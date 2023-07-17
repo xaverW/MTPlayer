@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.FilmInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
@@ -189,14 +189,14 @@ public class FilmGuiController extends AnchorPane {
                 ProgConfig.FILM_GUI_DIVIDER_ON.set(true);
             }
         });
-        Listener.addListener(new Listener(new int[]{Listener.EVENT_HISTORY_CHANGED},
+        MTListener.addListener(new MTListener(new int[]{MTListener.EVENT_HISTORY_CHANGED},
                 FilmGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 PTableFactory.refreshTable(tableView);
             }
         });
-        Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, this.getClass().getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_BLACKLIST_CHANGED, this.getClass().getSimpleName()) {
             @Override
             public void pingFx() {
                 PTableFactory.refreshTable(tableView);

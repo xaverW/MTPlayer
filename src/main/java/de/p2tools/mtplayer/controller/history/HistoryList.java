@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmTools;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.date.DateFactory;
@@ -108,7 +108,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             if (bookmark) {
                 FilmTools.clearAllBookmarks();
             }
-            Listener.notify(Listener.EVENT_HISTORY_CHANGED, HistoryList.class.getSimpleName());
+            MTListener.notify(MTListener.EVENT_HISTORY_CHANGED, HistoryList.class.getSimpleName());
         }
     }
 

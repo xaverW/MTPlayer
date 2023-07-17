@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.mtdownload.DownloadRemainingData;
 import de.p2tools.p2lib.mtdownload.DownloadSize;
 import de.p2tools.p2lib.tools.date.DateFactory;
 import de.p2tools.p2lib.tools.date.PDate;
@@ -42,7 +43,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final IntegerProperty guiState = new SimpleIntegerProperty(DownloadConstants.STATE_INIT);
     private final DoubleProperty progress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
     private final DoubleProperty guiProgress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
-    private final IntegerProperty remaining = new SimpleIntegerProperty(DownloadConstants.REMAINING_NOT_STARTET);
+    private final DownloadRemainingData remaining = new DownloadRemainingData();
     private final StringProperty bandwidth = new SimpleStringProperty("");
 
     private final DownloadSize downloadSize = new DownloadSize();
@@ -78,7 +79,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
     public final Property[] properties = {no, filmNr, aboName, channel, theme, title,
-            state, progress, remaining, bandwidth, downloadSize,
+            state, progress, bandwidth, downloadSize,
             filmDate, time, durationMinute,
             hd, ut, geoBlocked, filmUrl, historyUrl, url, urlSubtitle,
             setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
@@ -111,7 +112,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_stringProp("title", title));
 //        list.add(new Config_intProp("state", state)); Downloads starten immer in "init" damit sie nicht automatisch starten
         list.add(new Config_doubleProp("progress", progress));
-        list.add(new Config_intProp("remaining", remaining));
+//        list.add(new Config_intProp("remaining", remaining));
         list.add(new Config_stringProp("bandwidth", bandwidth));
         list.add(new Config_stringProp("time", time));
         list.add(new Config_intProp("durationMinute", durationMinute));
@@ -275,16 +276,16 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         Platform.runLater(() -> guiProgress.setValue(progress));
     }
 
-    public int getRemaining() {
-        return remaining.get();
-    }
-
-    public IntegerProperty remainingProperty() {
+    public DownloadRemainingData getRemaining() {
         return remaining;
     }
 
-    public void setRemaining(int remaining) {
-        this.remaining.set(remaining);
+    public int getRemainingValue() {
+        return remaining.getValue();
+    }
+
+    public void setRemaining(int i) {
+        remaining.setValue(i);
     }
 
     public String getBandwidth() {

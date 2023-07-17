@@ -31,7 +31,6 @@ public class DownloadConstants {
     public static final double PROGRESS_NEARLY_FINISHED = 0.995; //99,5%
     public static final double PROGRESS_FINISHED = 1; //100%
 
-    public static final int REMAINING_NOT_STARTET = Integer.MAX_VALUE; // Restzeit wenn noch nicht gestartet
     // Stati
     public static final int STATE_INIT = 0; // noch nicht gestartet
     public static final int STATE_STOPPED = 1; // gestartet und wieder abgebrochen
@@ -103,28 +102,28 @@ public class DownloadConstants {
         return ret;
     }
 
-    public static String getTextTimeLeft(long timeLeftSeconds) {
-        if (timeLeftSeconds > 300) {
-            return Math.round(timeLeftSeconds / 60.0) + " Min.";
-
-        } else if (timeLeftSeconds > 230) {
-            return "5 Min.";
-        } else if (timeLeftSeconds > 170) {
-            return "4 Min.";
-        } else if (timeLeftSeconds > 110) {
-            return "3 Min.";
-        } else if (timeLeftSeconds > 60) {
-            return "2 Min.";
-        } else if (timeLeftSeconds > 30) {
-            return "1 Min.";
-        } else if (timeLeftSeconds > 20) {
-            return "30 s";
-        } else if (timeLeftSeconds > 10) {
-            return "20 s";
-        } else if (timeLeftSeconds > 0) {
-            return "10 s";
-        } else {
-            return "";
-        }
-    }
+//    public static String getTextTimeLeft(long timeLeftSeconds) {
+//        if (timeLeftSeconds > 300) {
+//            return Math.round(timeLeftSeconds / 60.0) + " Min.";
+//
+//        } else if (timeLeftSeconds > 230) {
+//            return "5 Min.";
+//        } else if (timeLeftSeconds > 170) {
+//            return "4 Min.";
+//        } else if (timeLeftSeconds > 110) {
+//            return "3 Min.";
+//        } else if (timeLeftSeconds > 60) {
+//            return "2 Min.";
+//        } else if (timeLeftSeconds > 30) {
+//            return "1 Min.";
+//        } else if (timeLeftSeconds > 20) {
+//            return "30 s";
+//        } else if (timeLeftSeconds > 10) {
+//            return "20 s";
+//        } else if (timeLeftSeconds > 0) {
+//            return "10 s";
+//        } else {
+//            return "";
+//        }
+//    }
 }

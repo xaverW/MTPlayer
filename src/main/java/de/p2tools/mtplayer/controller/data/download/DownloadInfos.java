@@ -21,7 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.p2lib.mtdownload.DownloadRemainingData;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.text.DecimalFormat;
@@ -62,7 +63,7 @@ public class DownloadInfos {
 
     public DownloadInfos(ProgData progData) {
         this.progData = progData;
-        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadInfos.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, DownloadInfos.class.getSimpleName()) {
             @Override
             public void ping() {
                 clean();
@@ -169,15 +170,15 @@ public class DownloadInfos {
     }
 
     public String getTimeLeftNotStarted() {
-        return DownloadConstants.getTextTimeLeft(timeLeftNotStartedDownloads);
+        return DownloadRemainingData.getTextTimeLeft(timeLeftNotStartedDownloads);
     }
 
     public String getTimeLeftWaiting() {
-        return DownloadConstants.getTextTimeLeft(timeLeftWaitingDownloads);
+        return DownloadRemainingData.getTextTimeLeft(timeLeftWaitingDownloads);
     }
 
     public String getTimeLeftLoading() {
-        return DownloadConstants.getTextTimeLeft(timeLeftLoadingDownloads);
+        return DownloadRemainingData.getTextTimeLeft(timeLeftLoadingDownloads);
     }
 
     private synchronized void generateDownloadInfos() {

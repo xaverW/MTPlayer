@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -41,7 +41,7 @@ public class FilmFilterRunner {
 
         progData.actFilmFilterWorker.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter()); // Filmfilter (User) haben sich geändert
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
-        Listener.addListener(new Listener(Listener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
@@ -52,13 +52,13 @@ public class FilmFilterRunner {
                 }
             }
         });
-        Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 filterList();
             }
         });
-        Listener.addListener(new Listener(Listener.EVENT_DIACRITIC_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_DIACRITIC_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 filterList();

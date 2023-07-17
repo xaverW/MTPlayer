@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.history;
 
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
@@ -66,7 +66,7 @@ public class HistoryWriteToFile implements Runnable {
         // und jetzt schreiben
         writeHistoryDataToFile(list, append);
 
-        Listener.notify(Listener.EVENT_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
+        MTListener.notify(MTListener.EVENT_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
         PDuration.counterStop("doWork");
     }
 

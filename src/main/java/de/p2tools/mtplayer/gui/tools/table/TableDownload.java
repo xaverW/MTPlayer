@@ -19,10 +19,12 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.guitools.PTableFactory;
 import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.CellIntMax;
 import de.p2tools.p2lib.guitools.ptable.CellIntNull;
+import de.p2tools.p2lib.mtdownload.DownloadRemainingData;
 import de.p2tools.p2lib.mtdownload.DownloadSizeData;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
 import de.p2tools.p2lib.tools.date.PDate;
@@ -68,6 +70,19 @@ public class TableDownload extends PTable<DownloadData> {
         ProgColorList.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> refresh());
 
+        final TableDownload table = this;
+        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
+            @Override
+            public void ping() {
+                if (getSortOrder().isEmpty()) {
+                    System.out.println("sortOrder is empty");
+                } else {
+                    System.out.println("sort");
+                    sort();
+                }
+            }
+        });
+
         final TableColumn<DownloadData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.setCellFactory(new CellIntMax().cellFactory);
@@ -107,9 +122,8 @@ public class TableDownload extends PTable<DownloadData> {
         progressColumn.setCellFactory(new CellDownloadProgress().cellFactoryProgress);
         progressColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<DownloadData, Integer> remainingColumn = new TableColumn<>("Restzeit");
+        final TableColumn<DownloadData, DownloadRemainingData> remainingColumn = new TableColumn<>("Restzeit");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
-        remainingColumn.setCellFactory(new CellDownloadRemaining<>().cellFactory);
         remainingColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<DownloadData, Integer> speedColumn = new TableColumn<>("Geschwindigkeit");

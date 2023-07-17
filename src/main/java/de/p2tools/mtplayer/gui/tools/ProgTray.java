@@ -58,7 +58,7 @@ public class ProgTray {
         ProgConfig.SYSTEM_TRAY_ICON_PATH.addListener((observableValue, aBoolean, t1) -> {
             Platform.runLater(() -> setTray());
         });
-        Listener.addListener(new Listener(Listener.EVENT_TIMER, StatusBarController.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, StatusBarController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 try {

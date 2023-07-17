@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.tools.file.PFileSize;
 import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;
@@ -52,7 +52,7 @@ public class PaneDownloadInfo extends AnchorPane {
         AnchorPane.setRightAnchor(gridPane, 0.0);
         AnchorPane.setTopAnchor(gridPane, 0.0);
 
-        Listener.addListener(new Listener(Listener.EVENT_TIMER, PaneDownloadInfo.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, PaneDownloadInfo.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 setInfoText();

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.worker;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2lib.mtfilm.tools.SearchFilmlistUpdate;
@@ -34,7 +34,7 @@ public class CheckForNewFilmlist extends SearchFilmlistUpdate {
                 setFoundNewList(false);
             }
         });
-        Listener.addListener(new Listener(Listener.EVENT_TIMER, CheckForNewFilmlist.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, CheckForNewFilmlist.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 // kan dauern und hält dann das Programm beim Start auf

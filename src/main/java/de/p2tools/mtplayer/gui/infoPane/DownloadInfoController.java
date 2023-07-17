@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Tab;
@@ -43,7 +43,7 @@ public class DownloadInfoController extends PClosePaneH {
         progData = ProgData.getInstance();
 
         initInfoPane();
-        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadInfoController.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, DownloadInfoController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 paneDownloadChart.searchInfos(MTPlayerController.paneShown == MTPlayerController.PANE_SHOWN.DOWNLOAD &&

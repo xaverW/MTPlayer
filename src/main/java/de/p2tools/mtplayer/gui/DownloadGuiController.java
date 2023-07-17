@@ -29,7 +29,7 @@ import de.p2tools.mtplayer.gui.dialog.DownloadStartAtTimeController;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.DownloadInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
@@ -285,7 +285,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        Listener.addListener(new Listener(Listener.EVENT_TIMER, DownloadGuiController.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
@@ -295,7 +295,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-        Listener.addListener(new Listener(Listener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode)
@@ -305,7 +305,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-        Listener.addListener(new Listener(Listener.EVEMT_SETDATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVEMT_SETDATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 tableView.refresh();

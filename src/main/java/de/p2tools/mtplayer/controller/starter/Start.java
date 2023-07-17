@@ -16,10 +16,10 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
-import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.tools.MLInputStream;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
+import de.p2tools.p2lib.mtdownload.DownloadRemainingData;
 import de.p2tools.p2lib.tools.date.PDate;
 
 public class Start {
@@ -60,7 +60,7 @@ public class Start {
         if (download.isStateStartedRun() && getTimeLeftSeconds() > 0) {
             download.setRemaining(timeLeftSeconds);
         } else {
-            download.setRemaining(DownloadConstants.REMAINING_NOT_STARTET);
+            download.setRemaining(DownloadRemainingData.REMAINING_NOT_STARTET);
         }
     }
 

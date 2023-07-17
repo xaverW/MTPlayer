@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.AboInfoController;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableAbo;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
@@ -139,7 +139,7 @@ public class AboGuiController extends AnchorPane {
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             tableView.refresh();
         });
-        Listener.addListener(new Listener(Listener.EVEMT_SETDATA_CHANGED, AboGuiController.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVEMT_SETDATA_CHANGED, AboGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 tableView.refresh();

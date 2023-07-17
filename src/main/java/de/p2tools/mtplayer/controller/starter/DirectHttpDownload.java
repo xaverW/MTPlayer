@@ -25,8 +25,8 @@ import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
 import de.p2tools.mtplayer.controller.tools.MLInputStream;
 import de.p2tools.mtplayer.gui.dialog.DownloadContinueDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadErrorDialogController;
-import de.p2tools.mtplayer.gui.tools.Listener;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -60,7 +60,7 @@ public class DirectHttpDownload extends Thread {
     private File file = null;
     private String responseCode;
     private boolean work = false;
-    private final Listener listener = new Listener(Listener.EVENT_TIMER_HALF_SECOND, DirectHttpDownload.class.getSimpleName()) {
+    private final MTListener listener = new MTListener(MTListener.EVENT_TIMER_HALF_SECOND, DirectHttpDownload.class.getSimpleName()) {
         @Override
         public void ping() {
             work = true;
@@ -75,7 +75,7 @@ public class DirectHttpDownload extends Thread {
         download = d;
         setName("DIRECT DL THREAD: " + d.getTitle());
         download.setStateStartedRun();
-        Listener.addListener(listener);
+        MTListener.addListener(listener);
     }
 
     @Override
@@ -210,7 +210,7 @@ public class DirectHttpDownload extends Thread {
         }
 
         StarterClass.finalizeDownload(download);
-        Listener.removeListener(listener);
+        MTListener.removeListener(listener);
     }
 
     /**

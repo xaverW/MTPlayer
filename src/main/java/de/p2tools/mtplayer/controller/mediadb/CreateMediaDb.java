@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.mediadb;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.tools.Listener;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.tools.duration.PDuration;
@@ -163,13 +163,13 @@ public class CreateMediaDb {
         PDuration.counterStart("createDB");
         mediaDataList.setStopSearching(false);
         mediaDataList.setSearching(true);
-        Listener.notify(Listener.EVENT_MEDIA_DB_START, CreateMediaDb.class.getSimpleName());
+        MTListener.notify(MTListener.EVENT_MEDIA_DB_START, CreateMediaDb.class.getSimpleName());
     }
 
     private void stop() {
         mediaDataList.setSearching(false);
         PLog.sysLog(logs);
-        Listener.notify(Listener.EVENT_MEDIA_DB_STOP, CreateMediaDb.class.getSimpleName());
+        MTListener.notify(MTListener.EVENT_MEDIA_DB_STOP, CreateMediaDb.class.getSimpleName());
         PDuration.counterStop("createDB");
     }
 

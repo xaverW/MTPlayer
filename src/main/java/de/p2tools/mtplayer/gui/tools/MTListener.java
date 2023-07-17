@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.EventListener;
 
 
-public class Listener implements EventListener {
-    private static final ArrayList<Listener> listeners = new ArrayList<>();
+public class MTListener implements EventListener {
+    private static final ArrayList<MTListener> listeners = new ArrayList<>();
     static int count = 0;
     public static final int EVENT_BLACKLIST_CHANGED = count++;
     public static final int EVENT_DIACRITIC_CHANGED = count++;
-    public static final int EVENT_TIMER = count++;
+    public static final int EVENT_TIMER_SECOND = count++;
     public static final int EVENT_TIMER_HALF_SECOND = count++;
     public static final int EVENT_MEDIA_DB_START = count++;
     public static final int EVENT_MEDIA_DB_STOP = count++;
@@ -37,25 +37,25 @@ public class Listener implements EventListener {
     public int[] event = {-1};
     public String eventClass = "";
 
-    public Listener() {
+    public MTListener() {
     }
 
-    public Listener(int event, String eventClass) {
+    public MTListener(int event, String eventClass) {
         this.event = new int[]{event};
         this.eventClass = eventClass;
     }
 
-    public Listener(int[] event, String eventClass) {
+    public MTListener(int[] event, String eventClass) {
         this.event = event;
         this.eventClass = eventClass;
     }
 
-    public static synchronized void addListener(Listener listener) {
+    public static synchronized void addListener(MTListener listener) {
         PLog.debugLog("Anz. Listener: " + listeners.size());
         listeners.add(listener);
     }
 
-    public static synchronized void removeListener(Listener listener) {
+    public static synchronized void removeListener(MTListener listener) {
         listeners.remove(listener);
     }
 
