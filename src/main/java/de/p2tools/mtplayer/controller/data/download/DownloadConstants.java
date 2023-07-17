@@ -31,6 +31,7 @@ public class DownloadConstants {
     public static final double PROGRESS_NEARLY_FINISHED = 0.995; //99,5%
     public static final double PROGRESS_FINISHED = 1; //100%
 
+    public static final int REMAINING_NOT_STARTET = Integer.MAX_VALUE; // Restzeit wenn noch nicht gestartet
     // Stati
     public static final int STATE_INIT = 0; // noch nicht gestartet
     public static final int STATE_STOPPED = 1; // gestartet und wieder abgebrochen
@@ -102,7 +103,7 @@ public class DownloadConstants {
         return ret;
     }
 
-    public static String getTimeLeft(long timeLeftSeconds) {
+    public static String getTextTimeLeft(long timeLeftSeconds) {
         if (timeLeftSeconds > 300) {
             return Math.round(timeLeftSeconds / 60.0) + " Min.";
 

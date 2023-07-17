@@ -31,8 +31,6 @@ public class ProgIconsMTPlayer {
 
     private static final List<P2IconMTViewer> iconList = new ArrayList<>();
 
-    public static P2IconMTViewer ICON_BUTTON_SAVE = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "save_all.png", 16, 16);
-
     public static P2IconMTViewer ICON_DIALOG_ON = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "dialog-ein.png", "dialog-ein-sw.png", 16, 16);
     public static P2IconMTViewer IMAGE_ACHTUNG_64 = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "achtung_64.png", 64, 64);
 

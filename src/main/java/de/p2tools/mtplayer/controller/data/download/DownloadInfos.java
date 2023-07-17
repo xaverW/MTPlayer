@@ -169,15 +169,15 @@ public class DownloadInfos {
     }
 
     public String getTimeLeftNotStarted() {
-        return DownloadConstants.getTimeLeft(timeLeftNotStartedDownloads);
+        return DownloadConstants.getTextTimeLeft(timeLeftNotStartedDownloads);
     }
 
     public String getTimeLeftWaiting() {
-        return DownloadConstants.getTimeLeft(timeLeftWaitingDownloads);
+        return DownloadConstants.getTextTimeLeft(timeLeftWaitingDownloads);
     }
 
     public String getTimeLeftLoading() {
-        return DownloadConstants.getTimeLeft(timeLeftLoadingDownloads);
+        return DownloadConstants.getTextTimeLeft(timeLeftLoadingDownloads);
     }
 
     private synchronized void generateDownloadInfos() {

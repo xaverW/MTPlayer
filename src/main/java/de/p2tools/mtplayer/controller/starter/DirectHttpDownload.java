@@ -336,7 +336,7 @@ public class DirectHttpDownload extends Thread {
                     if (sizeLeft > 0 && aktBandwidth > 0) {
                         timeLeft = sizeLeft / aktBandwidth;
                     }
-                    download.getStart().setTimeLeftSeconds(timeLeft);
+                    download.getStart().setTimeLeftSeconds((int) timeLeft);
 
                     // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
                     // als die bereits geladene Spielzeit des Films

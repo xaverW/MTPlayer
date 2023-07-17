@@ -55,12 +55,12 @@ public class Start {
         return timeLeftSeconds;
     }
 
-    public void setTimeLeftSeconds(long timeLeftSeconds) {
+    public void setTimeLeftSeconds(int timeLeftSeconds) {
         this.timeLeftSeconds = timeLeftSeconds;
         if (download.isStateStartedRun() && getTimeLeftSeconds() > 0) {
-            download.setRemaining(DownloadConstants.getTimeLeft(timeLeftSeconds));
+            download.setRemaining(timeLeftSeconds);
         } else {
-            download.setRemaining("");
+            download.setRemaining(DownloadConstants.REMAINING_NOT_STARTET);
         }
     }
 

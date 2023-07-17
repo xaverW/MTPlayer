@@ -61,9 +61,7 @@ public class TableDownload extends PTable<DownloadData> {
 
         final Comparator<String> sorter = GermanStringIntSorter.getInstance();
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> refresh());
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            PTableFactory.refreshTable(this);
-        });
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> PTableFactory.refreshTable(this));
         ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> refresh());
@@ -111,6 +109,7 @@ public class TableDownload extends PTable<DownloadData> {
 
         final TableColumn<DownloadData, Integer> remainingColumn = new TableColumn<>("Restzeit");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
+        remainingColumn.setCellFactory(new CellDownloadRemaining<>().cellFactory);
         remainingColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<DownloadData, Integer> speedColumn = new TableColumn<>("Geschwindigkeit");

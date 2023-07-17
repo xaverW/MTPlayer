@@ -167,7 +167,7 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         getDownloadSize().reset();
-        setRemaining("");
+        setRemaining(DownloadConstants.REMAINING_NOT_STARTET);
         setBandwidth("");
         getStart().setBandwidth(0);
         setNo(P2LibConst.NUMBER_NOT_STARTED);

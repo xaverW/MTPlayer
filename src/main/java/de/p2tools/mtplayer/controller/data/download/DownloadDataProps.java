@@ -42,7 +42,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final IntegerProperty guiState = new SimpleIntegerProperty(DownloadConstants.STATE_INIT);
     private final DoubleProperty progress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
     private final DoubleProperty guiProgress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
-    private final StringProperty remaining = new SimpleStringProperty("");
+    private final IntegerProperty remaining = new SimpleIntegerProperty(DownloadConstants.REMAINING_NOT_STARTET);
     private final StringProperty bandwidth = new SimpleStringProperty("");
 
     private final DownloadSize downloadSize = new DownloadSize();
@@ -111,7 +111,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_stringProp("title", title));
 //        list.add(new Config_intProp("state", state)); Downloads starten immer in "init" damit sie nicht automatisch starten
         list.add(new Config_doubleProp("progress", progress));
-        list.add(new Config_stringProp("remaining", remaining));
+        list.add(new Config_intProp("remaining", remaining));
         list.add(new Config_stringProp("bandwidth", bandwidth));
         list.add(new Config_stringProp("time", time));
         list.add(new Config_intProp("durationMinute", durationMinute));
@@ -275,15 +275,15 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         Platform.runLater(() -> guiProgress.setValue(progress));
     }
 
-    public String getRemaining() {
+    public int getRemaining() {
         return remaining.get();
     }
 
-    public StringProperty remainingProperty() {
+    public IntegerProperty remainingProperty() {
         return remaining;
     }
 
-    public void setRemaining(String remaining) {
+    public void setRemaining(int remaining) {
         this.remaining.set(remaining);
     }
 
