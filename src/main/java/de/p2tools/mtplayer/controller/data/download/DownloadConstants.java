@@ -62,7 +62,7 @@ public class DownloadConstants {
 
     //Download wird so oft gestartet, falls er beim ersten Mal nicht anspringt
     public static final int START_COUNTER_MAX = 3;
-
+    public static final int REMAINING_NOT_STARTET = Integer.MIN_VALUE; // Restzeit wenn noch nicht gestartet
 
     private static final DecimalFormat df = new DecimalFormat("###,##0.0");
 
@@ -102,28 +102,48 @@ public class DownloadConstants {
         return ret;
     }
 
-//    public static String getTextTimeLeft(long timeLeftSeconds) {
-//        if (timeLeftSeconds > 300) {
-//            return Math.round(timeLeftSeconds / 60.0) + " Min.";
-//
-//        } else if (timeLeftSeconds > 230) {
-//            return "5 Min.";
-//        } else if (timeLeftSeconds > 170) {
-//            return "4 Min.";
-//        } else if (timeLeftSeconds > 110) {
-//            return "3 Min.";
-//        } else if (timeLeftSeconds > 60) {
-//            return "2 Min.";
-//        } else if (timeLeftSeconds > 30) {
-//            return "1 Min.";
-//        } else if (timeLeftSeconds > 20) {
-//            return "30 s";
-//        } else if (timeLeftSeconds > 10) {
-//            return "20 s";
-//        } else if (timeLeftSeconds > 0) {
-//            return "10 s";
-//        } else {
-//            return "";
-//        }
-//    }
+    public static String getRemaining(int l) {
+        if (l == DownloadConstants.REMAINING_NOT_STARTET) {
+            // dann ist er noch nicht gestartet
+            return "";
+
+        } else if (l < 0) {
+            // dann ist er fertig
+            final int dauer = l / 60;
+            if (dauer == 0) {
+                return "Dauer: " + -1 * l + " s";
+            } else {
+                return "Dauer: " + -1 * dauer + " Min";
+            }
+
+        } else {
+            // dann läuft er noch
+            return getTextTimeLeft(l);
+        }
+    }
+
+    public static String getTextTimeLeft(long timeLeftSeconds) {
+        if (timeLeftSeconds > 300) {
+            return Math.round(timeLeftSeconds / 60.0) + " Min.";
+
+        } else if (timeLeftSeconds > 230) {
+            return "5 Min.";
+        } else if (timeLeftSeconds > 170) {
+            return "4 Min.";
+        } else if (timeLeftSeconds > 110) {
+            return "3 Min.";
+        } else if (timeLeftSeconds > 60) {
+            return "2 Min.";
+        } else if (timeLeftSeconds > 30) {
+            return "1 Min.";
+        } else if (timeLeftSeconds > 20) {
+            return "30 s";
+        } else if (timeLeftSeconds > 10) {
+            return "20 s";
+        } else if (timeLeftSeconds > 0) {
+            return "10 s";
+        } else {
+            return "";
+        }
+    }
 }

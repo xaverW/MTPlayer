@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.starter.Start;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.mtdownload.DownloadRemainingData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.tools.PSystemUtils;
@@ -168,8 +167,8 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         getDownloadSize().reset();
-        setRemaining(DownloadRemainingData.REMAINING_NOT_STARTET);
-        setBandwidth("");
+        setRemaining(DownloadConstants.REMAINING_NOT_STARTET);
+        setBandwidth(0);
         getStart().setBandwidth(0);
         setNo(P2LibConst.NUMBER_NOT_STARTED);
     }
@@ -323,7 +322,8 @@ public final class DownloadData extends DownloadDataProps {
         ret.setStart(getStart());
         ret.setData = setData;
         ret.abo = abo;
-        ret.setRemaining(getRemaining().getValue());
+//        ret.setRemainingInt(getRemainingInt());
+//        ret.setBandwidthLong(getBandwidthLong());
 
         return ret;
     }
@@ -339,6 +339,7 @@ public final class DownloadData extends DownloadDataProps {
         setStart(download.getStart());
         setData = download.setData;
         abo = download.abo;
-        setRemaining(download.getRemaining().getValue());
+//        setRemainingInt(download.getRemainingInt());
+//        setBandwidthLong(download.getBandwidthLong());
     }
 }

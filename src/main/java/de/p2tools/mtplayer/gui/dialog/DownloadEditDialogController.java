@@ -579,7 +579,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         if (download.isStateStartedRun() &&
                 download.getStart().getTimeLeftSeconds() > 0) {
-            lblCont[DownloadFieldNames.DOWNLOAD_REMAINING_TIME_NO].setText(download.getRemaining().toString()/* DownloadRemainingData.getTextTimeLeft(download.getStart().getTimeLeftSeconds())*/);
+            lblCont[DownloadFieldNames.DOWNLOAD_REMAINING_TIME_NO].setText(DownloadConstants.getTextTimeLeft(download.getStart().getTimeLeftSeconds()));
         }
         gridPane.add(text[DownloadFieldNames.DOWNLOAD_REMAINING_TIME_NO], 2, row);
         gridPane.add(lblCont[DownloadFieldNames.DOWNLOAD_REMAINING_TIME_NO], 3, row);

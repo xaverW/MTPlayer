@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.mtplayer.gui.tools.MTListener;
-import de.p2tools.p2lib.mtdownload.DownloadRemainingData;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.text.DecimalFormat;
@@ -170,15 +169,15 @@ public class DownloadInfos {
     }
 
     public String getTimeLeftNotStarted() {
-        return DownloadRemainingData.getTextTimeLeft(timeLeftNotStartedDownloads);
+        return DownloadConstants.getTextTimeLeft(timeLeftNotStartedDownloads);
     }
 
     public String getTimeLeftWaiting() {
-        return DownloadRemainingData.getTextTimeLeft(timeLeftWaitingDownloads);
+        return DownloadConstants.getTextTimeLeft(timeLeftWaitingDownloads);
     }
 
     public String getTimeLeftLoading() {
-        return DownloadRemainingData.getTextTimeLeft(timeLeftLoadingDownloads);
+        return DownloadConstants.getTextTimeLeft(timeLeftLoadingDownloads);
     }
 
     private synchronized void generateDownloadInfos() {

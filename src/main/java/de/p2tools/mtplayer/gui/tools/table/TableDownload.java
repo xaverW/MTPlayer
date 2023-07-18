@@ -24,7 +24,6 @@ import de.p2tools.p2lib.guitools.PTableFactory;
 import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.CellIntMax;
 import de.p2tools.p2lib.guitools.ptable.CellIntNull;
-import de.p2tools.p2lib.mtdownload.DownloadRemainingData;
 import de.p2tools.p2lib.mtdownload.DownloadSizeData;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
 import de.p2tools.p2lib.tools.date.PDate;
@@ -36,6 +35,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.Comparator;
 
 public class TableDownload extends PTable<DownloadData> {
+    int i = 0;
 
     public TableDownload(Table.TABLE_ENUM table_enum) {
         super(table_enum);
@@ -69,19 +69,6 @@ public class TableDownload extends PTable<DownloadData> {
         ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> refresh());
-
-        final TableDownload table = this;
-        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
-            @Override
-            public void ping() {
-                if (getSortOrder().isEmpty()) {
-                    System.out.println("sortOrder is empty");
-                } else {
-                    System.out.println("sort");
-                    sort();
-                }
-            }
-        });
 
         final TableColumn<DownloadData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
@@ -122,12 +109,14 @@ public class TableDownload extends PTable<DownloadData> {
         progressColumn.setCellFactory(new CellDownloadProgress().cellFactoryProgress);
         progressColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<DownloadData, DownloadRemainingData> remainingColumn = new TableColumn<>("Restzeit");
+        final TableColumn<DownloadData, Integer> remainingColumn = new TableColumn<>("Restzeit");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
+        remainingColumn.setCellFactory(new CellDownloadRemaining<>().cellFactory);
         remainingColumn.getStyleClass().add("alignCenterRightPadding_25");
 
-        final TableColumn<DownloadData, Integer> speedColumn = new TableColumn<>("Geschwindigkeit");
+        final TableColumn<DownloadData, Long> speedColumn = new TableColumn<>("Geschwindigkeit");
         speedColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
+        speedColumn.setCellFactory(new CellDownloadBandwidth<>().cellFactory);
         speedColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<DownloadData, String> startTimeColumn = new TableColumn<>("Startzeit");
@@ -209,5 +198,20 @@ public class TableDownload extends PTable<DownloadData> {
                 datumColumn, timeColumn, durationColumn,
                 hdColumn, utColumn, geoColumn, artColumn, srcColumn, /*placedBackColumn,*/
                 programColumn, setColumn, urlColumn, fileNameColumn, pathColumn);
+
+        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
+            @Override
+            public void ping() {
+                if (!getSortOrder().isEmpty() &&
+                        (getSortOrder().get(0).equals(progressColumn) ||
+                                getSortOrder().get(0).equals(remainingColumn) ||
+                                getSortOrder().get(0).equals(speedColumn)
+                        )) {
+                    // dann sind es die Spalten die sich ändern
+                    sort();
+                    System.out.println("sort " + i++);
+                }
+            }
+        });
     }
 }

@@ -260,16 +260,10 @@ public class StarterClass {
             download.getDownloadSize().setActFileSize(-1);
 
             if (start.getInputStream() != null) {
-                download.setBandwidth("Ø " + SizeTools.humanReadableByteCount(start.getInputStream().getSumBandwidth(), true));
+                download.setBandwidthEnd(start.getInputStream().getSumBandwidth());
             }
 
             download.setRemaining(-1 * start.getStartTime().diffInSeconds());
-//            final long dauer = start.getStartTime().diffInMinutes();
-//            if (dauer == 0) {
-//                download.setRemaining("Dauer: " + start.getStartTime().diffInSeconds() + " s");
-//            } else {
-//                download.setRemaining("Dauer: " + start.getStartTime().diffInMinutes() + " Min");
-//            }
         }
 
         download.setNo(P2LibConst.NUMBER_NOT_STARTED);
