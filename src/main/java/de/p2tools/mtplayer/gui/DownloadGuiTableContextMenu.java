@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.p2lib.tools.PSystemUtils;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -51,11 +52,15 @@ public class DownloadGuiTableContextMenu {
         miStop.setOnAction(a -> downloadGuiController.stopDownload(false));
         final MenuItem miChange = new MenuItem("Download ändern");
         miChange.setOnAction(a -> downloadGuiController.changeDownload());
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        miUndo.setOnAction(a -> progData.downloadList.undoDownloads());
 
+        miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));
         miStart.setDisable(download == null);
         miStop.setDisable(download == null);
         miChange.setDisable(download == null);
-        contextMenu.getItems().addAll(miStart, miStop, miChange);
+
+        contextMenu.getItems().addAll(miStart, miStop, miChange, miUndo);
 
         // Submenü "Download"
         contextMenu.getItems().add(new SeparatorMenuItem());
