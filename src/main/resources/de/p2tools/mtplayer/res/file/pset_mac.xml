@@ -5,7 +5,7 @@
             <id>Speichern</id>
             <visibleName>Speichern</visibleName>
             <prefix>http</prefix>
-            <suffix>mp4,mp3,m4v,m4a</suffix>
+            <suffix>mp4,mp3,m4v,m4a,webm</suffix>
             <destPath>ZIELPFAD</destPath>
             <destName>%t-%T-%z</destName>
             <play>false</play>
