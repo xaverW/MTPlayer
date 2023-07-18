@@ -101,7 +101,7 @@ public class TableDownload extends PTable<DownloadData> {
         // die zwei Spalten mit eigenen propertys
         final TableColumn<DownloadData, Integer> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("guiState"));
-        startColumn.setCellFactory(new CellDownloadState().cellFactoryState);
+        startColumn.setCellFactory(new CellDownloadState().cellFactory);
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!

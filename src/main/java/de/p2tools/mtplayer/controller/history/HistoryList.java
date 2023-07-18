@@ -281,7 +281,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
         PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(downloadList.size() + 1, 0.75F);
-        downloadList.stream().forEach(download -> {
+        downloadList.forEach(download -> {
             if (bookmark && download.getFilm() != null) {
                 download.getFilm().setBookmark(false);
 
@@ -297,26 +297,23 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStop("History: removeDataFromHistory");
     }
 
-    private void removeFromHistory(HashSet<String> urlHash) {
+    private void removeFromHistory(HashSet<String> removeUrlHash) {
         final ArrayList<HistoryData> newHistoryList = new ArrayList<>();
-
         found = false;
 
         PDuration.counterStart("History: removeFromHistory");
-        PLog.sysLog("Aus Historyliste löschen: " + urlHash.size() + ", löschen aus: " + fileName);
+        PLog.sysLog("Aus Historyliste löschen: " + removeUrlHash.size() + ", löschen aus: " + fileName);
 
         waitWhileWorking(); // wird diese Liste abgesucht
 
-        this.stream().forEach(historyData -> {
-
-            if (urlHash.contains(historyData.getUrl())) {
+        this.forEach(historyData -> {
+            if (removeUrlHash.contains(historyData.getUrl())) {
                 // nur dann muss das Logfile auch geschrieben werden
                 found = true;
             } else {
                 // kommt wieder in die history
                 newHistoryList.add(historyData);
             }
-
         });
 
         if (found) {

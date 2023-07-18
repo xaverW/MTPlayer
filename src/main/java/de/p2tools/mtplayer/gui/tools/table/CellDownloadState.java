@@ -38,7 +38,7 @@ import java.util.List;
 
 public class CellDownloadState<S, T> extends TableCell<S, T> {
 
-    public final Callback<TableColumn<DownloadData, Integer>, TableCell<DownloadData, Integer>> cellFactoryState
+    public final Callback<TableColumn<DownloadData, Integer>, TableCell<DownloadData, Integer>> cellFactory
             = (final TableColumn<DownloadData, Integer> param) -> {
 
         final TableCell<DownloadData, Integer> cell = new TableCell<DownloadData, Integer>() {

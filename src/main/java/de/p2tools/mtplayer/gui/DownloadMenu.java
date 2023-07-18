@@ -120,7 +120,7 @@ public class DownloadMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
-            progData.downloadGuiController.undoDeleteDownload();
+            progData.downloadList.undoDownloads();
         });
         PShortcutWorker.addShortCut(miUndo, ProgShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
         miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));

@@ -127,7 +127,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         if (undoList.isEmpty()) {
             return;
         }
-        //aus der AboHistory löschen
+        //aus der Abo-History löschen
         progData.erledigteAbos.removeDownloadDataFromHistory(undoList);
         addAll(undoList);
         undoList.clear();

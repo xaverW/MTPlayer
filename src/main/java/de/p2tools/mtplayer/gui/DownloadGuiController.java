@@ -232,9 +232,9 @@ public class DownloadGuiController extends AnchorPane {
         change();
     }
 
-    public void undoDeleteDownload() {
-        progData.downloadList.undoDownloads();
-    }
+//    public void undoDeleteDownload() {
+//        progData.downloadList.undoDownloads();
+//    }
 
     public void setFilmShown() {
         // Filme als gesehen markieren
