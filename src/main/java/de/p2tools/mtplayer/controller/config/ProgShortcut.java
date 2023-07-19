@@ -122,10 +122,11 @@ public class ProgShortcut {
                     "Download ändern",
                     "Der markierte Download in der Tabelle \"Downloads\" kann geändert werden.");
 
-    public static final PShortcut SHORTCUT_DOWNLOAD_UNDO_DELETE =
-            new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_UNDO_DELETE, ProgConfig.SHORTCUT_DOWNLOAD_UNDO_DELETE_INIT,
-                    "Gelöschten Download wieder anlegen",
-                    "Der markierte Download in der Tabelle \"Downloads\" kann geändert werden.");
+    public static final PShortcut SHORTCUT_UNDO_DELETE =
+            new PShortcut(ProgConfig.SHORTCUT_UNDO_DELETE, ProgConfig.SHORTCUT_UNDO_DELETE_INIT,
+                    "Gelöschte Downloads oder Abos wieder anlegen",
+                    "Die zuletzt gelöschten Downloads in der Tabelle \"Downloads\" oder " +
+                            "die zuletzt gelöschten Abos in der Tabelle \"Abos\" können wieder angelegt werden.");
 
     public static final PShortcut SHORTCUT_DOWNLOADS_UPDATE =
             new PShortcut(ProgConfig.SHORTCUT_DOWNLOAD_UPDATE, ProgConfig.SHORTCUT_DOWNLOADS_UPDATE_INIT,
@@ -137,7 +138,7 @@ public class ProgShortcut {
                     "Downloads aufräumen",
                     "Die Liste der Downloads in der Tabelle \"Downloads\" wird aufgeräumt.");
 
-    private static ObservableList<PShortcut> shortcutList = FXCollections.observableArrayList();
+    private static final ObservableList<PShortcut> shortcutList = FXCollections.observableArrayList();
 
     public ProgShortcut() {
         shortcutList.add(SHORTCUT_SEARCH_MEDIACOLLECTION);
@@ -160,9 +161,9 @@ public class ProgShortcut {
         shortcutList.add(SHORTCUT_DOWNLOAD_START);
         shortcutList.add(SHORTCUT_DOWNLOAD_STOP);
         shortcutList.add(SHORTCUT_DOWNLOAD_CHANGE);
-        shortcutList.add(SHORTCUT_DOWNLOAD_UNDO_DELETE);
         shortcutList.add(SHORTCUT_DOWNLOADS_UPDATE);
         shortcutList.add(SHORTCUT_DOWNLOADS_CLEAN_UP);
+        shortcutList.add(SHORTCUT_UNDO_DELETE);
     }
 
     public static synchronized ObservableList<PShortcut> getShortcutList() {

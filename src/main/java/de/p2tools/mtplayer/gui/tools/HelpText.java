@@ -737,7 +737,7 @@ public class HelpText {
                     "\n";
 
     public static final String SMALL_BUTTON =
-            "In den Tabellen der Ansichten \"Filme\" und \"Downloads\" können " +
+            "In den Tabellen der Ansichten \"Filme\", \"Downloads\" und \"Abos\" können " +
                     "kleinere Buttons gewählt werden, um die Zeilenhöhe zu verringern." +
                     "\n";
 

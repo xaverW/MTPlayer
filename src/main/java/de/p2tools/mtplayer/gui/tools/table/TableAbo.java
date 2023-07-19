@@ -54,6 +54,8 @@ public class TableAbo extends PTable<AboData> {
         getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO.addListener((observableValue, s, t1) -> refresh());
+
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
             PTableFactory.refreshTable(this);
         });
@@ -65,7 +67,7 @@ public class TableAbo extends PTable<AboData> {
 
         final TableColumn<AboData, Boolean> activColumn = new TableColumn<>("Aktiv");
         activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
-        activColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        activColumn.setCellFactory(new CellCheckBox().cellFactory);
         activColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> hitColumn = new TableColumn<>("Treffer");
@@ -76,6 +78,10 @@ public class TableAbo extends PTable<AboData> {
         final TableColumn<AboData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("alignCenterLeft");
+
+        final TableColumn<AboData, String> startColumn = new TableColumn<>("");
+        startColumn.setCellFactory(new CellAboButton<>().cellFactory);
+        startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, String> resColumn = new TableColumn<>("Auflösung");
         resColumn.setCellValueFactory(new PropertyValueFactory<>("resolution"));
@@ -91,7 +97,7 @@ public class TableAbo extends PTable<AboData> {
 
         final TableColumn<AboData, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
-        themeExactColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        themeExactColumn.setCellFactory(new CellCheckBox().cellFactory);
         themeExactColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
@@ -107,17 +113,17 @@ public class TableAbo extends PTable<AboData> {
         somewhereColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<AboData, Integer> timeRange = new TableColumn<>("Zeitraum");
-        timeRange.setCellFactory(new CellAboMin().cellFactoryMin);
+        timeRange.setCellFactory(new CellAboMin().cellFactory);
         timeRange.setCellValueFactory(new PropertyValueFactory<>("timeRange"));
         timeRange.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> minColumn = new TableColumn<>("Min");
-        minColumn.setCellFactory(new CellAboMin().cellFactoryMin);
+        minColumn.setCellFactory(new CellAboMin().cellFactory);
         minColumn.setCellValueFactory(new PropertyValueFactory<>("minDurationMinute"));
         minColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> maxColumn = new TableColumn<>("Max");
-        maxColumn.setCellFactory(new CellAboMax().cellFactoryMax);
+        maxColumn.setCellFactory(new CellAboMax().cellFactory);
         maxColumn.setCellValueFactory(new PropertyValueFactory<>("maxDurationMinute"));
         maxColumn.getStyleClass().add("alignCenter");
 
@@ -142,7 +148,7 @@ public class TableAbo extends PTable<AboData> {
         genDateColumn.getStyleClass().add("alignCenter");
 
         getColumns().addAll(
-                nrColumn, activColumn, hitColumn, nameColumn, resColumn, senderColumn,
+                nrColumn, activColumn, hitColumn, nameColumn, startColumn, resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
                 somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn,
                 destinationColumn, datumColumn, psetColumn, genDateColumn);

@@ -152,6 +152,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_ONLY_ONE_INSTANCE = addBoolProp("system-only-one-instance", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_FILM = addBoolProp("system-small-row-table-film", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addBoolProp("system-small-row-table-download", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_ABO = addBoolProp("system-small-row-table-abo", Boolean.FALSE);
     public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE);
     public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");
     public static BooleanProperty SYSTEM_SSL_ALWAYS_TRUE = addBoolProp("system-ssl-always-true");
@@ -389,8 +390,8 @@ public class ProgConfig extends PDataProgConfig {
     public static String SHORTCUT_DOWNLOAD_CHANGE_INIT = "Ctrl+C";
     public static StringProperty SHORTCUT_DOWNLOAD_CHANGE = addStrProp("SHORTCUT_DOWNLOAD_CHANGE", SHORTCUT_DOWNLOAD_CHANGE_INIT);
 
-    public static String SHORTCUT_DOWNLOAD_UNDO_DELETE_INIT = "Ctrl+R";
-    public static StringProperty SHORTCUT_DOWNLOAD_UNDO_DELETE = addStrProp("SHORTCUT_DOWNLOAD_UNDO_DELETE", SHORTCUT_DOWNLOAD_UNDO_DELETE_INIT);
+    public static String SHORTCUT_UNDO_DELETE_INIT = "Ctrl+Z";
+    public static StringProperty SHORTCUT_UNDO_DELETE = addStrProp("SHORTCUT_DOWNLOAD_UNDO_DELETE", SHORTCUT_UNDO_DELETE_INIT);
 
     public static String SHORTCUT_DOWNLOADS_UPDATE_INIT = "CTRL+U";
     public static StringProperty SHORTCUT_DOWNLOAD_UPDATE = addStrProp("SHORTCUT_DOWNLOAD_UPDATE", SHORTCUT_DOWNLOADS_UPDATE_INIT);
@@ -398,7 +399,7 @@ public class ProgConfig extends PDataProgConfig {
     public static String SHORTCUT_DOWNLOAD_CLEAN_UP_INIT = "CTRL+O";
     public static StringProperty SHORTCUT_DOWNLOAD_CLEAN_UP = addStrProp("SHORTCUT_DOWNLOAD_CLEAN_UP", SHORTCUT_DOWNLOAD_CLEAN_UP_INIT);
 
-    private static String[] PARAMETER_INFO = new String[]{
+    private static final String[] PARAMETER_INFO = new String[]{
             "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden",
             "\t" + "und sind auch nicht für ständige Änderungen gedacht.",
             "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt.",

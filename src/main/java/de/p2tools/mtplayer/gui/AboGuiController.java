@@ -178,7 +178,7 @@ public class AboGuiController extends AnchorPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 final Optional<AboData> optionalAbo = getSel(false);
                 AboData abo = optionalAbo.orElse(null);
-                ContextMenu contextMenu = new AboGuiTableContextMenue(progData, this, tableView).getContextMenu(abo);
+                ContextMenu contextMenu = new AboTableContextMenu(progData, this, tableView).getContextMenu(abo);
                 tableView.setContextMenu(contextMenu);
             }
         });

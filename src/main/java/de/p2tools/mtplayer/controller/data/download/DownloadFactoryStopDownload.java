@@ -50,7 +50,7 @@ public class DownloadFactoryStopDownload {
             return false;
         }
 
-        ProgData.getInstance().downloadList.addDownloadsToUndoList(list);
+        ProgData.getInstance().downloadList.addDownloadsToUndoList(list); // erst eintragen, dann löschen - selList ändert sich dann
 
         final ArrayList<DownloadData> aboHistoryList = new ArrayList<>();
         for (final DownloadData download : list) {

@@ -36,7 +36,7 @@ import javafx.util.Callback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CellDownloadState<S, T> extends TableCell<S, T> {
+public class CellDownloadButton<S, T> extends TableCell<S, T> {
 
     public final Callback<TableColumn<DownloadData, Integer>, TableCell<DownloadData, Integer>> cellFactory
             = (final TableColumn<DownloadData, Integer> param) -> {

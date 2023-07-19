@@ -45,8 +45,6 @@ public class PaneLogfile {
 
     private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
     private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
-    private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
-    private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
     private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
     private TextField txtLogFile;
@@ -60,8 +58,6 @@ public class PaneLogfile {
     public void close() {
         tglSearchAbo.selectedProperty().unbindBidirectional(ProgConfig.ABO_SEARCH_NOW);
         tglStartDownload.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
-        tglSmallFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
-        tglSmallDownload.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
         tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
         tglEnableLog.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_ON);
         txtLogFile.textProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_DIR);

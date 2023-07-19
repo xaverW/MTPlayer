@@ -26,6 +26,7 @@ import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.tools.PStringUtils;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -42,6 +43,7 @@ public class PaneConfig {
     private final PToggleSwitch tglOnlyOneInstance = new PToggleSwitch("Nur eine Instanz des Programms öffnen");
     private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
+    private final PToggleSwitch tglSmallAbo = new PToggleSwitch("In der Tabelle \"Abo\" nur kleine Button anzeigen:");
     private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
     private TextField txtUserAgent;
 
@@ -57,6 +59,7 @@ public class PaneConfig {
         tglOnlyOneInstance.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ONE_INSTANCE);
         tglSmallFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
         tglSmallDownload.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
+        tglSmallAbo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO);
         tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT);
     }
@@ -90,6 +93,7 @@ public class PaneConfig {
 
         tglSmallFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
         tglSmallDownload.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
+        tglSmallAbo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO);
         final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
                 HelpText.SMALL_BUTTON);
         GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
@@ -139,8 +143,10 @@ public class PaneConfig {
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglSmallFilm, 0, ++row, 2, 1);
-        gridPane.add(btnHelpSize, 2, row);
+        gridPane.add(btnHelpSize, 2, row, 1, 2);
         gridPane.add(tglSmallDownload, 0, ++row, 2, 1);
+        gridPane.add(tglSmallAbo, 0, ++row, 2, 1);
+        GridPane.setValignment(btnHelpSize, VPos.TOP);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglTipOfDay, 0, ++row, 2, 1);

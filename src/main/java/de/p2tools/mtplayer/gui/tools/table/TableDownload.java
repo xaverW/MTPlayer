@@ -101,12 +101,12 @@ public class TableDownload extends PTable<DownloadData> {
         // die zwei Spalten mit eigenen propertys
         final TableColumn<DownloadData, Integer> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("guiState"));
-        startColumn.setCellFactory(new CellDownloadState().cellFactory);
+        startColumn.setCellFactory(new CellDownloadButton().cellFactory);
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
         progressColumn.setCellValueFactory(new PropertyValueFactory<>("guiProgress"));
-        progressColumn.setCellFactory(new CellDownloadProgress().cellFactoryProgress);
+        progressColumn.setCellFactory(new CellDownloadProgress().cellFactory);
         progressColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<DownloadData, Integer> remainingColumn = new TableColumn<>("Restzeit");
@@ -142,17 +142,17 @@ public class TableDownload extends PTable<DownloadData> {
 
         final TableColumn<DownloadData, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
-        hdColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        hdColumn.setCellFactory(new CellCheckBox().cellFactory);
         hdColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
-        utColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        utColumn.setCellFactory(new CellCheckBox().cellFactory);
         utColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Boolean> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geoBlocked"));
-        geoColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        geoColumn.setCellFactory(new CellCheckBox().cellFactory);
         geoColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, String> artColumn = new TableColumn<>("Art");

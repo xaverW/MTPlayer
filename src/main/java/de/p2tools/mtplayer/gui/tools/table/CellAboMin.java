@@ -24,7 +24,7 @@ import javafx.util.Callback;
 
 public class CellAboMin<S, T> extends TableCell<S, T> {
 
-    public final Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> cellFactoryMin
+    public final Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> cellFactory
             = (final TableColumn<AboData, Integer> param) -> {
 
         final TableCell<AboData, Integer> cell = new TableCell<>() {

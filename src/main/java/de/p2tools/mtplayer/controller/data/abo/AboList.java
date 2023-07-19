@@ -42,6 +42,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
     private int nr;
     private static final GermanStringSorter sorter = GermanStringSorter.getInstance();
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
+    private final ObservableList<AboData> undoList = FXCollections.observableArrayList();
 
     public AboList(ProgData progData) {
         super(FXCollections.observableArrayList());
@@ -212,6 +213,11 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         }
     }
 
+    public synchronized void setAboActive(AboData abo, boolean on) {
+        abo.setActive(on);
+        notifyChanges();
+    }
+
     public synchronized void deleteAbo(AboData abo) {
         if (abo == null) {
             return;
@@ -233,6 +239,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         }
 
         if (PAlert.showAlertOkCancel("Löschen", "Abo löschen", text)) {
+            addAbosToUndoList(lAbo); // erst eintragen, dann löschen - selList ändert sich dann
             this.removeAll(lAbo);
             notifyChanges();
         }
@@ -313,5 +320,23 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         }
         name.sort(sorter);
         return name;
+    }
+
+    public ObservableList<AboData> getUndoList() {
+        return undoList;
+    }
+
+    public synchronized void addAbosToUndoList(List<AboData> list) {
+        undoList.clear();
+        undoList.addAll(list);
+    }
+
+    public synchronized void undoAbos() {
+        if (undoList.isEmpty()) {
+            return;
+        }
+        addAll(undoList);
+        undoList.clear();
+        notifyChanges();
     }
 }

@@ -115,14 +115,15 @@ public class DownloadMenu {
         });
         PShortcutWorker.addShortCut(miChange, ProgShortcut.SHORTCUT_DOWNLOAD_CHANGE);
 
-        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + ShortKeyFactory.SHORT_CUT_LEER +
+                ProgShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
         miUndo.setOnAction(a -> {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             progData.downloadList.undoDownloads();
         });
-        PShortcutWorker.addShortCut(miUndo, ProgShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
+//        PShortcutWorker.addShortCut(miUndo, ProgShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
         miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));
 
         mb.getItems().addAll(miDownloadStart, miDownloadStop, miChange, miUndo);

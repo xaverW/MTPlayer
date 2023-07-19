@@ -29,7 +29,7 @@ import javafx.util.Callback;
 
 public class CellDownloadProgress<S, T> extends TableCell<S, T> {
 
-    public final Callback<TableColumn<DownloadData, Double>, TableCell<DownloadData, Double>> cellFactoryProgress
+    public final Callback<TableColumn<DownloadData, Double>, TableCell<DownloadData, Double>> cellFactory
             = (final TableColumn<DownloadData, Double> param) -> {
 
         final ProgressBarTableCell<DownloadData> cell = new ProgressBarTableCell<>() {

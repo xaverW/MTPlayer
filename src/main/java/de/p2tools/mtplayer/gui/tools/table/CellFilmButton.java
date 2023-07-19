@@ -30,9 +30,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
-public class CellFilmStart<S, T> extends TableCell<S, T> {
+public class CellFilmButton<S, T> extends TableCell<S, T> {
 
-    public final Callback<TableColumn<FilmDataMTP, String>, TableCell<FilmDataMTP, String>> cellFactoryStart
+    public final Callback<TableColumn<FilmDataMTP, String>, TableCell<FilmDataMTP, String>> cellFactory
             = (final TableColumn<FilmDataMTP, String> param) -> {
 
         final TableCell<FilmDataMTP, String> cell = new TableCell<>() {

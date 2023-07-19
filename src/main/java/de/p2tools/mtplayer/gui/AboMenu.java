@@ -16,12 +16,14 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -99,7 +101,18 @@ public class AboMenu {
             progData.aboList.addNewAboFromFilterButton(filmFilter);
         });
 
-        mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew, miAboAddFilter);
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + ShortKeyFactory.SHORT_CUT_LEER +
+                ProgShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
+        miUndo.setOnAction(a -> {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.ABO) {
+                return;
+            }
+            progData.aboList.undoAbos();
+        });
+//        PShortcutWorker.addShortCut(miUndo, ProgShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
+        miUndo.disableProperty().bind(Bindings.isEmpty(progData.aboList.getUndoList()));
+
+        mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew, miAboAddFilter, miUndo);
 
         final MenuItem miSelectAll = new MenuItem("Alles auswählen");
         miSelectAll.setOnAction(a -> progData.aboGuiController.selectAll());

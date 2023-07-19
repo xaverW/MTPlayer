@@ -27,13 +27,13 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
-public class DownloadGuiTableContextMenu {
+public class DownloadTableContextMenu {
 
     private final ProgData progData;
     private final DownloadGuiController downloadGuiController;
     private final TableDownload tableView;
 
-    public DownloadGuiTableContextMenu(final ProgData progData, final DownloadGuiController downloadGuiController, final TableDownload tableView) {
+    public DownloadTableContextMenu(final ProgData progData, final DownloadGuiController downloadGuiController, final TableDownload tableView) {
         this.progData = progData;
         this.downloadGuiController = downloadGuiController;
         this.tableView = tableView;

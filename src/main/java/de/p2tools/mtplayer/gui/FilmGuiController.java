@@ -245,7 +245,7 @@ public class FilmGuiController extends AnchorPane {
                 final Optional<FilmDataMTP> optionalFilm = getSel(true, false); // ist für Blacklist wichtig
                 FilmDataMTP film;
                 film = optionalFilm.orElse(null);
-                ContextMenu contextMenu = new FilmGuiTableContextMenu(progData, this, tableView).getContextMenu(film);
+                ContextMenu contextMenu = new FilmTableContextMenu(progData, this, tableView).getContextMenu(film);
                 tableView.setContextMenu(contextMenu);
             }
         });

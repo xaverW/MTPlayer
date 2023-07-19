@@ -130,4 +130,17 @@ public class MTPlayerFactory {
                 break;
         }
     }
+
+    public static void undoDels() {
+        switch (MTPlayerController.paneShown) {
+            case FILM:
+                break;
+            case DOWNLOAD:
+                ProgData.getInstance().downloadList.undoDownloads();
+                break;
+            case ABO:
+                ProgData.getInstance().aboList.undoAbos();
+                break;
+        }
+    }
 }

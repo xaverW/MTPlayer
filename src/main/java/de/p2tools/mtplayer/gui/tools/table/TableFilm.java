@@ -83,7 +83,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
         titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<FilmDataMTP, String> startColumn = new TableColumn<>("");
-        startColumn.setCellFactory(new CellFilmStart().cellFactoryStart);
+        startColumn.setCellFactory(new CellFilmButton().cellFactory);
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, PDate> datumColumn = new TableColumn<>("Datum");
@@ -105,12 +105,12 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
-        hdColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        hdColumn.setCellFactory(new CellCheckBox().cellFactory);
         hdColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
-        utColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        utColumn.setCellFactory(new CellCheckBox().cellFactory);
         utColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, String> geoColumn = new TableColumn<>("Geo");
@@ -127,7 +127,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, Boolean> bookmarkColumn = new TableColumn<>("Bookmark");
         bookmarkColumn.setCellValueFactory(new PropertyValueFactory<>("bookmark"));
-        bookmarkColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        bookmarkColumn.setCellFactory(new CellCheckBox().cellFactory);
         bookmarkColumn.getStyleClass().add("alignCenterLeft");
 
         nrColumn.setPrefWidth(50);

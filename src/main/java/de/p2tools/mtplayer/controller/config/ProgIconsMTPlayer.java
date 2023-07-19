@@ -50,6 +50,9 @@ public class ProgIconsMTPlayer {
     public static P2IconMTViewer ICON_BUTTON_PLAY = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-play.png", 16, 16);
     public static P2IconMTViewer ICON_BUTTON_CLEAR = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-clear.png", 16, 16);
     public static P2IconMTViewer ICON_DIALOG_QUIT = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "dialog-quit.png", 64, 64);
+    public static P2IconMTViewer IMAGE_TABLE_ABO_ON = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-abo-on.png", 14, 14);
+    public static P2IconMTViewer IMAGE_TABLE_ABO_OFF = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-abo-off.png", 14, 14);
+    public static P2IconMTViewer IMAGE_TABLE_ABO_DEL = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-abo-del.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_FILM_PLAY = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-film-play.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_FILM_SAVE = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-film-save.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_DOWNLOAD_START = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-download-start.png", 14, 14);

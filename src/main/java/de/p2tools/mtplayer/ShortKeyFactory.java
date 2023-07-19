@@ -84,5 +84,11 @@ public class ShortKeyFactory {
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::addBlacklistTheme;
         scene.getAccelerators().put(kc, rn);
+
+        // Undo, gelöschte (Downloads, Abos) wieder herstellen
+        pShortcut = ProgShortcut.SHORTCUT_UNDO_DELETE;
+        kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
+        rn = MTPlayerFactory::undoDels;
+        scene.getAccelerators().put(kc, rn);
     }
 }

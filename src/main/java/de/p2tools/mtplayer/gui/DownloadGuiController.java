@@ -359,7 +359,7 @@ public class DownloadGuiController extends AnchorPane {
                 final Optional<DownloadData> optionalDownload = getSel(false);
                 DownloadData download;
                 download = optionalDownload.orElse(null);
-                ContextMenu contextMenu = new DownloadGuiTableContextMenu(progData, this, tableView).getContextMenu(download);
+                ContextMenu contextMenu = new DownloadTableContextMenu(progData, this, tableView).getContextMenu(download);
                 tableView.setContextMenu(contextMenu);
             }
         });

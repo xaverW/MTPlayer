@@ -20,18 +20,19 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.tools.table.TableAbo;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
-public class AboGuiTableContextMenue {
+public class AboTableContextMenu {
 
     private final ProgData progData;
     private final AboGuiController aboGuiController;
     private final TableAbo tableView;
 
-    public AboGuiTableContextMenue(ProgData progData, AboGuiController aboGuiController, TableAbo tableView) {
+    public AboTableContextMenu(ProgData progData, AboGuiController aboGuiController, TableAbo tableView) {
 
         this.progData = progData;
         this.aboGuiController = aboGuiController;
@@ -62,11 +63,15 @@ public class AboGuiTableContextMenue {
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
         miNew.setOnAction(a -> progData.aboList.addNewAboButton("Neu", "", "", ""));
 
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        miUndo.setOnAction(a -> progData.aboList.undoAbos());
+
+        miUndo.disableProperty().bind(Bindings.isEmpty(progData.aboList.getUndoList()));
         miOnOff.setDisable(abo == null);
         miDel.setDisable(abo == null);
         miChange.setDisable(abo == null);
 
-        contextMenu.getItems().addAll(miOnOff, miDel, miChange, miNew);
+        contextMenu.getItems().addAll(miOnOff, miDel, miChange, miNew, miUndo);
 
         // Submenu "Filter"
         contextMenu.getItems().add(new SeparatorMenuItem());

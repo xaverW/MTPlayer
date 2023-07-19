@@ -79,7 +79,7 @@ public class PaneMedia extends PaneDialog {
         final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
         externalColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
         externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
-        externalColumn.setCellFactory(new CellCheckBox().cellFactoryBool);
+        externalColumn.setCellFactory(new CellCheckBox().cellFactory);
 
         tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externalColumn);
 
