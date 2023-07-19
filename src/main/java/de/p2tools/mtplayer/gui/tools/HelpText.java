@@ -919,7 +919,7 @@ public class HelpText {
                     "teilweise geladene Filmdateien " +
                     "mit gelöscht werden." +
                     "\n\n" +
-                    "Wird \"Immer ausführen\" angeklickt, wird die Einstellung in Zukunft " +
+                    "Wird \"Nicht mehr fragen\" angeklickt, wird die Einstellung in Zukunft " +
                     "immer ausgeführt, der Dialog erscheint dann nicht mehr. Diese Einstellung kann aber " +
                     "in den Programmeinstellungen->Downloads auch wieder geändert werden." +
                     "\n";
@@ -927,10 +927,22 @@ public class HelpText {
     public static final String DOWNLOAD_ONLY_CANCEL =
             "Hier kann ein Download abgebrochen oder gelöscht werden. " +
                     "\n\n" +
-                    "Wird \"Immer ausführen\" angeklickt, wird der Download in Zukunft " +
+                    "Wird \"Nicht mehr fragen\" angeklickt, wird der Download in Zukunft " +
                     "immer abgebrochen oder gelöscht. Der Dialog erscheint dann nicht mehr. Diese Einstellung kann aber " +
                     "in den Programmeinstellungen->Downloads auch wieder geändert werden." +
                     "\n";
 
-
+    public static final String ABO_DELETE_CONFIG =
+            "Soll ein Abo gelöscht werden, kann hier ausgewählt werden, was gemacht werden soll:" +
+                    "\n\n" +
+                    "* Jedes mal vorher fragen\n" +
+                    "* Abo sofort löschen ohne zu fragen." +
+                    "\n";
+    public static final String ABO_DELETE_DIALOG =
+            "Hier kann ein Abo gelöscht werden. " +
+                    "\n\n" +
+                    "Wird \"Nicht mehr fragen\" angeklickt, wird das Abo in Zukunft " +
+                    "immer gelöscht. Der Dialog erscheint dann nicht mehr. Diese Einstellung kann aber " +
+                    "in den Programmeinstellungen->Abo auch wieder geändert werden." +
+                    "\n";
 }

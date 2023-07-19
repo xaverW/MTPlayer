@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.starter.DownloadState;
+import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PButton;
@@ -148,48 +148,48 @@ public class PaneDownloadStop {
         ProgConfig.DOWNLOAD_STOP.addListener((v, o, n) -> setRadio());
         ProgConfig.DOWNLOAD_CONTINUE.addListener((v, o, n) -> setRadio());
 
-        rbOnlyStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_ONLY_STOP.setValue(DownloadState.DOWNLOAD_ONLY_STOP__ASK));
-        rbOnlyStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_ONLY_STOP.setValue(DownloadState.DOWNLOAD_ONLY_STOP__DELETE));
+        rbOnlyStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_ONLY_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_ONLY_STOP__ASK));
+        rbOnlyStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_ONLY_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_ONLY_STOP__DELETE));
 
-        rbDelStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__ASK));
-        rbDelStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE_FILE));
-        rbDelStopNothing.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE));
+        rbDelStopAsk.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_STOP__ASK));
+        rbDelStopDelete.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_STOP__DELETE_FILE));
+        rbDelStopNothing.setOnAction(a -> ProgConfig.DOWNLOAD_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_STOP__DO_NOT_DELETE));
 
-        rbRestartAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__ASK));
-        rbRestartContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE));
-        rbRestartRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART));
+        rbRestartAsk.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(AskBeforeDeleteState.DOWNLOAD_RESTART__ASK));
+        rbRestartContinue.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(AskBeforeDeleteState.DOWNLOAD_RESTART__CONTINUE));
+        rbRestartRestart.setOnAction(a -> ProgConfig.DOWNLOAD_CONTINUE.setValue(AskBeforeDeleteState.DOWNLOAD_RESTART__RESTART));
     }
 
     private void setRadio() {
         switch (ProgConfig.DOWNLOAD_ONLY_STOP.getValue()) {
-            case DownloadState.DOWNLOAD_ONLY_STOP__DELETE:
+            case AskBeforeDeleteState.DOWNLOAD_ONLY_STOP__DELETE:
                 rbOnlyStopDelete.setSelected(true);
                 break;
-            case DownloadState.DOWNLOAD_ONLY_STOP__ASK:
+            case AskBeforeDeleteState.DOWNLOAD_ONLY_STOP__ASK:
             default:
                 rbOnlyStopAsk.setSelected(true);
                 break;
         }
         switch (ProgConfig.DOWNLOAD_STOP.getValue()) {
-            case DownloadState.DOWNLOAD_STOP__DELETE_FILE:
+            case AskBeforeDeleteState.DOWNLOAD_STOP__DELETE_FILE:
                 rbDelStopDelete.setSelected(true);
                 break;
-            case DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE:
+            case AskBeforeDeleteState.DOWNLOAD_STOP__DO_NOT_DELETE:
                 rbDelStopNothing.setSelected(true);
                 break;
-            case DownloadState.DOWNLOAD_STOP__ASK:
+            case AskBeforeDeleteState.DOWNLOAD_STOP__ASK:
             default:
                 rbDelStopAsk.setSelected(true);
                 break;
         }
         switch (ProgConfig.DOWNLOAD_CONTINUE.getValue()) {
-            case DownloadState.DOWNLOAD_RESTART__CONTINUE:
+            case AskBeforeDeleteState.DOWNLOAD_RESTART__CONTINUE:
                 rbRestartContinue.setSelected(true);
                 break;
-            case DownloadState.DOWNLOAD_RESTART__RESTART:
+            case AskBeforeDeleteState.DOWNLOAD_RESTART__RESTART:
                 rbRestartRestart.setSelected(true);
                 break;
-            case DownloadState.DOWNLOAD_RESTART__ASK:
+            case AskBeforeDeleteState.DOWNLOAD_RESTART__ASK:
             default:
                 rbRestartAsk.setSelected(true);
                 break;

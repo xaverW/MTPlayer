@@ -22,12 +22,14 @@ import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
+import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
-import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.GermanStringSorter;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -231,18 +233,22 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             return;
         }
 
-        String text;
-        if (lAbo.size() == 1) {
-            text = "Soll das Abo:" + P2LibConst.LINE_SEPARATORx2 + "\"" + lAbo.get(0).getName() + "\"" + P2LibConst.LINE_SEPARATORx2 + "gelöscht werden?";
-        } else {
-            text = "Sollen die " + lAbo.size() + " markierten Abos gelöscht werden?";
+        if (ProgConfig.ABO_ONLY_STOP.getValue() == AskBeforeDeleteState.ABO_DELETE__ASK) {
+            // dann erst mal fragen
+            AboDelDialogController aboDelDialog =
+                    new AboDelDialogController(lAbo);
+            if (aboDelDialog.getState() != PDialogExtra.STATE.STATE_OK) {
+                //dann soll nix gemacht werden
+                PLog.sysLog("Abo löschen: Abbruch");
+                return;
+            }
         }
 
-        if (PAlert.showAlertOkCancel("Löschen", "Abo löschen", text)) {
-            addAbosToUndoList(lAbo); // erst eintragen, dann löschen - selList ändert sich dann
-            this.removeAll(lAbo);
-            notifyChanges();
-        }
+        // dann soll das Abo gelöscht werden
+        PLog.sysLog("Abo löschen");
+        addAbosToUndoList(lAbo); // erst eintragen, dann löschen - selList ändert sich dann
+        this.removeAll(lAbo);
+        notifyChanges();
     }
 
     public synchronized void notifyChanges() {

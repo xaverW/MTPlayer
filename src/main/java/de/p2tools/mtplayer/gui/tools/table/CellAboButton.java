@@ -59,9 +59,9 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 btnActivate.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 if (aboData.isActive()) {
                     // dann ausschalen
-                    btnActivate.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_ABO_ON.getImageView());
-                } else {
                     btnActivate.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_ABO_OFF.getImageView());
+                } else {
+                    btnActivate.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_ABO_ON.getImageView());
                 }
                 btnActivate.setOnAction(a -> ProgData.getInstance().aboList.setAboActive(aboData, !aboData.isActive()));
 

@@ -16,7 +16,11 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
-public class DownloadState {
+public class AskBeforeDeleteState {
+
+    //die Vorgaben des Users:
+    public static final int ABO_DELETE__ASK = 0;
+    public static final int ABO_DELETE__DELETE = 1;
 
     //die Vorgaben des Users:
     public static final int DOWNLOAD_ONLY_STOP__ASK = 0;
@@ -34,8 +38,8 @@ public class DownloadState {
 
     //Antwort des Dialogs, wenn der User gefragt wird
     public enum ContinueDownload {
-        CANCEL_DOWNLOAD,
-        CONTINUE_DOWNLOAD,
-        RESTART_DOWNLOAD
+        CANCEL,
+        CONTINUE,
+        RESTART
     }
 }

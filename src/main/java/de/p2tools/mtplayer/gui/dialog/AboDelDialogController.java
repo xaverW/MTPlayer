@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -31,21 +31,19 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
-public class DownloadOnlyStopDialogController extends PDialogExtra {
+public class AboDelDialogController extends PDialogExtra {
 
     private final VBox vBoxCont;
-    private final Button btnDelDl = new Button("DL löschen, Datei behalten");
+    private final Button btnDelDl = new Button("Abo löschen");
     private final Button btnCancel = new Button("Abbrechen");
     private final CheckBox chkAlways = new CheckBox("Nicht mehr fragen");
-    private final boolean delete; //  nur zur Anzeige des Button-Textes
-    private final ObservableList<DownloadData> foundDownloadList;
+    private final ObservableList<AboData> foundDownloadList;
     private STATE state;
 
-    public DownloadOnlyStopDialogController(ObservableList<DownloadData> foundDownloadList, boolean delete) {
-        super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_ONLY_STOP_DIALOG_SIZE, "Download löschen",
+    public AboDelDialogController(ObservableList<AboData> foundAboList) {
+        super(ProgData.getInstance().primaryStage, ProgConfig.ABO_DEL_DIALOG_SIZE, "Abo löschen",
                 true, false, DECO.BORDER_SMALL);
-        this.foundDownloadList = foundDownloadList;
-        this.delete = delete;
+        this.foundDownloadList = foundAboList;
 
         vBoxCont = getVBoxCont();
         init(true);
@@ -57,34 +55,28 @@ public class DownloadOnlyStopDialogController extends PDialogExtra {
 
     @Override
     public void make() {
-        if (delete) {
-            // dann werden die Downloads gelöscht
-            btnDelDl.setText("Download löschen");
-        } else {
-            // dann werden die Downloads nur gestoppt
-            btnDelDl.setText("Download abbrechen");
-        }
-
-        getHBoxTitle().getChildren().add(delete ?
-                new Label("Download löschen") :
-                new Label("Download abbrechen"));
-
+        getHBoxTitle().getChildren().add(new Label("Abo löschen"));
         vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
         vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
 
 
-        TableView<DownloadData> table = new TableView<>();
-        final TableColumn<DownloadData, String> themeColumn = new TableColumn<>("Thema");
-        themeColumn.prefWidthProperty().bind(table.widthProperty().multiply(40.0 / 100));
+        TableView<AboData> table = new TableView<>();
+        final TableColumn<AboData, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.prefWidthProperty().bind(table.widthProperty().multiply(30.0 / 100));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.getStyleClass().add("special-column-style");
+
+        final TableColumn<AboData, String> themeColumn = new TableColumn<>("Thema");
+        themeColumn.prefWidthProperty().bind(table.widthProperty().multiply(30.0 / 100));
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("special-column-style");
 
-        final TableColumn<DownloadData, String> titleColumn = new TableColumn<>("Titel");
-        titleColumn.prefWidthProperty().bind(table.widthProperty().multiply(55.0 / 100));
+        final TableColumn<AboData, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.prefWidthProperty().bind(table.widthProperty().multiply(30.0 / 100));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("special-column-style");
 
-        table.getColumns().addAll(themeColumn, titleColumn);
+        table.getColumns().addAll(nameColumn, themeColumn, titleColumn);
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         table.setItems(foundDownloadList);
         vBoxCont.getChildren().addAll(table);
@@ -93,15 +85,14 @@ public class DownloadOnlyStopDialogController extends PDialogExtra {
         getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
         getHBoxOverButtons().getChildren().addAll(chkAlways);
 
-        btnDelDl.setTooltip(new Tooltip("Der Download wird abgebrochen oder gelöscht."));
-        btnCancel.setTooltip(new Tooltip("Der Download wird nicht abgebrochen oder gelöscht."));
+        btnDelDl.setTooltip(new Tooltip("Das Abo wird gelöscht."));
+        btnCancel.setTooltip(new Tooltip("Das Abo wird nicht gelöscht."));
 
         btnDelDl.setOnAction(event -> {
-            // löschen: nur Download
             state = STATE.STATE_OK;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.DOWNLOAD_ONLY_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_ONLY_STOP__DELETE);
+                ProgConfig.ABO_ONLY_STOP.setValue(AskBeforeDeleteState.ABO_DELETE__DELETE);
             }
             quit();
         });
@@ -111,7 +102,7 @@ public class DownloadOnlyStopDialogController extends PDialogExtra {
             quit();
         });
         Button btnHelp = PButton.helpButton(getStage(),
-                "Download abbrechen oder löschen", HelpText.DOWNLOAD_ONLY_CANCEL);
+                "Abo löschen", HelpText.ABO_DELETE_DIALOG);
         addHlpButton(btnHelp);
         addOkCancelButtons(btnDelDl, btnCancel);
     }

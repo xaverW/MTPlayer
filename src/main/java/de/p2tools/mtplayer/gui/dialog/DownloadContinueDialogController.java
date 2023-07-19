@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.starter.DownloadState;
+import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
@@ -46,7 +46,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private final Button btnRestartDownload = new Button("neu _Starten");
     private final Button btnCancel = new Button("_Abbrechen");
     private final Button btnContinueDownload = new Button("_Weiterführen");
-    private final CheckBox chkAlways = new CheckBox("Immer ausführen");
+    private final CheckBox chkAlways = new CheckBox("Nicht mehr fragen");
 
     private final Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private final TextField txtFileName = new TextField("");
@@ -57,7 +57,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private final GridPane gridPane = new GridPane();
 
     private final DownloadData download;
-    private DownloadState.ContinueDownload result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
+    private AskBeforeDeleteState.ContinueDownload result = AskBeforeDeleteState.ContinueDownload.CANCEL;
     private final boolean directDownload;
     private final String oldPathFile;
 
@@ -75,14 +75,14 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
         if (ProgData.autoMode) {
             // dann schaut ja eh keiner zu, also restart des Downloads
-            result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
+            result = AskBeforeDeleteState.ContinueDownload.RESTART;
             return;
         } else {
             init(true);
         }
     }
 
-    public DownloadState.ContinueDownload getResult() {
+    public AskBeforeDeleteState.ContinueDownload getResult() {
         return result;
     }
 
@@ -173,25 +173,25 @@ public class DownloadContinueDialogController extends PDialogExtra {
         btnPath.setOnAction(event -> getDestination());
 
         btnCancel.setOnAction(event -> {
-            result = DownloadState.ContinueDownload.CANCEL_DOWNLOAD;
+            result = AskBeforeDeleteState.ContinueDownload.CANCEL;
             quit();
         });
 
         btnRestartDownload.setOnAction(event -> {
             if (chkAlways.isSelected()) {
-                ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__RESTART);
+                ProgConfig.DOWNLOAD_CONTINUE.setValue(AskBeforeDeleteState.DOWNLOAD_RESTART__RESTART);
             }
 
-            result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
+            result = AskBeforeDeleteState.ContinueDownload.RESTART;
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txtFileName.getText());
             quit();
         });
         btnContinueDownload.setOnAction(event -> {
             if (chkAlways.isSelected()) {
-                ProgConfig.DOWNLOAD_CONTINUE.setValue(DownloadState.DOWNLOAD_RESTART__CONTINUE);
+                ProgConfig.DOWNLOAD_CONTINUE.setValue(AskBeforeDeleteState.DOWNLOAD_RESTART__CONTINUE);
             }
 
-            result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
+            result = AskBeforeDeleteState.ContinueDownload.CONTINUE;
             quit();
         });
     }
@@ -242,7 +242,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
             }
         } else {
             timeline.stop();
-            result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
+            result = AskBeforeDeleteState.ContinueDownload.CONTINUE;
             quit();
         }
     }

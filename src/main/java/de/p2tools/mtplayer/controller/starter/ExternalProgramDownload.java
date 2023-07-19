@@ -282,16 +282,16 @@ public class ExternalProgramDownload extends Thread {
         boolean ret = false;
         if (file.exists()) {
 
-            DownloadState.ContinueDownload result;
+            AskBeforeDeleteState.ContinueDownload result;
             boolean isNewName = false;
 
-            if (ProgConfig.DOWNLOAD_CONTINUE.getValue() == DownloadState.DOWNLOAD_RESTART__CONTINUE) {
+            if (ProgConfig.DOWNLOAD_CONTINUE.getValue() == AskBeforeDeleteState.DOWNLOAD_RESTART__CONTINUE) {
                 //weiterführen
-                result = DownloadState.ContinueDownload.CONTINUE_DOWNLOAD;
+                result = AskBeforeDeleteState.ContinueDownload.CONTINUE;
 
-            } else if (ProgConfig.DOWNLOAD_CONTINUE.getValue() == DownloadState.DOWNLOAD_RESTART__RESTART) {
+            } else if (ProgConfig.DOWNLOAD_CONTINUE.getValue() == AskBeforeDeleteState.DOWNLOAD_RESTART__RESTART) {
                 //neu starten
-                result = DownloadState.ContinueDownload.RESTART_DOWNLOAD;
+                result = AskBeforeDeleteState.ContinueDownload.RESTART;
 
             } else {
                 //vorher fragen
@@ -304,13 +304,13 @@ public class ExternalProgramDownload extends Thread {
             }
 
             switch (result) {
-                case CANCEL_DOWNLOAD:
+                case CANCEL:
                     // dann wars das
                     download.stopDownload();
                     ret = true;
                     break;
 
-                case RESTART_DOWNLOAD:
+                case RESTART:
                     if (!isNewName) {
                         // alte Datei vorher löschen
                         try {

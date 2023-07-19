@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.starter.DownloadState;
+import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -42,7 +42,7 @@ public class DownloadStopDialogController extends PDialogExtra {
     private final Button btnDelDlFile = new Button();
     private final Button btnDelDl = new Button("DL löschen, Datei behalten");
     private final Button btnCancel = new Button("Abbrechen");
-    private final CheckBox chkAlways = new CheckBox("Immer ausführen");
+    private final CheckBox chkAlways = new CheckBox("Nicht mehr fragen");
     private final ObservableList<File> list;
     private final boolean delete;// nur zur Anzeige des Button-Textes
     private final ObservableList<DownloadData> foundDownloadList;
@@ -135,7 +135,7 @@ public class DownloadStopDialogController extends PDialogExtra {
             state = STATE.STATE_1;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DELETE_FILE);
+                ProgConfig.DOWNLOAD_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_STOP__DELETE_FILE);
             }
             quit();
         });
@@ -144,7 +144,7 @@ public class DownloadStopDialogController extends PDialogExtra {
             state = STATE.STATE_2;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.DOWNLOAD_STOP.setValue(DownloadState.DOWNLOAD_STOP__DO_NOT_DELETE);
+                ProgConfig.DOWNLOAD_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_STOP__DO_NOT_DELETE);
             }
             quit();
         });
