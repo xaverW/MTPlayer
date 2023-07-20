@@ -84,6 +84,11 @@ public class TableDownload extends PTable<DownloadData> {
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         aboColumn.getStyleClass().add("alignCenterLeft");
 
+        final TableColumn<DownloadData, Integer> buttonColumn = new TableColumn<>("");
+        buttonColumn.setCellValueFactory(new PropertyValueFactory<>("guiState"));
+        buttonColumn.setCellFactory(new CellDownloadButton().cellFactory);
+        buttonColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<DownloadData, String> senderColumn = new TableColumn<>("Sender");
         senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         senderColumn.getStyleClass().add("alignCenter");
@@ -97,12 +102,6 @@ public class TableDownload extends PTable<DownloadData> {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
         titleColumn.setComparator(sorter);
-
-        // die zwei Spalten mit eigenen propertys
-        final TableColumn<DownloadData, Integer> startColumn = new TableColumn<>("");
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("guiState"));
-        startColumn.setCellFactory(new CellDownloadButton().cellFactory);
-        startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Double> progressColumn = new TableColumn<>("Fortschritt"); //müssen sich unterscheiden!!
         progressColumn.setCellValueFactory(new PropertyValueFactory<>("guiProgress"));
@@ -193,7 +192,7 @@ public class TableDownload extends PTable<DownloadData> {
 
         getColumns().addAll(
                 nrColumn, filmNrColumn,
-                aboColumn, senderColumn, themeColumn, titleColumn, startColumn,
+                aboColumn, buttonColumn, senderColumn, themeColumn, titleColumn,
                 progressColumn, remainingColumn, speedColumn, startTimeColumn, sizeColumn,
                 datumColumn, timeColumn, durationColumn,
                 hdColumn, utColumn, geoColumn, artColumn, srcColumn, /*placedBackColumn,*/

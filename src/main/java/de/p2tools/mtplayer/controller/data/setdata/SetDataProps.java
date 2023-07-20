@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.gui.configdialog.setdata.AboSubDir;
+import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
 import de.p2tools.p2lib.configfile.config.*;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;

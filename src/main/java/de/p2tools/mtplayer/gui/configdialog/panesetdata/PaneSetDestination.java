@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.gui.configdialog.setdata;
+package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;

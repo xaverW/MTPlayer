@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.configdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.configpanes.PaneBlackList;
+import de.p2tools.mtplayer.gui.configdialog.paneblacklist.PaneBlackList;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmLoad;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;

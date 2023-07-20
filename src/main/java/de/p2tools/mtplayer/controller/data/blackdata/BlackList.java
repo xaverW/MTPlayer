@@ -23,12 +23,14 @@ import de.p2tools.p2lib.configfile.pdata.PDataList;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
 @SuppressWarnings("serial")
@@ -40,6 +42,8 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
 
     private FilteredList<BlackData> filteredList = null;
     private SortedList<BlackData> sortedList = null;
+    private final ObservableList<BlackData> undoList = FXCollections.observableArrayList();
+
 
     public BlackList(ProgData progData, String tag) {
         super(FXCollections.observableArrayList());
@@ -105,6 +109,16 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
         return ret;
     }
 
+    public synchronized void removeBlackData(List<BlackData> list) {
+        addBlackDataToUndoList(list);
+        removeAll(list);
+    }
+
+    public synchronized void clearList() {
+        addBlackDataToUndoList(this);
+        super.clear();
+    }
+
     public synchronized void clearCounter() {
         for (final BlackData blackData : this) {
             blackData.clearCounter();
@@ -136,5 +150,21 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
         for (BlackData blackData : this) {
             blackData.setNo(no++);
         }
+    }
+
+    public ObservableList<BlackData> getUndoList() {
+        return undoList;
+    }
+
+    public synchronized void addBlackDataToUndoList(List<BlackData> list) {
+        undoList.setAll(list);
+    }
+
+    public synchronized void undoBlackData() {
+        if (undoList.isEmpty()) {
+            return;
+        }
+        addAll(undoList);
+        undoList.clear();
     }
 }

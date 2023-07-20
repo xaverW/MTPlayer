@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
-import de.p2tools.mtplayer.gui.configdialog.setdata.ControllerSet;
+import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
 import de.p2tools.mtplayer.gui.startdialog.DownPathPane;
 import de.p2tools.mtplayer.gui.startdialog.PathPane;
 import de.p2tools.p2lib.P2LibConst;
