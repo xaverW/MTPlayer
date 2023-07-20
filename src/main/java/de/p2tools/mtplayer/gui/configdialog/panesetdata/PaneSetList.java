@@ -56,14 +56,18 @@ public class PaneSetList extends VBox {
     }
 
     public void close() {
+        progData.setDataList.getUndoList().clear();
     }
 
-    public Optional<SetData> getSel() {
-        Optional<SetData> opt = Optional.of(tableView.getSelectionModel().getSelectedItem());
-        if (!opt.isPresent()) {
+    public Optional<SetData> getSel(boolean show) {
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedTableRow >= 0) {
+            return Optional.of(tableView.getSelectionModel().getSelectedItem());
+        }
+        if (show) {
             PAlert.showInfoNoSelection();
         }
-        return opt;
+        return Optional.empty();
     }
 
     private void make() {
@@ -92,13 +96,10 @@ public class PaneSetList extends VBox {
         tableView.setItems(progData.setDataList);
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                final Optional<SetData> optionalSetData = getSel();
-                SetData setData;
-                if (optionalSetData.isPresent()) {
-                    setData = optionalSetData.get();
-                    ContextMenu contextMenu = new SetDataTableContextMenu(progData).getContextMenu(setData);
-                    tableView.setContextMenu(contextMenu);
-                }
+                final Optional<SetData> optionalSetData = getSel(false);
+                SetData setData = optionalSetData.orElse(null);
+                ContextMenu contextMenu = new SetDataTableContextMenu(progData).getContextMenu(setData);
+                tableView.setContextMenu(contextMenu);
             }
         });
         tableView.getSelectionModel().selectedItemProperty().addListener((u, o, n) ->
@@ -115,6 +116,7 @@ public class PaneSetList extends VBox {
         btnDel.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
+                progData.setDataList.addDataToUndoList(setData);
                 progData.setDataList.removeSetData(setData);
             }
         });

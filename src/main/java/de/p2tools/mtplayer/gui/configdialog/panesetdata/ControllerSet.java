@@ -87,6 +87,6 @@ public class ControllerSet extends AnchorPane {
     }
 
     public Optional<SetData> getSel() {
-        return paneSetList.getSel();
+        return paneSetList.getSel(true);
     }
 }

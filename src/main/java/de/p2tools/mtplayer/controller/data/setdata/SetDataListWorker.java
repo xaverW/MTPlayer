@@ -21,14 +21,17 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.Collection;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class SetDataListWorker extends SimpleListProperty<SetData> implements PDataList<SetData> {
     // Liste aller Programmsets
     public static final String TAG = "SetDataList";
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);
+    private final ObservableList<SetData> undoList = FXCollections.observableArrayList();
 
     public SetDataListWorker() {
         super(FXCollections.observableArrayList());
@@ -110,5 +113,27 @@ public class SetDataListWorker extends SimpleListProperty<SetData> implements PD
         if (setData.getVisibleName().isEmpty()) {
             setData.setVisibleName(setData.getId());
         }
+    }
+
+    public ObservableList<SetData> getUndoList() {
+        return undoList;
+    }
+
+    public synchronized void addDataToUndoList(SetData setData) {
+        undoList.clear();
+        undoList.addAll(setData);
+    }
+
+    public synchronized void addDataToUndoList(List<SetData> list) {
+        undoList.clear();
+        undoList.addAll(list);
+    }
+
+    public synchronized void undoData() {
+        if (undoList.isEmpty()) {
+            return;
+        }
+        addAll(undoList);
+        undoList.clear();
     }
 }

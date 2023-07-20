@@ -18,8 +18,10 @@ package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 
 public class SetDataTableContextMenu {
 
@@ -36,19 +38,27 @@ public class SetDataTableContextMenu {
     }
 
     private void getMenu(ContextMenu contextMenu, SetData setData) {
-        MenuItem miPlay = new MenuItem("\"Abspielen\" setzen");
+        if (setData != null) {
+            MenuItem miPlay = new MenuItem("\"Abspielen\" setzen");
+            miPlay.setOnAction(a -> progData.setDataList.setPlay(setData));
+            miPlay.setDisable(setData.isPlay());
 
-        MenuItem miSave = new MenuItem("\"Speichern\" " + (setData.isSave() ? "löschen" : "setzen"));
-        MenuItem miAbo = new MenuItem("\"Abo\" " + (setData.isAbo() ? "löschen" : "setzen"));
-        MenuItem miButton = new MenuItem("\"Button\" " + (setData.isButton() ? "löschen" : "setzen"));
+            MenuItem miSave = new MenuItem("\"Speichern\" " + (setData.isSave() ? "löschen" : "setzen"));
+            miSave.setOnAction(a -> setData.setSave(!setData.isSave()));
 
-        miPlay.setOnAction(a -> progData.setDataList.setPlay(setData));
-        miPlay.setDisable(setData.isPlay());
+            MenuItem miAbo = new MenuItem("\"Abo\" " + (setData.isAbo() ? "löschen" : "setzen"));
+            miAbo.setOnAction(a -> setData.setAbo(!setData.isAbo()));
 
-        miSave.setOnAction(a -> setData.setSave(!setData.isSave()));
-        miAbo.setOnAction(a -> setData.setAbo(!setData.isAbo()));
-        miButton.setOnAction(a -> setData.setButton(!setData.isButton()));
+            MenuItem miButton = new MenuItem("\"Button\" " + (setData.isButton() ? "löschen" : "setzen"));
+            miButton.setOnAction(a -> setData.setButton(!setData.isButton()));
 
-        contextMenu.getItems().addAll(miPlay, miSave, miAbo, miButton);
+            contextMenu.getItems().addAll(miPlay, miSave, miAbo, miButton);
+        }
+
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        miUndo.setOnAction(a -> progData.setDataList.undoData());
+        miUndo.disableProperty().bind(Bindings.isEmpty(progData.setDataList.getUndoList()));
+        contextMenu.getItems().addAll(miUndo);
     }
 }
