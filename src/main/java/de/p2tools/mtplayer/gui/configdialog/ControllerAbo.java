@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.configdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.gui.configpanes.PaneAboStop;
+import de.p2tools.mtplayer.gui.configpanes.PaneAbo;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
@@ -27,7 +27,7 @@ import java.util.Collection;
 
 public class ControllerAbo extends PAccordionPane {
 
-    private PaneAboStop paneAboStop;
+    private PaneAbo paneAbo;
 
     private final Stage stage;
 
@@ -39,7 +39,7 @@ public class ControllerAbo extends PAccordionPane {
 
     @Override
     public void close() {
-        paneAboStop.close();
+        paneAbo.close();
         super.close();
     }
 
@@ -47,8 +47,8 @@ public class ControllerAbo extends PAccordionPane {
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
 
-        paneAboStop = new PaneAboStop(stage);
-        paneAboStop.makeAbo(result);
+        paneAbo = new PaneAbo(stage);
+        paneAbo.makeAbo(result);
 
         return result;
     }

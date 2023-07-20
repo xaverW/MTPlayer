@@ -19,28 +19,31 @@ package de.p2tools.mtplayer.gui.configdialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.configdialog.paneblacklist.PaneBlackList;
-import de.p2tools.mtplayer.gui.configpanes.PaneBlack;
+import de.p2tools.mtplayer.gui.configpanes.PaneFilmLoad;
+import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ControllerBlack extends PAccordionPane {
+public class ControllerLoadFilmList extends PAccordionPane {
+
+    private PaneFilmLoad paneFilmLoad;
+    private PaneBlackList paneBlackList;
+    private PaneFilmSender paneFilmSender;
+    private final BooleanProperty diacriticChanged;
 
     private final ProgData progData;
-
-    private final BooleanProperty blackChanged;
-    private PaneBlack paneBlack;
-    private PaneBlackList paneBlackList;
     private final Stage stage;
 
-    public ControllerBlack(Stage stage, BooleanProperty blackChanged) {
-        super(ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_BLACKLIST);
+    public ControllerLoadFilmList(Stage stage, BooleanProperty diacriticChanged) {
+        super(ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
         this.stage = stage;
-        this.blackChanged = blackChanged;
+        this.diacriticChanged = diacriticChanged;
         progData = ProgData.getInstance();
 
         init();
@@ -48,18 +51,24 @@ public class ControllerBlack extends PAccordionPane {
 
     @Override
     public void close() {
-        super.close();
-        paneBlack.close();
+        paneFilmLoad.close();
         paneBlackList.close();
+        paneFilmSender.close();
+        super.close();
     }
 
     @Override
     public Collection<TitledPane> createPanes() {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
-        paneBlack = new PaneBlack(stage, blackChanged);
-        paneBlack.makeBlack(result);
-        paneBlackList = new PaneBlackList(stage, progData, true, blackChanged);
+        paneFilmLoad = new PaneFilmLoad(stage, progData, diacriticChanged);
+        paneFilmLoad.make(result);
+
+        paneBlackList = new PaneBlackList(stage, progData, false, new SimpleBooleanProperty());
         paneBlackList.make(result);
+
+        paneFilmSender = new PaneFilmSender(stage, false);
+        paneFilmSender.make(result);
+
         return result;
     }
 }

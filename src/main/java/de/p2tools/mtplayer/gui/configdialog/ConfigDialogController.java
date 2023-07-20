@@ -49,8 +49,8 @@ public class ConfigDialogController extends PDialogExtra {
     private final BooleanProperty diacriticChanged = new SimpleBooleanProperty(false);
 
     private ControllerConfig controllerConfig;
-    private ControllerFilm controllerFilm;
-    private ControllerBlack controllerBlack;
+    private ControllerLoadFilmList controllerLoadFilmList;
+    private ControllerBlackList controllerBlackList;
     private ControllerDownload controllerDownload;
     private ControllerAbo controllerAbo;
     private ControllerMedia controllerMedia;
@@ -180,8 +180,8 @@ public class ConfigDialogController extends PDialogExtra {
     @Override
     public void close() {
         controllerConfig.close();
-        controllerFilm.close();
-        controllerBlack.close();
+        controllerLoadFilmList.close();
+        controllerBlackList.close();
         controllerDownload.close();
         controllerAbo.close();
         controllerMedia.close();
@@ -204,16 +204,16 @@ public class ConfigDialogController extends PDialogExtra {
                 tabPane.getTabs().add(tab);
             }
 
-            controllerFilm = new ControllerFilm(this.getStage(), diacriticChanged);
+            controllerLoadFilmList = new ControllerLoadFilmList(this.getStage(), diacriticChanged);
             tab = new Tab("Filmliste laden");
             tab.setClosable(false);
-            tab.setContent(controllerFilm);
+            tab.setContent(controllerLoadFilmList);
             tabPane.getTabs().add(tab);
 
-            controllerBlack = new ControllerBlack(this.getStage(), blackChanged);
+            controllerBlackList = new ControllerBlackList(this.getStage(), blackChanged);
             tab = new Tab("Blacklist");
             tab.setClosable(false);
-            tab.setContent(controllerBlack);
+            tab.setContent(controllerBlackList);
             tabPane.getTabs().add(tab);
 
             controllerDownload = new ControllerDownload(this.getStage());

@@ -22,55 +22,66 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import javafx.geometry.HPos;
+import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class PaneAboStop {
+public class PaneAbo {
 
+    private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
+    private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
     private final ToggleGroup groupOnlyStop = new ToggleGroup();
     private final RadioButton rbOnlyStopAsk = new RadioButton("Vor dem Löschen fragen");
     private final RadioButton rbOnlyStopDelete = new RadioButton("Abo sofort löschen ohne zu fragen");
-
     private final Stage stage;
 
-    public PaneAboStop(Stage stage) {
+    public PaneAbo(Stage stage) {
         this.stage = stage;
         initRadio();
     }
 
     public void close() {
+        tglSearchAbo.selectedProperty().unbindBidirectional(ProgConfig.ABO_SEARCH_NOW);
+        tglStartDownload.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
     }
 
     public void makeAbo(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
-        TitledPane tpConfig = new TitledPane("Abo stoppen", gridPane);
+        TitledPane tpConfig = new TitledPane("Abo", gridPane);
         result.add(tpConfig);
-
-        final Button btnHelpStop = PButton.helpButton(stage, "Abo",
-                HelpText.ABO_DELETE_CONFIG);
-
-        GridPane.setHalignment(btnHelpStop, HPos.RIGHT);
 
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
-        Text text = new Text("Abos löschen");
-        text.setFont(Font.font(null, FontWeight.BOLD, -1));
-        text.getStyleClass().add("downloadGuiMediaText");
+        tglSearchAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_SEARCH_NOW);
+        final Button btnHelpAbo = PButton.helpButton(stage, "Abos automatisch suchen",
+                HelpText.SEARCH_ABOS_IMMEDIATELY);
+
+        tglStartDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
+        final Button btnHelpDownload = PButton.helpButton(stage, "Downloads sofort starten",
+                HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
+
+        final Button btnHelpStop = PButton.helpButton(stage, "Abos löschen",
+                HelpText.ABO_DELETE_CONFIG);
+        GridPane.setValignment(btnHelpStop, VPos.TOP);
 
         int row = 0;
-        gridPane.add(text, 0, row);
+        gridPane.add(tglSearchAbo, 0, row);
+        gridPane.add(btnHelpAbo, 1, row);
+
+        gridPane.add(tglStartDownload, 0, ++row);
+        gridPane.add(btnHelpDownload, 1, row);
+
+        gridPane.add(new Label(""), 0, ++row);
+        gridPane.add(new Label("Abos löschen"), 0, ++row);
         gridPane.add(btnHelpStop, 1, row, 1, 2);
 
         final String LEER = "     ";
