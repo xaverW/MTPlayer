@@ -57,6 +57,7 @@ public class PaneSetList extends VBox {
 
     public void close() {
         progData.setDataList.getUndoList().clear();
+        progData.setDataList.forEach(setData -> setData.getProgramList().getUndoList().clear());
     }
 
     public Optional<SetData> getSel(boolean show) {

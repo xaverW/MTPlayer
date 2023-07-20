@@ -36,6 +36,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -129,9 +130,23 @@ public class PaneSetProgram {
                 prefixColumn, suffixColumn, restartColumn, downManagerColumn);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::bindActTableData));
-
+        tableView.setOnMousePressed(m -> {
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                ContextMenu contextMenu = getContextMenu();
+                tableView.setContextMenu(contextMenu);
+            }
+        });
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
+    }
+
+    private ContextMenu getContextMenu() {
+        final ContextMenu contextMenu = new ContextMenu();
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        miUndo.setOnAction(a -> setDataObjectProperty.getValue().getProgramList().undoData());
+        miUndo.setDisable(setDataObjectProperty.getValue().getProgramList().getUndoList().isEmpty());
+        contextMenu.getItems().addAll(miUndo);
+        return contextMenu;
     }
 
     private void initButton(VBox vBox) {
@@ -143,6 +158,7 @@ public class PaneSetProgram {
             if (sels == null || sels.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
+                setDataObjectProperty.getValue().getProgramList().addDataToUndoList(sels);
                 setDataObjectProperty.getValue().getProgramList().removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
             }

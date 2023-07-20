@@ -19,10 +19,14 @@ package de.p2tools.mtplayer.controller.data.setdata;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class ProgramList extends SimpleListProperty<ProgramData> implements PDataList<ProgramData> {
     public static final String TAG = "ProgramList";
+    private final ObservableList<ProgramData> undoList = FXCollections.observableArrayList();
 
     public ProgramList() {
         super(FXCollections.observableArrayList());
@@ -64,4 +68,20 @@ public class ProgramList extends SimpleListProperty<ProgramData> implements PDat
         return neu;
     }
 
+    public ObservableList<ProgramData> getUndoList() {
+        return undoList;
+    }
+
+    public synchronized void addDataToUndoList(List<ProgramData> list) {
+        undoList.clear();
+        undoList.addAll(list);
+    }
+
+    public synchronized void undoData() {
+        if (undoList.isEmpty()) {
+            return;
+        }
+        addAll(undoList);
+        undoList.clear();
+    }
 }

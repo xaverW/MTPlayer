@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import javafx.beans.binding.Bindings;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -58,7 +57,7 @@ public class SetDataTableContextMenu {
         contextMenu.getItems().add(new SeparatorMenuItem());
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> progData.setDataList.undoData());
-        miUndo.disableProperty().bind(Bindings.isEmpty(progData.setDataList.getUndoList()));
+        miUndo.setDisable(progData.setDataList.getUndoList().isEmpty());
         contextMenu.getItems().addAll(miUndo);
     }
 }

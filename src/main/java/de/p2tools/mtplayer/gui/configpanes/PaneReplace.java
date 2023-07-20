@@ -240,7 +240,7 @@ public class PaneReplace {
         final ContextMenu contextMenu = new ContextMenu();
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> ProgData.getInstance().replaceList.undoData());
-        miUndo.disableProperty().bind(Bindings.isEmpty(ProgData.getInstance().replaceList.getUndoList()));
+        miUndo.setDisable(ProgData.getInstance().replaceList.getUndoList().isEmpty());
         contextMenu.getItems().addAll(miUndo);
         return contextMenu;
     }

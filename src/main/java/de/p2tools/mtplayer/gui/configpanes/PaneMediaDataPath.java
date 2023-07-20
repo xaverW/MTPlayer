@@ -145,7 +145,7 @@ public class PaneMediaDataPath {
         final ContextMenu contextMenu = new ContextMenu();
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> ProgData.getInstance().mediaCollectionDataList.undoData(external));
-        miUndo.disableProperty().bind(Bindings.isEmpty(ProgData.getInstance().mediaCollectionDataList.getUndoList(external)));
+        miUndo.setDisable(ProgData.getInstance().mediaCollectionDataList.getUndoList(external).isEmpty());
         contextMenu.getItems().addAll(miUndo);
         return contextMenu;
     }

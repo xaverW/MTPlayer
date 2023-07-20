@@ -20,7 +20,6 @@ package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.p2lib.guitools.ptable.CellLocalDate;
-import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -85,8 +84,7 @@ public class BlackPaneTable {
         final ContextMenu contextMenu = new ContextMenu();
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> list.undoBlackData());
-
-        miUndo.disableProperty().bind(Bindings.isEmpty(list.getUndoList()));
+        miUndo.setDisable(list.getUndoList().isEmpty());
         contextMenu.getItems().addAll(miUndo);
 
         return contextMenu;
