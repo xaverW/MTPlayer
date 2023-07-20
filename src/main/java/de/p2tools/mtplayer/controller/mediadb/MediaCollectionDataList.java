@@ -20,21 +20,23 @@ import de.p2tools.p2lib.configfile.pdata.PDataList;
 import de.p2tools.p2lib.tools.PIndex;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
 public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionData> implements PDataList<MediaCollectionData> {
 
     public static final String TAG = "MediaCollectionDataList";
-    private FilteredList<MediaCollectionData> filteredListInternal = null;
     private SortedList<MediaCollectionData> sortedListInternal = null;
-    private FilteredList<MediaCollectionData> filteredListExternal = null;
     private SortedList<MediaCollectionData> sortedListExternal = null;
+    private final ObservableList<MediaCollectionData> undoListInternal = FXCollections.observableArrayList();
+    private final ObservableList<MediaCollectionData> undoListExternal = FXCollections.observableArrayList();
 
     public MediaCollectionDataList() {
         super(FXCollections.observableArrayList());
@@ -72,7 +74,7 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
 
     public SortedList<MediaCollectionData> getSortedListInternal() {
         if (sortedListInternal == null) {
-            filteredListInternal = new FilteredList<>(this, p -> !p.isExternal());
+            FilteredList<MediaCollectionData> filteredListInternal = new FilteredList<>(this, p -> !p.isExternal());
             sortedListInternal = new SortedList<>(filteredListInternal);
         }
         return sortedListInternal;
@@ -80,7 +82,7 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
 
     public SortedList<MediaCollectionData> getSortedListExternal() {
         if (sortedListExternal == null) {
-            filteredListExternal = new FilteredList<>(this, p -> p.isExternal());
+            FilteredList<MediaCollectionData> filteredListExternal = new FilteredList<>(this, p -> p.isExternal());
             sortedListExternal = new SortedList<>(filteredListExternal);
         }
         return sortedListExternal;
@@ -159,6 +161,32 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
             if (mediaCollectionData.getId() == id) {
                 iterator.remove();
             }
+        }
+    }
+
+    public ObservableList<MediaCollectionData> getUndoList(boolean external) {
+        return external ? undoListExternal : undoListInternal;
+    }
+
+    public synchronized void addDataToUndoList(List<MediaCollectionData> list, boolean external) {
+        if (external) {
+            undoListExternal.clear();
+            undoListExternal.addAll(list);
+        } else {
+            undoListInternal.clear();
+            undoListInternal.addAll(list);
+        }
+    }
+
+    public synchronized void undoData(boolean external) {
+        if (external ? undoListExternal.isEmpty() : undoListInternal.isEmpty()) {
+            return;
+        }
+        addAll(external ? undoListExternal : undoListInternal);
+        if (external) {
+            undoListExternal.clear();
+        } else {
+            undoListInternal.clear();
         }
     }
 }

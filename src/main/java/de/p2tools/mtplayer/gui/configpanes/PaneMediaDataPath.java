@@ -34,6 +34,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -76,6 +77,8 @@ public class PaneMediaDataPath {
     }
 
     public void close() {
+        progData.mediaCollectionDataList.getUndoList(true).clear();
+        progData.mediaCollectionDataList.getUndoList(false).clear();
     }
 
     private void initTable(VBox vBox) {
@@ -127,9 +130,24 @@ public class PaneMediaDataPath {
                 txtPath.textProperty().bindBidirectional(n.pathProperty());
             }
         });
+        tableView.setOnMousePressed(m -> {
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                ContextMenu contextMenu = getContextMenu();
+                tableView.setContextMenu(contextMenu);
+            }
+        });
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
+    }
+
+    private ContextMenu getContextMenu() {
+        final ContextMenu contextMenu = new ContextMenu();
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        miUndo.setOnAction(a -> ProgData.getInstance().mediaCollectionDataList.undoData(external));
+        miUndo.disableProperty().bind(Bindings.isEmpty(ProgData.getInstance().mediaCollectionDataList.getUndoList(external)));
+        contextMenu.getItems().addAll(miUndo);
+        return contextMenu;
     }
 
     private void makeButton(VBox vBox) {
@@ -194,6 +212,8 @@ public class PaneMediaDataPath {
             PAlert.showInfoNoSelection();
             return;
         }
+
+        progData.mediaCollectionDataList.addDataToUndoList(sels, external);
 
         List<Long> idList = new ArrayList<>();
         sels.stream().forEach(mediaPathData -> {
