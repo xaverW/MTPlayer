@@ -36,6 +36,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -62,6 +63,7 @@ public class PaneReplace {
     }
 
     public void close() {
+        ProgData.getInstance().replaceList.getUndoList().clear();
         unbindText();
         tglAscii.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
         tglReplace.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
@@ -115,7 +117,7 @@ public class PaneReplace {
         final TableColumn<ReplaceData, String> toColumn = new TableColumn<>("Nach");
         toColumn.setCellValueFactory(new PropertyValueFactory<>("to"));
 
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
@@ -123,6 +125,12 @@ public class PaneReplace {
         tableView.setItems(ProgData.getInstance().replaceList);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActReplaceData));
+        tableView.setOnMousePressed(m -> {
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                ContextMenu contextMenu = getContextMenu();
+                tableView.setContextMenu(contextMenu);
+            }
+        });
 
         tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_REPLACETABLE.not());
         VBox.setVgrow(tableView, Priority.ALWAYS);
@@ -133,10 +141,10 @@ public class PaneReplace {
         btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             final ObservableList<ReplaceData> sels = tableView.getSelectionModel().getSelectedItems();
-
             if (sels == null || sels.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
+                ProgData.getInstance().replaceList.addDataToUndoList(sels);
                 ProgData.getInstance().replaceList.removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
             }
@@ -163,7 +171,9 @@ public class PaneReplace {
                 PAlert.showInfoNoSelection();
             } else {
                 int res = ProgData.getInstance().replaceList.up(sel, true);
+                tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(res);
+                tableView.scrollTo(res);
             }
         });
 
@@ -176,7 +186,9 @@ public class PaneReplace {
                 PAlert.showInfoNoSelection();
             } else {
                 int res = ProgData.getInstance().replaceList.up(sel, false);
+                tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(res);
+                tableView.scrollTo(res);
             }
         });
 
@@ -189,7 +201,9 @@ public class PaneReplace {
                 PAlert.showInfoNoSelection();
             } else {
                 int res = ProgData.getInstance().replaceList.top(sel, true);
+                tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(res);
+                tableView.scrollTo(res);
             }
         });
 
@@ -202,7 +216,9 @@ public class PaneReplace {
                 PAlert.showInfoNoSelection();
             } else {
                 int res = ProgData.getInstance().replaceList.top(sel, false);
+                tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(res);
+                tableView.scrollTo(res);
             }
         });
 
@@ -218,6 +234,15 @@ public class PaneReplace {
         hBox.getChildren().addAll(btnNew, btnDel, PGuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
                 btnTop, btnUp, btnDown, btnBottom, PGuiTools.getHBoxGrower(), btnReset);
         vBox.getChildren().addAll(hBox);
+    }
+
+    private ContextMenu getContextMenu() {
+        final ContextMenu contextMenu = new ContextMenu();
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        miUndo.setOnAction(a -> ProgData.getInstance().replaceList.undoData());
+        miUndo.disableProperty().bind(Bindings.isEmpty(ProgData.getInstance().replaceList.getUndoList()));
+        contextMenu.getItems().addAll(miUndo);
+        return contextMenu;
     }
 
     private void addConfigs(VBox vBox) {

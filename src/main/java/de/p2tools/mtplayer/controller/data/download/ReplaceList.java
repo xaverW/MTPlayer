@@ -19,12 +19,15 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.util.List;
 
 public final class ReplaceList extends SimpleListProperty<ReplaceData> implements PDataList<ReplaceData> {
 
     public static final String TAG = "ReplaceList";
+    private final ObservableList<ReplaceData> undoList = FXCollections.observableArrayList();
 
     public ReplaceList() {
         super(FXCollections.observableArrayList());
@@ -53,25 +56,22 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> implement
     }
 
     public void init() {
+        addDataToUndoList(this);
         clear();
         add(new ReplaceData(" ", "_"));
         add(new ReplaceData("?", "_"));
     }
 
     public String replace(String strCheck, boolean path) {
-
         // hat der Nutzer als Suchbegriff "leer" eingegeben, dann weg damit
         this.removeIf(replaceData -> replaceData.getFrom().isEmpty());
-
         for (ReplaceData replaceData : this) {
-
             if (path && replaceData.getFrom().equals(File.separator)) {
                 // bei Pfaden darf / oder \ natürlich nicht entfernt werden
                 continue;
             } else {
                 strCheck = strCheck.replace(replaceData.getFrom(), replaceData.getTo());
             }
-
         }
 
         return strCheck;
@@ -104,4 +104,20 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> implement
         return neu;
     }
 
+    public ObservableList<ReplaceData> getUndoList() {
+        return undoList;
+    }
+
+    public synchronized void addDataToUndoList(List<ReplaceData> list) {
+        undoList.clear();
+        undoList.addAll(list);
+    }
+
+    public synchronized void undoData() {
+        if (undoList.isEmpty()) {
+            return;
+        }
+        addAll(undoList);
+        undoList.clear();
+    }
 }
