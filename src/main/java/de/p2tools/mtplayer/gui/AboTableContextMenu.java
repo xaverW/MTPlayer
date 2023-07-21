@@ -20,7 +20,6 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.tools.table.TableAbo;
-import javafx.beans.binding.Bindings;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -66,7 +65,7 @@ public class AboTableContextMenu {
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> progData.aboList.undoAbos());
 
-        miUndo.disableProperty().bind(Bindings.isEmpty(progData.aboList.getUndoList()));
+        miUndo.setDisable(progData.aboList.getUndoList().isEmpty());
         miOnOff.setDisable(abo == null);
         miDel.setDisable(abo == null);
         miChange.setDisable(abo == null);

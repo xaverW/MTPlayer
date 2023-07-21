@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.p2lib.tools.PSystemUtils;
-import javafx.beans.binding.Bindings;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -55,7 +54,7 @@ public class DownloadTableContextMenu {
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> progData.downloadList.undoDownloads());
 
-        miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));
+        miUndo.setDisable(progData.downloadList.getUndoList().isEmpty());
         miStart.setDisable(download == null);
         miStop.setDisable(download == null);
         miChange.setDisable(download == null);
