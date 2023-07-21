@@ -37,16 +37,16 @@ public class BlacklistFactory {
     public static void addBlackFilm() {
         // aus dem Menü: mit markiertem Film ein Black erstellen
         // Dialog anzeigen
-        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
-        if (filmSelection.isEmpty()) {
+        final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(true, true);
+        if (filmDataMTP.isEmpty()) {
             return;
         }
 
-        BlackData blackData = new BlackData(filmSelection.get().getChannel(), filmSelection.get().getTheme(),
-                filmSelection.get().getTitle(), "");
+        BlackData blackData = new BlackData(filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
+                filmDataMTP.get().getTitle(), "");
+
         AddBlackListDialogController addBlacklistDialogController =
-                new AddBlackListDialogController(ProgData.getInstance(), filmSelection.get().FILM_CHANNEL_STR,
-                        filmSelection.get().getTheme(), filmSelection.get().getTitle(), blackData);
+                new AddBlackListDialogController(blackData);
 
         if (!addBlacklistDialogController.isOk()) {
             //dann doch nicht
@@ -65,9 +65,9 @@ public class BlacklistFactory {
 
         BlackData blackData = new BlackData(downloadData.get().getChannel(), downloadData.get().getTheme(),
                 downloadData.get().getTitle(), "");
+
         AddBlackListDialogController addBlacklistDialogController =
-                new AddBlackListDialogController(ProgData.getInstance(), downloadData.get().getChannel(),
-                        downloadData.get().getTheme(), downloadData.get().getTitle(), blackData);
+                new AddBlackListDialogController(blackData);
 
         if (!addBlacklistDialogController.isOk()) {
             //dann doch nicht

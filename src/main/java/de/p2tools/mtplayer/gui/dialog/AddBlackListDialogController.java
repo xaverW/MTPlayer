@@ -55,24 +55,22 @@ public class AddBlackListDialogController extends PDialogExtra {
     private final Button btnClearTitel = new Button();
     private final Button btnClearThemeTitel = new Button();
 
-    private final String channel;
-    private final String theme;
-    private final String title;
+    private final String channel; // sind die Startwerte
+    private final String theme; // sind die Startwerte
+    private final String title; // sind die Startwerte
 
     private final BlackData blackData;
 
-    public AddBlackListDialogController(ProgData progData, String channel, String theme, String title, BlackData blackData) {
-        super(progData.primaryStage, ProgConfig.ADD_BLACK_DIALOG_SIZE,
+    public AddBlackListDialogController(BlackData blackData) {
+        super(ProgData.getInstance().primaryStage, ProgConfig.ADD_BLACK_DIALOG_SIZE,
                 "Blacklist-Eintrag erstellen", true, false);
 
-        this.channel = channel;
-        this.theme = theme;
-        this.title = title;
+        this.channel = blackData.getChannel();
+        this.theme = blackData.getTheme();
+        this.title = blackData.getTitle();
         this.blackData = blackData;
-
-        mbChannel = new PMenuButton(blackData.channelProperty(),
+        mbChannel = new PMenuButton(this.blackData.channelProperty(),
                 ProgData.getInstance().worker.getAllChannelList(), true);
-
 
         init(true);
     }
