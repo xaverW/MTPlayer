@@ -95,10 +95,10 @@ public class MTPlayerFactory {
     public static void addBlacklist() {
         switch (MTPlayerController.paneShown) {
             case FILM:
-                BlacklistFactory.addBlackFilm();
+                BlacklistFactory.addBlackFilm(true);
                 break;
             case DOWNLOAD:
-                BlacklistFactory.addBlackDownload();
+                BlacklistFactory.addBlackFilm(false);
                 break;
             case ABO:
                 break;

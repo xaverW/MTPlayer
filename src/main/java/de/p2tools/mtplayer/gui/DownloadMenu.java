@@ -190,9 +190,7 @@ public class DownloadMenu {
         Menu submenuBlacklist = new Menu("Blacklist");
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen" +
                 ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
-        miBlack.setOnAction(event -> {
-            BlacklistFactory.addBlackDownload();
-        });
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(false));
 
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen" +
                 ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut());

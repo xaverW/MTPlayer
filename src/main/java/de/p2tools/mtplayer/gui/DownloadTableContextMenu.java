@@ -128,7 +128,7 @@ public class DownloadTableContextMenu {
         Menu submenuBlacklist = new Menu("Blacklist");
 
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
-        miBlack.setOnAction(event -> BlacklistFactory.addBlackDownload());
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(false));
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
         miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(downloadData.getChannel(), downloadData.getTheme(), ""));

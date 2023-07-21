@@ -34,41 +34,29 @@ public class BlacklistFactory {
     private BlacklistFactory() {
     }
 
-    public static void addBlackFilm() {
+    public static void addBlackFilm(boolean film) {
         // aus dem Menü: mit markiertem Film ein Black erstellen
         // Dialog anzeigen
-        final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(true, true);
-        if (filmDataMTP.isEmpty()) {
-            return;
+        BlackData blackData;
+        if (film) {
+            final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(true, true);
+            if (filmDataMTP.isEmpty()) {
+                return;
+            }
+            blackData = new BlackData(filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
+                    filmDataMTP.get().getTitle(), "");
+            
+        } else {
+            final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+            if (downloadData.isEmpty()) {
+                return;
+            }
+            blackData = new BlackData(downloadData.get().getChannel(), downloadData.get().getTheme(),
+                    downloadData.get().getTitle(), "");
         }
-
-        BlackData blackData = new BlackData(filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
-                filmDataMTP.get().getTitle(), "");
 
         AddBlackListDialogController addBlacklistDialogController =
                 new AddBlackListDialogController(blackData);
-
-        if (!addBlacklistDialogController.isOk()) {
-            //dann doch nicht
-            return;
-        }
-        ProgData.getInstance().blackList.addAndNotify(blackData);
-    }
-
-    public static void addBlackDownload() {
-        // aus dem Menü: mit markiertem Download ein Black erstellen
-        // Dialog anzeigen
-        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
-        if (downloadData.isEmpty()) {
-            return;
-        }
-
-        BlackData blackData = new BlackData(downloadData.get().getChannel(), downloadData.get().getTheme(),
-                downloadData.get().getTitle(), "");
-
-        AddBlackListDialogController addBlacklistDialogController =
-                new AddBlackListDialogController(blackData);
-
         if (!addBlacklistDialogController.isOk()) {
             //dann doch nicht
             return;
