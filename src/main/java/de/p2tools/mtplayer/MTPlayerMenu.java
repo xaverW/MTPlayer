@@ -31,11 +31,18 @@ import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.tools.log.PLogger;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Region;
 
 public class MTPlayerMenu extends MenuButton {
     public MTPlayerMenu() {
         makeButton();
+        setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                ProgConfig.SYSTEM_DARK_THEME.setValue(!ProgConfig.SYSTEM_DARK_THEME.getValue());
+
+            }
+        });
     }
 
     private void makeButton() {
@@ -48,6 +55,9 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung");
         miSearchMediaCollection.setOnAction(a -> new MediaDialogController("", ""));
         PShortcutWorker.addShortCut(miSearchMediaCollection, ProgShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
+
+        final CheckMenuItem miDarkMode = new CheckMenuItem("Dark Mode");
+        miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
@@ -64,7 +74,7 @@ public class MTPlayerMenu extends MenuButton {
         getStyleClass().addAll("btnFunction", "btnFunc-1");
         setText("");
         setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU_TOP.getImageView());
-        getItems().addAll(miConfig, miSearchMediaCollection, addHelp(progData),
+        getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode, addHelp(progData),
                 new SeparatorMenuItem(), miQuit, miQuitWait);
     }
 
