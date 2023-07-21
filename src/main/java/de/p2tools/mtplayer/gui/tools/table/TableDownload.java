@@ -208,7 +208,8 @@ public class TableDownload extends PTable<DownloadData> {
                         )) {
                     // dann sind es die Spalten die sich ändern
                     sort();
-                    System.out.println("sort " + i++);
+                    //todo ??
+//                    System.out.println("sort " + i++);
                 }
             }
         });
