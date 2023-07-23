@@ -75,7 +75,7 @@ public class StarterClass {
 
         final String url = film.arr[FilmDataXml.FILM_URL];
         if (!url.isEmpty()) {
-            final DownloadData download = new DownloadData(pSet, film, DownloadConstants.SRC_BUTTON, null, "", "", resolution);
+            final DownloadData download = new DownloadData(DownloadConstants.SRC_BUTTON, pSet, film, null, "", "", resolution);
             progData.downloadList.startDownloads(download);
             starterThread.startDownload(download); // da nicht in der ListeDownloads
 

@@ -84,6 +84,11 @@ public class ProgShortcut {
                     "Film abspielen",
                     "Der markierte Film in der Tabelle \"Filme\" wird abgespielt.");
 
+    public static final PShortcut SHORTCUT_PLAY_FILM_ALL =
+            new PShortcut(ProgConfig.SHORTCUT_PLAY_FILM_ALL, ProgConfig.SHORTCUT_PLAY_FILM_ALL_INIT,
+                    "Alle markierten Filme abspielen",
+                    "Alle markierten Filme in der Tabelle \"Filme\" werden abgespielt.");
+
     public static final PShortcut SHORTCUT_SAVE_FILM =
             new PShortcut(ProgConfig.SHORTCUT_SAVE_FILM, ProgConfig.SHORTCUT_SAVE_FILM_INIT,
                     "Film speichern",
@@ -153,6 +158,7 @@ public class ProgShortcut {
         shortcutList.add(SHORTCUT_SHOW_INFOS);
         shortcutList.add(SHORTCUT_INFO_FILM);
         shortcutList.add(SHORTCUT_PLAY_FILM);
+        shortcutList.add(SHORTCUT_PLAY_FILM_ALL);
         shortcutList.add(SHORTCUT_SAVE_FILM);
         shortcutList.add(SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD);

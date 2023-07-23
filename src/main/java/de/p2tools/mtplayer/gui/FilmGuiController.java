@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
@@ -107,6 +108,11 @@ public class FilmGuiController extends AnchorPane {
     public void playFilmUrl() {
         // Menü/Button Film (URL) abspielen
         startFilmUrl();
+    }
+
+    public void playFilmAllUrl() {
+        // Menü/Button Film (URL) abspielen
+        startFilmAllUrl();
     }
 
     public void playFilmUrlWithSet(SetData psetData) {
@@ -274,12 +280,24 @@ public class FilmGuiController extends AnchorPane {
         filmSelection.ifPresent(this::startFilmUrl);
     }
 
+    private synchronized void startFilmAllUrl() {
+        // Menü/Button Film (URL) abspielen
+        ArrayList<FilmDataMTP> list = getSelList();
+        if (list.isEmpty()) {
+            return;
+        }
+
+        setWasShown(list.get(0)); // den ersten markieren
+        FilmPlayFactory.startFilmUrl(list);
+    }
+
     public synchronized void startFilmUrl(FilmDataMTP mtp) {
         // aus Menü
         if (mtp != null) {
             tableView.getSelectionModel().select(mtp);
             setWasShown(mtp);
-            FilmTools.playFilm(mtp, null);
+//            FilmTools.playFilm(mtp, null);
+            FilmPlayFactory.startFilmUrl(mtp);
         }
     }
 

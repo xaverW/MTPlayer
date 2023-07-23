@@ -249,7 +249,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             downloadAddInfos[i] = new DownloadAddInfo(chkAll.selectedProperty(), downloadAddInfos);
             downloadAddInfos[i].psetData = setData;
             downloadAddInfos[i].film = filmsToDownloadList.get(i);
-            downloadAddInfos[i].download = new DownloadData(setData, downloadAddInfos[i].film, DownloadConstants.SRC_DOWNLOAD,
+            downloadAddInfos[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD, setData, downloadAddInfos[i].film,
                     null, "", aktPath, "");
 
             downloadAddInfos[i].path = downloadAddInfos[i].download.getDestPath();
@@ -513,7 +513,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         SetData psetData = cbSet.getSelectionModel().getSelectedItem();
 
         downloadAddInfo.psetData = psetData;
-        downloadAddInfo.download = new DownloadData(psetData, downloadAddInfo.film, DownloadConstants.SRC_DOWNLOAD, null, "", "", FilmDataMTP.RESOLUTION_NORMAL);
+        downloadAddInfo.download = new DownloadData(DownloadConstants.SRC_DOWNLOAD, psetData, downloadAddInfo.film, null, "", "", FilmDataMTP.RESOLUTION_NORMAL);
         downloadAddInfo.path = downloadAddInfo.download.getDestPath();
         downloadAddInfo.name = downloadAddInfo.download.getDestFileName();
         downloadAddInfo.info = downloadAddInfo.psetData.isInfoFile();
@@ -581,9 +581,9 @@ public class DownloadAddDialogController extends PDialogExtra {
         List<DownloadData> list = new ArrayList<>();
         for (DownloadAddInfo d : downloadAddInfos) {
             // jetzt wird mit den angegebenen Pfaden gearbeitet
-            DownloadData download = new DownloadData(d.psetData,
+            DownloadData download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
+                    d.psetData,
                     d.film,
-                    DownloadConstants.SRC_DOWNLOAD,
                     null,
                     d.name,
                     d.path,

@@ -83,6 +83,7 @@ public class ProgIconsMTPlayer {
     public static P2IconMTViewer ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-download-start-time.png", 32, 32);
 
     public static P2IconMTViewer ICON_TOOLBAR_FILM_START = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-start.png", 32, 32);
+    public static P2IconMTViewer ICON_TOOLBAR_FILM_ALL_START = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-all-start.png", 32, 32);
     public static P2IconMTViewer ICON_TOOLBAR_FILM_REC = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-rec.png", 32, 32);
     public static P2IconMTViewer ICON_TOOLBAR_FILM_BOOKMARK = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-bookmark.png", 32, 32);
     public static P2IconMTViewer ICON_TOOLBAR_FILM_BOOKMARK_FILTER = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-bookmark-filter.png", 32, 32);

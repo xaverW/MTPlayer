@@ -125,7 +125,7 @@ public class DownloadFactoryAbo {
             //und dann auch in die Liste schreiben
             abo.setDate(new PDate());
             final SetData setData = abo.getSetData(ProgData.getInstance());
-            syncDownloadArrayList.add(new DownloadData(setData, film, DownloadConstants.SRC_ABO, abo, "", "", ""));
+            syncDownloadArrayList.add(new DownloadData(DownloadConstants.SRC_ABO, setData, film, abo, "", "", ""));
             found = true;
         });
 

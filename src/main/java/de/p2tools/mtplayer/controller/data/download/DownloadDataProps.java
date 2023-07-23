@@ -16,8 +16,10 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.config.*;
+import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.mtdownload.DownloadSize;
 import de.p2tools.p2lib.tools.date.DateFactory;
@@ -25,10 +27,16 @@ import de.p2tools.p2lib.tools.date.PDate;
 import de.p2tools.p2lib.tools.date.PDateProperty;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
 public class DownloadDataProps extends PDataSample<DownloadData> {
+
+    private final ArrayList<FilmDataMTP> filmList = new ArrayList<>(); // wenn mehrere Filme gestartet werden sollen
+    private final ObservableList<String> urlList = FXCollections.observableArrayList();
+    ; // wenn mehrere Filme gestartet werden sollen
 
     private final IntegerProperty no = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
     private final IntegerProperty filmNr = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
@@ -56,7 +64,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
 
     private final StringProperty filmUrl = new SimpleStringProperty(""); //in normaler Auflösung
     private final StringProperty historyUrl = new SimpleStringProperty("");
-    private final StringProperty url = new SimpleStringProperty(""); //in der gewählte Auflösung
+    //    private final StringProperty url = new SimpleStringProperty(""); //in der gewählte Auflösung
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
 
     private final StringProperty setDataId = new SimpleStringProperty("");
@@ -80,7 +88,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     public final Property[] properties = {no, filmNr, aboName, channel, theme, title,
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, durationMinute,
-            hd, ut, geoBlocked, filmUrl, historyUrl, url, urlSubtitle,
+            hd, ut, geoBlocked, filmUrl, historyUrl, /*url,*/ urlSubtitle,
             setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
@@ -120,7 +128,11 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_boolProp("geoBlocked", geoBlocked));
         list.add(new Config_stringProp("filmUrl", filmUrl));
         list.add(new Config_stringProp("historyUrl", historyUrl));
-        list.add(new Config_stringProp("url", url));
+
+//        list.add(new Config_stringProp("url", url));
+        list.add(new ConfigStringList("url", urlList));
+
+
         list.add(new Config_stringProp("urlSubtitle", urlSubtitle));
         list.add(new Config_stringProp("setDataId", setDataId));
         list.add(new Config_stringProp("program", program));
@@ -139,6 +151,38 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_boolProp("subtitle", subtitle));
 
         return list.toArray(new Config[]{});
+    }
+
+    public ArrayList<FilmDataMTP> getFilmList() {
+        return filmList;
+    }
+
+    public ObservableList<String> getUrlList() {
+        return urlList;
+    }
+
+    public FilmDataMTP getFilm() {
+        if (filmList.isEmpty()) {
+            return null;
+        } else {
+            return filmList.get(0);
+        }
+    }
+
+    public void setFilm(FilmDataMTP filmDataMTP) {
+        filmList.add(0, filmDataMTP);
+    }
+
+    public String getUrl() {
+        if (urlList.isEmpty()) {
+            return "";
+        } else {
+            return urlList.get(0);
+        }
+    }
+
+    public void setUrl(String url) {
+        urlList.add(0, url);
     }
 
 
@@ -393,18 +437,6 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
 
     public void setHistoryUrl(String historyUrl) {
         this.historyUrl.set(historyUrl);
-    }
-
-    public String getUrl() {
-        return url.get();
-    }
-
-    public StringProperty urlProperty() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url.set(url);
     }
 
     public String getUrlSubtitle() {

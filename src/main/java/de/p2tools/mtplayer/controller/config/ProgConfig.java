@@ -381,6 +381,9 @@ public class ProgConfig extends PDataProgConfig {
     public static String SHORTCUT_PLAY_FILM_INIT = "Ctrl+P";
     public static StringProperty SHORTCUT_PLAY_FILM = addStrProp("SHORTCUT_PLAY_FILM", SHORTCUT_PLAY_FILM_INIT);
 
+    public static String SHORTCUT_PLAY_FILM_ALL_INIT = "Ctrl+A";
+    public static StringProperty SHORTCUT_PLAY_FILM_ALL = addStrProp("SHORTCUT_PLAY_FILM_ALL", SHORTCUT_PLAY_FILM_ALL_INIT);
+
     public static String SHORTCUT_SAVE_FILM_INIT = "Ctrl+S";
     public static StringProperty SHORTCUT_SAVE_FILM = addStrProp("SHORTCUT_SAVE_FILM", SHORTCUT_SAVE_FILM_INIT);
 

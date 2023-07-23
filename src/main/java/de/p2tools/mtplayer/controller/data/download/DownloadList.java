@@ -156,7 +156,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
             if (counter < 0) {
                 break;
             }
-            d.setFilm(progData.filmlist.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+            d.addFilm(progData.filmlist.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
             d.setSizeDownloadFromFilm();
         }
 

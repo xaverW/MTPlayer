@@ -60,8 +60,14 @@ public class FilmMenu {
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
                 "Abspielen", "Markierten Film abspielen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_START.getImageView());
+        final ToolBarButton btPlayAll = new ToolBarButton(vBox,
+                "Alle Abspielen", "Alle Markierten Filme abspielen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_ALL_START.getImageView());
         final ToolBarButton btSave = new ToolBarButton(vBox,
                 "Speichern", "Markierte Filme speichern", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_REC.getImageView());
+
+        btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
+        btPlayAll.setOnAction(a -> progData.filmGuiController.playFilmAllUrl());
+        btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -76,9 +82,6 @@ public class FilmMenu {
                 "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
         final ToolBarButton btFilterBookmakr = new ToolBarButton(vBox,
                 "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIconsMTPlayer.ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
-
-        btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
-        btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
 
         btBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm(true));
         btDelBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
@@ -133,6 +136,15 @@ public class FilmMenu {
         });
         PShortcutWorker.addShortCut(mbPlay, ProgShortcut.SHORTCUT_PLAY_FILM);
 
+        final MenuItem mbPlayAll = new MenuItem("Alle markierten Film abspielen");
+        mbPlayAll.setOnAction(a -> {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+                return;
+            }
+            progData.filmGuiController.playFilmAllUrl();
+        });
+        PShortcutWorker.addShortCut(mbPlayAll, ProgShortcut.SHORTCUT_PLAY_FILM_ALL);
+
         final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
@@ -142,7 +154,7 @@ public class FilmMenu {
         });
         PShortcutWorker.addShortCut(mbSave, ProgShortcut.SHORTCUT_SAVE_FILM);
 
-        mb.getItems().addAll(mbPlay, mbSave);
+        mb.getItems().addAll(mbPlay, mbPlayAll, mbSave);
 
         final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
         miFilmShown.setOnAction(a -> {

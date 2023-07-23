@@ -716,7 +716,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
     private void setHyperLink() {
         pHyperlinkUrlFilm.setUrl(download.filmUrlProperty().getValueSafe());
-        pHyperlinkUrlDownload.setUrl(download.urlProperty().getValueSafe());
+        pHyperlinkUrlDownload.setUrl(download.getUrl());
     }
 
     private void resetDownloadCallForProgramm() {
@@ -732,7 +732,7 @@ public class DownloadEditDialogController extends PDialogExtra {
             }
 
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txt[DownloadFieldNames.DOWNLOAD_DEST_FILE_NAME_NO].getText());
-            final DownloadData d = new DownloadData(download.getSetData(), download.getFilm(), download.getSource(), download.getAbo(),
+            final DownloadData d = new DownloadData(download.getSource(), download.getSetData(), download.getFilm(), download.getAbo(),
                     download.getDestFileName(),
                     download.getDestPath(), res);
 

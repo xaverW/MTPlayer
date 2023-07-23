@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.starter.RuntimeExec;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
@@ -37,6 +38,22 @@ import java.util.Date;
 public class DownloadFactoryProgram {
 
     private DownloadFactoryProgram() {
+    }
+
+    public static boolean makeProgParameter(DownloadData downloadData) {
+        // zieldatei und pfad bauen und eintragen
+        try {
+            final ProgramData programData = downloadData.getSetData().getProgUrl(downloadData.getUrl());
+            if (programData == null) {
+                return false; //todo ist das gut da wenn kein Set zum Download???
+            }
+
+            downloadData.setProgram(programData.getName());
+            buildProgParameter(downloadData, programData);
+        } catch (final Exception ex) {
+            PLog.errorLog(825600145, ex);
+        }
+        return true;
     }
 
     public static boolean makeProgParameter(DownloadData download, FilmDataMTP film, AboData abo, String name, String path) {
@@ -59,6 +76,7 @@ public class DownloadFactoryProgram {
 
             download.setProgramRestart(programData.isRestart());
             download.setProgramDownloadmanager(programData.isDownManager());
+
             buildFileNamePath(download, download.getSetData(), film, abo, name, path);
             buildProgParameter(download, programData);
         } catch (final Exception ex) {
@@ -73,15 +91,16 @@ public class DownloadFactoryProgram {
             download.setProgramCallArray("");
         } else {
             String befehlsString = program.getProgrammAufruf();
+            befehlsString = buildUrl(download, befehlsString);
             befehlsString = replaceExec(download, befehlsString);
             download.setProgramCall(befehlsString);
 
             String progArray = program.getProgrammAufrufArray();
+            progArray = buildUrl(download, progArray);
             progArray = replaceExec(download, progArray);
             download.setProgramCallArray(progArray);
         }
     }
-
 
     private static void buildFileNamePath(DownloadData download, SetData setData, FilmDataMTP film, AboData abo, String nname, String ppath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
@@ -410,17 +429,44 @@ public class DownloadFactoryProgram {
         return ret;
     }
 
+    private static String buildUrl(DownloadData downloadData, String execString) {
+        // die URL bauen
+        if (downloadData.getUrlList().size() <= 1) {
+            return execString.replace("%f", downloadData.getUrl());
+        }
 
-    private static String replaceExec(DownloadData download, String execString) {
-        execString = execString.replace("**", download.getDestPathFile());
-        execString = execString.replace("%f", download.getUrl());
-        //execString = execString.replace("%F", download.getUrlRtmp());
-        if (download.getFilm() != null) {
+        final String TRENNER;
+        // dann sind es mehrere Filme
+        if (execString.contains(RuntimeExec.TRENNER_PROG_ARRAY)) {
+            // dann solls das Array sein
+            TRENNER = RuntimeExec.TRENNER_PROG_ARRAY;
+        } else {
+            // dann ist der einfache Aufruf
+            TRENNER = " ";
+        }
+        StringBuilder url = new StringBuilder();
+        boolean append = false;
+        for (String u : downloadData.getUrlList()) {
+            if (!append) {
+                append = true;
+            } else {
+                url.append(TRENNER);
+            }
+            url.append(u);
+        }
+        return execString.replace("%f", url);
+    }
+
+    private static String replaceExec(DownloadData downloadData, String execString) {
+        // hier werden die Parameter beim Programmaufruf ersetzt
+        execString = execString.replace("**", downloadData.getDestPathFile());
+
+        if (downloadData != null) {
             //ist für Button z.B. "search in google"
-            execString = execString.replace("%w", download.getFilm().getWebsite());
-            execString = execString.replace("%t", download.getFilm().getTheme());
-            execString = execString.replace("%T", download.getFilm().getTitle());
-            execString = execString.replace("%s", download.getFilm().getChannel());
+            execString = execString.replace("%w", downloadData.getFilm().getWebsite());
+            execString = execString.replace("%t", downloadData.getFilm().getTheme());
+            execString = execString.replace("%T", downloadData.getFilm().getTitle());
+            execString = execString.replace("%s", downloadData.getFilm().getChannel());
         } else {
             execString = execString.replace("%w", "");
             execString = execString.replace("%t", "");
@@ -428,8 +474,8 @@ public class DownloadFactoryProgram {
             execString = execString.replace("%s", "");
         }
 
-        execString = execString.replace("%a", download.getDestPath());
-        execString = execString.replace("%b", download.getDestFileName());
+        execString = execString.replace("%a", downloadData.getDestPath());
+        execString = execString.replace("%b", downloadData.getDestFileName());
 
         return execString;
     }
