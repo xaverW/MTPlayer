@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 
 public class DownloadDataProps extends PDataSample<DownloadData> {
 
-    private final ArrayList<FilmDataMTP> filmList = new ArrayList<>(); // wenn mehrere Filme gestartet werden sollen
     private final ObservableList<String> urlList = FXCollections.observableArrayList();
     ; // wenn mehrere Filme gestartet werden sollen
 
@@ -68,7 +66,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
 
     private final StringProperty setDataId = new SimpleStringProperty("");
-    private final StringProperty program = new SimpleStringProperty("");
+    private final StringProperty programName = new SimpleStringProperty("");
     private final StringProperty programCall = new SimpleStringProperty("");
     private final StringProperty programCallArray = new SimpleStringProperty("");
     private final BooleanProperty programRestart = new SimpleBooleanProperty(false);
@@ -89,7 +87,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, durationMinute,
             hd, ut, geoBlocked, filmUrl, historyUrl, /*url,*/ urlSubtitle,
-            setDataId, program, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
+            setDataId, programName, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
 
@@ -135,7 +133,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
 
         list.add(new Config_stringProp("urlSubtitle", urlSubtitle));
         list.add(new Config_stringProp("setDataId", setDataId));
-        list.add(new Config_stringProp("program", program));
+        list.add(new Config_stringProp("program", programName));
         list.add(new Config_stringProp("programCall", programCall));
         list.add(new Config_stringProp("programCallArray", programCallArray));
         list.add(new Config_boolProp("programRestart", programRestart));
@@ -153,24 +151,8 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         return list.toArray(new Config[]{});
     }
 
-    public ArrayList<FilmDataMTP> getFilmList() {
-        return filmList;
-    }
-
     public ObservableList<String> getUrlList() {
         return urlList;
-    }
-
-    public FilmDataMTP getFilm() {
-        if (filmList.isEmpty()) {
-            return null;
-        } else {
-            return filmList.get(0);
-        }
-    }
-
-    public void setFilm(FilmDataMTP filmDataMTP) {
-        filmList.add(0, filmDataMTP);
     }
 
     public String getUrl() {
@@ -463,16 +445,16 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.setDataId.set(setDataId);
     }
 
-    public String getProgram() {
-        return program.get();
+    public String getProgramName() {
+        return programName.get();
     }
 
-    public StringProperty programProperty() {
-        return program;
+    public StringProperty programNameProperty() {
+        return programName;
     }
 
-    public void setProgram(String program) {
-        this.program.set(program);
+    public void setProgramName(String programName) {
+        this.programName.set(programName);
     }
 
     public String getProgramCall() {

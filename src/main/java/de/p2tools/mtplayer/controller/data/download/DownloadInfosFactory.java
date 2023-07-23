@@ -40,7 +40,7 @@ public class DownloadInfosFactory {
         String textLinks;
         final int sumFilmlist = progData.filmlist.size();
         final int sumFilmShown = progData.filmGuiController.getFilmCount();
-        final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadConstants.SRC_BUTTON).size();
+//        final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadConstants.SRC_BUTTON).size();
 
         String sumFilmlistStr = numberFormat.format(sumFilmShown);
         String sumFilmShownStr = numberFormat.format(sumFilmlist);
@@ -55,13 +55,13 @@ public class DownloadInfosFactory {
             textLinks += " (Insgesamt: " + sumFilmShownStr + " )";
         }
         // laufende Programme
-        if (runs == 1) {
-            textLinks += SEPARATOR;
-            textLinks += (runs + " laufender Film");
-        } else if (runs > 1) {
-            textLinks += SEPARATOR;
-            textLinks += (runs + " laufende Filme");
-        }
+//        if (runs == 1) {
+//            textLinks += SEPARATOR;
+//            textLinks += (runs + " laufender Film");
+//        } else if (runs > 1) {
+//            textLinks += SEPARATOR;
+//            textLinks += (runs + " laufende Filme");
+//        }
         // auch die Downloads anzeigen
         if (progData.downloadInfos.getAmount() > 0) {
             textLinks += SEPARATOR;

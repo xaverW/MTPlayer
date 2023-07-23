@@ -105,14 +105,30 @@ public class FilmGuiController extends AnchorPane {
         filmSelection.ifPresent(mtp -> PSystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 
-    public void playFilmUrl() {
-        // Menü/Button Film (URL) abspielen
-        startFilmUrl();
+    public void playFilm() {
+        // Menü/Button Film abspielen
+        final Optional<FilmDataMTP> filmSelection = getSel(true, true);
+        filmSelection.ifPresent(this::playFilm);
     }
 
-    public void playFilmAllUrl() {
-        // Menü/Button Film (URL) abspielen
-        startFilmAllUrl();
+    public synchronized void playFilm(FilmDataMTP mtp) {
+        // aus Menü/Button Film abspielen
+        if (mtp != null) {
+            tableView.getSelectionModel().select(mtp);
+            setWasShown(mtp);
+            FilmPlayFactory.startFilm(mtp);
+        }
+    }
+
+    public void playFilmList() {
+        // aus Menü/Button Film abspielen
+        ArrayList<FilmDataMTP> list = getSelList();
+        if (list.isEmpty()) {
+            return;
+        }
+
+        setWasShown(list.get(0)); // den ersten markieren
+        FilmPlayFactory.startFilmList(list);
     }
 
     public void playFilmUrlWithSet(SetData psetData) {
@@ -272,33 +288,6 @@ public class FilmGuiController extends AnchorPane {
                 event.consume();
             }
         });
-    }
-
-    private synchronized void startFilmUrl() {
-        // Menü/Button Film (URL) abspielen
-        final Optional<FilmDataMTP> filmSelection = getSel(true, true);
-        filmSelection.ifPresent(this::startFilmUrl);
-    }
-
-    private synchronized void startFilmAllUrl() {
-        // Menü/Button Film (URL) abspielen
-        ArrayList<FilmDataMTP> list = getSelList();
-        if (list.isEmpty()) {
-            return;
-        }
-
-        setWasShown(list.get(0)); // den ersten markieren
-        FilmPlayFactory.startFilmUrl(list);
-    }
-
-    public synchronized void startFilmUrl(FilmDataMTP mtp) {
-        // aus Menü
-        if (mtp != null) {
-            tableView.getSelectionModel().select(mtp);
-            setWasShown(mtp);
-//            FilmTools.playFilm(mtp, null);
-            FilmPlayFactory.startFilmUrl(mtp);
-        }
     }
 
     private void setWasShown(FilmDataMTP mtp) {

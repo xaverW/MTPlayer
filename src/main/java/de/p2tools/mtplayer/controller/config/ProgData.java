@@ -101,7 +101,7 @@ public class ProgData {
     public FilmlistMTP filmlistFiltered; // Filmliste, wie im TabFilme angezeigt
 
     public DownloadList downloadList; // Filme die als "Download" geladen werden sollen
-    public DownloadList downloadListButton; // Filme die über "Tab Filme" als Button/Film abspielen gestartet werden
+    //    public DownloadList downloadListButton; // Filme die über "Tab Filme" als Button/Film abspielen, gestartet werden
     public AboList aboList;
     public BlackList filmListFilter;
     public BlackList blackList;
@@ -131,7 +131,7 @@ public class ProgData {
         setDataList = new SetDataList();
         aboList = new AboList(this);
         downloadList = new DownloadList(this);
-        downloadListButton = new DownloadList(this);
+//        downloadListButton = new DownloadList(this);
 
         filmFilterRunner = new FilmFilterRunner(this);
 

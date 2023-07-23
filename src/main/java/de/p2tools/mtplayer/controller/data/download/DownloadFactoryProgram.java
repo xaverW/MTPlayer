@@ -40,22 +40,6 @@ public class DownloadFactoryProgram {
     private DownloadFactoryProgram() {
     }
 
-    public static boolean makeProgParameter(DownloadData downloadData) {
-        // zieldatei und pfad bauen und eintragen
-        try {
-            final ProgramData programData = downloadData.getSetData().getProgUrl(downloadData.getUrl());
-            if (programData == null) {
-                return false; //todo ist das gut da wenn kein Set zum Download???
-            }
-
-            downloadData.setProgram(programData.getName());
-            buildProgParameter(downloadData, programData);
-        } catch (final Exception ex) {
-            PLog.errorLog(825600145, ex);
-        }
-        return true;
-    }
-
     public static boolean makeProgParameter(DownloadData download, FilmDataMTP film, AboData abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
         try {
@@ -68,10 +52,11 @@ public class DownloadFactoryProgram {
             //legt fest, dass NICHT Abspielen, Abspielen immer über Programm!
             download.setType((download.getSetData().checkDownloadDirect(download.getUrl()) && download.getSetData().progsContainPath()) ?
                     DownloadConstants.TYPE_DOWNLOAD : DownloadConstants.TYPE_PROGRAM);
+
             if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
-                download.setProgram(DownloadConstants.TYPE_DOWNLOAD);
+                download.setProgramName(DownloadConstants.TYPE_DOWNLOAD);
             } else {
-                download.setProgram(programData.getName());
+                download.setProgramName(programData.getName());
             }
 
             download.setProgramRestart(programData.isRestart());

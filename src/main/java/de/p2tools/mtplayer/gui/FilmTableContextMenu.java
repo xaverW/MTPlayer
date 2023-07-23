@@ -48,7 +48,7 @@ public class FilmTableContextMenu {
 
         // Start/Save
         MenuItem miStart = new MenuItem("Film abspielen");
-        miStart.setOnAction(a -> filmGuiController.playFilmUrl());
+        miStart.setOnAction(a -> filmGuiController.playFilm());
         MenuItem miSave = new MenuItem("Film speichern");
         miSave.setOnAction(a -> filmGuiController.saveTheFilm());
         miStart.setDisable(film == null);

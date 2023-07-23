@@ -693,7 +693,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         //---------------------------------
         addToGrid(DownloadFieldNames.DOWNLOAD_SET_DATA_NO, false, row++, setData.visibleNameProperty(), true);
-        addToGrid(DownloadFieldNames.DOWNLOAD_PROGRAM_NO, false, row++, download.programProperty(), true);
+        addToGrid(DownloadFieldNames.DOWNLOAD_PROGRAM_NO, false, row++, download.programNameProperty(), true);
 
         row = initProgramArray(row);
         row = initName(row);

@@ -65,8 +65,8 @@ public class FilmMenu {
         final ToolBarButton btSave = new ToolBarButton(vBox,
                 "Speichern", "Markierte Filme speichern", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_REC.getImageView());
 
-        btPlay.setOnAction(a -> progData.filmGuiController.playFilmUrl());
-        btPlayAll.setOnAction(a -> progData.filmGuiController.playFilmAllUrl());
+        btPlay.setOnAction(a -> progData.filmGuiController.playFilm());
+        btPlayAll.setOnAction(a -> progData.filmGuiController.playFilmList());
         btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
 
         vBoxSpace = new VBox();
@@ -132,7 +132,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            progData.filmGuiController.playFilmUrl();
+            progData.filmGuiController.playFilm();
         });
         PShortcutWorker.addShortCut(mbPlay, ProgShortcut.SHORTCUT_PLAY_FILM);
 
@@ -141,7 +141,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            progData.filmGuiController.playFilmAllUrl();
+            progData.filmGuiController.playFilmList();
         });
         PShortcutWorker.addShortCut(mbPlayAll, ProgShortcut.SHORTCUT_PLAY_FILM_ALL);
 

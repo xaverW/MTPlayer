@@ -143,7 +143,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStop("addHistoryDataToHistory");
     }
 
-    public synchronized void addFilmDataToHistory(ArrayList<FilmDataMTP> filmList) {
+    public synchronized void addFilmDataListToHistory(ArrayList<FilmDataMTP> filmList) {
         // eine Liste Filme in die History schreiben
 
         if (filmList == null || filmList.isEmpty()) {

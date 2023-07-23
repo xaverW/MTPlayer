@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -72,14 +71,9 @@ public class CellFilmButton<S, T> extends TableCell<S, T> {
                     btnSave.setMinHeight(18);
                 }
 
-                btnPlay.setOnAction((ActionEvent event) -> {
-                    ProgData.getInstance().filmGuiController.startFilmUrl(film);
-//                    FilmTools.playFilm(film, null);
-                });
-                btnSave.setOnAction(event -> {
-                    ProgData.getInstance().filmlist.saveFilm(film, null);
-                });
-                hbox.getChildren().addAll(btnPlay, btnSave/*, btnBookmark*/);
+                btnPlay.setOnAction(e -> ProgData.getInstance().filmGuiController.playFilm(film));
+                btnSave.setOnAction(e -> ProgData.getInstance().filmlist.saveFilm(film, null));
+                hbox.getChildren().addAll(btnPlay, btnSave);
                 setGraphic(hbox);
             }
         };

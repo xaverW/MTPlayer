@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelFilmFile;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadStartAtTimeController;
@@ -153,7 +154,8 @@ public class DownloadGuiController extends AnchorPane {
         film.arr[FilmDataMTP.FILM_URL] = download.get().getUrl();
         film.arr[FilmDataMTP.FILM_URL_SMALL] = "";
         // und starten
-        FilmTools.playFilm(film, null);
+
+        FilmPlayFactory.startFilm(film);
     }
 
     public void copyFilmThemeTitle(boolean theme) {

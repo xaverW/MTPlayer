@@ -20,9 +20,8 @@ package de.p2tools.mtplayer.controller.film;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.starter.RuntimeExecStartFilm;
+import de.p2tools.mtplayer.controller.starter.RuntimeExecPlayFilm;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.date.DateFactory;
 import de.p2tools.p2lib.tools.date.PDate;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -33,11 +32,11 @@ public class FilmPlayFactory {
     private FilmPlayFactory() {
     }
 
-    public static synchronized void startFilmUrl(ArrayList<FilmDataMTP> list) {
+    public static synchronized void startFilmList(ArrayList<FilmDataMTP> list) {
         playFilm(list);
     }
 
-    public static synchronized void startFilmUrl(FilmDataMTP mtp) {
+    public static synchronized void startFilm(FilmDataMTP mtp) {
         // aus Menü
         if (mtp != null) {
             ArrayList<FilmDataMTP> list = new ArrayList<>();
@@ -46,38 +45,24 @@ public class FilmPlayFactory {
         }
     }
 
-    public static void playFilm(ArrayList<FilmDataMTP> list) {
-        // aus Menü
+    private static void playFilm(ArrayList<FilmDataMTP> filmList) {
         SetData setData = ProgData.getInstance().setDataList.getSetDataPlay();
         if (setData == null) {
             new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.PLAY);
             return;
         }
 
-        DownloadData filmPlayerData = new DownloadData(list, setData);
-        startUrlWithProgram(filmPlayerData);
+        DownloadData downloadData = new DownloadData(filmList, setData);
+        start(filmList, downloadData);
     }
 
-    public static synchronized void startUrlWithProgram(DownloadData filmPlayerData) {
-        // url mit dem Programm mit der Nr. starten (Button oder TabFilm, TabDownload "rechte Maustaste")
-        // Quelle "Button" ist immer ein vom User gestarteter Film, also Quelle_Button!!!!!!!!!!!
-
-        final String url = filmPlayerData.getFilmList().get(0).arr[FilmDataXml.FILM_URL];
-        if (!url.isEmpty()) {
-            ProgData.getInstance().downloadList.startDownloads(filmPlayerData);
-            startDownload(filmPlayerData); // da nicht in der ListeDownloads
-
-            // und jetzt noch in die DownloadListe damit die Farbe im Tab Filme passt
-            ProgData.getInstance().downloadListButton.addWithNr(filmPlayerData);
-        }
-    }
-
-    private static void startDownload(DownloadData filmPlayerData) {
+    private static void start(ArrayList<FilmDataMTP> filmList, DownloadData downloadData) {
         // versuch das Programm zu starten
         final ArrayList<String> list = new ArrayList<>();
-        startMsg(filmPlayerData, list);
+        startMsg(downloadData, list);
 
-        final RuntimeExecStartFilm runtimeExec = new RuntimeExecStartFilm(filmPlayerData);
+        ProgData.getInstance().history.addFilmDataListToHistory(filmList);
+        final RuntimeExecPlayFilm runtimeExec = new RuntimeExecPlayFilm(downloadData);
         Process process = runtimeExec.exec(true /* log */);
         if (process != null) {
             // dann läuft er
@@ -86,16 +71,17 @@ public class FilmPlayFactory {
             // nicht gestartet
             list.add("Film konnte nicht gestartet werden");
         }
+        list.add(PLog.LILNE3);
         PLog.sysLog(list.toArray(new String[0]));
     }
 
-    static void startMsg(DownloadData filmPlayerData, ArrayList<String> list) {
-        list.add(PLog.LILNE3);
+    static void startMsg(DownloadData downloadData, ArrayList<String> list) {
+        list.add(PLog.LILNE2);
         list.add("Film abspielen");
-        list.add("URL: " + filmPlayerData.getUrl());
+        list.add("URL: " + downloadData.getUrl());
         list.add("Startzeit: " + DateFactory.F_FORMAT_HH__mm__ss.format(new PDate()));
-        list.add("Programmaufruf: " + filmPlayerData.getProgramCall());
-        list.add("Programmaufruf[]: " + filmPlayerData.getProgramCallArray());
-        list.add(PLog.LILNE_EMPTY);
+        list.add("Programmaufruf: " + downloadData.getProgramCall());
+        list.add("Programmaufruf[]: " + downloadData.getProgramCallArray());
+        list.add(PLog.LILNE3);
     }
 }

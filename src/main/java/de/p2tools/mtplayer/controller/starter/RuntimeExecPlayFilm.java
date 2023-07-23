@@ -19,20 +19,17 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.tools.log.PLog;
 
-public class RuntimeExecStartFilm {
+public class RuntimeExecPlayFilm {
 
     public static final String TRENNER_PROG_ARRAY = "<>";
-    private final DownloadData filmPlayerData;
     private final String strProgCall;
     private String[] arrProgCallArray;
-    private String strProgCallArray;
+    private final String strProgCallArray;
     private Process process = null;
 
-    public RuntimeExecStartFilm(DownloadData filmPlayerData) {
-        this.filmPlayerData = filmPlayerData;
-
-        this.strProgCall = filmPlayerData.getProgramCall();
-        this.strProgCallArray = filmPlayerData.getProgramCallArray();
+    public RuntimeExecPlayFilm(DownloadData downloadData) {
+        this.strProgCall = downloadData.getProgramCall();
+        this.strProgCallArray = downloadData.getProgramCallArray();
         arrProgCallArray = strProgCallArray.split(TRENNER_PROG_ARRAY);
         if (arrProgCallArray.length <= 1) {
             arrProgCallArray = null;
@@ -51,8 +48,8 @@ public class RuntimeExecStartFilm {
                     PLog.sysLog(" -> " + strProgCallArray);
                     PLog.sysLog("=====================");
                 }
-//                process = Runtime.getRuntime().exec(arrProgCallArray);
-                new ProcessBuilder(arrProgCallArray).inheritIO().start();
+                // process = Runtime.getRuntime().exec(arrProgCallArray);
+                process = new ProcessBuilder(arrProgCallArray).inheritIO().start();
             } else {
                 if (log) {
                     PLog.sysLog("=====================");
@@ -60,11 +57,11 @@ public class RuntimeExecStartFilm {
                     PLog.sysLog(" -> " + strProgCall);
                     PLog.sysLog("=====================");
                 }
-//                process = Runtime.getRuntime().exec(strProgCall);
-                new ProcessBuilder(strProgCall).inheritIO().start().waitFor();
+                // process = Runtime.getRuntime().exec(strProgCall);
+                process = new ProcessBuilder(strProgCall).inheritIO().start();
             }
         } catch (final Exception ex) {
-            PLog.errorLog(450028932, ex, "Fehler beim Starten");
+            PLog.errorLog(874587458, ex, "Fehler beim Starten");
         }
         return process;
     }

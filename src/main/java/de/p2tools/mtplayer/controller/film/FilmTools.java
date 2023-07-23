@@ -39,7 +39,7 @@ public class FilmTools {
 
     public static void setFilmShown(ProgData progData, ArrayList<FilmDataMTP> filmArrayList, boolean setShown) {
         if (setShown) {
-            progData.history.addFilmDataToHistory(filmArrayList);
+            progData.history.addFilmDataListToHistory(filmArrayList);
         } else {
             progData.history.removeFilmDataFromHistory(filmArrayList);
         }
@@ -54,7 +54,7 @@ public class FilmTools {
 
     public static void bookmarkFilm(ProgData progData, ArrayList<FilmDataMTP> filmArrayList, boolean bookmark) {
         if (bookmark) {
-            progData.bookmarks.addFilmDataToHistory(filmArrayList);
+            progData.bookmarks.addFilmDataListToHistory(filmArrayList);
         } else {
             progData.bookmarks.removeFilmDataFromHistory(filmArrayList);
         }

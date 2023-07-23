@@ -163,7 +163,7 @@ public class TableDownload extends PTable<DownloadData> {
         srcColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<DownloadData, String> programColumn = new TableColumn<>("Programm");
-        programColumn.setCellValueFactory(new PropertyValueFactory<>("program"));
+        programColumn.setCellValueFactory(new PropertyValueFactory<>("programName"));
         programColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<DownloadData, Integer> setColumn = new TableColumn<>("Programmset");
