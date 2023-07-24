@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.p2lib.tools.PSystemUtils;
@@ -219,7 +220,7 @@ public class DownloadTableContextMenu {
         final MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
         miUpdate.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
         final MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
-        miCleanUp.setOnAction(e -> progData.downloadList.cleanUpList());
+        miCleanUp.setOnAction(e -> DownloadFactory.cleanUpList(progData.downloadList));
 
         miStartAll.setDisable(download == null);
         miStartTimeAll.setDisable(download == null);

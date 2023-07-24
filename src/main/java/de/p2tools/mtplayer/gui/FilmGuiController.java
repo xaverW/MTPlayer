@@ -18,9 +18,8 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.FilmInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
@@ -103,15 +102,10 @@ public class FilmGuiController extends AnchorPane {
         filmSelection.ifPresent(mtp -> PSystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 
-    public void saveFilm(SetData pSet) {
-        final ArrayList<FilmDataMTP> list = getSelList(true);
-        progData.filmlist.saveFilm(list, pSet);
-    }
-
     public void bookmarkFilm(boolean bookmark) {
         final ArrayList<FilmDataMTP> list = getSelList(true);
         if (!list.isEmpty()) {
-            FilmTools.bookmarkFilm(progData, list, bookmark);
+            FilmToolsFactory.bookmarkFilmList(list, bookmark);
         }
     }
 
@@ -128,7 +122,7 @@ public class FilmGuiController extends AnchorPane {
             return;
         }
         getSel(true, false); // damit sel gesetzt wird
-        FilmTools.setFilmShown(progData, list, set);
+        FilmToolsFactory.setFilmShown(list, set);
         selectLastShown();
     }
 

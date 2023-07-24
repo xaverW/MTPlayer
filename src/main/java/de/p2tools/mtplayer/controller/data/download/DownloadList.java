@@ -68,7 +68,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     }
 
     public synchronized void initDownloads() {
-        this.stream().forEach(download -> {
+        this.forEach(download -> {
             //ist bei gespeicherten Downloads der Fall
             SetData setData = progData.setDataList.getSetDataForDownloads(download.getSetDataId());
             if (setData != null) { //todo und dann??
@@ -81,23 +81,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         Collections.sort(this);
     }
 
-    @Override
-    public synchronized boolean add(DownloadData d) {
-        return super.add(d);
-    }
-
-    @Override
-    public synchronized boolean addAll(Collection<? extends DownloadData> elements) {
-        return super.addAll(elements);
-    }
-
-    public synchronized boolean addWithNr(DownloadData e) {
-        final boolean ret = super.add(e);
-        setNumbersInList();
-        return ret;
-    }
-
-    public synchronized void addWithNr(List<DownloadData> list) {
+    public synchronized void addWithNo(List<DownloadData> list) {
         list.stream().forEach(download -> super.add(download));
         setNumbersInList();
     }
@@ -144,12 +128,10 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         return ret;
     }
 
-
-    public synchronized void addFilmInList() {
+    public synchronized void addFilmInDownloads() {
         // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
         // den Film wieder eintragen
         PDuration.counterStart("addFilmInList");
-
         int counter = 50; //todo das dauert sonst viel zu lang
         for (DownloadData d : this) {
             --counter;
@@ -159,7 +141,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
             d.setFilm(progData.filmlist.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
             d.setSizeDownloadFromFilm();
         }
-
         PDuration.counterStop("addFilmInList");
     }
 
@@ -174,10 +155,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
             }
         }
         return null;
-    }
-
-    public synchronized void cleanUpList() {
-        DownloadFactory.cleanUpList(this);
     }
 
     /**

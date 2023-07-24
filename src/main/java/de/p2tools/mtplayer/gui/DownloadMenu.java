@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
@@ -72,7 +73,7 @@ public class DownloadMenu {
                 "Film Starten", "Gespeicherten Film abspielen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
         btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
-        btDownloadClear.setOnAction(a -> progData.downloadList.cleanUpList());
+        btDownloadClear.setOnAction(a -> DownloadFactory.cleanUpList(progData.downloadList));
         btStartDownloads.setOnAction(a -> progData.downloadGuiController.startDownload(false));
         btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
         btDownloadAllTime.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
@@ -164,7 +165,7 @@ public class DownloadMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
-            progData.downloadList.cleanUpList();
+            DownloadFactory.cleanUpList(progData.downloadList);
         });
         PShortcutWorker.addShortCut(mbClean, ProgShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
 

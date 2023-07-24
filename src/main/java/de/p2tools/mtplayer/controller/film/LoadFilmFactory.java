@@ -146,7 +146,7 @@ public class LoadFilmFactory {
             AboFactory.setAboForFilmlist();
 
             logList.add("Bookmarks eintragen");
-            FilmTools.markBookmarks();
+            FilmToolsFactory.markBookmarks();
 
             logList.add("Blacklist filtern");
             ProgData.getInstance().maskerPane.setMaskerText("Blacklist filtern");
@@ -157,7 +157,7 @@ public class LoadFilmFactory {
 
             logList.add("Filme in Downloads eingetragen");
             ProgData.getInstance().maskerPane.setMaskerText("Downloads eingetragen");
-            ProgData.getInstance().downloadList.addFilmInList();
+            ProgData.getInstance().downloadList.addFilmInDownloads();
 
             PLog.sysLog(logList);
 

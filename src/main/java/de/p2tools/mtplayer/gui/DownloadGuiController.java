@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelFilmFile;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
-import de.p2tools.mtplayer.controller.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.gui.dialog.DownloadEditDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadStartAtTimeController;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
@@ -103,6 +103,32 @@ public class DownloadGuiController extends AnchorPane {
         tableView.requestFocus();
     }
 
+    public ArrayList<DownloadData> getSelList() {
+        // todo observableList -> abo
+        final ArrayList<DownloadData> ret = new ArrayList<>();
+        ret.addAll(tableView.getSelectionModel().getSelectedItems());
+        if (ret.isEmpty()) {
+            PAlert.showInfoNoSelection();
+        }
+        return ret;
+    }
+
+    public Optional<DownloadData> getSel() {
+        return getSel(true);
+    }
+
+    public Optional<DownloadData> getSel(boolean show) {
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedTableRow >= 0) {
+            return Optional.of(tableView.getSelectionModel().getSelectedItem());
+        } else {
+            if (show) {
+                PAlert.showInfoNoSelection();
+            }
+            return Optional.empty();
+        }
+    }
+    
     public int getDownloadsShown() {
         return tableView.getItems().size();
     }
@@ -258,32 +284,6 @@ public class DownloadGuiController extends AnchorPane {
 
     public void saveTable() {
         Table.saveTable(tableView, Table.TABLE_ENUM.DOWNLOAD);
-    }
-
-    private ArrayList<DownloadData> getSelList() {
-        // todo observableList -> abo
-        final ArrayList<DownloadData> ret = new ArrayList<>();
-        ret.addAll(tableView.getSelectionModel().getSelectedItems());
-        if (ret.isEmpty()) {
-            PAlert.showInfoNoSelection();
-        }
-        return ret;
-    }
-
-    public Optional<DownloadData> getSel() {
-        return getSel(true);
-    }
-
-    public Optional<DownloadData> getSel(boolean show) {
-        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
-        if (selectedTableRow >= 0) {
-            return Optional.of(tableView.getSelectionModel().getSelectedItem());
-        } else {
-            if (show) {
-                PAlert.showInfoNoSelection();
-            }
-            return Optional.empty();
-        }
     }
 
     private void initListener() {
@@ -442,7 +442,7 @@ public class DownloadGuiController extends AnchorPane {
                 filmArrayList.add(download.getFilm());
             }
         });
-        FilmTools.setFilmShown(progData, filmArrayList, shown);
+        FilmToolsFactory.setFilmShown(filmArrayList, shown);
     }
 
     private void stopWaiting() {

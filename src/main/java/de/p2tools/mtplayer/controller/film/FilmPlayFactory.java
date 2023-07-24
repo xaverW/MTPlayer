@@ -49,7 +49,7 @@ public class FilmPlayFactory {
 
         if (psetData.isSave()) {
             // wenn ein Set zum Speichern gewählt wurde, einen Download anlegen und starten
-            ProgData.getInstance().filmlist.saveFilm(list, psetData);
+            FilmSaveFactory.saveFilmList(list, psetData);
             return;
         }
 

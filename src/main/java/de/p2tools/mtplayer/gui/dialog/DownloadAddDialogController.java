@@ -106,7 +106,8 @@ public class DownloadAddDialogController extends PDialogExtra {
     private ArrayList<FilmDataMTP> filmsToDownloadList;
     private DownloadAddInfo[] downloadAddInfos;
 
-    public DownloadAddDialogController(ProgData progData, ArrayList<FilmDataMTP> filmsToDownloadList, SetData setData, String filterResolution) {
+    public DownloadAddDialogController(ProgData progData, ArrayList<FilmDataMTP> filmsToDownloadList,
+                                       SetData setData, String filterResolution) {
         super(progData.primaryStage,
                 filmsToDownloadList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE :
                         ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
@@ -598,7 +599,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             list.add(download);
         }
 
-        progData.downloadList.addWithNr(list);
+        progData.downloadList.addWithNo(list);
         if (rbStart.isSelected() || rbTime.isSelected()) {
             // und evtl. auch gleich starten
             progData.downloadList.startDownloads(list, false);

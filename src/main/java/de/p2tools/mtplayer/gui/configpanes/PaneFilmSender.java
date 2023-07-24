@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -133,7 +133,7 @@ public class PaneFilmSender {
         final TilePane tilePaneSender = new TilePane();
         tilePaneSender.setHgap(5);
         tilePaneSender.setVgap(5);
-        ArrayList aListChannel = FilmTools.getSenderListNotToLoad();
+        ArrayList aListChannel = FilmToolsFactory.getSenderListNotToLoad();
         ArrayList<CheckBox> aListCb = new ArrayList<>();
         for (String s : ProgConst.SENDER) {
             final CheckBox cb = new CheckBox(s);
@@ -141,7 +141,7 @@ public class PaneFilmSender {
             cb.setSelected(aListChannel.contains(s));
             cb.setOnAction(a -> {
                 makePropSender(aListCb);
-                FilmTools.checkAllSenderSelectedNotToLoad(stage);
+                FilmToolsFactory.checkAllSenderSelectedNotToLoad(stage);
             });
 
             tilePaneSender.getChildren().add(cb);

@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
+import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
@@ -68,7 +69,7 @@ public class FilmMenu {
 
         btPlay.setOnAction(a -> FilmPlayFactory.playFilm());
         btPlayAll.setOnAction(a -> FilmPlayFactory.playFilmList());
-        btSave.setOnAction(a -> progData.filmGuiController.saveFilm(null));
+        btSave.setOnAction(a -> FilmSaveFactory.saveFilmList());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -151,7 +152,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            progData.filmGuiController.saveFilm(null);
+            FilmSaveFactory.saveFilmList();
         });
         PShortcutWorker.addShortCut(mbSave, ProgShortcut.SHORTCUT_SAVE_FILM);
 

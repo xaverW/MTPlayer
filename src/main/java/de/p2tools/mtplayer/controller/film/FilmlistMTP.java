@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.film;
 
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.mtfilm.film.*;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -67,7 +66,6 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         PDuration.counterStart("filteredListSetPred");
         getFilteredList().setPredicate(predicate);
         PDuration.counterStop("filteredListSetPred");
-
     }
 
     @Override
@@ -75,13 +73,13 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         return metaData[FilmlistXml.FILMLIST_ID_NR];
     }
 
-    public synchronized void saveFilm(FilmDataMTP film, SetData pSet) {
-        FilmTools.saveFilm(film, pSet);
-    }
+//    public synchronized void saveFilm(FilmDataMTP film, SetData pSet) {
+//        FilmSaveFactory.saveFilm(film, pSet);
+//    }
 
-    public synchronized void saveFilm(List<FilmDataMTP> list, SetData pSet) {
-        FilmTools.saveFilm(list, pSet);
-    }
+//    public synchronized void saveFilm(List<FilmDataMTP> list, SetData pSet) {
+//        FilmSaveFactory.saveFilm(list, pSet);
+//    }
 
     @Override
     public synchronized boolean importFilmOnlyWithNr(FilmDataMTP film) {
@@ -107,10 +105,10 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         return FilmlistFactory.markFilms(this);
     }
 
-    private boolean addInit(FilmDataMTP film) {
-//        film.init(); todo
-        return add(film);
-    }
+//    private boolean addInit(FilmDataMTP film) {
+////        film.init(); todo
+//        return add(film);
+//    }
 
     @Override
     public synchronized void clear() {

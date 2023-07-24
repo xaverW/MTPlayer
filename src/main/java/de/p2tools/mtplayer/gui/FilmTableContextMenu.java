@@ -21,7 +21,8 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
-import de.p2tools.mtplayer.controller.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
+import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
@@ -51,7 +52,7 @@ public class FilmTableContextMenu {
         MenuItem miStart = new MenuItem("Film abspielen");
         miStart.setOnAction(a -> FilmPlayFactory.playFilm());
         MenuItem miSave = new MenuItem("Film speichern");
-        miSave.setOnAction(a -> filmGuiController.saveFilm(null));
+        miSave.setOnAction(a -> FilmSaveFactory.saveFilmList());
         miStart.setDisable(film == null);
         miSave.setDisable(film == null);
         contextMenu.getItems().addAll(miStart, miSave);
@@ -231,13 +232,13 @@ public class FilmTableContextMenu {
 
         if (film != null && film.isBookmark()) {
             // Bookmark löschen
-            miBookmarkDel.setOnAction(a -> FilmTools.bookmarkFilm(progData, film, false));
+            miBookmarkDel.setOnAction(a -> FilmToolsFactory.bookmarkFilm(film, false));
             miBookmarkAdd.setDisable(true);
 
         } else {
             // Bookmark anlegen
             miBookmarkDel.setDisable(true);
-            miBookmarkAdd.setOnAction(a -> FilmTools.bookmarkFilm(progData, film, true));
+            miBookmarkAdd.setOnAction(a -> FilmToolsFactory.bookmarkFilm(film, true));
         }
         miBookmarkDelAll.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
 

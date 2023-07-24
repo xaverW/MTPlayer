@@ -16,10 +16,11 @@
 
 package de.p2tools.mtplayer.controller.history;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmTools;
+import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
@@ -106,7 +107,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             clearList();
             historyWorker.deleteHistoryFile();
             if (bookmark) {
-                FilmTools.clearAllBookmarks();
+                FilmToolsFactory.clearAllBookmarks();
             }
             MTListener.notify(MTListener.EVENT_HISTORY_CHANGED, HistoryList.class.getSimpleName());
         }
@@ -120,7 +121,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     private synchronized boolean checkIfLiveStream(String theme) {
         // live ist nie alt
-        return theme.equals(FilmTools.THEME_LIVE);
+        return theme.equals(ProgConst.THEME_LIVE);
     }
 
     //===============

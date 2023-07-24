@@ -18,10 +18,10 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
+import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -78,7 +78,7 @@ public class CellFilmButton<S, T> extends TableCell<S, T> {
                 });
                 btnSave.setOnAction(e -> {
                     FilmDataMTP film = getTableView().getItems().get(getIndex());
-                    ProgData.getInstance().filmlist.saveFilm(film, null);
+                    FilmSaveFactory.saveFilm(film);
                 });
                 hbox.getChildren().addAll(btnPlay, btnSave);
                 setGraphic(hbox);
