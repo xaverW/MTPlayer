@@ -28,7 +28,6 @@ import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -39,6 +38,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AboEditDialogController extends AboDialogController {
 
@@ -52,7 +52,7 @@ public class AboEditDialogController extends AboDialogController {
         super(progData, filmFilter, abo);
     }
 
-    public AboEditDialogController(ProgData progData, ObservableList<AboData> aboList) {
+    public AboEditDialogController(ProgData progData, List<AboData> aboList) {
         //hier werden Abos geändert -> Button
         super(progData, aboList);
     }

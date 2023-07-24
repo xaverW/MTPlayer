@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.AboInfoController;
 import de.p2tools.mtplayer.gui.tools.MTListener;
@@ -84,6 +85,30 @@ public class AboGuiController extends AnchorPane {
         setFilter();
     }
 
+    public ObservableList<AboData> getSelList() {
+        final ObservableList<AboData> ret = tableView.getSelectionModel().getSelectedItems();
+        if (ret == null || ret.isEmpty()) {
+            PAlert.showInfoNoSelection();
+        }
+        return ret;
+    }
+
+    public Optional<AboData> getSel() {
+        return getSel(true);
+    }
+
+    private Optional<AboData> getSel(boolean show) {
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedTableRow >= 0) {
+            return Optional.of(tableView.getSelectionModel().getSelectedItem());
+        } else {
+            if (show) {
+                PAlert.showInfoNoSelection();
+            }
+            return Optional.empty();
+        }
+    }
+
     public void isShown() {
         tableView.requestFocus();
         FilmInfoDialogController.getInstance().setFilm(null);
@@ -97,31 +122,6 @@ public class AboGuiController extends AnchorPane {
         return tableView.getSelectionModel().getSelectedItems().size();
     }
 
-    public void aboEditDialog() {
-        //Abos aus Tab Abo (Menü, Doppelklick Tabelle) ändern
-        progData.aboList.aboEditDialog(getSelList());
-    }
-
-    public void setFilmFilterFromAbo() {
-        Optional<AboData> abo = getSel();
-        progData.actFilmFilterWorker.loadStoredFilterFromAbo(abo);
-    }
-
-    public void setAboFromFilmFilterButton() {
-        Optional<AboData> abo = getSel();
-        progData.aboList.changeAboFromFilterButton(abo, progData.actFilmFilterWorker.getActFilterSettings());
-    }
-
-    public void setAboActive(boolean on) {
-        ObservableList<AboData> lAbo = getSelList();
-        progData.aboList.setAboActive(lAbo, on);
-    }
-
-    public void deleteAbo() {
-        ObservableList<AboData> lAbo = getSelList();
-        progData.aboList.deleteAbo(lAbo);
-    }
-
     public void selectAll() {
         tableView.getSelectionModel().selectAll();
     }
@@ -129,7 +129,6 @@ public class AboGuiController extends AnchorPane {
     public void invertSelection() {
         PTableFactory.invertSelection(tableView);
     }
-
 
     public void saveTable() {
         Table.saveTable(tableView, Table.TABLE_ENUM.ABO);
@@ -156,7 +155,7 @@ public class AboGuiController extends AnchorPane {
             TableRowAbo<AboData> row = new TableRowAbo<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                    aboEditDialog();
+                    AboListFactory.editAbo();
                 }
             });
 
@@ -193,30 +192,6 @@ public class AboGuiController extends AnchorPane {
                 event.consume();
             }
         });
-    }
-
-    private ObservableList<AboData> getSelList() {
-        final ObservableList<AboData> ret = tableView.getSelectionModel().getSelectedItems();
-        if (ret == null || ret.isEmpty()) {
-            PAlert.showInfoNoSelection();
-        }
-        return ret;
-    }
-
-    private Optional<AboData> getSel() {
-        return getSel(true);
-    }
-
-    private Optional<AboData> getSel(boolean show) {
-        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
-        if (selectedTableRow >= 0) {
-            return Optional.of(tableView.getSelectionModel().getSelectedItem());
-        } else {
-            if (show) {
-                PAlert.showInfoNoSelection();
-            }
-            return Optional.empty();
-        }
     }
 
     private void setFilterProperty() {

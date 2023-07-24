@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
+import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.MenuButton;
@@ -71,11 +72,11 @@ public class AboMenu {
         final ToolBarButton btChange = new ToolBarButton(vBox,
                 "Abos ändern", "Markierte Abos ändern", ProgIconsMTPlayer.ICON_TOOLBAR_ABO_CONFIG.getImageView());
 
-        btNew.setOnAction(a -> progData.aboList.addNewAboButton("Neu", "", "", ""));
-        btOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
-        btOff.setOnAction(a -> progData.aboGuiController.setAboActive(false));
-        btDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
-        btChange.setOnAction(a -> progData.aboGuiController.aboEditDialog());
+        btNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
+        btOn.setOnAction(a -> AboListFactory.setAboActive(true));
+        btOff.setOnAction(a -> AboListFactory.setAboActive(false));
+        btDel.setOnAction(a -> AboListFactory.deleteAbo());
+        btChange.setOnAction(a -> AboListFactory.editAbo());
     }
 
     private void initMenu() {
@@ -86,19 +87,19 @@ public class AboMenu {
         mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");
-        mbOn.setOnAction(a -> progData.aboGuiController.setAboActive(true));
+        mbOn.setOnAction(a -> AboListFactory.setAboActive(true));
         final MenuItem mbOff = new MenuItem("Abos ausschalten");
-        mbOff.setOnAction(e -> progData.aboGuiController.setAboActive(false));
+        mbOff.setOnAction(e -> AboListFactory.setAboActive(false));
         final MenuItem miDel = new MenuItem("Abos löschen");
-        miDel.setOnAction(a -> progData.aboGuiController.deleteAbo());
+        miDel.setOnAction(a -> AboListFactory.deleteAbo());
         final MenuItem miChange = new MenuItem("Abos ändern");
-        miChange.setOnAction(a -> progData.aboGuiController.aboEditDialog());
+        miChange.setOnAction(a -> AboListFactory.editAbo());
         final MenuItem miNew = new MenuItem("Neues Abo anlegen");
-        miNew.setOnAction(a -> progData.aboList.addNewAboButton("Neu", "", "", ""));
+        miNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
         final MenuItem miAboAddFilter = new MenuItem("Aus dem Film-Filter ein Abo erstellen");
         miAboAddFilter.setOnAction(a -> {
             FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
-            progData.aboList.addNewAboFromFilterButton(filmFilter);
+            AboListFactory.addNewAboFromFilterButton(filmFilter);
         });
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + ShortKeyFactory.SHORT_CUT_LEER +

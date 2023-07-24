@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableAbo;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
@@ -50,17 +51,17 @@ public class AboTableContextMenu {
         final MenuItem miOnOff;
         if (abo != null && abo.isActive()) {
             miOnOff = new MenuItem("Abos ausschalten");
-            miOnOff.setOnAction(e -> aboGuiController.setAboActive(false));
+            miOnOff.setOnAction(e -> AboListFactory.setAboActive(false));
         } else {
             miOnOff = new MenuItem("Abos einschalten");
-            miOnOff.setOnAction(a -> aboGuiController.setAboActive(true));
+            miOnOff.setOnAction(a -> AboListFactory.setAboActive(true));
         }
         final MenuItem miDel = new MenuItem("Abos löschen");
-        miDel.setOnAction(a -> aboGuiController.deleteAbo());
+        miDel.setOnAction(a -> AboListFactory.deleteAbo());
         final MenuItem miChange = new MenuItem("Abos ändern");
-        miChange.setOnAction(a -> aboGuiController.aboEditDialog());
+        miChange.setOnAction(a -> AboListFactory.editAbo());
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
-        miNew.setOnAction(a -> progData.aboList.addNewAboButton("Neu", "", "", ""));
+        miNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> progData.aboList.undoAbos());
@@ -94,9 +95,9 @@ public class AboTableContextMenu {
 
     private Menu getSubMenuFilter(AboData abo) {
         final MenuItem miAboToFilter = new MenuItem("Abo  -->  Filmfilter (Filmfilter aus Abo setzen)");
-        miAboToFilter.setOnAction(a -> aboGuiController.setFilmFilterFromAbo());
+        miAboToFilter.setOnAction(a -> AboListFactory.setFilmFilterFromAbo());
         final MenuItem miFilterToAbo = new MenuItem("Filmfilter  -->  Abo (Abo aus Filmfilter setzen)");
-        miFilterToAbo.setOnAction(a -> aboGuiController.setAboFromFilmFilterButton());
+        miFilterToAbo.setOnAction(a -> AboListFactory.setAboFromFilmFilter());
 
         Menu mFilter = new Menu("Filmfilter - Abo");
         mFilter.setDisable(abo == null);

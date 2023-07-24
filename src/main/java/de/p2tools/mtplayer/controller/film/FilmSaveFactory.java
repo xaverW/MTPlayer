@@ -32,7 +32,6 @@ public class FilmSaveFactory {
     private FilmSaveFactory() {
     }
 
-
     public static void saveFilm(FilmDataMTP film) {
         // aus Button/Menü
         ArrayList<FilmDataMTP> list = new ArrayList<>();

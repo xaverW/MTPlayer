@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
@@ -178,8 +179,8 @@ public class DownloadTableContextMenu {
         miDelAbo.setDisable(download == null);
 
         if (download != null && download.getAbo() != null) {
-            miChangeAbo.setOnAction(event -> progData.aboList.aboEditDialog(download.getAbo()));
-            miDelAbo.setOnAction(event -> progData.aboList.deleteAbo(download.getAbo()));
+            miChangeAbo.setOnAction(event -> AboListFactory.editAbo(download.getAbo()));
+            miDelAbo.setOnAction(event -> AboListFactory.deleteAbo(download.getAbo()));
         } else {
             miChangeAbo.setDisable(true);
             miDelAbo.setDisable(true);

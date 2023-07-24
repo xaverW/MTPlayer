@@ -45,6 +45,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
+
 public class AboDialogController extends PDialogExtra {
 
     final GridPane gridPane = new GridPane();
@@ -132,7 +134,7 @@ public class AboDialogController extends PDialogExtra {
         initDialog();
     }
 
-    public AboDialogController(ProgData progData, ObservableList<AboData> aboList) {
+    public AboDialogController(ProgData progData, List<AboData> aboList) {
         // hier werden Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", false, false, DECO.BORDER, true);

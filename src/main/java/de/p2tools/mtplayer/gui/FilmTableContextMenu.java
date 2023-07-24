@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
@@ -158,16 +159,16 @@ public class FilmTableContextMenu {
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
             FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
-            progData.aboList.addNewAboFromFilterButton(filmFilter);
+            AboListFactory.addNewAboFromFilterButton(filmFilter);
         });
         AboData aboData = film == null ? null : BlacklistFilterFactory.findAbo(film);
         if (aboData == null) {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen
             miAboAddChannelTheme.setOnAction(a ->
-                    progData.aboList.addNewAboButton(film.getTheme(), film.getChannel(), film.getTheme(), ""));
+                    AboListFactory.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), ""));
             miAboAddChannelThemeTitle.setOnAction(a ->
-                    progData.aboList.addNewAboButton(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
+                    AboListFactory.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
             //Abo löschen/ändern
             miAboChange.setDisable(true);
             miAboDel.setDisable(true);
@@ -177,9 +178,9 @@ public class FilmTableContextMenu {
             miAboAddChannelThemeTitle.setDisable(true);
             //Abo löschen/ändern
             miAboChange.setOnAction(event ->
-                    progData.aboList.aboEditDialog(aboData));
+                    AboListFactory.editAbo(aboData));
             miAboDel.setOnAction(event ->
-                    progData.aboList.deleteAbo(aboData));
+                    AboListFactory.deleteAbo(aboData));
         }
 
         submenuAbo.getItems().addAll(miAboAddChannelTheme, miAboAddChannelThemeTitle, miAboAddFilter, miAboChange, miAboDel);

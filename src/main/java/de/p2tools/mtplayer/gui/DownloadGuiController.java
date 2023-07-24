@@ -128,7 +128,7 @@ public class DownloadGuiController extends AnchorPane {
             return Optional.empty();
         }
     }
-    
+
     public int getDownloadsShown() {
         return tableView.getItems().size();
     }
@@ -168,20 +168,7 @@ public class DownloadGuiController extends AnchorPane {
         if (download.isEmpty()) {
             return;
         }
-
-        FilmDataMTP film;
-        if (download.get().getFilm() == null) {
-            film = new FilmDataMTP();
-        } else {
-            film = download.get().getFilm().getCopy();
-        }
-
-        // und jetzt die tatsächlichen URLs des Downloads eintragen
-        film.arr[FilmDataMTP.FILM_URL] = download.get().getUrl();
-        film.arr[FilmDataMTP.FILM_URL_SMALL] = "";
-        // und starten
-
-        FilmPlayFactory.playFilm(film);
+        FilmPlayFactory.playUrl(download.get());
     }
 
     public void copyFilmThemeTitle(boolean theme) {
@@ -198,9 +185,6 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilmInfos(DownloadData download) {
-//        if (tabPane.getSelectionModel().getSelectedItem().equals(tabMedia)) {
-//            downloadGuiMedia.setSearchPredicate(download);
-//        }
         downloadInfoController.setDownloadInfos(download);
         FilmInfoDialogController.getInstance().setFilm(download != null ? download.getFilm() : null);
     }
@@ -259,10 +243,6 @@ public class DownloadGuiController extends AnchorPane {
     public void changeDownload() {
         change();
     }
-
-//    public void undoDeleteDownload() {
-//        progData.downloadList.undoDownloads();
-//    }
 
     public void setFilmShown() {
         // Filme als gesehen markieren

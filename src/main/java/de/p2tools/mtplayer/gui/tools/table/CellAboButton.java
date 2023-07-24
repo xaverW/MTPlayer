@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -70,7 +71,7 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 btnDel.setTooltip(new Tooltip("Abo löschen"));
                 btnDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnDel.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_ABO_DEL.getImageView());
-                btnDel.setOnAction(a -> ProgData.getInstance().aboList.deleteAbo(aboData));
+                btnDel.setOnAction(a -> AboListFactory.deleteAbo(aboData));
 
                 if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO.get()) {
                     btnActivate.setMaxHeight(18);

@@ -16,18 +16,10 @@
 
 package de.p2tools.mtplayer.controller.data.abo;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
-import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
-import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.GermanStringSorter;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
@@ -36,7 +28,10 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class AboList extends SimpleListProperty<AboData> implements PDataList<AboData> {
     private final ProgData progData;
@@ -97,118 +92,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         super.add(abo);
     }
 
-    public synchronized void addNewAboFromFilterButton(FilmFilter filmFilter) {
-        //abo anlegen, oder false wenns schon existiert
-        String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
-        String theme = filmFilter.isThemeVis() ? filmFilter.getTheme().trim() : "";
-        boolean themeExact = filmFilter.isThemeExact();
-        String title = filmFilter.isTitleVis() ? filmFilter.getTitle().trim() : "";
-        String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle().trim() : "";
-        String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere().trim() : "";
-        int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : FilterCheck.FILTER_ALL_OR_MIN;
-        int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : FilterCheck.FILTER_DURATION_MAX_MINUTE;
-
-        String searchTitle = "";
-        String searchChannel = channel.isEmpty() ? "" : channel + " - ";
-
-        if (!themeTitle.isEmpty()) {
-            searchTitle = searchChannel + themeTitle;
-
-        } else if (!theme.isEmpty() && !title.isEmpty()) {
-            searchTitle = searchChannel + theme + "-" + title;
-
-        } else if (!theme.isEmpty() || !title.isEmpty()) {
-            searchTitle = searchChannel + theme + title;
-
-        } else if (!somewhere.isEmpty()) {
-            searchTitle = searchChannel + somewhere;
-        }
-
-        if (searchTitle.isEmpty()) {
-            searchTitle = "Abo aus Filter";
-        }
-
-        searchTitle = DownloadFactory.replaceEmptyFileName(searchTitle,
-                false /* nur ein Ordner */,
-                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
-                ProgConfig.SYSTEM_ONLY_ASCII.getValue());
-
-        final AboData abo = new AboData(progData,
-                searchTitle /* name */,
-                channel,
-                theme,
-                themeTitle,
-                title,
-                somewhere,
-                filmFilter.getTimeRange(),
-                minDuration,
-                maxDuration,
-                searchTitle);
-
-        if (!theme.isEmpty()) {
-            abo.setThemeExact(themeExact);
-        }
-
-        new AboEditDialogController(progData, abo);
-    }
-
-    public synchronized void changeAboFromFilterButton(Optional<AboData> oAbo, FilmFilter filmFilter) {
-        // abo mit den Filterwerten einstellen
-        if (!oAbo.isPresent()) {
-            return;
-        }
-
-        final AboData abo = oAbo.get();
-        new AboEditDialogController(progData, filmFilter, abo);
-    }
-
-    public synchronized void addNewAboButton(String aboName, String filmChannel, String filmTheme, String filmTitle) {
-        // abo anlegen, oder false wenns schon existiert
-        int minDuration, maxDuration;
-        try {
-            minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getValue();
-            maxDuration = ProgConfig.ABO_MINUTE_MAX_SIZE.getValue();
-        } catch (final Exception ex) {
-            minDuration = FilterCheck.FILTER_ALL_OR_MIN;
-            maxDuration = FilterCheck.FILTER_DURATION_MAX_MINUTE;
-            ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(FilterCheck.FILTER_ALL_OR_MIN);
-            ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-        }
-
-        String namePath = DownloadFactory.replaceEmptyFileName(aboName,
-                false /* nur ein Ordner */,
-                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
-                ProgConfig.SYSTEM_ONLY_ASCII.getValue());
-
-        final AboData abo = new AboData(progData,
-                namePath /* name */,
-                filmChannel,
-                filmTheme,
-                "" /* filmThemaTitel */,
-                filmTitle,
-                "",
-                FilterCheck.FILTER_ALL_OR_MIN,
-                minDuration,
-                maxDuration,
-                namePath);
-
-        new AboEditDialogController(progData, abo);
-    }
-
-    public synchronized void aboEditDialog(AboData abo) {
-        //Abo aus Tab Filme/Download ändern
-        if (abo != null) {
-            aboEditDialog(FXCollections.observableArrayList(abo));
-        }
-    }
-
-    public synchronized void aboEditDialog(ObservableList<AboData> lAbo) {
-        if (!lAbo.isEmpty()) {
-            new AboEditDialogController(progData, lAbo);
-        }
-    }
-
-    public synchronized void setAboActive(ObservableList<AboData> lAbo, boolean on) {
+    public synchronized void setAboActive(List<AboData> lAbo, boolean on) {
         if (!lAbo.isEmpty()) {
             lAbo.stream().forEach(abo -> abo.setActive(on));
             notifyChanges();
@@ -220,30 +104,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         notifyChanges();
     }
 
-    public synchronized void deleteAbo(AboData abo) {
-        if (abo == null) {
-            return;
-        }
-        ObservableList<AboData> lAbo = FXCollections.observableArrayList(abo);
-        deleteAbo(lAbo);
-    }
-
     public synchronized void deleteAbo(ObservableList<AboData> lAbo) {
-        if (lAbo.isEmpty()) {
-            return;
-        }
-
-        if (ProgConfig.ABO_ONLY_STOP.getValue() == AskBeforeDeleteState.ABO_DELETE__ASK) {
-            // dann erst mal fragen
-            AboDelDialogController aboDelDialog =
-                    new AboDelDialogController(lAbo);
-            if (aboDelDialog.getState() != PDialogExtra.STATE.STATE_OK) {
-                //dann soll nix gemacht werden
-                PLog.sysLog("Abo löschen: Abbruch");
-                return;
-            }
-        }
-
         // dann soll das Abo gelöscht werden
         PLog.sysLog("Abo löschen");
         addAbosToUndoList(lAbo); // erst eintragen, dann löschen - selList ändert sich dann

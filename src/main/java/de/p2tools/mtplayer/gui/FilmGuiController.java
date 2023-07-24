@@ -102,6 +102,33 @@ public class FilmGuiController extends AnchorPane {
         filmSelection.ifPresent(mtp -> PSystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 
+    public ArrayList<FilmDataMTP> getSelList(boolean markSel/*markieren was vor dem SEL ist*/) {
+        final ArrayList<FilmDataMTP> ret = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
+        if (ret.isEmpty()) {
+            PAlert.showInfoNoSelection();
+        } else if (markSel) {
+            setWasLastShown(ret.get(0));
+        }
+        return ret;
+    }
+
+    public Optional<FilmDataMTP> getSel(boolean markSel/*markieren was vor dem SEL ist*/, boolean show) {
+        Optional<FilmDataMTP> mtp;
+        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedTableRow >= 0) {
+            mtp = Optional.of(tableView.getSelectionModel().getSelectedItem());
+        } else {
+            if (show) {
+                PAlert.showInfoNoSelection();
+            }
+            mtp = Optional.empty();
+        }
+        if (markSel && mtp.isPresent()) {
+            setWasLastShown(mtp.get());
+        }
+        return mtp;
+    }
+
     public void bookmarkFilm(boolean bookmark) {
         final ArrayList<FilmDataMTP> list = getSelList(true);
         if (!list.isEmpty()) {
@@ -128,33 +155,6 @@ public class FilmGuiController extends AnchorPane {
 
     public void saveTable() {
         Table.saveTable(tableView, Table.TABLE_ENUM.FILM);
-    }
-
-    public ArrayList<FilmDataMTP> getSelList(boolean markSel/*markieren was vor dem SEL ist*/) {
-        final ArrayList<FilmDataMTP> ret = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
-        if (ret.isEmpty()) {
-            PAlert.showInfoNoSelection();
-        } else if (markSel) {
-            setWasLastShown(ret.get(0));
-        }
-        return ret;
-    }
-
-    public Optional<FilmDataMTP> getSel(boolean markSel/*markieren was vor dem SEL ist*/, boolean show) {
-        Optional<FilmDataMTP> mtp;
-        final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
-        if (selectedTableRow >= 0) {
-            mtp = Optional.of(tableView.getSelectionModel().getSelectedItem());
-        } else {
-            if (show) {
-                PAlert.showInfoNoSelection();
-            }
-            mtp = Optional.empty();
-        }
-        if (markSel && mtp.isPresent()) {
-            setWasLastShown(mtp.get());
-        }
-        return mtp;
     }
 
     private void initListener() {

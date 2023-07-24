@@ -34,6 +34,22 @@ public class FilmPlayFactory {
     private FilmPlayFactory() {
     }
 
+    public static void playUrl(DownloadData download) {
+        // aus Menü
+        FilmDataMTP film;
+        if (download.getFilm() == null) {
+            film = new FilmDataMTP();
+        } else {
+            film = download.getFilm().getCopy();
+        }
+
+        // und jetzt die tatsächlichen URLs des Downloads eintragen
+        film.arr[FilmDataMTP.FILM_URL] = download.getUrl();
+        film.arr[FilmDataMTP.FILM_URL_SMALL] = "";
+        // und starten
+        playFilm(film);
+    }
+
     public static void playFilmListWithSet(SetData psetData) {
         // Button/Menü: Film mit Set starten
         List<FilmDataMTP> list = ProgData.getInstance().filmGuiController.getSelList(true);

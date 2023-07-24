@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -139,7 +140,7 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miAbo = new MenuItem("aus den Filtereinstellungen ein Abo erstellen");
         miAbo.setOnAction(a -> {
             FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
-            progData.aboList.addNewAboFromFilterButton(filmFilter);
+            AboListFactory.addNewAboFromFilterButton(filmFilter);
         });
 
         final MenuItem miResort = new MenuItem("Filterprofile sortieren");
