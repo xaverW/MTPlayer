@@ -155,7 +155,7 @@ public class DownloadGuiController extends AnchorPane {
         film.arr[FilmDataMTP.FILM_URL_SMALL] = "";
         // und starten
 
-        FilmPlayFactory.startFilm(film);
+        FilmPlayFactory.playFilm(film);
     }
 
     public void copyFilmThemeTitle(boolean theme) {

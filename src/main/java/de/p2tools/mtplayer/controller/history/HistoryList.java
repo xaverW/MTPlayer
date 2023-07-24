@@ -143,7 +143,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStop("addHistoryDataToHistory");
     }
 
-    public synchronized void addFilmDataListToHistory(ArrayList<FilmDataMTP> filmList) {
+    public synchronized void addFilmDataListToHistory(List<FilmDataMTP> filmList) {
         // eine Liste Filme in die History schreiben
 
         if (filmList == null || filmList.isEmpty()) {
@@ -193,6 +193,10 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStart("addDownloadDataListToHistory");
         for (final DownloadData download : downloadList) {
             if (checkIfLiveStream(download.getTheme())) {
+                continue;
+            }
+            if (!download.getSetData().isPlay() && !download.getSetData().isSave()) {
+                // dann ist es nicht zum Abspielen oder Speichern->Button
                 continue;
             }
 

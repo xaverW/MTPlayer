@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmTools;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
@@ -48,9 +49,9 @@ public class FilmTableContextMenu {
 
         // Start/Save
         MenuItem miStart = new MenuItem("Film abspielen");
-        miStart.setOnAction(a -> filmGuiController.playFilm());
+        miStart.setOnAction(a -> FilmPlayFactory.playFilm());
         MenuItem miSave = new MenuItem("Film speichern");
-        miSave.setOnAction(a -> filmGuiController.saveTheFilm());
+        miSave.setOnAction(a -> filmGuiController.saveFilm(null));
         miStart.setDisable(film == null);
         miSave.setDisable(film == null);
         contextMenu.getItems().addAll(miStart, miSave);
@@ -78,10 +79,10 @@ public class FilmTableContextMenu {
         final MenuItem miFilmsSetShown;
         if (film != null && film.isShown()) {
             miFilmsSetShown = new MenuItem("Filme als ungesehen markieren");
-            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmNotShown());
+            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(false));
         } else {
             miFilmsSetShown = new MenuItem("Filme als gesehen markieren");
-            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown());
+            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(true));
         }
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
@@ -191,7 +192,7 @@ public class FilmTableContextMenu {
             list.forEach(setData -> {
                 final MenuItem item = new MenuItem(setData.getVisibleName());
                 item.setDisable(film == null);
-                item.setOnAction(event -> filmGuiController.playFilmUrlWithSet(setData));
+                item.setOnAction(event -> FilmPlayFactory.playFilmListWithSet(setData));
                 submenuSet.getItems().add(item);
             });
 

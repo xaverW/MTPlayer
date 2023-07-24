@@ -20,9 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmTools;
-import de.p2tools.mtplayer.controller.film.FilmlistMTP;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.FilmInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
@@ -105,43 +103,13 @@ public class FilmGuiController extends AnchorPane {
         filmSelection.ifPresent(mtp -> PSystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 
-    public void playFilm() {
-        // Menü/Button Film abspielen
-        final Optional<FilmDataMTP> filmSelection = getSel(true, true);
-        filmSelection.ifPresent(this::playFilm);
-    }
-
-    public synchronized void playFilm(FilmDataMTP mtp) {
-        // aus Menü/Button Film abspielen
-        if (mtp != null) {
-            tableView.getSelectionModel().select(mtp);
-            setWasShown(mtp);
-            FilmPlayFactory.startFilm(mtp);
-        }
-    }
-
-    public void playFilmList() {
-        // aus Menü/Button Film abspielen
-        ArrayList<FilmDataMTP> list = getSelList();
-        if (list.isEmpty()) {
-            return;
-        }
-
-        setWasShown(list.get(0)); // den ersten markieren
-        FilmPlayFactory.startFilmList(list);
-    }
-
-    public void playFilmUrlWithSet(SetData psetData) {
-        // Button/Menü: Film mit Set starten
-        startFilmUrlWithSet(psetData);
-    }
-
-    public void saveTheFilm() {
-        saveFilm();
+    public void saveFilm(SetData pSet) {
+        final ArrayList<FilmDataMTP> list = getSelList(true);
+        progData.filmlist.saveFilm(list, pSet);
     }
 
     public void bookmarkFilm(boolean bookmark) {
-        final ArrayList<FilmDataMTP> list = getSelList();
+        final ArrayList<FilmDataMTP> list = getSelList(true);
         if (!list.isEmpty()) {
             FilmTools.bookmarkFilm(progData, list, bookmark);
         }
@@ -153,31 +121,27 @@ public class FilmGuiController extends AnchorPane {
         film.ifPresent(mtp -> new MediaDialogController(mtp.getTheme(), mtp.getTitle()));
     }
 
-    public void setFilmShown() {
+    public void setFilmShown(boolean set) {
         // aus dem Menü/Kontext Tabelle
-        final ArrayList<FilmDataMTP> list = getSelList();
+        final ArrayList<FilmDataMTP> list = getSelList(true);
         if (list.isEmpty()) {
             return;
         }
         getSel(true, false); // damit sel gesetzt wird
-        FilmTools.setFilmShown(progData, list, true);
-        selectShown();
-    }
-
-    public void setFilmNotShown() {
-        final ArrayList<FilmDataMTP> list = getSelList();
-        FilmTools.setFilmShown(progData, list, false);
-        PTableFactory.refreshTable(tableView);
+        FilmTools.setFilmShown(progData, list, set);
+        selectLastShown();
     }
 
     public void saveTable() {
         Table.saveTable(tableView, Table.TABLE_ENUM.FILM);
     }
 
-    public ArrayList<FilmDataMTP> getSelList() {
+    public ArrayList<FilmDataMTP> getSelList(boolean markSel/*markieren was vor dem SEL ist*/) {
         final ArrayList<FilmDataMTP> ret = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
             PAlert.showInfoNoSelection();
+        } else if (markSel) {
+            setWasLastShown(ret.get(0));
         }
         return ret;
     }
@@ -185,7 +149,6 @@ public class FilmGuiController extends AnchorPane {
     public Optional<FilmDataMTP> getSel(boolean markSel/*markieren was vor dem SEL ist*/, boolean show) {
         Optional<FilmDataMTP> mtp;
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
-
         if (selectedTableRow >= 0) {
             mtp = Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
@@ -194,18 +157,15 @@ public class FilmGuiController extends AnchorPane {
             }
             mtp = Optional.empty();
         }
-
         if (markSel && mtp.isPresent()) {
-            setWasShown(mtp.get());
+            setWasLastShown(mtp.get());
         }
         return mtp;
     }
 
     private void initListener() {
         ProgConfig.FILM_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
-        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
-            selectShown();
-        });
+        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> selectLastShown());
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
                 ProgConfig.FILM_GUI_DIVIDER_ON.set(true);
@@ -224,15 +184,6 @@ public class FilmGuiController extends AnchorPane {
                 PTableFactory.refreshTable(tableView);
             }
         });
-    }
-
-    public void remove() {
-        FilmlistMTP list = new FilmlistMTP();
-        tableView.setItems(list.getSortedList());
-    }
-
-    public void set() {
-        tableView.setItems(sortedList);
     }
 
     private void initTable() {
@@ -290,7 +241,8 @@ public class FilmGuiController extends AnchorPane {
         });
     }
 
-    private void setWasShown(FilmDataMTP mtp) {
+    private void setWasLastShown(FilmDataMTP mtp) {
+        // die Filme vor dem letzten angezeigten Film markieren
         boolean set = true;
         for (int i = 0; i < tableView.getItems().size(); ++i) {
             FilmDataMTP f = tableView.getItems().get(i);
@@ -302,7 +254,8 @@ public class FilmGuiController extends AnchorPane {
         }
     }
 
-    private void selectShown() {
+    private void selectLastShown() {
+        // den letzten Film vor dem zuvor angezeigten setzen
         Platform.runLater(() -> {
             // bei der Blacklist kommt das außer der Reihe
             if (tableView.getItems().isEmpty()) {
@@ -333,33 +286,6 @@ public class FilmGuiController extends AnchorPane {
                 tableView.scrollTo(0);
             }
         });
-    }
-
-    private void startFilmUrlWithSet(SetData pSet) {
-        // Button/Menü: Film mit Set starten
-        // Url mit Prognr. starten
-        if (pSet.isSave()) {
-            // wenn das pSet zum Speichern (über die Button) gewählt wurde,
-            // weiter mit dem Dialog "Speichern"
-            saveFilm(pSet);
-            return;
-        }
-
-        final Optional<FilmDataMTP> filmSelection = getSel(true, true);
-        if (filmSelection.isEmpty()) {
-            return;
-        }
-
-        FilmTools.playFilm(filmSelection.get(), pSet);
-    }
-
-    private synchronized void saveFilm() {
-        saveFilm(null);
-    }
-
-    private synchronized void saveFilm(SetData pSet) {
-        final ArrayList<FilmDataMTP> list = getSelList();
-        progData.filmlist.saveFilm(list, pSet);
     }
 
     private void setFilmInfos() {

@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class FilmTools {
@@ -60,37 +61,13 @@ public class FilmTools {
         }
     }
 
-    public static void playFilm(FilmDataMTP film, SetData psetData) {
-        // aus Menü
-        SetData setData;
-        String resolution = "";
-
-        if (psetData != null) {
-            setData = psetData;
-        } else {
-            setData = ProgData.getInstance().setDataList.getSetDataPlay();
-        }
-
-        if (setData == null) {
-            new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.PLAY);
-            return;
-        }
-
-        if (ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().isOnlyHd()) {
-            resolution = FilmDataMTP.RESOLUTION_HD;
-        }
-
-        // und starten
-        ProgData.getInstance().starterClass.startUrlWithProgram(film, setData, resolution);
-    }
-
     public static void saveFilm(FilmDataMTP film, SetData pSet) {
         ArrayList<FilmDataMTP> list = new ArrayList<>();
         list.add(film);
         saveFilm(list, pSet);
     }
 
-    public static void saveFilm(ArrayList<FilmDataMTP> list, SetData pSet) {
+    public static void saveFilm(List<FilmDataMTP> list, SetData pSet) {
         if (list.isEmpty()) {
             return;
         }

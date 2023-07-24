@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
+import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
@@ -65,9 +66,9 @@ public class FilmMenu {
         final ToolBarButton btSave = new ToolBarButton(vBox,
                 "Speichern", "Markierte Filme speichern", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_REC.getImageView());
 
-        btPlay.setOnAction(a -> progData.filmGuiController.playFilm());
-        btPlayAll.setOnAction(a -> progData.filmGuiController.playFilmList());
-        btSave.setOnAction(a -> progData.filmGuiController.saveTheFilm());
+        btPlay.setOnAction(a -> FilmPlayFactory.playFilm());
+        btPlayAll.setOnAction(a -> FilmPlayFactory.playFilmList());
+        btSave.setOnAction(a -> progData.filmGuiController.saveFilm(null));
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -132,7 +133,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            progData.filmGuiController.playFilm();
+            FilmPlayFactory.playFilm();
         });
         PShortcutWorker.addShortCut(mbPlay, ProgShortcut.SHORTCUT_PLAY_FILM);
 
@@ -141,7 +142,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            progData.filmGuiController.playFilmList();
+            FilmPlayFactory.playFilmList();
         });
         PShortcutWorker.addShortCut(mbPlayAll, ProgShortcut.SHORTCUT_PLAY_FILM_ALL);
 
@@ -150,7 +151,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            progData.filmGuiController.saveTheFilm();
+            progData.filmGuiController.saveFilm(null);
         });
         PShortcutWorker.addShortCut(mbSave, ProgShortcut.SHORTCUT_SAVE_FILM);
 
@@ -161,7 +162,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            progData.filmGuiController.setFilmShown();
+            progData.filmGuiController.setFilmShown(true);
         });
         PShortcutWorker.addShortCut(miFilmShown, ProgShortcut.SHORTCUT_FILM_SHOWN);
 
@@ -170,7 +171,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            progData.filmGuiController.setFilmNotShown();
+            progData.filmGuiController.setFilmShown(false);
         });
         PShortcutWorker.addShortCut(miFilmNotShown, ProgShortcut.SHORTCUT_FILM_NOT_SHOWN);
 

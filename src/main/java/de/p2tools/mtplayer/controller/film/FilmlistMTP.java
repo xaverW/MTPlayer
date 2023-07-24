@@ -79,7 +79,7 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         FilmTools.saveFilm(film, pSet);
     }
 
-    public synchronized void saveFilm(ArrayList<FilmDataMTP> list, SetData pSet) {
+    public synchronized void saveFilm(List<FilmDataMTP> list, SetData pSet) {
         FilmTools.saveFilm(list, pSet);
     }
 

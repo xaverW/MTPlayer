@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.infoPane;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
+import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColor;
 import javafx.geometry.Insets;
@@ -50,7 +51,7 @@ public class PaneFilmButton {
                 btn.getStyleClass().add("setButton");
             }
 
-            btn.setOnAction(a -> ProgData.getInstance().filmGuiController.playFilmUrlWithSet(setData));
+            btn.setOnAction(a -> FilmPlayFactory.playFilmListWithSet(setData));
             tilePaneButton.getChildren().add(btn);
         });
         return tilePaneButton;
