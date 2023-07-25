@@ -24,7 +24,7 @@ import javafx.util.Callback;
 
 public class CellAboBackHist<S, T> extends TableCell<S, T> {
 
-    public final Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> callbackHits =
+    public final Callback<TableColumn<AboData, Integer>, TableCell<AboData, Integer>> callback =
             (final TableColumn<AboData, Integer> param) -> {
 
                 final TableCell<AboData, Integer> cell = new TableCell<>() {

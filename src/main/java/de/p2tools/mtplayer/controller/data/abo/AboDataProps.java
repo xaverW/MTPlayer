@@ -34,6 +34,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
 
     private final IntegerProperty no = new SimpleIntegerProperty(0);
     private final BooleanProperty active = new SimpleBooleanProperty(true);
+    private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private final StringProperty name = new SimpleStringProperty("");
     private final StringProperty description = new SimpleStringProperty("");
     private final StringProperty resolution = new SimpleStringProperty(FilmDataMTP.RESOLUTION_NORMAL);
@@ -53,10 +54,9 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final PDateProperty genDate = new PDateProperty(new PDate()); //Erstelldatum
 
     private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
-    private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private int countHit = 0;
 
-    public final Property[] properties = {no, active, name, description, resolution,
+    public final Property[] properties = {no, active, hit, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
             timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, date, setDataId, genDate};
 
@@ -70,6 +70,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         ArrayList<Config> list = new ArrayList<>();
         list.add(new Config_intProp("no", no));
         list.add(new Config_boolProp("active", active));
+        list.add(new Config_intProp("hit", hit));
         list.add(new Config_stringProp("name", name));
         list.add(new Config_stringProp("description", description));
         list.add(new Config_stringProp("resolution", resolution));

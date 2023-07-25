@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 public class AboFieldNames {
 
     public static final String ABO_NO = "Nr";
+    public static final String ABO_HIT = "Treffer";
     public static final String ABO_ACTIVE = "Aktiv";
     public static final String ABO_NAME = "Name";
     public static final String ABO_DESCRIPTION = "Beschreibung";
@@ -40,27 +41,29 @@ public class AboFieldNames {
     public static final String ABO_GEN_DATE = "Angelegt";
 
     public static final int ABO_NO_NO = 0;
-    public static final int ABO_ACTIVE_NO = 1;
-    public static final int ABO_NAME_NO = 2;
-    public static final int ABO_DESCRIPTION_NO = 3;
-    public static final int ABO_RESOLUTION_NO = 4;
-    public static final int ABO_CHANNEL_NO = 5;
-    public static final int ABO_THEME_NO = 6;
-    public static final int ABO_THEME_EXACT_NO = 7;
-    public static final int ABO_THEME_TITLE_NO = 8;
-    public static final int ABO_TITLE_NO = 9;
-    public static final int ABO_SOMEWHERE_NO = 10;
-    public static final int ABO_TIME_RANGE_NO = 11;
-    public static final int ABO_MIN_DURATION_NO = 12;
-    public static final int ABO_MAX_DURATION_NO = 13;
-    public static final int ABO_START_TIME_NO = 14;
-    public static final int ABO_DEST_PATH_NO = 15;
-    public static final int ABO_DATE_LAST_ABO_NO = 16;
-    public static final int ABO_SET_DATA_ID_NO = 17;
-    public static final int ABO_GEN_DATE_NO = 18;
+    public static final int ABO_HIT_NO = 1;
+    public static final int ABO_ACTIVE_NO = 2;
+    public static final int ABO_NAME_NO = 3;
+    public static final int ABO_DESCRIPTION_NO = 4;
+    public static final int ABO_RESOLUTION_NO = 5;
+    public static final int ABO_CHANNEL_NO = 6;
+    public static final int ABO_THEME_NO = 7;
+    public static final int ABO_THEME_EXACT_NO = 8;
+    public static final int ABO_THEME_TITLE_NO = 9;
+    public static final int ABO_TITLE_NO = 10;
+    public static final int ABO_SOMEWHERE_NO = 11;
+    public static final int ABO_TIME_RANGE_NO = 12;
+    public static final int ABO_MIN_DURATION_NO = 13;
+    public static final int ABO_MAX_DURATION_NO = 14;
+    public static final int ABO_START_TIME_NO = 15;
+    public static final int ABO_DEST_PATH_NO = 16;
+    public static final int ABO_DATE_LAST_ABO_NO = 17;
+    public static final int ABO_SET_DATA_ID_NO = 18;
+    public static final int ABO_GEN_DATE_NO = 19;
 
     public static final String[] COLUMN_NAMES = {
             ABO_NO,
+            ABO_HIT,
             ABO_ACTIVE,
             ABO_NAME,
             ABO_DESCRIPTION,

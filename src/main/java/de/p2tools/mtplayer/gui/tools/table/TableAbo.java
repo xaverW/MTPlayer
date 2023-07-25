@@ -72,7 +72,7 @@ public class TableAbo extends PTable<AboData> {
 
         final TableColumn<AboData, Integer> hitColumn = new TableColumn<>("Treffer");
         hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
-        hitColumn.setCellFactory(new CellAboBackHist().callbackHits);
+        hitColumn.setCellFactory(new CellAboBackHist().callback);
         hitColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<AboData, String> nameColumn = new TableColumn<>("Name");

@@ -190,10 +190,14 @@ public class AboEditDialogController extends AboDialogController {
                 break;
 
             case AboFieldNames.ABO_NO_NO:
-                txt[i].setEditable(false);
-                txt[i].setDisable(true);
-                txt[i].setText(aboCopy.getNo() + "");
-                gridPane.add(txt[i], 1, grid);
+                final Label lblNo = new Label();
+                lblNo.setText(aboCopy.getNo() + "");
+                gridPane.add(lblNo, 1, grid);
+                break;
+            case AboFieldNames.ABO_HIT_NO:
+                final Label lblHit = new Label();
+                lblHit.textProperty().bind(aboList.get(0).hitProperty().asString());
+                gridPane.add(lblHit, 1, grid);
                 break;
             case AboFieldNames.ABO_NAME_NO:
                 setDefaultTxt(i, grid);
@@ -486,6 +490,7 @@ public class AboEditDialogController extends AboDialogController {
 
         switch (i) {
             case AboFieldNames.ABO_NO_NO:
+            case AboFieldNames.ABO_HIT_NO:
             case AboFieldNames.ABO_DATE_LAST_ABO_NO:
             case AboFieldNames.ABO_GEN_DATE_NO:
             case AboFieldNames.ABO_MAX_DURATION_NO:

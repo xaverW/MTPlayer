@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.abo.AboDataProps;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
@@ -79,7 +80,7 @@ public class DownloadFactoryAbo {
         List<DownloadData> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
 
         // den Abo-Trefferzähler zurücksetzen
-        ProgData.getInstance().aboList.stream().forEach(abo -> abo.clearCountHit());
+        ProgData.getInstance().aboList.forEach(AboDataProps::clearCountHit);
 
         if (ProgData.getInstance().setDataList.getSetDataForAbo("") == null) {
             // dann fehlt ein Set für die Abos
@@ -96,14 +97,14 @@ public class DownloadFactoryAbo {
 
         // und jetzt die Filmliste ablaufen
         ProgData.getInstance().filmList.parallelStream().forEach(film -> {
-            final AboData abo = film.getAbo();
-            if (abo == null) {
+            final AboData aboData = film.getAbo();
+            if (aboData == null) {
                 //dann gibts dafür kein Abo
                 //oder abo ist ausgeschaltet, ...
                 return;
             }
 
-            abo.incrementCountHit();
+            aboData.incrementCountHit();
 
             if (checkWithBlackList && BlacklistFilterFactory.checkFilmIsBlockedCompleteBlackData(film, false)) {
                 // Blacklist auch bei Abos anwenden und Film wird blockiert
@@ -116,16 +117,16 @@ public class DownloadFactoryAbo {
             }
 
             // mit der tatsächlichen URL prüfen, ob die URL schon in der Downloadliste ist
-            final String urlDownload = film.getUrlForResolution(abo.getResolution());
+            final String urlDownload = film.getUrlForResolution(aboData.getResolution());
             if (!syncDownloadsAlreadyInTheListHash.add(urlDownload)) {
                 return;
             }
 
             //dann haben wird einen Treffer :)
             //und dann auch in die Liste schreiben
-            abo.setDate(new PDate());
-            final SetData setData = abo.getSetData(ProgData.getInstance());
-            syncDownloadArrayList.add(new DownloadData(DownloadConstants.SRC_ABO, setData, film, abo, "", "", ""));
+            aboData.setDate(new PDate());
+            final SetData setData = aboData.getSetData(ProgData.getInstance());
+            syncDownloadArrayList.add(new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData, "", "", ""));
             found = true;
         });
 
@@ -138,7 +139,7 @@ public class DownloadFactoryAbo {
         syncDownloadsAlreadyInTheListHash.clear();
 
         // und jetzt die hits eintragen (hier, damit nicht bei jedem die Tabelle geändert werden muss)
-        ProgData.getInstance().aboList.forEach(abo -> abo.setCountedHits());
+        ProgData.getInstance().aboList.forEach(AboDataProps::setCountedHits);
 
         PDuration.counterStop("searchForNewDownloads");
     }
