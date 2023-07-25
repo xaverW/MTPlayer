@@ -55,7 +55,7 @@ public class PaneAbo extends PaneDialog {
         this.stage = stage;
         this.abo = abo;
         if (abo) {
-            list = progData.erledigteAbos;
+            list = progData.historyListAbos;
             textSearch = new Text("Abos, suchen im: " +
                     (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL ?
                             "Titel des Abos" : "Thema oder Titel des Abos"));
@@ -66,7 +66,7 @@ public class PaneAbo extends PaneDialog {
                             "Titel des Abos" : "Thema oder Titel des Abos")));
 
         } else {
-            list = progData.history;
+            list = progData.historyList;
             textSearch = new Text("History, suchen im: " +
                     (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL ?
                             "Titel des History-Films" : "Thema oder Titel des History-Films"));

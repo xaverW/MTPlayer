@@ -29,7 +29,6 @@ import javafx.scene.layout.VBox;
 public class FilterController extends PClosePaneV {
 
     public static final int FILTER_SPACING_TEXTFILTER = 10;
-
     private final VBox vBoxAll;
 
     public FilterController(BooleanProperty mlConfig) {

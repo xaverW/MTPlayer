@@ -18,11 +18,16 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
+import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.log.PLog;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -34,6 +39,31 @@ import java.util.List;
 public class DownloadFactory {
 
     private DownloadFactory() {
+    }
+
+    public static void searchForAbosAndMaybeStart() {
+        if (LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
+            // wird danach eh gemacht
+            return;
+        }
+
+        if (ProgData.getInstance().setDataList.getSetDataForAbo() == null) {
+            // SetData sind nicht eingerichtet
+            Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.ABO));
+            return;
+        }
+
+        PDuration.counterStart("searchForAbosAndMaybeStart");
+        PLog.sysLog("Downloads aus Abos suchen");
+        //erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
+        ProgData.getInstance().downloadList.searchForDownloadsFromAbos();
+
+        if (ProgConfig.DOWNLOAD_START_NOW.getValue() || ProgData.autoMode) {
+            // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
+            PLog.sysLog("Downloads aus Abos starten");
+            ProgData.getInstance().downloadList.startAllDownloads();
+        }
+        PDuration.counterStop("searchForAbosAndMaybeStart");
     }
 
     public static void preferDownloads(DownloadList downloadList, List<DownloadData> prefDownList) {

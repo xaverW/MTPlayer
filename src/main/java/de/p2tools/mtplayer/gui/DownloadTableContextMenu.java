@@ -219,7 +219,7 @@ public class DownloadTableContextMenu {
         final MenuItem miStopWaiting = new MenuItem("Alle wartenden Downloads stoppen");
         miStopWaiting.setOnAction(a -> downloadGuiController.stopWaitingDownloads());
         final MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
-        miUpdate.setOnAction(e -> progData.worker.searchForAbosAndMaybeStart());
+        miUpdate.setOnAction(e -> DownloadFactory.searchForAbosAndMaybeStart());
         final MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
         miCleanUp.setOnAction(e -> DownloadFactory.cleanUpList(progData.downloadList));
 

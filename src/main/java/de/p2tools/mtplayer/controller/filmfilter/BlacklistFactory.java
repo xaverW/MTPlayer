@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmlistMTP;
+import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.gui.dialog.AddBlackListDialogController;
 import de.p2tools.p2lib.tools.duration.PDuration;
 
@@ -45,7 +45,7 @@ public class BlacklistFactory {
             }
             blackData = new BlackData(filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
                     filmDataMTP.get().getTitle(), "");
-            
+
         } else {
             final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
             if (downloadData.isEmpty()) {
@@ -105,7 +105,7 @@ public class BlacklistFactory {
         for (BlackData bl : list) {
             bl.clearCounter();
         }
-        final FilmlistMTP filmDataMTPS = ProgData.getInstance().filmlist;
+        final FilmListMTP filmDataMTPS = ProgData.getInstance().filmList;
         if (filmDataMTPS != null) {
             filmDataMTPS.parallelStream().forEach(film ->
                     BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list));

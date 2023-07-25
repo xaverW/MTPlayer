@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.download.ReplaceList;
 import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
-import de.p2tools.mtplayer.controller.film.FilmlistMTP;
+import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.filmfilter.ActFilmFilterWorker;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
 import de.p2tools.mtplayer.controller.history.HistoryList;
@@ -97,8 +97,8 @@ public class ProgData {
     public DownloadInfos downloadInfos;
 
     // Programmdaten
-    public FilmlistMTP filmlist; // ist die komplette Filmliste
-    public FilmlistMTP filmlistFiltered; // Filmliste, wie im TabFilme angezeigt
+    public FilmListMTP filmList; // ist die komplette Filmliste
+    public FilmListMTP filmListFiltered; // Filmliste, wie im TabFilme angezeigt
 
     public DownloadList downloadList; // Filme die als "Download" geladen werden sollen
     //    public DownloadList downloadListButton; // Filme die über "Tab Filme" als Button/Film abspielen, gestartet werden
@@ -112,9 +112,9 @@ public class ProgData {
 
     public ReplaceList replaceList;
 
-    public HistoryList history; // alle angesehenen Filme
-    public HistoryList erledigteAbos; // erfolgreich geladenen Abos
-    public HistoryList bookmarks; // markierte Filme
+    public HistoryList historyList; // alle angesehenen Filme
+    public HistoryList historyListAbos; // erfolgreich geladenen Abos
+    public HistoryList historyListBookmarks; // markierte Filme
     public CheckForNewFilmlist checkForNewFilmlist;
 
     private ProgData() {
@@ -122,8 +122,8 @@ public class ProgData {
         replaceList = new ReplaceList();
 
         actFilmFilterWorker = new ActFilmFilterWorker(this);
-        filmlist = new FilmlistMTP();
-        filmlistFiltered = new FilmlistMTP();
+        filmList = new FilmListMTP();
+        filmListFiltered = new FilmListMTP();
 
         filmListFilter = new BlackList(this, "FilmListFilter");
         blackList = new BlackList(this, "BlackList");
@@ -135,11 +135,11 @@ public class ProgData {
 
         filmFilterRunner = new FilmFilterRunner(this);
 
-        history = new HistoryList(ProgConst.FILE_HISTORY,
+        historyList = new HistoryList(ProgConst.FILE_HISTORY,
                 ProgInfos.getSettingsDirectory_String(), false);
-        erledigteAbos = new HistoryList(ProgConst.FILE_ERLEDIGTE_ABOS,
+        historyListAbos = new HistoryList(ProgConst.FILE_FINISHED_ABOS,
                 ProgInfos.getSettingsDirectory_String(), false);
-        bookmarks = new HistoryList(ProgConst.FILE_BOOKMARKS,
+        historyListBookmarks = new HistoryList(ProgConst.FILE_BOOKMARKS,
                 ProgInfos.getSettingsDirectory_String(), true);
 
         mediaDataList = new MediaDataList();

@@ -34,9 +34,9 @@ public class FilmToolsFactory {
 
     public static void setFilmShown(ArrayList<FilmDataMTP> filmArrayList, boolean setShown) {
         if (setShown) {
-            ProgData.getInstance().history.addFilmDataListToHistory(filmArrayList);
+            ProgData.getInstance().historyList.addFilmDataListToHistory(filmArrayList);
         } else {
-            ProgData.getInstance().history.removeFilmDataFromHistory(filmArrayList);
+            ProgData.getInstance().historyList.removeFilmDataFromHistory(filmArrayList);
         }
     }
 
@@ -48,24 +48,24 @@ public class FilmToolsFactory {
 
     public static void bookmarkFilmList(ArrayList<FilmDataMTP> filmArrayList, boolean bookmark) {
         if (bookmark) {
-            ProgData.getInstance().bookmarks.addFilmDataListToHistory(filmArrayList);
+            ProgData.getInstance().historyListBookmarks.addFilmDataListToHistory(filmArrayList);
         } else {
-            ProgData.getInstance().bookmarks.removeFilmDataFromHistory(filmArrayList);
+            ProgData.getInstance().historyListBookmarks.removeFilmDataFromHistory(filmArrayList);
         }
     }
 
     public static void clearAllBookmarks() {
-        FilmlistMTP filmlist = ProgData.getInstance().filmlist;
+        FilmListMTP filmlist = ProgData.getInstance().filmList;
         filmlist.stream().forEach(film -> film.setBookmark(false));
     }
 
     public static void markBookmarks() {
-        if (ProgData.getInstance().bookmarks.isEmpty()) {
+        if (ProgData.getInstance().historyListBookmarks.isEmpty()) {
             return;
         }
 
-        FilmlistMTP filmlist = ProgData.getInstance().filmlist;
-        HistoryList bookmarks = ProgData.getInstance().bookmarks;
+        FilmListMTP filmlist = ProgData.getInstance().filmList;
+        HistoryList bookmarks = ProgData.getInstance().historyListBookmarks;
 
         filmlist.stream().forEach(film -> {
             if (bookmarks.checkIfUrlAlreadyIn(film.getUrlHistory())) {

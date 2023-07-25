@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelFilmFile;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
@@ -62,8 +63,8 @@ public class DownloadGuiController extends AnchorPane {
     private final TableDownload tableView;
     private final DownloadInfoController downloadInfoController;
     private final ProgData progData;
-    private final FilteredList<DownloadData> filteredDownloads;
-    private final SortedList<DownloadData> sortedDownloads;
+    private final FilteredList<DownloadData> filteredListDownloads;
+    private final SortedList<DownloadData> sortedListDownloads;
     private boolean bound = false;
 
     public DownloadGuiController() {
@@ -84,8 +85,8 @@ public class DownloadGuiController extends AnchorPane {
 
         ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
 
-        filteredDownloads = new FilteredList<>(progData.downloadList, p -> true);
-        sortedDownloads = new SortedList<>(filteredDownloads);
+        filteredListDownloads = new FilteredList<>(progData.downloadList, p -> true);
+        sortedListDownloads = new SortedList<>(filteredListDownloads);
 
         setInfoPane();
         initTable();
@@ -283,7 +284,7 @@ public class DownloadGuiController extends AnchorPane {
                 if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode)
                         && ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-                    progData.worker.searchForAbosAndMaybeStart();
+                    DownloadFactory.searchForAbosAndMaybeStart();
                 }
             }
         });
@@ -295,24 +296,24 @@ public class DownloadGuiController extends AnchorPane {
         });
 
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
-                Platform.runLater(() -> setFilter()));
+                Platform.runLater(this::setFilter));
 
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());
+                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                Platform.runLater(() -> progData.worker.searchForAbosAndMaybeStart());
+                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
             }
         });
     }
 
     private void initTable() {
         Table.setTable(tableView);
-        tableView.setItems(sortedDownloads);
-        sortedDownloads.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedListDownloads);
+        sortedListDownloads.comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tv -> {
             TableRowDownload<DownloadData> row = new TableRowDownload<>();
@@ -408,9 +409,8 @@ public class DownloadGuiController extends AnchorPane {
                     state.equals(DownloadConstants.STATE_COMBO_ERROR) && downloadData.isStateError());
         }
 
-        filteredDownloads.setPredicate(predicate);
+        filteredListDownloads.setPredicate(predicate);
     }
-
 
     private void setFilmShown(boolean shown) {
         // Filme als (un)gesehen markieren

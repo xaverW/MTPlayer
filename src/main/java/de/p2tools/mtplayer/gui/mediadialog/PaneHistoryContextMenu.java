@@ -50,14 +50,14 @@ public class PaneHistoryContextMenu {
     }
 
     private void getMenu(ContextMenu contextMenu) {
-        FilmDataMTP film = progData.filmlist.getFilmByUrl(historyDataArrayList.get(0).getUrl());
+        FilmDataMTP film = progData.filmList.getFilmByUrl(historyDataArrayList.get(0).getUrl());
 
         MenuItem miDelUrl = new MenuItem("Url aus der Liste löschen");
         miDelUrl.setOnAction(a -> {
             if (history) {
-                progData.history.removeHistoryDataFromHistory(historyDataArrayList);
+                progData.historyList.removeHistoryDataFromHistory(historyDataArrayList);
             } else {
-                progData.erledigteAbos.removeHistoryDataFromHistory(historyDataArrayList);
+                progData.historyListAbos.removeHistoryDataFromHistory(historyDataArrayList);
             }
         });
 

@@ -56,7 +56,7 @@ public class LoadFilmFactory {
     }
 
     public synchronized static final LoadFilmFactory getInstance() {
-        return instance == null ? instance = new LoadFilmFactory(new FilmlistMTP(), new FilmlistMTP()) : instance;
+        return instance == null ? instance = new LoadFilmFactory(new FilmListMTP(), new FilmListMTP()) : instance;
     }
 
     public void initLoadFactoryConst() {
@@ -76,7 +76,7 @@ public class LoadFilmFactory {
         LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MIN_DURATION = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getValue();
         LoadFactoryConst.removeDiacritic = ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue();
         LoadFactoryConst.userAgent = ProgConfig.SYSTEM_USERAGENT.getValue();
-        LoadFactoryConst.filmlist = ProgData.getInstance().filmlist;
+        LoadFactoryConst.filmlist = ProgData.getInstance().filmList;
         LoadFactoryConst.loadFilmlist = loadFilmlist;
         LoadFactoryConst.primaryStage = ProgData.getInstance().primaryStage;
         LoadFactoryConst.filmListUrl = ProgData.filmListUrl;
@@ -103,7 +103,7 @@ public class LoadFilmFactory {
         loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
-                ProgData.getInstance().worker.workOnLoadStart();
+                ProgData.getInstance().worker.workOnFilmListLoadStart();
                 if (event.progress == PROGRESS_INDETERMINATE) {
                     // ist dann die gespeicherte Filmliste
                     ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
@@ -127,7 +127,7 @@ public class LoadFilmFactory {
             @Override
             public synchronized void finished(ListenerFilmlistLoadEvent event) {
                 PDuration.onlyPing("Filme geladen: Nachbearbeiten");
-                afterLoadingFilmlist();
+                afterLoadingFilmList();
             }
         });
     }
@@ -135,12 +135,12 @@ public class LoadFilmFactory {
     /**
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
-    private void afterLoadingFilmlist() {
+    private void afterLoadingFilmList() {
         new Thread(() -> {
             List<String> logList = new ArrayList<>();
 
             logList.add("Themen suchen");
-            ProgData.getInstance().filmlist.loadTheme();
+            ProgData.getInstance().filmList.loadTheme();
 
             logList.add("Abos eintragen");
             AboFactory.setAboForFilmlist();
@@ -167,11 +167,11 @@ public class LoadFilmFactory {
             PDuration.onlyPing("Filme nachbearbeiten: Ende");
 
             ProgData.getInstance().maskerPane.setMaskerText("Abos suchen");
-            ProgData.getInstance().worker.workOnLoadFinished();
+            ProgData.getInstance().worker.workOnFilmListLoadFinished();
             ProgData.getInstance().filmFilterRunner.filter();
 
-            String filmDate = FilmlistFactory.getAgeAsStringDate(ProgData.getInstance().filmlist.metaData);
-            ProgConfig.SYSTEM_FILMLIST_DATE.setValue(ProgData.getInstance().filmlist.isEmpty() ? "" : filmDate);
+            String filmDate = FilmlistFactory.getAgeAsStringDate(ProgData.getInstance().filmList.metaData);
+            ProgConfig.SYSTEM_FILMLIST_DATE.setValue(ProgData.getInstance().filmList.isEmpty() ? "" : filmDate);
 
             if (!doneAtProgramStart) {
                 doneAtProgramStart = true;

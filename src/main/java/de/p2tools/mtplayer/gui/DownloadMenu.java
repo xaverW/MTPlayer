@@ -72,7 +72,7 @@ public class DownloadMenu {
         final ToolBarButton btDownloadFilm = new ToolBarButton(vBox,
                 "Film Starten", "Gespeicherten Film abspielen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
-        btDownloadRefresh.setOnAction(a -> progData.worker.searchForAbosAndMaybeStart());
+        btDownloadRefresh.setOnAction(a -> DownloadFactory.searchForAbosAndMaybeStart());
         btDownloadClear.setOnAction(a -> DownloadFactory.cleanUpList(progData.downloadList));
         btStartDownloads.setOnAction(a -> progData.downloadGuiController.startDownload(false));
         btDownloadAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
@@ -156,7 +156,7 @@ public class DownloadMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
-            progData.worker.searchForAbosAndMaybeStart();
+            DownloadFactory.searchForAbosAndMaybeStart();
         });
         PShortcutWorker.addShortCut(mbUpdateList, ProgShortcut.SHORTCUT_DOWNLOADS_UPDATE);
 

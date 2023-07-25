@@ -87,7 +87,7 @@ public class FilmMenu {
 
         btBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm(true));
         btDelBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
-        btDelAllBookmark.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
+        btDelAllBookmark.setOnAction(a -> progData.historyListBookmarks.clearAll(progData.primaryStage));
 
         btFilterBookmakr.setOnAction(a -> {
             if (storedActFilterSettings != null && storedBookmarkFilter != null) {
@@ -220,7 +220,7 @@ public class FilmMenu {
         final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
         miBookmarkDel.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
         final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
-        miBookmarkDelAll.setOnAction(a -> progData.bookmarks.clearAll(progData.primaryStage));
+        miBookmarkDelAll.setOnAction(a -> progData.historyListBookmarks.clearAll(progData.primaryStage));
 
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);
         mb.getItems().add(submenuBookmark);

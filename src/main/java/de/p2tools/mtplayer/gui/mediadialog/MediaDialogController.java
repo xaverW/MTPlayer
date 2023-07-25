@@ -89,7 +89,7 @@ public class MediaDialogController extends PDialogExtra {
         paneAbo.close();
         paneHistory.close();
 
-        progData.erledigteAbos.filteredListSetPredFalse();
+        progData.historyListAbos.filteredListSetPredFalse();
         progData.mediaDataList.filterdListSetPredFalse();
         super.close();
     }

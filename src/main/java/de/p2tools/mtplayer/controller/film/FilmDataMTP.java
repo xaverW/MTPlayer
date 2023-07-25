@@ -43,7 +43,7 @@ public class FilmDataMTP extends FilmData {
     @Override
     public void init() {
         super.init();
-        setShown(ProgData.getInstance().history.checkIfUrlAlreadyIn(getUrlHistory()));
+        setShown(ProgData.getInstance().historyList.checkIfUrlAlreadyIn(getUrlHistory()));
     }
 
     public synchronized AboData getAbo() {

@@ -82,7 +82,7 @@ public class FilmFilterRunner {
                     PLog.debugLog("========================================");
 
                     progData.filmGuiController.tableView.setVisible(false);
-                    progData.filmlistFiltered.filteredListSetPred(
+                    progData.filmListFiltered.filteredListSetPred(
                             PredicateFactory.getPredicate(progData.actFilmFilterWorker.getActFilterSettings()));
 
                     Platform.runLater(() -> {

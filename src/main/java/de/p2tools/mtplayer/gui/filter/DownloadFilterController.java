@@ -115,7 +115,7 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.SRC_COMBO_ABO);
 
         Bindings.bindBidirectional(cboSrc.valueProperty(), ProgConfig.FILTER_DOWNLOAD_SOURCE,
-                new StringConverter<String>() {
+                new StringConverter<>() {
 
                     @Override
                     public String fromString(String cb) {
@@ -151,7 +151,7 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.TYPE_COMBO_PROGRAM);
 
         Bindings.bindBidirectional(cboKind.valueProperty(), ProgConfig.FILTER_DOWNLOAD_TYPE,
-                new StringConverter<String>() {
+                new StringConverter<>() {
 
                     @Override
                     public String fromString(String cb) {
@@ -190,7 +190,7 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.STATE_COMBO_ERROR);
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE);
 
-        cboAbo.setItems(progData.worker.getAllAboNamesList()); // todo evtl. nur die vorhandenen Abos
+        cboAbo.setItems(progData.worker.getAllAboNamesList());
         cboAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO);
     }
 

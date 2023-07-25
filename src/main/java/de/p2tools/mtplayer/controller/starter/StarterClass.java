@@ -106,7 +106,7 @@ public class StarterClass {
             PLog.errorLog(795632500, "Download fehlgeschlagen: Datei zu klein: " + download.getDestPathFile());
         } else {
             if (download.isAbo()) {
-                progData.erledigteAbos.addHistoryDataToHistory(download.getTheme(), download.getTitle(), download.getHistoryUrl());
+                progData.historyListAbos.addHistoryDataToHistory(download.getTheme(), download.getTitle(), download.getHistoryUrl());
             }
             ret = true;
         }

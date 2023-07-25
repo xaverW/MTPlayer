@@ -95,7 +95,7 @@ public class DownloadFactoryAbo {
         final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue();
 
         // und jetzt die Filmliste ablaufen
-        ProgData.getInstance().filmlist.parallelStream().forEach(film -> {
+        ProgData.getInstance().filmList.parallelStream().forEach(film -> {
             final AboData abo = film.getAbo();
             if (abo == null) {
                 //dann gibts dafür kein Abo
@@ -110,7 +110,7 @@ public class DownloadFactoryAbo {
                 return;
             }
 
-            if (ProgData.getInstance().erledigteAbos.checkIfUrlAlreadyIn(film.getUrlHistory())) {
+            if (ProgData.getInstance().historyListAbos.checkIfUrlAlreadyIn(film.getUrlHistory())) {
                 // ist schon mal geladen worden
                 return;
             }

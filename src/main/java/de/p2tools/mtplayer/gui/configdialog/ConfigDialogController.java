@@ -155,7 +155,7 @@ public class ConfigDialogController extends PDialogExtra {
     private void onlyClose() {
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             //dann hat sich der Geo-Standort geändert
-            progData.filmlist.markGeoBlocked();
+            progData.filmList.markGeoBlocked();
         }
 
         if (blackChanged.get() && !LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
@@ -169,7 +169,7 @@ public class ConfigDialogController extends PDialogExtra {
             new Thread(() -> {
                 ProgData.getInstance().maskerPane.setMaskerText("Diakritika entfernen");
                 ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
-                FilmFactory.flattenDiacritic(progData.filmlist);
+                FilmFactory.flattenDiacritic(progData.filmList);
                 MTListener.notify(MTListener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
                 ProgData.getInstance().maskerPane.switchOffMasker();
             }).start();

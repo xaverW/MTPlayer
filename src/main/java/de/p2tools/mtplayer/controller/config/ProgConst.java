@@ -29,7 +29,7 @@ public class ProgConst {
     public static final String CONFIG_DIRECTORY = "p2Mtplayer"; // im Homeverzeichnis
 
     public static final String FILE_BOOKMARKS = "bookmarks.txt";
-    public static final String FILE_ERLEDIGTE_ABOS = "downloads.txt";
+    public static final String FILE_FINISHED_ABOS = "downloads.txt";
     public static final String FILE_HISTORY = "history.txt";
     public static final String FILE_MEDIA_DB = "mediadb.txt";
     public static final String LOG_DIR = "Log";

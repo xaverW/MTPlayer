@@ -112,7 +112,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
             return;
         }
         //aus der Abo-History löschen
-        progData.erledigteAbos.removeDownloadDataFromHistory(undoList);
+        progData.historyListAbos.removeDownloadDataFromHistory(undoList);
         addAll(undoList);
         undoList.clear();
     }
@@ -138,7 +138,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
             if (counter < 0) {
                 break;
             }
-            d.setFilm(progData.filmlist.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+            d.setFilm(progData.filmList.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
             d.setSizeDownloadFromFilm();
         }
         PDuration.counterStop("addFilmInList");

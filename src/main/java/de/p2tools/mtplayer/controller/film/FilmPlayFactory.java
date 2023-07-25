@@ -114,7 +114,7 @@ public class FilmPlayFactory {
         final ArrayList<String> list = new ArrayList<>();
         startMsg(downloadData, list);
 
-        ProgData.getInstance().history.addFilmDataListToHistory(filmList);
+        ProgData.getInstance().historyList.addFilmDataListToHistory(filmList);
         final RuntimeExecPlayFilm runtimeExec = new RuntimeExecPlayFilm(downloadData);
         Process process = runtimeExec.exec(true /* log */);
         if (process != null) {

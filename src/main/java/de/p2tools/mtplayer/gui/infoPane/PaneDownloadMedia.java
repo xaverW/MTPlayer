@@ -190,11 +190,11 @@ public class PaneDownloadMedia extends VBox {
 
     private void initSearch() {
         lblSumMedia.setText(progData.mediaDataList.getFilteredList().size() + "");
-        lblSumAbo.setText(progData.erledigteAbos.getFilteredList().size() + "");
+        lblSumAbo.setText(progData.historyListAbos.getFilteredList().size() + "");
         progData.mediaDataList.getFilteredList().addListener((ListChangeListener<MediaData>) c ->
                 Platform.runLater(() -> lblSumMedia.setText(progData.mediaDataList.getFilteredList().size() + "")));
-        progData.erledigteAbos.getFilteredList().addListener((ListChangeListener<HistoryData>) c ->
-                Platform.runLater(() -> lblSumAbo.setText(progData.erledigteAbos.getFilteredList().size() + "")));
+        progData.historyListAbos.getFilteredList().addListener((ListChangeListener<HistoryData>) c ->
+                Platform.runLater(() -> lblSumAbo.setText(progData.historyListAbos.getFilteredList().size() + "")));
 
         txtSearchMedia.textProperty().addListener((u, o, n) -> {
             filter(true);
@@ -221,7 +221,7 @@ public class PaneDownloadMedia extends VBox {
             progData.mediaDataList.filteredListSetPredicate(
                     MediaSearchPredicateFactory.getPredicateMediaData(txtSearchMedia.getText()));
         } else {
-            progData.erledigteAbos.filteredListSetPredicate(
+            progData.historyListAbos.filteredListSetPredicate(
                     MediaSearchPredicateFactory.getPredicateHistoryData(txtSearchAbo.getText()));
         }
     }
@@ -288,7 +288,7 @@ public class PaneDownloadMedia extends VBox {
         tableAbo.getColumns().addAll(themeColumn, titleColumn, dateColumn);
         tableAbo.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        SortedList<HistoryData> sortedList = progData.erledigteAbos.getSortedList();
+        SortedList<HistoryData> sortedList = progData.historyListAbos.getSortedList();
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());
         tableAbo.setItems(sortedList);
     }

@@ -25,14 +25,14 @@ import javafx.collections.transformation.SortedList;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class FilmlistMTP extends Filmlist<FilmDataMTP> {
+public class FilmListMTP extends Filmlist<FilmDataMTP> {
 
     public String[][] themePerChannel = {{""}};
 
     private FilteredList<FilmDataMTP> filteredList = null;
     private SortedList<FilmDataMTP> sortedList = null;
 
-    public FilmlistMTP() {
+    public FilmListMTP() {
     }
 
     @Override
@@ -126,7 +126,7 @@ public class FilmlistMTP extends Filmlist<FilmDataMTP> {
         }
     }
 
-    public synchronized void setMeta(FilmlistMTP filmlist) {
+    public synchronized void setMeta(FilmListMTP filmlist) {
         System.arraycopy(filmlist.metaData, 0, metaData, 0, FilmlistXml.MAX_ELEM);
     }
 

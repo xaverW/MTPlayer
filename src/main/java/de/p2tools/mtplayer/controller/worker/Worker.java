@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.controller.worker;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -32,15 +32,15 @@ import java.util.*;
 
 public class Worker {
 
-    private ObservableList<String> allChannelList = FXCollections.observableArrayList("");
-    private ObservableList<String> themeForChannelList = FXCollections.observableArrayList("");
-    private ObservableList<String> channelsForAbosList = FXCollections.observableArrayList("");
-    private ObservableList<String> allAboNamesList = FXCollections.observableArrayList("");
+    private final ObservableList<String> allChannelList = FXCollections.observableArrayList("");
+    private final ObservableList<String> themeForChannelList = FXCollections.observableArrayList("");
+    private final ObservableList<String> channelsForAbosList = FXCollections.observableArrayList("");
+    private final ObservableList<String> allAboNamesList = FXCollections.observableArrayList("");
 
-    final FilmFilter sfTemp = new FilmFilter();
-    String downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.get();
-    String downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.get();
-    String aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
+    private final FilmFilter sfTemp = new FilmFilter();
+    private String downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
+    private String downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
+    private String aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
 
     private final ProgData progData;
 
@@ -76,20 +76,36 @@ public class Worker {
         });
     }
 
-    public void workOnLoadStart() {
-        // the channel combo will be reseted, therefore save the filter
+    public ObservableList<String> getAllChannelList() {
+        return allChannelList;
+    }
+
+    public ObservableList<String> getThemeForChannelList() {
+        return themeForChannelList;
+    }
+
+    public ObservableList<String> getChannelsForAbosList() {
+        return channelsForAbosList;
+    }
+
+    public ObservableList<String> getAllAboNamesList() {
+        return allAboNamesList;
+    }
+
+    public void workOnFilmListLoadStart() {
+        // the channel combo will be reset, therefore save the filter
         saveFilter();
     }
 
-    public void workOnLoadFinished() {
+    public void workOnFilmListLoadFinished() {
         Platform.runLater(() -> {
             // alle Sender laden
-            allChannelList.setAll(Arrays.asList(progData.filmlist.sender));
+            allChannelList.setAll(Arrays.asList(progData.filmList.sender));
 
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
             createThemeList(progData.actFilmFilterWorker.getActFilterSettings().getChannel());
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                searchForAbosAndMaybeStart();
+                DownloadFactory.searchForAbosAndMaybeStart();
             }
 
             // activate the saved filter
@@ -98,42 +114,31 @@ public class Worker {
     }
 
     private void saveFilter() {
+        // Filter Filme
         progData.actFilmFilterWorker.getActFilterSettings().copyTo(sfTemp);
+        // Filter Downloads
         downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
         downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
+        // Filter Abos
         aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
     }
 
     private void resetFilter() {
         sfTemp.copyTo(progData.actFilmFilterWorker.getActFilterSettings());
-        ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
-        ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo); // todo ???
-        ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
-    }
-
-    public void searchForAbosAndMaybeStart() {
-        if (LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
-            // wird danach eh gemacht
-            return;
+        if (getAllAboNamesList().contains(downloadFilterAbo)) {
+            // nur wenn noch drin, dann wieder setzen
+            ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo);
+        } else {
+            ProgConfig.FILTER_DOWNLOAD_ABO.setValue("");
         }
-
-        if (progData.setDataList.getSetDataForAbo() == null) {
-            // SetData sind nicht eingerichtet
-            Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));
-            return;
+        if (allChannelList.contains(aboFilterChannel)) {
+            // nur wenn noch drin, dann wieder setzen
+            ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
+            ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
+        } else {
+            ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue("");
+            ProgConfig.FILTER_ABO_CHANNEL.setValue("");
         }
-
-        PDuration.counterStart("searchForAbosAndMaybeStart");
-        PLog.sysLog("Downloads aus Abos suchen");
-        //erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
-        progData.downloadList.searchForDownloadsFromAbos();
-
-        if (ProgConfig.DOWNLOAD_START_NOW.getValue() || ProgData.autoMode) {
-            // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
-            PLog.sysLog("Downloads aus Abos starten");
-            progData.downloadList.startAllDownloads();
-        }
-        PDuration.counterStop("searchForAbosAndMaybeStart");
     }
 
     public void createThemeList(String sender) {
@@ -141,7 +146,7 @@ public class Worker {
         PDuration.counterStart("createThemeList");
         final ArrayList<String> theme = new ArrayList<>();
         if (sender.isEmpty()) {
-            theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[0]));
+            theme.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[0]));
         } else {
             makeTheme(sender.trim(), theme);
         }
@@ -179,10 +184,10 @@ public class Worker {
             final TreeSet<String> tree = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             tree.add("");
 
-            for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
+            for (int i = 1; i < progData.filmListFiltered.themePerChannel.length; ++i) {
                 for (String s : senderArr) {
-                    if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(s.trim())) {
-                        tree.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
+                    if (progData.filmListFiltered.sender[i].equalsIgnoreCase(s.trim())) {
+                        tree.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[i]));
                         break;
                     }
                 }
@@ -190,9 +195,9 @@ public class Worker {
             theme.addAll(tree);
 
         } else {
-            for (int i = 1; i < progData.filmlistFiltered.themePerChannel.length; ++i) {
-                if (progData.filmlistFiltered.sender[i].equalsIgnoreCase(sender)) {
-                    theme.addAll(Arrays.asList(progData.filmlistFiltered.themePerChannel[i]));
+            for (int i = 1; i < progData.filmListFiltered.themePerChannel.length; ++i) {
+                if (progData.filmListFiltered.sender[i].equalsIgnoreCase(sender)) {
+                    theme.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[i]));
                     break;
                 }
             }
@@ -208,21 +213,5 @@ public class Worker {
             allAboNamesList.setAll(listAboName);
             resetFilter();
         });
-    }
-
-    public ObservableList<String> getAllChannelList() {
-        return allChannelList;
-    }
-
-    public ObservableList<String> getThemeForChannelList() {
-        return themeForChannelList;
-    }
-
-    public ObservableList<String> getChannelsForAbosList() {
-        return channelsForAbosList;
-    }
-
-    public ObservableList<String> getAllAboNamesList() {
-        return allAboNamesList;
     }
 }

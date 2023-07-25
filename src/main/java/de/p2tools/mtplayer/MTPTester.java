@@ -112,7 +112,7 @@ public class MTPTester {
         PDuration.counterStart("MTPTester diakritische Zeichen");
         ProgConfig.SYSTEM_REMOVE_DIACRITICS.setValue(ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue());
         if (ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue()) {
-            FilmFactory.flattenDiacritic(progData.filmlist);
+            FilmFactory.flattenDiacritic(progData.filmList);
         }
         PDuration.counterStop("MTPTester diakritische Zeichen");
     }

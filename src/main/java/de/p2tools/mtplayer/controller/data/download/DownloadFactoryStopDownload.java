@@ -60,7 +60,7 @@ public class DownloadFactoryStopDownload {
             }
         }
         if (!aboHistoryList.isEmpty()) {
-            ProgData.getInstance().erledigteAbos.addDownloadDataListToHistory(aboHistoryList);
+            ProgData.getInstance().historyListAbos.addDownloadDataListToHistory(aboHistoryList);
         }
         downloadList.removeAll(list);
 

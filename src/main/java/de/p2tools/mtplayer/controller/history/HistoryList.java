@@ -241,7 +241,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         // in den Filmen für die zu löschenden URLs history löschen
-        ProgData.getInstance().filmlist.stream().forEach(film -> {
+        ProgData.getInstance().filmList.stream().forEach(film -> {
             if (hash.contains(film.getUrlForHash())) {
                 film.setShown(false);
                 film.setActHist(false);

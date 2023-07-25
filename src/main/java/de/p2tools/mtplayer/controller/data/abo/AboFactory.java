@@ -47,7 +47,7 @@ public class AboFactory {
 
         if (aboList.isEmpty()) {
             // dann nur die Abos in der Filmliste löschen
-            ProgData.getInstance().filmlist.parallelStream().forEach(film -> {
+            ProgData.getInstance().filmList.parallelStream().forEach(film -> {
                 // für jeden Film Abo löschen
                 film.arr[FilmDataXml.FILM_ABO_NAME] = "";
                 film.setAbo(null);
@@ -63,7 +63,7 @@ public class AboFactory {
         });
 
         // das kostet die Zeit!!
-        ProgData.getInstance().filmlist.parallelStream().
+        ProgData.getInstance().filmList.parallelStream().
                 forEach(filmDataMTP -> AboFactory.assignAboToFilm(filmDataMTP));
 
         PDuration.counterStop("setAboForFilmlist");

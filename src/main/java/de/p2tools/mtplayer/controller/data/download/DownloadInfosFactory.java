@@ -38,7 +38,7 @@ public class DownloadInfosFactory {
 
     public static synchronized String getStatusInfosFilm() {
         String textLinks;
-        final int sumFilmlist = progData.filmlist.size();
+        final int sumFilmlist = progData.filmList.size();
         final int sumFilmShown = progData.filmGuiController.getFilmCount();
 //        final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadConstants.SRC_BUTTON).size();
 

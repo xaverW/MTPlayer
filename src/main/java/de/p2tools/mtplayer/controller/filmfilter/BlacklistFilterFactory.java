@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmlistMTP;
+import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
@@ -85,7 +85,7 @@ public class BlacklistFilterFactory {
         ProgData.getInstance().blackList.clearCounter();
         loadCurrentBlacklistSettings();
         //Filmliste durchlaufen und geblockte Filme markieren
-        ProgData.getInstance().filmlist.stream().forEach(filmDataMTP ->
+        ProgData.getInstance().filmList.stream().forEach(filmDataMTP ->
                 filmDataMTP.setBlackBlocked(checkFilmIsBlockedCompleteBlackData(filmDataMTP, true)));
         //und jetzt die filteredList erstellen
         getBlackFilteredFilmlist();
@@ -108,8 +108,8 @@ public class BlacklistFilterFactory {
         //je nach Einstellungen BLACK-ON  --  BLACK_OFF -- WHITE
         //mit der Liste wird dann im TabFilme weiter gearbeitet
         final ProgData progData = ProgData.getInstance();
-        final FilmlistMTP filmList = progData.filmlist;
-        final FilmlistMTP filmListFiltered = progData.filmlistFiltered;
+        final FilmListMTP filmList = progData.filmList;
+        final FilmListMTP filmListFiltered = progData.filmListFiltered;
 
         PDuration.counterStart("getBlackFilteredFilmlist");
         loadCurrentBlacklistSettings();

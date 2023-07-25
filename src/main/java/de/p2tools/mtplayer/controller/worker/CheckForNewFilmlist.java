@@ -38,12 +38,12 @@ public class CheckForNewFilmlist extends SearchFilmlistUpdate {
             @Override
             public void pingFx() {
                 // kan dauern und hält dann das Programm beim Start auf
-                new Thread(() -> hasNewFilmlist(ProgData.getInstance().filmlist.getFilmlistId())).start();
+                new Thread(() -> hasNewFilmlist(ProgData.getInstance().filmList.getFilmlistId())).start();
             }
         });
     }
 
     public boolean check() {
-        return super.check(ProgData.getInstance().filmlist.getFilmlistId());
+        return super.check(ProgData.getInstance().filmList.getFilmlistId());
     }
 }

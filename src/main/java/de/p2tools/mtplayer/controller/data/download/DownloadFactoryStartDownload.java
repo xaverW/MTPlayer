@@ -34,7 +34,7 @@ public class DownloadFactoryStartDownload {
         }
         downloads.forEach(DownloadData::initStartDownload);
         downloadList.addNumber(downloads);
-        ProgData.getInstance().history.addDownloadDataListToHistory(downloads);
+        ProgData.getInstance().historyList.addDownloadDataListToHistory(downloads);
     }
 
     /**
@@ -123,7 +123,7 @@ public class DownloadFactoryStartDownload {
         }
 
         //aus der AboHistory löschen
-        ProgData.getInstance().erledigteAbos.removeDownloadDataFromHistory(listDownloadsRemoveAboHistory);
+        ProgData.getInstance().historyListAbos.removeDownloadDataFromHistory(listDownloadsRemoveAboHistory);
 
         // jetzt noch die Starts stoppen
         listDelDownloads.stream().forEach(download -> download.stopDownload());

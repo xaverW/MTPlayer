@@ -60,7 +60,7 @@ public class FilmGuiController extends AnchorPane {
 
     public FilmGuiController() {
         progData = ProgData.getInstance();
-        sortedList = progData.filmlistFiltered.getSortedList();
+        sortedList = progData.filmListFiltered.getSortedList();
         filmInfoController = new FilmInfoController();
         tableView = new TableFilm(Table.TABLE_ENUM.FILM, progData);
 
