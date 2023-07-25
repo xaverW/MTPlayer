@@ -41,9 +41,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 
 import java.util.List;
 
@@ -187,16 +190,23 @@ public class AboDialogController extends PDialogExtra {
                 PColumnConstraints.getCcPrefSize());
 
         if (aboList.size() > 1) {
-            Label l1 = new Label("bei allen\nändern");
+            // dann werden mehre Abos geändert
+            Label l1 = new Label(aboList.size() + " Abos ändern");
+            l1.setStyle("-fx-font-weight: bold;");
+            gridPane.add(l1, 1, 0);
+            GridPane.setValignment(l1, VPos.CENTER);
+
+            Label l2 = new Label("nur diese\nFelder\nändern");
+            l2.setMinHeight(Region.USE_PREF_SIZE);
+            l2.setTextAlignment(TextAlignment.CENTER);
             VBox vBox = new VBox();
             vBox.getStyleClass().add("chk-edit-all-text");
             vBox.setAlignment(Pos.CENTER);
-            vBox.getChildren().addAll(l1);
+            vBox.getChildren().addAll(l2);
             gridPane.add(vBox, 2, 0);
         }
 
         makeControl();
-
         btnOk.requestFocus();
     }
 
@@ -291,6 +301,7 @@ public class AboDialogController extends PDialogExtra {
                     // dann auch SetData
                     abo.setSetData(aboCopy.getSetData());
                 }
+
                 abo.properties[i].setValue(aboCopy.properties[i].getValue());
             }
         }
