@@ -23,23 +23,25 @@ import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColor;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 
-public class PaneFilmButton {
+public class PaneFilmButton extends TilePane {
 
-    private PaneFilmButton() {
+    public PaneFilmButton() {
+        setVgap(P2LibConst.DIST_BUTTON);
+        setHgap(P2LibConst.DIST_BUTTON);
+        setPadding(new Insets(P2LibConst.DIST_EDGE));
+
+        addButton();
+        ProgData.getInstance().setDataList.addListener((ListChangeListener<SetData>) c -> addButton());
     }
 
-    public static TilePane getButtonPane() {
+    private void addButton() {
+        getChildren().clear();
         SetDataList setDataList = ProgData.getInstance().setDataList.getSetDataListButton();
-
-        TilePane tilePaneButton = new TilePane();
-        tilePaneButton.setVgap(P2LibConst.DIST_BUTTON);
-        tilePaneButton.setHgap(P2LibConst.DIST_BUTTON);
-        tilePaneButton.setPadding(new Insets(P2LibConst.DIST_EDGE));
-
         setDataList.forEach(setData -> {
             Button btn = new Button(setData.getVisibleName());
             btn.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
@@ -52,8 +54,8 @@ public class PaneFilmButton {
             }
 
             btn.setOnAction(a -> FilmPlayFactory.playFilmListWithSet(setData));
-            tilePaneButton.getChildren().add(btn);
+            getChildren().add(btn);
         });
-        return tilePaneButton;
+
     }
 }

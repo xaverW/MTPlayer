@@ -23,6 +23,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PHyperlink;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -49,8 +50,10 @@ public class PaneFilmInfo extends VBox {
 
     private FilmDataMTP film = null;
     private String oldDescription = "";
+    private final DoubleProperty dividerProp;
 
-    public PaneFilmInfo() {
+    public PaneFilmInfo(DoubleProperty dividerProp) {
+        this.dividerProp = dividerProp;
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(textArea, btnReset);
         StackPane.setAlignment(btnReset, Pos.BOTTOM_RIGHT);
@@ -96,8 +99,9 @@ public class PaneFilmInfo extends VBox {
         gridPane.add(lblAbo, 1, row);
 
         splitPane.getItems().addAll(vBoxLeft, gridPane);
-        splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.FILM_GUI_INFO_DIVIDER);
-        SplitPane.setResizableWithParent(gridPane, false);
+        splitPane.getDividers().get(0).positionProperty().bindBidirectional(dividerProp);
+        SplitPane.setResizableWithParent(vBoxLeft, Boolean.FALSE);
+        SplitPane.setResizableWithParent(gridPane, Boolean.FALSE);
 
         setSpacing(0);
         setPadding(new Insets(0));

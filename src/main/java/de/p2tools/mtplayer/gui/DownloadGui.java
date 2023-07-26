@@ -18,64 +18,57 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.filter.AboFilterController;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
+import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
-public class AboGuiPack {
+public class DownloadGui {
 
     ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
-    DoubleProperty doubleProperty; // sonst geht die Ref verloren
-    BooleanProperty boolDivOn;
-    private final AboFilterController aboFilterController;
-    private AboGuiController aboGuiController;
+    private final DownloadFilterController downloadFilterController;
+    private final DownloadGuiController guiController;
+
     private boolean bound = false;
 
-
-    public AboGuiPack() {
+    public DownloadGui() {
         progData = ProgData.getInstance();
-        this.doubleProperty = ProgConfig.ABO_GUI_FILTER_DIVIDER;
-        this.boolDivOn = ProgConfig.ABO_GUI_FILTER_DIVIDER_ON;
-        aboFilterController = new AboFilterController();
-        aboGuiController = new AboGuiController();
+        downloadFilterController = new DownloadFilterController();
+        guiController = new DownloadGuiController();
     }
 
     public void closeSplit() {
-        boolDivOn.setValue(!boolDivOn.get());
+        ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.get());
     }
 
     private void setSplit() {
-        if (boolDivOn.getValue()) {
+        if (ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getValue()) {
             splitPane.getItems().clear();
-            splitPane.getItems().addAll(aboFilterController, aboGuiController);
+            splitPane.getItems().addAll(downloadFilterController, guiController);
             bound = true;
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(doubleProperty);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
         } else {
             if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(doubleProperty);
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
             }
             splitPane.getItems().clear();
-            splitPane.getItems().addAll(aboGuiController);
+            splitPane.getItems().addAll(guiController);
         }
     }
 
     public SplitPane pack() {
 
-        // Menü
-        final MenuController menuController = new MenuController(MenuController.StartupMode.ABO);
-        menuController.setId("abo-menu-pane");
+        final MenuController menuController = new MenuController(MenuController.StartupMode.DOWNLOAD);
+        menuController.setId("download-menu-pane");
 
-        // Abo Gui
-        progData.aboGuiController = aboGuiController;
+        // Gui
+        progData.downloadGuiController = guiController;
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        SplitPane.setResizableWithParent(aboFilterController, Boolean.FALSE);
+        SplitPane.setResizableWithParent(downloadFilterController, Boolean.FALSE);
 
         hBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         hBox.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
@@ -83,7 +76,7 @@ public class AboGuiPack {
         HBox.setHgrow(splitPane, Priority.ALWAYS);
         hBox.getChildren().addAll(splitPane, menuController);
 
-        boolDivOn.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setSplit());
         setSplit();
         return new SplitPane(hBox);
     }

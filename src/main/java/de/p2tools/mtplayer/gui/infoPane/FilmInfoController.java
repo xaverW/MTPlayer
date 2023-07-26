@@ -29,6 +29,7 @@ import javafx.scene.layout.VBox;
 public class FilmInfoController extends PClosePaneH {
 
     private PaneFilmInfo paneFilmInfo;
+    private PaneFilmButton paneFilmButton;
     private final ProgData progData;
     private final TabPane tabPane = new TabPane();
 
@@ -37,7 +38,6 @@ public class FilmInfoController extends PClosePaneH {
         progData = ProgData.getInstance();
 
         initInfoPane();
-        setInfoTabPane();
     }
 
     public void setFilmInfos(FilmDataMTP film) {
@@ -45,7 +45,9 @@ public class FilmInfoController extends PClosePaneH {
     }
 
     private void initInfoPane() {
-        paneFilmInfo = new PaneFilmInfo();
+        paneFilmInfo = new PaneFilmInfo(ProgConfig.FILM_GUI_INFO_DIVIDER);
+        paneFilmButton = new PaneFilmButton();
+
         super.getRipProperty().addListener((u, o, n) -> {
             if (tabPane.getTabs().isEmpty() && !getVBoxAll().getChildren().isEmpty()) {
                 if (getVBoxAll().getChildren().get(0).equals(paneFilmInfo)) {
@@ -77,6 +79,7 @@ public class FilmInfoController extends PClosePaneH {
         ProgConfig.FILM_PANE_DIALOG_INFO_ON.addListener((u, o, n) -> setInfoTabPane());
         ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.addListener((u, o, n) -> setInfoTabPane());
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> setInfoTabPane());
+        setInfoTabPane();
     }
 
     private void dialogInfo() {
@@ -86,7 +89,7 @@ public class FilmInfoController extends PClosePaneH {
     }
 
     private void dialogButton() {
-        new InfoPaneDialog(PaneFilmButton.getButtonPane(), "Startbutton",
+        new InfoPaneDialog(paneFilmButton, "Startbutton",
                 ProgConfig.FILM_PANE_DIALOG_BUTTON_SIZE, ProgConfig.FILM_PANE_DIALOG_BUTTON_ON,
                 ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
     }
@@ -116,7 +119,7 @@ public class FilmInfoController extends PClosePaneH {
                 return;
 
             } else {
-                getVBoxAll().getChildren().setAll(PaneFilmButton.getButtonPane());
+                getVBoxAll().getChildren().setAll(paneFilmButton);
                 VBox.setVgrow(paneFilmInfo, Priority.ALWAYS);
                 return;
             }
@@ -129,7 +132,7 @@ public class FilmInfoController extends PClosePaneH {
 
             Tab buttonTab = new Tab("Startbutton");
             buttonTab.setClosable(false);
-            buttonTab.setContent(PaneFilmButton.getButtonPane());
+            buttonTab.setContent(paneFilmButton);
 
             tabPane.getTabs().addAll(filmInfoTab, buttonTab);
             getVBoxAll().getChildren().setAll(tabPane);

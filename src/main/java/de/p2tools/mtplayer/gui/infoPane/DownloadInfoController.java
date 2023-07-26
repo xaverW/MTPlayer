@@ -52,37 +52,8 @@ public class DownloadInfoController extends PClosePaneH {
         });
     }
 
-    int i = 0;
-
-    public void setDownloadInfos(DownloadData download) {
-        paneFilmInfo.setFilm(download != null ? download.getFilm() : null);
-        if (paneIsVisible(paneDownloadMedia, ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON)) {
-            paneDownloadMedia.setSearchPredicate(download);
-        }
-    }
-
-    private boolean paneIsVisible(Pane pane, BooleanProperty booleanProperty) {
-        if (booleanProperty.getValue()) {
-            // dann im Extrafenster
-            return true;
-        } else if (!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue()) {
-            // dann wird gar nix angezeigt
-            return false;
-        } else if (!getVBoxAll().getChildren().isEmpty() &&
-                getVBoxAll().getChildren().get(0).equals(pane)) {
-            // dann wird nur das angezeigt
-            return true;
-        } else if (tabPane.getSelectionModel().getSelectedItem() != null &&
-                tabPane.getSelectionModel().getSelectedItem().getContent().equals(pane)) {
-            // dann ist der Tab ausgewählt
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private void initInfoPane() {
-        paneFilmInfo = new PaneFilmInfo();
+        paneFilmInfo = new PaneFilmInfo(ProgConfig.DOWNLOAD_GUI_INFO_DIVIDER);
         paneDownloadMedia = new PaneDownloadMedia();
         paneDownloadChart = new PaneDownloadChart(progData);
         paneDownloadInfo = new PaneDownloadInfo();
@@ -133,8 +104,34 @@ public class DownloadInfoController extends PClosePaneH {
         ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON.addListener((u, o, n) -> setInfoTabPane());
         ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON.addListener((u, o, n) -> setInfoTabPane());
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> setInfoTabPane());
-
         setInfoTabPane();
+    }
+
+    public void setDownloadInfos(DownloadData download) {
+        paneFilmInfo.setFilm(download != null ? download.getFilm() : null);
+        if (paneIsVisible(paneDownloadMedia, ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON)) {
+            paneDownloadMedia.setSearchPredicate(download);
+        }
+    }
+
+    private boolean paneIsVisible(Pane pane, BooleanProperty booleanProperty) {
+        if (booleanProperty.getValue()) {
+            // dann im Extrafenster
+            return true;
+        } else if (!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue()) {
+            // dann wird gar nix angezeigt
+            return false;
+        } else if (!getVBoxAll().getChildren().isEmpty() &&
+                getVBoxAll().getChildren().get(0).equals(pane)) {
+            // dann wird nur das angezeigt
+            return true;
+        } else if (tabPane.getSelectionModel().getSelectedItem() != null &&
+                tabPane.getSelectionModel().getSelectedItem().getContent().equals(pane)) {
+            // dann ist der Tab ausgewählt
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void dialogInfo() {

@@ -92,14 +92,9 @@ public class ProgConst {
 
     public static final int MAX_DEST_PATH_IN_DIALOG_DOWNLOAD = 10;
 
-    public static final double FILM_GUI_FILTER_DIVIDER_LOCATION = 0.3;
-    public static final double FILM_GUI_INFO_DIVIDER_LOCATION = 0.7;
-    public static final double DOWNLOAD_GUI_FILTER_DIVIDER_LOCATION = 0.3;
-    public static final double ABO_GUI_FILTER_DIVIDER_LOCATION = 0.3;
-
-    public static final double GUI_FILME_DIVIDER_LOCATION = 0.7;
-    public static final double GUI_DOWNLOAD_DIVIDER_LOCATION = 0.7;
-    public static final double GUI_ABO_DIVIDER_LOCATION = 0.7;
+    public static final double GUI_FILTER_DIVIDER_LOCATION = 0.3;
+    public static final double GUI_INFO_DIVIDER_LOCATION = 0.7;
+    public static final double GUI_DIVIDER_LOCATION = 0.7;
 
     public static final double CONFIG_DIALOG_SET_DIVIDER = 0.2;
 

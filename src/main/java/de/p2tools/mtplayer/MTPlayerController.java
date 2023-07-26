@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.gui.AboGuiPack;
-import de.p2tools.mtplayer.gui.DownloadGuiPack;
-import de.p2tools.mtplayer.gui.FilmGuiPack;
+import de.p2tools.mtplayer.gui.AboGui;
+import de.p2tools.mtplayer.gui.DownloadGui;
+import de.p2tools.mtplayer.gui.FilmGui;
 import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
@@ -59,9 +59,9 @@ public class MTPlayerController extends StackPane {
     private SplitPane splitPaneAbo;
 
     private final ProgData progData;
-    private final FilmGuiPack filmGuiPack = new FilmGuiPack();
-    private final DownloadGuiPack downloadGuiPack = new DownloadGuiPack();
-    private final AboGuiPack aboGuiPack = new AboGuiPack();
+    private final FilmGui filmGui = new FilmGui();
+    private final DownloadGui downloadGui = new DownloadGui();
+    private final AboGui aboGui = new AboGui();
 
     public MTPlayerController() {
         progData = ProgData.getInstance();
@@ -84,9 +84,9 @@ public class MTPlayerController extends StackPane {
             hBoxTop.getChildren().addAll(btnFilmlist, tilePaneFilmDownloadAbo, new MTPlayerMenu());
 
             // Center
-            splitPaneFilm = filmGuiPack.pack();
-            splitPaneDownload = downloadGuiPack.pack();
-            splitPaneAbo = aboGuiPack.pack();
+            splitPaneFilm = filmGui.pack();
+            splitPaneDownload = downloadGui.pack();
+            splitPaneAbo = aboGui.pack();
             stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneDownload, splitPaneAbo);
 
             // Statusbar
@@ -195,7 +195,7 @@ public class MTPlayerController extends StackPane {
     private void selPanelFilm() {
         if (paneShown == PANE_SHOWN.FILM) {
             // dann ist der 2. Klick
-            filmGuiPack.closeSplit();
+            filmGui.closeSplit();
             return;
         }
 
@@ -212,7 +212,7 @@ public class MTPlayerController extends StackPane {
     private void selPanelDownload() {
         if (paneShown == PANE_SHOWN.DOWNLOAD) {
             // dann ist der 2. Klick
-            downloadGuiPack.closeSplit();
+            downloadGui.closeSplit();
             return;
         }
 
@@ -229,7 +229,7 @@ public class MTPlayerController extends StackPane {
     private void selPanelAbo() {
         if (paneShown == PANE_SHOWN.ABO) {
             // dann ist der 2. Klick
-            aboGuiPack.closeSplit();
+            aboGui.closeSplit();
             return;
         }
 

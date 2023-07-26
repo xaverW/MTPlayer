@@ -19,45 +19,39 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.FilmFilterController;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
-public class FilmGuiPack {
+public class FilmGui {
 
     ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
-    static DoubleProperty doubleProperty; //sonst geht die Ref verloren
-    static BooleanProperty boolDivOn;
     private final FilmFilterController filmFilterController;
     private final FilmGuiController guiController;
     private boolean bound = false;
 
-    public FilmGuiPack() {
+    public FilmGui() {
         progData = ProgData.getInstance();
-        this.doubleProperty = ProgConfig.FILM_GUI_FILTER_DIVIDER;
-        this.boolDivOn = ProgConfig.FILM_GUI_FILTER_DIVIDER_ON;
         filmFilterController = new FilmFilterController();
         guiController = new FilmGuiController();
     }
 
     public void closeSplit() {
-        boolDivOn.setValue(!boolDivOn.get());
+        ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.get());
     }
 
     private void setSplit() {
-        if (boolDivOn.getValue()) {
+        if (ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getValue()) {
             splitPane.getItems().clear();
             splitPane.getItems().addAll(filmFilterController, guiController);
             bound = true;
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(doubleProperty);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.FILM_GUI_FILTER_DIVIDER);
         } else {
             if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(doubleProperty);
+                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.FILM_GUI_FILTER_DIVIDER);
             }
             splitPane.getItems().clear();
             splitPane.getItems().addAll(guiController);
@@ -81,7 +75,7 @@ public class FilmGuiPack {
         HBox.setHgrow(splitPane, Priority.ALWAYS);
         hBox.getChildren().addAll(splitPane, menuController);
 
-        boolDivOn.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setSplit());
         setSplit();
         return new SplitPane(hBox);
     }

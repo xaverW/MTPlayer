@@ -200,9 +200,9 @@ public class ProgConfig extends PDataProgConfig {
     // Gui Film
     public static StringProperty FILM_GUI_FILTER_DIALOG = addStrProp("film-gui-filter-dialog", "400:500");
     public static BooleanProperty FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBoolProp("film-gui-filter-dialog-is-showing", Boolean.FALSE);
-    public static DoubleProperty FILM_GUI_FILTER_DIVIDER = addDoubleProp("film-gui-filter-divider", ProgConst.FILM_GUI_FILTER_DIVIDER_LOCATION);
+    public static DoubleProperty FILM_GUI_FILTER_DIVIDER = addDoubleProp("film-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty FILM_GUI_FILTER_DIVIDER_ON = addBoolProp("film-gui-filter-divider-on", Boolean.TRUE);
-    public static DoubleProperty FILM_GUI_DIVIDER = addDoubleProp("film-gui-divider", ProgConst.GUI_FILME_DIVIDER_LOCATION);
+    public static DoubleProperty FILM_GUI_DIVIDER = addDoubleProp("film-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);
     public static BooleanProperty FILM_GUI_DIVIDER_ON = addBoolProp("film-gui-divider-on", Boolean.TRUE);
     public static StringProperty FILM_GUI_TABLE_WIDTH = addStrProp("film-gui-table-width");
     public static StringProperty FILM_GUI_TABLE_SORT = addStrProp("film-gui-table-sort");
@@ -210,7 +210,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty FILM_GUI_TABLE_VIS = addStrProp("film-gui-table-vis");
     public static StringProperty FILM_GUI_TABLE_ORDER = addStrProp("film-gui-table-order");
     public static StringProperty ADD_BLACK_DIALOG_SIZE = addStrProp("add-black-dialog-size", "600:400");
-    public static DoubleProperty FILM_GUI_INFO_DIVIDER = addDoubleProp("film-gui-info-divider", ProgConst.FILM_GUI_INFO_DIVIDER_LOCATION);
+    public static DoubleProperty FILM_GUI_INFO_DIVIDER = addDoubleProp("film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
     // Gui Download
     public static StringProperty DOWNLOAD_DIALOG_PATH_SAVING = addStrProp("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
@@ -224,9 +224,9 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_DIALOG_ADD_MORE_SIZE = addStrProp("download-dialog-add-more-size");
     public static StringProperty DOWNLOAD_DIALOG_CONTINUE_SIZE = addStrProp("download-dialog-continue-size");
     public static StringProperty DOWNLOAD_DIALOG_ERROR_SIZE = addStrProp("download-dialog-error-size", "");
-    public static DoubleProperty DOWNLOAD_GUI_FILTER_DIVIDER = addDoubleProp("download-gui-filter-divider", ProgConst.DOWNLOAD_GUI_FILTER_DIVIDER_LOCATION);
+    public static DoubleProperty DOWNLOAD_GUI_FILTER_DIVIDER = addDoubleProp("download-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty DOWNLOAD_GUI_FILTER_DIVIDER_ON = addBoolProp("download-gui-filter-divider-on", Boolean.TRUE);
-    public static DoubleProperty DOWNLOAD_GUI_DIVIDER = addDoubleProp("download-gui-divider", ProgConst.GUI_DOWNLOAD_DIVIDER_LOCATION);
+    public static DoubleProperty DOWNLOAD_GUI_DIVIDER = addDoubleProp("download-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);
     public static BooleanProperty DOWNLOAD_GUI_DIVIDER_ON = addBoolProp("download-gui-divider-on", Boolean.TRUE);
     public static StringProperty DOWNLOAD_GUI_TABLE_WIDTH = addStrProp("download-gui-table-width");
     public static StringProperty DOWNLOAD_GUI_TABLE_SORT = addStrProp("download-gui-table-sort");
@@ -235,6 +235,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_GUI_TABLE_ORDER = addStrProp("download-gui-table-order");
     public static BooleanProperty DOWNLOAD_SHOW_NOTIFICATION = addBoolProp("download-show-notification", Boolean.TRUE);
     public static DoubleProperty DOWNLOAD_GUI_MEDIA_DIVIDER = addDoubleProp("download-gui-media-divider", 0.5);
+    public static DoubleProperty DOWNLOAD_GUI_INFO_DIVIDER = addDoubleProp("download-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
     public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "950:600");
     public static StringProperty DOWNLOAD_ONLY_STOP_DIALOG_SIZE = addStrProp("download-only-stop-dialog-size", "600:400");
 
@@ -270,16 +271,16 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", FilterCheck.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
     public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", FilterCheck.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
     public static StringProperty ABO_DIALOG_EDIT_SIZE = addStrProp("abo-dialog-edit-size", "600:800");
-    public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDoubleProp("abo-gui-filter-divider", ProgConst.ABO_GUI_FILTER_DIVIDER_LOCATION);
+    public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDoubleProp("abo-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty ABO_GUI_FILTER_DIVIDER_ON = addBoolProp("abo-gui-filter-divider-on", Boolean.TRUE);
-    public static DoubleProperty ABO_GUI_DIVIDER = addDoubleProp("abo-gui-divider", ProgConst.GUI_ABO_DIVIDER_LOCATION);
+    public static DoubleProperty ABO_GUI_DIVIDER = addDoubleProp("abo-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);
     public static BooleanProperty ABO_GUI_DIVIDER_ON = addBoolProp("abo-gui-divider-on", Boolean.TRUE);
     public static StringProperty ABO_GUI_TABLE_WIDTH = addStrProp("abo-gui-table-width");
     public static StringProperty ABO_GUI_TABLE_SORT = addStrProp("abo-gui-table-sort");
     public static StringProperty ABO_GUI_TABLE_UP_DOWN = addStrProp("abo-gui-table-up-down");
     public static StringProperty ABO_GUI_TABLE_VIS = addStrProp("abo-gui-table-vis");
     public static StringProperty ABO_GUI_TABLE_ORDER = addStrProp("abo-gui-table-order");
-    public static DoubleProperty ABO_GUI_INFO_DIVIDER = addDoubleProp("abo-gui-info-divider", ProgConst.FILM_GUI_INFO_DIVIDER_LOCATION);
+    public static DoubleProperty ABO_GUI_INFO_DIVIDER = addDoubleProp("abo-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
     public static StringProperty ABO_DEL_DIALOG_SIZE = addStrProp("abo-del-dialog-size", "600:400");
     public static IntegerProperty ABO_ONLY_STOP = addIntProp("abo-only-stop", AskBeforeDeleteState.DOWNLOAD_STOP__ASK);
 
