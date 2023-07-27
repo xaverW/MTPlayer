@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Priority;
@@ -107,7 +108,6 @@ public class FilmInfoController extends PClosePaneH {
     }
 
     private void setTabs() {
-        boolean ret = false;
         int i = 0;
 
         if (ProgConfig.FILM_PANE_DIALOG_INFO_ON.getValue()) {
@@ -117,7 +117,6 @@ public class FilmInfoController extends PClosePaneH {
             if (!tabPane.getTabs().contains(tabFilmInfo)) {
                 tabPane.getTabs().add(i, tabFilmInfo);
             }
-            ret = true;
             ++i;
         }
 
@@ -132,7 +131,6 @@ public class FilmInfoController extends PClosePaneH {
                 if (!tabPane.getTabs().contains(tabButton)) {
                     tabPane.getTabs().add(i, tabButton);
                 }
-                ret = true;
                 ++i;
             }
         }
@@ -144,16 +142,22 @@ public class FilmInfoController extends PClosePaneH {
             if (!tabPane.getTabs().contains(tabMedia)) {
                 tabPane.getTabs().add(i, tabMedia);
             }
-            ret = true;
+            ++i;
         }
 
-        if (ret) {
-            // dann gibts einen Tab
-            getVBoxAll().getChildren().setAll(tabPane);
-            VBox.setVgrow(tabPane, Priority.ALWAYS);
-        } else {
+        if (i == 0) {
             getVBoxAll().getChildren().clear();
             ProgConfig.FILM_GUI_DIVIDER_ON.set(false);
+        } else if (i == 1) {
+            // dann gibts einen Tab
+            final Node node = tabPane.getTabs().get(0).getContent();
+            tabPane.getTabs().remove(0);
+            getVBoxAll().getChildren().setAll(node);
+            VBox.setVgrow(node, Priority.ALWAYS);
+        } else {
+            // dann gibts mehre Tabs
+            getVBoxAll().getChildren().setAll(tabPane);
+            VBox.setVgrow(tabPane, Priority.ALWAYS);
         }
     }
 }
