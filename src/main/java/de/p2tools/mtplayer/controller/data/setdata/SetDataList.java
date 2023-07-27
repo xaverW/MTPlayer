@@ -165,17 +165,12 @@ public class SetDataList extends SetDataListWorker {
 
     public SetDataList getSetDataListButton() {
         // liefert eine Liste Programmsets, die als Button angelegt sind
-        // "leere" Button  werden nicht mehr angezeigt
-        // sind nur die 2 Standardsets in der Liste wird nichts geliefert
-
-        if (this.size() <= 2) {
-            return new SetDataList();
-        }
+        // "leere" Button werden nicht mehr angezeigt
 
         return stream()
                 .filter(SetDataProps::isButton)
-                .filter(setData -> !setData.getProgramList().isEmpty())
-                .filter(setData -> !setData.getVisibleName().isEmpty())
+//                .filter(setData -> !setData.getProgramList().isEmpty()) // könnte auch Sets ohne Programm geben??
+//                .filter(setData -> !setData.getVisibleName().isEmpty()) // kann es nicht mehr geben
                 .collect(Collectors.toCollection(SetDataList::new));
     }
 

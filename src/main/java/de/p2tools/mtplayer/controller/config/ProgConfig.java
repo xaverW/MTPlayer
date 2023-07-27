@@ -290,6 +290,8 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty FILM_PANE_DIALOG_INFO_ON = addBoolProp("film-pane-dialog-info-on");
     public static StringProperty FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("film-pane-dialog-button-size");
     public static BooleanProperty FILM_PANE_DIALOG_BUTTON_ON = addBoolProp("film-pane-dialog-button-on");
+    public static StringProperty FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("film-pane-dialog-media-size");
+    public static BooleanProperty FILM_PANE_DIALOG_MEDIA_ON = addBoolProp("film-pane-dialog-media-on");
 
     public static StringProperty DOWNLOAD_PANE_DIALOG_INFO_SIZE = addStrProp("download-pane-dialog-info-size");
     public static BooleanProperty DOWNLOAD_PANE_DIALOG_INFO_ON = addBoolProp("download-pane-dialog-info-on");

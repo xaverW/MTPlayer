@@ -39,7 +39,7 @@ import java.util.Collection;
 public class PaneSetName {
     private final TextField txtVisibleName = new TextField("");
     private final TextArea txtDescription = new TextArea("");
-    private ChangeListener changeListener;
+    private ChangeListener<String> changeListener;
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
@@ -49,6 +49,12 @@ public class PaneSetName {
 
     public void close() {
         unBindProgData();
+        for (int i = 0; i < ProgData.getInstance().setDataList.size(); ++i) {
+            SetData sd = ProgData.getInstance().setDataList.get(i);
+            if (sd.getVisibleName().trim().isEmpty()) {
+                sd.setVisibleName("Set " + (i + 1));
+            }
+        }
     }
 
     public void makePane(Collection<TitledPane> result) {
@@ -103,8 +109,8 @@ public class PaneSetName {
     private void unBindProgData() {
         if (setData != null) {
             txtVisibleName.textProperty().unbindBidirectional(setData.visibleNameProperty());
-            txtVisibleName.setText("");
             txtVisibleName.textProperty().removeListener(changeListener);
+            txtVisibleName.setText("");
 
             txtDescription.textProperty().unbindBidirectional(setData.descriptionProperty());
             txtDescription.setText("");

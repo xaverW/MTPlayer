@@ -46,9 +46,9 @@ public class InfoPaneDialog extends PDialogExtra {
         this.onProperty = onProperty;// zeigt an, ob Dialog zu sehen
         this.infoOnProperty = infoOnProperty;// infoPane anzeigen
 
-        init(tabIsOnProperty.getValue());
-        onProperty.setValue(true);
-        tabIsOnProperty.addListener(l);
+        init(this.tabIsOnProperty.getValue());
+        this.onProperty.setValue(true);
+        this.tabIsOnProperty.addListener(l);
     }
 
     @Override

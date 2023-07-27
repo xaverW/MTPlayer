@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColor;
-import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
@@ -36,7 +35,7 @@ public class PaneFilmButton extends TilePane {
         setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         addButton();
-        ProgData.getInstance().setDataList.addListener((ListChangeListener<SetData>) c -> addButton());
+        ProgData.getInstance().setDataList.addListener((u, o, n) -> addButton());
     }
 
     private void addButton() {
@@ -56,6 +55,5 @@ public class PaneFilmButton extends TilePane {
             btn.setOnAction(a -> FilmPlayFactory.playFilmListWithSet(setData));
             getChildren().add(btn);
         });
-
     }
 }

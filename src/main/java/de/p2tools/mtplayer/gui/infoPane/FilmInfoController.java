@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
 import javafx.scene.control.Tab;
@@ -29,14 +28,18 @@ import javafx.scene.layout.VBox;
 public class FilmInfoController extends PClosePaneH {
 
     private PaneFilmInfo paneFilmInfo;
-    private PaneFilmButton paneFilmButton;
-    private final ProgData progData;
+    private PaneFilmButton paneButton;
+    private PaneDownloadMedia paneMedia;
+    private Tab tabFilmInfo;
+    private Tab tabButton;
+    private Tab tabMedia;
     private final TabPane tabPane = new TabPane();
+
+    private final ProgData progData;
 
     public FilmInfoController() {
         super(ProgConfig.FILM_GUI_DIVIDER_ON, true, true);
         progData = ProgData.getInstance();
-
         initInfoPane();
     }
 
@@ -46,97 +49,111 @@ public class FilmInfoController extends PClosePaneH {
 
     private void initInfoPane() {
         paneFilmInfo = new PaneFilmInfo(ProgConfig.FILM_GUI_INFO_DIVIDER);
-        paneFilmButton = new PaneFilmButton();
+        paneButton = new PaneFilmButton();
+        paneMedia = new PaneDownloadMedia();
+        tabFilmInfo = new Tab("Beschreibung");
+        tabFilmInfo.setClosable(false);
+        tabButton = new Tab("Startbutton");
+        tabButton.setClosable(false);
+        tabMedia = new Tab("Mediensammlung");
+        tabMedia.setClosable(false);
 
         super.getRipProperty().addListener((u, o, n) -> {
-            if (tabPane.getTabs().isEmpty() && !getVBoxAll().getChildren().isEmpty()) {
-                if (getVBoxAll().getChildren().get(0).equals(paneFilmInfo)) {
-                    dialogInfo();
-                } else {
-                    dialogButton();
-                }
-
+            if (tabFilmInfo.isSelected()) {
+                setDialogInfo();
+            } else if (tabButton.isSelected()) {
+                setDialogButton();
             } else {
-                Tab sel = tabPane.getSelectionModel().getSelectedItem();
-                if (sel.getContent().equals(paneFilmInfo)) {
-                    // dann filmInfo in den Dialog
-                    dialogInfo();
-                } else {
-                    // dann die buttonInfo
-                    dialogButton();
-                }
+                setDialogMedia();
             }
-            setInfoTabPane();
         });
 
         if (ProgConfig.FILM_PANE_DIALOG_INFO_ON.getValue()) {
-            dialogInfo();
+            setDialogInfo();
         }
         if (ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.getValue()) {
-            dialogButton();
+            setDialogButton();
         }
+        if (ProgConfig.FILM_PANE_DIALOG_MEDIA_ON.getValue()) {
+            setDialogMedia();
+        }
+        ProgConfig.FILM_PANE_DIALOG_INFO_ON.addListener((u, o, n) -> setTabs()); // kommt beim Ein- und Ausschalten der Fenster
+        ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.addListener((u, o, n) -> setTabs());
+        ProgConfig.FILM_PANE_DIALOG_MEDIA_ON.addListener((u, o, n) -> setTabs());
+        progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> setTabs());
 
-        ProgConfig.FILM_PANE_DIALOG_INFO_ON.addListener((u, o, n) -> setInfoTabPane());
-        ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.addListener((u, o, n) -> setInfoTabPane());
-        progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> setInfoTabPane());
-        setInfoTabPane();
+        setTabs();
     }
 
-    private void dialogInfo() {
+    private void setDialogInfo() {
+        tabFilmInfo.setContent(null);
         new InfoPaneDialog(paneFilmInfo, "Filminfos",
                 ProgConfig.FILM_PANE_DIALOG_INFO_SIZE, ProgConfig.FILM_PANE_DIALOG_INFO_ON,
                 ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
     }
 
-    private void dialogButton() {
-        new InfoPaneDialog(paneFilmButton, "Startbutton",
+    private void setDialogButton() {
+        tabButton.setContent(null);
+        new InfoPaneDialog(paneButton, "Startbutton",
                 ProgConfig.FILM_PANE_DIALOG_BUTTON_SIZE, ProgConfig.FILM_PANE_DIALOG_BUTTON_ON,
                 ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
     }
 
-    private void setInfoTabPane() {
-        tabPane.getTabs().clear();
-        getVBoxAll().getChildren().clear();
-        int count = 0;
-        if (!ProgConfig.FILM_PANE_DIALOG_INFO_ON.getValue()) {
-            ++count;
-        }
+    private void setDialogMedia() {
+        tabMedia.setContent(null);
+        new InfoPaneDialog(paneMedia, "Mediensammlung",
+                ProgConfig.FILM_PANE_DIALOG_MEDIA_SIZE, ProgConfig.FILM_PANE_DIALOG_MEDIA_ON,
+                ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
+    }
 
-        final SetDataList setDataList = progData.setDataList.getSetDataListButton();
-        if (!setDataList.isEmpty() && !ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.getValue()) {
-            ++count;
-        }
+    private void setTabs() {
+        boolean ret = false;
+        int i = 0;
 
-        if (count == 0) {
-            // dann gibts nix zu sehen und dann das InfoPane ausblenden
-            ProgConfig.FILM_GUI_DIVIDER_ON.set(false);
-
-        } else if (count == 1) {
-            // dann kein Tab
-            if (!ProgConfig.FILM_PANE_DIALOG_INFO_ON.getValue()) {
-                getVBoxAll().getChildren().setAll(paneFilmInfo);
-                VBox.setVgrow(paneFilmInfo, Priority.ALWAYS);
-                return;
-
-            } else {
-                getVBoxAll().getChildren().setAll(paneFilmButton);
-                VBox.setVgrow(paneFilmInfo, Priority.ALWAYS);
-                return;
-            }
-
+        if (ProgConfig.FILM_PANE_DIALOG_INFO_ON.getValue()) {
+            tabPane.getTabs().remove(tabFilmInfo);
         } else {
-            // dann werden beide angezeigt
-            Tab filmInfoTab = new Tab("Beschreibung");
-            filmInfoTab.setClosable(false);
-            filmInfoTab.setContent(paneFilmInfo);
+            tabFilmInfo.setContent(paneFilmInfo);
+            if (!tabPane.getTabs().contains(tabFilmInfo)) {
+                tabPane.getTabs().add(i, tabFilmInfo);
+            }
+            ret = true;
+            ++i;
+        }
 
-            Tab buttonTab = new Tab("Startbutton");
-            buttonTab.setClosable(false);
-            buttonTab.setContent(paneFilmButton);
+        if (ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.getValue()) {
+            tabPane.getTabs().remove(tabButton);
+        } else {
+            if (progData.setDataList.getSetDataListButton().size() <= 0) {
+                // dann gibts keine Button
+                tabPane.getTabs().remove(tabButton);
+            } else {
+                tabButton.setContent(paneButton);
+                if (!tabPane.getTabs().contains(tabButton)) {
+                    tabPane.getTabs().add(i, tabButton);
+                }
+                ret = true;
+                ++i;
+            }
+        }
 
-            tabPane.getTabs().addAll(filmInfoTab, buttonTab);
+        if (ProgConfig.FILM_PANE_DIALOG_MEDIA_ON.getValue()) {
+            tabPane.getTabs().remove(tabMedia);
+        } else {
+            tabMedia.setContent(paneMedia);
+            if (!tabPane.getTabs().contains(tabMedia)) {
+                tabPane.getTabs().add(i, tabMedia);
+            }
+            ret = true;
+        }
+
+        if (ret) {
+            // dann gibts einen Tab
             getVBoxAll().getChildren().setAll(tabPane);
             VBox.setVgrow(tabPane, Priority.ALWAYS);
+        } else {
+            getVBoxAll().getChildren().clear();
+            ProgConfig.FILM_GUI_DIVIDER_ON.set(false);
         }
     }
 }
