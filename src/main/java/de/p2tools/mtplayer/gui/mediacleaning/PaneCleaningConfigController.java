@@ -71,29 +71,29 @@ public class PaneCleaningConfigController {
 
 
     private void initPane() {
-        tglExact.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_ABO);
+        tglExact.selectedProperty().bindBidirectional(media ? ProgConfig.GUI_MEDIA_CLEAN_EXACT_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_EXACT_ABO);
 
         tglClean.disableProperty().bind(tglExact.selectedProperty());
-        tglClean.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_ABO);
+        tglClean.selectedProperty().bindBidirectional(media ? ProgConfig.GUI_MEDIA_CLEAN_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_ABO);
 
         tglAndOr.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
-        tglAndOr.selectedProperty().bindBidirectional(media ? ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_ABO);
+        tglAndOr.selectedProperty().bindBidirectional(media ? ProgConfig.GUI_MEDIA_CLEAN_AND_OR_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_AND_OR_ABO);
 
         tglNum.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglNum.selectedProperty().bindBidirectional(media ?
-                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_ABO);
+                ProgConfig.GUI_MEDIA_CLEAN_NUMBER_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_NUMBER_ABO);
 
         tglDate.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglDate.selectedProperty().bindBidirectional(media ?
-                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_DATE_ABO);
+                ProgConfig.GUI_MEDIA_CLEAN_DATE_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_DATE_ABO);
 
         tglClip.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglClip.selectedProperty().bindBidirectional(media ?
-                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_ABO);
+                ProgConfig.GUI_MEDIA_CLEAN_CLIP_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_CLIP_ABO);
 
         tglList.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
         tglList.selectedProperty().bindBidirectional(media ?
-                ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA : ProgConfig.DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO);
+                ProgConfig.GUI_MEDIA_CLEAN_LIST_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_LIST_ABO);
     }
 
     private void addGrid(VBox vBox) {

@@ -35,25 +35,25 @@ public class DownloadGuiMediaSearch {
 
     public static VBox getSearchMedia(Label lblSumMedia) {
         // Suchen wie
-        HBox hBoxWhat = getSearchWhat(ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA);
+        HBox hBoxWhat = getSearchWhat(ProgConfig.GUI_MEDIA_BUILD_SEARCH_MEDIA);
 
         // Suchen wo
         HBox hBoxWhere = new HBox(P2LibConst.DIST_EDGE);
         hBoxWhere.setAlignment(Pos.CENTER_LEFT);
         hBoxWhere.setPadding(new Insets(0));
         Label lblMedSearchIn = new Label(getTextMed());
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> lblMedSearchIn.setText(getTextMed()));
+        ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> lblMedSearchIn.setText(getTextMed()));
         Button btnChangeMedia = new Button();
         btnChangeMedia.getStyleClass().add("buttonVerySmall");
         btnChangeMedia.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
         btnChangeMedia.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CHANGE.getImageView());
         btnChangeMedia.setOnAction(a -> {
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
-            } else if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL) {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TT);
+            if (ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
+                ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
+            } else if (ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL) {
+                ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TT);
             } else {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEME);
+                ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEME);
             }
         });
 
@@ -71,14 +71,14 @@ public class DownloadGuiMediaSearch {
 
     public static VBox getSearchAbo(Label lblSumMedia, boolean abo) {
         // Suchen wie
-        HBox hBoxWhat = getSearchWhat(ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO);
+        HBox hBoxWhat = getSearchWhat(ProgConfig.GUI_MEDIA_BUILD_SEARCH_ABO);
 
         // Suchen wo
         HBox hBoxWhere = new HBox(P2LibConst.DIST_EDGE);
         hBoxWhere.setAlignment(Pos.CENTER_LEFT);
         hBoxWhere.setPadding(new Insets(0));
         Label lblAbosSearchIn = new Label(abo ? getTextAbo() : getTextHistory());
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) ->
+        ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) ->
                 lblAbosSearchIn.setText(abo ? getTextAbo() : getTextHistory()));
 
         Button btnChangeAbo = new Button();
@@ -86,12 +86,12 @@ public class DownloadGuiMediaSearch {
         btnChangeAbo.setTooltip(new Tooltip("Einstellung wo gesucht wird, ändern"));
         btnChangeAbo.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CHANGE.getImageView());
         btnChangeAbo.setOnAction(a -> {
-            if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
-            } else if (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL) {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TT);
+            if (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
+                ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TITEL);
+            } else if (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL) {
+                ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_TT);
             } else {
-                ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEME);
+                ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEME);
             }
         });
 
@@ -108,7 +108,7 @@ public class DownloadGuiMediaSearch {
     }
 
     private static String getTextMed() {
-        switch (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.getValue()) {
+        switch (ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.getValue()) {
             case ProgConst.MEDIA_COLLECTION_SEARCH_THEME:
                 return "Medien suchen im: Pfad";
             case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:
@@ -119,7 +119,7 @@ public class DownloadGuiMediaSearch {
     }
 
     private static String getTextAbo() {
-        switch (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue()) {
+        switch (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue()) {
             case ProgConst.MEDIA_COLLECTION_SEARCH_THEME:
                 return "Abos suchen im: Thema des Abos";
             case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:
@@ -130,7 +130,7 @@ public class DownloadGuiMediaSearch {
     }
 
     private static String getTextHistory() {
-        switch (ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.getValue()) {
+        switch (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue()) {
             case ProgConst.MEDIA_COLLECTION_SEARCH_THEME:
                 return "History suchen im: Thema des History-Films";
             case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:

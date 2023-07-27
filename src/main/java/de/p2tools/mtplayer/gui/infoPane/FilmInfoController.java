@@ -20,9 +20,11 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -30,7 +32,7 @@ public class FilmInfoController extends PClosePaneH {
 
     private PaneFilmInfo paneFilmInfo;
     private PaneFilmButton paneButton;
-    private PaneDownloadMedia paneMedia;
+    private PaneMedia paneMedia;
     private Tab tabFilmInfo;
     private Tab tabButton;
     private Tab tabMedia;
@@ -46,12 +48,35 @@ public class FilmInfoController extends PClosePaneH {
 
     public void setFilmInfos(FilmDataMTP film) {
         paneFilmInfo.setFilm(film);
+        if (paneIsVisible(paneMedia, ProgConfig.FILM_PANE_DIALOG_MEDIA_ON)) {
+            paneMedia.setSearchPredicate(film);
+        }
+    }
+
+    private boolean paneIsVisible(Pane pane, BooleanProperty booleanProperty) {
+        if (booleanProperty.getValue()) {
+            // dann im Extrafenster
+            return true;
+        } else if (!ProgConfig.FILM_GUI_DIVIDER_ON.getValue()) {
+            // dann wird gar nix angezeigt
+            return false;
+        } else if (!getVBoxAll().getChildren().isEmpty() &&
+                getVBoxAll().getChildren().get(0).equals(pane)) {
+            // dann wird nur das angezeigt
+            return true;
+        } else if (tabPane.getSelectionModel().getSelectedItem() != null &&
+                tabPane.getSelectionModel().getSelectedItem().getContent().equals(pane)) {
+            // dann ist der Tab ausgewählt
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void initInfoPane() {
         paneFilmInfo = new PaneFilmInfo(ProgConfig.FILM_GUI_INFO_DIVIDER);
         paneButton = new PaneFilmButton();
-        paneMedia = new PaneDownloadMedia();
+        paneMedia = new PaneMedia();
         tabFilmInfo = new Tab("Beschreibung");
         tabFilmInfo.setClosable(false);
         tabButton = new Tab("Startbutton");

@@ -33,7 +33,7 @@ import javafx.scene.layout.VBox;
 public class DownloadInfoController extends PClosePaneH {
 
     private PaneFilmInfo paneFilmInfo;
-    private PaneDownloadMedia paneMedia;
+    private PaneMedia paneMedia;
     private PaneDownloadChart paneDownloadChart;
     private PaneDownloadInfo paneDownloadInfo;
     private Tab tabFilmInfo;
@@ -60,7 +60,7 @@ public class DownloadInfoController extends PClosePaneH {
 
     private void initInfoPane() {
         paneFilmInfo = new PaneFilmInfo(ProgConfig.DOWNLOAD_GUI_INFO_DIVIDER);
-        paneMedia = new PaneDownloadMedia();
+        paneMedia = new PaneMedia();
         paneDownloadChart = new PaneDownloadChart(progData);
         paneDownloadInfo = new PaneDownloadInfo();
 

@@ -141,12 +141,12 @@ public class PaneDialog extends ScrollPane {
         VBox vLeft = DownloadGuiMediaSearch.getSearchMedia(null);
         VBox vRight = DownloadGuiMediaSearch.getSearchAbo(null, abo);
 
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter());
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter());
-        ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA.addListener((u, o, n) -> {
+        ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter());
+        ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter());
+        ProgConfig.GUI_MEDIA_BUILD_SEARCH_MEDIA.addListener((u, o, n) -> {
             setSearchString();
         });
-        ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO.addListener((u, o, n) -> {
+        ProgConfig.GUI_MEDIA_BUILD_SEARCH_ABO.addListener((u, o, n) -> {
             setSearchString();
         });
 

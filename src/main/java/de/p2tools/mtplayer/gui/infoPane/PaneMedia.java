@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
@@ -48,7 +49,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.Date;
 
-public class PaneDownloadMedia extends VBox {
+public class PaneMedia extends VBox {
 
     private final TableView<MediaData> tableMedia = new TableView<>();
     private final TableView<HistoryData> tableAbo = new TableView<>();
@@ -57,13 +58,16 @@ public class PaneDownloadMedia extends VBox {
     private final Button btnConfig = new Button();
     private final Button btnDialogMedia = new Button();
     private final Button btnClear = new Button();
-    private DownloadData downloadData = null;
+    private boolean searchIsNull = true;
+    private String searchTheme = "";
+    private String searchTitle = "";
+
     private final Label lblSumMedia = new Label();
     private final Label lblSumAbo = new Label();
 
     private final ProgData progData;
 
-    public PaneDownloadMedia() {
+    public PaneMedia() {
         progData = ProgData.getInstance();
         init();
         initMenu(true);
@@ -73,25 +77,39 @@ public class PaneDownloadMedia extends VBox {
         initSearch();
     }
 
+    public void setSearchPredicate(FilmDataMTP filmDataMTP) {
+        if (!this.isVisible()) {
+            return;
+        }
+
+        this.searchIsNull = filmDataMTP == null;
+        this.searchTheme = searchIsNull ? "" : filmDataMTP.getTheme();
+        this.searchTitle = searchIsNull ? "" : filmDataMTP.getTitle();
+        setSearchString(true);
+        setSearchString(false);
+    }
+
     public void setSearchPredicate(DownloadData downloadData) {
         if (!this.isVisible()) {
             return;
         }
 
-        this.downloadData = downloadData;
+        this.searchIsNull = downloadData == null;
+        this.searchTheme = searchIsNull ? "" : downloadData.getTheme();
+        this.searchTitle = searchIsNull ? "" : downloadData.getTitle();
         setSearchString(true);
         setSearchString(false);
     }
 
     private void setSearchString(boolean media) {
-        if (downloadData == null) {
+        if (searchIsNull) {
             return;
         }
 
         if (media) {
-            txtSearchMedia.setText(MediaCleaningFactory.cleanSearchText(downloadData.getTheme(), downloadData.getTitle(), media));
+            txtSearchMedia.setText(MediaCleaningFactory.cleanSearchText(searchTheme, searchTitle, media));
         } else {
-            txtSearchAbo.setText(MediaCleaningFactory.cleanSearchText(downloadData.getTheme(), downloadData.getTitle(), media));
+            txtSearchAbo.setText(MediaCleaningFactory.cleanSearchText(searchTheme, searchTitle, media));
         }
     }
 
@@ -113,14 +131,10 @@ public class PaneDownloadMedia extends VBox {
         VBox vRight = DownloadGuiMediaSearch.getSearchAbo(lblSumAbo, true);
         vRight.getChildren().add(tableAbo);
 
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter(true));
-        ProgConfig.DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter(false));
-        ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA.addListener((u, o, n) -> {
-            setSearchString(true);
-        });
-        ProgConfig.DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO.addListener((u, o, n) -> {
-            setSearchString(false);
-        });
+        ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter(true));
+        ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter(false));
+        ProgConfig.GUI_MEDIA_BUILD_SEARCH_MEDIA.addListener((u, o, n) -> setSearchString(true));
+        ProgConfig.GUI_MEDIA_BUILD_SEARCH_ABO.addListener((u, o, n) -> setSearchString(false));
 
         tableMedia.setStyle("-fx-border-width: 1px;");
         tableMedia.setStyle("-fx-border-color: -text-color-blue;");
@@ -161,8 +175,8 @@ public class PaneDownloadMedia extends VBox {
         btnDialogMedia.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MENU.getImageView());
         btnDialogMedia.setOnAction(a -> {
             new MediaDialogController(
-                    downloadData == null ? "" : downloadData.getTheme(),
-                    downloadData == null ? txtSearchMedia.getText() : downloadData.getTitle(), true);
+                    searchTheme,
+                    searchIsNull ? txtSearchMedia.getText() : searchTitle, true);
             setSearchString(true);
             setSearchString(false);
             filter(true);// wegen Dialog, wenn vorher schon leer
@@ -171,8 +185,8 @@ public class PaneDownloadMedia extends VBox {
         btnDialogMedia.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
                 new MediaDialogController(
-                        downloadData == null ? "" : downloadData.getTheme(),
-                        downloadData == null ? txtSearchAbo.getText() : downloadData.getTitle(), false);
+                        searchTheme,
+                        searchIsNull ? txtSearchAbo.getText() : searchTitle, false);
                 setSearchString(true);
                 setSearchString(false);
                 filter(true);// wegen Dialog, wenn vorher schon leer

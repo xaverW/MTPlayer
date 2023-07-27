@@ -42,7 +42,7 @@ public class MediaCleaningDialogController extends PDialogExtra {
     private PaneCleaningListController paneCleaningListController;
 
     public MediaCleaningDialogController(boolean media) {
-        super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_GUI_MEDIA_CONFIG_DIALOG_SIZE, "Einstellungen",
+        super(ProgData.getInstance().primaryStage, ProgConfig.GUI_MEDIA_CONFIG_DIALOG_SIZE, "Einstellungen",
                 true, false, DECO.NO_BORDER);
 
         this.progData = ProgData.getInstance();

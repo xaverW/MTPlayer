@@ -239,26 +239,26 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "950:600");
     public static StringProperty DOWNLOAD_ONLY_STOP_DIALOG_SIZE = addStrProp("download-only-stop-dialog-size", "600:400");
 
-    //Gui Download Media
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_MEDIA = addIntProp("download-gui-media-build-search-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //aus was der Suchbegriff gebaut wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_BUILD_SEARCH_ABO = addIntProp("download-gui-media-build-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //aus was der Suchbegriff gebaut wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_MEDIA = addIntProp("download-gui-media-search-in-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //wo bei Medien gesucht wird: T/Th/TT
-    public static IntegerProperty DOWNLOAD_GUI_MEDIA_SEARCH_IN_ABO = addIntProp("download-gui-media-search-in-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //wo bei Abos gesucht wird: T/Th/TT
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_MEDIA = addBoolProp("download-gui-media-clean-media", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_ABO = addBoolProp("download-gui-media-clean-abo", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_MEDIA = addBoolProp("download-gui-media-clean-exact-media", Boolean.FALSE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_EXACT_ABO = addBoolProp("download-gui-media-clean-exact-abo", Boolean.FALSE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_MEDIA = addBoolProp("download-gui-media-clean-and-or-media", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_AND_OR_ABO = addBoolProp("download-gui-media-clean-and-or-abo", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_MEDIA = addBoolProp("download-gui-media-clean-number-media", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_NUMBER_ABO = addBoolProp("download-gui-media-clean-number-abo", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_DATE_MEDIA = addBoolProp("download-gui-media-clean-date-media", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_DATE_ABO = addBoolProp("download-gui-media-clean-date-abo", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_MEDIA = addBoolProp("download-gui-media-clean-clip-media", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_CLIP_ABO = addBoolProp("download-gui-media-clean-clip-abo", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_LIST_MEDIA = addBoolProp("download-gui-media-clean-list-media", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_MEDIA_CLEAN_LIST_ABO = addBoolProp("download-gui-media-clean-list-abo", Boolean.TRUE);
-    public static StringProperty DOWNLOAD_GUI_MEDIA_CONFIG_DIALOG_SIZE = addStrProp("download-gui-media-config-dialog-size", "800:700");
+    //Gui Media (Search) Dialog
+    public static IntegerProperty GUI_MEDIA_BUILD_SEARCH_MEDIA = addIntProp("gui-media-build-search-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty GUI_MEDIA_BUILD_SEARCH_ABO = addIntProp("gui-media-build-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty GUI_MEDIA_SEARCH_IN_MEDIA = addIntProp("gui-media-search-in-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //wo bei Medien gesucht wird: T/Th/TT
+    public static IntegerProperty GUI_MEDIA_SEARCH_IN_ABO = addIntProp("gui-media-search-in-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //wo bei Abos gesucht wird: T/Th/TT
+    public static BooleanProperty GUI_MEDIA_CLEAN_MEDIA = addBoolProp("gui-media-clean-media", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_ABO = addBoolProp("gui-media-clean-abo", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_EXACT_MEDIA = addBoolProp("gui-media-clean-exact-media", Boolean.FALSE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_EXACT_ABO = addBoolProp("gui-media-clean-exact-abo", Boolean.FALSE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_AND_OR_MEDIA = addBoolProp("gui-media-clean-and-or-media", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_AND_OR_ABO = addBoolProp("gui-media-clean-and-or-abo", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_NUMBER_MEDIA = addBoolProp("gui-media-clean-number-media", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_NUMBER_ABO = addBoolProp("gui-media-clean-number-abo", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_DATE_MEDIA = addBoolProp("gui-media-clean-date-media", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_DATE_ABO = addBoolProp("gui-media-clean-date-abo", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_CLIP_MEDIA = addBoolProp("gui-media-clean-clip-media", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_CLIP_ABO = addBoolProp("gui-media-clean-clip-abo", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_LIST_MEDIA = addBoolProp("gui-media-clean-list-media", Boolean.TRUE);
+    public static BooleanProperty GUI_MEDIA_CLEAN_LIST_ABO = addBoolProp("gui-media-clean-list-abo", Boolean.TRUE);
+    public static StringProperty GUI_MEDIA_CONFIG_DIALOG_SIZE = addStrProp("gui-media-config-dialog-size", "800:700");
 
     // Downloadchart
     public static BooleanProperty DOWNLOAD_CHART_SEPARAT = addBoolProp("download-chart-separat", Boolean.TRUE);

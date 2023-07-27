@@ -81,7 +81,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void isShown() {
-        setFilmInfos();
+        setFilmInfos(tableView.getSelectionModel().getSelectedItem());
         tableView.requestFocus();
     }
 
@@ -195,17 +195,16 @@ public class FilmGuiController extends AnchorPane {
             row.hoverProperty().addListener((observable) -> {
                 final FilmDataMTP filmDataMTP = (FilmDataMTP) row.getItem();
                 if (row.isHover() && filmDataMTP != null) {
-                    filmInfoController.setFilmInfos(filmDataMTP);
-                    FilmInfoDialogController.getInstance().setFilm(filmDataMTP);
+                    setFilmInfos(filmDataMTP);
                 } else {
-                    setFilmInfos();
+                    setFilmInfos(tableView.getSelectionModel().getSelectedItem());
                 }
             });
             return row;
         });
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 //wird auch durch FilmlistenUpdate ausgelöst
-                Platform.runLater(this::setFilmInfos));
+                Platform.runLater(() -> setFilmInfos(tableView.getSelectionModel().getSelectedItem())));
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
@@ -282,9 +281,8 @@ public class FilmGuiController extends AnchorPane {
         });
     }
 
-    private void setFilmInfos() {
+    private void setFilmInfos(FilmDataMTP film) {
         // Film in FilmInfoDialog setzen
-        FilmDataMTP film = tableView.getSelectionModel().getSelectedItem();
         filmInfoController.setFilmInfos(film);
         FilmInfoDialogController.getInstance().setFilm(film);
     }
