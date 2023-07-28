@@ -47,14 +47,16 @@ public class FilmInfoController extends PClosePaneH {
     }
 
     public void setFilmInfos(FilmDataMTP film) {
-        paneFilmInfo.setFilm(film);
+        if (paneIsVisible(paneFilmInfo, ProgConfig.FILM_PANE_DIALOG_INFO_ON)) {
+            paneFilmInfo.setFilm(film);
+        }
         if (paneIsVisible(paneMedia, ProgConfig.FILM_PANE_DIALOG_MEDIA_ON)) {
             paneMedia.setSearchPredicate(film);
         }
     }
 
-    private boolean paneIsVisible(Pane pane, BooleanProperty booleanProperty) {
-        if (booleanProperty.getValue()) {
+    private boolean paneIsVisible(Pane pane, BooleanProperty extraDialog) {
+        if (extraDialog.getValue()) {
             // dann im Extrafenster
             return true;
         } else if (!ProgConfig.FILM_GUI_DIVIDER_ON.getValue()) {

@@ -107,7 +107,9 @@ public class DownloadInfoController extends PClosePaneH {
     }
 
     public void setDownloadInfos(DownloadData download) {
-        paneFilmInfo.setFilm(download != null ? download.getFilm() : null);
+        if (paneIsVisible(paneFilmInfo, ProgConfig.DOWNLOAD_PANE_DIALOG_INFO_ON)) {
+            paneFilmInfo.setFilm(download != null ? download.getFilm() : null);
+        }
         if (paneIsVisible(paneMedia, ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON)) {
             paneMedia.setSearchPredicate(download);
         }
