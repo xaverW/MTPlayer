@@ -96,12 +96,9 @@ public class WriteMediaDb implements AutoCloseable {
 
     private synchronized void write(Path file, List<MediaData> mediaDbList) {
         try {
-
             this.mediaDbList = mediaDbList;
             xmlFilePath = file;
-
             writeXmlData();
-
         } catch (final Exception ex) {
             logList.add("Fehler, nicht geschrieben!");
             PLog.errorLog(656328109, ex);
@@ -133,13 +130,11 @@ public class WriteMediaDb implements AutoCloseable {
 
     private void writeXmlData() throws XMLStreamException, IOException {
         xmlWriteStart();
-
         writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
         writer.writeComment("MediaDb");
         writer.writeCharacters(P2LibConst.LINE_SEPARATOR);
         xmlWrite();
         writer.writeCharacters(P2LibConst.LINE_SEPARATORx2);
-
         xmlWriteEnd();
     }
 
@@ -158,9 +153,9 @@ public class WriteMediaDb implements AutoCloseable {
     private void xmlWrite() throws XMLStreamException {
         // Filme schreiben
         for (final MediaData mediaData : mediaDbList) {
-            mediaData.setXmlFromProps();
+            String[] arr = mediaData.setXmlFromProps();
             if (mediaData.isExternal()) {
-                xmlWrite(MediaData.TAG, MediaData.XML_NAMES, mediaData.arr, true);
+                xmlWrite(MediaData.TAG, MediaData.XML_NAMES, arr, true);
             }
         }
     }

@@ -18,9 +18,10 @@ package de.p2tools.mtplayer.controller.mediadb;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.mtfilm.tools.Data;
 
-public class MediaData extends Data<MediaData> {
+import java.util.Arrays;
+
+public class MediaData {
     //sind die Daten die im "mediadb.txt" liegen!!
 
     public final static int MEDIA_DATA_NAME = 0;
@@ -35,61 +36,66 @@ public class MediaData extends Data<MediaData> {
     public final static String[] XML_NAMES = {"Name", "Pfad", "Groesse", "Sammlung", "SammlungsId", "Extern"};
     public static final String TAG = "Mediensammlung";
 
-    public String[] arr;
+    public final String name;
+    public final String path;
+    public final String size;
+    public final String collection;
+    public final String collectionId;
+    public final String extern;
 
     private MediaCollectionData mediaCollectionData;
     private MediaFileSize mediaFileSize = new MediaFileSize(0);
-    private long collectionId = 0;
+    private long collectionIdLong = 0;
 
 
-    public MediaData() {
-        makeArr();
+    public MediaData(String[] arr) {
+        this.name = arr[MEDIA_DATA_NAME];
+        this.path = arr[MEDIA_DATA_PATH];
+        this.size = getSize().getSizeAsStr();
+        mediaFileSize.setSize(arr[MEDIA_DATA_SIZE]);
+
+        try {
+            collectionIdLong = Long.parseLong(arr[MEDIA_DATA_COLLECTION_ID]);
+        } catch (Exception ex) {
+            collectionIdLong = 0;
+        }
+        this.collection = getCollectionName();
+        this.collectionId = String.valueOf(getCollectionIdLong());
+        this.extern = String.valueOf(isExternal());
     }
 
     public MediaData(String name, String path, long size, MediaCollectionData mediaCollectionData) {
-        makeArr();
         this.mediaCollectionData = mediaCollectionData; // todo brauchts das
 
-        setName(cleanUp(name));
-        setPath(cleanUp(path));
-        setSize(size);
-        setCollectionId(mediaCollectionData.getId());
+        mediaFileSize.setSize(size);
+        this.collectionIdLong = mediaCollectionData.getId();
+
+        this.name = cleanUp(name);
+        this.path = cleanUp(path);
+        this.size = getSize().getSizeAsStr();
+        this.collection = getCollectionName();
+        this.collectionId = String.valueOf(getCollectionIdLong());
+        this.extern = String.valueOf(isExternal());
+    }
+
+    public String getHash() {
+        return getName() + "##" + getPath() + "##" + getCollectionIdLong();
     }
 
     public String getName() {
-        return arr[MEDIA_DATA_NAME];
-    }
-
-    public void setName(String name) {
-        arr[MEDIA_DATA_NAME] = name;
+        return name;
     }
 
     public String getPath() {
-        return arr[MEDIA_DATA_PATH];
-    }
-
-    public void setPath(String path) {
-        arr[MEDIA_DATA_PATH] = path;
+        return path;
     }
 
     public MediaFileSize getSize() {
         return mediaFileSize;
     }
 
-    public void setSize(String size) {
-        mediaFileSize.setSize(size);
-    }
-
-    public void setSize(long size) {
-        mediaFileSize.setSize(size);
-    }
-
-    public long getCollectionId() {
-        return collectionId;
-    }
-
-    public void setCollectionId(long collectionId) {
-        this.collectionId = collectionId;
+    public long getCollectionIdLong() {
+        return collectionIdLong;
     }
 
     public String getCollectionName() {
@@ -110,21 +116,28 @@ public class MediaData extends Data<MediaData> {
 
     private boolean checkMediaPathData() {
         if (mediaCollectionData == null) {
-            this.mediaCollectionData = ProgData.getInstance().mediaCollectionDataList.getMediaCollectionData(getCollectionId());
+            this.mediaCollectionData = ProgData.getInstance().mediaCollectionDataList.getMediaCollectionData(getCollectionIdLong());
         }
         return mediaCollectionData != null;
     }
 
+    private static String cleanUp(String s) {
+        s = s.replace(P2LibConst.LINE_SEPARATOR, "");
+        s = s.replace("|", "");
+        return s;
+    }
+
     public boolean equal(MediaData m) {
-        return m.arr[MEDIA_DATA_NAME].equals(arr[MEDIA_DATA_NAME])
-                && m.arr[MEDIA_DATA_PATH].equals(arr[MEDIA_DATA_PATH])
+        return m.name.equals(name)
+                && m.path.equals(path)
                 && m.mediaCollectionData.equals(mediaCollectionData)
-                && m.arr[MEDIA_DATA_SIZE].equals(arr[MEDIA_DATA_SIZE]);
+                && m.size.equals(size);
     }
 
     @Override
     public String toString() {
         String ret = "";
+        String[] arr = setXmlFromProps();
         for (int i = 0; i < MAX_ELEM; ++i) {
             if (i == 0) {
                 ret += "| ***|" + COLUMN_NAMES[i] + ": " + arr[i] + P2LibConst.LINE_SEPARATOR;
@@ -135,38 +148,20 @@ public class MediaData extends Data<MediaData> {
         return ret;
     }
 
-    public String getHash() {
-        return getName() + "##" + getPath() + "##" + getCollectionId();
-    }
-
-    @Override
-    public void setPropsFromXml() {
-        setSize(arr[MEDIA_DATA_SIZE]);
-        try {
-            setCollectionId(Long.parseLong(arr[MEDIA_DATA_COLLECTION_ID]));
-        } catch (Exception ex) {
-            setCollectionId(0);
-        }
-    }
-
-    @Override
-    public void setXmlFromProps() {
+    public String[] setXmlFromProps() {
+        String[] arr = getArr();
+        arr[MEDIA_DATA_NAME] = getName();
+        arr[MEDIA_DATA_PATH] = getPath();
         arr[MEDIA_DATA_SIZE] = getSize().getSizeAsStr();
         arr[MEDIA_DATA_COLLECTION_NAME] = getCollectionName();
-        arr[MEDIA_DATA_COLLECTION_ID] = String.valueOf(getCollectionId());
+        arr[MEDIA_DATA_COLLECTION_ID] = String.valueOf(getCollectionIdLong());
         arr[MEDIA_DATA_EXTERN] = String.valueOf(isExternal());
+        return arr;
     }
 
-    private static String cleanUp(String s) {
-        s = s.replace(P2LibConst.LINE_SEPARATOR, "");
-        s = s.replace("|", "");
-        return s;
-    }
-
-    private void makeArr() {
-        arr = new String[MAX_ELEM];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = "";
-        }
+    public static String[] getArr() {
+        String[] arr = new String[MAX_ELEM];
+        Arrays.fill(arr, "");
+        return arr;
     }
 }

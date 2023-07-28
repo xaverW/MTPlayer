@@ -89,12 +89,11 @@ public class ReadMediaDb implements AutoCloseable {
                     continue;
                 }
 
-                final MediaData mediaData = new MediaData();
-                if (get(parser, MediaData.TAG, MediaData.XML_NAMES, mediaData.arr)) {
-                    mediaData.setPropsFromXml();
+                String[] arr = MediaData.getArr();
+                if (get(parser, MediaData.TAG, MediaData.XML_NAMES, arr)) {
+                    final MediaData mediaData = new MediaData(arr);
                     list.add(mediaData);
                 }
-
             }
         } catch (final Exception ex) {
             list.clear();

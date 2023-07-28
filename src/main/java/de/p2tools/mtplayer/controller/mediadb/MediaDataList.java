@@ -106,7 +106,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
     synchronized void removeMediaData(long collectionId) {
         // remove all media with this collectionId
         List<MediaData> rest = new ArrayList<>();
-        this.stream().filter(mediaData -> mediaData.getCollectionId() != collectionId).forEach(mediaData -> rest.add(mediaData));
+        this.stream().filter(mediaData -> mediaData.getCollectionIdLong() != collectionId).forEach(mediaData -> rest.add(mediaData));
         this.setAll(rest);
     }
 
@@ -135,7 +135,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         mediaCollectionDataList.stream().forEach(collectionData -> collectionData.setCount(0));
 
         this.stream().forEach(mediaData -> {
-            MediaCollectionData mediaCollectionData = mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionId());
+            MediaCollectionData mediaCollectionData = mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionIdLong());
             if (mediaCollectionData != null) {
                 mediaCollectionData.setCount(mediaCollectionData.getCount() + 1);
             }
