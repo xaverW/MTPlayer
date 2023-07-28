@@ -38,11 +38,11 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
     public static final String TAG = "MediaCollectionData";
     public final static int MAX_ELEM = XML_NAMES.length;
 
-    private LongProperty id = new SimpleLongProperty(0L);
-    private StringProperty path = new SimpleStringProperty("");
-    private StringProperty collectionName = new SimpleStringProperty("");
-    private BooleanProperty external = new SimpleBooleanProperty(false);
-    private IntegerProperty count = new SimpleIntegerProperty(0);
+    private final LongProperty id = new SimpleLongProperty(0L);
+    private final StringProperty path = new SimpleStringProperty("");
+    private final StringProperty collectionName = new SimpleStringProperty("");
+    private final BooleanProperty external = new SimpleBooleanProperty(false);
+    private final IntegerProperty count = new SimpleIntegerProperty(0);
 
     public MediaCollectionData() {
     }
