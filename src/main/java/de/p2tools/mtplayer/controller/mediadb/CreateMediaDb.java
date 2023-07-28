@@ -96,13 +96,13 @@ public class CreateMediaDb {
             }
 
             // und jetzt abarbeiten
-            progData.mediaCollectionDataList.getMediaCollectionDataList(false).stream().forEach((mediaPathData) -> {
-                if (mediaPathData.getCollectionName().isEmpty()) {
+            progData.mediaCollectionDataList.getMediaCollectionDataList(false).forEach((mediaCollectionData) -> {
+                if (mediaCollectionData.getCollectionName().isEmpty()) {
                     final String name = progData.mediaCollectionDataList.getNextMediaCollectionName(false);
-                    mediaPathData.setCollectionName(name.intern());
+                    mediaCollectionData.setCollectionName(name.intern());
                 }
                 // und alle Medien dieses Pfades suchen
-                searchFile(new File(mediaPathData.getPath()), mediaPathData);
+                searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getId());
             });
 
             logs.add(" -> gefundene Medien: " + tmpMediaDataList.size());
@@ -146,7 +146,7 @@ public class CreateMediaDb {
             }
 
             // und jetzt alle Medien dieses Pfades suchen
-            searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData);
+            searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getId());
             logs.add(" -> im Pfad gefundene Medien: " + tmpMediaDataList.size());
             mediaDataList.addAllMediaData(tmpMediaDataList);
             mediaDataList.checkExternalMediaData();
@@ -179,7 +179,7 @@ public class CreateMediaDb {
                         : "Der Pfad der Mediensammlung kann nicht gelesen werden:" + P2LibConst.LINE_SEPARATOR) + error));
     }
 
-    private void searchFile(File dir, MediaCollectionData mediaCollectionData) {
+    private void searchFile(File dir, long collectionIdLong) {
         if (mediaDataList.isStopSearching()) {
             // dann wurde es vom User abgebrochen
             return;
@@ -193,7 +193,7 @@ public class CreateMediaDb {
         if (files != null) {
             for (final File file : files) {
                 if (file.isDirectory()) {
-                    searchFile(file, mediaCollectionData);
+                    searchFile(file, collectionIdLong);
                 } else {
                     if (checkFileSize && file.length() < fileSize) {
                         continue;
@@ -206,7 +206,7 @@ public class CreateMediaDb {
                     }
 
                     tmpMediaDataList.add(new MediaData(file.getName(), file.getParent().intern(),
-                            file.length(), mediaCollectionData));
+                            file.length(), collectionIdLong));
                 }
             }
         }

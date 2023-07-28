@@ -27,55 +27,39 @@ public class MediaData {
     public final static int MEDIA_DATA_NAME = 0;
     public final static int MEDIA_DATA_PATH = 1;
     public final static int MEDIA_DATA_SIZE = 2;
-    public final static int MEDIA_DATA_COLLECTION_NAME = 3;
-    public final static int MEDIA_DATA_COLLECTION_ID = 4;
-    public final static int MEDIA_DATA_EXTERN = 5;
+    public final static int MEDIA_DATA_COLLECTION_ID = 3;
+    public final static int MEDIA_DATA_EXTERN = 4;
 
-    public final static int MAX_ELEM = 6;
-    public final static String[] COLUMN_NAMES = {"Name", "Pfad", "Größe [MB]", "Sammlung", "SammlungsId", "Extern"};
-    public final static String[] XML_NAMES = {"Name", "Pfad", "Groesse", "Sammlung", "SammlungsId", "Extern"};
+    public final static int MAX_ELEM = 5;
+    public final static String[] COLUMN_NAMES = {"Name", "Pfad", "Größe [MB]", "SammlungsId", "Extern"};
+    public final static String[] XML_NAMES = {"Name", "Pfad", "Groesse", "SammlungsId", "Extern"};
     public static final String TAG = "Mediensammlung";
 
-    public final String name;
-    public final String path;
-    public final String size;
-    public final String collection;
-    public final String collectionId;
-    public final String extern;
-
-    private MediaCollectionData mediaCollectionData;
-    private MediaFileSize mediaFileSize = new MediaFileSize(0);
-    private long collectionIdLong = 0;
+    private final String name;
+    private final String path;
+    private final boolean extern;
+    private final MediaFileSize mediaFileSize = new MediaFileSize(0);
+    private long collectionIdLong;
 
 
     public MediaData(String[] arr) {
         this.name = arr[MEDIA_DATA_NAME];
         this.path = arr[MEDIA_DATA_PATH];
-        this.size = getSize().getSizeAsStr();
         mediaFileSize.setSize(arr[MEDIA_DATA_SIZE]);
-
         try {
             collectionIdLong = Long.parseLong(arr[MEDIA_DATA_COLLECTION_ID]);
         } catch (Exception ex) {
             collectionIdLong = 0;
         }
-        this.collection = getCollectionName();
-        this.collectionId = String.valueOf(getCollectionIdLong());
-        this.extern = String.valueOf(isExternal());
+        this.extern = setExternal(); // wird gesetzt mit der Sammlung-Info, muss also nicht gespeichert werden
     }
 
-    public MediaData(String name, String path, long size, MediaCollectionData mediaCollectionData) {
-        this.mediaCollectionData = mediaCollectionData; // todo brauchts das
-
+    public MediaData(String name, String path, long size, long collectionIdLong) {
         mediaFileSize.setSize(size);
-        this.collectionIdLong = mediaCollectionData.getId();
-
+        this.collectionIdLong = collectionIdLong;
         this.name = cleanUp(name);
         this.path = cleanUp(path);
-        this.size = getSize().getSizeAsStr();
-        this.collection = getCollectionName();
-        this.collectionId = String.valueOf(getCollectionIdLong());
-        this.extern = String.valueOf(isExternal());
+        this.extern = setExternal(); // wird gesetzt mit der Sammlung-Info, muss also nicht gespeichert werden
     }
 
     public String getHash() {
@@ -98,27 +82,15 @@ public class MediaData {
         return collectionIdLong;
     }
 
-    public String getCollectionName() {
-        if (checkMediaPathData()) {
-            return mediaCollectionData.getCollectionName();
-        } else {
-            return "";
-        }
-    }
-
     public boolean isExternal() {
-        if (checkMediaPathData()) {
-            return mediaCollectionData.isExternal();
-        } else {
-            return false;
-        }
+        return extern;
     }
 
-    private boolean checkMediaPathData() {
-        if (mediaCollectionData == null) {
-            this.mediaCollectionData = ProgData.getInstance().mediaCollectionDataList.getMediaCollectionData(getCollectionIdLong());
+    private boolean setExternal() {
+        if (collectionIdLong > 0) {
+            return ProgData.getInstance().mediaCollectionDataList.isMediaCollectionDataExternal(getCollectionIdLong());
         }
-        return mediaCollectionData != null;
+        return false;
     }
 
     private static String cleanUp(String s) {
@@ -130,8 +102,8 @@ public class MediaData {
     public boolean equal(MediaData m) {
         return m.name.equals(name)
                 && m.path.equals(path)
-                && m.mediaCollectionData.equals(mediaCollectionData)
-                && m.size.equals(size);
+                && m.collectionIdLong == collectionIdLong
+                && m.getSize() == getSize();
     }
 
     @Override
@@ -153,7 +125,6 @@ public class MediaData {
         arr[MEDIA_DATA_NAME] = getName();
         arr[MEDIA_DATA_PATH] = getPath();
         arr[MEDIA_DATA_SIZE] = getSize().getSizeAsStr();
-        arr[MEDIA_DATA_COLLECTION_NAME] = getCollectionName();
         arr[MEDIA_DATA_COLLECTION_ID] = String.valueOf(getCollectionIdLong());
         arr[MEDIA_DATA_EXTERN] = String.valueOf(isExternal());
         return arr;

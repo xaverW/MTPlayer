@@ -127,6 +127,17 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
                 .findAny().orElse(null);
     }
 
+    public boolean isMediaCollectionDataExternal(long id) {
+        if (this.stream()
+                .filter(m -> (m.getId() == id))
+                .filter(MediaCollectionData::isExternal)
+                .findAny().orElse(null) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private MediaCollectionData getMediaCollectionData(String collectionName) {
         MediaCollectionData mediaCollectionData = this.stream()
                 .filter(m -> m.getCollectionName().equals(collectionName))
