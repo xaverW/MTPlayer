@@ -94,19 +94,11 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         filteredList.setPredicate(p -> true);
     }
 
-    public synchronized boolean addAllMediaData(List<MediaData> list) {
-        return this.addAll(list);
-    }
-
-    public synchronized boolean setAllMediaData(List<MediaData> list) {
-        return this.setAll(list);
-    }
-
-
-    synchronized void removeMediaData(long collectionId) {
-        // remove all media with this collectionId
+    synchronized void removeMediaData(int collectionId) {
+        // remove all media with this collectionId, in one way
         List<MediaData> rest = new ArrayList<>();
-        this.stream().filter(mediaData -> mediaData.getCollectionIdLong() != collectionId).forEach(mediaData -> rest.add(mediaData));
+        this.stream().filter(mediaData -> mediaData.getCollectionId() != collectionId)
+                .forEach(rest::add);
         this.setAll(rest);
     }
 
@@ -132,10 +124,10 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
     public synchronized void countMediaData(ProgData progData) {
         // creates the counter in the MediaCollectionDataList
         final MediaCollectionDataList mediaCollectionDataList = progData.mediaCollectionDataList;
-        mediaCollectionDataList.stream().forEach(collectionData -> collectionData.setCount(0));
+        mediaCollectionDataList.forEach(collectionData -> collectionData.setCount(0));
 
-        this.stream().forEach(mediaData -> {
-            MediaCollectionData mediaCollectionData = mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionIdLong());
+        this.forEach(mediaData -> {
+            MediaCollectionData mediaCollectionData = mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionId());
             if (mediaCollectionData != null) {
                 mediaCollectionData.setCount(mediaCollectionData.getCount() + 1);
             }

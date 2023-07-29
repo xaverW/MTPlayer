@@ -102,11 +102,11 @@ public class CreateMediaDb {
                     mediaCollectionData.setCollectionName(name.intern());
                 }
                 // und alle Medien dieses Pfades suchen
-                searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getId());
+                searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getIdInt());
             });
 
             logs.add(" -> gefundene Medien: " + tmpMediaDataList.size());
-            mediaDataList.setAllMediaData(tmpMediaDataList);
+            mediaDataList.setAll(tmpMediaDataList);
             mediaDataList.checkExternalMediaData();
             mediaDataList.countMediaData(progData);
 
@@ -146,9 +146,9 @@ public class CreateMediaDb {
             }
 
             // und jetzt alle Medien dieses Pfades suchen
-            searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getId());
+            searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getIdInt());
             logs.add(" -> im Pfad gefundene Medien: " + tmpMediaDataList.size());
-            mediaDataList.addAllMediaData(tmpMediaDataList);
+            mediaDataList.addAll(tmpMediaDataList);
             mediaDataList.checkExternalMediaData();
             mediaDataList.countMediaData(progData);
             new WriteMediaDb(progData).writeExternalMediaData(logs);
@@ -179,7 +179,7 @@ public class CreateMediaDb {
                         : "Der Pfad der Mediensammlung kann nicht gelesen werden:" + P2LibConst.LINE_SEPARATOR) + error));
     }
 
-    private void searchFile(File dir, long collectionIdLong) {
+    private void searchFile(File dir, int collectionIdLong) {
         if (mediaDataList.isStopSearching()) {
             // dann wurde es vom User abgebrochen
             return;

@@ -27,7 +27,7 @@ public class MediaData {
     public final static int MEDIA_DATA_NAME = 0;
     public final static int MEDIA_DATA_PATH = 1;
     public final static int MEDIA_DATA_SIZE = 2;
-    public final static int MEDIA_DATA_COLLECTION_ID = 3;
+    public final static int MEDIA_DATA_COLLECTION_ID = 3; // ist die alte ID, long
     public final static int MEDIA_DATA_EXTERN = 4;
 
     public final static int MAX_ELEM = 5;
@@ -39,31 +39,38 @@ public class MediaData {
     private final String path;
     private final boolean extern;
     private final MediaFileSize mediaFileSize = new MediaFileSize(0);
-    private long collectionIdLong;
-
+    private final int collectionId; // kann negativ (sind die alten Long) und positiv (sind die neuen int) sein!!
 
     public MediaData(String[] arr) {
         this.name = arr[MEDIA_DATA_NAME];
         this.path = arr[MEDIA_DATA_PATH];
         mediaFileSize.setSize(arr[MEDIA_DATA_SIZE]);
+
+        int id;
         try {
-            collectionIdLong = Long.parseLong(arr[MEDIA_DATA_COLLECTION_ID]);
+            id = Integer.parseInt(arr[MEDIA_DATA_COLLECTION_ID]); // sind die neuen
         } catch (Exception ex) {
-            collectionIdLong = 0;
+            // dann ist evtl. noch das alte Format
+            try {
+                id = -1 * (int) Long.parseLong(arr[MEDIA_DATA_COLLECTION_ID]); // V14 kann noch ein Long sein
+            } catch (Exception e) {
+                id = 0;
+            }
         }
+        collectionId = id;
         this.extern = setExternal(); // wird gesetzt mit der Sammlung-Info, muss also nicht gespeichert werden
     }
 
-    public MediaData(String name, String path, long size, long collectionIdLong) {
+    public MediaData(String name, String path, long size, int id) {
         mediaFileSize.setSize(size);
-        this.collectionIdLong = collectionIdLong;
+        this.collectionId = id;
         this.name = cleanUp(name);
         this.path = cleanUp(path);
         this.extern = setExternal(); // wird gesetzt mit der Sammlung-Info, muss also nicht gespeichert werden
     }
 
     public String getHash() {
-        return getName() + "##" + getPath() + "##" + getCollectionIdLong();
+        return getName() + "##" + getPath() + "##" + collectionId;
     }
 
     public String getName() {
@@ -78,8 +85,8 @@ public class MediaData {
         return mediaFileSize;
     }
 
-    public long getCollectionIdLong() {
-        return collectionIdLong;
+    public int getCollectionId() {
+        return collectionId;
     }
 
     public boolean isExternal() {
@@ -87,8 +94,8 @@ public class MediaData {
     }
 
     private boolean setExternal() {
-        if (collectionIdLong > 0) {
-            return ProgData.getInstance().mediaCollectionDataList.isMediaCollectionDataExternal(getCollectionIdLong());
+        if (collectionId != 0) {
+            return ProgData.getInstance().mediaCollectionDataList.isMediaCollectionDataExternal(collectionId);
         }
         return false;
     }
@@ -102,7 +109,7 @@ public class MediaData {
     public boolean equal(MediaData m) {
         return m.name.equals(name)
                 && m.path.equals(path)
-                && m.collectionIdLong == collectionIdLong
+                && m.collectionId == collectionId
                 && m.getSize() == getSize();
     }
 
@@ -122,11 +129,11 @@ public class MediaData {
 
     public String[] setXmlFromProps() {
         String[] arr = getArr();
-        arr[MEDIA_DATA_NAME] = getName();
-        arr[MEDIA_DATA_PATH] = getPath();
+        arr[MEDIA_DATA_NAME] = name;
+        arr[MEDIA_DATA_PATH] = path;
         arr[MEDIA_DATA_SIZE] = getSize().getSizeAsStr();
-        arr[MEDIA_DATA_COLLECTION_ID] = String.valueOf(getCollectionIdLong());
-        arr[MEDIA_DATA_EXTERN] = String.valueOf(isExternal());
+        arr[MEDIA_DATA_COLLECTION_ID] = String.valueOf(collectionId);
+        arr[MEDIA_DATA_EXTERN] = String.valueOf(extern);
         return arr;
     }
 

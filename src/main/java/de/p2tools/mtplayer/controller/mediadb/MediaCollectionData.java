@@ -16,10 +16,7 @@
 
 package de.p2tools.mtplayer.controller.mediadb;
 
-import de.p2tools.p2lib.configfile.config.Config;
-import de.p2tools.p2lib.configfile.config.Config_boolProp;
-import de.p2tools.p2lib.configfile.config.Config_longProp;
-import de.p2tools.p2lib.configfile.config.Config_stringProp;
+import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.tools.PIndex;
 import javafx.beans.property.*;
@@ -28,17 +25,13 @@ import java.util.ArrayList;
 
 public class MediaCollectionData extends PDataSample<MediaCollectionData> {
 
-    private final static int MEDIA_PATH_ID = 0;
-    private final static int MEDIA_PATH_PATH = 1;
-    private final static int MEDIA_PATH_COLLECTION_NAME = 2;
-    private final static int MEDIA_PATH_EXTERNAL = 3;
-
     public final static String[] COLUMN_NAMES = {"Id", "Pfad", "Sammlung", "Extern"};
     public final static String[] XML_NAMES = COLUMN_NAMES;
     public static final String TAG = "MediaCollectionData";
     public final static int MAX_ELEM = XML_NAMES.length;
 
-    private final LongProperty id = new SimpleLongProperty(0L);
+    private final LongProperty idLong = new SimpleLongProperty(0L); // sind die alten, bis V14
+    private final IntegerProperty idInt = new SimpleIntegerProperty(0);
     private final StringProperty path = new SimpleStringProperty("");
     private final StringProperty collectionName = new SimpleStringProperty("");
     private final BooleanProperty external = new SimpleBooleanProperty(false);
@@ -51,7 +44,7 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
         setPath(path);
         setCollectionName(collectionName);
         setExternal(external);
-        setId(PIndex.getIndex());
+        setIdInt(PIndex.getIndexInt());
     }
 
     @Override
@@ -67,7 +60,8 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_longProp("id", "Id", id));
+        list.add(new Config_longProp("id", "Id", idLong));
+        list.add(new Config_intProp("idInt", "IdInt", idInt));
         list.add(new Config_stringProp("path", "Pfad", path));
         list.add(new Config_stringProp("collectionName", "Sammlung", collectionName));
         list.add(new Config_boolProp("external", "Extern", external));
@@ -75,16 +69,28 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
         return list.toArray(new Config[]{});
     }
 
-    public long getId() {
-        return id.get();
+    public int getIdInt() {
+        return idInt.get();
     }
 
-    public LongProperty idProperty() {
-        return id;
+    public IntegerProperty idIntProperty() {
+        return idInt;
     }
 
-    public void setId(long id) {
-        this.id.set(id);
+    public void setIdInt(int idInt) {
+        this.idInt.set(idInt);
+    }
+
+    public long getIdLong() {
+        return idLong.get();
+    }
+
+    public LongProperty idLongProperty() {
+        return idLong;
+    }
+
+    public void setIdLong(long idLong) {
+        this.idLong.set(idLong);
     }
 
     public String getPath() {

@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("serial")
 public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionData> implements PDataList<MediaCollectionData> {
 
     public static final String TAG = "MediaCollectionDataList";
@@ -44,8 +43,15 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
 
     @Override
     public boolean add(MediaCollectionData mediaCollectionData) {
-        if (mediaCollectionData.getId() <= 0) {
-            mediaCollectionData.setId(PIndex.getIndex());
+        if (mediaCollectionData.getIdLong() > 0) {
+            // dann gibts noch eine alte ID
+            mediaCollectionData.setIdInt((int) mediaCollectionData.getIdLong() * -1); // dann sind sie immer anders als die neuen IDs
+            mediaCollectionData.setIdLong(0); // und jetzt "ausschalten"
+        }
+
+        if (mediaCollectionData.getIdInt() == 0) {
+            // dann muss sie gesetzt werden
+            mediaCollectionData.setIdInt(PIndex.getIndexInt());
         }
         return super.add(mediaCollectionData);
     }
@@ -123,13 +129,13 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
 
     public MediaCollectionData getMediaCollectionData(long id) {
         return this.stream()
-                .filter(m -> (m.getId() == id))
+                .filter(m -> (m.getIdInt() == id))
                 .findAny().orElse(null);
     }
 
     public boolean isMediaCollectionDataExternal(long id) {
         if (this.stream()
-                .filter(m -> (m.getId() == id))
+                .filter(m -> (m.getIdInt() == id))
                 .filter(MediaCollectionData::isExternal)
                 .findAny().orElse(null) != null) {
             return true;
@@ -161,17 +167,6 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
             }
         }
         hashSet.clear();
-    }
-
-    synchronized void removeMediaCollectionData(long id) {
-        // remove collection
-        Iterator<MediaCollectionData> iterator = iterator();
-        while (iterator.hasNext()) {
-            MediaCollectionData mediaCollectionData = iterator.next();
-            if (mediaCollectionData.getId() == id) {
-                iterator.remove();
-            }
-        }
     }
 
     public ObservableList<MediaCollectionData> getUndoList(boolean external) {

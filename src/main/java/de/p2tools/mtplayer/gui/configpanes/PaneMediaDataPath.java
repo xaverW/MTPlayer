@@ -207,20 +207,13 @@ public class PaneMediaDataPath {
     private void delete() {
         final List<MediaCollectionData> sels = new ArrayList<>();
         sels.addAll(tableView.getSelectionModel().getSelectedItems());
-
         if (sels.isEmpty()) {
             PAlert.showInfoNoSelection();
             return;
         }
 
         progData.mediaCollectionDataList.addDataToUndoList(sels, external);
-
-        List<Long> idList = new ArrayList<>();
-        sels.stream().forEach(mediaPathData -> {
-            idList.add(mediaPathData.getId());
-        });
-        MediaDataWorker.removeMediaCollection(idList);
-
+        MediaDataWorker.removeMediaCollection(sels);
         tableView.getSelectionModel().clearSelection();
     }
 
