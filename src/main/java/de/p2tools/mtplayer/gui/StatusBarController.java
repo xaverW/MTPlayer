@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PGuiTools;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -115,7 +115,7 @@ public class StatusBarController extends AnchorPane {
 //        lblRight.getStyleClass().add("lblInfo");
 
         hBox.setStyle("-fx-background-color: -fx-background;");
-        hBox.getChildren().addAll(lblSel, lblLeft, hBoxCircle, PGuiTools.getHBoxGrower(), lblRight);
+        hBox.getChildren().addAll(lblSel, lblLeft, hBoxCircle, P2GuiTools.getHBoxGrower(), lblRight);
         return hBox;
     }
 

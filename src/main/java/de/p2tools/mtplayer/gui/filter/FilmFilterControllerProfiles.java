@@ -26,8 +26,8 @@ import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.guitools.PSeparatorComboBox;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
@@ -232,7 +232,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
         final Button btnHelp = PButton.helpButton("Filter", HelpText.GUI_FILM_FILTER);
         hBox = new HBox(10);
-        hBox.getChildren().addAll(mbFilterTools, PGuiTools.getHBoxGrower(), btnHelp);
+        hBox.getChildren().addAll(mbFilterTools, P2GuiTools.getHBoxGrower(), btnHelp);
         getChildren().add(hBox);
     }
 

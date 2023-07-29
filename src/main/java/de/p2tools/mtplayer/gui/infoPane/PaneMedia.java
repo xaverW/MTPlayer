@@ -33,8 +33,8 @@ import de.p2tools.mtplayer.gui.mediadialog.PaneMediaContextMenu;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -120,7 +120,7 @@ public class PaneMedia extends VBox {
         hBoxTop.setAlignment(Pos.CENTER);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
-        hBoxButton.getChildren().addAll(btnConfig, btnClear, btnHelpMedia, PGuiTools.getVDistance(5), btnDialogMedia);
+        hBoxButton.getChildren().addAll(btnConfig, btnClear, btnHelpMedia, P2GuiTools.getVDistance(5), btnDialogMedia);
         hBoxTop.getChildren().addAll(txtSearchMedia, hBoxButton, txtSearchAbo);
         HBox.setHgrow(txtSearchMedia, Priority.ALWAYS);
         HBox.setHgrow(txtSearchAbo, Priority.ALWAYS);

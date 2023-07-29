@@ -26,9 +26,9 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -183,7 +183,7 @@ public class PaneMediaDataPath {
         });
         hBox.getChildren().addAll(btnUpdate);
 
-        hBox.getChildren().addAll(btnDel, btnAdd, PGuiTools.getHBoxGrower(), btnHelp);
+        hBox.getChildren().addAll(btnDel, btnAdd, P2GuiTools.getHBoxGrower(), btnHelp);
         vBox.getChildren().addAll(hBox);
     }
 

@@ -22,9 +22,9 @@ import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -105,7 +105,7 @@ public class PaneFilmSender {
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_LEFT);
         Label lbl = new Label("Diese Sender  *nicht*  laden:");
-        hBox.getChildren().addAll(lbl, PGuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
+        hBox.getChildren().addAll(lbl, P2GuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
 
         vBox.getChildren().add(new Label(" "));
         vBox.getChildren().add(hBox);
@@ -125,7 +125,7 @@ public class PaneFilmSender {
             hBox = new HBox();
             hBox.setAlignment(Pos.CENTER_RIGHT);
             hBox.getChildren().add(btnLoad);
-            vBox.getChildren().addAll(PGuiTools.getHDistance(P2LibConst.DIST_BUTTON), hBox);
+            vBox.getChildren().addAll(P2GuiTools.getHDistance(P2LibConst.DIST_BUTTON), hBox);
         }
     }
 

@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -101,7 +101,7 @@ public class BlackPaneMoveButton {
         if (!controlBlackListNotFilmFilter) {
             hBoxButton.getChildren().addAll(btnLoad);
         }
-        hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCopy, btnMove, btnHelpCount);
+        hBoxButton.getChildren().addAll(P2GuiTools.getHBoxGrower(), btnCopy, btnMove, btnHelpCount);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         VBox vb = new VBox(P2LibConst.DIST_BUTTON);

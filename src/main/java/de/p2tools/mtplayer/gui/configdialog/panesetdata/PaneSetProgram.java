@@ -25,9 +25,9 @@ import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -201,8 +201,8 @@ public class PaneSetProgram {
                 HelpTextPset.PSET_FILE_HELP_PROG);
 
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
-        hBox.getChildren().addAll(btnNew, btnDel, PGuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
-                btnUp, btnDown, PGuiTools.getHBoxGrower(), btnHelpProg);
+        hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
+                btnUp, btnDown, P2GuiTools.getHBoxGrower(), btnHelpProg);
         vBox.getChildren().addAll(hBox);
     }
 

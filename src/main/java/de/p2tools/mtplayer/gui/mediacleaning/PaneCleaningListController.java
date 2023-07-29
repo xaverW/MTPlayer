@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.guitools.PGuiTools;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -139,7 +139,7 @@ public class PaneCleaningListController {
 
         HBox hBox1 = new HBox(P2LibConst.DIST_EDGE);
         hBox1.setPadding(new Insets(P2LibConst.DIST_BUTTON));
-        hBox1.getChildren().addAll(btnNew, btnDel, btnClear, PGuiTools.getHBoxGrower(), btnAddStandards);
+        hBox1.getChildren().addAll(btnNew, btnDel, btnClear, P2GuiTools.getHBoxGrower(), btnAddStandards);
         vBox.getChildren().add(hBox1);
     }
 

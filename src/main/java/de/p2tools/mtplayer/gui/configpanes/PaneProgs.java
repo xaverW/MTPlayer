@@ -23,9 +23,9 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.tools.PShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -155,7 +155,7 @@ public class PaneProgs {
         hBox.getChildren().addAll(txtSystemCall, btnTest, btnStandard, btnHelp);
         HBox.setHgrow(txtSystemCall, Priority.ALWAYS);
         HBox hBoxOn = new HBox();
-        hBoxOn.getChildren().addAll(PGuiTools.getVDistance(20), cbxSystemCallOn);
+        hBoxOn.getChildren().addAll(P2GuiTools.getVDistance(20), cbxSystemCallOn);
         vBox.getChildren().addAll(new Label("Systemaufruf nach dem \"Auf Downloads warten\" Dialog"), hBox, hBoxOn);
         gridPane.add(vBox, 0, row);
     }

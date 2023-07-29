@@ -25,8 +25,8 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.BigButton;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
 import de.p2tools.p2lib.tools.PShutDown;
@@ -125,8 +125,8 @@ public class QuitDialogController extends PDialogExtra {
         HBox hBox = new HBox(P2LibConst.DIST_HBOX);
         hBox.setAlignment(Pos.CENTER_RIGHT);
         HBox hBoxCall = new HBox(0);
-        hBoxCall.getChildren().addAll(PGuiTools.getVDistance(25), lblSystemCall);
-        hBox.getChildren().addAll(chkShutDown, PGuiTools.getHBoxGrower(), btnEdit, btnHelp);
+        hBoxCall.getChildren().addAll(P2GuiTools.getVDistance(25), lblSystemCall);
+        hBox.getChildren().addAll(chkShutDown, P2GuiTools.getHBoxGrower(), btnEdit, btnHelp);
         vBox.getChildren().addAll(hBox, hBoxCall);
         gridPane.add(vBox, 1, ++row);
 

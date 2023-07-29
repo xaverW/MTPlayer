@@ -24,9 +24,9 @@ import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -131,7 +131,7 @@ public class PaneBlackList {
         });
 
         HBox hBox = new HBox(P2LibConst.DIST_EDGE);
-        hBox.getChildren().addAll(rbBlack, rbWhite, rbOff, PGuiTools.getHBoxGrower(), btnHelp);
+        hBox.getChildren().addAll(rbBlack, rbWhite, rbOff, P2GuiTools.getHBoxGrower(), btnHelp);
         vBox.getChildren().add(hBox);
     }
 

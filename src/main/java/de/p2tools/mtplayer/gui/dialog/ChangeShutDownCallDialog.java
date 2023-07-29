@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.tools.PShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -75,13 +75,13 @@ public class ChangeShutDownCallDialog extends PDialogExtra {
         VBox vBox = new VBox(P2LibConst.DIST_VBOX);
 
         HBox hBox = new HBox(P2LibConst.DIST_HBOX);
-        hBox.getChildren().addAll(new Label("Standard Befehl:"), lblStandard, PGuiTools.getHBoxGrower(), btnStandard);
+        hBox.getChildren().addAll(new Label("Standard Befehl:"), lblStandard, P2GuiTools.getHBoxGrower(), btnStandard);
         vBox.getChildren().addAll(hBox);
 
         hBox = new HBox(P2LibConst.DIST_HBOX);
         HBox.setHgrow(txtCall, Priority.ALWAYS);
         hBox.getChildren().addAll(new Label("Eigener Befehl:"), txtCall, btnTest, btnHelp);
-        vBox.getChildren().addAll(PGuiTools.getVDistance(P2LibConst.DIST_VBOX), hBox);
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(P2LibConst.DIST_VBOX), hBox);
 
         getVBoxCont().getChildren().addAll(vBox);
 

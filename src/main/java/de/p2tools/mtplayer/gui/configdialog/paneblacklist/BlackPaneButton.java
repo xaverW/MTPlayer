@@ -25,8 +25,8 @@ import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.guitools.PTableFactory;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
@@ -131,7 +131,7 @@ public class BlackPaneButton {
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, btnClear);
 
-        hBoxButton.getChildren().addAll(PGuiTools.getHBoxGrower(), btnCountHits, btnAddStandards, btnCleanList);
+        hBoxButton.getChildren().addAll(P2GuiTools.getHBoxGrower(), btnCountHits, btnAddStandards, btnCleanList);
         hBoxButton.getChildren().addAll(btnHelpCount);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);

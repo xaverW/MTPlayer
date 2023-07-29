@@ -23,8 +23,8 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
@@ -78,8 +78,8 @@ public class BlackPaneFilterGrid {
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(SPACE_TITLE);
-        vb.getChildren().addAll(new Label("Thema"), txtFilterThema, PGuiTools.getVDistance(2), tglFilterExact);
-        vb1.getChildren().addAll(vb, PGuiTools.getVDistance(1));
+        vb.getChildren().addAll(new Label("Thema"), txtFilterThema, P2GuiTools.getVDistance(2), tglFilterExact);
+        vb1.getChildren().addAll(vb, P2GuiTools.getVDistance(1));
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(SPACE_TITLE);
@@ -92,7 +92,7 @@ public class BlackPaneFilterGrid {
         vb1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
-        vb1.getChildren().add(PGuiTools.getVDistance(5));
+        vb1.getChildren().add(P2GuiTools.getVDistance(5));
         vb1.getChildren().add(tglFilterActive);
 
         VBox vb2 = new VBox();

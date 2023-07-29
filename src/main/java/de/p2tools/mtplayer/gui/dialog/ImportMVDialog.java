@@ -28,9 +28,9 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -81,14 +81,14 @@ public class ImportMVDialog extends PDialogExtra {
         text.getStyleClass().add("downloadGuiMediaText");
         vBox.getChildren().add(text);
         addPath(vBox);
-        vBox.getChildren().add(PGuiTools.getHDistance(20));
+        vBox.getChildren().add(P2GuiTools.getHDistance(20));
 
         text = new Text("2. Einstellungen suchen");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));
         text.getStyleClass().add("downloadGuiMediaText");
         vBox.getChildren().add(text);
         addLoad(vBox);
-        vBox.getChildren().add(PGuiTools.getHDistance(20));
+        vBox.getChildren().add(P2GuiTools.getHDistance(20));
 
         text = new Text("3. Einstellungen anfügen");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));

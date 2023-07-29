@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
-import de.p2tools.p2lib.guitools.PGuiTools;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
@@ -48,11 +48,11 @@ public class DownloadMenu {
 
     private void initButton() {
         // Button
-        vBox.getChildren().add(PGuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btDownloadRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
 
-        vBox.getChildren().add(PGuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btStartDownloads = new ToolBarButton(vBox,
                 "Downloads Starten", "Markierte Downloads starten", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_START.getImageView());
         final ToolBarButton btDownloadAll = new ToolBarButton(vBox,
@@ -60,7 +60,7 @@ public class DownloadMenu {
         final ToolBarButton btDownloadAllTime = new ToolBarButton(vBox,
                 "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME.getImageView());
 
-        vBox.getChildren().add(PGuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btDownloadBack = new ToolBarButton(vBox,
                 "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
         final ToolBarButton btDownloadDel = new ToolBarButton(vBox,
@@ -68,7 +68,7 @@ public class DownloadMenu {
         final ToolBarButton btDownloadClear = new ToolBarButton(vBox,
                 "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
 
-        vBox.getChildren().add(PGuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btDownloadFilm = new ToolBarButton(vBox,
                 "Film Starten", "Gespeicherten Film abspielen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 

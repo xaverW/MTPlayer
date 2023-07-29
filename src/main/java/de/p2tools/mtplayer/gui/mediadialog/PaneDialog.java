@@ -27,8 +27,8 @@ import de.p2tools.mtplayer.gui.DownloadGuiMediaSearch;
 import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PGuiTools;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -179,7 +179,7 @@ public class PaneDialog extends ScrollPane {
 
         HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
         hBoxSum.getChildren().addAll(new Label("Treffer:"), lblHits,
-                PGuiTools.getHBoxGrower(), new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
+                P2GuiTools.getHBoxGrower(), new Label("Anzahl Medien gesamt:"), lblGesamtMedia);
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);

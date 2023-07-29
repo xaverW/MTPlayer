@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PGuiTools;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -58,9 +58,9 @@ public class DownloadGuiMediaSearch {
         });
 
         if (lblSumMedia == null) {
-            hBoxWhere.getChildren().addAll(lblMedSearchIn, PGuiTools.getHBoxGrower(), btnChangeMedia);
+            hBoxWhere.getChildren().addAll(lblMedSearchIn, P2GuiTools.getHBoxGrower(), btnChangeMedia);
         } else {
-            hBoxWhere.getChildren().addAll(lblMedSearchIn, PGuiTools.getHBoxGrower(), lblSumMedia, btnChangeMedia);
+            hBoxWhere.getChildren().addAll(lblMedSearchIn, P2GuiTools.getHBoxGrower(), lblSumMedia, btnChangeMedia);
         }
 
         VBox vLeft = new VBox(5);
@@ -96,9 +96,9 @@ public class DownloadGuiMediaSearch {
         });
 
         if (lblSumMedia == null) {
-            hBoxWhere.getChildren().addAll(lblAbosSearchIn, PGuiTools.getHBoxGrower(), btnChangeAbo);
+            hBoxWhere.getChildren().addAll(lblAbosSearchIn, P2GuiTools.getHBoxGrower(), btnChangeAbo);
         } else {
-            hBoxWhere.getChildren().addAll(lblAbosSearchIn, PGuiTools.getHBoxGrower(), lblSumMedia, btnChangeAbo);
+            hBoxWhere.getChildren().addAll(lblAbosSearchIn, P2GuiTools.getHBoxGrower(), lblSumMedia, btnChangeAbo);
         }
 
         VBox vLeft = new VBox(5);
@@ -163,7 +163,7 @@ public class DownloadGuiMediaSearch {
                 ip.setValue(ProgConst.MEDIA_COLLECTION_SEARCH_THEME);
             }
         });
-        hBoxWhat.getChildren().addAll(lblText, PGuiTools.getHBoxGrower(), btnChangeMedia);
+        hBoxWhat.getChildren().addAll(lblText, P2GuiTools.getHBoxGrower(), btnChangeMedia);
         return hBoxWhat;
     }
 
