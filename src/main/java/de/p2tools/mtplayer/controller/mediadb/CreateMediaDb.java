@@ -38,8 +38,7 @@ public class CreateMediaDb {
     private final ProgData progData;
     private final MediaDataList mediaDataList;
     private String[] suffix;
-    private List tmpMediaDataList = new ArrayList<MediaData>();
-    ArrayList<String> logs = new ArrayList<>();
+    private final ArrayList<String> logs = new ArrayList<>();
 
     final boolean withoutSuffix = ProgConfig.MEDIA_DB_WITH_OUT_SUFFIX.getValue();
     final boolean noHiddenFiles = ProgConfig.MEDIA_DB_NO_HIDDEN_FILES.getValue();
@@ -58,7 +57,7 @@ public class CreateMediaDb {
             // und fügt die gespeicherten externen Medien hinzu
             create();
         } else {
-            // durchsucht einen EXTERNEN Pfad und fügt ihn an die DB an
+            // durchsucht einen Pfad und fügt ihn an die DB an
             // wird nur manuell vom User gestartet und löscht nicht die MediaDB
             create(mediaCollectionData);
         }
@@ -70,12 +69,15 @@ public class CreateMediaDb {
      * -> bei jedem Start
      */
     private void create() {
+        List<MediaData> tmpMediaDataList = new ArrayList<>();
         start();
         try {
             // ===================================
             // die gesamte MediaDB laden: gespeicherte Liste abarbeiten
             // und lokale Filme anfügen
             logs.add("Gesamte Mediensammlung aufbauen");
+
+            // jetzt erst mal die gespeicherten EXTERNEN laden
             tmpMediaDataList.addAll(new ReadMediaDb().loadSavedExternalMediaData());
 
             // und die Pfade "putzen" und dann auf lesbarkeit prüfen
@@ -99,18 +101,16 @@ public class CreateMediaDb {
             progData.mediaCollectionDataList.getMediaCollectionDataList(false).forEach((mediaCollectionData) -> {
                 if (mediaCollectionData.getCollectionName().isEmpty()) {
                     final String name = progData.mediaCollectionDataList.getNextMediaCollectionName(false);
-                    mediaCollectionData.setCollectionName(name.intern());
+                    mediaCollectionData.setCollectionName(name);
                 }
                 // und alle Medien dieses Pfades suchen
-                searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getIdInt());
+                searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getIdInt(), tmpMediaDataList);
             });
 
             logs.add(" -> gefundene Medien: " + tmpMediaDataList.size());
             mediaDataList.setAll(tmpMediaDataList);
-            mediaDataList.checkExternalMediaData();
+            mediaDataList.checkDuplicateMediaData();
             mediaDataList.countMediaData(progData);
-
-
         } catch (final Exception ex) {
             PLog.errorLog(945120375, ex);
         }
@@ -118,22 +118,22 @@ public class CreateMediaDb {
     }
 
     /**
-     * durchsucht einen EXTERNEN Pfad
+     * durchsucht einen Pfad
      * -> wird nur manuell vom User gestartet und löscht nicht die MediaDB
      *
      * @param mediaCollectionData
      */
     private void create(MediaCollectionData mediaCollectionData) {
-        start();
+        if (mediaCollectionData == null) {
+            return;
+        }
         try {
-            if (mediaCollectionData == null) {
-                return;
-            }
+            final List<MediaData> tmpMediaDataList = new ArrayList<>();
+            start();
             // ===================================
             // dann nur einen Pfad hinzufügen
             final File f = new File(mediaCollectionData.getPath());
             logs.add("externen Pfad absuchen: " + f.getAbsolutePath());
-
             if (!f.canRead()) {
                 if (!error.isEmpty()) {
                     error = error + P2LibConst.LINE_SEPARATOR;
@@ -146,13 +146,15 @@ public class CreateMediaDb {
             }
 
             // und jetzt alle Medien dieses Pfades suchen
-            searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getIdInt());
+            searchFile(new File(mediaCollectionData.getPath()), mediaCollectionData.getIdInt(), tmpMediaDataList);
             logs.add(" -> im Pfad gefundene Medien: " + tmpMediaDataList.size());
             mediaDataList.addAll(tmpMediaDataList);
-            mediaDataList.checkExternalMediaData();
+            mediaDataList.checkDuplicateMediaData();
             mediaDataList.countMediaData(progData);
-            new WriteMediaDb(progData).writeExternalMediaData(logs);
-
+            if (mediaCollectionData.isExternal()) {
+                // nur externe müssen geschrieben werden
+                new WriteMediaDb(progData).writeExternalMediaData(logs);
+            }
         } catch (final Exception ex) {
             PLog.errorLog(120321254, ex);
         }
@@ -179,12 +181,11 @@ public class CreateMediaDb {
                         : "Der Pfad der Mediensammlung kann nicht gelesen werden:" + P2LibConst.LINE_SEPARATOR) + error));
     }
 
-    private void searchFile(File dir, int collectionIdLong) {
+    private void searchFile(File dir, int collectionIdLong, List<MediaData> tmpMediaDataList) {
         if (mediaDataList.isStopSearching()) {
             // dann wurde es vom User abgebrochen
             return;
         }
-
         if (dir == null) {
             return;
         }
@@ -193,7 +194,7 @@ public class CreateMediaDb {
         if (files != null) {
             for (final File file : files) {
                 if (file.isDirectory()) {
-                    searchFile(file, collectionIdLong);
+                    searchFile(file, collectionIdLong, tmpMediaDataList);
                 } else {
                     if (checkFileSize && file.length() < fileSize) {
                         continue;
@@ -204,7 +205,6 @@ public class CreateMediaDb {
                     if (!checkSuffix(suffix, file.getName())) {
                         continue;
                     }
-
                     tmpMediaDataList.add(new MediaData(file.getName(), file.getParent().intern(),
                             file.length(), collectionIdLong));
                 }

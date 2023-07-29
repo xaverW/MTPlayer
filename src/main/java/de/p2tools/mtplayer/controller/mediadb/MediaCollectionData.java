@@ -141,8 +141,4 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
     public void setCount(int count) {
         this.count.set(count);
     }
-
-    public String getHash() {
-        return getPath();
-    }
 }

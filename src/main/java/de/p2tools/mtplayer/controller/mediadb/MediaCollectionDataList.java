@@ -152,7 +152,8 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
     }
 
     public void cleanUpInternalMediaCollectionData() {
-        // checks duplicates in the INTERN mediaCollectionDataList
+        // MediaDataCollections mit gleichem Pfad werden entfernt
+        // nur die INTERNEN, EXTERNE können den gleichen Pfad haben!!
         final HashSet<String> hashSet = new HashSet<>(size());
         Iterator<MediaCollectionData> it = iterator();
         while (it.hasNext()) {
@@ -161,8 +162,7 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
                 continue;
             }
 
-            final String h = mediaCollectionData.getHash();
-            if (!hashSet.add(h)) {
+            if (!hashSet.add(mediaCollectionData.getPath())) {
                 it.remove();
             }
         }

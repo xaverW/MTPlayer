@@ -36,8 +36,8 @@ public class MediaDataWorker {
     }
 
     // **************************************************************
-    // INTERNAL
-    // MediaDataList INTERN anlegen und die gespeicherten EXTERNEN anfügen
+    // Ganze Mediensammlung erstellen
+    // INTERNE suchen und anlegen und die gespeicherten EXTERNEN anfügen
     public static synchronized void createMediaDb() {
         if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
@@ -50,16 +50,17 @@ public class MediaDataWorker {
     }
 
     // **************************************************************
-    // EXTERNAL
-    // MediaDataList EXTERN: eine collection neu einlesen
-    public static synchronized void updateExternalCollection(MediaCollectionData mediaCollectionData) {
+    // Eine MediaCollection neu einlesen, vorher die vorhandenen löschen
+    public static synchronized void updateCollection(MediaCollectionData mediaCollectionData) {
         if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
             return;
         }
 
-        Thread th = new Thread(new UpdateExternal(mediaCollectionData));
-        th.setName("UpdateExternal");
+        progData.mediaDataList.removeMediaData(mediaCollectionData);
+        mediaCollectionData.setCount(0);
+        Thread th = new Thread(new CreateTheMediaDB(mediaCollectionData));
+        th.setName("updateCollection");
         th.start();
     }
 
@@ -122,7 +123,7 @@ public class MediaDataWorker {
             dataList.forEach(mediaCollectionData -> {
                 mediaCollectionData.setCount(0); // damits beim UNDO stimmt, Liste ist dann ja leer
                 progData.mediaCollectionDataList.remove(mediaCollectionData);
-                progData.mediaDataList.removeMediaData(mediaCollectionData.getIdInt());
+                progData.mediaDataList.removeMediaData(mediaCollectionData);
             });
         }
 
@@ -140,26 +141,12 @@ public class MediaDataWorker {
         public CreateTheMediaDB() {
         }
 
-        @Override
-        public void run() {
-            new CreateMediaDb().createDB(mediaCollectionData);
-        }
-    }
-
-    private static class UpdateExternal implements Runnable {
-        MediaCollectionData mediaCollectionData;
-
-        public UpdateExternal(MediaCollectionData mediaCollectionData) {
+        public CreateTheMediaDB(MediaCollectionData mediaCollectionData) {
             this.mediaCollectionData = mediaCollectionData;
         }
 
         @Override
         public void run() {
-            // erst mal die collection entfernen
-            progData.mediaDataList.removeMediaData(mediaCollectionData.getIdInt());
-            mediaCollectionData.setCount(0);
-
-            // dann wieder einlesen und hinzufügen
             new CreateMediaDb().createDB(mediaCollectionData);
         }
     }

@@ -69,10 +69,6 @@ public class MediaData {
         this.extern = setExternal(); // wird gesetzt mit der Sammlung-Info, muss also nicht gespeichert werden
     }
 
-    public String getHash() {
-        return getName() + "##" + getPath() + "##" + collectionId;
-    }
-
     public String getName() {
         return name;
     }

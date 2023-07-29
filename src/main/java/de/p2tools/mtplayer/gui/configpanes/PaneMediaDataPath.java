@@ -173,18 +173,15 @@ public class PaneMediaDataPath {
         }
         btnAdd.setOnAction(a -> add());
 
-        if (external) {
-            Button btnUpdate = new Button("");
-            btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
-            btnUpdate.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_UPDATE.getImageView());
-            btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
-                    .or(progData.mediaDataList.searchingProperty()));
-
-            btnUpdate.setOnAction(a -> {
-                update();
-            });
-            hBox.getChildren().addAll(btnUpdate);
-        }
+        Button btnUpdate = new Button("");
+        btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
+        btnUpdate.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_UPDATE.getImageView());
+        btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
+                .or(progData.mediaDataList.searchingProperty()));
+        btnUpdate.setOnAction(a -> {
+            update();
+        });
+        hBox.getChildren().addAll(btnUpdate);
 
         hBox.getChildren().addAll(btnDel, btnAdd, PGuiTools.getHBoxGrower(), btnHelp);
         vBox.getChildren().addAll(hBox);
@@ -192,7 +189,6 @@ public class PaneMediaDataPath {
 
     private void update() {
         MediaCollectionData mediaCollectionData = tableView.getSelectionModel().getSelectedItem();
-
         File file = new File(mediaCollectionData.getPath());
         if (!file.exists()) {
             PAlert.showErrorAlert("Pfad existiert nicht!", "Der Pfad der Sammlung:" + P2LibConst.LINE_SEPARATOR +
@@ -200,8 +196,7 @@ public class PaneMediaDataPath {
                     "existiert nicht. Die Sammlung kann nicht eingelesen werden");
             return;
         }
-
-        MediaDataWorker.updateExternalCollection(mediaCollectionData);
+        MediaDataWorker.updateCollection(mediaCollectionData);
     }
 
     private void delete() {

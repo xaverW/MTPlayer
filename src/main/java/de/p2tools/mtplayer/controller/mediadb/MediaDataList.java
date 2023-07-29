@@ -94,31 +94,30 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         filteredList.setPredicate(p -> true);
     }
 
-    synchronized void removeMediaData(int collectionId) {
+    synchronized void removeMediaData(MediaCollectionData mediaCollectionData) {
         // remove all media with this collectionId, in one way
         List<MediaData> rest = new ArrayList<>();
-        this.stream().filter(mediaData -> mediaData.getCollectionId() != collectionId)
+        this.stream().filter(mediaData -> mediaData.getCollectionId() != mediaCollectionData.getIdInt())
                 .forEach(rest::add);
         this.setAll(rest);
     }
 
 
-    synchronized void checkExternalMediaData() {
+    synchronized void checkDuplicateMediaData() {
         // checks duplicates in the mediaDataList and creates the counter in the pathList
-        // beim kompletten Neuladen der MediaDB können ja nur externe doppelt sein
+        // bei den EXTERNEN kann der Pfad/Dateiname doppelt sein! muss aber nur einmal in die DB
+        // da ja über Pfad/Dateiname verglichen wird und nicht über den Datei-Hash
         final HashSet<String> hashSet = new HashSet<>(size());
         Iterator<MediaData> it = iterator();
         while (it.hasNext()) {
-            MediaData mediaData = it.next();
-            if (!mediaData.isExternal()) {
-                continue;
-            }
-
-            final String h = mediaData.getHash();
-            if (!hashSet.add(h)) {
+            final MediaData mediaData = it.next();
+            // final String h = mediaData.getName() + "##" + mediaData.getPath() + "##" + mediaData.getCollectionId();
+            // collId nicht mehr, wenn sich die collections "überschneiden" gibts sonst doppelte
+            if (!hashSet.add(mediaData.getName() + mediaData.getPath())) {
                 it.remove();
             }
         }
+        hashSet.clear();
     }
 
     public synchronized void countMediaData(ProgData progData) {
