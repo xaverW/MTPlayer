@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
-import de.p2tools.mtplayer.gui.DownloadGuiMediaSearch;
 import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.PaneMediaContextMenu;
@@ -126,9 +125,9 @@ public class PaneMedia extends VBox {
         HBox.setHgrow(txtSearchAbo, Priority.ALWAYS);
 
         // Suchen in den Medien
-        VBox vLeft = DownloadGuiMediaSearch.getSearchMedia(lblSumMedia);
+        VBox vLeft = MediaSearchFactory.getSearchMedia(lblSumMedia, true);
         vLeft.getChildren().add(tableMedia);
-        VBox vRight = DownloadGuiMediaSearch.getSearchAbo(lblSumAbo, true);
+        VBox vRight = MediaSearchFactory.getSearchAbo(lblSumAbo, true, true);
         vRight.getChildren().add(tableAbo);
 
         ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter(true));

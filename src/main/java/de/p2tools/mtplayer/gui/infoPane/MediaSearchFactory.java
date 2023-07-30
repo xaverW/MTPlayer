@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.gui;
+package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
@@ -31,9 +31,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class DownloadGuiMediaSearch {
+public class MediaSearchFactory {
+    private MediaSearchFactory() {
+    }
 
-    public static VBox getSearchMedia(Label lblSumMedia) {
+    public static VBox getSearchMedia(Label lblSumMedia, boolean searchWhat) {
         // Suchen wie
         HBox hBoxWhat = getSearchWhat(ProgConfig.GUI_MEDIA_BUILD_SEARCH_MEDIA);
 
@@ -65,11 +67,14 @@ public class DownloadGuiMediaSearch {
 
         VBox vLeft = new VBox(5);
         vLeft.setPadding(new Insets(5));
-        vLeft.getChildren().addAll(hBoxWhat, hBoxWhere);
+        if (searchWhat) {
+            vLeft.getChildren().addAll(hBoxWhat);
+        }
+        vLeft.getChildren().addAll(hBoxWhere);
         return vLeft;
     }
 
-    public static VBox getSearchAbo(Label lblSumMedia, boolean abo) {
+    public static VBox getSearchAbo(Label lblSumMedia, boolean abo, boolean searchWhat) {
         // Suchen wie
         HBox hBoxWhat = getSearchWhat(ProgConfig.GUI_MEDIA_BUILD_SEARCH_ABO);
 
@@ -103,7 +108,10 @@ public class DownloadGuiMediaSearch {
 
         VBox vLeft = new VBox(5);
         vLeft.setPadding(new Insets(5));
-        vLeft.getChildren().addAll(hBoxWhat, hBoxWhere);
+        if (searchWhat) {
+            vLeft.getChildren().addAll(hBoxWhat);
+        }
+        vLeft.getChildren().addAll(hBoxWhere);
         return vLeft;
     }
 
@@ -168,13 +176,10 @@ public class DownloadGuiMediaSearch {
     }
 
     private static String getTextSearchInAbo(int search) {
-        switch (search) {
-            case ProgConst.MEDIA_COLLECTION_SEARCH_THEME:
-                return "Suchtext bauen mit: Thema des Films";
-            case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL:
-                return "Suchtext bauen mit: Titel des Films";
-            default:
-                return "Suchtext bauen mit: Thema und Titel des Films";
-        }
+        return switch (search) {
+            case ProgConst.MEDIA_COLLECTION_SEARCH_THEME -> "Suchtext bauen mit: Thema des Films";
+            case ProgConst.MEDIA_COLLECTION_SEARCH_TITEL -> "Suchtext bauen mit: Titel des Films";
+            default -> "Suchtext bauen mit: Thema und Titel des Films";
+        };
     }
 }

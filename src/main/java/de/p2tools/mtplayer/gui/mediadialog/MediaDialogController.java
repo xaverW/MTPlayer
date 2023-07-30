@@ -46,15 +46,15 @@ public class MediaDialogController extends PDialogExtra {
     private final StringProperty searchStringProp = new SimpleStringProperty();
     private final ProgData progData = ProgData.getInstance();
 
-    private PaneMedia paneMedia;
-    private PaneAbo paneAbo;
-    private PaneAbo paneHistory;
+    private PaneDialogMedia paneDialogMedia;
+    private PaneDialogAbo paneDialogAbo;
+    private PaneDialogAbo paneHistory;
 
-    public MediaDialogController(String SearchTheme, String searchTitel, boolean openMedia) {
+    public MediaDialogController(String searchTheme, String searchTitel, boolean openMedia) {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
                 true, false, DECO.BORDER);
 
-        this.searchThemeOrg = SearchTheme.trim();
+        this.searchThemeOrg = searchTheme.trim();
         this.searchTitelOrg = searchTitel.trim();
         searchStringProp.setValue(searchThemeOrg + " " + searchTitelOrg);
         ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.setValue(openMedia);
@@ -62,13 +62,13 @@ public class MediaDialogController extends PDialogExtra {
         init(true);
     }
 
-    public MediaDialogController(String SearchTheme, String searchTitel) {
+    public MediaDialogController(String searchTheme, String searchTitel) {
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
                 true, false, DECO.BORDER);
 
-        this.searchThemeOrg = SearchTheme.trim();
+        this.searchThemeOrg = searchTheme.trim();
         this.searchTitelOrg = searchTitel.trim();
-        searchStringProp.setValue(SearchTheme + " " + searchTitel);
+        searchStringProp.setValue(searchTheme + " " + searchTitel);
 
         init(true);
     }
@@ -78,15 +78,15 @@ public class MediaDialogController extends PDialogExtra {
         initPanel();
         initAction();
         setPane();
-        paneMedia.filter(searchStringProp.getValueSafe());
-        paneAbo.filter(searchStringProp.getValueSafe());
+        paneDialogMedia.filter(searchStringProp.getValueSafe());
+        paneDialogAbo.filter(searchStringProp.getValueSafe());
         paneHistory.filter(searchStringProp.getValueSafe());
     }
 
     @Override
     public void close() {
-        paneMedia.close();
-        paneAbo.close();
+        paneDialogMedia.close();
+        paneDialogAbo.close();
         paneHistory.close();
 
         progData.historyListAbos.filteredListSetPredFalse();
@@ -96,25 +96,25 @@ public class MediaDialogController extends PDialogExtra {
 
     private void initPanel() {
         try {
-            paneMedia = new PaneMedia(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp);
-            paneMedia.make();
+            paneDialogMedia = new PaneDialogMedia(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp);
+            paneDialogMedia.make();
 
-            paneAbo = new PaneAbo(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp, true);
-            paneAbo.make();
+            paneDialogAbo = new PaneDialogAbo(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp, true);
+            paneDialogAbo.make();
 
-            paneHistory = new PaneAbo(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp, false);
+            paneHistory = new PaneDialogAbo(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp, false);
             paneHistory.make();
 
             tabMedia = new Tab("Mediensammlung");
             tabMedia.setTooltip(new Tooltip("Hier wird der Inhalt der Mediensammlung angezeigt"));
             tabMedia.setClosable(false);
-            tabMedia.setContent(paneMedia);
+            tabMedia.setContent(paneDialogMedia);
             tabPane.getTabs().add(tabMedia);
 
             tabAbo = new Tab("Erledigte Abos");
             tabAbo.setTooltip(new Tooltip("Hier werden erledigte Abos angezeigt"));
             tabAbo.setClosable(false);
-            tabAbo.setContent(paneAbo);
+            tabAbo.setContent(paneDialogAbo);
             tabPane.getTabs().add(tabAbo);
 
             tabHistory = new Tab("History");

@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
-import de.p2tools.mtplayer.gui.DownloadGuiMediaSearch;
+import de.p2tools.mtplayer.gui.infoPane.MediaSearchFactory;
 import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.P2LibConst;
@@ -42,6 +42,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.util.Collection;
+
 public class PaneDialog extends ScrollPane {
 
     Text textSearch = new Text();
@@ -58,12 +60,12 @@ public class PaneDialog extends ScrollPane {
     TextField txtSearch = new TextField();
 
     ProgressBar progress = new ProgressBar();
-    private Button btnStopSearching = new Button();
+    private final Button btnStopSearching = new Button();
 
     Label lblGesamtMedia = new Label();
     Label lblHits = new Label();
-    TableView<MediaData> tableMedia = new TableView();
-    TableView<HistoryData> tableAbo = new TableView();
+    TableView<MediaData> tableMedia = new TableView<>();
+    TableView<HistoryData> tableAbo = new TableView<>();
 
     TextField txtTitleMedia = new TextField();
     TextField txtPathMedia = new TextField();
@@ -77,8 +79,8 @@ public class PaneDialog extends ScrollPane {
 
     private final boolean media;
     private final boolean abo;
-
-    private ProgData progData = ProgData.getInstance();
+    private final boolean mediaDataExist;
+    private final ProgData progData = ProgData.getInstance();
 
     ChangeListener sizeListener;
     ListChangeListener<HistoryData> listener;
@@ -90,6 +92,7 @@ public class PaneDialog extends ScrollPane {
         this.searchStringProp = searchStringProp;
         this.media = media;
         this.abo = abo;
+        this.mediaDataExist = !this.searchThemeOrg.isEmpty() || !searchTitelOrg.isEmpty();
 
         listenerDbStart = new MTListener(MTListener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
@@ -107,6 +110,16 @@ public class PaneDialog extends ScrollPane {
             }
         };
     }
+
+    public void make(Collection<TitledPane> result) {
+        VBox vBox = new VBox(P2LibConst.DIST_VBOX);
+        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        TitledPane tpConfig = new TitledPane("Medien", vBox);
+        result.add(tpConfig);
+        vBox.getChildren().add(this);
+        make();
+    }
+
 
     public void make() {
         initPanel();
@@ -138,8 +151,8 @@ public class PaneDialog extends ScrollPane {
         btnClear.setOnAction(a -> txtSearch.clear());
 
         // Suchen was
-        VBox vLeft = DownloadGuiMediaSearch.getSearchMedia(null);
-        VBox vRight = DownloadGuiMediaSearch.getSearchAbo(null, abo);
+        VBox vLeft = MediaSearchFactory.getSearchMedia(null, mediaDataExist);
+        VBox vRight = MediaSearchFactory.getSearchAbo(null, abo, mediaDataExist);
 
         ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter());
         ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter());
@@ -156,7 +169,12 @@ public class PaneDialog extends ScrollPane {
         HBox hBoxSearch = new HBox(P2LibConst.DIST_HBOX);
         hBoxSearch.setPadding(new Insets(0));
         hBoxSearch.setAlignment(Pos.CENTER_RIGHT);
-        hBoxSearch.getChildren().addAll(new Label("Suchen: "), txtSearch, btnReset, btnClean, btnConfig, btnClear);
+        if (mediaDataExist) {
+            hBoxSearch.getChildren().addAll(new Label("Suchen: "), txtSearch, btnReset, btnClean, btnConfig, btnClear);
+        } else {
+            // wenns keine MediaData gibt, dann brauchts das Putzen auch nicht
+            hBoxSearch.getChildren().addAll(new Label("Suchen: "), txtSearch, btnClear);
+        }
         VBox.setVgrow(hBoxSearch, Priority.ALWAYS);
 
         if (media) {

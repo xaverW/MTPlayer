@@ -27,9 +27,7 @@ import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
@@ -40,7 +38,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PaneAbo extends PaneDialog {
+public class PaneDialogAbo extends PaneDialog {
 
     private final boolean abo;
     private final HistoryList list;
@@ -50,7 +48,7 @@ public class PaneAbo extends PaneDialog {
 
     private ProgData progData = ProgData.getInstance();
 
-    public PaneAbo(Stage stage, String searchThemeOrg, String searchTitelOrg, StringProperty searchStringProp, boolean abo) {
+    public PaneDialogAbo(Stage stage, String searchThemeOrg, String searchTitelOrg, StringProperty searchStringProp, boolean abo) {
         super(searchThemeOrg, searchTitelOrg, searchStringProp, false, abo);
         this.stage = stage;
         this.abo = abo;
@@ -87,23 +85,29 @@ public class PaneAbo extends PaneDialog {
 
     @Override
     void initTable() {
+        tableAbo.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
+        tableAbo.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tableAbo.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableAbo.setEditable(true);
+
         final TableColumn<HistoryData, String> themeColumn = new TableColumn<>("Thema");
-        themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(20.0 / 100));
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
 
         final TableColumn<HistoryData, String> titleColumn = new TableColumn<>("Titel");
-        titleColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(50.0 / 100));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         final TableColumn<HistoryData, Date> dateColumn = new TableColumn<>("Datum");
-        dateColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(15.0 / 100));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.setSortType(TableColumn.SortType.DESCENDING);
         dateColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<HistoryData, String> pathColumn = new TableColumn<>("Url");
-        pathColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(14.0 / 100));
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
+
+        themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(20.0 / 100));
+        titleColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(50.0 / 100));
+        dateColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(15.0 / 100));
+        pathColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(14.0 / 100));
 
         tableAbo.getColumns().addAll(themeColumn, titleColumn, dateColumn, pathColumn);
 

@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.configdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.gui.configpanes.PaneMediaConfig;
-import de.p2tools.mtplayer.gui.configpanes.PaneMediaData;
 import de.p2tools.mtplayer.gui.configpanes.PaneMediaDataPath;
+import de.p2tools.mtplayer.gui.mediadialog.PaneDialogMedia;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
@@ -29,10 +29,10 @@ import java.util.Collection;
 
 public class ControllerMedia extends PAccordionPane {
 
-    PaneMediaConfig paneMediaConfig;
-    PaneMediaDataPath panePathIntern;
-    PaneMediaDataPath panePathExtern;
-    PaneMediaData paneMediaData;
+    private PaneMediaConfig paneMediaConfig;
+    private PaneMediaDataPath panePathIntern;
+    private PaneMediaDataPath panePathExtern;
+    private PaneDialogMedia paneDialogMedia;
 
     private final Stage stage;
 
@@ -47,7 +47,7 @@ public class ControllerMedia extends PAccordionPane {
         paneMediaConfig.close();
         panePathIntern.close();
         panePathExtern.close();
-        paneMediaData.close();
+        paneDialogMedia.close();
         super.close();
     }
 
@@ -61,8 +61,8 @@ public class ControllerMedia extends PAccordionPane {
         panePathIntern.make(result);
         panePathExtern = new PaneMediaDataPath(stage, true);
         panePathExtern.make(result);
-        paneMediaData = new PaneMediaData(stage);
-        paneMediaData.make(result);
+        paneDialogMedia = new PaneDialogMedia(stage);
+        paneDialogMedia.make(result);
 
         return result;
     }

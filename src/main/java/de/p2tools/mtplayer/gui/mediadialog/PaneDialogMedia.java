@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.configpanes;
+package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
@@ -23,70 +23,56 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
-import de.p2tools.mtplayer.gui.mediadialog.PaneMediaContextMenu;
-import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
 import de.p2tools.p2lib.tools.file.PFileUtils;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Collection;
+public class PaneDialogMedia extends PaneDialog {
 
-public class PaneMediaData {
-
-    private final TableView<MediaData> tableView = new TableView<>();
-    private final TextField txtTitleMedia = new TextField();
-    private final TextField txtPathMedia = new TextField();
-    private final Label lblSize = new Label();
-    private final Button btnPlay = new Button();
-    private final Button btnOpen = new Button();
-    private final Button btnCreateMediaDB = new Button("_Mediensammlung neu aufbauen");
-    private ChangeListener sizeListener;
-
+    private final Stage stage;
+    private final FilteredList<MediaData> filteredList;
+    private final SortedList<MediaData> sortedList;
 
     private ProgData progData = ProgData.getInstance();
-    private final Stage stage;
 
-    public PaneMediaData(Stage stage) {
+    public PaneDialogMedia(Stage stage) {
+        super("", "", new SimpleStringProperty(), true, false);
         this.stage = stage;
+        this.filteredList = new FilteredList<>(progData.mediaDataList, p -> true);
+        this.sortedList = new SortedList<>(filteredList);
     }
 
-    public void make(Collection<TitledPane> result) {
-        VBox vBox = new VBox(P2LibConst.DIST_VBOX);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
-
-        TitledPane tpConfig = new TitledPane("Medien", vBox);
-        result.add(tpConfig);
-
-        initTable(vBox);
-        initLabelSum(vBox);
-        initLabel(vBox);
+    public PaneDialogMedia(Stage stage, String searchThemeOrg, String searchTitelOrg, StringProperty searchStringProp) {
+        super(searchThemeOrg, searchTitelOrg, searchStringProp, true, false);
+        this.stage = stage;
+        this.filteredList = new FilteredList<>(progData.mediaDataList, p -> true);
+        this.sortedList = new SortedList<>(filteredList);
     }
 
+    @Override
     public void close() {
-        btnCreateMediaDB.disableProperty().unbind();
         progData.mediaDataList.sizeProperty().removeListener(sizeListener);
+        progress.visibleProperty().unbind();
+        btnCreateMediaDB.disableProperty().unbind();
     }
 
-    private void initTable(VBox vBox) {
-        tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        tableView.setEditable(true);
+    @Override
+    void initTable() {
+        tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
+        tableMedia.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tableMedia.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableMedia.setEditable(true);
 
         final TableColumn<MediaData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -102,43 +88,46 @@ public class PaneMediaData {
         externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
         externalColumn.setCellFactory(new CellCheckBox().cellFactory);
 
-        nameColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(25.0 / 100));
-        pathColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(40.0 / 100));
-        sizeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
-        externalColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
+        nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(45.0 / 100));
+        pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(30.0 / 100));
+        sizeColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
+        externalColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(10.0 / 100));
 
-        tableView.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externalColumn);
-        tableView.setItems(progData.mediaDataList);
+        tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn, externalColumn);
 
-        tableView.setOnMousePressed(m -> {
-            if (tableView.getItems().isEmpty()) {
+        tableMedia.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
+            setTableSel(dataNew);
+        });
+        tableMedia.setOnMousePressed(m -> {
+            if (tableMedia.getItems().isEmpty()) {
                 return;
             }
             if (m.getButton().equals(MouseButton.SECONDARY)) {
-                MediaData mediaData = tableView.getSelectionModel().getSelectedItem();
+                MediaData mediaData = tableMedia.getSelectionModel().getSelectedItem();
                 if (mediaData == null) {
                     PAlert.showInfoNoSelection();
 
                 } else {
                     ContextMenu contextMenu = new PaneMediaContextMenu(stage, mediaData).getContextMenu();
-                    tableView.setContextMenu(contextMenu);
+                    tableMedia.setContextMenu(contextMenu);
                 }
             }
         });
-        tableView.setRowFactory(tv -> {
+        tableMedia.setRowFactory(tv -> {
             TableRow<MediaData> row = new TableRow<>();
             row.hoverProperty().addListener((observable) -> {
                 final MediaData mediaData = row.getItem();
                 if (row.isHover() && mediaData != null) {
                     setTableSel(mediaData);
                 } else {
-                    setTableSel(tableView.getSelectionModel().getSelectedItem());
+                    setTableSel(tableMedia.getSelectionModel().getSelectedItem());
                 }
             });
             return row;
         });
-        VBox.setVgrow(tableView, Priority.ALWAYS);
-        vBox.getChildren().addAll(tableView);
+
+        sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());
+        tableMedia.setItems(sortedList);
     }
 
     private void setTableSel(MediaData mediaData) {
@@ -151,23 +140,20 @@ public class PaneMediaData {
         }
     }
 
-    private void initLabelSum(VBox vBox) {
-        btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
-        btnCreateMediaDB.setOnAction(e -> MediaDataWorker.createMediaDb());
-        sizeListener = (observable, oldValue, newValue) ->
-                Platform.runLater(() -> lblSize.setText(progData.mediaDataList.size() + ""));
+    @Override
+    void initAction() {
+        super.initAction();
+
+        lblGesamtMedia.setText(progData.mediaDataList.size() + "");
+        sizeListener = (observable, oldValue, newValue) -> {
+            Platform.runLater(() -> lblGesamtMedia.setText(progData.mediaDataList.size() + ""));
+        };
         progData.mediaDataList.sizeProperty().addListener(sizeListener);
 
-        lblSize.setText(progData.mediaDataList.size() + "");
-        HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
-        hBoxSum.setAlignment(Pos.CENTER_LEFT);
-        hBoxSum.getChildren().addAll(btnCreateMediaDB, P2GuiTools.getHBoxGrower(),
-                new Label("Anzahl Medien gesamt:"),
-                lblSize);
-        vBox.getChildren().addAll(hBoxSum);
-    }
+        progress.visibleProperty().bind(progData.mediaDataList.searchingProperty());
+        btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
+        btnCreateMediaDB.setOnAction(e -> MediaDataWorker.createMediaDb());
 
-    private void initLabel(VBox vBox) {
         btnOpen.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));
         btnOpen.setOnAction(e -> open());
@@ -177,24 +163,12 @@ public class PaneMediaData {
         btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen"));
         btnPlay.setOnAction(e -> play());
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
+    }
 
-        txtPathMedia.setEditable(false);
-        txtTitleMedia.setEditable(false);
-        
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-
-        gridPane.add(new Label("Titel:"), 0, 0);
-        gridPane.add(txtTitleMedia, 1, 0);
-        gridPane.add(btnPlay, 2, 0);
-        gridPane.add(new Label("Pfad:"), 0, 1);
-        gridPane.add(txtPathMedia, 1, 1);
-        gridPane.add(btnOpen, 2, 1);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
-
-        vBox.getChildren().addAll(gridPane);
+    @Override
+    public void filter() {
+        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateMediaData(txtSearch.getText()));
+        lblHits.setText(filteredList.size() + "");
     }
 
     private void play() {
@@ -207,6 +181,7 @@ public class PaneMediaData {
     }
 
     private void open() {
-        POpen.openDir(txtPathMedia.getText(), ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        final String s = txtPathMedia.getText();
+        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
     }
 }
