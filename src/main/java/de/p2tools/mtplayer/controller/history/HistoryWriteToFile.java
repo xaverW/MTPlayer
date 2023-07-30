@@ -35,13 +35,16 @@ public class HistoryWriteToFile implements Runnable {
     private final List<HistoryData> list;
     private final boolean append;
     private final BooleanProperty isWorking;
-    private final HistoryWorker historyWorker;
+    private final String settingsDir;
+    private final String fileName;
 
-    public HistoryWriteToFile(List<HistoryData> list, boolean append, BooleanProperty isWorking, HistoryWorker historyWorker) {
+    public HistoryWriteToFile(String settingsDir, String fileName, List<HistoryData> list,
+                              boolean append, BooleanProperty isWorking) {
+        this.settingsDir = settingsDir;
+        this.fileName = fileName;
         this.list = list;
         this.append = append;
         this.isWorking = isWorking;
-        this.historyWorker = historyWorker;
     }
 
     @Override
@@ -51,16 +54,16 @@ public class HistoryWriteToFile implements Runnable {
     }
 
     private void doWork() {
-        final Path urlPath = historyWorker.getUrlFilePath();
+        final Path urlPath = HistoryFactory.getUrlFilePath(settingsDir, fileName);
         if (Files.notExists(urlPath)) {
             return;
         }
 
         PDuration.counterStart("doWork");
         if (append) {
-            PLog.sysLog("An Historyliste anfügen: " + list.size() + ", Datei: " + historyWorker.getFileName());
+            PLog.sysLog("An Historyliste anfügen: " + list.size() + ", Datei: " + fileName);
         } else {
-            PLog.sysLog("Ganze Historyliste schreiben: " + list.size() + ", Datei: " + historyWorker.getFileName());
+            PLog.sysLog("Ganze Historyliste schreiben: " + list.size() + ", Datei: " + fileName);
         }
 
         // und jetzt schreiben
@@ -73,16 +76,14 @@ public class HistoryWriteToFile implements Runnable {
     private boolean writeHistoryDataToFile(List<HistoryData> list, boolean append) {
         boolean ret = false;
         try (BufferedWriter bufferedWriter = (append ?
-                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(historyWorker.getUrlFilePath(), StandardOpenOption.APPEND))) :
-                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(historyWorker.getUrlFilePath()))))
+                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(HistoryFactory.getUrlFilePath(settingsDir, fileName), StandardOpenOption.APPEND))) :
+                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(HistoryFactory.getUrlFilePath(settingsDir, fileName)))))
         ) {
-
             for (final HistoryData historyData : list) {
-                final String line = historyData.getLine();
+                final String line = HistoryFactory.getLine(historyData);
                 bufferedWriter.write(line);
             }
             ret = true;
-
         } catch (final Exception ex) {
             PLog.errorLog(420312459, ex);
         }

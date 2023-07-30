@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.history;
 
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
@@ -44,22 +43,20 @@ import java.util.function.Predicate;
 public class HistoryList extends SimpleListProperty<HistoryData> {
 
     private final HashSet<String> urlHash = new HashSet<>();
+    private final String settingsDir;
     private final String fileName;
     private FilteredList<HistoryData> filteredList = null;
     private SortedList<HistoryData> sortedList = null;
-    private BooleanProperty isWorking = new SimpleBooleanProperty(false);
-    public final HistoryWorker historyWorker;
+    private final BooleanProperty isWorking = new SimpleBooleanProperty(false);
     private final boolean bookmark;
     private boolean found = false;
 
     public HistoryList(String fileName, String settingsDir, boolean bookmark) {
         super(FXCollections.observableArrayList());
-
+        this.settingsDir = settingsDir;
         this.fileName = fileName;
-        this.historyWorker = new HistoryWorker(fileName, settingsDir);
         this.bookmark = bookmark;
-
-        historyWorker.readHistoryDataFromFile(this);
+        HistoryFactory.readHistoryDataFromFile(settingsDir, fileName, this);
         fillUrlHash();
     }
 
@@ -105,7 +102,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                         "(" + size + " " + title + ")" +
                         " gelöscht werden?")) {
             clearList();
-            historyWorker.deleteHistoryFile();
+            HistoryFactory.deleteHistoryFile(settingsDir, fileName);
             if (bookmark) {
                 FilmToolsFactory.clearAllBookmarks();
             }
@@ -119,17 +116,13 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         return urlHash.contains(urlFilm);
     }
 
-    private synchronized boolean checkIfLiveStream(String theme) {
-        // live ist nie alt
-        return theme.equals(ProgConst.THEME_LIVE);
-    }
 
     //===============
     //ADD
     //===============
     public synchronized void addHistoryDataToHistory(String theme, String title, String url) {
         // einen Film in die History schreiben
-        if (checkIfUrlAlreadyIn(url) || checkIfLiveStream(theme)) {
+        if (checkIfUrlAlreadyIn(url) || HistoryFactory.checkIfLiveStream(theme)) {
             return;
         }
 
@@ -193,7 +186,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
         PDuration.counterStart("addDownloadDataListToHistory");
         for (final DownloadData download : downloadList) {
-            if (checkIfLiveStream(download.getTheme())) {
+            if (HistoryFactory.checkIfLiveStream(download.getTheme())) {
                 continue;
             }
             if (!download.getSetData().isPlay() && !download.getSetData().isSave()) {
@@ -261,7 +254,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
         PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(filmList.size() + 1, 0.75F);
-        filmList.stream().forEach(film -> {
+        filmList.forEach(film -> {
             if (bookmark) {
                 film.setBookmark(false);
 
@@ -335,7 +328,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         waitWhileWorkingAndSetWorking();
 
         try {
-            Thread th = new Thread(new HistoryWriteToFile(list, append, isWorking, historyWorker));
+            Thread th = new Thread(new HistoryWriteToFile(settingsDir, fileName, list, append, isWorking));
             th.setName("HistoryWriteToFile");
             th.start();
             // th.run();
@@ -384,6 +377,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     private void fillUrlHash() {
         urlHash.clear();
-        this.stream().forEach(h -> urlHash.add(h.getUrl()));
+        this.forEach(h -> urlHash.add(h.getUrl()));
     }
 }
