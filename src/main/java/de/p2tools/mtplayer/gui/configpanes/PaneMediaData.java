@@ -49,8 +49,8 @@ import java.util.Collection;
 public class PaneMediaData {
 
     private final TableView<MediaData> tableView = new TableView<>();
-    private final Label lblTitleMedia = new Label();
-    private final Label lblPathMedia = new Label();
+    private final TextField txtTitleMedia = new TextField();
+    private final TextField txtPathMedia = new TextField();
     private final Label lblSize = new Label();
     private final Button btnPlay = new Button();
     private final Button btnOpen = new Button();
@@ -143,11 +143,11 @@ public class PaneMediaData {
 
     private void setTableSel(MediaData mediaData) {
         if (mediaData != null) {
-            lblPathMedia.setText(mediaData.getPath());
-            lblTitleMedia.setText(mediaData.getName());
+            txtPathMedia.setText(mediaData.getPath());
+            txtTitleMedia.setText(mediaData.getName());
         } else {
-            lblPathMedia.setText("");
-            lblTitleMedia.setText("");
+            txtPathMedia.setText("");
+            txtTitleMedia.setText("");
         }
     }
 
@@ -171,22 +171,25 @@ public class PaneMediaData {
         btnOpen.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));
         btnOpen.setOnAction(e -> open());
-        btnOpen.disableProperty().bind(lblPathMedia.textProperty().isEmpty().and(lblTitleMedia.textProperty().isEmpty()));
+        btnOpen.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
         btnPlay.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_PLAY.getImageView());
         btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen"));
         btnPlay.setOnAction(e -> play());
-        btnPlay.disableProperty().bind(lblPathMedia.textProperty().isEmpty().and(lblTitleMedia.textProperty().isEmpty()));
+        btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
+        txtPathMedia.setEditable(false);
+        txtTitleMedia.setEditable(false);
+        
         GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         gridPane.add(new Label("Titel:"), 0, 0);
-        gridPane.add(lblTitleMedia, 1, 0);
+        gridPane.add(txtTitleMedia, 1, 0);
         gridPane.add(btnPlay, 2, 0);
         gridPane.add(new Label("Pfad:"), 0, 1);
-        gridPane.add(lblPathMedia, 1, 1);
+        gridPane.add(txtPathMedia, 1, 1);
         gridPane.add(btnOpen, 2, 1);
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
@@ -195,8 +198,8 @@ public class PaneMediaData {
     }
 
     private void play() {
-        final String path = lblPathMedia.getText();
-        final String name = lblTitleMedia.getText();
+        final String path = txtPathMedia.getText();
+        final String name = txtTitleMedia.getText();
         if (!name.isEmpty() && !path.isEmpty()) {
             POpen.playStoredFilm(PFileUtils.addsPath(path, name),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
@@ -204,6 +207,6 @@ public class PaneMediaData {
     }
 
     private void open() {
-        POpen.openDir(lblPathMedia.getText(), ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        POpen.openDir(txtPathMedia.getText(), ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
     }
 }

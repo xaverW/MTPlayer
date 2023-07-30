@@ -48,7 +48,7 @@ public class WriteMediaDb implements AutoCloseable {
     private ArrayList<String> logList = new ArrayList<>();
     boolean writeLog = false;
     private List<MediaData> mediaDbList;
-    private ProgData progData;
+    private final ProgData progData;
 
     public WriteMediaDb(ProgData progData) {
         this.progData = progData;

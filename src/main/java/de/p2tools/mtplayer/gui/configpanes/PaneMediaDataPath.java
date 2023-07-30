@@ -77,8 +77,7 @@ public class PaneMediaDataPath {
     }
 
     public void close() {
-        progData.mediaCollectionDataList.getUndoList(true).clear();
-        progData.mediaCollectionDataList.getUndoList(false).clear();
+        progData.mediaCollectionDataList.clearUndoList();
     }
 
     private void initTable(VBox vBox) {
@@ -200,15 +199,13 @@ public class PaneMediaDataPath {
     }
 
     private void delete() {
-        final List<MediaCollectionData> sels = new ArrayList<>();
-        sels.addAll(tableView.getSelectionModel().getSelectedItems());
+        final List<MediaCollectionData> sels = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
         if (sels.isEmpty()) {
             PAlert.showInfoNoSelection();
             return;
         }
 
-        progData.mediaCollectionDataList.addDataToUndoList(sels, external);
-        MediaDataWorker.removeMediaCollection(sels);
+        MediaDataWorker.removeMediaCollection(sels, external);
         tableView.getSelectionModel().clearSelection();
     }
 

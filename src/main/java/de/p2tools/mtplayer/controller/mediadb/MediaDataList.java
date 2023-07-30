@@ -122,11 +122,10 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
 
     public synchronized void countMediaData(ProgData progData) {
         // creates the counter in the MediaCollectionDataList
-        final MediaCollectionDataList mediaCollectionDataList = progData.mediaCollectionDataList;
-        mediaCollectionDataList.forEach(collectionData -> collectionData.setCount(0));
+        progData.mediaCollectionDataList.forEach(collectionData -> collectionData.setCount(0));
 
         this.forEach(mediaData -> {
-            MediaCollectionData mediaCollectionData = mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionId());
+            MediaCollectionData mediaCollectionData = progData.mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionId());
             if (mediaCollectionData != null) {
                 mediaCollectionData.setCount(mediaCollectionData.getCount() + 1);
             }

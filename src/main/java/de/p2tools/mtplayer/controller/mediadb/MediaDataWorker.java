@@ -106,28 +106,22 @@ public class MediaDataWorker {
     // **************************************************************
     // INTERN/EXTERNAL: eine collection und ihre Medien löschen
     // EXTERNAL media in Datei schreiben
-    public static synchronized void removeMediaCollection(List<MediaCollectionData> dataList) {
+    public static synchronized void removeMediaCollection(List<MediaCollectionData> dataList, boolean external) {
         // aus dem ConfigDialog: Button "Löschen"
         if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
             return;
         }
 
-        boolean extern = false;
-        for (MediaCollectionData id : dataList) {
-            if (id.isExternal()) {
-                // dann sind externe dabei
-                extern = true;
-            }
+        progData.mediaCollectionDataList.addDataToUndoList(dataList, external);
 
-            dataList.forEach(mediaCollectionData -> {
-                mediaCollectionData.setCount(0); // damits beim UNDO stimmt, Liste ist dann ja leer
-                progData.mediaCollectionDataList.remove(mediaCollectionData);
-                progData.mediaDataList.removeMediaData(mediaCollectionData);
-            });
-        }
+        dataList.forEach(mediaCollectionData -> {
+            mediaCollectionData.setCount(0); // damits beim UNDO stimmt, Liste ist dann ja leer
+            progData.mediaCollectionDataList.remove(mediaCollectionData);
+            progData.mediaDataList.removeMediaData(mediaCollectionData);
+        });
 
-        if (extern) {
+        if (external) {
             // muss nur dann geschrieben werden
             new WriteMediaDb(progData).writeExternalMediaData();
         }

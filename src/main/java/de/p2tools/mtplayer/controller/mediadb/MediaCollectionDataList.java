@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.mediadb;
 
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import de.p2tools.p2lib.tools.PIndex;
 import javafx.beans.property.SimpleListProperty;
@@ -24,6 +25,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -34,8 +36,10 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
     public static final String TAG = "MediaCollectionDataList";
     private SortedList<MediaCollectionData> sortedListInternal = null;
     private SortedList<MediaCollectionData> sortedListExternal = null;
-    private final ObservableList<MediaCollectionData> undoListInternal = FXCollections.observableArrayList();
-    private final ObservableList<MediaCollectionData> undoListExternal = FXCollections.observableArrayList();
+    private final ObservableList<MediaCollectionData> undoMediaCollectionInternal = FXCollections.observableArrayList();
+    private final ObservableList<MediaCollectionData> undoMediaCollectionExternal = FXCollections.observableArrayList();
+    private final List<MediaData> undoMediaDataExternal = new ArrayList<>();
+    private final List<MediaData> undoMediaDataInternal = new ArrayList<>();
 
     public MediaCollectionDataList() {
         super(FXCollections.observableArrayList());
@@ -170,28 +174,60 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
     }
 
     public ObservableList<MediaCollectionData> getUndoList(boolean external) {
-        return external ? undoListExternal : undoListInternal;
+        return external ? undoMediaCollectionExternal : undoMediaCollectionInternal;
+    }
+
+    public void clearUndoList() {
+        undoMediaDataExternal.clear();
+        undoMediaDataInternal.clear();
+        undoMediaCollectionExternal.clear();
+        undoMediaCollectionInternal.clear();
     }
 
     public synchronized void addDataToUndoList(List<MediaCollectionData> list, boolean external) {
         if (external) {
-            undoListExternal.clear();
-            undoListExternal.addAll(list);
+            undoMediaCollectionExternal.clear();
+            undoMediaDataExternal.clear();
+            undoMediaCollectionExternal.addAll(list);
+            list.forEach(mediaCollectionData ->
+                    undoMediaDataExternal.addAll(ProgData.getInstance().mediaDataList.stream()
+                            .filter(mediaData -> mediaData.getCollectionId() == mediaCollectionData.getIdInt())
+                            .toList()));
+
         } else {
-            undoListInternal.clear();
-            undoListInternal.addAll(list);
+            undoMediaCollectionInternal.clear();
+            undoMediaDataInternal.clear();
+            undoMediaCollectionInternal.addAll(list);
+            list.forEach(mediaCollectionData ->
+                    undoMediaDataInternal.addAll(ProgData.getInstance().mediaDataList.stream()
+                            .filter(mediaData -> mediaData.getCollectionId() == mediaCollectionData.getIdInt())
+                            .toList()));
         }
     }
 
     public synchronized void undoData(boolean external) {
-        if (external ? undoListExternal.isEmpty() : undoListInternal.isEmpty()) {
+        if (external ? undoMediaCollectionExternal.isEmpty() : undoMediaCollectionInternal.isEmpty()) {
             return;
         }
-        addAll(external ? undoListExternal : undoListInternal);
+
         if (external) {
-            undoListExternal.clear();
+            // die Sammlungen
+            addAll(undoMediaCollectionExternal);
+            undoMediaCollectionExternal.clear();
+            // und die MediaData
+            ProgData.getInstance().mediaDataList.addAll(undoMediaDataExternal);
+            undoMediaDataExternal.clear();
+            new WriteMediaDb(ProgData.getInstance()).writeExternalMediaData();
+
         } else {
-            undoListInternal.clear();
+            // die Sammlungen
+            addAll(undoMediaCollectionInternal);
+            undoMediaCollectionInternal.clear();
+            // und die MediaData
+            ProgData.getInstance().mediaDataList.addAll(undoMediaDataInternal);
+            undoMediaDataInternal.clear();
         }
+        // und jetzt noch die Zahlen aktualisieren
+        ProgData.getInstance().mediaDataList.countMediaData(ProgData.getInstance());
     }
 }
