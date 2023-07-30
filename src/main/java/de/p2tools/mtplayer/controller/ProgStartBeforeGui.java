@@ -57,6 +57,11 @@ public class ProgStartBeforeGui {
             PDuration.onlyPing("Erster Start: CleaningList init");
             ProgData.getInstance().mediaCleaningList.initList();
         }
+
+        PLog.sysLog("History-Listen laden");
+        ProgData.getInstance().historyList.loadList();
+        ProgData.getInstance().historyListAbos.loadList();
+        ProgData.getInstance().historyListBookmarks.loadList();
     }
 
     /**

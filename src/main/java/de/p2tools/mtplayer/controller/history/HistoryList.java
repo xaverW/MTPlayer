@@ -56,8 +56,14 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         this.settingsDir = settingsDir;
         this.fileName = fileName;
         this.bookmark = bookmark;
+    }
+
+    public void loadList() {
+        // beim Programmstart laden
+        PDuration.counterStart("loadList");
         HistoryFactory.readHistoryDataFromFile(settingsDir, fileName, this);
         fillUrlHash();
+        PDuration.counterStop("loadList");
     }
 
     public SortedList<HistoryData> getSortedList() {
