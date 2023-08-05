@@ -91,8 +91,6 @@ public class ProgConst {
 
     // minimale Größe (256 kB) eines Films um nicht als Fehler zu gelten
     public static final int MIN_DATEI_GROESSE_FILM = 256 * 1000;
-    // es können maximal soviele Filme eines Senders/Servers gleichzeitig geladen werden
-    public static final int MAX_SENDER_FILME_LADEN = 2;
 
     public static final int MAX_DEST_PATH_IN_DIALOG_DOWNLOAD = 10;
 

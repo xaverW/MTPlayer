@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.Start;
 import de.p2tools.p2lib.tools.date.PLTimeFactory;
@@ -116,7 +115,7 @@ public class DownloadFactoryStarts {
         //ersten passenden Download der Liste zurückgeben oder null
         //und versuchen, dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
         DownloadData ret = null;
-        if (downloadList.size() > 0 && getDown(downloadList, ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getValue())) {
+        if (!downloadList.isEmpty() && getDown(downloadList, ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getValue())) {
             final DownloadData download = nextStart(downloadList);
             if (download != null && download.isStateStartedWaiting()) {
                 ret = download;
@@ -126,7 +125,7 @@ public class DownloadFactoryStarts {
     }
 
     private static DownloadData nextStart(DownloadList downloadList) {
-        // Download mit der kleinsten Nr finden der zu Starten ist
+        // Download mit der kleinsten Nr finden, der zu Starten ist
         // erster Versuch, Start mit einem anderen Sender
 
         DownloadData tmpDownload = searchNextDownload(downloadList, 1);
@@ -141,17 +140,18 @@ public class DownloadFactoryStarts {
         }
 
         // zweiter Versuch, Start mit einem passenden Sender
-        tmpDownload = searchNextDownload(downloadList, ProgConst.MAX_SENDER_FILME_LADEN);
+        tmpDownload = searchNextDownload(downloadList, -1);
         return tmpDownload;
     }
 
     private static DownloadData searchNextDownload(DownloadList downloadList, int maxProChannel) {
+        // max: max. Anzahl pro Domain ODER "-1" dann egal
         DownloadData tmpDownload = null;
         int nr = -1;
         for (DownloadData download : downloadList) {
             if (download.isStateStartedWaiting() &&
                     checkStartTime(download) &&
-                    !maxChannelPlay(downloadList, download, maxProChannel) &&
+                    (maxProChannel < 0 || !maxChannelPlay(downloadList, download, maxProChannel)) &&
                     (nr == -1 || download.getNo() < nr)) {
 
                 tmpDownload = download;
@@ -183,7 +183,7 @@ public class DownloadFactoryStarts {
     }
 
     private static boolean maxChannelPlay(DownloadList downloadList, DownloadData d, int max) {
-        // true wenn bereits die maxAnzahl pro Sender läuft
+        // true, wenn bereits die maxAnzahl pro Sender läuft
         try {
             int counter = 0;
             final String host = getHost(d);
