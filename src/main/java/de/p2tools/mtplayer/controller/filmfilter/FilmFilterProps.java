@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_intProp;

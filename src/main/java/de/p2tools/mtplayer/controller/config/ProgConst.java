@@ -36,6 +36,10 @@ public class ProgConst {
     public static final String CSS_FILE = "de/p2tools/mtplayer/mtfx.css";
     public static final String CSS_FILE_DARK_THEME = "de/p2tools/mtplayer/mtfx-dark.css";
 
+    public static final int SEARCH_FAST_THEME_TITLE = 0;
+    public static final int SEARCH_FAST_THEME = 1;
+    public static final int SEARCH_FAST_TITLE = 2;
+
     public static final String M3U8_URL = "m3u8";
 
     public static final int SYSTEM_BLACKLIST_MAX_FILM_DAYS = 300; // Filter Blacklist: nur Filme der letzten xx Tage laden

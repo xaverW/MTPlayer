@@ -14,22 +14,21 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filmfilter;
+package de.p2tools.mtplayer.controller.data.blackdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
+import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BlacklistFilterFactory {
@@ -120,12 +119,12 @@ public class BlacklistFilterFactory {
 
             Stream<FilmDataMTP> initialStream = filmList.parallelStream();
 
-            if (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
+            if (progData.filmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
                 //blacklist ONLY
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOnly");
-                initialStream = initialStream.filter(filmDataMTP -> filmDataMTP.isBlackBlocked());
+                initialStream = initialStream.filter(FilmDataProps::isBlackBlocked);
 
-            } else if (progData.actFilmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
+            } else if (progData.filmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
                 //blacklist ON
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOn");
                 initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());
@@ -135,7 +134,7 @@ public class BlacklistFilterFactory {
                 PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
             }
 
-            filmListFiltered.addAll(initialStream.collect(Collectors.toList()));
+            filmListFiltered.addAll(initialStream.toList());
 
             // Array mit Sendernamen/Themen füllen
             filmListFiltered.loadTheme();

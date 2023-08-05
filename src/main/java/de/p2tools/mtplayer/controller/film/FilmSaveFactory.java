@@ -60,7 +60,7 @@ public class FilmSaveFactory {
         }
 
         String resolution = "";
-        if (progData.actFilmFilterWorker.getActFilterSettings().isOnlyHd()) {
+        if (progData.filmFilterWorker.getActFilterSettings().isOnlyHd()) {
             resolution = FilmDataMTP.RESOLUTION_HD;
         }
 

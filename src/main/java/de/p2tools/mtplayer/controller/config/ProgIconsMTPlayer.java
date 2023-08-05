@@ -49,6 +49,9 @@ public class ProgIconsMTPlayer {
     public static P2IconMTViewer ICON_BUTTON_FILE_OPEN = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-file-open.png", 16, 16);
     public static P2IconMTViewer ICON_BUTTON_PLAY = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-play.png", 16, 16);
     public static P2IconMTViewer ICON_BUTTON_CLEAR = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-clear.png", 16, 16);
+    public static P2IconMTViewer ICON_BUTTON_SEARCH = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-search.png", 16, 16);
+    public static P2IconMTViewer ICON_BUTTON_UP_DOWN = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-up-down.png", 8, 26);
+    public static P2IconMTViewer ICON_BUTTON_UP_DOWN_H = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-up-down-h.png", 26, 6);
     public static P2IconMTViewer ICON_DIALOG_QUIT = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "dialog-quit.png", 64, 64);
     public static P2IconMTViewer IMAGE_TABLE_ABO_ON = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-abo-on.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_ABO_OFF = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-abo-off.png", 14, 14);
@@ -71,6 +74,7 @@ public class ProgIconsMTPlayer {
     public static P2IconMTViewer ICON_BUTTON_MOVE_TOP = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-move-top.png", 16, 16);
     public static P2IconMTViewer ICON_BUTTON_MOVE_BOTTOM = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "button-move-bottom.png", 16, 16);
 
+    public static P2IconMTViewer ICON_TOOLBAR_BUTTON_SEARCH = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-button-search.png", 24, 24);
     public static P2IconMTViewer ICON_TOOLBAR_MENU = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-menu.png", 18, 15);
     public static P2IconMTViewer ICON_TOOLBAR_MENU_TOP = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-menu-top.png", 32, 18);
     public static P2IconMTViewer ICON_TOOLBAR_DOWNLOAD_CLEAN = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-download-clean.png", 32, 32);

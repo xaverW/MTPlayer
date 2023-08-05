@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.beans.binding.Bindings;
@@ -87,7 +87,7 @@ public class DownloadMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
         mb.setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU.getImageView());
-        mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
+        mb.getStyleClass().addAll("btnFunction", "btnFunc-2");
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");
         miDownloadStart.setOnAction(a -> {

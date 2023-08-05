@@ -19,11 +19,11 @@ package de.p2tools.mtplayer.controller.filmfilter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 
-public class FilmFilterFactory {
+public class FilmFilterSamples {
 
-    private FilmFilterFactory() {
+    private FilmFilterSamples() {
     }
-    
+
     public static FilmFilter getBookmarkFilter(FilmFilter filmFilter) {
         FilmFilter sf = filmFilter.getCopy();
         sf.clearFilter();
@@ -73,7 +73,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur neue Filme");
@@ -113,7 +113,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur Bookmarks");
@@ -153,7 +153,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("aktuelle Nachrichten");
@@ -195,7 +195,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Nachrichten mit Europa UND Brexit");
@@ -237,7 +237,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur ARD ODER ZDF");
@@ -279,7 +279,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Sport");
@@ -320,7 +320,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Livestreams");
@@ -361,7 +361,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Abendkrimi");
@@ -404,7 +404,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur \"neue\" in HD");
@@ -447,7 +447,7 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("keine Beitrage mit: \"Audiodeskription\" und \"Gebärdensprache\" anzeigen");
@@ -491,6 +491,6 @@ public class FilmFilterFactory {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+        progData.filmFilterWorker.getStoredFilterList().add(sf);
     }
 }

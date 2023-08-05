@@ -17,6 +17,10 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
@@ -29,32 +33,25 @@ public class PredicateFactory {
     private PredicateFactory() {
     }
 
-    public static Predicate<FilmData> getPredicate(FilmFilter filmFilter) {
+    public static Predicate<FilmData> getPredicate(ProgData progData) {
+
+        FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
+        FastFilmFilter fastFilmFilter = progData.filmFilterWorker.getFastFilterSettings();
+
         Filter fChannel;
-        Filter fTheme;
-        Filter fThemeTitle;
-        Filter fTitle;
+
         Filter fSomewhere;
         Filter fUrl;
         Filter fShowDate;
 
         String filterChannel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
-        String filterTheme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
-        String filterThemeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
-        String filterTitle = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
         String filterSomewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere() : "";
         String filterUrl = filmFilter.isUrlVis() ? filmFilter.getUrl() : "";
         String filterShowDate = filmFilter.isShowDateVis() ? filmFilter.getShowDate() : "";
 
-        final boolean themeExact = filmFilter.isThemeExact();
         // Sender
         fChannel = new Filter(filterChannel, true);
-        // Thema
-        fTheme = new Filter(filterTheme, themeExact, true);
-        // ThemaTitel
-        fThemeTitle = new Filter(filterThemeTitle, true);
-        // Titel
-        fTitle = new Filter(filterTitle, true);
+
         // Irgendwo
         fSomewhere = new Filter(filterSomewhere, true);
         // URL
@@ -62,18 +59,18 @@ public class PredicateFactory {
         //ShowDate
         fShowDate = new Filter(filterShowDate, false);
 
-        final boolean onlyBookmark = filmFilter.isOnlyVis() ? filmFilter.isOnlyBookmark() : false;
-        final boolean onlyHd = filmFilter.isOnlyVis() ? filmFilter.isOnlyHd() : false;
-        final boolean onlyUt = filmFilter.isOnlyVis() ? filmFilter.isOnlyUt() : false;
-        final boolean onlyLive = filmFilter.isOnlyVis() ? filmFilter.isOnlyLive() : false;
-        final boolean onlyNew = filmFilter.isOnlyVis() ? filmFilter.isOnlyNew() : false;
-        final boolean onlyAktHist = filmFilter.isOnlyVis() ? filmFilter.getOnlyActHistory() : false;
+        final boolean onlyBookmark = filmFilter.isOnlyVis() && filmFilter.isOnlyBookmark();
+        final boolean onlyHd = filmFilter.isOnlyVis() && filmFilter.isOnlyHd();
+        final boolean onlyUt = filmFilter.isOnlyVis() && filmFilter.isOnlyUt();
+        final boolean onlyLive = filmFilter.isOnlyVis() && filmFilter.isOnlyLive();
+        final boolean onlyNew = filmFilter.isOnlyVis() && filmFilter.isOnlyNew();
+        final boolean onlyAktHist = filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory();
 
-        final boolean noAbos = filmFilter.isNotVis() ? filmFilter.isNotAbo() : false;
-        final boolean noShown = filmFilter.isNotVis() ? filmFilter.isNotHistory() : false;
-        final boolean noDouble = filmFilter.isNotVis() ? filmFilter.isNotDouble() : false;
-        final boolean noGeo = filmFilter.isNotVis() ? filmFilter.isNotGeo() : false;
-        final boolean noFuture = filmFilter.isNotVis() ? filmFilter.isNotFuture() : false;
+        final boolean noAbos = filmFilter.isNotVis() && filmFilter.isNotAbo();
+        final boolean noShown = filmFilter.isNotVis() && filmFilter.isNotHistory();
+        final boolean noDouble = filmFilter.isNotVis() && filmFilter.isNotDouble();
+        final boolean noGeo = filmFilter.isNotVis() && filmFilter.isNotGeo();
+        final boolean noFuture = filmFilter.isNotVis() && filmFilter.isNotFuture();
 
         final int checkBlack = filmFilter.blacklistOnOffProperty().getValue();
 
@@ -169,21 +166,10 @@ public class PredicateFactory {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
         }
 
+        predicate = addFastFilter(filmFilter, fastFilmFilter, predicate);
 
         if (!fChannel.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchChannelSmart(fChannel, f));
-        }
-
-        if (!fTheme.isEmpty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeExact(fTheme, f));
-        }
-
-        if (!fThemeTitle.isEmpty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeTitle(fThemeTitle, f));
-        }
-
-        if (!fTitle.isEmpty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fTitle, f));
         }
 
         if (!fSomewhere.isEmpty) {
@@ -199,6 +185,67 @@ public class PredicateFactory {
             predicate = predicate.and(f -> checkShowDate(filmFilter.getShowDate(), f));
         }
 
+        return predicate;
+    }
+
+    private static Predicate<FilmData> addFastFilter(FilmFilter filmFilter, FastFilmFilter fastFilmFilter,
+                                                     Predicate<FilmData> predicate) {
+        Filter fastFilter = new Filter(fastFilmFilter.getFilterTerm(), true);
+
+        Filter fTheme;
+        Filter fThemeTitle;
+        Filter fTitle;
+
+        String filterTheme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
+        String filterThemeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
+        String filterTitle = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
+        final boolean themeExact = filmFilter.isThemeExact();
+
+        // Thema
+        fTheme = new Filter(filterTheme, themeExact, true);
+        // ThemaTitel
+        fThemeTitle = new Filter(filterThemeTitle, true);
+        // Titel
+        fTitle = new Filter(filterTitle, true);
+
+        if (ProgConfig.FAST_SEARCH_ON.getValue() &&
+                ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME_TITLE) {
+            // dann mit dem FAST
+            if (!fastFilter.isEmpty) {
+                predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeTitle(fastFilter, f));
+            }
+        } else {
+            // mit dem regulären Filter
+            if (!fThemeTitle.isEmpty) {
+                predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeTitle(fThemeTitle, f));
+            }
+        }
+
+        if (ProgConfig.FAST_SEARCH_ON.getValue() &&
+                ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME) {
+            // dann mit dem FAST
+            if (!fastFilter.isEmpty) {
+                predicate = predicate.and(f -> FilmFilterCheck.checkMatchTheme(fastFilter, f));
+            }
+        } else {
+            // mit dem regulären Filter
+            if (!fTheme.isEmpty) {
+                predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeExact(fTheme, f));
+            }
+        }
+
+        if (ProgConfig.FAST_SEARCH_ON.getValue() &&
+                ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_TITLE) {
+            // dann mit dem FAST
+            if (!fastFilter.isEmpty) {
+                predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fastFilter, f));
+            }
+        } else {
+            // mit dem regulären Filter
+            if (!fTitle.isEmpty) {
+                predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fTitle, f));
+            }
+        }
         return predicate;
     }
 

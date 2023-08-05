@@ -39,12 +39,12 @@ public class AboListFactory {
 
     public static void setFilmFilterFromAbo() {
         Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
-        ProgData.getInstance().actFilmFilterWorker.loadStoredFilterFromAbo(abo);
+        ProgData.getInstance().filmFilterWorker.loadStoredFilterFromAbo(abo);
     }
 
     public static void setAboFromFilmFilter() {
         Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
-        changeAboFromFilterButton(abo, ProgData.getInstance().actFilmFilterWorker.getActFilterSettings());
+        changeAboFromFilterButton(abo, ProgData.getInstance().filmFilterWorker.getActFilterSettings());
     }
 
     public static void setAboActive(boolean on) {

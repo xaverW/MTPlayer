@@ -33,7 +33,8 @@ public class MTListener implements EventListener {
     public static final int EVENT_MEDIA_DB_START = count++;
     public static final int EVENT_MEDIA_DB_STOP = count++;
     public static final int EVENT_HISTORY_CHANGED = count++;
-    public static final int EVEMT_SETDATA_CHANGED = count++;
+    public static final int EVENT_SET_DATA_CHANGED = count++;
+    public static final int EVENT_FILTER_CHANGED = count++;
     public int[] event = {-1};
     public String eventClass = "";
 
@@ -60,7 +61,7 @@ public class MTListener implements EventListener {
     }
 
     public static synchronized void notify(int eventNotify, String eventClass) {
-        listeners.stream().forEach(listener -> {
+        listeners.forEach(listener -> {
             for (final int event : listener.event) {
                 // um einen Kreislauf zu verhindern
                 if (event == eventNotify && !listener.eventClass.equals(eventClass)) {
@@ -82,7 +83,7 @@ public class MTListener implements EventListener {
     private void pingen() {
         try {
             ping();
-            Platform.runLater(() -> pingFx());
+            Platform.runLater(this::pingFx);
         } catch (final Exception ex) {
             PLog.errorLog(698989743, ex);
         }

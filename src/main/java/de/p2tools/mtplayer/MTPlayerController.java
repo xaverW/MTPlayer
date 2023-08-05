@@ -30,7 +30,6 @@ import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tooltip;
@@ -47,6 +46,7 @@ public class MTPlayerController extends StackPane {
     private final Button btnFilm = new Button("Filme");
     private final Button btnDownload = new Button("Downloads");
     private final Button btnAbo = new Button("Abos");
+    private final SearchFast searchFast = new SearchFast();
 
     private final BorderPane borderPane = new BorderPane();
     private final StackPane stackPaneCont = new StackPane();
@@ -71,17 +71,20 @@ public class MTPlayerController extends StackPane {
     private void init() {
         try {
             // Toolbar
+            TilePane tilePane = new TilePane();
+            tilePane.setPrefColumns(3);
+            tilePane.setHgap(20);
+            tilePane.setPadding(new Insets(0));
+            tilePane.setAlignment(Pos.CENTER);
+            tilePane.getChildren().addAll(btnFilm, btnDownload, btnAbo);
+
             HBox hBoxTop = new HBox();
             hBoxTop.setPadding(new Insets(10));
-            hBoxTop.setSpacing(20);
+            hBoxTop.setSpacing(10);
             hBoxTop.setAlignment(Pos.CENTER);
-
-            TilePane tilePaneFilmDownloadAbo = new TilePane();
-            tilePaneFilmDownloadAbo.setHgap(20);
-            tilePaneFilmDownloadAbo.setAlignment(Pos.CENTER);
-            tilePaneFilmDownloadAbo.getChildren().addAll(btnFilm, btnDownload, btnAbo);
-            HBox.setHgrow(tilePaneFilmDownloadAbo, Priority.ALWAYS);
-            hBoxTop.getChildren().addAll(btnFilmlist, tilePaneFilmDownloadAbo, new MTPlayerMenu());
+            HBox.setHgrow(tilePane, Priority.SOMETIMES);
+            HBox.setHgrow(searchFast, Priority.ALWAYS);
+            hBoxTop.getChildren().addAll(btnFilmlist, tilePane, searchFast, new MTPlayerMenu());
 
             // Center
             splitPaneFilm = filmGui.pack();
@@ -147,7 +150,7 @@ public class MTPlayerController extends StackPane {
         LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
-                if (stackPaneCont.getChildren().size() == 0) {
+                if (stackPaneCont.getChildren().isEmpty()) {
                     return;
                 }
                 setFocus();
@@ -249,15 +252,19 @@ public class MTPlayerController extends StackPane {
         btnAbo.getStyleClass().clear();
 
         if (paneShown == PANE_SHOWN.FILM) {
+            searchFast.setVisible(true);
             btnFilm.getStyleClass().add("btnTabTop-sel");
         } else {
+            searchFast.setVisible(false);
             btnFilm.getStyleClass().add("btnTabTop");
         }
+
         if (paneShown == PANE_SHOWN.DOWNLOAD) {
             btnDownload.getStyleClass().add("btnTabTop-sel");
         } else {
             btnDownload.getStyleClass().add("btnTabTop");
         }
+
         if (paneShown == PANE_SHOWN.ABO) {
             btnAbo.getStyleClass().add("btnTabTop-sel");
         } else {
@@ -266,7 +273,6 @@ public class MTPlayerController extends StackPane {
     }
 
     public void setFocus() {
-        Node node = stackPaneCont.getChildren().get(stackPaneCont.getChildren().size() - 1);
         if (paneShown == PANE_SHOWN.FILM) {
             progData.filmGuiController.isShown();
         }

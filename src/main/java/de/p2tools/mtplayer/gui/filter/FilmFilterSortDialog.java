@@ -89,7 +89,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         nameColumn.setCellFactory(cellFactory);
 
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.actFilmFilterWorker.getStoredFilterList());
+        tableView.setItems(progData.filmFilterWorker.getStoredFilterList());
 
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
         btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
@@ -107,7 +107,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = progData.actFilmFilterWorker.getStoredFilterList().top(sel, true);
+                int res = progData.filmFilterWorker.getStoredFilterList().top(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -120,7 +120,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = progData.actFilmFilterWorker.getStoredFilterList().top(sel, false);
+                int res = progData.filmFilterWorker.getStoredFilterList().top(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -133,7 +133,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = progData.actFilmFilterWorker.getStoredFilterList().up(sel, true);
+                int res = progData.filmFilterWorker.getStoredFilterList().up(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -146,7 +146,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = progData.actFilmFilterWorker.getStoredFilterList().up(sel, false);
+                int res = progData.filmFilterWorker.getStoredFilterList().up(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -187,7 +187,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             return;
         }
 
-        if (progData.actFilmFilterWorker.removeStoredFilter(sf)) {
+        if (progData.filmFilterWorker.removeStoredFilter(sf)) {
             tableView.getSelectionModel().selectFirst();
         }
     }
@@ -196,9 +196,9 @@ public class FilmFilterSortDialog extends PDialogExtra {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         FilmFilter sf = new FilmFilter(PSeparatorComboBox.SEPARATOR);
         if (sel < 0) {
-            progData.actFilmFilterWorker.getStoredFilterList().add(sf);
+            progData.filmFilterWorker.getStoredFilterList().add(sf);
         } else {
-            progData.actFilmFilterWorker.getStoredFilterList().add(sel + 1, sf);
+            progData.filmFilterWorker.getStoredFilterList().add(sel + 1, sf);
         }
     }
 }

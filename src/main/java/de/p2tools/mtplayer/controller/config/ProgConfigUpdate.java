@@ -36,10 +36,10 @@ public class ProgConfigUpdate {
             // dann müssen die gespeicherten Filter aktualisiert werden
             final int FILTER_DAYS_MAX__OLD = 30; // ist der alte Wert für "alles"
 
-            if (ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
-                ProgData.getInstance().actFilmFilterWorker.getActFilterSettings().setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
+            if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
+                ProgData.getInstance().filmFilterWorker.getActFilterSettings().setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
             }
-            ProgData.getInstance().actFilmFilterWorker.getStoredFilterList().stream().forEach(sf -> {
+            ProgData.getInstance().filmFilterWorker.getStoredFilterList().stream().forEach(sf -> {
                 if (sf.getTimeRange() == FILTER_DAYS_MAX__OLD) {
                     sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
                 }

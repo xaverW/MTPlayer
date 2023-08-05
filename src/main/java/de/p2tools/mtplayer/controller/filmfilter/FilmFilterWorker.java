@@ -16,14 +16,14 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.alert.PAlert;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -31,24 +31,15 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public final class ActFilmFilterWorker {
-
-    private final ProgData progData;
-
-    final int MAX_FILTER_HISTORY = 10;
+public final class FilmFilterWorker {
     final int MAX_FILTER_GO_BACK = 5;
-
-    private final BooleanProperty filterChange = new SimpleBooleanProperty(true);
     private final BooleanProperty backward = new SimpleBooleanProperty(false);
     private final BooleanProperty forward = new SimpleBooleanProperty(false);
 
-    private final ChangeListener<Boolean> filterChangeListener;
-    private final ChangeListener<Boolean> blacklistChangeListener;
-
     // ist der aktuell angezeigte Filter
     public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
-    private FilmFilter actFilterSettings = new FilmFilter(SELECTED_FILTER_NAME); // ist der "aktuelle" Filter im Programm
-    private FilmFilter oldActFilterSettings = new FilmFilter(SELECTED_FILTER_NAME); // ist der "aktuelle" Filter im Programm
+    private final FastFilmFilter fastFilter = new FastFilmFilter(); // ist der FastFilter
+    private final FilmFilter actFilterSettings = new FilmFilter(SELECTED_FILTER_NAME); // ist der "aktuelle" Filter im Programm
 
     // ist die Liste der gespeicherten Filter
     private final FilmFilterList filmFilterList = new FilmFilterList();
@@ -77,24 +68,9 @@ public final class ActFilmFilterWorker {
 
     private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
 
-    private final ObservableList<String> lastThemaTitleFilter = FXCollections.observableArrayList("");
-    private final ObservableList<String> lastTitleFilter = FXCollections.observableArrayList("");
-    private final ObservableList<String> lastSomewhereFilter = FXCollections.observableArrayList("");
-    private final ObservableList<String> lastUrlFilter = FXCollections.observableArrayList("");
-
-
-    public ActFilmFilterWorker(ProgData progData) {
-        this.progData = progData;
-
-        filterChangeListener = (observable, oldValue, newValue) -> {
-            postFilterChange();
-        };
-        blacklistChangeListener = (observable, oldValue, newValue) -> {
-            postBlacklistChange();
-        };
-        actFilterSettings.filterChangeProperty().addListener(filterChangeListener); // wenn der User den Filter ändert
-        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener); // wenn der User die Blackl. ein-/ausschaltet
-
+    public FilmFilterWorker() {
+        fastFilter.filterChangeProperty().addListener((observable, oldValue, newValue) ->
+                MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName())); // wenn der User den Filter ändert
         filmFilterBackward.addListener((ListChangeListener<FilmFilter>) c -> {
             if (filmFilterBackward.size() > 1) {
                 backward.setValue(true);
@@ -115,10 +91,6 @@ public final class ActFilmFilterWorker {
         addBackward();
     }
 
-    public BooleanProperty filterChangeProperty() {
-        return filterChange;
-    }
-
     public BooleanProperty backwardProperty() {
         return backward;
     }
@@ -136,6 +108,10 @@ public final class ActFilmFilterWorker {
         return actFilterSettings;
     }
 
+    public FastFilmFilter getFastFilterSettings() {
+        return fastFilter;
+    }
+
     /**
      * setzt die aktuellen Filtereinstellungen aus einem Filter (gespeicherten Filter)
      *
@@ -145,20 +121,17 @@ public final class ActFilmFilterWorker {
         if (sf == null) {
             return;
         }
-        actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
-        actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
+        actFilterSettings.switchFilterOff(true);
         int black = actFilterSettings.blacklistOnOffProperty().getValue();
-
         sf.copyTo(actFilterSettings);
+        actFilterSettings.switchFilterOff(false);
+
         if (actFilterSettings.blacklistOnOffProperty().getValue() == black) {
             // Black hat sich nicht geändert
             postFilterChange();
         } else {
             postBlacklistChange();
         }
-
-        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
-        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     /**
@@ -252,13 +225,12 @@ public final class ActFilmFilterWorker {
      * @param oAbo
      */
     public synchronized void loadStoredFilterFromAbo(Optional<AboData> oAbo) {
-        if (!oAbo.isPresent()) {
+        if (oAbo.isEmpty()) {
             return;
         }
 
         final AboData abo = oAbo.get();
-        actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
-        actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
+        actFilterSettings.switchFilterOff(true);
         actFilterSettings.turnOffFilter(); // Filter erstmal löschen und dann alle abschalten
 
         actFilterSettings.setChannelAndVis(abo.getChannel());
@@ -278,14 +250,13 @@ public final class ActFilmFilterWorker {
         actFilterSettings.setTimeRange(abo.getTimeRange());
 
         filmFilterForward.clear();
+        actFilterSettings.switchFilterOff(false);
+
         postFilterChange();
-        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
-        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     public synchronized void clearFilter() {
-        actFilterSettings.filterChangeProperty().removeListener(filterChangeListener);
-        actFilterSettings.blacklistChangeProperty().removeListener(blacklistChangeListener);
+        actFilterSettings.switchFilterOff(true);
 
         if (actFilterSettings.isTextFilterEmpty()) {
             actFilterSettings.clearFilter(); // Button Black wird nicht verändert
@@ -296,9 +267,8 @@ public final class ActFilmFilterWorker {
         filmFilterForward.clear();
         filmFilterBackward.clear();
 
+        actFilterSettings.switchFilterOff(false);
         postFilterChange();
-        actFilterSettings.filterChangeProperty().addListener(filterChangeListener);
-        actFilterSettings.blacklistChangeProperty().addListener(blacklistChangeListener);
     }
 
     public void goBackward() {
@@ -321,66 +291,6 @@ public final class ActFilmFilterWorker {
 
         final FilmFilter sf = filmFilterForward.remove(filmFilterForward.size() - 1);
         setActFilterSettings(sf);
-    }
-
-    public ObservableList<String> getLastThemaTitleFilter() {
-        return lastThemaTitleFilter;
-    }
-
-    public synchronized void addLastThemeTitleFilter(String filter) {
-        addLastFilter(lastThemaTitleFilter, filter);
-    }
-
-    public ObservableList<String> getLastTitleFilter() {
-        return lastTitleFilter;
-    }
-
-    public synchronized void addLastTitleFilter(String filter) {
-        addLastFilter(lastTitleFilter, filter);
-    }
-
-    public ObservableList<String> getLastSomewhereFilter() {
-        return lastSomewhereFilter;
-    }
-
-    public synchronized void addLastSomewhereFilter(String filter) {
-        addLastFilter(lastSomewhereFilter, filter);
-    }
-
-    public ObservableList<String> getLastUrlFilter() {
-        return lastUrlFilter;
-    }
-
-    public synchronized void addLastUrlFilter(String filter) {
-        addLastFilter(lastUrlFilter, filter);
-    }
-
-    private synchronized void addLastFilter(ObservableList<String> list, String filter) {
-        if (filter.isEmpty()) {
-            return;
-        }
-
-        if (!list.stream().filter(f -> f.equals(filter)).findAny().isPresent()) {
-            list.add(filter);
-        }
-        while (list.size() >= MAX_FILTER_HISTORY) {
-            list.remove(1);
-        }
-    }
-
-    int i = 0;
-
-    private void setFilterChange() {
-        addLastThemeTitleFilter(progData.actFilmFilterWorker.getActFilterSettings().getThemeTitle());
-        addLastTitleFilter(progData.actFilmFilterWorker.getActFilterSettings().getTitle());
-        addLastSomewhereFilter(progData.actFilmFilterWorker.getActFilterSettings().getSomewhere());
-        addLastUrlFilter(progData.actFilmFilterWorker.getActFilterSettings().getUrl());
-
-        //hier erst mal die actFilter vergleichen, ob geändert
-        if (!oldActFilterSettings.isSame(actFilterSettings, true)) {
-            actFilterSettings.copyTo(oldActFilterSettings);
-            this.filterChange.set(!filterChange.get());
-        }
     }
 
     private void addBackward() {
@@ -452,12 +362,12 @@ public final class ActFilmFilterWorker {
 
     private void postFilterChange() {
         addBackward();
-        setFilterChange();
+        MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
     }
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
         BlacklistFilterFactory.getBlackFilteredFilmlist();
-        setFilterChange();
+        MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
     }
 }

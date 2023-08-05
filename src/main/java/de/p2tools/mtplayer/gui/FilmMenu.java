@@ -22,11 +22,11 @@ import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -92,7 +92,7 @@ public class FilmMenu {
         btFilterBookmakr.setOnAction(a -> {
             if (storedActFilterSettings != null && storedBookmarkFilter != null) {
                 // prüfen, ob sich der Filter geändert hat, wenn ja, dann auf Anfang
-                FilmFilter sf = progData.actFilmFilterWorker.getActFilterSettings();
+                FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
                 if (storedBookmarkFilter.isSame(sf, false)) {
                     // dann hat sich der Filter geändert
                     storedActFilterSettings = null;
@@ -101,23 +101,23 @@ public class FilmMenu {
 
             if (storedActFilterSettings == null) {
                 // dann wurde es noch nicht aufgerufen
-                if (progData.actFilmFilterWorker.getActFilterSettings().isOnlyVis() &&
-                        progData.actFilmFilterWorker.getActFilterSettings().isOnlyBookmark()) {
+                if (progData.filmFilterWorker.getActFilterSettings().isOnlyVis() &&
+                        progData.filmFilterWorker.getActFilterSettings().isOnlyBookmark()) {
                     // dann ist Bookmark schon gesetzt, dann erst mal ausschalten
-                    storedActFilterSettings = progData.actFilmFilterWorker.getActFilterSettings().getCopy();
-                    progData.actFilmFilterWorker.getActFilterSettings().clearFilter();
+                    storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
+                    progData.filmFilterWorker.getActFilterSettings().clearFilter();
 
                 } else {
                     // dann setzen des Bookmarkfilters
-                    storedActFilterSettings = progData.actFilmFilterWorker.getActFilterSettings().getCopy();
-                    storedBookmarkFilter = FilmFilterFactory.getBookmarkFilter(storedActFilterSettings);
-                    progData.actFilmFilterWorker.setActFilterSettings(storedBookmarkFilter);
+                    storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
+                    storedBookmarkFilter = FilmFilterSamples.getBookmarkFilter(storedActFilterSettings);
+                    progData.filmFilterWorker.setActFilterSettings(storedBookmarkFilter);
                 }
 
             } else {
                 // dann den gemerkten Filter wieder setzen, aber ohne Bookmark
                 storedActFilterSettings.setOnlyBookmark(false);
-                progData.actFilmFilterWorker.setActFilterSettings(storedActFilterSettings);
+                progData.filmFilterWorker.setActFilterSettings(storedActFilterSettings);
                 storedActFilterSettings = null;
             }
         });
@@ -127,7 +127,7 @@ public class FilmMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Filmmenü anzeigen"));
         mb.setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU.getImageView());
-        mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
+        mb.getStyleClass().addAll("btnFunction", "btnFunc-2");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> {

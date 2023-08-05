@@ -49,12 +49,12 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void addButton() {
         btnGoBack.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_BACKWARD.getImageView());
-        btnGoBack.setOnAction(a -> progData.actFilmFilterWorker.goBackward());
-        btnGoBack.disableProperty().bind(progData.actFilmFilterWorker.backwardProperty().not());
+        btnGoBack.setOnAction(a -> progData.filmFilterWorker.goBackward());
+        btnGoBack.disableProperty().bind(progData.filmFilterWorker.backwardProperty().not());
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
         btnGoForward.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FORWARD.getImageView());
-        btnGoForward.setOnAction(a -> progData.actFilmFilterWorker.goForward());
-        btnGoForward.disableProperty().bind(progData.actFilmFilterWorker.forwardProperty().not());
+        btnGoForward.setOnAction(a -> progData.filmFilterWorker.goForward());
+        btnGoForward.disableProperty().bind(progData.filmFilterWorker.forwardProperty().not());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnClearFilter.setOnAction(a -> clearFilter());
@@ -73,7 +73,7 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void clearFilter() {
         PDuration.onlyPing("Filter löschen");
-        progData.actFilmFilterWorker.clearFilter();
+        progData.filmFilterWorker.clearFilter();
     }
 
     private void editFilter() {

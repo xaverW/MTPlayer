@@ -84,7 +84,7 @@ public class AboMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Abomenü anzeigen"));
         mb.setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU.getImageView());
-        mb.getStyleClass().addAll("btnFunction", "btnFunc-1");
+        mb.getStyleClass().addAll("btnFunction", "btnFunc-2");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");
         mbOn.setOnAction(a -> AboListFactory.setAboActive(true));
@@ -98,7 +98,7 @@ public class AboMenu {
         miNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
         final MenuItem miAboAddFilter = new MenuItem("Aus dem Film-Filter ein Abo erstellen");
         miAboAddFilter.setOnAction(a -> {
-            FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
+            FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
             AboListFactory.addNewAboFromFilterButton(filmFilter);
         });
 

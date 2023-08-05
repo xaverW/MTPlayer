@@ -62,7 +62,9 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
 
     @Override
     public synchronized void filteredListSetPred(Predicate<FilmData> predicate) {
+        PLog.debugLog("");
         PLog.debugLog("=================> Filter: " + ++count);
+        PLog.debugLog("");
         PDuration.counterStart("filteredListSetPred");
         getFilteredList().setPredicate(predicate);
         PDuration.counterStop("filteredListSetPred");
@@ -72,14 +74,6 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
     public String getFilmlistId() {
         return metaData[FilmlistXml.FILMLIST_ID_NR];
     }
-
-//    public synchronized void saveFilm(FilmDataMTP film, SetData pSet) {
-//        FilmSaveFactory.saveFilm(film, pSet);
-//    }
-
-//    public synchronized void saveFilm(List<FilmDataMTP> list, SetData pSet) {
-//        FilmSaveFactory.saveFilm(list, pSet);
-//    }
 
     @Override
     public synchronized boolean importFilmOnlyWithNr(FilmDataMTP film) {
@@ -95,8 +89,6 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
         this.parallelStream().forEach((FilmData f) -> f.setGeoBlocked());
     }
 
-    int countDouble = 0;
-
     @Override
     public synchronized int markFilms() {
         // läuft direkt nach dem Laden der Filmliste!
@@ -104,11 +96,6 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
         // viele Filme sind bei mehreren Sendern vorhanden
         return FilmlistFactory.markFilms(this);
     }
-
-//    private boolean addInit(FilmDataMTP film) {
-////        film.init(); todo
-//        return add(film);
-//    }
 
     @Override
     public synchronized void clear() {
@@ -226,9 +213,9 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
         final LinkedHashSet<String> senderSet = new LinkedHashSet<>(21);
         // der erste Sender ist ""
         senderSet.add("");
-        stream().forEach(film -> senderSet.add(film.getChannel()));
+        this.forEach(film -> senderSet.add(film.getChannel()));
 
-        sender = senderSet.toArray(new String[senderSet.size()]);
+        sender = senderSet.toArray(new String[0]);
 
         // für den Sender "" sind alle Themen im themenPerSender[0]
         final int senderLength = sender.length;

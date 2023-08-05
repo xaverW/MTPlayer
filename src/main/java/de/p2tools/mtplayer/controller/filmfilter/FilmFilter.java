@@ -17,20 +17,17 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.animation.PauseTransition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.util.Duration;
 
 public final class FilmFilter extends FilmFilterProps {
 
-    private final BooleanProperty filterChange = new SimpleBooleanProperty(false);
-    private final BooleanProperty blacklistChange = new SimpleBooleanProperty(false);
-    private boolean reportChange = true;
-    private final PauseTransition pause = new PauseTransition(Duration.millis(200));
-
+    private boolean filterIsOff = true; // Filter ist EIN - meldet Änderungen
+    private final PauseTransition pause = new PauseTransition(Duration.millis(200)); // nach Ablauf wird Änderung gemeldet - oder nach Return
 
     public FilmFilter() {
         initFilter();
@@ -42,20 +39,29 @@ public final class FilmFilter extends FilmFilterProps {
         setName(name);
     }
 
-    public boolean isReportChange() {
-        return reportChange;
+    public void reportFilterReturn() {
+        PLog.debugLog("reportFilterReturn");
+        pause.stop();
+        MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
     }
 
-    public void setReportChange(boolean reportChange) {
-        this.reportChange = reportChange;
+    private void reportFilterChange() {
+        // da wird die Änderung gemeldet
+        if (!filterIsOff) {
+            MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+        }
     }
 
-    public BooleanProperty filterChangeProperty() {
-        return filterChange;
+    private void reportBlacklistChange() {
+        if (!filterIsOff) { // todo ??
+            BlacklistFilterFactory.getBlackFilteredFilmlist();
+            MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+        }
     }
 
-    public BooleanProperty blacklistChangeProperty() {
-        return blacklistChange;
+    public void switchFilterOff(boolean switchOff) {
+        pause.stop();
+        this.filterIsOff = switchOff;
     }
 
     public void setChannelAndVis(String set) {
@@ -76,12 +82,6 @@ public final class FilmFilter extends FilmFilterProps {
     public void setTitleAndVis(String set) {
         setTitle(set);
         setTitleVis(true);
-    }
-
-    public void reportFilterReturn() {
-        PLog.debugLog("reportFilterReturn");
-        pause.stop();
-        filterChange.setValue(!filterChange.getValue());
     }
 
     public void turnOffFilter() {
@@ -200,7 +200,6 @@ public final class FilmFilter extends FilmFilterProps {
             setTxtFilterChange();
         });
 
-
         titleVisProperty().addListener(l -> setFilterChange());
         titleProperty().addListener(l -> {
             setTxtFilterChange();
@@ -251,7 +250,6 @@ public final class FilmFilter extends FilmFilterProps {
 
     private void setTxtFilterChange() {
         //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
-//        PDebugLog.sysLog("setTxtFilterChange");
         if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
             //dann wird erst nach "RETURN" gestartet
             pause.stop();
@@ -263,21 +261,7 @@ public final class FilmFilter extends FilmFilterProps {
 
     private void setFilterChange() {
         //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
-//        PDebugLog.sysLog("setFilterChange");
         pause.playFromStart();
-    }
-
-    private void reportFilterChange() {
-        if (reportChange) {
-            filterChange.setValue(!filterChange.getValue());
-        }
-    }
-
-    private void reportBlacklistChange() {
-        if (reportChange) {
-//            PDebugLog.sysLog("reportBlacklistChange");
-            blacklistChange.setValue(!blacklistChange.getValue());
-        }
     }
 
     public boolean isTextFilterEmpty() {

@@ -19,13 +19,13 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.p2lib.tools.PSystemUtils;
@@ -119,19 +119,19 @@ public class FilmTableContextMenu {
         Menu submenuFilter = new Menu("Filter");
 
         final MenuItem miFilterChannel = new MenuItem("nach Sender filtern");
-        miFilterChannel.setOnAction(event -> progData.actFilmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel()));
+        miFilterChannel.setOnAction(event -> progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel()));
         final MenuItem miFilterTheme = new MenuItem("nach Thema filtern");
-        miFilterTheme.setOnAction(event -> progData.actFilmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme()));
+        miFilterTheme.setOnAction(event -> progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme()));
         final MenuItem miFilterChannelTheme = new MenuItem("nach Sender und Thema filtern");
         miFilterChannelTheme.setOnAction(event -> {
-            progData.actFilmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.actFilmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme());
+            progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme());
         });
         final MenuItem miFilterChannelThemeTitle = new MenuItem("nach Sender, Thema und Titel filtern");
         miFilterChannelThemeTitle.setOnAction(event -> {
-            progData.actFilmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.actFilmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme());
-            progData.actFilmFilterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
+            progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme());
+            progData.filmFilterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
         });
 
         miFilterChannel.setDisable(film == null);
@@ -158,7 +158,7 @@ public class FilmTableContextMenu {
 
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
-            FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
+            FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
             AboListFactory.addNewAboFromFilterButton(filmFilter);
         });
         AboData aboData = film == null ? null : BlacklistFilterFactory.findAbo(film);

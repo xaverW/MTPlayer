@@ -19,7 +19,7 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;

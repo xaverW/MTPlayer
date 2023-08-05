@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -37,7 +36,6 @@ public class Worker {
     private final ObservableList<String> channelsForAbosList = FXCollections.observableArrayList("");
     private final ObservableList<String> allAboNamesList = FXCollections.observableArrayList("");
 
-    private final FilmFilter sfTemp = new FilmFilter();
     private String downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
     private String downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
     private String aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
@@ -103,7 +101,7 @@ public class Worker {
             allChannelList.setAll(Arrays.asList(progData.filmList.sender));
 
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            createThemeList(progData.actFilmFilterWorker.getActFilterSettings().getChannel());
+            createThemeList(progData.filmFilterWorker.getActFilterSettings().getChannel());
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 DownloadFactory.searchForAbosAndMaybeStart();
             }
@@ -114,8 +112,6 @@ public class Worker {
     }
 
     private void saveFilter() {
-        // Filter Filme
-        progData.actFilmFilterWorker.getActFilterSettings().copyTo(sfTemp);
         // Filter Downloads
         downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
         downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
@@ -124,7 +120,6 @@ public class Worker {
     }
 
     private void resetFilter() {
-        sfTemp.copyTo(progData.actFilmFilterWorker.getActFilterSettings());
         if (getAllAboNamesList().contains(downloadFilterAbo)) {
             // nur wenn noch drin, dann wieder setzen
             ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo);
@@ -165,15 +160,13 @@ public class Worker {
 
             return collator.compare(arg1, arg2);
         };
-        Collections.sort(theme, comparator);
+        theme.sort(comparator);
 
         Platform.runLater(() -> {
             saveFilter();
-            this.progData.actFilmFilterWorker.getActFilterSettings().setReportChange(false);
             themeForChannelList.setAll(theme);
-            this.progData.actFilmFilterWorker.getActFilterSettings().setReportChange(true);
             resetFilter();
-            this.progData.actFilmFilterWorker.initFilter();
+            this.progData.filmFilterWorker.initFilter();
         });
         PDuration.counterStop("createThemeList");
     }

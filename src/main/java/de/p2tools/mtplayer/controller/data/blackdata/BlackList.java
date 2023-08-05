@@ -17,8 +17,6 @@
 package de.p2tools.mtplayer.controller.data.blackdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFactory;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.beans.property.SimpleListProperty;

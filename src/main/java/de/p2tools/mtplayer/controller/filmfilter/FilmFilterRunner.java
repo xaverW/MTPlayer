@@ -20,7 +20,6 @@ package de.p2tools.mtplayer.controller.filmfilter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -39,12 +38,17 @@ public class FilmFilterRunner {
     public FilmFilterRunner(ProgData progData) {
         this.progData = progData;
 
-        progData.actFilmFilterWorker.filterChangeProperty().addListener((observable, oldValue, newValue) -> filter()); // Filmfilter (User) haben sich geändert
+        MTListener.addListener(new MTListener(MTListener.EVENT_FILTER_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+            @Override
+            public void ping() {
+                filterList();
+            }
+        });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
         MTListener.addListener(new MTListener(MTListener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
-            public void pingFx() {
-                FilmFilter filmFilter = progData.actFilmFilterWorker.getActFilterSettings();
+            public void ping() {
+                FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
                 if (filmFilter.isNotVis() && filmFilter.isNotHistory() ||
                         filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory()) {
                     //nur dann wird History gefiltert
@@ -54,20 +58,16 @@ public class FilmFilterRunner {
         });
         MTListener.addListener(new MTListener(MTListener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
-            public void pingFx() {
+            public void ping() {
                 filterList();
             }
         });
         MTListener.addListener(new MTListener(MTListener.EVENT_DIACRITIC_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
-            public void pingFx() {
+            public void ping() {
                 filterList();
             }
         });
-    }
-
-    public void filter() {
-        Platform.runLater(() -> filterList());
     }
 
     private void filterList() {
@@ -77,17 +77,11 @@ public class FilmFilterRunner {
             research.set(false);
             try {
                 Platform.runLater(() -> {
-                    PLog.debugLog("========================================");
-                    PLog.debugLog("         === Filter: " + count++ + " ===");
-                    PLog.debugLog("========================================");
-
                     progData.filmGuiController.tableView.setVisible(false);
-                    progData.filmListFiltered.filteredListSetPred(
-                            PredicateFactory.getPredicate(progData.actFilmFilterWorker.getActFilterSettings()));
+                    progData.filmListFiltered.filteredListSetPred(PredicateFactory.getPredicate(progData));
 
                     Platform.runLater(() -> {
                         progData.filmGuiController.tableView.setVisible(true);
-//                        System.out.println("visible");
                     });
 
                     search.set(false);

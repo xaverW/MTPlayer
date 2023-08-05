@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.data.download.ReplaceList;
 import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
-import de.p2tools.mtplayer.controller.filmfilter.ActFilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
@@ -76,7 +76,7 @@ public class ProgData {
     // zentrale Klassen
     public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public ProgShortcut progShortcut; // verwendete Shortcuts
-    public ActFilmFilterWorker actFilmFilterWorker; // gespeicherte Filterprofile
+    public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile
     public FilmFilterRunner filmFilterRunner;
 
     // Gui
@@ -121,7 +121,7 @@ public class ProgData {
         progShortcut = new ProgShortcut();
         replaceList = new ReplaceList();
 
-        actFilmFilterWorker = new ActFilmFilterWorker(this);
+        filmFilterWorker = new FilmFilterWorker();
         filmList = new FilmListMTP();
         filmListFiltered = new FilmListMTP();
 

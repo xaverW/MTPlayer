@@ -17,10 +17,11 @@
 
 package de.p2tools.mtplayer.controller.config;
 
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.filmfilter.ActFilmFilterWorker;
-import de.p2tools.mtplayer.controller.filmfilter.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmfilter.FastFilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
@@ -211,6 +212,10 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty FILM_GUI_TABLE_ORDER = addStrProp("film-gui-table-order");
     public static StringProperty ADD_BLACK_DIALOG_SIZE = addStrProp("add-black-dialog-size", "600:400");
     public static DoubleProperty FILM_GUI_INFO_DIVIDER = addDoubleProp("film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+
+    // Gui Film -> fast search
+    public static BooleanProperty FAST_SEARCH_ON = addBoolProp("fast-search-on", Boolean.FALSE);
+    public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
 
     // Gui Download
     public static StringProperty DOWNLOAD_DIALOG_PATH_SAVING = addStrProp("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
@@ -461,11 +466,17 @@ public class ProgConfig extends PDataProgConfig {
 
         configFile.addConfigs(progData.setDataList);
 
-        final FilmFilter akt_sf = progData.actFilmFilterWorker.getActFilterSettings(); //akt-Filter
-        akt_sf.setName(ActFilmFilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
-        configFile.addConfigs(akt_sf);
-        configFile.addConfigs(progData.actFilmFilterWorker.getStoredFilterList()); //Filterprofile
+        // Filter
+        final FastFilmFilter fastFilmFilter = progData.filmFilterWorker.getFastFilterSettings(); //fast-Filter
+        configFile.addConfigs(fastFilmFilter);
 
+        final FilmFilter akt_sf = progData.filmFilterWorker.getActFilterSettings(); //akt-Filter
+        akt_sf.setName(FilmFilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
+        configFile.addConfigs(akt_sf);
+
+        configFile.addConfigs(progData.filmFilterWorker.getStoredFilterList()); //Filterprofile
+
+        // Rest
         configFile.addConfigs(progData.aboList);
         configFile.addConfigs(progData.filmListFilter);
         configFile.addConfigs(progData.blackList);

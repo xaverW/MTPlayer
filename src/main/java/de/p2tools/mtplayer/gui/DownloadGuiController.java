@@ -288,7 +288,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-        MTListener.addListener(new MTListener(MTListener.EVEMT_SETDATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_SET_DATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 tableView.refresh();

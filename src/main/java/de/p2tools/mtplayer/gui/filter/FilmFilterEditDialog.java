@@ -64,74 +64,74 @@ public class FilmFilterEditDialog extends PDialogExtra {
 
         PToggleSwitch tglChannel = new PToggleSwitch("Sender");
         tglChannel.setMaxWidth(Double.MAX_VALUE);
-        tglChannel.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().channelVisProperty());
+        tglChannel.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().channelVisProperty());
         vBox.getChildren().add(tglChannel);
 
         VBox v = new VBox(5);
         PToggleSwitch tglTheme = new PToggleSwitch("Thema");
         tglTheme.setMaxWidth(Double.MAX_VALUE);
-        tglTheme.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().themeVisProperty());
+        tglTheme.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().themeVisProperty());
         v.getChildren().add(tglTheme);
 
         PToggleSwitch tglThemeExact = new PToggleSwitch("  -> freie Suche mit Eingabefeld");
-        tglThemeExact.disableProperty().bind(progData.actFilmFilterWorker.getActFilterSettings().themeVisProperty().not());
+        tglThemeExact.disableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty().not());
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
 
-        tglThemeExact.setSelected(!progData.actFilmFilterWorker.getActFilterSettings().isThemeExact());
+        tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().isThemeExact());
         tglThemeExact.selectedProperty().addListener((observable, oldValue, newValue) ->
-                progData.actFilmFilterWorker.getActFilterSettings().themeExactProperty().setValue(!newValue));
+                progData.filmFilterWorker.getActFilterSettings().themeExactProperty().setValue(!newValue));
 
         v.getChildren().add(tglThemeExact);
         vBox.getChildren().add(v);
 
         PToggleSwitch tglThemeTitle = new PToggleSwitch("Thema oder Titel");
         tglThemeTitle.setMaxWidth(Double.MAX_VALUE);
-        tglThemeTitle.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().themeTitleVisProperty());
+        tglThemeTitle.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().themeTitleVisProperty());
         vBox.getChildren().add(tglThemeTitle);
 
         PToggleSwitch tglTitle = new PToggleSwitch("Titel");
         tglTitle.setMaxWidth(Double.MAX_VALUE);
-        tglTitle.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().titleVisProperty());
+        tglTitle.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().titleVisProperty());
         vBox.getChildren().add(tglTitle);
 
         PToggleSwitch tglSomewhere = new PToggleSwitch("Irgendwo");
         tglSomewhere.setMaxWidth(Double.MAX_VALUE);
-        tglSomewhere.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().somewhereVisProperty());
+        tglSomewhere.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().somewhereVisProperty());
         vBox.getChildren().add(tglSomewhere);
 
         PToggleSwitch tglUrl = new PToggleSwitch("Url");
         tglUrl.setMaxWidth(Double.MAX_VALUE);
-        tglUrl.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().urlVisProperty());
+        tglUrl.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().urlVisProperty());
         vBox.getChildren().add(tglUrl);
 
         PToggleSwitch tglTimeRange = new PToggleSwitch("Zeitraum [Tage]");
         tglTimeRange.setMaxWidth(Double.MAX_VALUE);
-        tglTimeRange.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().timeRangeVisProperty());
+        tglTimeRange.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().timeRangeVisProperty());
         vBox.getChildren().add(tglTimeRange);
 
         PToggleSwitch tglMinMax = new PToggleSwitch("Filmlänge Min/Max");
         tglMinMax.setMaxWidth(Double.MAX_VALUE);
-        tglMinMax.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
+        tglMinMax.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
         vBox.getChildren().add(tglMinMax);
 
         PToggleSwitch tglMinMaxTime = new PToggleSwitch("Sendezeit");
         tglMinMaxTime.setMaxWidth(Double.MAX_VALUE);
-        tglMinMaxTime.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
+        tglMinMaxTime.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
         vBox.getChildren().add(tglMinMaxTime);
 
         PToggleSwitch tglShowDate = new PToggleSwitch("Sendedatum");
         tglShowDate.setMaxWidth(Double.MAX_VALUE);
-        tglShowDate.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().showDateVisProperty());
+        tglShowDate.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().showDateVisProperty());
         vBox.getChildren().add(tglShowDate);
 
         PToggleSwitch tglOnly = new PToggleSwitch("\"anzeigen\"");
         tglOnly.setMaxWidth(Double.MAX_VALUE);
-        tglOnly.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().onlyVisProperty());
+        tglOnly.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().onlyVisProperty());
         vBox.getChildren().add(tglOnly);
 
         PToggleSwitch tglNot = new PToggleSwitch("\"ausschließen\"");
         tglNot.setMaxWidth(Double.MAX_VALUE);
-        tglNot.selectedProperty().bindBidirectional(progData.actFilmFilterWorker.getActFilterSettings().notVisProperty());
+        tglNot.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().notVisProperty());
         vBox.getChildren().add(tglNot);
 
         //Wartezeit

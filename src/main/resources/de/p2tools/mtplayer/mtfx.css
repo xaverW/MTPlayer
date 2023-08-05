@@ -94,3 +94,22 @@
 .special-column-style .label {
   -fx-alignment: CENTER_LEFT;
 }
+
+.fast-search-on {
+    -fx-background-color: -style-extra-pane-color;
+    -fx-border-width: 1;
+    -fx-border-color: #939a9f;
+}
+.fast-search-off {
+    -fx-padding: 2;
+}
+
+/*Button im fastSearch im Tab Filme*/
+.selectButton{
+    -fx-border-width: 1;
+    -fx-padding: 1 5;
+}
+.selectButton:pressed{
+    -fx-border-width: 2;
+    -fx-padding: 0 4;
+}

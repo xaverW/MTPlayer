@@ -138,7 +138,7 @@ public class AboGuiController extends AnchorPane {
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             tableView.refresh();
         });
-        MTListener.addListener(new MTListener(MTListener.EVEMT_SETDATA_CHANGED, AboGuiController.class.getSimpleName()) {
+        MTListener.addListener(new MTListener(MTListener.EVENT_SET_DATA_CHANGED, AboGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 tableView.refresh();
