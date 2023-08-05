@@ -23,7 +23,6 @@ import javafx.collections.ListChangeListener;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
 public class FilmFilterControllerTextFilter extends VBox {
@@ -50,39 +49,38 @@ public class FilmFilterControllerTextFilter extends VBox {
         this.cboUrl = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().urlProperty());
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
-        initStringFilter();
+        initCboThemeExactFilter();
         addFilter();
     }
 
-    private void initStringFilter() {
-        //Theme
-        // todo??
+    private void initCboThemeExactFilter() {
+        // Theme: ein Extra für "EXACT"
+        progData.filmFilterWorker.getActFilterSettings().themeExactProperty().addListener((observable, oldValue, newValue) -> {
+            addCboThemeItem();
+        });
+        addCboThemeItem();
         cboTheme.editableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeExactProperty().not());
-        cboTheme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        cboTheme.setVisibleRowCount(25);
-        cboTheme.setItems(progData.worker.getThemeForChannelList());
         cboTheme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.filmFilterWorker.getActFilterSettings().themeExactProperty().getValue()) {
                 progData.filmFilterWorker.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
             }
         });
-        cboTheme.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            progData.filmFilterWorker.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
-        });
-        cboTheme.getEditor().setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
-            }
-        });
-        progData.filmFilterWorker.getActFilterSettings().themeProperty().addListener((observable, oldValue, newValue) -> {
-            cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
-        });
-        cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
         progData.worker.getThemeForChannelList().addListener((ListChangeListener<String>) c -> {
             progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
             cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
             progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
         });
+    }
+
+    private void addCboThemeItem() {
+        if (progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
+            // dann die channels eintragen
+            cboTheme.setItems(progData.worker.getThemeForChannelList());
+            cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
+        } else {
+            // dann freie Suche
+            cboTheme.getItems().clear();
+        }
     }
 
     private void addFilter() {

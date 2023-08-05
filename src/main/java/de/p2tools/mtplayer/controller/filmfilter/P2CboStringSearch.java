@@ -100,7 +100,7 @@ public class P2CboStringSearch extends ComboBox<String> {
         if (filterList.size() <= 1) {
             if (filterList.stream().noneMatch(string -> string.equals(filterStr))) {
                 // dann gibts schon mal keine doppelte
-                filterList.add(filterStr);
+                filterList.add(1, filterStr);
                 setItems(filterList);
             }
             stop = false;
@@ -108,15 +108,15 @@ public class P2CboStringSearch extends ComboBox<String> {
         }
 
         System.out.println("==Filter== " + ++filter);
-        if (filterStr.contains(filterList.get(filterList.size() - 1))) {
+        if (filterStr.contains(filterList.get(1))) {
             // aktueller Filter enthält den letzten Filter: also weiter getippt
-            filterList.remove(filterList.size() - 1);
-            filterList.add(filterStr);
+            filterList.remove(1);
+            filterList.add(1, filterStr);
         } else {
-            filterList.add(filterStr);
+            filterList.add(1, filterStr);
         }
         while (filterList.size() >= MAX_FILTER_HISTORY) {
-            filterList.remove(1); // den letzten entfernen
+            filterList.remove(filterList.size() - 1); // den letzten entfernen
         }
         setItems(filterList);
         stop = false;
