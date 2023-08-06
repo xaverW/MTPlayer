@@ -194,7 +194,7 @@ public class FilmGuiController extends AnchorPane {
             });
             row.hoverProperty().addListener((observable) -> {
                 final FilmDataMTP filmDataMTP = (FilmDataMTP) row.getItem();
-                if (row.isHover() && filmDataMTP != null) {
+                if (row.isHover() && filmDataMTP != null) { // null bei den leeren Zeilen unterhalb
                     setFilmInfos(filmDataMTP);
                 } else {
                     setFilmInfos(tableView.getSelectionModel().getSelectedItem());

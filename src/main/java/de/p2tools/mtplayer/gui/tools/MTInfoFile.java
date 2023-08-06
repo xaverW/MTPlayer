@@ -46,42 +46,39 @@ public class MTInfoFile {
         try (DataOutputStream dos = new DataOutputStream(Files.newOutputStream(path));
              OutputStreamWriter osw = new OutputStreamWriter(dos);
              BufferedWriter br = new BufferedWriter(osw)) {
-            if (download.getFilm() != null) {
-                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_CHANNEL] + ":        " + download.getFilm().arr[FilmDataXml.FILM_CHANNEL]);
-                br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_THEME] + ":         " + download.getFilm().arr[FilmDataXml.FILM_THEME]);
-                br.write(P2LibConst.LINE_SEPARATORx2);
-                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TITLE] + ":         " + download.getFilm().arr[FilmDataXml.FILM_TITLE]);
-                br.write(P2LibConst.LINE_SEPARATORx2);
-                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DATE] + ":         " + download.getFilm().arr[FilmDataXml.FILM_DATE]);
-                br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TIME] + ":          " + download.getFilm().arr[FilmDataXml.FILM_TIME]);
-                br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DURATION] + ":   " + download.getFilm().arr[FilmDataXml.FILM_DURATION]);
-                br.write(P2LibConst.LINE_SEPARATOR);
-                br.write(DownloadFieldNames.DOWNLOAD_SIZE + ":    " + download.getDownloadSize());
-                br.write(P2LibConst.LINE_SEPARATORx2);
+            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_CHANNEL] + ":        " + download.getChannel());
+            br.write(P2LibConst.LINE_SEPARATOR);
+            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_THEME] + ":         " + download.getTheme());
+            br.write(P2LibConst.LINE_SEPARATORx2);
+            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TITLE] + ":         " + download.getTitle());
+            br.write(P2LibConst.LINE_SEPARATORx2);
+            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DATE] + ":         " + download.getFilmDate().toString());
+            br.write(P2LibConst.LINE_SEPARATOR);
+            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TIME] + ":          " + download.getTime());
+            br.write(P2LibConst.LINE_SEPARATOR);
+            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DURATION] + ":   " + download.getDurationMinute());
+            br.write(P2LibConst.LINE_SEPARATOR);
+            br.write(DownloadFieldNames.DOWNLOAD_SIZE + ":    " + download.getDownloadSize());
+            br.write(P2LibConst.LINE_SEPARATORx2);
 
-                br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_WEBSITE] + P2LibConst.LINE_SEPARATOR);
-                br.write(download.getFilm().arr[FilmDataXml.FILM_WEBSITE]);
-                br.write(P2LibConst.LINE_SEPARATORx2);
-            }
+            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_WEBSITE] + P2LibConst.LINE_SEPARATOR);
+            br.write(download.getUrlWebsite());
+            br.write(P2LibConst.LINE_SEPARATORx2);
 
             br.write(DownloadFieldNames.DOWNLOAD_URL + P2LibConst.LINE_SEPARATOR);
             br.write(download.getUrl());
             br.write(P2LibConst.LINE_SEPARATORx2);
 
-            if (download.getFilm() != null) {
-                int anz = 0;
-                for (final String s : download.getFilm().getDescription().split(" ")) {
-                    anz += s.length();
-                    br.write(s + ' ');
-                    if (anz > 50) {
-                        br.write(P2LibConst.LINE_SEPARATOR);
-                        anz = 0;
-                    }
+            int anz = 0;
+            for (final String s : download.getDescription().split(" ")) {
+                anz += s.length();
+                br.write(s + ' ');
+                if (anz > 50) {
+                    br.write(P2LibConst.LINE_SEPARATOR);
+                    anz = 0;
                 }
             }
+
             br.write(P2LibConst.LINE_SEPARATORx2);
             br.flush();
             PLog.sysLog(new String[]{"Infofile", "  geschrieben"});

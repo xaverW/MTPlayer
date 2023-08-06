@@ -18,12 +18,16 @@ package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PHyperlink;
+import de.p2tools.p2lib.mtdownload.DownloadSizeData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -49,16 +53,21 @@ public class PaneFilmInfo extends VBox {
     private final Label lblAbo = new Label();
 
     private FilmDataMTP film = null;
+    private DownloadData downloadData = null;
+    private final ChangeListener<String> changeListener;
+    private final ChangeListener<DownloadSizeData> sizeChangeListener;
+
     private String oldDescription = "";
-    private final DoubleProperty dividerProp;
 
     public PaneFilmInfo(DoubleProperty dividerProp) {
-        this.dividerProp = dividerProp;
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(textArea, btnReset);
         StackPane.setAlignment(btnReset, Pos.BOTTOM_RIGHT);
         stackPane.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(stackPane, Priority.ALWAYS);
+
+        this.changeListener = (observable, oldValue, newValue) -> setFilmDescription();
+        this.sizeChangeListener = (u, o, n) -> setSize(true);
 
         btnReset.setOnAction(a -> resetFilmDescription());
         btnReset.setTooltip(new Tooltip("Beschreibung zurücksetzen"));
@@ -70,7 +79,6 @@ public class PaneFilmInfo extends VBox {
 
         textArea.setWrapText(true);
         textArea.setPrefRowCount(4);
-        textArea.textProperty().addListener((a, b, c) -> setFilmDescription());
 
         VBox v = new VBox();
         v.setSpacing(0);
@@ -109,11 +117,21 @@ public class PaneFilmInfo extends VBox {
         getChildren().add(splitPane);
     }
 
+//    int i = 0;
+
     public void setFilm(FilmDataMTP film) {
+//        System.out.println("=====> setFilm(FilmDataMTP film) " +
+//                ++i + "  " + (film != null ? film.getTitle() : "null"));
         hBoxUrl.getChildren().clear();
+        textArea.textProperty().removeListener(changeListener);
+        if (this.downloadData != null) {
+            this.downloadData.downloadSizeProperty().removeListener(sizeChangeListener);
+        }
+
+        this.film = film;
+        this.downloadData = null;
 
         if (film == null) {
-            this.film = null;
             lblTheme.setText("");
             lblTitle.setText("");
             textArea.clear();
@@ -128,39 +146,121 @@ public class PaneFilmInfo extends VBox {
             return;
         }
 
-        this.film = film;
-
         lblTheme.setText(film.arr[FilmDataXml.FILM_CHANNEL] + "  -  " + film.arr[FilmDataXml.FILM_THEME]);
         lblTitle.setText(film.arr[FilmDataXml.FILM_TITLE]);
+
         textArea.setText(film.getDescription());
         oldDescription = film.getDescription();
         btnReset.setVisible(false);
-
-        if (!film.arr[FilmDataXml.FILM_WEBSITE].isEmpty()) {
-            PHyperlink hyperlink = new PHyperlink(film.arr[FilmDataXml.FILM_WEBSITE],
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
-            hBoxUrl.getChildren().addAll(lblUrl, hyperlink);
-        }
+        textArea.textProperty().addListener(changeListener);
 
         lblDate.setText(film.getDate().get_dd_MM_yyyy());
         lblTime.setText(film.getTime());
         lblDuration.setText(film.getDuration() + " [min]");
         lblSize.setText(film.getFilmSize().toString() + " [MB]");
         lblAbo.setText(film.getAboName());
+
+        if (!film.arr[FilmDataXml.FILM_WEBSITE].isEmpty()) {
+            PHyperlink hyperlink = new PHyperlink(film.arr[FilmDataXml.FILM_WEBSITE],
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+            hBoxUrl.getChildren().addAll(lblUrl, hyperlink);
+        }
+    }
+
+    public void setFilm(DownloadData downloadData) {
+//        System.out.println("=====> setFilm(DownloadData downloadData)" +
+//                ++i + "  " + (downloadData != null ? downloadData.getTitle() : "null"));
+        hBoxUrl.getChildren().clear();
+        textArea.textProperty().removeListener(changeListener);
+        if (this.downloadData != null) {
+            this.downloadData.downloadSizeProperty().removeListener(sizeChangeListener);
+        }
+
+        this.film = null;
+        this.downloadData = downloadData;
+
+        if (downloadData == null) {
+            lblTheme.setText("");
+            lblTitle.setText("");
+            textArea.clear();
+            oldDescription = "";
+            btnReset.setVisible(false);
+
+            lblDate.setText("");
+            lblTime.setText("");
+            lblDuration.setText("");
+            lblSize.setText("");
+            lblAbo.setText("");
+            return;
+        }
+
+        lblTheme.setText(downloadData.getChannel() + "  -  " + downloadData.getTheme());
+        lblTitle.setText(downloadData.getTitle());
+        lblDate.setText(downloadData.getFilmDate().get_dd_MM_yyyy());
+        lblTime.setText(downloadData.getTime());
+        lblDuration.setText(downloadData.getDurationMinute() + " [min]");
+
+        setSize(false); // die kann bim Film abweichen: HD, small
+        downloadData.downloadSizeProperty().addListener(sizeChangeListener);
+        lblAbo.setText(downloadData.getAboName());
+
+        textArea.setText(downloadData.getDescription());
+        textArea.setEditable(downloadData.isNotStartedOrFinished());
+        oldDescription = downloadData.getDescription();
+        btnReset.setVisible(false);
+        textArea.textProperty().addListener(changeListener);
+
+        if (!downloadData.getUrlWebsite().isEmpty()) {
+            PHyperlink hyperlink = new PHyperlink(downloadData.getUrlWebsite(),
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+            hBoxUrl.getChildren().addAll(lblUrl, hyperlink);
+        }
+    }
+
+    private void setSize(boolean async) {
+        if (downloadData != null) {
+            final String size = downloadData.getDownloadSize().toString();
+
+            if (async) {
+                Platform.runLater(() -> {
+                    // die kann bim Film abweichen: HD, small
+                    // und wird beim Download asynchron gesetzt
+                    if (size.isEmpty()) {
+                        lblSize.setText("");
+                    } else {
+                        lblSize.setText(size + " [MB]");
+                    }
+                });
+
+            } else {
+                if (size.isEmpty()) {
+                    lblSize.setText("");
+                } else {
+                    lblSize.setText(size + " [MB]");
+                }
+            }
+        }
     }
 
     private void setFilmDescription() {
+        btnReset.setVisible(true);
         if (film != null) {
-            btnReset.setVisible(true);
             film.setDescription(textArea.getText());
+        }
+        if (downloadData != null) {
+            downloadData.setDescription(textArea.getText());
         }
     }
 
     private void resetFilmDescription() {
+        btnReset.setVisible(false);
         if (film != null) {
             film.setDescription(oldDescription);
             textArea.setText(film.getDescription());
-            btnReset.setVisible(false);
+        }
+        if (downloadData != null) {
+            downloadData.setDescription(oldDescription);
+            textArea.setText(downloadData.getDescription());
         }
     }
 }

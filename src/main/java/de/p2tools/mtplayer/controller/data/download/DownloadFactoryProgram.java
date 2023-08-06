@@ -448,10 +448,10 @@ public class DownloadFactoryProgram {
 
         if (downloadData != null) {
             //ist für Button z.B. "search in google"
-            execString = execString.replace("%w", downloadData.getFilm().getWebsite());
-            execString = execString.replace("%t", downloadData.getFilm().getTheme());
-            execString = execString.replace("%T", downloadData.getFilm().getTitle());
-            execString = execString.replace("%s", downloadData.getFilm().getChannel());
+            execString = execString.replace("%w", downloadData.getUrlWebsite());
+            execString = execString.replace("%t", downloadData.getTheme());
+            execString = execString.replace("%T", downloadData.getTitle());
+            execString = execString.replace("%s", downloadData.getChannel());
         } else {
             execString = execString.replace("%w", "");
             execString = execString.replace("%t", "");

@@ -43,6 +43,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
+    private final StringProperty description = new SimpleStringProperty("");
 
     private final IntegerProperty state = new SimpleIntegerProperty(DownloadConstants.STATE_INIT);
     private final IntegerProperty guiState = new SimpleIntegerProperty(DownloadConstants.STATE_INIT);
@@ -61,6 +62,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final BooleanProperty geoBlocked = new SimpleBooleanProperty(false);
 
     private final StringProperty filmUrl = new SimpleStringProperty(""); //in normaler Auflösung
+    private final StringProperty urlWebsite = new SimpleStringProperty("");
     private final StringProperty historyUrl = new SimpleStringProperty("");
     //    private final StringProperty url = new SimpleStringProperty(""); //in der gewählte Auflösung
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
@@ -83,10 +85,10 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
-    public final Property[] properties = {no, filmNr, aboName, channel, theme, title,
+    public final Property[] properties = {no, filmNr, aboName, channel, theme, title, description,
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, durationMinute,
-            hd, ut, geoBlocked, filmUrl, historyUrl, /*url,*/ urlSubtitle,
+            hd, ut, geoBlocked, filmUrl, urlWebsite, historyUrl, /*url,*/ urlSubtitle,
             setDataId, programName, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
@@ -115,6 +117,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_stringProp("channel", channel));
         list.add(new Config_stringProp("theme", theme));
         list.add(new Config_stringProp("title", title));
+        list.add(new Config_stringProp("description", description));
 //        list.add(new Config_intProp("state", state)); Downloads starten immer in "init" damit sie nicht automatisch starten
         list.add(new Config_doubleProp("progress", progress));
         list.add(new Config_intProp("remaining", remaining));
@@ -125,6 +128,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_boolProp("ut", ut));
         list.add(new Config_boolProp("geoBlocked", geoBlocked));
         list.add(new Config_stringProp("filmUrl", filmUrl));
+        list.add(new Config_stringProp("urlWebsite", urlWebsite));
         list.add(new Config_stringProp("historyUrl", historyUrl));
 
 //        list.add(new Config_stringProp("url", url));
@@ -275,6 +279,18 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.title.set(title);
     }
 
+    public String getDescription() {
+        return description.get();
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
     public int getState() {
         return state.get();
     }
@@ -407,6 +423,18 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
 
     public void setFilmUrl(String filmUrl) {
         this.filmUrl.set(filmUrl);
+    }
+
+    public String getUrlWebsite() {
+        return urlWebsite.get();
+    }
+
+    public StringProperty urlWebsiteProperty() {
+        return urlWebsite;
+    }
+
+    public void setUrlWebsite(String urlWebsite) {
+        this.urlWebsite.set(urlWebsite);
     }
 
     public String getHistoryUrl() {

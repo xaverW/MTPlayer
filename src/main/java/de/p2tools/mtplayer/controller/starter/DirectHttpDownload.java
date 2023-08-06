@@ -461,15 +461,15 @@ public class DirectHttpDownload extends Thread {
     }
 
     private void canAlreadyStarted(DownloadData downloadData) {
-        if (downloadData.getFilm() != null && downloadData.isStateStartedRun()) {
+        if (downloadData.isStateStartedRun()) {
 
-            if (downloadData.getFilm().getDurationMinute() > 0
+            if (downloadData.getDurationMinute() > 0
                     && downloadData.getStart().getTimeLeftSeconds() > 0
                     && downloadData.getDownloadSize().getActFileSize() > 0
                     && downloadData.getDownloadSize().getSize() > 0) {
 
                 // macht nur dann Sinn
-                final long filetimeAlreadyLoadedSeconds = downloadData.getFilm().getDurationMinute() * 60
+                final long filetimeAlreadyLoadedSeconds = downloadData.getDurationMinute() * 60
                         * downloadData.getDownloadSize().getActFileSize()
                         / downloadData.getDownloadSize().getSize();
 
