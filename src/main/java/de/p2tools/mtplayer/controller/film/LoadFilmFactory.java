@@ -120,7 +120,7 @@ public class LoadFilmFactory {
 
             @Override
             public void loaded(ListenerFilmlistLoadEvent event) {
-                // todo wird mehrmals aufgerufen ??
+                // wird nach dem Laden mehrfach aufgerufen
                 ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
                 ProgData.getInstance().maskerPane.setMaskerProgress(PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
                 ProgData.FILMLIST_IS_DOWNLOADING.setValue(false);

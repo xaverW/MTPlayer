@@ -64,7 +64,7 @@ public class ProgData {
     public static boolean startMinimized = false; //Minimiert starten
     public static boolean reset = false; //Programm auf Starteinstellungen zurücksetzen
     public static boolean firstProgramStart = false; //ist der allererste Programmstart: Init wird gemacht
-    public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen
+    public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
 
     public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
