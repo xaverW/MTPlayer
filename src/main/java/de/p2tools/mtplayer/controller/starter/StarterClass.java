@@ -56,7 +56,7 @@ public class StarterClass {
         starterThread = new StarterThread();
         starterThread.start();
 
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
                 searchFilms = true;

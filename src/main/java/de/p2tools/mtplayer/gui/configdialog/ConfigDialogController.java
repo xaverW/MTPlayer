@@ -122,7 +122,7 @@ public class ConfigDialogController extends PDialogExtra {
             public void finished(ListenerFilmlistLoadEvent event) {
             }
         };
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listener);
+        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(listener);
 
 
         VBox.setVgrow(tabPane, Priority.ALWAYS);
@@ -188,7 +188,7 @@ public class ConfigDialogController extends PDialogExtra {
         controllerSet.close();
 
         MTListener.notify(MTListener.EVENT_SET_DATA_CHANGED, ConfigDialogController.class.getSimpleName());
-        LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listener);
+        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.removeListenerLoadFilmlist(listener);
         dialogIsRunning.setValue(false);
         super.close();
     }

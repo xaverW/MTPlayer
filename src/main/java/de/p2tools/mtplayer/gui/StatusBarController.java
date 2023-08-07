@@ -160,7 +160,7 @@ public class StatusBarController extends AnchorPane {
         stackPane.getChildren().addAll(filmPane, downloadPane, aboPane);
         stackPane.setPadding(new Insets(0));
         filmPane.toFront();
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void start(ListenerFilmlistLoadEvent event) {
                 stopTimer = true;

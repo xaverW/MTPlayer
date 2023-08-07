@@ -27,7 +27,7 @@ import de.p2tools.p2lib.mtfilm.tools.SearchFilmlistUpdate;
 public class CheckForNewFilmlist extends SearchFilmlistUpdate {
 
     public CheckForNewFilmlist() {
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 //dann wird wieder gesucht

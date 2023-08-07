@@ -147,7 +147,7 @@ public class MTPlayerController extends StackPane {
                 btnFilmlist.getStyleClass().remove("buttonLoadFilmlistNewList");
             }
         });
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public void finished(ListenerFilmlistLoadEvent event) {
                 if (stackPaneCont.getChildren().isEmpty()) {

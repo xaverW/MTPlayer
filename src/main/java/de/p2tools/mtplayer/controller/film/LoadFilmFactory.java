@@ -99,7 +99,7 @@ public class LoadFilmFactory {
 
     private LoadFilmFactory(Filmlist<FilmDataMTP> filmlistNew, Filmlist<FilmDataMTP> filmlistDiff) {
         loadFilmlist = new LoadFilmlist(filmlistNew, filmlistDiff);
-        loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
                 ProgData.FILMLIST_IS_DOWNLOADING.setValue(true);

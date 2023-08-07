@@ -48,7 +48,7 @@ public class BlackPaneButton {
     }
 
     void close() {
-        LoadFilmFactory.getInstance().loadFilmlist.removeListenerLoadFilmlist(listenerLoadFilmlist);
+        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.removeListenerLoadFilmlist(listenerLoadFilmlist);
     }
 
     void addButton(Stage stage, VBox vBox, TableView<BlackData> tableView,
@@ -126,7 +126,7 @@ public class BlackPaneButton {
                 btnCountHits.setDisable(false);
             }
         };
-        LoadFilmFactory.getInstance().loadFilmlist.addListenerLoadFilmlist(listenerLoadFilmlist);
+        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(listenerLoadFilmlist);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, btnClear);

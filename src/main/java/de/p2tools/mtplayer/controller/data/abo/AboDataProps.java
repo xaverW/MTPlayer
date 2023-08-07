@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
-import de.p2tools.p2lib.mtfilm.tools.Data;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.date.DateFactory;
 import de.p2tools.p2lib.tools.date.PDate;
@@ -381,6 +380,6 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     }
 
     public int compareTo(AboDataProps arg0) {
-        return Data.sorter.compare(getName(), arg0.getName());
+        return getName().compareTo(arg0.getName());
     }
 }
