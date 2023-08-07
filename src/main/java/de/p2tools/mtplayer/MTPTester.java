@@ -25,6 +25,7 @@ import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
+import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
@@ -103,6 +104,11 @@ public class MTPTester {
             btnCloseDialog.setOnAction(a -> PDialogExtra.closeAllDialog());
             gridPane.add(new Label(), 0, ++row);
             gridPane.add(btnCloseDialog, 0, ++row);
+
+            gridPane.add(new Label(), 0, ++row);
+            PToggleSwitch tglDownloading = new PToggleSwitch("ProgData.FILMLIST_IS_DOWNLOADING");
+            tglDownloading.selectedProperty().bindBidirectional(ProgData.FILMLIST_IS_DOWNLOADING);
+            gridPane.add(tglDownloading, 0, ++row);
         }
     }
 

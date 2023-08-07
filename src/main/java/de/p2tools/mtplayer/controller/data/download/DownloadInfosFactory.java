@@ -20,8 +20,8 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.tools.file.PFileSize;
 
 import java.text.NumberFormat;

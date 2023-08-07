@@ -17,12 +17,13 @@
 package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -196,6 +197,7 @@ public class PaneDownload {
         setTextBandwidth();
 
         sliderBandwidth.valueProperty().addListener((obs, oldValue, newValue) -> {
+            ProgData.FILMLIST_IS_DOWNLOADING.setValue(false); // vorsichtshalber
             setTextBandwidth();
         });
     }

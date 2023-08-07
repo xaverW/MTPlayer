@@ -258,20 +258,19 @@ public class DownloadInfos {
             byteLoadingDownloads = byteLoadingDownloadsAlreadyLoaded;
         }
 
-        final long resBandwidth = bandwidth > 0 ? bandwidth : ProgConfig.DOWNLOAD_BANDWIDTH_KBYTE.getValue();
-        if (resBandwidth > 0) {
+        if (bandwidth > 0) {
             // wartende Downloads
             if (byteWaitingDownloads <= 0) {
                 timeLeftWaitingDownloads = 0;
             } else {
-                timeLeftWaitingDownloads = byteWaitingDownloads / resBandwidth;
+                timeLeftWaitingDownloads = byteWaitingDownloads / bandwidth;
             }
 
             // nicht gestartete Downloads
             if (byteNotStartedDownloads <= 0) {
                 timeLeftNotStartedDownloads = 0;
             } else {
-                timeLeftNotStartedDownloads = byteNotStartedDownloads / resBandwidth;
+                timeLeftNotStartedDownloads = byteNotStartedDownloads / bandwidth;
             }
         }
 

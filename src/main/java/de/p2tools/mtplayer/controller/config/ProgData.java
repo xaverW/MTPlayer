@@ -26,8 +26,8 @@ import de.p2tools.mtplayer.controller.data.download.ReplaceList;
 import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
@@ -64,6 +64,8 @@ public class ProgData {
     public static boolean startMinimized = false; //Minimiert starten
     public static boolean reset = false; //Programm auf Starteinstellungen zurücksetzen
     public static boolean firstProgramStart = false; //ist der allererste Programmstart: Init wird gemacht
+    public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen
+
     public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty ABO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);

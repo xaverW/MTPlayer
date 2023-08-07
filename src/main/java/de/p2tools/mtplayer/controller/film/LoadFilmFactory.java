@@ -65,8 +65,6 @@ public class LoadFilmFactory {
 
         LoadFactoryConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
         LoadFactoryConst.SYSTEM_LOAD_NOT_SENDER = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue();
-        LoadFactoryConst.DOWNLOAD_MAX_BANDWIDTH_KBYTE = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE;
-        LoadFactoryConst.downloadMaxBandwidth = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue();
 
         LoadFactoryConst.dateStoredFilmlist = ProgConfig.SYSTEM_FILMLIST_DATE.getValue();
         LoadFactoryConst.firstProgramStart = ProgData.firstProgramStart;
@@ -104,6 +102,7 @@ public class LoadFilmFactory {
         loadFilmlist.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
             @Override
             public synchronized void start(ListenerFilmlistLoadEvent event) {
+                ProgData.FILMLIST_IS_DOWNLOADING.setValue(true);
                 ProgData.getInstance().worker.workOnFilmListLoadStart();
                 if (event.progress == PROGRESS_INDETERMINATE) {
                     // ist dann die gespeicherte Filmliste
@@ -121,8 +120,10 @@ public class LoadFilmFactory {
 
             @Override
             public void loaded(ListenerFilmlistLoadEvent event) {
+                // todo wird mehrmals aufgerufen ??
                 ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
                 ProgData.getInstance().maskerPane.setMaskerProgress(PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
+                ProgData.FILMLIST_IS_DOWNLOADING.setValue(false);
             }
 
             @Override

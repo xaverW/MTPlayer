@@ -21,8 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
-import de.p2tools.mtplayer.controller.tools.MLInputStream;
 import de.p2tools.mtplayer.gui.dialog.DownloadContinueDialogController;
 import de.p2tools.mtplayer.gui.dialog.DownloadErrorDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
@@ -30,6 +28,8 @@ import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
+import de.p2tools.p2lib.mtdownload.MLInputStream;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -271,7 +271,10 @@ public class DirectHttpDownload extends Thread {
         }
 
         download.getStart().setInputStream(new MLInputStream(conn.getInputStream(),
-                bandwidthCalculationTimer, ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE));
+                bandwidthCalculationTimer,
+                ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE,
+                ProgData.FILMLIST_IS_DOWNLOADING));
+
         fos = new FileOutputStream(file, (downloaded != 0));
         download.getDownloadSize().setActFileSize(downloaded);
         final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];

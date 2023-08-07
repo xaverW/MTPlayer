@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.gui.filter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
-import de.p2tools.mtplayer.controller.tools.MLBandwidthTokenBucket;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
+import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -233,6 +233,7 @@ public class DownloadFilterController extends FilterController {
         setTextBandwidth();
 
         sliderBandwidth.valueProperty().addListener((obs, oldValue, newValue) -> {
+            ProgData.FILMLIST_IS_DOWNLOADING.setValue(false); // vorsichtshalber
             setTextBandwidth();
         });
     }
