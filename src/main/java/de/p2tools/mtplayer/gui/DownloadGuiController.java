@@ -327,11 +327,16 @@ public class DownloadGuiController extends AnchorPane {
                 final DownloadData downloadData = (DownloadData) row.getItem();
                 if (row.isHover() && downloadData != null) { // null bei den leeren Zeilen unterhalb
                     setFilmInfos(downloadData);
-                } else {
+                } else if (downloadData == null) {
                     setFilmInfos(tableView.getSelectionModel().getSelectedItem());
                 }
             });
             return row;
+        });
+        tableView.hoverProperty().addListener((o) -> {
+            if (!tableView.isHover()) {
+                setFilmInfos(tableView.getSelectionModel().getSelectedItem());
+            }
         });
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 //wird auch durch FilmlistenUpdate ausgelöst

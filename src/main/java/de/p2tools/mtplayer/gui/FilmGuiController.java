@@ -180,6 +180,8 @@ public class FilmGuiController extends AnchorPane {
         });
     }
 
+    int i = 0;
+
     private void initTable() {
         Table.setTable(tableView);
         tableView.setItems(sortedList);
@@ -196,15 +198,22 @@ public class FilmGuiController extends AnchorPane {
                 final FilmDataMTP filmDataMTP = (FilmDataMTP) row.getItem();
                 if (row.isHover() && filmDataMTP != null) { // null bei den leeren Zeilen unterhalb
                     setFilmInfos(filmDataMTP);
-                } else {
+                } else if (filmDataMTP == null) {
                     setFilmInfos(tableView.getSelectionModel().getSelectedItem());
                 }
             });
             return row;
         });
+        tableView.hoverProperty().addListener((o) -> {
+            if (!tableView.isHover()) {
+                setFilmInfos(tableView.getSelectionModel().getSelectedItem());
+            }
+        });
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 //wird auch durch FilmlistenUpdate ausgelöst
-                Platform.runLater(() -> setFilmInfos(tableView.getSelectionModel().getSelectedItem())));
+                Platform.runLater(() -> {
+                    setFilmInfos(tableView.getSelectionModel().getSelectedItem());
+                }));
 
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
