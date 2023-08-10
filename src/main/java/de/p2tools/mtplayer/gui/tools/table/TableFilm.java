@@ -70,9 +70,9 @@ public class TableFilm extends PTable<FilmDataMTP> {
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        final TableColumn<FilmDataMTP, String> senderColumn = new TableColumn<>("Sender");
-        senderColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        senderColumn.getStyleClass().add("alignCenter");
+        final TableColumn<FilmDataMTP, String> channelColumn = new TableColumn<>("Sender");
+        channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
+        channelColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -86,9 +86,9 @@ public class TableFilm extends PTable<FilmDataMTP> {
         startColumn.setCellFactory(new CellFilmButton().cellFactory);
         startColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<FilmDataMTP, PDate> datumColumn = new TableColumn<>("Datum");
-        datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        datumColumn.getStyleClass().add("alignCenter");
+        final TableColumn<FilmDataMTP, PDate> dateColumn = new TableColumn<>("Datum");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, String> timeColumn = new TableColumn<>("Zeit");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -131,15 +131,15 @@ public class TableFilm extends PTable<FilmDataMTP> {
         bookmarkColumn.getStyleClass().add("alignCenterLeft");
 
         nrColumn.setPrefWidth(50);
-        senderColumn.setPrefWidth(80);
+        channelColumn.setPrefWidth(80);
         themeColumn.setPrefWidth(180);
         titleColumn.setPrefWidth(230);
 
         getColumns().addAll(
                 nrColumn,
-                senderColumn, themeColumn, titleColumn,
+                channelColumn, themeColumn, titleColumn,
                 startColumn,
-                datumColumn, timeColumn, durationColumn, sizeColumn,
+                dateColumn, timeColumn, durationColumn, sizeColumn,
                 hdColumn, utColumn,
                 geoColumn,
                 urlColumn, aboColumn, bookmarkColumn);

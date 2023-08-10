@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.gui.infoPane;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningMediaFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.history.HistoryData;
-import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
@@ -106,9 +106,9 @@ public class PaneMedia extends VBox {
         }
 
         if (media) {
-            txtSearchMedia.setText(MediaCleaningFactory.cleanSearchText(searchTheme, searchTitle, media));
+            txtSearchMedia.setText(CleaningMediaFactory.cleanSearchText(searchTheme, searchTitle, media));
         } else {
-            txtSearchAbo.setText(MediaCleaningFactory.cleanSearchText(searchTheme, searchTitle, media));
+            txtSearchAbo.setText(CleaningMediaFactory.cleanSearchText(searchTheme, searchTitle, media));
         }
     }
 

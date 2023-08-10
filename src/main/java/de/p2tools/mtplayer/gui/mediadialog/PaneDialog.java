@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningMediaFactory;
 import de.p2tools.mtplayer.controller.history.HistoryData;
-import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.gui.infoPane.MediaSearchFactory;
 import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
@@ -271,6 +271,6 @@ public class PaneDialog extends ScrollPane {
     }
 
     private void setSearchString() {
-        txtSearch.setText(MediaCleaningFactory.cleanSearchText(searchThemeOrg, searchTitelOrg, media));
+        txtSearch.setText(CleaningMediaFactory.cleanSearchText(searchThemeOrg, searchTitelOrg, media));
     }
 }

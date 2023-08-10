@@ -14,40 +14,45 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.mediacleaning;
+package de.p2tools.mtplayer.gui.dialog.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
-import de.p2tools.mtplayer.controller.data.mediacleaningdata.MediaCleaningData;
-import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
+import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningData;
+import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class PaneCleaningListController {
+public class PaneCleaningList {
 
-    TableView<MediaCleaningData> tableView = new TableView<>();
+    TableView<CleaningData> tableView = new TableView<>();
     private final ProgData progData;
     private final Stage stage;
-    private MediaCleaningData mediaCleaningData;
-    private TextField txtClean = new TextField();
+    private CleaningData cleaningData;
+    private final TextField txtClean = new TextField();
+    private final CheckBox chkExact = new CheckBox();
+    public final CleaningDataList cleaningDataList;
 
-
-    public PaneCleaningListController(Stage stage) {
+    public PaneCleaningList(Stage stage, boolean propose) {
         this.stage = stage;
         progData = ProgData.getInstance();
+
+        if (propose) {
+            cleaningDataList = progData.cleaningDataListPropose;
+        } else {
+            cleaningDataList = progData.cleaningDataListMedia;
+        }
     }
 
     public void close() {
@@ -77,20 +82,26 @@ public class PaneCleaningListController {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        final TableColumn<MediaCleaningData, String> removeColumn = new TableColumn<>("Entfernen");
-        removeColumn.setCellValueFactory(new PropertyValueFactory<>("cleaningData"));
-        removeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.45));
+        final TableColumn<CleaningData, String> removeColumn = new TableColumn<>("Entfernen");
+        removeColumn.setCellValueFactory(new PropertyValueFactory<>("cleaningString"));
+        removeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.25));
 
-        final TableColumn<MediaCleaningData, String> utfCodeColumn = new TableColumn<>("UTF-8 Code");
+        final TableColumn<CleaningData, Boolean> exactColumn = new TableColumn<>("Immer");
+        exactColumn.setCellValueFactory(new PropertyValueFactory<>("always"));
+        exactColumn.setCellFactory(new CellCheckBox().cellFactory);
+        exactColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
+
+        final TableColumn<CleaningData, String> utfCodeColumn = new TableColumn<>("UTF-8 Code");
         utfCodeColumn.setCellValueFactory(new PropertyValueFactory<>("codePoint"));
-        utfCodeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.45));
+        utfCodeColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.40));
 
-        tableView.getColumns().addAll(removeColumn, utfCodeColumn);
-        SortedList<MediaCleaningData> sortedList = progData.mediaCleaningList.getSortedList();
-        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-        tableView.setItems(sortedList);
+        tableView.getColumns().addAll(removeColumn, exactColumn, utfCodeColumn);
         tableView.setMaxHeight(Double.MAX_VALUE);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setActData());
+
+        SortedList<CleaningData> sortedList = cleaningDataList.getSortedList();
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedList);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);
         vBox.getChildren().addAll(tableView);
@@ -100,11 +111,11 @@ public class PaneCleaningListController {
         Button btnDel = new Button("");
         btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
-            final ObservableList<MediaCleaningData> selected = tableView.getSelectionModel().getSelectedItems();
+            final ObservableList<CleaningData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
-                progData.mediaCleaningList.removeAll(selected);
+                cleaningDataList.removeAll(selected);
                 tableView.getSelectionModel().clearSelection();
             }
         });
@@ -112,8 +123,8 @@ public class PaneCleaningListController {
         Button btnNew = new Button("");
         btnNew.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
-            MediaCleaningData blackData = new MediaCleaningData();
-            progData.mediaCleaningList.add(blackData);
+            CleaningData blackData = new CleaningData();
+            cleaningDataList.add(blackData);
             tableView.getSelectionModel().clearSelection();
             tableView.getSelectionModel().select(blackData);
             tableView.scrollTo(blackData);
@@ -122,19 +133,19 @@ public class PaneCleaningListController {
         Button btnClear = new Button("_Alle löschen");
         btnClear.setTooltip(new Tooltip("Alle Einträge in der Liste werden gelöscht"));
         btnClear.setOnAction(event -> {
-            if (progData.mediaCleaningList.size() > 0) {
+            if (cleaningDataList.size() > 0) {
                 if (!PAlert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
                         "Die Tabelle wird komplett gelöscht und alle Einträge gehen verloren.")) {
                     return;
                 }
             }
-            progData.mediaCleaningList.clear();
+            cleaningDataList.clear();
         });
 
         Button btnAddStandards = new Button("_Standards einfügen");
         btnAddStandards.setTooltip(new Tooltip("Die Standardeinträge der Liste anfügen"));
         btnAddStandards.setOnAction(event -> {
-            MediaCleaningFactory.initMediaCleaningList(progData.mediaCleaningList);
+            cleaningDataList.initList();
         });
 
         HBox hBox1 = new HBox(P2LibConst.DIST_EDGE);
@@ -144,27 +155,41 @@ public class PaneCleaningListController {
     }
 
     private void addTextField(VBox vBox) {
-        HBox hBox = new HBox(P2LibConst.DIST_EDGE);
-        hBox.setAlignment(Pos.CENTER);
-        HBox.setHgrow(txtClean, Priority.ALWAYS);
-        hBox.getChildren().addAll(new Label("Entfernen:"), txtClean);
-        vBox.getChildren().add(hBox);
+        // Gridpane
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setPadding(new Insets(0));
+        int row = 0;
+        gridPane.add(new Label("Entfernen:"), 0, row);
+        gridPane.add(txtClean, 1, row);
+
+        gridPane.add(new Label("Immer:"), 0, ++row);
+        gridPane.add(chkExact, 1, row);
+
+        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
+                PColumnConstraints.getCcComputedSizeAndHgrow());
+
+        vBox.getChildren().add(gridPane);
     }
 
     private void setActData() {
-        MediaCleaningData blackDataAct = tableView.getSelectionModel().getSelectedItem();
-        if (blackDataAct == mediaCleaningData) {
+        CleaningData blackDataAct = tableView.getSelectionModel().getSelectedItem();
+        if (blackDataAct == cleaningData) {
             return;
         }
 
-        if (mediaCleaningData != null) {
-            txtClean.textProperty().unbindBidirectional(mediaCleaningData.cleaningDataProperty());
+        if (cleaningData != null) {
+            txtClean.textProperty().unbindBidirectional(cleaningData.cleaningStringProperty());
             txtClean.clear();
+            chkExact.selectedProperty().unbindBidirectional(cleaningData.alwaysProperty());
+            chkExact.setSelected(false);
         }
 
-        mediaCleaningData = blackDataAct;
-        if (mediaCleaningData != null) {
-            txtClean.textProperty().bindBidirectional(mediaCleaningData.cleaningDataProperty());
+        cleaningData = blackDataAct;
+        if (cleaningData != null) {
+            txtClean.textProperty().bindBidirectional(cleaningData.cleaningStringProperty());
+            chkExact.selectedProperty().bindBidirectional(cleaningData.alwaysProperty());
         }
     }
 }

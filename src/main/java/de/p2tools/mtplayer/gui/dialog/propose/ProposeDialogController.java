@@ -14,91 +14,93 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.mediacleaning;
+package de.p2tools.mtplayer.gui.dialog.propose;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.dialog.propose.PaneCleaningList;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.tools.log.PLog;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-
-public class MediaCleaningDialogController extends PDialogExtra {
+public class ProposeDialogController extends PDialogExtra {
 
     private final TabPane tabPane = new TabPane();
-    private final Button btnOk = new Button("_Ok");
-    private final boolean media;
+    private final Label lblHeader = new Label("Filme vorschlagen");
     private final ProgData progData;
 
-    private PaneCleaningConfigController paneCleaningConfigControllerMedia;
-    private PaneCleaningConfigController paneCleaningConfigControllerAbo;
+    private PaneProposeList paneProposeList;
     private PaneCleaningList paneCleaningList;
+    private PanePropFilmList panePropFilmList;
 
-    public MediaCleaningDialogController(boolean media) {
-        super(ProgData.getInstance().primaryStage, ProgConfig.GUI_MEDIA_CONFIG_DIALOG_SIZE, "Einstellungen",
-                true, false, DECO.NO_BORDER);
+    public ProposeDialogController(ProgData progData, StringProperty conf) {
+        super(progData.primaryStage, conf, "Download weiterführen",
+                true, false, DECO.BORDER_SMALL);
+        this.progData = progData;
 
-        this.progData = ProgData.getInstance();
-        this.media = media;
         init(true);
     }
 
     @Override
     public void make() {
-        VBox.setVgrow(tabPane, Priority.ALWAYS);
-        final Button btnHelp = PButton.helpButton(getStage(), "Medien", HelpText.MEDIA_CLEANING_CONFIG_DIALOG);
-        btnOk.setOnAction(a -> close());
+        getHBoxTitle().getChildren().add(lblHeader);
 
+        final Button btnOk = new Button("_Ok");
+        final Button btnHelp = PButton.helpButton(getStage(), "Medien", HelpText.MEDIA_CLEANING_CONFIG_DIALOG);
+        btnOk.setOnAction(a -> quit());
         addOkButton(btnOk);
         addHlpButton(btnHelp);
 
         getVBoxCont().setPadding(new Insets(0));
         getVBoxCont().getChildren().add(tabPane);
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
         initPanel();
     }
 
     @Override
     public void close() {
-        paneCleaningConfigControllerMedia.close();
-        paneCleaningConfigControllerAbo.close();
+        paneProposeList.close();
         paneCleaningList.close();
+        panePropFilmList.close();
         super.close();
     }
 
     private void initPanel() {
         try {
-            Tab tabConfig;
+            Tab tabFilmlist;
+            Tab tabProposeList;
             Tab tabCleaningList;
 
-            paneCleaningConfigControllerMedia = new PaneCleaningConfigController(getStage(), true);
-            tabConfig = new Tab("Einstellungen Mediensammlung");
-            tabConfig.setClosable(false);
-            tabConfig.setContent(paneCleaningConfigControllerMedia.makePane());
-            tabPane.getTabs().add(tabConfig);
+            this.panePropFilmList = new PanePropFilmList(progData, getStage());
+            tabFilmlist = new Tab("Filme");
+            tabFilmlist.setClosable(false);
+            tabFilmlist.setContent(panePropFilmList.makePane());
+            tabPane.getTabs().add(tabFilmlist);
 
-            paneCleaningConfigControllerAbo = new PaneCleaningConfigController(getStage(), false);
-            tabConfig = new Tab("Einstellungen Abos und History");
-            tabConfig.setClosable(false);
-            tabConfig.setContent(paneCleaningConfigControllerAbo.makePane());
-            tabPane.getTabs().add(tabConfig);
+            this.paneProposeList = new PaneProposeList(progData, getStage());
+            tabProposeList = new Tab("Vorschläge");
+            tabProposeList.setClosable(false);
+            tabProposeList.setContent(paneProposeList.makePane());
+            tabPane.getTabs().add(tabProposeList);
 
-            paneCleaningList = new PaneCleaningList(getStage(), false);
+            this.paneCleaningList = new PaneCleaningList(getStage(), true);
             tabCleaningList = new Tab("Cleaning Liste");
             tabCleaningList.setClosable(false);
             tabCleaningList.setContent(paneCleaningList.makePane());
             tabPane.getTabs().add(tabCleaningList);
-
-            tabPane.getSelectionModel().select(media ? 0 : 1);
         } catch (final Exception ex) {
-            PLog.errorLog(962104652, ex);
+            PLog.errorLog(894210365, ex);
         }
+    }
+
+    private void quit() {
+        close();
     }
 }

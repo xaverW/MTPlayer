@@ -14,41 +14,41 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.data.mediacleaningdata;
+package de.p2tools.mtplayer.controller.data.cleaningdata;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.mediadb.MediaCleaningFactory;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
+public class CleaningDataList extends SimpleListProperty<CleaningData> implements PDataList<CleaningData> {
 
-@SuppressWarnings("serial")
-public class MediaCleaningList extends SimpleListProperty<MediaCleaningData> implements PDataList<MediaCleaningData> {
+    public String TAG;
 
-    public String TAG = "MediaCleaningList";
-    private final ProgData progData;
+    private final boolean propose;
+    private FilteredList<CleaningData> filteredList = null;
+    private SortedList<CleaningData> sortedList = null;
 
-    private FilteredList<MediaCleaningData> filteredList = null;
-    private SortedList<MediaCleaningData> sortedList = null;
-
-    public MediaCleaningList(ProgData progData) {
+    public CleaningDataList(boolean propose) {
         super(FXCollections.observableArrayList());
-        this.progData = progData;
+        this.TAG = propose ? "CleaningDataListPropose" : "CleaningDataListMedia";
+        this.propose = propose;
     }
 
     public void initList() {
         if (isEmpty()) {
-            MediaCleaningFactory.initMediaCleaningList(this);
+            for (String s : CleaningFactory.REPLACE_LIST) {
+                add(new CleaningData(s, true));
+            }
+            for (String s : CleaningFactory.CLEAN_LIST) {
+                add(new CleaningData(s, false));
+            }
         }
+        this.forEach(cl -> cl.setCleaningString(cl.getCleaningString().trim()));
     }
 
-    public SortedList<MediaCleaningData> getSortedList() {
+    public SortedList<CleaningData> getSortedList() {
         if (sortedList == null || filteredList == null) {
             filteredList = new FilteredList<>(this, p -> true);
             sortedList = new SortedList<>(filteredList);
@@ -56,22 +56,12 @@ public class MediaCleaningList extends SimpleListProperty<MediaCleaningData> imp
         return sortedList;
     }
 
-    public FilteredList<MediaCleaningData> getFilteredList() {
+    public FilteredList<CleaningData> getFilteredList() {
         if (sortedList == null || filteredList == null) {
-            filteredList = new FilteredList<MediaCleaningData>(this, p -> true);
+            filteredList = new FilteredList<CleaningData>(this, p -> true);
             sortedList = new SortedList<>(filteredList);
         }
         return filteredList;
-    }
-
-    public synchronized void filteredListSetPred(Predicate<MediaCleaningData> predicate) {
-        getFilteredList().setPredicate(predicate);
-    }
-
-    public String[] getSearchArr() {
-        List<String> arr = new ArrayList<>();
-        this.stream().forEach(e -> arr.add(e.getCleaningData()));
-        return arr.toArray(new String[0]);
     }
 
     @Override
@@ -81,23 +71,23 @@ public class MediaCleaningList extends SimpleListProperty<MediaCleaningData> imp
 
     @Override
     public String getComment() {
-        return "Liste aller MediaCleaningData";
+        return propose ? "Liste aller ProposeReplaceData" : "Liste aller ProposeCleaningData";
     }
 
     @Override
-    public MediaCleaningData getNewItem() {
-        return new MediaCleaningData();
+    public CleaningData getNewItem() {
+        return new CleaningData();
     }
 
     @Override
     public void addNewItem(Object obj) {
-        if (obj.getClass().equals(MediaCleaningData.class)) {
-            add((MediaCleaningData) obj);
+        if (obj.getClass().equals(CleaningData.class)) {
+            add((CleaningData) obj);
         }
     }
 
     @Override
-    public synchronized boolean add(MediaCleaningData b) {
+    public synchronized boolean add(CleaningData b) {
         return super.add(b);
     }
 }

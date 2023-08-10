@@ -55,7 +55,8 @@ public class ProgStartBeforeGui {
             PDuration.onlyPing("Erster Start: PSet geladen");
             FilmFilterSamples.addStandardFilter();
             PDuration.onlyPing("Erster Start: CleaningList init");
-            ProgData.getInstance().mediaCleaningList.initList();
+            ProgData.getInstance().cleaningDataListMedia.initList();
+            ProgData.getInstance().cleaningDataListPropose.initList();
         }
 
         PLog.sysLog("History-Listen laden");
@@ -125,14 +126,16 @@ public class ProgStartBeforeGui {
         progData.aboList.clear();
         progData.downloadList.clear();
         progData.blackList.clear();
-        progData.mediaCleaningList.clear();
+        progData.cleaningDataListMedia.clear();
+        progData.cleaningDataListPropose.clear();
     }
 
     private static void initAfterLoad() {
         ProgData.getInstance().downloadList.initDownloads();
         ProgData.getInstance().aboList.initAboList();
         ProgData.getInstance().aboList.sort();
-        ProgData.getInstance().mediaCleaningList.initList();
+        ProgData.getInstance().cleaningDataListMedia.initList();
+        ProgData.getInstance().cleaningDataListPropose.initList();
 
         //Filter einrichten
         if (ProgData.getInstance().filmFilterWorker.getStoredFilterList().isEmpty()) {

@@ -93,6 +93,7 @@ public class ProgIconsMTPlayer {
     public static P2IconMTViewer ICON_TOOLBAR_FILM_BOOKMARK_FILTER = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-bookmark-filter.png", 32, 32);
     public static P2IconMTViewer ICON_TOOLBAR_FILM_DEL_BOOKMARK = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-del-bookmark.png", 32, 32);
     public static P2IconMTViewer ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-del-all-bookmark.png", 32, 32);
+    public static P2IconMTViewer ICON_TOOLBAR_PROPOSE = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-propose.png", 32, 32);
 
     public static P2IconMTViewer ICON_TOOLBAR_ABO_NEW = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-new.png", 32, 32);
     public static P2IconMTViewer ICON_TOOLBAR_ABO_ON = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-on.png", 32, 32);

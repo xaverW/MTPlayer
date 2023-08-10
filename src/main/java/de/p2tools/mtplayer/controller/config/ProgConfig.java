@@ -212,6 +212,9 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty ADD_BLACK_DIALOG_SIZE = addStrProp("add-black-dialog-size", "600:400");
     public static DoubleProperty FILM_GUI_INFO_DIVIDER = addDoubleProp("film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
+    // Propose
+    public static StringProperty PROPOSE_DIALOG_CONTROLLER_SIZE = addStrProp("propose-dialog-controller-size");
+
     // Gui Film -> fast search
     public static BooleanProperty FAST_SEARCH_ON = addBoolProp("fast-search-on", Boolean.FALSE);
     public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
@@ -479,7 +482,9 @@ public class ProgConfig extends PDataProgConfig {
         configFile.addConfigs(progData.aboList);
         configFile.addConfigs(progData.filmListFilter);
         configFile.addConfigs(progData.blackList);
-        configFile.addConfigs(progData.mediaCleaningList);
+        configFile.addConfigs(progData.cleaningDataListMedia);
+        configFile.addConfigs(progData.cleaningDataListPropose);
+        configFile.addConfigs(progData.proposeList);
         configFile.addConfigs(progData.replaceList);
         configFile.addConfigs(progData.downloadList);
         configFile.addConfigs(progData.mediaCollectionDataList);

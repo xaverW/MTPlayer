@@ -130,9 +130,10 @@ public class ProgConst {
     public static final String PHOENIX = "PHOENIX";
     public static final String RBB = "RBB";
     public static final String RBB_TV = "rbtv";
+    public static final String RADIO_BREMEN = "Radio Bremen TV";
+
     public static final String SR = "SR";
     public static final String SRF = "SRF";
-    public static final String SRF_PODCAST = "SRF.Podcast";
     public static final String SWR = "SWR";
     public static final String WDR = "WDR";
     public static final String ZDF = "ZDF";
@@ -140,6 +141,6 @@ public class ProgConst {
 
     public static final String[] SENDER = {DREISAT, ARD,
             ARTE_DE, ARTE_EN, ARTE_ES, ARTE_FR, ARTE_IT, ARTE_PL,
-            BR, DW, HR, KIKA, MDR, NDR, ORF, PHOENIX, RBB, RBB_TV, SR,
-            SRF, SRF_PODCAST, SWR, WDR, ZDF, ZDF_TIVI};
+            BR, DW, HR, KIKA, MDR, NDR, ORF, PHOENIX, RBB, RBB_TV, RADIO_BREMEN, SR,
+            SRF, SWR, WDR, ZDF, ZDF_TIVI};
 }

@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
+import de.p2tools.mtplayer.gui.dialog.propose.ProposeDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
@@ -109,6 +110,13 @@ public class MTPTester {
             PToggleSwitch tglDownloading = new PToggleSwitch("ProgData.FILMLIST_IS_DOWNLOADING");
             tglDownloading.selectedProperty().bindBidirectional(ProgData.FILMLIST_IS_DOWNLOADING);
             gridPane.add(tglDownloading, 0, ++row);
+
+            gridPane.add(new Label(), 0, ++row);
+            Button btnPropose = new Button("Film vorschlagen");
+            gridPane.add(btnPropose, 0, ++row);
+            btnPropose.setOnAction(a -> {
+                new ProposeDialogController(progData, ProgConfig.PROPOSE_DIALOG_CONTROLLER_SIZE);
+            });
         }
     }
 

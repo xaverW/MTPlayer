@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.ShortKeyFactory;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
@@ -27,6 +28,7 @@ import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
+import de.p2tools.mtplayer.gui.dialog.propose.ProposeDialogController;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -121,6 +123,17 @@ public class FilmMenu {
                 storedActFilterSettings = null;
             }
         });
+
+        if (ProgData.debug) {
+            vBoxSpace = new VBox();
+            vBoxSpace.setMaxHeight(10);
+            vBoxSpace.setMinHeight(10);
+            vBox.getChildren().add(vBoxSpace);
+
+            final ToolBarButton btPropose = new ToolBarButton(vBox,
+                    "Filme vorschlagen", "Filme suchen, die zu den bisherigen gesehenen Filmen passen", ProgIconsMTPlayer.ICON_TOOLBAR_PROPOSE.getImageView());
+            btPropose.setOnAction(a -> new ProposeDialogController(progData, ProgConfig.PROPOSE_DIALOG_CONTROLLER_SIZE));
+        }
     }
 
     private void initFilmMenu() {
