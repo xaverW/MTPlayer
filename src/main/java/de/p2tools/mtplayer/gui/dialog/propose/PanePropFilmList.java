@@ -24,12 +24,12 @@ import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.tools.table.CellFilmButton;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.prange.PRangeBox;
+import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.guitools.ptable.CellIntNull;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.date.PDate;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -134,11 +134,10 @@ public class PanePropFilmList {
     }
 
     private void initUnderTable(VBox vBox) {
-        final PRangeBox slDur = initDurFilter();
-        final Label lblDur = new Label("Filmlänge:");
+        final P2RangeBox slDur = new P2RangeBox("Filmlänge:", false, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
 
         Button btnGenerate = new Button("Filme suchen");
-        btnGenerate.setOnAction(a -> ProposeFactory.generateFilmList(slDur.getMinValue(), slDur.getMaxValue()));
+        btnGenerate.setOnAction(a -> ProposeFactory.generateFilmList(slDur.getActMinValue(), slDur.getActMaxValue()));
 
         Label lblCountList = new Label();
         lblCountList.textProperty().bind(progData.proposeList.getFilmDataList().sizeProperty().asString());
@@ -148,22 +147,17 @@ public class PanePropFilmList {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(0));
+
         int row = 0;
-        gridPane.add(lblDur, 0, row);
-        gridPane.add(slDur, 1, row);
-        gridPane.add(P2GuiTools.getVDistance(50), 2, row);
-        gridPane.add(lblCountList, 3, row);
-        ++row;
-        gridPane.add(btnGenerate, 0, ++row, 2, 1);
+        gridPane.add(btnGenerate, 0, row);
+        gridPane.add(lblCountList, 1, row);
+        GridPane.setHalignment(lblCountList, HPos.RIGHT);
+
+        gridPane.add(new Label(), 0, ++row, 2, 1);
+        gridPane.add(slDur, 0, ++row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().addAll(gridPane);
-    }
-
-    private PRangeBox initDurFilter() {
-        PRangeBox slDur = new PRangeBox(0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
-        slDur.setValuePrefix("");
-        return slDur;
     }
 }

@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.p2lib.guitools.PLDatePicker;
 import de.p2tools.p2lib.guitools.pcheckcombobox.PCheckComboBox;
-import de.p2tools.p2lib.guitools.prange.PRangeBox;
+import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.guitools.prange.PTimePeriodBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
@@ -44,7 +44,7 @@ public class FilmFilterControllerFilter extends VBox {
     private final Label lblTimeRange = new Label("Zeitraum:");
     private final Label lblTimeRangeValue = new Label();
 
-    private final PRangeBox slDur = new PRangeBox(0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
+    private final P2RangeBox slDur = new P2RangeBox("Filmlänge:", true, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
     private final Label lblDur = new Label("Filmlänge:");
 
     private final PTimePeriodBox slFilmTime = new PTimePeriodBox();
@@ -130,7 +130,6 @@ public class FilmFilterControllerFilter extends VBox {
     private void initDurFilter() {
         slDur.minValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minDurProperty());
         slDur.maxValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().maxDurProperty());
-        slDur.setValuePrefix("");
     }
 
     private void initFilmTimeFilter() {
@@ -195,11 +194,11 @@ public class FilmFilterControllerFilter extends VBox {
         getChildren().addAll(vBox);
 
         // MinMax Dauer
-        vBox = new VBox(2);
-        vBox.getChildren().addAll(lblDur, slDur);
-        vBox.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
-        vBox.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
-        getChildren().addAll(vBox);
+//        vBox = new VBox(2);
+//        vBox.getChildren().addAll(lblDur, slDur);
+        slDur.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
+        slDur.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
+        getChildren().addAll(slDur);
 
         // MinMax Uhrzeit
         vBox = new VBox(2);

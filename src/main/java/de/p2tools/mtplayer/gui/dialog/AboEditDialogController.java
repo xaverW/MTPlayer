@@ -345,7 +345,7 @@ public class AboEditDialogController extends AboDialogController {
 
                 Label l = new Label("50 Tage");
                 l.setVisible(false);
-                StackPane stackPane = new StackPane();
+                StackPane stackPane = new StackPane(); // um die Breite konstant zu halten :)
                 stackPane.getChildren().addAll(l, lblTimeRange);
                 HBox hBox = new HBox(15);
                 hBox.getChildren().addAll(slTimeRange, stackPane);
@@ -354,7 +354,8 @@ public class AboEditDialogController extends AboDialogController {
                 break;
             case AboFieldNames.ABO_MIN_DURATION_NO:
                 initDur();
-                this.gridPane.add(pRangeBoxTime, 1, grid);
+                this.gridPane.add(p2RangeBoxTime, 1, grid);
+                GridPane.setHgrow(p2RangeBoxTime, Priority.ALWAYS);
                 break;
             case AboFieldNames.ABO_MAX_DURATION_NO:
                 break;
@@ -406,15 +407,13 @@ public class AboEditDialogController extends AboDialogController {
     }
 
     private void initDur() {
-        pRangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationMinuteProperty());
-        pRangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationMinuteProperty());
+        p2RangeBoxTime.maxValueProperty().bindBidirectional(aboCopy.maxDurationMinuteProperty());
+        p2RangeBoxTime.minValueProperty().bindBidirectional(aboCopy.minDurationMinuteProperty());
 
-        pRangeBoxTime.maxValueProperty().addListener((observable, oldValue, newValue) ->
+        p2RangeBoxTime.maxValueProperty().addListener((observable, oldValue, newValue) ->
                 cbxEditAll[AboFieldNames.ABO_MIN_DURATION_NO].setSelected(true));
-        pRangeBoxTime.minValueProperty().addListener((observable, oldValue, newValue) ->
+        p2RangeBoxTime.minValueProperty().addListener((observable, oldValue, newValue) ->
                 cbxEditAll[AboFieldNames.ABO_MIN_DURATION_NO].setSelected(true));
-
-        pRangeBoxTime.setValuePrefix("");
     }
 
     private void initTimeRange() {

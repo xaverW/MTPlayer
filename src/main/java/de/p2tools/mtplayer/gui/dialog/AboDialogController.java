@@ -32,7 +32,7 @@ import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.PTextAreaIgnoreTab;
 import de.p2tools.p2lib.guitools.PTimePicker;
-import de.p2tools.p2lib.guitools.prange.PRangeBox;
+import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -61,7 +61,7 @@ public class AboDialogController extends PDialogExtra {
     final ComboBox<String> cboDestination = new ComboBox<>();
     final Slider slTimeRange = new Slider();
     final Label lblTimeRange = new Label();
-    final PRangeBox pRangeBoxTime = new PRangeBox(0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
+    final P2RangeBox p2RangeBoxTime = new P2RangeBox("", false, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
     final CheckBox cbxOn = new CheckBox();
     final Label[] lbl = new Label[AboFieldNames.MAX_ELEM];
     final TextField[] txt = new TextField[AboFieldNames.MAX_ELEM];
