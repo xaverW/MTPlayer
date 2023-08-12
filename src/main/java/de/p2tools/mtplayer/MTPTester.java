@@ -26,6 +26,7 @@ import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
+import de.p2tools.p2lib.guitools.pnotification.P2Notification;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.tools.duration.PDuration;
@@ -38,7 +39,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import org.controlsfx.control.Notifications;
 
+import java.awt.*;
 import java.util.HashSet;
 
 public class MTPTester {
@@ -117,6 +120,73 @@ public class MTPTester {
             btnPropose.setOnAction(a -> {
                 new ProposeDialogController(progData, ProgConfig.PROPOSE_DIALOG_CONTROLLER_SIZE);
             });
+
+            gridPane.add(new Label(), 0, ++row);
+            Button btnMTNotify1 = new Button("p2Notification");
+            gridPane.add(btnMTNotify1, 0, ++row);
+            btnMTNotify1.setOnAction(a -> {
+                P2Notification.addNotification("Download beendet",
+                        "text fjksdladf \n jfksalödfj \n jfksdalöjf \n jfksdalöfj ",
+                        false);
+            });
+
+
+            gridPane.add(new Label(), 0, ++row);
+            Button btnMTNotify2 = new Button("p2Notification");
+            gridPane.add(btnMTNotify2, 0, ++row);
+            btnMTNotify2.setOnAction(a -> {
+                P2Notification.addNotification("Download beendet",
+                        "text fjksdladf",
+                        true);
+            });
+
+            gridPane.add(new Label(), 0, ++row);
+            Button btnNotify = new Button("controlFx");
+            gridPane.add(btnNotify, 0, ++row);
+            btnNotify.setOnAction(a -> {
+                Notifications.create()
+                        .title("Title Text")
+                        .text("Hello World 0!")
+                        .threshold(0, Notifications.create().title("Collapsed Notification"))
+                        .darkStyle()
+                        .showWarning();
+
+            });
+
+            gridPane.add(new Label(), 0, ++row);
+            Button btnTryNotify = new Button("AWS Tray");
+            gridPane.add(btnTryNotify, 0, ++row);
+            btnTryNotify.setOnAction(a -> {
+                tray();
+            });
+        }
+    }
+
+    private void tray() {
+        try {
+            //Obtain only one instance of the SystemTray object
+            SystemTray tray = SystemTray.getSystemTray();
+
+            // If you want to create an icon in the system tray to preview
+            Image image = Toolkit.getDefaultToolkit().createImage("some-icon.png");
+            //Alternative (if the icon is on the classpath):
+            //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
+
+            TrayIcon trayIcon = new TrayIcon(image, "Java AWT Tray Demo");
+            //Let the system resize the image if needed
+            trayIcon.setImageAutoSize(true);
+            //Set tooltip text for the tray icon
+            trayIcon.setToolTip("System tray icon demo");
+            tray.add(trayIcon);
+
+            // Display info notification:
+            trayIcon.displayMessage("Hello, World", "Java Notification Demo", TrayIcon.MessageType.INFO);
+            // Error:
+            // trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.ERROR);
+            // Warning:
+            // trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.WARNING);
+        } catch (Exception ex) {
+            System.err.print(ex);
         }
     }
 

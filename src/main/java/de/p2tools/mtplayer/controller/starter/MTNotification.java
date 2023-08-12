@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.pnotification.PNotification;
+import de.p2tools.p2lib.guitools.pnotification.P2Notification;
 
 
 public class MTNotification {
@@ -38,7 +38,7 @@ public class MTNotification {
             return;
         }
 
-        PNotification.addNotification("Download beendet", text, error);
+        P2Notification.addNotification("Download beendet", text, error);
     }
 }
 
