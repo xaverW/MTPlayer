@@ -17,7 +17,6 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
-import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
@@ -29,7 +28,10 @@ import de.p2tools.p2lib.tools.PGetList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
@@ -41,7 +43,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
     public final Callback<TableColumn<DownloadData, Integer>, TableCell<DownloadData, Integer>> cellFactory
             = (final TableColumn<DownloadData, Integer> param) -> {
 
-        final TableCell<DownloadData, Integer> cell = new TableCell<DownloadData, Integer>() {
+        final TableCell<DownloadData, Integer> cell = new TableCell<>() {
 
             @Override
             public void updateItem(Integer item, boolean empty) {
@@ -185,35 +187,8 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     setGraphic(null);
                     setText(null);
                 }
-
-                setCellStyle(this, item);
             }
         };
         return cell;
     };
-
-    private void setCellStyle(TableCell<DownloadData, Integer> cell, Integer item) {
-        TableRow<DownloadData> currentRow = cell.getTableRow();
-        if (currentRow == null) {
-            return;
-        }
-        switch (item) {
-            case DownloadConstants.STATE_INIT:
-            case DownloadConstants.STATE_STOPPED:
-                currentRow.setStyle("");
-                break;
-            case DownloadConstants.STATE_STARTED_WAITING:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_WAIT.getCssBackground());
-                break;
-            case DownloadConstants.STATE_STARTED_RUN:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_RUN.getCssBackground());
-                break;
-            case DownloadConstants.STATE_FINISHED:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_FINISHED.getCssBackground());
-                break;
-            case DownloadConstants.STATE_ERROR:
-                currentRow.setStyle(ProgColorList.DOWNLOAD_ERROR.getCssBackground());
-                break;
-        }
-    }
 }

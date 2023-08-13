@@ -96,7 +96,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void tableRefresh() {
-        tableView.refresh();
+        Platform.runLater(() -> PTableFactory.refreshTable(tableView));
     }
 
     public void isShown() {

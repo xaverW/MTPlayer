@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
@@ -43,13 +44,11 @@ public class TableRowDownload<T> extends TableRow {
             setTooltip(null);
 
         } else {
-            setTooltip(new Tooltip(download.getTheme() + "\n" +
-                    download.getTitle()));
+            setTooltip(new Tooltip(download.getTheme() + "\n" + download.getTitle()));
 
             if (geoMelden.get() && download.getGeoBlocked()) {
                 // geogeblockt
                 for (int i = 0; i < getChildren().size(); i++) {
-                    getChildren().get(i).setStyle("");
                     getChildren().get(i).setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
                 }
 
@@ -62,6 +61,25 @@ public class TableRowDownload<T> extends TableRow {
                 for (int i = 0; i < getChildren().size(); i++) {
                     getChildren().get(i).setStyle("");
                 }
+            }
+
+            switch (download.getState()) {
+                case DownloadConstants.STATE_INIT:
+                case DownloadConstants.STATE_STOPPED:
+                    setStyle("");
+                    break;
+                case DownloadConstants.STATE_STARTED_WAITING:
+                    setStyle(ProgColorList.DOWNLOAD_WAIT.getCssBackground());
+                    break;
+                case DownloadConstants.STATE_STARTED_RUN:
+                    setStyle(ProgColorList.DOWNLOAD_RUN.getCssBackground());
+                    break;
+                case DownloadConstants.STATE_FINISHED:
+                    setStyle(ProgColorList.DOWNLOAD_FINISHED.getCssBackground());
+                    break;
+                case DownloadConstants.STATE_ERROR:
+                    setStyle(ProgColorList.DOWNLOAD_ERROR.getCssBackground());
+                    break;
             }
         }
     }

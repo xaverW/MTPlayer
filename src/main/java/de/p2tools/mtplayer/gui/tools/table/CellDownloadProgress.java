@@ -40,16 +40,15 @@ public class CellDownloadProgress<S, T> extends TableCell<S, T> {
                 if (item != null) {
                     DownloadData download = getTableView().getItems().get(getIndex());
                     if (download.getProgramDownloadmanager()) {
-                        final String text = DownloadConstants.getTextProgress(true, download.getState(), item.doubleValue());
+                        final String text = DownloadConstants.getTextProgress(true, download.getState(), item);
                         Label label = new Label(text);
                         setGraphic(label);
 
                     } else if (item <= DownloadConstants.PROGRESS_STARTED || item >= DownloadConstants.PROGRESS_FINISHED) {
-                        String text = DownloadConstants.getTextProgress(false, download.getState(), item.doubleValue());
+                        String text = DownloadConstants.getTextProgress(false, download.getState(), item);
                         Label label = new Label(text);
                         if (ProgConfig.SYSTEM_MARK_GEO.get() && download.getGeoBlocked()) {
                             // geogeblockt
-                            label.setStyle("");
                             label.setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
                         }
                         setGraphic(label);
