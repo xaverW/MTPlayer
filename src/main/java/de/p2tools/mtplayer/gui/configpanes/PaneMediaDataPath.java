@@ -57,6 +57,7 @@ public class PaneMediaDataPath {
     private final ProgData progData;
     private final Stage stage;
     private MediaCollectionData collectionDataOld = null;
+    private boolean mediaChanged = false;
 
     public PaneMediaDataPath(Stage stage, boolean external) {
         this.stage = stage;
@@ -78,6 +79,10 @@ public class PaneMediaDataPath {
 
     public void close() {
         progData.mediaCollectionDataList.clearUndoList();
+        if (mediaChanged) {
+            // dann die Liste neu erstellen
+            MediaDataWorker.createMediaDb();
+        }
     }
 
     private void initTable(VBox vBox) {
@@ -198,17 +203,6 @@ public class PaneMediaDataPath {
         MediaDataWorker.updateCollection(mediaCollectionData);
     }
 
-    private void delete() {
-        final List<MediaCollectionData> sels = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
-        if (sels.isEmpty()) {
-            PAlert.showInfoNoSelection();
-            return;
-        }
-
-        MediaDataWorker.removeMediaCollection(sels, external);
-        tableView.getSelectionModel().clearSelection();
-    }
-
     private void makeGrid(VBox vBox) {
         final GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("extra-pane");
@@ -231,11 +225,21 @@ public class PaneMediaDataPath {
         gridPane.add(new Label("Pfad:"), 0, ++row);
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnPath, 2, row);
-
         gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
                 PColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().addAll(gridPane);
+    }
+
+    private void delete() {
+        final List<MediaCollectionData> sels = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
+        if (sels.isEmpty()) {
+            PAlert.showInfoNoSelection();
+            return;
+        }
+
+        MediaDataWorker.removeMediaCollection(sels, external);
+        tableView.getSelectionModel().clearSelection();
     }
 
     private void add() {
@@ -244,5 +248,9 @@ public class PaneMediaDataPath {
         tableView.getSelectionModel().clearSelection();
         tableView.getSelectionModel().select(mediaCollectionData);
         tableView.scrollTo(mediaCollectionData);
+        if (!external) {
+            // dann hat sich was geändert
+            mediaChanged = true;
+        }
     }
 }

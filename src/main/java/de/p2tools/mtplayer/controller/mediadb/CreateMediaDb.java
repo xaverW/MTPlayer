@@ -63,12 +63,10 @@ public class CreateMediaDb {
         }
     }
 
-    /**
-     * durchsucht die vom User angelegten Pfade für die interne Mediensammlung
-     * und fügt die gespeicherten externen Medien hinzu
-     * -> bei jedem Start
-     */
     private void create() {
+        // durchsucht die vom User angelegten Pfade für die interne Mediensammlung
+        // und fügt die gespeicherten externen Medien hinzu,
+        // bei jedem Programmstart oder manuell vom User gestartet
         List<MediaData> tmpMediaDataList = new ArrayList<>();
         start();
         try {
@@ -117,13 +115,9 @@ public class CreateMediaDb {
         stop();
     }
 
-    /**
-     * durchsucht einen Pfad
-     * -> wird nur manuell vom User gestartet und löscht nicht die MediaDB
-     *
-     * @param mediaCollectionData
-     */
     private void create(MediaCollectionData mediaCollectionData) {
+        // durchsucht einen Pfad und fügt ihn an die DB an
+        // wird nur manuell vom User gestartet und löscht nicht die MediaDB
         if (mediaCollectionData == null) {
             return;
         }

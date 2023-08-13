@@ -128,7 +128,10 @@ public class HelpText {
             "Hier können interne Medienordner in der Mediensammlung verwaltet werden: Ordner " +
                     "hinzufügen oder vorhandene Ordner aus der Mediensammlung entfernen. " +
                     "Eine Aktualisierung der Mediensammlung mit ihrem Inhalt erfolgt bei " +
-                    "jedem Programmstart." +
+                    "jedem Programmstart. Die Pfade müssen also beim Programmstart erreichbar sein." +
+                    P2LibConst.LINE_SEPARATORx2 +
+                    "Soll die Mediensammlung sofort aktualisiert werden, " +
+                    "kann das mit dem Button \"gedrehte Pfeile\" gestartet werden." +
                     "\n";
 
     public static final String DOWNLOAD_GUI_MEDIA =

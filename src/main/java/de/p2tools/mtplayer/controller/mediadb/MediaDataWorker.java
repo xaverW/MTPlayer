@@ -38,6 +38,7 @@ public class MediaDataWorker {
     // **************************************************************
     // Ganze Mediensammlung erstellen
     // INTERNE suchen und anlegen und die gespeicherten EXTERNEN anfügen
+    // Programmstart, User: MediaDialog, ConfigDialog beim Beenden nach Änderungen
     public static synchronized void createMediaDb() {
         if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
@@ -51,6 +52,7 @@ public class MediaDataWorker {
 
     // **************************************************************
     // Eine MediaCollection neu einlesen, vorher die vorhandenen löschen
+    // vom User ausgelöst, Config
     public static synchronized void updateCollection(MediaCollectionData mediaCollectionData) {
         if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)

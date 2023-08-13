@@ -107,10 +107,31 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         // checks duplicates in the mediaDataList and creates the counter in the pathList
         // bei den EXTERNEN kann der Pfad/Dateiname doppelt sein! muss aber nur einmal in die DB
         // da ja über Pfad/Dateiname verglichen wird und nicht über den Datei-Hash
+        // beim Löschen, haben die externen Vorrang, d.h. zuerst die internen löschen
         final HashSet<String> hashSet = new HashSet<>(size());
         Iterator<MediaData> it = iterator();
         while (it.hasNext()) {
+            // zuerst mal die doppelten externen löschen
             final MediaData mediaData = it.next();
+            if (!mediaData.isExternal()) {
+                continue;
+            }
+
+            // final String h = mediaData.getName() + "##" + mediaData.getPath() + "##" + mediaData.getCollectionId();
+            // collId nicht mehr, wenn sich die collections "überschneiden" gibts sonst doppelte
+            if (!hashSet.add(mediaData.getName() + mediaData.getPath())) {
+                it.remove();
+            }
+        }
+
+        it = iterator();
+        while (it.hasNext()) {
+            // jetzt sind alle externen drin, jetzt die internen checken
+            final MediaData mediaData = it.next();
+            if (mediaData.isExternal()) {
+                continue;
+            }
+
             // final String h = mediaData.getName() + "##" + mediaData.getPath() + "##" + mediaData.getCollectionId();
             // collId nicht mehr, wenn sich die collections "überschneiden" gibts sonst doppelte
             if (!hashSet.add(mediaData.getName() + mediaData.getPath())) {
