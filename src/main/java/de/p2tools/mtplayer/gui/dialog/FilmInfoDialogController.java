@@ -234,7 +234,7 @@ public class FilmInfoDialogController extends PDialogExtra {
 
     private void getMenu(Label lbl, ContextMenuEvent event) {
         final ContextMenu contextMenu = new ContextMenu();
-        MenuItem menuItem = new MenuItem("kopieren");
+        MenuItem menuItem = new MenuItem("Kopieren");
         menuItem.setOnAction(a -> {
             final Clipboard clipboard = Clipboard.getSystemClipboard();
             final ClipboardContent content = new ClipboardContent();
