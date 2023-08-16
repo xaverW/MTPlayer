@@ -28,7 +28,6 @@ public class FilmFilterRunner {
     private final ProgData progData;
     private static final AtomicBoolean search = new AtomicBoolean(false);
     private static final AtomicBoolean research = new AtomicBoolean(false);
-    int count = 0;
 
     /**
      * hier wird das Filtern der Filmliste "angestoßen"
@@ -38,13 +37,13 @@ public class FilmFilterRunner {
     public FilmFilterRunner(ProgData progData) {
         this.progData = progData;
 
+        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
         MTListener.addListener(new MTListener(MTListener.EVENT_FILTER_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void ping() {
                 filterList();
             }
         });
-        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
         MTListener.addListener(new MTListener(MTListener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void ping() {
@@ -70,6 +69,8 @@ public class FilmFilterRunner {
         });
     }
 
+    private int count = 0;
+
     private void filterList() {
         // ist etwas "umständlich", scheint aber am flüssigsten zu laufen
         PDuration.counterStart("filterList");
@@ -77,12 +78,15 @@ public class FilmFilterRunner {
             research.set(false);
             try {
                 Platform.runLater(() -> {
-                    progData.filmGuiController.tableView.setVisible(false);
+                    System.out.println("=======================================");
+                    System.out.println("   ===== FILTERN: " + ++count + " =====");
+                    System.out.println("=======================================");
+//                    progData.filmGuiController.tableView.setVisible(false);
                     progData.filmListFiltered.filteredListSetPred(PredicateFactory.getPredicate(progData));
 
-                    Platform.runLater(() -> {
-                        progData.filmGuiController.tableView.setVisible(true);
-                    });
+//                    Platform.runLater(() -> {
+//                        progData.filmGuiController.tableView.setVisible(true);
+//                    });
 
                     search.set(false);
                     if (research.get()) {

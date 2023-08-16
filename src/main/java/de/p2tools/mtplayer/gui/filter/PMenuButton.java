@@ -81,7 +81,7 @@ public class PMenuButton extends MenuButton {
             } else {
                 filterList.add(filter.getValueSafe().toLowerCase());
             }
-            filterList.stream().forEach(s -> s = s.trim());
+            filterList.forEach(s -> s = s.trim());
         }
 
         CheckBox miCheckAll = new CheckBox();
@@ -154,17 +154,17 @@ public class PMenuButton extends MenuButton {
     }
 
     private void setMenuText() {
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for (MenuItemClass cmi : menuItemsList) {
             if (cmi.getCheckBox().isSelected()) {
-                text = text + (text.isEmpty() ? "" : ", ") + cmi.getText();
+                text.append((text.isEmpty()) ? "" : ", ").append(cmi.getText());
             }
         }
-        setText(text);
-        ProgData.getInstance().worker.createThemeList(text);
+        setText(text.toString());
+        ProgData.getInstance().worker.createThemeList(text.toString());
     }
 
-    private class MenuItemClass {
+    private static class MenuItemClass {
         private final String text;
         private final CheckBox checkBox;
 

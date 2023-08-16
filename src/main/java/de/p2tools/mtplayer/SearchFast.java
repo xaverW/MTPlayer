@@ -103,6 +103,7 @@ public class SearchFast extends HBox {
             ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.FAST_SEARCH_ON.getValue());
         });
         btnSelectWhere.setOnMouseClicked(event -> {
+            // beim Umschalten des FastFilters
             if (ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_TITLE) {
                 ProgConfig.FAST_SEARCH_WHERE.setValue(ProgConst.SEARCH_FAST_THEME_TITLE);
             } else {

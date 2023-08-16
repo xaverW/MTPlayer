@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
+import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.mtfilter.Filter;
@@ -101,22 +102,22 @@ public class PredicateFactory {
         Predicate<FilmData> predicate = film -> true;
 
         if (onlyBookmark) {
-            predicate = predicate.and(f -> f.isBookmark());
+            predicate = predicate.and(FilmDataProps::isBookmark);
         }
         if (onlyHd) {
-            predicate = predicate.and(f -> f.isHd());
+            predicate = predicate.and(FilmDataProps::isHd);
         }
         if (onlyUt) {
-            predicate = predicate.and(f -> f.isUt());
+            predicate = predicate.and(FilmDataProps::isUt);
         }
         if (onlyLive) {
-            predicate = predicate.and(f -> f.isLive());
+            predicate = predicate.and(FilmDataProps::isLive);
         }
         if (onlyAktHist) {
-            predicate = predicate.and(f -> f.getActHist());
+            predicate = predicate.and(FilmDataProps::getActHist);
         }
         if (onlyNew) {
-            predicate = predicate.and(f -> f.isNewFilm());
+            predicate = predicate.and(FilmDataProps::isNewFilm);
         }
 
         if (noAbos) {

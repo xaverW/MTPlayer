@@ -191,7 +191,7 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
 
 
     public String getName() {
-        return name.get();
+        return name.getValueSafe();
     }
 
     public StringProperty nameProperty() {
@@ -215,7 +215,7 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
     }
 
     public String getChannel() {
-        return channel.get() == null ? "" : channel.get();
+        return channel.getValueSafe();
     }
 
     public StringProperty channelProperty() {

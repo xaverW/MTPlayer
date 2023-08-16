@@ -120,18 +120,20 @@ public class Worker {
     }
 
     private void resetFilter() {
-        if (getAllAboNamesList().contains(downloadFilterAbo)) {
-            // nur wenn noch drin, dann wieder setzen
+        // nur wenn noch drin, dann wieder setzen
+        if (allAboNamesList.contains(downloadFilterAbo)) {
             ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo);
         } else {
             ProgConfig.FILTER_DOWNLOAD_ABO.setValue("");
         }
-        if (allChannelList.contains(aboFilterChannel)) {
-            // nur wenn noch drin, dann wieder setzen
+        if (allChannelList.contains(downloadFilterChannel)) {
             ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
-            ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
         } else {
             ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue("");
+        }
+        if (allChannelList.contains(aboFilterChannel)) {
+            ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
+        } else {
             ProgConfig.FILTER_ABO_CHANNEL.setValue("");
         }
     }
@@ -165,8 +167,8 @@ public class Worker {
         Platform.runLater(() -> {
             saveFilter();
             themeForChannelList.setAll(theme);
+//            this.progData.filmFilterWorker.addBackward();
             resetFilter();
-            this.progData.filmFilterWorker.initFilter();
         });
         PDuration.counterStop("createThemeList");
     }

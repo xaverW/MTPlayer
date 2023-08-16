@@ -69,8 +69,6 @@ public final class FilmFilterWorker {
     private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
 
     public FilmFilterWorker() {
-        fastFilter.filterChangeProperty().addListener((observable, oldValue, newValue) ->
-                MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName())); // wenn der User den Filter ändert
         filmFilterBackward.addListener((ListChangeListener<FilmFilter>) c -> {
             if (filmFilterBackward.size() > 1) {
                 backward.setValue(true);
@@ -79,7 +77,7 @@ public final class FilmFilterWorker {
             }
         });
         filmFilterForward.addListener((ListChangeListener<FilmFilter>) c -> {
-            if (filmFilterForward.size() > 0) {
+            if (!filmFilterForward.isEmpty()) {
                 forward.setValue(true);
             } else {
                 forward.setValue(false);
@@ -87,9 +85,9 @@ public final class FilmFilterWorker {
         });
     }
 
-    public void initFilter() {
-        addBackward();
-    }
+//    public void initFilter() {
+//        addBackward();
+//    }
 
     public BooleanProperty backwardProperty() {
         return backward;
@@ -293,7 +291,7 @@ public final class FilmFilterWorker {
         setActFilterSettings(sf);
     }
 
-    private void addBackward() {
+    public void addBackward() {
         final FilmFilter sf = new FilmFilter();
         actFilterSettings.copyTo(sf);
         if (filmFilterBackward.isEmpty()) {
@@ -360,7 +358,7 @@ public final class FilmFilterWorker {
         return true;
     }
 
-    private void postFilterChange() {
+    public void postFilterChange() {
         addBackward();
         MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
     }

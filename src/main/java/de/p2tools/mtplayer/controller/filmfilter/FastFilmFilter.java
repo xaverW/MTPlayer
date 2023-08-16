@@ -17,23 +17,17 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.animation.PauseTransition;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.util.Duration;
 
 public final class FastFilmFilter extends FastFilmFilterProps {
 
-    private final BooleanProperty filterChange = new SimpleBooleanProperty(false); // Filter hat sich geändert
     private final PauseTransition pause = new PauseTransition(Duration.millis(200)); // nach Ablauf wird Änderung gemeldet - oder nach Return
 
     public FastFilmFilter() {
         initFilter();
-    }
-
-    public BooleanProperty filterChangeProperty() {
-        return filterChange;
     }
 
     public void clearFilter() {
@@ -42,7 +36,7 @@ public final class FastFilmFilter extends FastFilmFilterProps {
     }
 
     private void initFilter() {
-        pause.setOnFinished(event -> reportFilterChange());
+        pause.setOnFinished(event -> MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FastFilmFilter.class.getSimpleName()));
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         ProgConfig.SYSTEM_FILTER_WAIT_TIME.addListener((observable, oldValue, newValue) -> {
             PLog.debugLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
@@ -65,10 +59,5 @@ public final class FastFilmFilter extends FastFilmFilterProps {
         } else {
             pause.playFromStart();
         }
-    }
-
-    private void reportFilterChange() {
-        // da wird die Änderung gemeldet, nach Ablauf der PAUSE
-        filterChange.setValue(!filterChange.getValue());
     }
 }

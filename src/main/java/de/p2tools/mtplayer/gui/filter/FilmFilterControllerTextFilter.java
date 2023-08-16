@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmfilter.P2CboStringSearch;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ListChangeListener;
-import javafx.scene.control.Control;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
@@ -39,8 +39,8 @@ public class FilmFilterControllerTextFilter extends VBox {
     public FilmFilterControllerTextFilter() {
         super();
         progData = ProgData.getInstance();
-        mbChannel = new PMenuButton(ProgData.getInstance().filmFilterWorker.getActFilterSettings().channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList());
+        mbChannel = new PMenuButton(progData.filmFilterWorker.getActFilterSettings().channelProperty(),
+                progData.worker.getAllChannelList());
 
         this.cboTheme = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeProperty());
         this.cboThemeTitle = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeTitleProperty());
@@ -62,12 +62,15 @@ public class FilmFilterControllerTextFilter extends VBox {
         cboTheme.editableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeExactProperty().not());
         cboTheme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.filmFilterWorker.getActFilterSettings().themeExactProperty().getValue()) {
-                progData.filmFilterWorker.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
+                //progData.filmFilterWorker.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
+                progData.filmFilterWorker.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
             }
         });
         progData.worker.getThemeForChannelList().addListener((ListChangeListener<String>) c -> {
             progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
-            cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
+            // cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
+            cboTheme.addSearchStrings(progData.worker.getThemeForChannelList());
+            cboTheme.valueProperty().setValue(new P2CboSearcher(progData.filmFilterWorker.getActFilterSettings().getTheme()));
             progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
         });
     }
@@ -75,8 +78,10 @@ public class FilmFilterControllerTextFilter extends VBox {
     private void addCboThemeItem() {
         if (progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
             // dann die channels eintragen
-            cboTheme.setItems(progData.worker.getThemeForChannelList());
-            cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
+            // cboTheme.setItems(progData.worker.getThemeForChannelList());
+            // cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
+            cboTheme.addSearchStrings(progData.worker.getThemeForChannelList());
+            cboTheme.valueProperty().setValue(new P2CboSearcher(progData.filmFilterWorker.getActFilterSettings().getTheme()));
         } else {
             // dann freie Suche
             cboTheme.getItems().clear();
@@ -112,7 +117,7 @@ public class FilmFilterControllerTextFilter extends VBox {
         sp.managedProperty().bind(this.visibleProperty());
     }
 
-    private void addTxt(String txt, Control control, VBox vBoxComplete, BooleanProperty booleanProperty) {
+    private void addTxt(String txt, Node control, VBox vBoxComplete, BooleanProperty booleanProperty) {
         VBox vBox = new VBox(2);
         Label label = new Label(txt);
         vBox.getChildren().addAll(label, control);
