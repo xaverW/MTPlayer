@@ -78,7 +78,7 @@ public final class FilmFilter extends FilmFilterProps {
         }
     }
 
-    private void setFilterChange() {
+    private void setFilterChange(boolean startNow) {
         //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
         if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
             System.out.println("----------------------");
@@ -86,20 +86,13 @@ public final class FilmFilter extends FilmFilterProps {
             System.out.println(filterIsOff ? "filter off" : "filter on");
             System.out.println("     -----------------");
         }
-        pause.playFromStart();
-    }
 
-    private void setTxtFilterChange() {
-        System.out.println("----------------------");
-        System.out.println("setTxtFilterChange");
-        System.out.println(filterIsOff ? "filter off" : "filter on");
-        System.out.println("     -----------------");
-        //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
-        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+        if (!startNow && ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
             //dann wird erst nach "RETURN" gestartet
             pause.stop();
 
         } else {
+            // dann wird sofort gestartet (nach Pause)
             pause.playFromStart();
         }
     }
@@ -149,29 +142,25 @@ public final class FilmFilter extends FilmFilterProps {
             System.out.println("     -----------------");
         }
         pause.setDuration(Duration.millis(0));
-        boolean ret = false;
         if (!getChannel().isEmpty()) {
-            ret = true;
             setChannel("");
         }
         if (!getTheme().isEmpty()) {
-            ret = true;
             setTheme("");
         }
+        if (!getThemeExact().isEmpty()) {
+            setThemeExact("");
+        }
         if (!getThemeTitle().isEmpty()) {
-            ret = true;
             setThemeTitle("");
         }
         if (!getTitle().isEmpty()) {
-            ret = true;
             setTitle("");
         }
         if (!getSomewhere().isEmpty()) {
-            ret = true;
             setSomewhere("");
         }
         if (!getUrl().isEmpty()) {
-            ret = true;
             setUrl("");
         }
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
@@ -187,6 +176,7 @@ public final class FilmFilter extends FilmFilterProps {
         // alle Filter löschen, Button Black bleibt, wie er ist
         setChannel("");
         setTheme("");
+        setThemeExact("");
         setThemeTitle("");
         setTitle("");
         setSomewhere("");
@@ -219,6 +209,7 @@ public final class FilmFilter extends FilmFilterProps {
     public boolean isTextFilterEmpty() {
         return getChannel().isEmpty() &&
                 getTheme().isEmpty() &&
+                getThemeExact().isEmpty() &&
                 getThemeTitle().isEmpty() &&
                 getTitle().isEmpty() &&
                 getSomewhere().isEmpty() &&
@@ -232,6 +223,7 @@ public final class FilmFilter extends FilmFilterProps {
 
     public void setThemeAndVis(String set) {
         setTheme(set);
+        setThemeExact(set);
         setThemeVis(true);
     }
 
@@ -258,7 +250,7 @@ public final class FilmFilter extends FilmFilterProps {
         setThemeTitleVis(true);
 
         setThemeVis(false);
-        setThemeExact(false);
+        setThemeIsExact(false);
         setTitleVis(false);
         setSomewhereVis(false);
         setUrlVis(false);
@@ -273,20 +265,16 @@ public final class FilmFilter extends FilmFilterProps {
         setNotVis(false);
         setOnlyVis(false);
 
-        nameProperty().addListener(l -> setFilterChange());
+        nameProperty().addListener(l -> setFilterChange(true));
 
-        channelVisProperty().addListener(l -> setFilterChange());
-        channelProperty().addListener(l -> setFilterChange());
+        channelVisProperty().addListener(l -> setFilterChange(true));
+        channelProperty().addListener(l -> setFilterChange(true));
 
-        themeVisProperty().addListener(l -> setFilterChange());
-        themeExactProperty().addListener(l -> setFilterChange());
-        themeProperty().addListener(l -> {
-            if (themeExactProperty().getValue()) {
-                setFilterChange();
-            } else {
-                setTxtFilterChange();
-            }
-
+        themeVisProperty().addListener(l -> setFilterChange(true));
+        themeIsExactProperty().addListener(l -> setFilterChange(true));
+        themeProperty().addListener(l -> setFilterChange(false));
+        themeExactProperty().addListener(l -> {
+            setFilterChange(true);
 //            // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
 //            if (!themeExactProperty().getValue()) {
 //                PDebugLog.sysLog("Pause themeProperty");
@@ -300,47 +288,47 @@ public final class FilmFilter extends FilmFilterProps {
 //            }
         });
 
-        themeTitleVisProperty().addListener(l -> setFilterChange());
-        themeTitleProperty().addListener(l -> setTxtFilterChange());
+        themeTitleVisProperty().addListener(l -> setFilterChange(true));
+        themeTitleProperty().addListener(l -> setFilterChange(false));
 
-        titleVisProperty().addListener(l -> setFilterChange());
-        titleProperty().addListener(l -> setTxtFilterChange());
+        titleVisProperty().addListener(l -> setFilterChange(true));
+        titleProperty().addListener(l -> setFilterChange(false));
 
-        somewhereVisProperty().addListener(l -> setFilterChange());
-        somewhereProperty().addListener(l -> setTxtFilterChange());
+        somewhereVisProperty().addListener(l -> setFilterChange(true));
+        somewhereProperty().addListener(l -> setFilterChange(false));
 
-        urlVisProperty().addListener(l -> setFilterChange());
-        urlProperty().addListener(l -> setTxtFilterChange());
+        urlVisProperty().addListener(l -> setFilterChange(true));
+        urlProperty().addListener(l -> setFilterChange(false));
 
-        timeRangeVisProperty().addListener(l -> setFilterChange());
-        timeRangeProperty().addListener(l -> setFilterChange());
+        timeRangeVisProperty().addListener(l -> setFilterChange(true));
+        timeRangeProperty().addListener(l -> setFilterChange(true));
 
-        minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> setFilterChange());
-        minDurProperty().addListener(l -> setFilterChange());
-        maxDurProperty().addListener(l -> setFilterChange());
+        minMaxDurVisProperty().addListener((observable, oldValue, newValue) -> setFilterChange(true));
+        minDurProperty().addListener(l -> setFilterChange(true));
+        maxDurProperty().addListener(l -> setFilterChange(true));
 
-        minMaxTimeVisProperty().addListener((observable, oldValue, newValue) -> setFilterChange());
-        minMaxTimeInvertProperty().addListener((observable, oldValue, newValue) -> setFilterChange());
-        minTimeProperty().addListener(l -> setFilterChange());
-        maxTimeProperty().addListener(l -> setFilterChange());
+        minMaxTimeVisProperty().addListener((observable, oldValue, newValue) -> setFilterChange(true));
+        minMaxTimeInvertProperty().addListener((observable, oldValue, newValue) -> setFilterChange(true));
+        minTimeProperty().addListener(l -> setFilterChange(true));
+        maxTimeProperty().addListener(l -> setFilterChange(true));
 
-        showDateVisProperty().addListener(l -> setFilterChange());
-        showDateProperty().addListener(l -> setFilterChange());
+        showDateVisProperty().addListener(l -> setFilterChange(true));
+        showDateProperty().addListener(l -> setFilterChange(true));
 
-        onlyVisProperty().addListener(l -> setFilterChange());
-        onlyBookmarkProperty().addListener(l -> setFilterChange());
-        onlyHdProperty().addListener(l -> setFilterChange());
-        onlyNewProperty().addListener(l -> setFilterChange());
-        onlyUtProperty().addListener(l -> setFilterChange());
-        onlyLiveProperty().addListener(l -> setFilterChange());
-        onlyActHistoryProperty().addListener(l -> setFilterChange());
+        onlyVisProperty().addListener(l -> setFilterChange(true));
+        onlyBookmarkProperty().addListener(l -> setFilterChange(true));
+        onlyHdProperty().addListener(l -> setFilterChange(true));
+        onlyNewProperty().addListener(l -> setFilterChange(true));
+        onlyUtProperty().addListener(l -> setFilterChange(true));
+        onlyLiveProperty().addListener(l -> setFilterChange(true));
+        onlyActHistoryProperty().addListener(l -> setFilterChange(true));
 
-        notVisProperty().addListener(l -> setFilterChange());
-        notAboProperty().addListener(l -> setFilterChange());
-        notHistoryProperty().addListener(l -> setFilterChange());
-        notDoubleProperty().addListener(l -> setFilterChange());
-        notGeoProperty().addListener(l -> setFilterChange());
-        notFutureProperty().addListener(l -> setFilterChange());
+        notVisProperty().addListener(l -> setFilterChange(true));
+        notAboProperty().addListener(l -> setFilterChange(true));
+        notHistoryProperty().addListener(l -> setFilterChange(true));
+        notDoubleProperty().addListener(l -> setFilterChange(true));
+        notGeoProperty().addListener(l -> setFilterChange(true));
+        notFutureProperty().addListener(l -> setFilterChange(true));
 
         blacklistOnOffProperty().addListener(l -> reportBlacklistChange());
     }

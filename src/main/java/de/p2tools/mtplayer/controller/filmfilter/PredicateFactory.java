@@ -193,21 +193,20 @@ public class PredicateFactory {
                                                      Predicate<FilmData> predicate) {
         Filter fastFilter = new Filter(fastFilmFilter.getFilterTerm(), true);
 
-        Filter fTheme;
-        Filter fThemeTitle;
-        Filter fTitle;
-
-        String filterTheme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
-        String filterThemeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
-        String filterTitle = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
-        final boolean themeExact = filmFilter.isThemeExact();
-
         // Thema
-        fTheme = new Filter(filterTheme, themeExact, true);
+        final boolean themeExact = filmFilter.getThemeIsExact();
+        String filterTheme = filmFilter.isThemeVis() ?
+                themeExact ? filmFilter.getThemeExact() : filmFilter.getTheme()
+                : "";
+        Filter fTheme = new Filter(filterTheme, themeExact, true);
+
         // ThemaTitel
-        fThemeTitle = new Filter(filterThemeTitle, true);
+        String filterThemeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
+        Filter fThemeTitle = new Filter(filterThemeTitle, true);
+
         // Titel
-        fTitle = new Filter(filterTitle, true);
+        String filterTitle = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
+        Filter fTitle = new Filter(filterTitle, true);
 
         if (ProgConfig.FAST_SEARCH_ON.getValue() &&
                 ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME_TITLE) {

@@ -17,10 +17,10 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmfilter.P2CboSearcher;
 import de.p2tools.mtplayer.controller.filmfilter.P2CboStringSearch;
+import de.p2tools.mtplayer.controller.filmfilter.P2CboStringSearchExact;
 import javafx.beans.property.BooleanProperty;
-import javafx.collections.ListChangeListener;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -30,6 +30,7 @@ public class FilmFilterControllerTextFilter extends VBox {
 
     private final PMenuButton mbChannel;
     private final P2CboStringSearch cboTheme;
+    private final P2CboStringSearchExact cboThemeExact;
     private final P2CboStringSearch cboThemeTitle;
     private final P2CboStringSearch cboTitle;
     private final P2CboStringSearch cboSomewhere;
@@ -43,55 +44,33 @@ public class FilmFilterControllerTextFilter extends VBox {
         mbChannel = new PMenuButton(progData.filmFilterWorker.getActFilterSettings().channelProperty(),
                 progData.worker.getAllChannelList());
 
-        this.cboTheme = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeProperty());
-        this.cboThemeTitle = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeTitleProperty());
-        this.cboTitle = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().titleProperty());
-        this.cboSomewhere = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().somewhereProperty());
-        this.cboUrl = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().urlProperty());
+        cboTheme = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeProperty());
+        cboThemeExact = new P2CboStringSearchExact(progData, progData.filmFilterWorker.getActFilterSettings().themeExactProperty());
+
+        cboThemeTitle = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeTitleProperty());
+        cboTitle = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().titleProperty());
+        cboSomewhere = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().somewhereProperty());
+        cboUrl = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().urlProperty());
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
-        initCboThemeExactFilter();
         addFilter();
-    }
-
-    private void initCboThemeExactFilter() {
-        // Theme: ein Extra für "EXACT"
-        progData.filmFilterWorker.getActFilterSettings().themeExactProperty().addListener((observable, oldValue, newValue) -> {
-            addCboThemeItem();
-        });
-        addCboThemeItem();
-        cboTheme.editableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeExactProperty().not());
-        cboTheme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (progData.filmFilterWorker.getActFilterSettings().themeExactProperty().getValue()) {
-                //progData.filmFilterWorker.getActFilterSettings().setTheme(cboTheme.valueProperty().getValue());
-                progData.filmFilterWorker.getActFilterSettings().setTheme(cboTheme.getEditor().getText());
-            }
-        });
-        progData.worker.getThemeForChannelList().addListener((ListChangeListener<String>) c -> {
-            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
-            // cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
-            cboTheme.addSearchStrings(progData.worker.getThemeForChannelList());
-            cboTheme.valueProperty().setValue(new P2CboSearcher(progData.filmFilterWorker.getActFilterSettings().getTheme()));
-            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
-        });
-    }
-
-    private void addCboThemeItem() {
-        if (progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
-            // dann die channels eintragen
-            // cboTheme.setItems(progData.worker.getThemeForChannelList());
-            // cboTheme.valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getTheme());
-            cboTheme.addSearchStrings(progData.worker.getThemeForChannelList());
-            cboTheme.valueProperty().setValue(new P2CboSearcher(progData.filmFilterWorker.getActFilterSettings().getTheme()));
-        } else {
-            // dann freie Suche
-            cboTheme.getItems().clear();
-        }
     }
 
     private void addFilter() {
         addTxt("Sender", mbChannel, this, progData.filmFilterWorker.getActFilterSettings().channelVisProperty());
-        addTxt("Thema", cboTheme, this, progData.filmFilterWorker.getActFilterSettings().themeVisProperty());
+
+        BooleanProperty b = new SimpleBooleanProperty();
+        b.bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty()
+                .and(progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty().not())
+        );
+        addTxt("Thema", cboTheme, this, b);
+
+        b = new SimpleBooleanProperty();
+        b.bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty()
+                .and(progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty())
+        );
+        addTxt("Thema exakt", cboThemeExact, this, b);
+
         addTxt("Thema oder Titel", cboThemeTitle, this, progData.filmFilterWorker.getActFilterSettings().themeTitleVisProperty());
         addTxt("Titel", cboTitle, this, progData.filmFilterWorker.getActFilterSettings().titleVisProperty());
         addTxt("Irgendwo", cboSomewhere, this, progData.filmFilterWorker.getActFilterSettings().somewhereVisProperty());

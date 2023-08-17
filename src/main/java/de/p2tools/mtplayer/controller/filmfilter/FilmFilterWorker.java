@@ -66,7 +66,7 @@ public final class FilmFilterWorker {
                 }
             }, (FilmFilter tp) -> new Observable[]{tp.nameProperty()});
 
-    private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
+    private boolean theme = false, themeExact = false, themeTitle = false, title = false, somewhere = false, url = false;
 
     public FilmFilterWorker() {
         filmFilterBackward.addListener((ListChangeListener<FilmFilter>) c -> {
@@ -233,7 +233,7 @@ public final class FilmFilterWorker {
 
         actFilterSettings.setChannelAndVis(abo.getChannel());
         actFilterSettings.setThemeAndVis(abo.getTheme());
-        actFilterSettings.setThemeExact(abo.isThemeExact());
+        actFilterSettings.setThemeIsExact(abo.isThemeExact());
         actFilterSettings.setThemeTitleAndVis(abo.getThemeTitle());
         actFilterSettings.setTitleAndVis(abo.getTitle());
 
@@ -305,14 +305,19 @@ public final class FilmFilterWorker {
             return;
         }
 
-        if (!sf.isThemeExact() && checkText(sfB.themeProperty(), sf.themeProperty(), sfB, sf, thema)) {
+        if (!sf.getThemeIsExact() && checkText(sfB.themeProperty(), sf.themeProperty(), sfB, sf, theme)) {
             setFalse();
-            thema = true;
+            theme = true;
             return;
         }
-        if (checkText(sfB.themeTitleProperty(), sf.themeTitleProperty(), sfB, sf, themaTitle)) {
+        if (sf.getThemeIsExact() && checkText(sfB.themeExactProperty(), sf.themeExactProperty(), sfB, sf, themeExact)) {
             setFalse();
-            themaTitle = true;
+            themeExact = true;
+            return;
+        }
+        if (checkText(sfB.themeTitleProperty(), sf.themeTitleProperty(), sfB, sf, themeTitle)) {
+            setFalse();
+            themeTitle = true;
             return;
         }
         if (checkText(sfB.titleProperty(), sf.titleProperty(), sfB, sf, title)) {
@@ -336,8 +341,9 @@ public final class FilmFilterWorker {
     }
 
     private void setFalse() {
-        thema = false;
-        themaTitle = false;
+        theme = false;
+        themeExact = false;
+        themeTitle = false;
         title = false;
         somewhere = false;
         url = false;

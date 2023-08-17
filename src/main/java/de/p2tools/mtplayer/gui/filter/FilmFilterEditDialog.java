@@ -77,9 +77,9 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglThemeExact.disableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty().not());
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
 
-        tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().isThemeExact());
+        tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().getThemeIsExact());
         tglThemeExact.selectedProperty().addListener((observable, oldValue, newValue) ->
-                progData.filmFilterWorker.getActFilterSettings().themeExactProperty().setValue(!newValue));
+                progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty().setValue(!newValue));
 
         v.getChildren().add(tglThemeExact);
         vBox.getChildren().add(v);

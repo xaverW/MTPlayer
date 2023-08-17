@@ -23,11 +23,8 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
-    final int MAX_FILTER_HISTORY = 15;
+    public static final int MAX_FILTER_HISTORY = 15;
     private final StringProperty strSearchProperty;
     private final ProgData progData;
 
@@ -41,12 +38,6 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
             getItems().add(new P2CboSearcher());
         }
         init();
-    }
-
-    public void addSearchStrings(List<String> list) {
-        List<P2CboSearcher> sList = new ArrayList<>();
-        list.forEach(s -> sList.add(new P2CboSearcher(s)));
-        getItems().setAll(sList);
     }
 
     private void init() {
@@ -73,12 +64,7 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
                 progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
             }
         });
-        strSearchProperty.addListener((u, o, n) -> {
-            if (isEditable()) {
-                getEditor().setText(strSearchProperty.getValue());
-            } else {
-            }
-        });
+        strSearchProperty.addListener((u, o, n) -> getEditor().setText(strSearchProperty.getValue()));
         getEditor().setText(strSearchProperty.getValue());
     }
 

@@ -116,7 +116,7 @@ public class AboDialogController extends PDialogExtra {
 
         final String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         final String theme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
-        final boolean themeExact = filmFilter.isThemeExact();
+        final boolean themeExact = filmFilter.getThemeIsExact();
         final String title = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
         final String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
         final String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere() : "";
