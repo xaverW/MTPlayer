@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.filter.P2CboSearcher;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.ComboBox;
@@ -30,7 +29,6 @@ import java.util.List;
 public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
     final int MAX_FILTER_HISTORY = 15;
     private final StringProperty strSearchProperty;
-
     private final ProgData progData;
 
     public P2CboStringSearch(ProgData progData, StringProperty strSearchProperty) {
@@ -39,7 +37,7 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
         setEditable(true);
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         setVisibleRowCount(MAX_FILTER_HISTORY);
-        for (int i = 0; i < 15; ++i) {
+        for (int i = 0; i < MAX_FILTER_HISTORY; ++i) {
             getItems().add(new P2CboSearcher());
         }
         init();
@@ -57,15 +55,15 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
             if (newValue == null) {
                 return;
             }
-
-            System.out.println("===> new Value: " + newValue);
+            if (!this.isShowing()) {
+                // dann ist eine Auswahl aus der Combo
+                addLastFilter();
+            }
             regEx.checkPattern();
             strSearchProperty.setValue(getEditor().getText());
-            addLastFilter();
         });
         getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
                     if (getSelectionModel().getSelectedIndex() >= 0) {
-                        strSearchProperty.setValue(getSelectionModel().getSelectedItem().value);
                         progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
                     }
                 }
@@ -75,7 +73,6 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
                 progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
             }
         });
-
         strSearchProperty.addListener((u, o, n) -> {
             if (isEditable()) {
                 getEditor().setText(strSearchProperty.getValue());
@@ -85,70 +82,24 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
         getEditor().setText(strSearchProperty.getValue());
     }
 
-    private boolean stop = false;
-
     private synchronized void addLastFilter() {
         final String filterStr = getEditor().getText();
-
         if (filterStr == null || filterStr.isEmpty()) {
             System.out.println("=====> null/empty");
             return;
         }
 
-        for (int i = getItems().size() - 2; i >= 1; --i) {
-            getItems().get(i + 1).value = getItems().get(i).value;
+        P2CboSearcher tmp = getItems().get(1);
+        if (filterStr.contains(tmp.getValue())) {
+            // dann wird der erste damit ersetzt
+            tmp.setValue(filterStr);
+            return;
         }
-        getItems().get(1).value = filterStr;
 
-        stop = false;
+        // dann wird jetzt einfach weitergeschaltet
+        for (int i = getItems().size() - 2; i >= 1; --i) {
+            getItems().get(i + 1).setValue(getItems().get(i).getValue());
+        }
+        getItems().get(1).setValue(filterStr);
     }
-
-
-//    private synchronized void addLastFilter_() {
-//        if (stop) {
-//            System.out.println("==========");
-//            System.out.println(" stop ");
-//            System.out.println("==========");
-//            return;
-//        }
-//        stop = true;
-//        final String filterStr = strSearchProperty.getValueSafe();
-//
-//        if (filterStr == null || filterStr.isEmpty()) {
-//            System.out.println("=====> null/empty");
-//            stop = false;
-//            return;
-//        }
-//
-//        final ObservableList<String> filterList = FXCollections.observableArrayList();
-//        filterList.addAll(getItems());
-//
-//        if (filterList.size() <= 1) {
-//            if (filterList.stream().noneMatch(string -> string.equals(filterStr))) {
-//                // dann gibts schon mal keine doppelte
-//                filterList.add(1, filterStr);
-//                setItems(filterList);
-//            }
-//            stop = false;
-//            return;
-//        }
-//
-//        System.out.println("==Filter== " + ++filter);
-//        if (filterStr.contains(filterList.get(1))) {
-//            // aktueller Filter enthält den letzten Filter: also weiter getippt
-//            filterList.remove(1);
-//            filterList.add(1, filterStr);
-//        } else {
-//            filterList.add(1, filterStr);
-//        }
-//        while (filterList.size() >= MAX_FILTER_HISTORY) {
-//            filterList.remove(filterList.size() - 1); // den letzten entfernen
-//        }
-//        setItems(filterList);
-//        stop = false;
-//    }
-
-    int filter = 0;
-
-
 }

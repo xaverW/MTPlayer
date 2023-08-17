@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filmfilter.P2CboSearcher;
 import de.p2tools.mtplayer.controller.filmfilter.P2CboStringSearch;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ListChangeListener;

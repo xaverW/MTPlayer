@@ -15,15 +15,26 @@
  */
 
 
-package de.p2tools.mtplayer.gui.filter;
+package de.p2tools.mtplayer.controller.filmfilter;
 
-public class P2CboSearcher implements Comparable<P2CboSearcher> {
-    public String value = "";
+import javafx.scene.control.Label;
+
+public class P2CboSearcher extends Label implements Comparable<P2CboSearcher> {
+    private String value = "";
 
     public P2CboSearcher() {
     }
 
     public P2CboSearcher(String value) {
+        setValue(value);
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        setText(value);
         this.value = value;
     }
 
