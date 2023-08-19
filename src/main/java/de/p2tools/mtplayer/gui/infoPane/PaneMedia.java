@@ -283,7 +283,7 @@ public class PaneMedia extends VBox {
 
     private void initTableAbo() {
         final TableColumn<HistoryData, String> themeColumn = new TableColumn<>("Thema");
-        themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(45.0 / 100));
+        themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(35.0 / 100));
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("special-column-style");
 
@@ -293,7 +293,7 @@ public class PaneMedia extends VBox {
         titleColumn.getStyleClass().add("special-column-style");
 
         final TableColumn<HistoryData, Date> dateColumn = new TableColumn<>("Datum");
-        dateColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(10.0 / 100));
+        dateColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(15.0 / 100));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.setSortType(TableColumn.SortType.DESCENDING);
         dateColumn.getStyleClass().add("alignCenter");
