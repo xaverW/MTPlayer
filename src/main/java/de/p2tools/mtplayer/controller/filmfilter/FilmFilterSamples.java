@@ -40,7 +40,7 @@ public class FilmFilterSamples {
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
@@ -80,7 +80,7 @@ public class FilmFilterSamples {
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
@@ -120,7 +120,7 @@ public class FilmFilterSamples {
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
@@ -160,7 +160,7 @@ public class FilmFilterSamples {
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
 
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("Nachrichten");
@@ -202,7 +202,7 @@ public class FilmFilterSamples {
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
 
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("Europa:Brexit");
@@ -245,7 +245,7 @@ public class FilmFilterSamples {
         sf.setChannelVis(true);
         sf.setChannel("ard,zdf");
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(false);
@@ -286,7 +286,7 @@ public class FilmFilterSamples {
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("Sport");
         sf.setTitleVis(false);
@@ -327,7 +327,7 @@ public class FilmFilterSamples {
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(false);
@@ -369,7 +369,7 @@ public class FilmFilterSamples {
         sf.setChannelVis(true);
         sf.setChannel("ard,zdf");
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(false);
@@ -412,7 +412,7 @@ public class FilmFilterSamples {
         sf.setChannelVis(true);
         sf.setChannel("");
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(false);
@@ -455,7 +455,7 @@ public class FilmFilterSamples {
         sf.setChannelVis(true);
         sf.setChannel("");
         sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
+        sf.setThemeExact(true);
         sf.setThemeTitleVis(true);
         sf.setThemeTitle("");
         sf.setTitleVis(true);

@@ -22,8 +22,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.ComboBox;
 
-import java.util.Objects;
-
 public class P2CboStringSearchExact extends ComboBox<String> {
     private final StringProperty strSearchProperty;
     private final ProgData progData;
@@ -38,20 +36,26 @@ public class P2CboStringSearchExact extends ComboBox<String> {
     }
 
     private void init() {
-        progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty()
+        progData.filmFilterWorker.getActFilterSettings().themeExactProperty()
                 .addListener((observable, oldValue, newValue) -> addCboThemeItem());
         addCboThemeItem();
         progData.worker.getThemeForChannelList().addListener((ListChangeListener<String>) c -> {
-            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
+            if (!progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
+                // dann ist nur beim Umschalten
+                return;
+            }
             getItems().setAll(progData.worker.getThemeForChannelList());
-            valueProperty().setValue(progData.filmFilterWorker.getActFilterSettings().getThemeExact());
-            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
         });
 
         getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!Objects.equals(oldValue, newValue) && newValue != null) {
+                    if (!progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
+                        // dann ist nur beim Umschalten
+                        return;
+                    }
+                    if (this.isShowing() ||
+                            newValue == null && !strSearchProperty.getValueSafe().isEmpty() ||
+                            newValue != null && !strSearchProperty.getValueSafe().equals(newValue)) {
                         strSearchProperty.setValue(newValue);
-                        progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
                     }
                 }
         );
@@ -62,12 +66,12 @@ public class P2CboStringSearchExact extends ComboBox<String> {
     }
 
     private void addCboThemeItem() {
-        if (progData.filmFilterWorker.getActFilterSettings().getThemeIsExact()) {
+        if (progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
             // dann die channels eintragen
             getItems().addAll(progData.worker.getThemeForChannelList());
-        } else {
+//        } else {
             // dann freie Suche
-            getItems().clear();
+//            getItems().clear();
         }
     }
 }

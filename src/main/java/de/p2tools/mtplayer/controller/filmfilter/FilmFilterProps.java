@@ -36,9 +36,8 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
     private final StringProperty channel = new SimpleStringProperty();
 
     private final BooleanProperty themeVis = new SimpleBooleanProperty(false);
-    private final BooleanProperty themeIsExact = new SimpleBooleanProperty(false);
+    private final BooleanProperty themeExact = new SimpleBooleanProperty(false);
     private final StringProperty theme = new SimpleStringProperty();
-    private final StringProperty themeExact = new SimpleStringProperty();
 
     private final BooleanProperty themeTitleVis = new SimpleBooleanProperty(true);
     private final StringProperty themeTitle = new SimpleStringProperty();
@@ -81,13 +80,13 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
 
     private final IntegerProperty blacklistOnOff = new SimpleIntegerProperty(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
 
-    public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeIsExact, themeTitleVis,
+    public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeExact, themeTitleVis,
             titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis,
             minMaxTimeVis, minMaxTimeInvert, showDateVis,
             onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyActHistory, notVis,
             notAbo, notHistory, notDouble, notGeo, notFuture};
 
-    public StringProperty[] sfStringPropArr = {name, channel, theme, themeExact, themeTitle, title, somewhere, url, showDate};
+    public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url, showDate};
     public IntegerProperty[] sfIntegerPropArr = {timeRange, minDur, maxDur, minTime, maxTime, blacklistOnOff};
 
     @Override
@@ -97,9 +96,8 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
         list.add(new Config_boolProp("channelVis", channelVis));
         list.add(new Config_stringProp("channel", channel));
         list.add(new Config_boolProp("themeVis", themeVis));
-        list.add(new Config_boolProp("themeIsExact", themeIsExact));
+        list.add(new Config_boolProp("themeExact", themeExact));
         list.add(new Config_stringProp("theme", theme));
-        list.add(new Config_stringProp("themeExact", themeExact));
         list.add(new Config_boolProp("themeTitleVis", themeTitleVis));
         list.add(new Config_stringProp("themeTitle", themeTitle));
         list.add(new Config_boolProp("titleVis", titleVis));
@@ -242,16 +240,16 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
         this.themeVis.set(themeVis);
     }
 
-    public boolean getThemeIsExact() {
-        return themeIsExact.get();
+    public boolean isThemeExact() {
+        return themeExact.get();
     }
 
-    public BooleanProperty themeIsExactProperty() {
-        return themeIsExact;
+    public BooleanProperty themeExactProperty() {
+        return themeExact;
     }
 
-    public void setThemeIsExact(boolean themeIsExact) {
-        this.themeIsExact.set(themeIsExact);
+    public void setThemeExact(boolean themeExact) {
+        this.themeExact.set(themeExact);
     }
 
     public String getTheme() {
@@ -264,18 +262,6 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
 
     public void setTheme(String theme) {
         this.theme.set(theme);
-    }
-
-    public String getThemeExact() {
-        return themeExact.getValueSafe();
-    }
-
-    public StringProperty themeExactProperty() {
-        return themeExact;
-    }
-
-    public void setThemeExact(String themeExact) {
-        this.themeExact.set(themeExact);
     }
 
     public boolean isThemeTitleVis() {

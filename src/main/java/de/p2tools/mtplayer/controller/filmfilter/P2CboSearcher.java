@@ -34,8 +34,8 @@ public class P2CboSearcher extends Label implements Comparable<P2CboSearcher> {
     }
 
     public void setValue(String value) {
+        this.value = (value == null ? "" : value);
         setText(value);
-        this.value = value;
     }
 
     @Override

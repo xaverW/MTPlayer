@@ -66,7 +66,7 @@ public final class FilmFilterWorker {
                 }
             }, (FilmFilter tp) -> new Observable[]{tp.nameProperty()});
 
-    private boolean theme = false, themeExact = false, themeTitle = false, title = false, somewhere = false, url = false;
+    private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
 
     public FilmFilterWorker() {
         filmFilterBackward.addListener((ListChangeListener<FilmFilter>) c -> {
@@ -84,10 +84,6 @@ public final class FilmFilterWorker {
             }
         });
     }
-
-//    public void initFilter() {
-//        addBackward();
-//    }
 
     public BooleanProperty backwardProperty() {
         return backward;
@@ -159,7 +155,6 @@ public final class FilmFilterWorker {
         int id = 1;
         boolean found = false;
         while (!found) {
-
             final String name = "Filter " + id;
             if (!filmFilterList.stream().filter(f -> name.equalsIgnoreCase(f.getName())).findAny().isPresent()) {
                 ret = name;
@@ -179,7 +174,6 @@ public final class FilmFilterWorker {
         if (sf == null) {
             return false;
         }
-
         if (PAlert.showAlertOkCancel("Löschen", "Filterprofil löschen",
                 "Soll das Filterprofil: " +
                         sf.getName() + "\n" +
@@ -233,7 +227,7 @@ public final class FilmFilterWorker {
 
         actFilterSettings.setChannelAndVis(abo.getChannel());
         actFilterSettings.setThemeAndVis(abo.getTheme());
-        actFilterSettings.setThemeIsExact(abo.isThemeExact());
+        actFilterSettings.setThemeExact(abo.isThemeExact());
         actFilterSettings.setThemeTitleAndVis(abo.getThemeTitle());
         actFilterSettings.setTitleAndVis(abo.getTitle());
 
@@ -305,19 +299,14 @@ public final class FilmFilterWorker {
             return;
         }
 
-        if (!sf.getThemeIsExact() && checkText(sfB.themeProperty(), sf.themeProperty(), sfB, sf, theme)) {
+        if (!sf.isThemeExact() && checkText(sfB.themeProperty(), sf.themeProperty(), sfB, sf, thema)) {
             setFalse();
-            theme = true;
+            thema = true;
             return;
         }
-        if (sf.getThemeIsExact() && checkText(sfB.themeExactProperty(), sf.themeExactProperty(), sfB, sf, themeExact)) {
+        if (checkText(sfB.themeTitleProperty(), sf.themeTitleProperty(), sfB, sf, themaTitle)) {
             setFalse();
-            themeExact = true;
-            return;
-        }
-        if (checkText(sfB.themeTitleProperty(), sf.themeTitleProperty(), sfB, sf, themeTitle)) {
-            setFalse();
-            themeTitle = true;
+            themaTitle = true;
             return;
         }
         if (checkText(sfB.titleProperty(), sf.titleProperty(), sfB, sf, title)) {
@@ -341,9 +330,8 @@ public final class FilmFilterWorker {
     }
 
     private void setFalse() {
-        theme = false;
-        themeExact = false;
-        themeTitle = false;
+        thema = false;
+        themaTitle = false;
         title = false;
         somewhere = false;
         url = false;

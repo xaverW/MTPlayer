@@ -17,11 +17,15 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
+
+import java.util.Objects;
 
 public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
     public static final int MAX_FILTER_HISTORY = 15;
@@ -53,12 +57,21 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
             regEx.checkPattern();
             strSearchProperty.setValue(getEditor().getText());
         });
-        getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-                    if (getSelectionModel().getSelectedIndex() >= 0) {
-                        progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
+
+        getSelectionModel().selectedItemProperty().addListener(
+                (ChangeListener<Object>) (observable, oldValue, newValue) -> {
+                    // kann auch ein String!!!! sein
+                    if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+                        // dann melden
+                        if (this.isShowing() ||
+                                newValue != null
+                                        && newValue.getClass().equals(P2CboSearcher.class)
+                                        && !Objects.equals(strSearchProperty.getValueSafe(), ((P2CboSearcher) newValue).getValue())) {
+                            progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
+                        }
                     }
-                }
-        );
+                });
+
         setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();

@@ -194,10 +194,8 @@ public class PredicateFactory {
         Filter fastFilter = new Filter(fastFilmFilter.getFilterTerm(), true);
 
         // Thema
-        final boolean themeExact = filmFilter.getThemeIsExact();
-        String filterTheme = filmFilter.isThemeVis() ?
-                themeExact ? filmFilter.getThemeExact() : filmFilter.getTheme()
-                : "";
+        final boolean themeExact = filmFilter.isThemeExact();
+        String filterTheme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
         Filter fTheme = new Filter(filterTheme, themeExact, true);
 
         // ThemaTitel

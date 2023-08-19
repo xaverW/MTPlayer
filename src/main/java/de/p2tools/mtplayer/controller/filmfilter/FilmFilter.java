@@ -148,9 +148,6 @@ public final class FilmFilter extends FilmFilterProps {
         if (!getTheme().isEmpty()) {
             setTheme("");
         }
-        if (!getThemeExact().isEmpty()) {
-            setThemeExact("");
-        }
         if (!getThemeTitle().isEmpty()) {
             setThemeTitle("");
         }
@@ -176,7 +173,6 @@ public final class FilmFilter extends FilmFilterProps {
         // alle Filter löschen, Button Black bleibt, wie er ist
         setChannel("");
         setTheme("");
-        setThemeExact("");
         setThemeTitle("");
         setTitle("");
         setSomewhere("");
@@ -209,7 +205,6 @@ public final class FilmFilter extends FilmFilterProps {
     public boolean isTextFilterEmpty() {
         return getChannel().isEmpty() &&
                 getTheme().isEmpty() &&
-                getThemeExact().isEmpty() &&
                 getThemeTitle().isEmpty() &&
                 getTitle().isEmpty() &&
                 getSomewhere().isEmpty() &&
@@ -223,7 +218,6 @@ public final class FilmFilter extends FilmFilterProps {
 
     public void setThemeAndVis(String set) {
         setTheme(set);
-        setThemeExact(set);
         setThemeVis(true);
     }
 
@@ -250,7 +244,7 @@ public final class FilmFilter extends FilmFilterProps {
         setThemeTitleVis(true);
 
         setThemeVis(false);
-        setThemeIsExact(false);
+        setThemeExact(false);
         setTitleVis(false);
         setSomewhereVis(false);
         setUrlVis(false);
@@ -271,21 +265,10 @@ public final class FilmFilter extends FilmFilterProps {
         channelProperty().addListener(l -> setFilterChange(true));
 
         themeVisProperty().addListener(l -> setFilterChange(true));
-        themeIsExactProperty().addListener(l -> setFilterChange(true));
-        themeProperty().addListener(l -> setFilterChange(false));
-        themeExactProperty().addListener(l -> {
-            setFilterChange(true);
-//            // todo -> beim Ändern der "Thema" liste wird das 3xaufgerufen
-//            if (!themeExactProperty().getValue()) {
-//                PDebugLog.sysLog("Pause themeProperty");
-//                pause.setOnFinished(event -> reportFilterChange());
-//                pause.playFromStart();
-//
-//            } else {
-//                if (themeVisProperty().get()) {
-//                    reportFilterChange();
-//                }
-//            }
+        themeExactProperty().addListener(l -> setFilterChange(true));
+        themeProperty().addListener(l -> {
+            // wenn EXACT dann "startNow" TRUE -> dann Combo nicht editAble
+            setFilterChange(themeExactProperty().getValue());
         });
 
         themeTitleVisProperty().addListener(l -> setFilterChange(true));

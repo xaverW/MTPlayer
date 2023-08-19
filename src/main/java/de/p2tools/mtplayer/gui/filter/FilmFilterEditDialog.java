@@ -27,11 +27,11 @@ import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.*;
 
 
 public class FilmFilterEditDialog extends PDialogExtra {
@@ -67,21 +67,24 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglChannel.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().channelVisProperty());
         vBox.getChildren().add(tglChannel);
 
-        VBox v = new VBox(5);
+        // Thema
         PToggleSwitch tglTheme = new PToggleSwitch("Thema");
         tglTheme.setMaxWidth(Double.MAX_VALUE);
         tglTheme.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().themeVisProperty());
-        v.getChildren().add(tglTheme);
 
         PToggleSwitch tglThemeExact = new PToggleSwitch("  -> freie Suche mit Eingabefeld");
         tglThemeExact.disableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty().not());
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
-
-        tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().getThemeIsExact());
+        tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().isThemeExact());
         tglThemeExact.selectedProperty().addListener((observable, oldValue, newValue) ->
-                progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty().setValue(!newValue));
+                progData.filmFilterWorker.getActFilterSettings().themeExactProperty().setValue(!newValue));
 
-        v.getChildren().add(tglThemeExact);
+        VBox v = new VBox(5);
+        HBox h = new HBox(0);
+        h.setPadding(new Insets(0, 5, 0, 5));
+        h.getChildren().add(tglThemeExact);
+        HBox.setHgrow(tglThemeExact, Priority.ALWAYS);
+        v.getChildren().addAll(tglTheme, h);
         vBox.getChildren().add(v);
 
         PToggleSwitch tglThemeTitle = new PToggleSwitch("Thema oder Titel");
@@ -134,9 +137,10 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglNot.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().notVisProperty());
         vBox.getChildren().add(tglNot);
 
+
         //Wartezeit
-        CheckBox cbkReturn = new CheckBox("Suchbeginn erst mit \"Return\" starten");
-        cbkReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN);
+        PToggleSwitch tglReturn = new PToggleSwitch("In Textfeldern Suchbeginn erst mit \"Return\" starten");
+        tglReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN);
 
         Label lblValue = new Label();
         lblValue.setMinWidth(Region.USE_COMPUTED_SIZE);
@@ -156,6 +160,11 @@ public class FilmFilterEditDialog extends PDialogExtra {
         });
         slider.setValue(waitTime.getValue());
         setLabel(lblValue);
+        slider.disableProperty().bind(tglReturn.selectedProperty());
+        lblValue.disableProperty().bind(tglReturn.selectedProperty());
+
+        PToggleSwitch tglFirstTableRow = new PToggleSwitch("Nach einer Suche die erste Zeile\n" +
+                "in der Tabelle auswählen");
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(5);
@@ -165,18 +174,19 @@ public class FilmFilterEditDialog extends PDialogExtra {
         VBox.setVgrow(gridPane, Priority.ALWAYS);
 
         int row = 0;
-        gridPane.add(new Label("Suchbeginn nach Eingabe\nverzögern  um:"), 0, row);
+        gridPane.add(new Label("Suchbeginn nach Eingabe verzögern:"), 0, row);
         gridPane.add(lblValue, 1, row);
-        GridPane.setHalignment(lblValue, HPos.CENTER);
+        GridPane.setHalignment(lblValue, HPos.RIGHT);
 
         gridPane.add(slider, 0, ++row, 2, 1);
         GridPane.setHgrow(slider, Priority.ALWAYS);
-        slider.setPadding(new Insets(5, 0, 0, 0));
+        slider.setPadding(new Insets(0, 0, 0, 0));
 
-        gridPane.add(new Label(), 0, ++row);
+        ++row;
+        gridPane.add(tglReturn, 0, ++row, 2, 1);
 
-        gridPane.add(new Label("In Textfeldern:"), 0, ++row, 2, 1);
-        gridPane.add(cbkReturn, 0, ++row, 2, 1);
+        gridPane.add(new Label(), 0, ++row, 2, 1);
+        gridPane.add(tglFirstTableRow, 0, ++row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
                 PColumnConstraints.getCcPrefSize(),

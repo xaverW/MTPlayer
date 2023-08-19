@@ -135,7 +135,7 @@ public class AboListFactory {
         //abo anlegen, oder false wenns schon existiert
         String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         String theme = filmFilter.isThemeVis() ? filmFilter.getTheme().trim() : "";
-        boolean themeExact = filmFilter.getThemeIsExact();
+        boolean themeExact = filmFilter.isThemeExact();
         String title = filmFilter.isTitleVis() ? filmFilter.getTitle().trim() : "";
         String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle().trim() : "";
         String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere().trim() : "";
