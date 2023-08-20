@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.PMenuButton;
+import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;

@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
+import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.geometry.Insets;

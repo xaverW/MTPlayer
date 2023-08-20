@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.controller.filmfilter;
+package de.p2tools.mtplayer.gui.filter.helper;
 
 import javafx.scene.control.Label;
 

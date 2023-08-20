@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
+import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;

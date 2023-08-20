@@ -17,9 +17,10 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmfilter.P2CboStringSearch;
-import de.p2tools.mtplayer.controller.filmfilter.P2CboStringSearchExact;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
+import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearch;
+import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearchExact;
+import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
