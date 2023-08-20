@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -78,7 +79,7 @@ public class PaneBlackList {
         this.blackPaneButton = new BlackPaneButton();
 
         mbChannel = new PMenuButton(mbChannelProp,
-                ProgData.getInstance().worker.getAllChannelList(), true);
+                ThemeListFactory.allChannelList, true);
 
         if (controlBlackListNotFilmFilter) {
             sortedList = progData.blackList.getSortedList();

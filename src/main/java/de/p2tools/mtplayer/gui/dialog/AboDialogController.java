@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.alert.PAlert;
@@ -97,7 +98,7 @@ public class AboDialogController extends PDialogExtra {
         aboList.add(abo);
         this.aboCopy = abo.getCopy();
         this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList(), true);
+                ThemeListFactory.allChannelList, true);
 
         initDialog();
     }
@@ -112,7 +113,7 @@ public class AboDialogController extends PDialogExtra {
         aboList.add(abo);
         aboCopy = abo.getCopy();
         this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList(), true);
+                ThemeListFactory.allChannelList, true);
 
         final String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         final String theme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
@@ -149,7 +150,7 @@ public class AboDialogController extends PDialogExtra {
         this.aboList.addAll(aboList);
         this.aboCopy = aboList.get(0).getCopy();
         this.mbChannel = new PMenuButton(aboCopy.channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList(), true);
+                ThemeListFactory.allChannelList, true);
 
         initDialog();
     }

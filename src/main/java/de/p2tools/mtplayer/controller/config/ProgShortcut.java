@@ -186,9 +186,11 @@ public class ProgShortcut {
         HashSet<String> hashSet = new HashSet<>();
         for (PShortcut ps : shortcutList) {
             if (!hashSet.add(ps.getActShortcut())) {
+                hashSet.clear();
                 return true;
             }
         }
+        hashSet.clear();
         return false;
     }
 }

@@ -149,10 +149,9 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
     }
 
     private MediaCollectionData getMediaCollectionData(String collectionName) {
-        MediaCollectionData mediaCollectionData = this.stream()
+        return this.stream()
                 .filter(m -> m.getCollectionName().equals(collectionName))
                 .findAny().orElse(null);
-        return mediaCollectionData;
     }
 
     public void cleanUpInternalMediaCollectionData() {

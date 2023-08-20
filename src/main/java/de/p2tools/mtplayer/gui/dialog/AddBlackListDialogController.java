@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
@@ -70,7 +71,7 @@ public class AddBlackListDialogController extends PDialogExtra {
         this.title = blackData.getTitle();
         this.blackData = blackData;
         mbChannel = new PMenuButton(this.blackData.channelProperty(),
-                ProgData.getInstance().worker.getAllChannelList(), true);
+                ThemeListFactory.allChannelList, true);
 
         init(true);
     }

@@ -42,7 +42,7 @@ import java.util.List;
 
 public class LoadFilmFactory {
     private static LoadFilmFactory instance;
-    public static LoadFilmlist loadFilmlist; //erledigt das Update der Filmliste
+    public LoadFilmlist loadFilmlist; //erledigt das Update der Filmliste
     private static boolean doneAtProgramStart = false;
 
     public void loadFilmlistProgStart() {

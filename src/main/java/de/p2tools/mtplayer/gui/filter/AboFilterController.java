@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.filter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.geometry.Insets;
@@ -46,7 +47,7 @@ public class AboFilterController extends FilterController {
         progData = ProgData.getInstance();
         progData.aboFilterController = this;
         mbChannel = new PMenuButton(ProgConfig.FILTER_ABO_CHANNEL,
-                progData.worker.getChannelsForAbosList());
+                ThemeListFactory.channelsForAbosList);
 
 
         addCont("Abos für Sender", mbChannel, vBoxFilter);

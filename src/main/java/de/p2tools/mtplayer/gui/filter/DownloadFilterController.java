@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.filter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
@@ -55,7 +56,7 @@ public class DownloadFilterController extends FilterController {
         progData.downloadFilterController = this;
 
         mbChannel = new PMenuButton(ProgConfig.FILTER_DOWNLOAD_CHANNEL,
-                ProgData.getInstance().worker.getAllChannelList());
+                ThemeListFactory.allChannelList);
 
         initLayout();
         initFilter();
@@ -190,7 +191,7 @@ public class DownloadFilterController extends FilterController {
                 DownloadConstants.STATE_COMBO_ERROR);
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_STATE);
 
-        cboAbo.setItems(progData.worker.getAllAboNamesList());
+        cboAbo.setItems(ThemeListFactory.allAboNamesList);
         cboAbo.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_ABO);
     }
 

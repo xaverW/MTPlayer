@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.ComboBox;
@@ -39,12 +40,12 @@ public class P2CboStringSearchExact extends ComboBox<String> {
         progData.filmFilterWorker.getActFilterSettings().themeExactProperty()
                 .addListener((observable, oldValue, newValue) -> addCboThemeItem());
         addCboThemeItem();
-        progData.worker.getThemeForChannelList().addListener((ListChangeListener<String>) c -> {
+        ThemeListFactory.themeForChannelList.addListener((ListChangeListener<String>) c -> {
             if (!progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
                 // dann ist nur beim Umschalten
                 return;
             }
-            getItems().setAll(progData.worker.getThemeForChannelList());
+            getItems().setAll(ThemeListFactory.themeForChannelList);
         });
 
         getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -68,7 +69,7 @@ public class P2CboStringSearchExact extends ComboBox<String> {
     private void addCboThemeItem() {
         if (progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
             // dann die channels eintragen
-            getItems().addAll(progData.worker.getThemeForChannelList());
+            getItems().addAll(ThemeListFactory.themeForChannelList);
 //        } else {
             // dann freie Suche
 //            getItems().clear();

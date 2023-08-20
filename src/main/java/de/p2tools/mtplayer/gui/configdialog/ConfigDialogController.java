@@ -143,7 +143,7 @@ public class ConfigDialogController extends PDialogExtra {
     }
 
     private void onlyApply() {
-        if (!LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
+        if (!LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
             //dann wird die Blacklist immer neu gemacht, sonst wirds dann eh gemacht
             new Thread(() -> {
                 BlacklistFilterFactory.markFilmBlack(true);
@@ -158,7 +158,7 @@ public class ConfigDialogController extends PDialogExtra {
             progData.filmList.markGeoBlocked();
         }
 
-        if (blackChanged.get() && !LoadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
+        if (blackChanged.get() && !LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
             new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
         }

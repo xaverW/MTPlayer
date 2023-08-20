@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -150,7 +151,7 @@ public class PMenuButton extends MenuButton {
             cmi.getCheckBox().setSelected(false);
         }
         setText("");
-        ProgData.getInstance().worker.createThemeList("");
+        ThemeListFactory.createThemeList(ProgData.getInstance(), "");
     }
 
     private void setMenuText() {
@@ -161,7 +162,7 @@ public class PMenuButton extends MenuButton {
             }
         }
         setText(text.toString());
-        ProgData.getInstance().worker.createThemeList(text.toString());
+        ThemeListFactory.createThemeList(ProgData.getInstance(), text.toString());
     }
 
     private static class MenuItemClass {

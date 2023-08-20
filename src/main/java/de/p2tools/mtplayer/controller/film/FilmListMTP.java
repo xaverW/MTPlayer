@@ -256,7 +256,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
         }
 
         for (int i = 0; i < themePerChannel.length; ++i) {
-            themePerChannel[i] = tree[i].toArray(new String[tree[i].size()]);
+            themePerChannel[i] = tree[i].toArray(new String[0]);
             tree[i].clear();
             hashSet[i].clear();
         }

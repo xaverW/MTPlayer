@@ -42,11 +42,9 @@ import javafx.scene.text.Text;
 import org.controlsfx.control.Notifications;
 
 import java.awt.*;
-import java.util.HashSet;
 
 public class MTPTester {
     private final ProgInfoDialog progInfoDialog;
-    private final HashSet<String> hashSet = new HashSet<>();
     private final ProgData progData;
     private final TextArea textArea = new TextArea();
     private String text = "";

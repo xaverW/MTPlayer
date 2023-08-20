@@ -20,21 +20,13 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
-import java.text.Collator;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Worker {
-
-    private final ObservableList<String> allChannelList = FXCollections.observableArrayList("");
-    private final ObservableList<String> themeForChannelList = FXCollections.observableArrayList("");
-    private final ObservableList<String> channelsForAbosList = FXCollections.observableArrayList("");
-    private final ObservableList<String> allAboNamesList = FXCollections.observableArrayList("");
 
     private String downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
     private String downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
@@ -74,21 +66,6 @@ public class Worker {
         });
     }
 
-    public ObservableList<String> getAllChannelList() {
-        return allChannelList;
-    }
-
-    public ObservableList<String> getThemeForChannelList() {
-        return themeForChannelList;
-    }
-
-    public ObservableList<String> getChannelsForAbosList() {
-        return channelsForAbosList;
-    }
-
-    public ObservableList<String> getAllAboNamesList() {
-        return allAboNamesList;
-    }
 
     public void workOnFilmListLoadStart() {
         // the channel combo will be reset, therefore save the filter
@@ -98,10 +75,10 @@ public class Worker {
     public void workOnFilmListLoadFinished() {
         Platform.runLater(() -> {
             // alle Sender laden
-            allChannelList.setAll(Arrays.asList(progData.filmList.sender));
+            ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.filmList.sender));
 
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            createThemeList(progData.filmFilterWorker.getActFilterSettings().getChannel());
+            ThemeListFactory.createThemeList(progData, progData.filmFilterWorker.getActFilterSettings().getChannel());
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 DownloadFactory.searchForAbosAndMaybeStart();
             }
@@ -111,7 +88,7 @@ public class Worker {
         });
     }
 
-    private void saveFilter() {
+    public void saveFilter() {
         // Filter Downloads
         downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
         downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
@@ -119,83 +96,22 @@ public class Worker {
         aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
     }
 
-    private void resetFilter() {
+    public void resetFilter() {
         // nur wenn noch drin, dann wieder setzen
-        if (allAboNamesList.contains(downloadFilterAbo)) {
+        if (ThemeListFactory.allAboNamesList.contains(downloadFilterAbo)) {
             ProgConfig.FILTER_DOWNLOAD_ABO.setValue(downloadFilterAbo);
         } else {
             ProgConfig.FILTER_DOWNLOAD_ABO.setValue("");
         }
-        if (allChannelList.contains(downloadFilterChannel)) {
+        if (ThemeListFactory.allChannelList.contains(downloadFilterChannel)) {
             ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
         } else {
             ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue("");
         }
-        if (allChannelList.contains(aboFilterChannel)) {
+        if (ThemeListFactory.allChannelList.contains(aboFilterChannel)) {
             ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
         } else {
             ProgConfig.FILTER_ABO_CHANNEL.setValue("");
-        }
-    }
-
-    public void createThemeList(String sender) {
-        //toDo geht vielleicht besser??
-        PDuration.counterStart("createThemeList");
-        final ArrayList<String> theme = new ArrayList<>();
-        if (sender.isEmpty()) {
-            theme.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[0]));
-        } else {
-            makeTheme(sender.trim(), theme);
-        }
-
-        Collator collator = Collator.getInstance(Locale.GERMANY);
-        collator.setStrength(Collator.PRIMARY);
-        collator.setDecomposition(Collator.CANONICAL_DECOMPOSITION);
-
-        Comparator<String> comparator = (arg1, arg2) -> {
-            if (arg1.startsWith("\"") || arg1.startsWith("#") || arg1.startsWith("„")) {
-                arg1 = arg1.substring(1);
-            }
-            if (arg2.startsWith("\"") || arg2.startsWith("#") || arg2.startsWith("„")) {
-                arg2 = arg2.substring(1);
-            }
-
-            return collator.compare(arg1, arg2);
-        };
-        theme.sort(comparator);
-
-        Platform.runLater(() -> {
-            saveFilter();
-            themeForChannelList.setAll(theme);
-//            this.progData.filmFilterWorker.addBackward();
-            resetFilter();
-        });
-        PDuration.counterStop("createThemeList");
-    }
-
-    private void makeTheme(String sender, ArrayList<String> theme) {
-        if (sender.contains(",")) {
-            String[] senderArr = sender.toLowerCase().split(",");
-            final TreeSet<String> tree = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-            tree.add("");
-
-            for (int i = 1; i < progData.filmListFiltered.themePerChannel.length; ++i) {
-                for (String s : senderArr) {
-                    if (progData.filmListFiltered.sender[i].equalsIgnoreCase(s.trim())) {
-                        tree.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[i]));
-                        break;
-                    }
-                }
-            }
-            theme.addAll(tree);
-
-        } else {
-            for (int i = 1; i < progData.filmListFiltered.themePerChannel.length; ++i) {
-                if (progData.filmListFiltered.sender[i].equalsIgnoreCase(sender)) {
-                    theme.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[i]));
-                    break;
-                }
-            }
         }
     }
 
@@ -204,8 +120,8 @@ public class Worker {
         final ArrayList<String> listAboName = progData.aboList.getAboNameList();
         Platform.runLater(() -> {
             saveFilter();
-            channelsForAbosList.setAll(listAboChannel);
-            allAboNamesList.setAll(listAboName);
+            ThemeListFactory.channelsForAbosList.setAll(listAboChannel);
+            ThemeListFactory.allAboNamesList.setAll(listAboName);
             resetFilter();
         });
     }

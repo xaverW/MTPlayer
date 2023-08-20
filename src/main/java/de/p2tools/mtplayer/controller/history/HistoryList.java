@@ -145,7 +145,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     public synchronized void addFilmDataListToHistory(List<FilmDataMTP> filmList) {
         // eine Liste Filme in die History schreiben
-
         if (filmList == null || filmList.isEmpty()) {
             return;
         }
@@ -177,12 +176,12 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         writeToFile(list, true);
+        list.clear();
         PDuration.counterStop("addFilmDataToHistory");
     }
 
     public synchronized void addDownloadDataListToHistory(ArrayList<DownloadData> downloadList) {
         // eine Liste Downloads in die History schreiben
-
         if (downloadList == null || downloadList.isEmpty()) {
             return;
         }
@@ -219,6 +218,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         writeToFile(list, true);
+        list.clear();
         PDuration.counterStop("addDownloadDataListToHistory");
     }
 
@@ -228,7 +228,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     //===============
     public synchronized void removeHistoryDataFromHistory(ArrayList<HistoryData> historyDataList) {
         // Historydaten aus der History löschen und File wieder schreiben
-
         if (historyDataList == null || historyDataList.isEmpty()) {
             return;
         }
@@ -248,12 +247,12 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         });
 
         removeFromHistory(hash);
+        hash.clear();
         PDuration.counterStop("History: removeDataFromHistory");
     }
 
     public synchronized void removeFilmDataFromHistory(ArrayList<FilmDataMTP> filmList) {
         // eine Liste Filme aus der History löschen und File wieder schreiben
-
         if (filmList == null || filmList.isEmpty()) {
             return;
         }
@@ -273,12 +272,12 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         });
 
         removeFromHistory(hash);
+        hash.clear();
         PDuration.counterStop("History: removeDataFromHistory");
     }
 
     public synchronized void removeDownloadDataFromHistory(List<DownloadData> downloadList) {
         // eine Liste Downloads aus der History löschen und File wieder schreiben
-
         if (downloadList == null || downloadList.isEmpty()) {
             return;
         }
@@ -298,13 +297,13 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         });
 
         removeFromHistory(hash);
+        hash.clear();
         PDuration.counterStop("History: removeDataFromHistory");
     }
 
     private void removeFromHistory(HashSet<String> removeUrlHash) {
         final ArrayList<HistoryData> newHistoryList = new ArrayList<>();
         found = false;
-
         PDuration.counterStart("History: removeFromHistory");
         PLog.sysLog("Aus Historyliste löschen: " + removeUrlHash.size() + ", löschen aus: " + fileName);
 

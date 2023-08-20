@@ -18,9 +18,9 @@
 package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.PMenuButton;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -56,7 +56,7 @@ public class BlackPaneFilterGrid {
     public BlackPaneFilterGrid(TableView<BlackData> tableView, BlackList list) {
         this.tableView = tableView;
         this.list = list;
-        mbFilterChannel = new PMenuButton(mbFilterChannelProp, ProgData.getInstance().worker.getAllChannelList());
+        mbFilterChannel = new PMenuButton(mbFilterChannelProp, ThemeListFactory.allChannelList);
     }
 
     SplitPane addFilterGrid(VBox vBox, boolean controlBlackListNotFilmFilter) {
