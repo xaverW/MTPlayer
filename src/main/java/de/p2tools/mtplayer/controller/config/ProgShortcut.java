@@ -25,6 +25,10 @@ import java.util.HashSet;
 
 public class ProgShortcut {
 
+    public static final PShortcut SHORTCUT_CENTER_GUI =
+            new PShortcut(ProgConfig.SHORTCUT_CENTER_GUI, ProgConfig.SHORTCUT_CENTER_INIT,
+                    "Center Programm",
+                    "Das Programmfenster wird auf dem Bildschirm zentriert positioniert.");
     // Menü
     public static final PShortcut SHORTCUT_SEARCH_MEDIACOLLECTION =
             new PShortcut(ProgConfig.SHORTCUT_SEARCH_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_MEDIA_COLLECTION_INIT,
@@ -146,6 +150,8 @@ public class ProgShortcut {
     private static final ObservableList<PShortcut> shortcutList = FXCollections.observableArrayList();
 
     public ProgShortcut() {
+        shortcutList.add(SHORTCUT_CENTER_GUI);
+
         shortcutList.add(SHORTCUT_SEARCH_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM_WAIT);
