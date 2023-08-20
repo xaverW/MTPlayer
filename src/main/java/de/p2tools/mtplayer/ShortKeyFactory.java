@@ -36,6 +36,18 @@ public class ShortKeyFactory {
         KeyCombination kc;
         Runnable rn;
 
+        // quitt and wait
+        pShortcut = ProgShortcut.SHORTCUT_QUIT_PROGRAM_WAIT;
+        kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
+        rn = MTPlayerFactory::quitAndWait;
+        scene.getAccelerators().put(kc, rn);
+
+        // Center GUI
+        pShortcut = ProgShortcut.SHORTCUT_CENTER_GUI;
+        kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
+        rn = MTPlayerFactory::centerGui;
+        scene.getAccelerators().put(kc, rn);
+
         // Info
         pShortcut = ProgShortcut.SHORTCUT_SHOW_INFOS;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());

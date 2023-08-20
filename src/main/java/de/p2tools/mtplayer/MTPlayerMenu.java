@@ -63,19 +63,13 @@ public class MTPlayerMenu extends MenuButton {
         miQuit.setOnAction(e -> ProgQuit.quit(false));
         PShortcutWorker.addShortCut(miQuit, ProgShortcut.SHORTCUT_QUIT_PROGRAM);
 
-        //Menüpunkt ist nur, dass das Tastenkürzel dafür funkt., wird aber sonst nicht angezeigt
-        final MenuItem miQuitWait = new MenuItem("Beenden, laufende Downloads abwarten");
-        miQuitWait.setVisible(false); //ist wegen des shortcuts, der zusätzliche Menüpunkt verwirrt nur
-        miQuitWait.setOnAction(e -> ProgQuit.quit(true));
-        PShortcutWorker.addShortCut(miQuitWait, ProgShortcut.SHORTCUT_QUIT_PROGRAM_WAIT);
-
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);
         getStyleClass().addAll("btnFunction", "btnFunc-2");
         setText("");
         setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU_TOP.getImageView());
         getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode, addHelp(progData),
-                new SeparatorMenuItem(), miQuit, miQuitWait);
+                new SeparatorMenuItem(), miQuit);
     }
 
     private Menu addHelp(ProgData progData) {

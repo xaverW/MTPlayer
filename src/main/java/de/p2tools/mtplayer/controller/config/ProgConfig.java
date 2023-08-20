@@ -347,6 +347,10 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty FILTER_DOWNLOAD_ABO = addStrProp("filter-download-abo");
     public static StringProperty FILTER_DOWNLOAD_STATE = addStrProp("filter-download-state");
 
+    // Shortcuts, Programmweit
+    public static String SHORTCUT_CENTER_INIT = "Ctrl+Shift+C";
+    public static StringProperty SHORTCUT_CENTER_GUI = addStrProp("SHORTCUT_CENTER_GUI", SHORTCUT_CENTER_INIT);
+
     // Shorcuts Hauptmenü
     public static String SHORTCUT_QUIT_PROGRAM_INIT = "Ctrl+Q";
     public static StringProperty SHORTCUT_QUIT_PROGRAM = addStrProp("SHORTCUT_QUIT_PROGRAM", SHORTCUT_QUIT_PROGRAM_INIT);

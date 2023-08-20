@@ -17,12 +17,21 @@
 
 package de.p2tools.mtplayer;
 
+import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 
 public class MTPlayerFactory {
     private MTPlayerFactory() {
+    }
+
+    public static void quitAndWait() {
+        ProgQuit.quit(true);
+    }
+
+    public static void centerGui() {
+        ProgData.getInstance().primaryStage.centerOnScreen();
     }
 
     public static void setFilter() {
