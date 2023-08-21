@@ -163,6 +163,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty TIP_OF_DAY_DATE = addStrProp("tip-of-day-date"); //Datum des letzten Tips
     public static IntegerProperty SYSTEM_FILTER_WAIT_TIME = addIntProp("system-filter-wait-time", 100);
     public static BooleanProperty SYSTEM_FILTER_RETURN = addBoolProp("system-filter-return", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_FILTER_FIRST_ROW = addBoolProp("system-filter-first-row", Boolean.FALSE);
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStrProp("system-download-dir-new-version", "");
 
     // Fenstereinstellungen
@@ -348,7 +349,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty FILTER_DOWNLOAD_STATE = addStrProp("filter-download-state");
 
     // Shortcuts, Programmweit
-    public static String SHORTCUT_CENTER_INIT = "Ctrl+Shift+C";
+    public static String SHORTCUT_CENTER_INIT = "Ctrl+W";
     public static StringProperty SHORTCUT_CENTER_GUI = addStrProp("SHORTCUT_CENTER_GUI", SHORTCUT_CENTER_INIT);
 
     // Shorcuts Hauptmenü
