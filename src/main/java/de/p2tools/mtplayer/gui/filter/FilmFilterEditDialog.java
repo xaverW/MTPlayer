@@ -163,8 +163,9 @@ public class FilmFilterEditDialog extends PDialogExtra {
         slider.disableProperty().bind(tglReturn.selectedProperty());
         lblValue.disableProperty().bind(tglReturn.selectedProperty());
 
-        PToggleSwitch tglFirstTableRow = new PToggleSwitch("Nach einer Suche die erste Zeile\n" +
+        PToggleSwitch tglFirstTableRow = new PToggleSwitch("Nach der Suche immer die erste Zeile\n" +
                 "in der Tabelle auswählen");
+        tglFirstTableRow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_FIRST_ROW);
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(5);

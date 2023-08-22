@@ -159,7 +159,13 @@ public class FilmGuiController extends AnchorPane {
 
     private void initListener() {
         ProgConfig.FILM_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
-        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> selectLastShown());
+//        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
+//            selectLastShown();
+//        });
+        tableView.getItems().addListener((ListChangeListener<FilmDataMTP>) c -> {
+            selectLastShown();
+        });
+
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
                 ProgConfig.FILM_GUI_DIVIDER_ON.set(true);
@@ -246,48 +252,66 @@ public class FilmGuiController extends AnchorPane {
     private void setWasLastShown(FilmDataMTP mtp) {
         // die Filme vor dem letzten angezeigten Film markieren
         boolean set = true;
-        for (int i = 0; i < tableView.getItems().size(); ++i) {
-            FilmDataMTP f = tableView.getItems().get(i);
-            if (f == mtp) {
-                // dann ist der Start
+        for (FilmDataMTP filmDataMTP : sortedList) {
+            if (filmDataMTP == mtp) {
+                // dann ist es der Start
                 set = false;
             }
-            f.setWasHere(set);
+            filmDataMTP.setWasHere(set);
         }
     }
 
     private void selectLastShown() {
-        // den letzten Film vor dem zuvor angezeigten setzen
+        // bei der Blacklist kommt das außer der Reihe
+
+//        if (Platform.isFxApplicationThread()) {
+//            selectLastShown_();
+//            return;
+//        }
         Platform.runLater(() -> {
-            // bei der Blacklist kommt das außer der Reihe
-            if (tableView.getItems().isEmpty()) {
-                return;
-            }
-
-            if (tableView.getSelectionModel().getSelectedItem() != null) {
-                // dann ist schon was selektiert, passt.
-                tableView.scrollTo(tableView.getSelectionModel().getSelectedItem());
-                return;
-            }
-
-            boolean found = false;
-            for (int i = tableView.getItems().size() - 1; i >= 0; --i) {
-                FilmDataMTP f = tableView.getItems().get(i);
-                if (f.isWasHere()) {
-                    //dann haben wir den ersten
-                    tableView.getSelectionModel().select(f);
-                    tableView.scrollTo(f);
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                // dann wurde der erste Tabelleneintrag entfernt
-                tableView.getSelectionModel().select(0);
-                tableView.scrollTo(0);
-            }
+            // todo: fx20 kann das nicht!!!!!!!!!!!
+            selectLastShown_();
         });
+    }
+
+    private void selectLastShown_() {
+        // nach dem Filtern/ändern der Filmliste wird ... in der Tabelle selektiert
+        if (tableView.getItems().isEmpty()) {
+            return;
+        }
+
+        if (ProgConfig.SYSTEM_FILTER_FIRST_ROW.getValue()) {
+            // dann immer die erste Zeile
+            tableView.getSelectionModel().select(0);
+            tableView.scrollTo(0);
+            return;
+        }
+
+        FilmDataMTP filmDataMTP = tableView.getSelectionModel().getSelectedItem();
+        if (filmDataMTP != null) {
+            // dann ist schon was selektiert, passt.
+            tableView.scrollTo(filmDataMTP);
+            return;
+        }
+
+        // und JETZT wird gearbeitet
+        boolean found = false;
+        for (int i = sortedList.size() - 1; i >= 0; --i) {
+            FilmDataMTP f = sortedList.get(i);
+            if (f.isWasHere()) {
+                //dann haben wir den ersten
+                tableView.getSelectionModel().select(f);
+                tableView.scrollTo(f);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            // dann wurde der erste Tabelleneintrag entfernt
+            tableView.getSelectionModel().select(0);
+            tableView.scrollTo(0);
+        }
     }
 
     private void setFilmInfos(FilmDataMTP film) {

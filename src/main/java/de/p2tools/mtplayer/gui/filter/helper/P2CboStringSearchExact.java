@@ -42,15 +42,31 @@ public class P2CboStringSearchExact extends ComboBox<String> {
         addCboThemeItem();
         ThemeListFactory.themeForChannelList.addListener((ListChangeListener<String>) c -> {
             if (!progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
-                // dann ist nur beim Umschalten
+                // dann betrifft es das nicht
                 return;
             }
+
+            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
+            String oldValue = getSelectionModel().getSelectedItem(); // kann NULL sein, wenn nicht ausgewählt
             getItems().setAll(ThemeListFactory.themeForChannelList);
+            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
+
+            // und jetzt sel, wenn nicht mehr in der Liste ändert sich der sel!!!
+            if (oldValue == null || oldValue.isEmpty()) {
+                // dann war nichts ausgewählt, hat sich nichts geändert
+                return;
+            }
+            if (ThemeListFactory.themeForChannelList.contains(oldValue)) {
+                getSelectionModel().select(oldValue);
+            } else {
+                getSelectionModel().select("");
+                progData.filmFilterWorker.postFilterChange();
+            }
         });
 
         getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                     if (!progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
-                        // dann ist nur beim Umschalten
+                        // dann betrifft es das nicht
                         return;
                     }
                     if (this.isShowing() ||

@@ -84,7 +84,6 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
     private synchronized void addLastFilter() {
         final String filterStr = getEditor().getText();
         if (filterStr == null || filterStr.isEmpty()) {
-            System.out.println("=====> null/empty");
             return;
         }
 

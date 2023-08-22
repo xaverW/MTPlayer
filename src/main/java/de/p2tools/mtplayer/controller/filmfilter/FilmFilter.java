@@ -27,7 +27,7 @@ import javafx.util.Duration;
 public final class FilmFilter extends FilmFilterProps {
 
     private boolean filterIsOff = true; // Filter ist EIN - meldet Änderungen
-    private final PauseTransition pause = new PauseTransition(Duration.millis(200)); // nach Ablauf wird Änderung gemeldet - oder nach Return
+    private final PauseTransition pause = new PauseTransition(Duration.millis(300)); // nach Ablauf wird Änderung gemeldet - oder nach Return
 
     public FilmFilter() {
         initFilter();
@@ -40,12 +40,12 @@ public final class FilmFilter extends FilmFilterProps {
     }
 
     public void reportFilterReturn() {
-        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-            System.out.println("----------------------");
-            System.out.println("reportFilterReturn");
-            System.out.println(filterIsOff ? "filter off" : "filter on");
-            System.out.println("     -----------------");
-        }
+//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
+//            System.out.println("----------------------");
+//            System.out.println("reportFilterReturn");
+//            System.out.println(filterIsOff ? "filter off" : "filter on");
+//            System.out.println("     -----------------");
+//        }
         PLog.debugLog("reportFilterReturn");
         pause.stop();
         MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
@@ -53,25 +53,24 @@ public final class FilmFilter extends FilmFilterProps {
 
     private void reportFilterChange() {
         // da wird die Änderung gemeldet
-        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-            System.out.println("----------------------");
-            System.out.println("reportFilterChange");
-            System.out.println(filterIsOff ? "filter off" : "filter on");
-            System.out.println("     -----------------");
-        }
+//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
+//            System.out.println("----------------------");
+//            System.out.println("reportFilterChange");
+//            System.out.println(filterIsOff ? "filter off" : "filter on");
+//            System.out.println("     -----------------");
+//        }
         if (!filterIsOff) {
-            System.out.println("->reportFilterChange");
             MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
         }
     }
 
     private void reportBlacklistChange() {
-        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-            System.out.println("----------------------");
-            System.out.println("reportBlacklistChange");
-            System.out.println(filterIsOff ? "filter off" : "filter on");
-            System.out.println("     -----------------");
-        }
+//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
+//            System.out.println("----------------------");
+//            System.out.println("reportBlacklistChange");
+//            System.out.println(filterIsOff ? "filter off" : "filter on");
+//            System.out.println("     -----------------");
+//        }
         if (!filterIsOff) { // todo ??
             BlacklistFilterFactory.getBlackFilteredFilmlist();
             MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
@@ -80,12 +79,12 @@ public final class FilmFilter extends FilmFilterProps {
 
     private void setFilterChange(boolean startNow) {
         //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
-        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-            System.out.println("----------------------");
-            System.out.println("setFilterChange");
-            System.out.println(filterIsOff ? "filter off" : "filter on");
-            System.out.println("     -----------------");
-        }
+//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
+//            System.out.println("----------------------");
+//            System.out.println("setFilterChange");
+//            System.out.println(filterIsOff ? "filter off" : "filter on");
+//            System.out.println("     -----------------");
+//        }
 
         if (!startNow && ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
             //dann wird erst nach "RETURN" gestartet
@@ -100,21 +99,22 @@ public final class FilmFilter extends FilmFilterProps {
     public void switchFilterOff(boolean switchOff) {
         pause.stop();
         this.filterIsOff = switchOff;
-        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-            System.out.println("----------------------");
-            System.out.println("switchFilterOff");
-            System.out.println(filterIsOff ? "filter off" : "filter on");
-            System.out.println("     -----------------");
-        }
+//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
+//            System.out.println("----------------------");
+//            System.out.println("switchFilterOff");
+//            System.out.println(filterIsOff ? "filter off" : "filter on");
+//            System.out.println("     -----------------");
+//        }
     }
 
     public void turnOffFilter() {
-        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-            System.out.println("----------------------");
-            System.out.println("turnOffFilter");
-            System.out.println(filterIsOff ? "filter off" : "filter on");
-            System.out.println("     -----------------");
-        }        // alle Filter "abschalten" und löschen
+//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
+//            System.out.println("----------------------");
+//            System.out.println("turnOffFilter");
+//            System.out.println(filterIsOff ? "filter off" : "filter on");
+//            System.out.println("     -----------------");
+//        }
+        // alle Filter "abschalten" und löschen
         clearFilter();
 
         setChannelVis(false);
@@ -135,12 +135,12 @@ public final class FilmFilter extends FilmFilterProps {
     }
 
     public void clearTxtFilter() {
-        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-            System.out.println("----------------------");
-            System.out.println("clearTxtFilter");
-            System.out.println(filterIsOff ? "filter off" : "filter on");
-            System.out.println("     -----------------");
-        }
+//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
+//            System.out.println("----------------------");
+//            System.out.println("clearTxtFilter");
+//            System.out.println(filterIsOff ? "filter off" : "filter on");
+//            System.out.println("     -----------------");
+//        }
         pause.setDuration(Duration.millis(0));
         if (!getChannel().isEmpty()) {
             setChannel("");
@@ -164,12 +164,12 @@ public final class FilmFilter extends FilmFilterProps {
     }
 
     public void clearFilter() {
-        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-            System.out.println("----------------------");
-            System.out.println("clearFilter");
-            System.out.println(filterIsOff ? "filter off" : "filter on");
-            System.out.println("     -----------------");
-        }
+//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
+//            System.out.println("----------------------");
+//            System.out.println("clearFilter");
+//            System.out.println(filterIsOff ? "filter off" : "filter on");
+//            System.out.println("     -----------------");
+//        }
         // alle Filter löschen, Button Black bleibt, wie er ist
         setChannel("");
         setTheme("");

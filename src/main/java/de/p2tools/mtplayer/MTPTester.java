@@ -20,6 +20,7 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.mtplayer.gui.dialog.propose.ProposeDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
@@ -30,6 +31,7 @@ import de.p2tools.p2lib.guitools.pnotification.P2Notification;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.tools.duration.PDuration;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -157,6 +159,33 @@ public class MTPTester {
             btnTryNotify.setOnAction(a -> {
                 tray();
             });
+
+
+            gridPane.add(new Label(), 0, ++row);
+            Button btnTable = new Button("Table");
+            gridPane.add(btnTable, 0, ++row);
+            btnTable.setOnAction(a -> {
+                Platform.runLater(() -> {
+
+                    FilmDataMTP filmDataMTP = ProgData.getInstance().filmGuiController.tableView.getSelectionModel().getSelectedItem();
+                    if (filmDataMTP != null) {
+                        // dann ist schon was selektiert, passt.
+                        int i = ProgData.getInstance().filmGuiController.tableView.getSelectionModel().getSelectedIndex();
+//            PTableFactory.refreshTable(tableView);
+//            tableView.getSelectionModel().clearAndSelect(i);
+//            tableView.scrollTo(i);
+                        ProgData.getInstance().filmGuiController.tableView.scrollTo(filmDataMTP);
+                        System.out.println("aus 2: " + ProgData.getInstance().filmGuiController.tableView.getItems().size());
+                        System.out.println(i);
+                        return;
+                    }
+
+
+                });
+
+            });
+
+
         }
     }
 
