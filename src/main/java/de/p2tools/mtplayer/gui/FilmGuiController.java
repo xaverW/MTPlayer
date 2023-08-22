@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
+import de.p2tools.mtplayer.controller.filmfilter.PredicateFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.FilmInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
@@ -33,7 +34,6 @@ import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ContextMenu;
@@ -162,9 +162,9 @@ public class FilmGuiController extends AnchorPane {
 //        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
 //            selectLastShown();
 //        });
-        tableView.getItems().addListener((ListChangeListener<FilmDataMTP>) c -> {
-            selectLastShown();
-        });
+//        tableView.getItems().addListener((ListChangeListener<FilmDataMTP>) c -> {
+//            selectLastShown();
+//        });
 
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
@@ -249,6 +249,17 @@ public class FilmGuiController extends AnchorPane {
         });
     }
 
+    public void setFilterPred() {
+//        FilmDataMTP filmDataMTP = tableView.getSelectionModel().getSelectedItem();
+//        tableView.setItems(emptyList);
+//        System.out.println("tableView: " + tableView.getItems().size());
+        progData.filmListFiltered.filteredListSetPred(PredicateFactory.getPredicate(progData));
+//        tableView.setItems(sortedList);
+//        tableView.getSelectionModel().select(filmDataMTP);
+//        System.out.println("tableView: " + tableView.getItems().size());
+        selectLastShown();
+    }
+
     private void setWasLastShown(FilmDataMTP mtp) {
         // die Filme vor dem letzten angezeigten Film markieren
         boolean set = true;
@@ -264,14 +275,11 @@ public class FilmGuiController extends AnchorPane {
     private void selectLastShown() {
         // bei der Blacklist kommt das außer der Reihe
 
-//        if (Platform.isFxApplicationThread()) {
-//            selectLastShown_();
-//            return;
-//        }
-        Platform.runLater(() -> {
-            // todo: fx20 kann das nicht!!!!!!!!!!!
+        if (Platform.isFxApplicationThread()) {
             selectLastShown_();
-        });
+            return;
+        }
+        Platform.runLater(this::selectLastShown_);
     }
 
     private void selectLastShown_() {
@@ -290,6 +298,7 @@ public class FilmGuiController extends AnchorPane {
         FilmDataMTP filmDataMTP = tableView.getSelectionModel().getSelectedItem();
         if (filmDataMTP != null) {
             // dann ist schon was selektiert, passt.
+            // todo: fx20 kann das nicht!!!!!!!!!!!
             tableView.scrollTo(filmDataMTP);
             return;
         }
@@ -297,11 +306,12 @@ public class FilmGuiController extends AnchorPane {
         // und JETZT wird gearbeitet
         boolean found = false;
         for (int i = sortedList.size() - 1; i >= 0; --i) {
-            FilmDataMTP f = sortedList.get(i);
-            if (f.isWasHere()) {
+            FilmDataMTP film = sortedList.get(i);
+            if (film.isWasHere()) {
                 //dann haben wir den ersten
-                tableView.getSelectionModel().select(f);
-                tableView.scrollTo(f);
+                // todo: fx20 kann das nicht!!!!!!!!!!!
+                tableView.getSelectionModel().select(film);
+                tableView.scrollTo(film);
                 found = true;
                 break;
             }

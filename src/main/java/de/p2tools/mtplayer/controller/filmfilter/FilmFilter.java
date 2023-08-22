@@ -27,7 +27,7 @@ import javafx.util.Duration;
 public final class FilmFilter extends FilmFilterProps {
 
     private boolean filterIsOff = true; // Filter ist EIN - meldet Änderungen
-    private final PauseTransition pause = new PauseTransition(Duration.millis(300)); // nach Ablauf wird Änderung gemeldet - oder nach Return
+    private final PauseTransition pause = new PauseTransition(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue())); // nach Ablauf wird Änderung gemeldet - oder nach Return
 
     public FilmFilter() {
         initFilter();

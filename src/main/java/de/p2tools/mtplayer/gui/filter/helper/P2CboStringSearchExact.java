@@ -46,10 +46,10 @@ public class P2CboStringSearchExact extends ComboBox<String> {
                 return;
             }
 
-            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
+//            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
             String oldValue = getSelectionModel().getSelectedItem(); // kann NULL sein, wenn nicht ausgewählt
             getItems().setAll(ThemeListFactory.themeForChannelList);
-            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
+//            progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
 
             // und jetzt sel, wenn nicht mehr in der Liste ändert sich der sel!!!
             if (oldValue == null || oldValue.isEmpty()) {
@@ -72,7 +72,7 @@ public class P2CboStringSearchExact extends ComboBox<String> {
                     if (this.isShowing() ||
                             newValue == null && !strSearchProperty.getValueSafe().isEmpty() ||
                             newValue != null && !strSearchProperty.getValueSafe().equals(newValue)) {
-                        strSearchProperty.setValue(newValue);
+                        strSearchProperty.setValue(newValue == null ? "" : newValue);
                     }
                 }
         );

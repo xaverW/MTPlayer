@@ -24,7 +24,6 @@ import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
-import javafx.beans.property.IntegerProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -37,7 +36,6 @@ import javafx.scene.layout.*;
 public class FilmFilterEditDialog extends PDialogExtra {
 
     final ProgData progData;
-    IntegerProperty waitTime = ProgConfig.SYSTEM_FILTER_WAIT_TIME;
 
     public FilmFilterEditDialog(ProgData progData) {
         super(progData.primaryStage, null, "Filtereinstellungen", true, true, DECO.NO_BORDER);
@@ -155,10 +153,10 @@ public class FilmFilterEditDialog extends PDialogExtra {
         slider.setShowTickLabels(true);
         slider.setSnapToTicks(true);
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            waitTime.setValue(Double.valueOf(slider.getValue()).intValue());
+            ProgConfig.SYSTEM_FILTER_WAIT_TIME.setValue(Double.valueOf(slider.getValue()).intValue());
             setLabel(lblValue);
         });
-        slider.setValue(waitTime.getValue());
+        slider.setValue(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
         setLabel(lblValue);
         slider.disableProperty().bind(tglReturn.selectedProperty());
         lblValue.disableProperty().bind(tglReturn.selectedProperty());
@@ -200,7 +198,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
     }
 
     private int setLabel(Label lblValue) {
-        int intValue = waitTime.getValue();
+        int intValue = ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue();
         lblValue.setText("  " + intValue + " ms");
         return intValue;
     }
