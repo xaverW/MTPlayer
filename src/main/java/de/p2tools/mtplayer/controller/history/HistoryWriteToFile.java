@@ -68,6 +68,7 @@ public class HistoryWriteToFile implements Runnable {
 
         // und jetzt schreiben
         writeHistoryDataToFile(list, append);
+        list.clear(); // wird nicht mehr gebraucht
 
         MTListener.notify(MTListener.EVENT_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
         PDuration.counterStop("doWork");

@@ -176,7 +176,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         writeToFile(list, true);
-        list.clear();
         PDuration.counterStop("addFilmDataToHistory");
     }
 
@@ -218,7 +217,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         writeToFile(list, true);
-        list.clear();
         PDuration.counterStop("addDownloadDataListToHistory");
     }
 

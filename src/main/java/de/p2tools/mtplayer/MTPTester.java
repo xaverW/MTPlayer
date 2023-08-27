@@ -19,31 +19,28 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
-import de.p2tools.mtplayer.gui.dialog.propose.ProposeDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
-import de.p2tools.p2lib.guitools.pnotification.P2Notification;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
+import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
+import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import org.controlsfx.control.Notifications;
 
 import java.awt.*;
+import java.util.function.Predicate;
 
 public class MTPTester {
     private final ProgInfoDialog progInfoDialog;
@@ -51,6 +48,7 @@ public class MTPTester {
     private final TextArea textArea = new TextArea();
     private String text = "";
     private final PMaskerPane maskerPane = new PMaskerPane();
+    private boolean ard = false;
 
     public MTPTester(final ProgData progData) {
         this.progData = progData;
@@ -82,110 +80,113 @@ public class MTPTester {
             final Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
 
-            Button btnMarkFilm = new Button("Diakrit");
-            btnMarkFilm.setMaxWidth(Double.MAX_VALUE);
-            btnMarkFilm.setOnAction(a -> check());
-
-            Button btnMarkBlack = new Button("MarkBlack");
-            btnMarkBlack.setMaxWidth(Double.MAX_VALUE);
-            btnMarkBlack.setOnAction(a -> new Thread(() ->
-                    BlacklistFilterFactory.markFilmBlack(true)).start());
+//            Button btnMarkFilm = new Button("Diakrit");
+//            btnMarkFilm.setMaxWidth(Double.MAX_VALUE);
+//            btnMarkFilm.setOnAction(a -> check());
+//
+//            Button btnMarkBlack = new Button("MarkBlack");
+//            btnMarkBlack.setMaxWidth(Double.MAX_VALUE);
+//            btnMarkBlack.setOnAction(a -> new Thread(() ->
+//                    BlacklistFilterFactory.markFilmBlack(true)).start());
 
 
             int row = 0;
-            gridPane.add(text, 0, row, 2, 1);
-            gridPane.add(btnMarkFilm, 0, ++row);
-            gridPane.add(btnMarkBlack, 0, ++row);
+//            gridPane.add(text, 0, row, 2, 1);
+//            gridPane.add(btnMarkFilm, 0, ++row);
+//            gridPane.add(btnMarkBlack, 0, ++row);
+//
+//            gridPane.add(textArea, 0, ++row, 2, 1);
 
-            gridPane.add(textArea, 0, ++row, 2, 1);
+//            Button btnShutDown = new Button("ShutDownDialog");
+//            btnShutDown.setOnAction(a -> new QuitDialogController(false));
+//            gridPane.add(new Label(), 0, ++row);
+//            gridPane.add(btnShutDown, 0, ++row);
+//
+//            Button btnCloseDialog = new Button("Alle Dialoge schließen");
+//            btnCloseDialog.setOnAction(a -> PDialogExtra.closeAllDialog());
+//            gridPane.add(new Label(), 0, ++row);
+//            gridPane.add(btnCloseDialog, 0, ++row);
+//
+//            gridPane.add(new Label(), 0, ++row);
+//            PToggleSwitch tglDownloading = new PToggleSwitch("ProgData.FILMLIST_IS_DOWNLOADING");
+//            tglDownloading.selectedProperty().bindBidirectional(ProgData.FILMLIST_IS_DOWNLOADING);
+//            gridPane.add(tglDownloading, 0, ++row);
+//
+//            gridPane.add(new Label(), 0, ++row);
+//            Button btnPropose = new Button("Film vorschlagen");
+//            gridPane.add(btnPropose, 0, ++row);
+//            btnPropose.setOnAction(a -> {
+//                new ProposeDialogController(progData, ProgConfig.PROPOSE_DIALOG_CONTROLLER_SIZE);
+//            });
 
-            Button btnShutDown = new Button("ShutDownDialog");
-            btnShutDown.setOnAction(a -> new QuitDialogController(false));
+//            gridPane.add(new Label(), 0, ++row);
+//            Button btnMTNotify1 = new Button("p2Notification");
+//            gridPane.add(btnMTNotify1, 0, ++row);
+//            btnMTNotify1.setOnAction(a -> {
+//                P2Notification.addNotification("Download beendet",
+//                        "text fjksdladf \n jfksalödfj \n jfksdalöjf \n jfksdalöfj ",
+//                        false);
+//            });
+//
+//
+//            gridPane.add(new Label(), 0, ++row);
+//            Button btnMTNotify2 = new Button("p2Notification");
+//            gridPane.add(btnMTNotify2, 0, ++row);
+//            btnMTNotify2.setOnAction(a -> {
+//                P2Notification.addNotification("Download beendet",
+//                        "text fjksdladf",
+//                        true);
+//            });
+//
+//            gridPane.add(new Label(), 0, ++row);
+//            Button btnNotify = new Button("controlFx");
+//            gridPane.add(btnNotify, 0, ++row);
+//            btnNotify.setOnAction(a -> {
+//                Notifications.create()
+//                        .title("Title Text")
+//                        .text("Hello World 0!")
+//                        .threshold(0, Notifications.create().title("Collapsed Notification"))
+//                        .darkStyle()
+//                        .showWarning();
+//
+//            });
+//
+//            gridPane.add(new Label(), 0, ++row);
+//            Button btnTryNotify = new Button("AWS Tray");
+//            gridPane.add(btnTryNotify, 0, ++row);
+//            btnTryNotify.setOnAction(a -> {
+//                tray();
+//            });
+
+
+            final CheckBox chkFilter = new CheckBox("Filtern");
+            final CheckBox chkSelect = new CheckBox("Select");
+            final Button btnTable = new Button("Table");
+
             gridPane.add(new Label(), 0, ++row);
-            gridPane.add(btnShutDown, 0, ++row);
-
-            Button btnCloseDialog = new Button("Alle Dialoge schließen");
-            btnCloseDialog.setOnAction(a -> PDialogExtra.closeAllDialog());
-            gridPane.add(new Label(), 0, ++row);
-            gridPane.add(btnCloseDialog, 0, ++row);
-
-            gridPane.add(new Label(), 0, ++row);
-            PToggleSwitch tglDownloading = new PToggleSwitch("ProgData.FILMLIST_IS_DOWNLOADING");
-            tglDownloading.selectedProperty().bindBidirectional(ProgData.FILMLIST_IS_DOWNLOADING);
-            gridPane.add(tglDownloading, 0, ++row);
-
-            gridPane.add(new Label(), 0, ++row);
-            Button btnPropose = new Button("Film vorschlagen");
-            gridPane.add(btnPropose, 0, ++row);
-            btnPropose.setOnAction(a -> {
-                new ProposeDialogController(progData, ProgConfig.PROPOSE_DIALOG_CONTROLLER_SIZE);
-            });
-
-            gridPane.add(new Label(), 0, ++row);
-            Button btnMTNotify1 = new Button("p2Notification");
-            gridPane.add(btnMTNotify1, 0, ++row);
-            btnMTNotify1.setOnAction(a -> {
-                P2Notification.addNotification("Download beendet",
-                        "text fjksdladf \n jfksalödfj \n jfksdalöjf \n jfksdalöfj ",
-                        false);
-            });
-
-
-            gridPane.add(new Label(), 0, ++row);
-            Button btnMTNotify2 = new Button("p2Notification");
-            gridPane.add(btnMTNotify2, 0, ++row);
-            btnMTNotify2.setOnAction(a -> {
-                P2Notification.addNotification("Download beendet",
-                        "text fjksdladf",
-                        true);
-            });
-
-            gridPane.add(new Label(), 0, ++row);
-            Button btnNotify = new Button("controlFx");
-            gridPane.add(btnNotify, 0, ++row);
-            btnNotify.setOnAction(a -> {
-                Notifications.create()
-                        .title("Title Text")
-                        .text("Hello World 0!")
-                        .threshold(0, Notifications.create().title("Collapsed Notification"))
-                        .darkStyle()
-                        .showWarning();
-
-            });
-
-            gridPane.add(new Label(), 0, ++row);
-            Button btnTryNotify = new Button("AWS Tray");
-            gridPane.add(btnTryNotify, 0, ++row);
-            btnTryNotify.setOnAction(a -> {
-                tray();
-            });
-
-
-            gridPane.add(new Label(), 0, ++row);
-            Button btnTable = new Button("Table");
             gridPane.add(btnTable, 0, ++row);
+            gridPane.add(chkFilter, 1, row);
+            gridPane.add(chkSelect, 2, row);
+
             btnTable.setOnAction(a -> {
-                Platform.runLater(() -> {
-
-                    FilmDataMTP filmDataMTP = ProgData.getInstance().filmGuiController.tableView.getSelectionModel().getSelectedItem();
-                    if (filmDataMTP != null) {
-                        // dann ist schon was selektiert, passt.
-                        int i = ProgData.getInstance().filmGuiController.tableView.getSelectionModel().getSelectedIndex();
-//            PTableFactory.refreshTable(tableView);
-//            tableView.getSelectionModel().clearAndSelect(i);
-//            tableView.scrollTo(i);
-                        ProgData.getInstance().filmGuiController.tableView.scrollTo(filmDataMTP);
-                        System.out.println("aus 2: " + ProgData.getInstance().filmGuiController.tableView.getItems().size());
-                        System.out.println(i);
-                        return;
+                TableView<FilmDataMTP> tableView = ProgData.getInstance().filmGuiController.tableView;
+                if (chkFilter.isSelected()) {
+                    ard = !ard;
+                    if (ard) {
+                        progData.filmListFiltered.filteredListSetPred(getPredicate("ard"));
+                    } else {
+                        progData.filmListFiltered.filteredListSetPred(getPredicate("zdf"));
                     }
+                }
 
-
-                });
-
+                if (chkSelect.isSelected()) {
+                    int i = tableView.getItems().size();
+                    i = (int) (Math.random() * (i + 1));
+                    System.out.println(i);
+                    tableView.getSelectionModel().clearAndSelect(i);
+                    tableView.scrollTo(i);
+                }
             });
-
-
         }
     }
 
@@ -230,5 +231,12 @@ public class MTPTester {
 
     public void close() {
         maskerPane.switchOffMasker();
+    }
+
+    private static Predicate<FilmData> getPredicate(String channel) {
+        Filter fChannel = new Filter(channel, true);
+        Predicate<FilmData> predicate = film -> true;
+        predicate = predicate.and(f -> FilmFilterCheck.checkMatchChannelSmart(fChannel, f));
+        return predicate;
     }
 }
