@@ -19,21 +19,26 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
+import de.p2tools.p2lib.guitools.pnotification.P2Notification;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -129,14 +134,29 @@ public class MTPTester {
 //            });
 //
 //
-//            gridPane.add(new Label(), 0, ++row);
-//            Button btnMTNotify2 = new Button("p2Notification");
-//            gridPane.add(btnMTNotify2, 0, ++row);
-//            btnMTNotify2.setOnAction(a -> {
-//                P2Notification.addNotification("Download beendet",
-//                        "text fjksdladf",
-//                        true);
-//            });
+            gridPane.add(new Label(), 0, ++row);
+            Button btnMTNotify2 = new Button("p2Notification");
+            gridPane.add(btnMTNotify2, 0, ++row);
+            btnMTNotify2.setOnAction(a -> {
+                Button btnFilmStart = new Button();
+                btnFilmStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
+                btnFilmStart.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_PLAY.getImageView());
+
+                Button btnOpenDirectory = new Button();
+                btnOpenDirectory.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
+                btnOpenDirectory.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
+
+                HBox hBoxBottom = new HBox();
+                hBoxBottom.setSpacing(P2LibConst.DIST_HBOX);
+                hBoxBottom.setAlignment(Pos.CENTER_RIGHT);
+                hBoxBottom.getChildren().addAll(btnFilmStart, btnOpenDirectory);
+
+                P2Notification.addNotification("Download beendet",
+                        "text fjksdladf\ntext aölskdjf ",
+                        P2Notification.STATE.INFO, hBoxBottom);
+            });
 //
 //            gridPane.add(new Label(), 0, ++row);
 //            Button btnNotify = new Button("controlFx");
@@ -150,7 +170,7 @@ public class MTPTester {
 //                        .showWarning();
 //
 //            });
-//
+
 //            gridPane.add(new Label(), 0, ++row);
 //            Button btnTryNotify = new Button("AWS Tray");
 //            gridPane.add(btnTryNotify, 0, ++row);

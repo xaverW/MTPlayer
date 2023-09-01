@@ -17,10 +17,17 @@
 package de.p2tools.mtplayer.controller.starter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.POpen;
 import de.p2tools.p2lib.guitools.pnotification.P2Notification;
+import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.HBox;
 
 
 public class MTNotification {
@@ -30,15 +37,38 @@ public class MTNotification {
                 "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getSize(), true) + P2LibConst.LINE_SEPARATOR +
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
-        add(text, error);
+        Button btnFilmStart = new Button();
+        btnFilmStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
+        btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
+        btnFilmStart.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_PLAY.getImageView());
+        btnFilmStart.setOnAction((ActionEvent event) -> {
+            POpen.playStoredFilm(download.getDestPathFile(),
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        });
+
+        Button btnOpenDirectory = new Button();
+        btnOpenDirectory.getStyleClass().addAll("btnFunction", "btnFuncTable");
+        btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
+        btnOpenDirectory.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
+        btnOpenDirectory.setOnAction((ActionEvent event) -> {
+            POpen.openDir(download.getDestPath(),
+                    ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        });
+
+        HBox hBoxBottom = new HBox();
+        hBoxBottom.setSpacing(P2LibConst.DIST_HBOX);
+        hBoxBottom.setAlignment(Pos.CENTER_RIGHT);
+        hBoxBottom.getChildren().addAll(btnFilmStart, btnOpenDirectory);
+        add(text, error, hBoxBottom);
     }
 
-    private static void add(String text, boolean error) {
+    private static void add(String text, boolean error, HBox hBoxBottom) {
         if (!ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getValue()) {
             return;
         }
 
-        P2Notification.addNotification("Download beendet", text, error);
+        P2Notification.addNotification("Download beendet", text,
+                error ? P2Notification.STATE.ERROR : P2Notification.STATE.INFO, hBoxBottom);
     }
 }
 

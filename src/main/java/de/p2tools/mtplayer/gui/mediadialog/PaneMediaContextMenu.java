@@ -53,7 +53,7 @@ public class PaneMediaContextMenu {
             }
         });
 
-        MenuItem miPlay = new MenuItem("gespeicherten Film abspielen");
+        MenuItem miPlay = new MenuItem("Gespeicherten Film abspielen");
         miPlay.setOnAction(a -> {
             String path = mediaData.getPath();
             String name = mediaData.getName();

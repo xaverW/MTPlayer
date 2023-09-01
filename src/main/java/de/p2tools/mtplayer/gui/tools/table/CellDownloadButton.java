@@ -126,7 +126,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                 } else if (item == DownloadConstants.STATE_FINISHED) {
                     btnFilmStart = new Button("");
                     btnFilmStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                    btnFilmStart.setTooltip(new Tooltip("gespeicherten Film abspielen"));
+                    btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
                     btnFilmStart.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_PLAY.getImageView());
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
