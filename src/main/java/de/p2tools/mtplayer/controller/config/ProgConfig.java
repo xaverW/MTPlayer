@@ -39,6 +39,7 @@ import org.apache.commons.lang3.SystemUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class ProgConfig extends PDataProgConfig {
 
@@ -221,7 +222,7 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
 
     // Gui Download
-    public static StringProperty DOWNLOAD_DIALOG_PATH_SAVING = addStrProp("download-dialog-path-saving"); // gesammelten Downloadpfade im Downloaddialog
+    public static List<String> DOWNLOAD_DIALOG_DOWNLOAD_PATH = addListProp("download-dialog-download-path"); // gesammelten Downloadpfade im Downloaddialog
     public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStrProp("download-dialog-hd-height-low", FilmDataMTP.RESOLUTION_NORMAL);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addBoolProp("download-dialog-start-download-now", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addBoolProp("download-dialog-start-download-not", Boolean.FALSE);

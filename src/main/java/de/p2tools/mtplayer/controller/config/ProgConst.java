@@ -49,8 +49,6 @@ public class ProgConst {
     public static final int SYSTEM_LOAD_FILMLIST_MIN_DURATION = 30; // Filter Programmstart: nur Filme mit mind. xx Minuten länge laden
     public static final int SYSTEM_FILTER_MAX_WAIT_TIME = 2_000; // 1.000 ms
 
-    public static final int DOWNLOAD_DIALOG_LOAD_MAX_FILESIZE_FROM_WEB = 10;
-
     //Mediensammlung
     public static final int MEDIA_COLLECTION_FILESIZE_ALL_FILES = 0;
     public static final int MEDIA_COLLECTION_FILESIZE_MAX = 20;

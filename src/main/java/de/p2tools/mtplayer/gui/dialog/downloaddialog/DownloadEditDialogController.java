@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.dialog;
+package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -439,8 +440,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         ++row;
 
         // gespeicherte Pfade eintragen
-        final String[] p = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
-        cbPath.getItems().addAll(p);
+        cbPath.getItems().addAll(ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH);
 
         if (download.getDestPath().isEmpty()) {
             cbPath.getSelectionModel().selectFirst();

@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.dialog;
+package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -198,8 +198,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
     private void initPathAndName() {
         // gespeicherte Pfade eintragen
-        final String[] p = ProgConfig.DOWNLOAD_DIALOG_PATH_SAVING.get().split("<>");
-        cbPath.getItems().addAll(p);
+        cbPath.getItems().addAll(ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH);
 
         if (download.getDestPath().isEmpty()) {
             cbPath.getSelectionModel().selectFirst();

@@ -20,8 +20,8 @@ package de.p2tools.mtplayer.controller.film;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.gui.dialog.DownloadAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
+import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadAddDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 

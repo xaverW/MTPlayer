@@ -15,43 +15,38 @@
  */
 
 
-package de.p2tools.mtplayer.gui.dialog;
+package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import javafx.beans.property.BooleanProperty;
 
 import java.util.Arrays;
 
-class DownloadAddInfo {
+public class DownloadAddData {
     String fileSize_HD = "";
     String fileSize_high = "";
     String fileSize_small = "";
 
     String resolution = FilmDataMTP.RESOLUTION_HD;
-    boolean info, subtitle, subDisable = false;
+    boolean makeInfo, makeSubTitle, subIsDisabled = false;
 
     FilmDataMTP film;
     DownloadData download;
-    SetData psetData;
+    SetData setData;
 
     String path = "";
     String name = "";
 
-    BooleanProperty chkAll;
-    DownloadAddInfo[] downloadAddInfos;
+    DownloadAddData[] downloadAddDataArr;
 
-    public DownloadAddInfo(BooleanProperty chkAll, DownloadAddInfo[] downloadAddInfos) {
-        this.chkAll = chkAll;
-        this.downloadAddInfos = downloadAddInfos;
+    public DownloadAddData(DownloadAddData[] downloadAddDataArr) {
+        this.downloadAddDataArr = downloadAddDataArr;
     }
 
-
-    void setResolution(String resolution) {
-        if (chkAll.get()) {
-
-            Arrays.stream(downloadAddInfos).forEach(d -> {
+    void setResolution(String resolution, boolean all) {
+        if (all) {
+            Arrays.stream(downloadAddDataArr).forEach(d -> {
                 if (resolution.equals(FilmDataMTP.RESOLUTION_HD) && d.film.isHd()) {
                     d.resolution = FilmDataMTP.RESOLUTION_HD;
 
@@ -68,23 +63,32 @@ class DownloadAddInfo {
         }
     }
 
-    void setInfo(boolean info) {
-        if (chkAll.get()) {
-            Arrays.stream(downloadAddInfos).forEach(d -> d.info = info);
+    void setInfo(boolean info, boolean all) {
+        if (all) {
+            Arrays.stream(downloadAddDataArr).forEach(d -> d.makeInfo = info);
         } else {
-            this.info = info;
+            this.makeInfo = info;
         }
     }
 
-    void setSubtitle(boolean subtitle) {
-        if (chkAll.get()) {
-            Arrays.stream(downloadAddInfos).forEach(d -> {
-                if (!d.subDisable) {
-                    d.subtitle = subtitle;
+    void setSubtitle(boolean subtitle, boolean all) {
+        if (all) {
+            Arrays.stream(downloadAddDataArr).forEach(d -> {
+                if (d.subIsDisabled) {
+                    // dann immer false, gibts nicht
+                    d.makeSubTitle = false;
+                } else {
+                    d.makeSubTitle = subtitle;
                 }
             });
+
         } else {
-            this.subtitle = subtitle;
+            if (this.subIsDisabled) {
+                // dann immer false, gibts nicht
+                this.makeSubTitle = false;
+            } else {
+                this.makeSubTitle = subtitle;
+            }
         }
     }
 
@@ -92,9 +96,9 @@ class DownloadAddInfo {
         this.name = name;
     }
 
-    void setPath(String path) {
-        if (chkAll.get()) {
-            Arrays.stream(downloadAddInfos).forEach(d -> d.path = path);
+    void setPath(String path, boolean all) {
+        if (all) {
+            Arrays.stream(downloadAddDataArr).forEach(d -> d.path = path);
         } else {
             this.path = path;
         }

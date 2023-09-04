@@ -87,7 +87,8 @@ public class DownloadFactoryProgram {
         }
     }
 
-    private static void buildFileNamePath(DownloadData download, SetData setData, FilmDataMTP film, AboData abo, String nname, String ppath) {
+    private static void buildFileNamePath(DownloadData download, SetData setData, FilmDataMTP film,
+                                          AboData abo, String nname, String ppath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
         String name;
