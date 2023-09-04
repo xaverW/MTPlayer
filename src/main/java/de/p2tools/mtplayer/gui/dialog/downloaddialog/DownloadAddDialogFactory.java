@@ -37,9 +37,6 @@ import java.util.Date;
 
 public class DownloadAddDialogFactory {
 
-    public static int DOWNLOAD_ADD_DIALOG_MAX_PATH = 10;
-    public static int DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE = 5;
-
     private DownloadAddDialogFactory() {
     }
 

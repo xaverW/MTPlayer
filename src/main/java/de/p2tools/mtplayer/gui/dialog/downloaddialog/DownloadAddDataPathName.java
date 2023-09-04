@@ -104,7 +104,7 @@ public class DownloadAddDataPathName {
     public void pathChanged(int actFilmIsShown) {
         // beim Ändern der cbo oder manuellem Eintragen
         final String s = cboPath.getEditor().getText();
-        System.out.println("pathChanged; " + s);
+//        System.out.println("pathChanged; " + s);
         if (!cboPath.getItems().contains(s)) {
             cboPath.getItems().add(s);
         }

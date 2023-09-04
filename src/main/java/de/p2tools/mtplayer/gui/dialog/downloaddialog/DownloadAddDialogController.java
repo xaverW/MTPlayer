@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
 import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
@@ -195,7 +196,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             downloadAddInfosArr[i].name = downloadAddInfosArr[i].download.getDestFileName();
 
             // Dateigröße
-            if (i < DownloadAddDialogFactory.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
+            if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
                 downloadAddInfosArr[i].fileSize_HD = downloadAddInfosArr[i].film.isHd() ?
                         FilmFactory.getSizeFromWeb(downloadAddInfosArr[i].film, downloadAddInfosArr[i].film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD)) : "";
                 downloadAddInfosArr[i].fileSize_high = FilmFactory.getSizeFromWeb(downloadAddInfosArr[i].film,

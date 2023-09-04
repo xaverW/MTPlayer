@@ -91,6 +91,7 @@ public class ProgConst {
     public static final int MIN_DATEI_GROESSE_FILM = 256 * 1000;
 
     public static final int MAX_DEST_PATH_IN_DIALOG_DOWNLOAD = 10;
+    public static int DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE = 5;
 
     public static final double GUI_FILTER_DIVIDER_LOCATION = 0.3;
     public static final double GUI_INFO_DIVIDER_LOCATION = 0.7;
