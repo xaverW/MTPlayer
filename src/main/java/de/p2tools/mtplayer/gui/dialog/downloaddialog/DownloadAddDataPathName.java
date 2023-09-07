@@ -28,15 +28,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class DownloadAddDataPathName {
     private final ComboBox<String> cboPath;
     private final TextField txtName;
     private final CheckBox chkPathAll;
     private final Label lblFree;
-    private DownloadAddData[] downloadAddInfosArr;
+    private final DownloadAddData[] downloadAddInfosArr;
     private final ObservableList<String> pathList;
 
     public DownloadAddDataPathName(ComboBox<String> cboPath, TextField txtName,
@@ -66,12 +69,12 @@ public class DownloadAddDataPathName {
             pathList.add(path);
         }
 
-        Arrays.stream(downloadAddInfosArr).toList().forEach(f -> {
-            if (f.path.isEmpty()) {
-                f.setPath(pathList.get(0), false);
+        Arrays.stream(downloadAddInfosArr).toList().forEach(downloadAddData -> {
+            if (downloadAddData.path.isEmpty()) {
+                downloadAddData.setPath(pathList.get(0), false);
             }
-            if (!pathList.contains(f.path)) {
-                pathList.add(f.path);
+            if (!pathList.contains(downloadAddData.path)) {
+                pathList.add(downloadAddData.path);
             }
         });
 
@@ -101,10 +104,9 @@ public class DownloadAddDataPathName {
         }
     }
 
-    public void pathChanged(int actFilmIsShown) {
+    public void pathChanged(int actFilmIsShown, String actValue) {
         // beim Ändern der cbo oder manuellem Eintragen
-        final String s = cboPath.getEditor().getText();
-//        System.out.println("pathChanged; " + s);
+        final String s = cboPath.getValue();
         if (!cboPath.getItems().contains(s)) {
             cboPath.getItems().add(s);
         }
@@ -130,13 +132,16 @@ public class DownloadAddDataPathName {
 
     public void setUsedPaths() {
         // Dialog-Ende: Die verwendeten Pfade oben einfügen
-        Arrays.stream(downloadAddInfosArr).toList().forEach(downloadAddData -> {
-            ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.add(0, downloadAddData.path);
-        });
+        List<DownloadAddData> list = new ArrayList<>(Arrays.stream(downloadAddInfosArr).toList());
+        Collections.reverse(list);
+        list.forEach(downloadAddData -> ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.add(0, downloadAddData.path));
 
         // doppelte aussortieren
         final ArrayList<String> tmpPathList = new ArrayList<>();
         for (String s : ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH) {
+            if (s.endsWith(File.separator)) {
+                s = s.substring(0, s.length() - 1);
+            }
             if (!tmpPathList.contains(s)) {
                 tmpPathList.add(s);
             }

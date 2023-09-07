@@ -34,7 +34,6 @@ import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -288,15 +287,12 @@ public class DownloadAddDialogController extends PDialogExtra {
                 chkPathAll, lblFree, downloadAddInfosArr);
         downloadAddDataPathName.initPathAndName(actFilmIsShown);
 
-        cboPath.valueProperty().addListener((observable, oldValue, newValue) -> {
-            downloadAddDataPathName.pathChanged(actFilmIsShown);
-        });
-        cboPath.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+        cboPath.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null && newValue != null && !oldValue.equals(newValue)) {
-                downloadAddDataPathName.pathChanged(actFilmIsShown);
+                downloadAddDataPathName.pathChanged(actFilmIsShown, cboPath.getValue());
             }
         });
-        chkPathAll.setOnAction(a -> downloadAddDataPathName.pathChanged(actFilmIsShown));
+        chkPathAll.setOnAction(a -> downloadAddDataPathName.pathChanged(actFilmIsShown, cboPath.getValue()));
 
         txtName.textProperty().addListener((observable, oldValue, newValue) -> {
             downloadAddDataPathName.nameChanged(actFilmIsShown);
@@ -349,9 +345,6 @@ public class DownloadAddDialogController extends PDialogExtra {
                         "Pfad oder Name ist leer.");
 
             } else {
-                if (!d.path.substring(d.path.length() - 1).equals(File.separator)) {
-                    d.path += File.separator;
-                }
                 if (SetFactory.checkPathWritable(d.path)) {
                     ok = true;
                 } else {
