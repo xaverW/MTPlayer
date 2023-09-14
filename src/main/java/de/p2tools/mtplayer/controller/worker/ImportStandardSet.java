@@ -87,7 +87,7 @@ public class ImportStandardSet extends LinkedList<String[]> {
 
     private static boolean loadSetDataLocalFile(SetDataList setDataList, String file) throws IOException {
         PLog.sysLog("Sets laden von: " + file);
-        InputStreamReader is = new InputStreamReader(ProgConst.class.getResource(file).openStream(), StandardCharsets.UTF_8);
+        InputStreamReader is = new InputStreamReader(ClassLoader.getSystemResource(file).openStream(), StandardCharsets.UTF_8);
         ConfigFile configFile = new ConfigFile(is, false);
         configFile.addConfigs(setDataList);
         return ConfigReadFile.readConfig(configFile);

@@ -128,8 +128,8 @@ public class ProgTray {
             String resource = ProgConfig.SYSTEM_TRAY_ICON_PATH.getValueSafe();
             image = Toolkit.getDefaultToolkit().getImage(resource);
         } else {
-            String resource = "/de/p2tools/mtplayer/res/P2_24.png";
-            URL res = getClass().getResource(resource);
+            String resource = "de/p2tools/mtplayer/res/P2_24.png";
+            URL res = ClassLoader.getSystemResource(resource);
             image = Toolkit.getDefaultToolkit().getImage(res);
         }
 

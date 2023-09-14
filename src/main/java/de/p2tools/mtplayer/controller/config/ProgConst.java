@@ -74,9 +74,9 @@ public class ProgConst {
     public static final String PROGRAM_SET_URL_MAC = "https://www.p2tools.de/extra/mtplayer/v-6/pset_mac.xml";
 
     //todo: beim Umstellen auf MOD wieder prüfen
-    public static final String PSET_FILE_LINUX = "/de/p2tools/mtplayer/res/file/pset_linux.xml";
-    public static final String PSET_FILE_WINDOWS = "/de/p2tools/mtplayer/res/file/pset_windows.xml";
-    public static final String PSET_FILE_MAC = "/de/p2tools/mtplayer/res/file/pset_mac.xml";
+    public static final String PSET_FILE_LINUX = "de/p2tools/mtplayer/res/file/pset_linux.xml";
+    public static final String PSET_FILE_WINDOWS = "de/p2tools/mtplayer/res/file/pset_windows.xml";
+    public static final String PSET_FILE_MAC = "de/p2tools/mtplayer/res/file/pset_mac.xml";
 
     // ProgrammUrls
     public static final String ADRESSE_WEBSITE_VLC = "http://www.videolan.org";
