@@ -28,8 +28,8 @@ import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PTableFactory;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -42,13 +42,13 @@ import javafx.stage.Stage;
 
 public class BlackPaneButton {
 
-    ListenerLoadFilmlist listenerLoadFilmlist;
+    P2LoadListener listenerLoadFilmlist;
 
     public BlackPaneButton() {
     }
 
     void close() {
-        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.removeListenerLoadFilmlist(listenerLoadFilmlist);
+        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.removeListenerLoadFilmlist(listenerLoadFilmlist);
     }
 
     void addButton(Stage stage, VBox vBox, TableView<BlackData> tableView,
@@ -115,18 +115,18 @@ public class BlackPaneButton {
             blackDataChanged.set(true);
             list.clearList();
         });
-        listenerLoadFilmlist = new ListenerLoadFilmlist() {
+        listenerLoadFilmlist = new P2LoadListener() {
             @Override
-            public void start(ListenerFilmlistLoadEvent event) {
+            public void start(P2LoadEvent event) {
                 btnCountHits.setDisable(true);
             }
 
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(P2LoadEvent event) {
                 btnCountHits.setDisable(false);
             }
         };
-        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(listenerLoadFilmlist);
+        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(listenerLoadFilmlist);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, btnClear);

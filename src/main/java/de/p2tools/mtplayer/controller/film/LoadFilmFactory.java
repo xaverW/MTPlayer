@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller.film;
 
+
 import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.UpdateCheckFactory;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -29,9 +30,9 @@ import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.mtfilm.film.Filmlist;
 import de.p2tools.p2lib.mtfilm.film.FilmlistFactory;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.LoadFilmlist;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -99,9 +100,9 @@ public class LoadFilmFactory {
 
     private LoadFilmFactory(Filmlist<FilmDataMTP> filmlistNew, Filmlist<FilmDataMTP> filmlistDiff) {
         loadFilmlist = new LoadFilmlist(filmlistNew, filmlistDiff);
-        loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
             @Override
-            public synchronized void start(ListenerFilmlistLoadEvent event) {
+            public synchronized void start(P2LoadEvent event) {
                 ProgData.FILMLIST_IS_DOWNLOADING.setValue(true);
                 ProgData.getInstance().worker.workOnFilmListLoadStart();
                 if (event.progress == PROGRESS_INDETERMINATE) {
@@ -114,12 +115,12 @@ public class LoadFilmFactory {
             }
 
             @Override
-            public synchronized void progress(ListenerFilmlistLoadEvent event) {
+            public synchronized void progress(P2LoadEvent event) {
                 ProgData.getInstance().maskerPane.setMaskerProgress(event.progress, event.text);
             }
 
             @Override
-            public void loaded(ListenerFilmlistLoadEvent event) {
+            public void loaded(P2LoadEvent event) {
                 // wird nach dem Laden mehrfach aufgerufen
                 ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
                 ProgData.getInstance().maskerPane.setMaskerProgress(PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
@@ -127,7 +128,7 @@ public class LoadFilmFactory {
             }
 
             @Override
-            public synchronized void finished(ListenerFilmlistLoadEvent event) {
+            public synchronized void finished(P2LoadEvent event) {
                 PDuration.onlyPing("Filme geladen: Nachbearbeiten");
                 afterLoadingFilmList();
             }

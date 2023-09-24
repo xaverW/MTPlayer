@@ -25,8 +25,8 @@ import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -57,7 +57,7 @@ public class ConfigDialogController extends PDialogExtra {
     private ControllerSet controllerSet;
 
     private IntegerProperty propSelectedTab = ProgConfig.SYSTEM_CONFIG_DIALOG_TAB;
-    private ListenerLoadFilmlist listener;
+    private P2LoadListener listener;
     private final ProgData progData;
     private boolean blackListDialog = false;
     public static BooleanProperty dialogIsRunning = new SimpleBooleanProperty(false);
@@ -95,10 +95,10 @@ public class ConfigDialogController extends PDialogExtra {
         getMaskerPane().setButtonText("");
         btnStop.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
         btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
-        listener = new ListenerLoadFilmlist() {
+        listener = new P2LoadListener() {
             @Override
-            public void start(ListenerFilmlistLoadEvent event) {
-                if (event.progress == ListenerLoadFilmlist.PROGRESS_INDETERMINATE) {
+            public void start(P2LoadEvent event) {
+                if (event.progress == P2LoadListener.PROGRESS_INDETERMINATE) {
                     // ist dann die gespeicherte Filmliste
                     getMaskerPane().setButtonVisible(false);
                 } else {
@@ -108,21 +108,21 @@ public class ConfigDialogController extends PDialogExtra {
             }
 
             @Override
-            public void progress(ListenerFilmlistLoadEvent event) {
+            public void progress(P2LoadEvent event) {
                 getMaskerPane().setMaskerProgress(event.progress, event.text);
             }
 
             @Override
-            public void loaded(ListenerFilmlistLoadEvent event) {
+            public void loaded(P2LoadEvent event) {
                 getMaskerPane().setButtonVisible(false);
-                getMaskerPane().setMaskerProgress(ListenerLoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
+                getMaskerPane().setMaskerProgress(P2LoadListener.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
             }
 
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(P2LoadEvent event) {
             }
         };
-        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(listener);
+        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(listener);
 
 
         VBox.setVgrow(tabPane, Priority.ALWAYS);
@@ -188,7 +188,7 @@ public class ConfigDialogController extends PDialogExtra {
         controllerSet.close();
 
         MTListener.notify(MTListener.EVENT_SET_DATA_CHANGED, ConfigDialogController.class.getSimpleName());
-        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.removeListenerLoadFilmlist(listener);
+        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.removeListenerLoadFilmlist(listener);
         dialogIsRunning.setValue(false);
         super.close();
     }

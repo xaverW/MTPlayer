@@ -25,8 +25,8 @@ import de.p2tools.mtplayer.gui.DownloadGui;
 import de.p2tools.mtplayer.gui.FilmGui;
 import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerFilmlistLoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.ListenerLoadFilmlist;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -147,9 +147,9 @@ public class MTPlayerController extends StackPane {
                 btnFilmlist.getStyleClass().remove("buttonLoadFilmlistNewList");
             }
         });
-        LoadFilmFactory.getInstance().loadFilmlist.filmListLoadNotifier.addListenerLoadFilmlist(new ListenerLoadFilmlist() {
+        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
             @Override
-            public void finished(ListenerFilmlistLoadEvent event) {
+            public void finished(P2LoadEvent event) {
                 if (stackPaneCont.getChildren().isEmpty()) {
                     return;
                 }
