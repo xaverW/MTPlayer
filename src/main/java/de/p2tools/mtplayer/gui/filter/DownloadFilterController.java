@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
@@ -38,7 +38,7 @@ public class DownloadFilterController extends FilterController {
 
     private final ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
     private final ComboBox<String> cboKind = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
-    private final PMenuButton mbChannel;
+    private final P2MenuButton mbChannel;
     private final ComboBox<String> cboAbo = new ComboBox<>();
     private final ComboBox<String> cboState = new ComboBox<>();
 
@@ -56,7 +56,7 @@ public class DownloadFilterController extends FilterController {
         progData = ProgData.getInstance();
         progData.downloadFilterController = this;
 
-        mbChannel = new PMenuButton(ProgConfig.FILTER_DOWNLOAD_CHANNEL,
+        mbChannel = new P2MenuButton(ProgConfig.FILTER_DOWNLOAD_CHANNEL,
                 ThemeListFactory.allChannelList);
 
         initLayout();

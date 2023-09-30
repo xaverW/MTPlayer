@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import javafx.geometry.Insets;
@@ -43,7 +43,7 @@ public class AddBlackListDialogController extends PDialogExtra {
     private final Button btnCount = new Button("Treffer zählen");
     private final Label lblCount = new Label();
 
-    private final PMenuButton mbChannel;
+    private final P2MenuButton mbChannel;
     private final TextField txtTheme = new TextField();
     private final PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
     private final TextField txtTitle = new TextField();
@@ -70,7 +70,7 @@ public class AddBlackListDialogController extends PDialogExtra {
         this.theme = blackData.getTheme();
         this.title = blackData.getTitle();
         this.blackData = blackData;
-        mbChannel = new PMenuButton(this.blackData.channelProperty(),
+        mbChannel = new P2MenuButton(this.blackData.channelProperty(),
                 ThemeListFactory.allChannelList, true);
 
         init(true);

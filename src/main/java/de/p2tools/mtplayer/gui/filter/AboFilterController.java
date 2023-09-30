@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
+import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.geometry.Insets;
@@ -33,7 +33,7 @@ import javafx.scene.layout.VBox;
 
 public class AboFilterController extends FilterController {
 
-    private PMenuButton mbChannel;
+    private P2MenuButton mbChannel;
     private ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
     private TextField txtDescription = new TextField();
     private TextField txtName = new TextField();
@@ -47,7 +47,7 @@ public class AboFilterController extends FilterController {
         vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
         progData.aboFilterController = this;
-        mbChannel = new PMenuButton(ProgConfig.FILTER_ABO_CHANNEL,
+        mbChannel = new P2MenuButton(ProgConfig.FILTER_ABO_CHANNEL,
                 ThemeListFactory.channelsForAbosList);
 
 

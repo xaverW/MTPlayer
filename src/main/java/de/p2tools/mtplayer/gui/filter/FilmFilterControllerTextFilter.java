@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearch;
 import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearchExact;
-import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
+import de.p2tools.p2lib.guitools.P2MenuButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -32,7 +32,7 @@ import javafx.scene.layout.VBox;
 
 public class FilmFilterControllerTextFilter extends VBox {
 
-    private final PMenuButton mbChannel;
+    private final P2MenuButton mbChannel;
     private final P2CboStringSearch cboTheme;
     private final P2CboStringSearchExact cboThemeExact;
     private final P2CboStringSearch cboThemeTitle;
@@ -47,8 +47,12 @@ public class FilmFilterControllerTextFilter extends VBox {
     public FilmFilterControllerTextFilter() {
         super();
         progData = ProgData.getInstance();
-        mbChannel = new PMenuButton(progData.filmFilterWorker.getActFilterSettings().channelProperty(),
-                ThemeListFactory.allChannelList);
+        mbChannel = new P2MenuButton(progData.filmFilterWorker.getActFilterSettings().channelProperty(),
+                ThemeListFactory.allChannelList) {
+            public void doAfterSelction(String text) {
+                ThemeListFactory.createThemeList(ProgData.getInstance(), text.toString());
+            }
+        };
 
         cboTheme = new P2CboStringSearch(progData, stringPropertyTheme);
         cboThemeExact = new P2CboStringSearchExact(progData, stringPropertyThemeExact);

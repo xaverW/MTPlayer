@@ -22,10 +22,10 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.guitools.PButton;
 import de.p2tools.p2lib.guitools.PColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
@@ -52,7 +52,7 @@ public class PaneBlackList {
     private final RadioButton rbOff = new RadioButton("Alles anzeigen");
     private final GridPane gridPane = new GridPane();
 
-    private final PMenuButton mbChannel;
+    private final P2MenuButton mbChannel;
     private final StringProperty mbChannelProp = new SimpleStringProperty();
     private final PToggleSwitch tgThemeExact = new PToggleSwitch("exakt:");
     private final TextField txtTheme = new TextField();
@@ -78,7 +78,7 @@ public class PaneBlackList {
         this.blackDataChanged = blackDataChanged;
         this.blackPaneButton = new BlackPaneButton();
 
-        mbChannel = new PMenuButton(mbChannelProp,
+        mbChannel = new P2MenuButton(mbChannelProp,
                 ThemeListFactory.allChannelList, true);
 
         if (controlBlackListNotFilmFilter) {

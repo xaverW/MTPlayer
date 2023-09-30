@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PMenuButton;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
 import de.p2tools.p2lib.mtfilter.Filter;
@@ -41,7 +41,7 @@ import java.util.function.Predicate;
 
 public class BlackPaneFilterGrid {
     private final BlackList list;
-    private final PMenuButton mbFilterChannel;
+    private final P2MenuButton mbFilterChannel;
     private final StringProperty mbFilterChannelProp = new SimpleStringProperty();
     private final TextField txtFilterThema = new TextField();
     private final TextField txtFilterTitel = new TextField();
@@ -56,7 +56,7 @@ public class BlackPaneFilterGrid {
     public BlackPaneFilterGrid(TableView<BlackData> tableView, BlackList list) {
         this.tableView = tableView;
         this.list = list;
-        mbFilterChannel = new PMenuButton(mbFilterChannelProp, ThemeListFactory.allChannelList);
+        mbFilterChannel = new P2MenuButton(mbFilterChannelProp, ThemeListFactory.allChannelList);
     }
 
     SplitPane addFilterGrid(VBox vBox, boolean controlBlackListNotFilmFilter) {
