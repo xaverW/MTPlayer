@@ -33,11 +33,11 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PHyperlink;
-import de.p2tools.p2lib.guitools.PTimePicker;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2Hyperlink;
+import de.p2tools.p2lib.guitools.P2TimePicker;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -79,10 +79,10 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final Label lblSizeFree = new Label();
     private final TextArea textAreaProg = new TextArea();
     private final TextArea textAreaCallArray = new TextArea();
-    private final PToggleSwitch tglUrl = new PToggleSwitch("URL");
-    PHyperlink pHyperlinkUrlFilm = new PHyperlink("",
+    private final P2ToggleSwitch tglUrl = new P2ToggleSwitch("URL");
+    P2Hyperlink p2HyperlinkUrlFilm = new P2Hyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
-    PHyperlink pHyperlinkUrlDownload = new PHyperlink("",
+    P2Hyperlink p2HyperlinkUrlDownload = new P2Hyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
 
     private final ToggleGroup group = new ToggleGroup();
@@ -90,7 +90,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     private String fileSize_high = "";
     private String fileSize_small = "";
     private String resolution = FilmDataMTP.RESOLUTION_NORMAL;
-    private final PTimePicker pTimePicker = new PTimePicker(true);
+    private final P2TimePicker p2TimePicker = new P2TimePicker(true);
     private final CheckBox chkStartTime = new CheckBox();
 
     private final DownloadData download;
@@ -164,11 +164,11 @@ public class DownloadEditDialogController extends PDialogExtra {
         text[DownloadFieldNames.DOWNLOAD_FILM_URL_NO].setVisible(urlProperty.get());
         text[DownloadFieldNames.DOWNLOAD_URL_NO].setManaged(urlProperty.get());
 
-        pHyperlinkUrlFilm.setVisible(urlProperty.get());
-        pHyperlinkUrlFilm.setManaged(urlProperty.get());
+        p2HyperlinkUrlFilm.setVisible(urlProperty.get());
+        p2HyperlinkUrlFilm.setManaged(urlProperty.get());
 
-        pHyperlinkUrlDownload.setVisible(urlProperty.get());
-        pHyperlinkUrlDownload.setManaged(urlProperty.get());
+        p2HyperlinkUrlDownload.setVisible(urlProperty.get());
+        p2HyperlinkUrlDownload.setManaged(urlProperty.get());
     }
 
     private void initButton() {
@@ -243,10 +243,10 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private void initGridPane() {
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -395,7 +395,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 btnReset.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
                 btnReset.setOnAction(e -> txt[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO].setText(orgProgArray));
 
-                final Button btnHelp = PButton.helpButton("Den Programmaufruf ändern",
+                final Button btnHelp = P2Button.helpButton("Den Programmaufruf ändern",
                         HelpText.EDIT_DOWNLOAD_WITH_PROG);
 
                 VBox vBox = new VBox(5);
@@ -482,26 +482,26 @@ public class DownloadEditDialogController extends PDialogExtra {
         hBox.setAlignment(Pos.CENTER_LEFT);
 
         txt[DownloadFieldNames.DOWNLOAD_START_TIME_NO].setEditable(!isStarted);
-        pTimePicker.setDisable(isStarted);
+        p2TimePicker.setDisable(isStarted);
         chkStartTime.setDisable(isStarted);
 
         chkStartTime.setSelected(!download.getStartTime().isEmpty());
         chkStartTime.setOnAction(a -> {
             if (chkStartTime.isSelected()) {
-                download.setStartTime(pTimePicker.getTime());
+                download.setStartTime(p2TimePicker.getTime());
             } else {
                 download.setStartTime("");
             }
         });
 
-        pTimePicker.setTime(download.getStartTime());
-        pTimePicker.setOnAction(a -> {
-            download.setStartTime(pTimePicker.getTime());
+        p2TimePicker.setTime(download.getStartTime());
+        p2TimePicker.setOnAction(a -> {
+            download.setStartTime(p2TimePicker.getTime());
         });
 
-        pTimePicker.disableProperty().bind(chkStartTime.selectedProperty().not());
+        p2TimePicker.disableProperty().bind(chkStartTime.selectedProperty().not());
 
-        hBox.getChildren().addAll(chkStartTime, pTimePicker);
+        hBox.getChildren().addAll(chkStartTime, p2TimePicker);
         gridPane.add(text[DownloadFieldNames.DOWNLOAD_START_TIME_NO], 0, row);
         gridPane.add(hBox, 1, row, 3, 1);
         ++row;
@@ -676,20 +676,20 @@ public class DownloadEditDialogController extends PDialogExtra {
         }
 
         //---------------------------------
-        pHyperlinkUrlFilm.setWrapText(true);
-        pHyperlinkUrlFilm.setMinHeight(Region.USE_PREF_SIZE);
-        pHyperlinkUrlFilm.setPadding(new Insets(5));
+        p2HyperlinkUrlFilm.setWrapText(true);
+        p2HyperlinkUrlFilm.setMinHeight(Region.USE_PREF_SIZE);
+        p2HyperlinkUrlFilm.setPadding(new Insets(5));
 
-        pHyperlinkUrlDownload.setWrapText(true);
-        pHyperlinkUrlDownload.setMinHeight(Region.USE_PREF_SIZE);
-        pHyperlinkUrlDownload.setPadding(new Insets(5));
+        p2HyperlinkUrlDownload.setWrapText(true);
+        p2HyperlinkUrlDownload.setMinHeight(Region.USE_PREF_SIZE);
+        p2HyperlinkUrlDownload.setPadding(new Insets(5));
 
         setHyperLink();
 
         gridPane.add(text[DownloadFieldNames.DOWNLOAD_FILM_URL_NO], 0, row);
-        gridPane.add(pHyperlinkUrlFilm, 1, row++, 3, 1);
+        gridPane.add(p2HyperlinkUrlFilm, 1, row++, 3, 1);
         gridPane.add(text[DownloadFieldNames.DOWNLOAD_URL_NO], 0, row);
-        gridPane.add(pHyperlinkUrlDownload, 1, row++, 3, 1);
+        gridPane.add(p2HyperlinkUrlDownload, 1, row++, 3, 1);
 
         //---------------------------------
         addToGrid(DownloadFieldNames.DOWNLOAD_SET_DATA_NO, false, row++, setData.visibleNameProperty(), true);
@@ -715,8 +715,8 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private void setHyperLink() {
-        pHyperlinkUrlFilm.setUrl(download.filmUrlProperty().getValueSafe());
-        pHyperlinkUrlDownload.setUrl(download.getUrl());
+        p2HyperlinkUrlFilm.setUrl(download.filmUrlProperty().getValueSafe());
+        p2HyperlinkUrlDownload.setUrl(download.getUrl());
     }
 
     private void resetDownloadCallForProgramm() {

@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.p2lib.guitools.PTableFactory;
-import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
+import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.tools.date.PDate;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -57,7 +57,7 @@ public class TableAbo extends PTable<AboData> {
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO.addListener((observableValue, s, t1) -> refresh());
 
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            PTableFactory.refreshTable(this);
+            P2TableFactory.refreshTable(this);
         });
         ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> this.refresh());
 
@@ -67,7 +67,7 @@ public class TableAbo extends PTable<AboData> {
 
         final TableColumn<AboData, Boolean> activColumn = new TableColumn<>("Aktiv");
         activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
-        activColumn.setCellFactory(new CellCheckBox().cellFactory);
+        activColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         activColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> hitColumn = new TableColumn<>("Treffer");
@@ -97,7 +97,7 @@ public class TableAbo extends PTable<AboData> {
 
         final TableColumn<AboData, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
-        themeExactColumn.setCellFactory(new CellCheckBox().cellFactory);
+        themeExactColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         themeExactColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, String> themeTitleColumn = new TableColumn<>("Thema-Titel");

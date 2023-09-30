@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.infoPane;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -58,7 +58,7 @@ public class PaneAboInfo extends VBox {
 
         gridPaneLeft.add(txtName, 0, 0);
         gridPaneLeft.add(txtInfo, 0, 1);
-        gridPaneLeft.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPaneLeft.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
         VBox.setVgrow(gridPaneLeft, Priority.ALWAYS);
 
         final GridPane gridPaneRight = new GridPane();
@@ -66,7 +66,7 @@ public class PaneAboInfo extends VBox {
         gridPaneRight.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPaneRight.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPaneRight.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        gridPaneRight.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPaneRight.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         chkExact.setDisable(true);
         int row = 0;

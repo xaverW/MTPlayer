@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2lib.guitools.PButton;
+import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.collections.FXCollections;
@@ -215,7 +215,7 @@ public class AboEditDialogController extends AboDialogController {
                 }
                 break;
             case AboFieldNames.ABO_RESOLUTION_NO:
-                final Button btnHelpRes = PButton.helpButton(this.getStage(),
+                final Button btnHelpRes = P2Button.helpButton(this.getStage(),
                         "Auflösung", HelpText.ABO_RES);
 
                 HBox h = new HBox();
@@ -321,7 +321,7 @@ public class AboEditDialogController extends AboDialogController {
                     }
                     cbxEditAll[i].setSelected(true);
                 });
-                final Button btnHelp = PButton.helpButton(getStage(), "Unterordner anlegen",
+                final Button btnHelp = P2Button.helpButton(getStage(), "Unterordner anlegen",
                         HelpText.ABO_SUBDIR);
 
                 final StackPane sp = new StackPane();
@@ -367,19 +367,19 @@ public class AboEditDialogController extends AboDialogController {
                 chkStartTime.setOnAction(a -> {
                     cbxEditAll[AboFieldNames.ABO_START_TIME_NO].setSelected(true);
                     if (chkStartTime.isSelected()) {
-                        aboCopy.setStartTime(pTimePicker.getTime());
+                        aboCopy.setStartTime(p2TimePicker.getTime());
                     } else {
                         aboCopy.setStartTime("");
                     }
                 });
 
-                pTimePicker.setTime(aboCopy.getStartTime());
-                pTimePicker.setOnAction(a -> {
-                    aboCopy.setStartTime(pTimePicker.getTime());
+                p2TimePicker.setTime(aboCopy.getStartTime());
+                p2TimePicker.setOnAction(a -> {
+                    aboCopy.setStartTime(p2TimePicker.getTime());
                 });
-                pTimePicker.disableProperty().bind(chkStartTime.selectedProperty().not());
+                p2TimePicker.disableProperty().bind(chkStartTime.selectedProperty().not());
 
-                final Button btnHelpStartTime = PButton.helpButton(getStage(), "Startzeit",
+                final Button btnHelpStartTime = P2Button.helpButton(getStage(), "Startzeit",
                         HelpText.ABO_START_TIME);
 
                 HBox hb = new HBox();
@@ -387,7 +387,7 @@ public class AboEditDialogController extends AboDialogController {
                 HBox.setHgrow(hb, Priority.ALWAYS);
                 hb.getChildren().add(btnHelpStartTime);
 
-                hBox.getChildren().addAll(chkStartTime, pTimePicker, hb);
+                hBox.getChildren().addAll(chkStartTime, p2TimePicker, hb);
                 gridPane.add(hBox, 1, grid);
                 break;
             default:

@@ -18,11 +18,11 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
-import de.p2tools.p2lib.guitools.PLDatePicker;
-import de.p2tools.p2lib.guitools.pcheckcombobox.PCheckComboBox;
+import de.p2tools.p2lib.guitools.P2LDatePicker;
+import de.p2tools.p2lib.guitools.pcheckcombobox.P2CheckComboBox;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
-import de.p2tools.p2lib.guitools.prange.PTimePeriodBox;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.prange.P2TimePeriodBox;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.date.PLDateFactory;
 import javafx.geometry.Pos;
@@ -47,16 +47,16 @@ public class FilmFilterControllerFilter extends VBox {
     private final P2RangeBox slDur = new P2RangeBox("Filmlänge:", true, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
     private final Label lblDur = new Label("Filmlänge:");
 
-    private final PTimePeriodBox slFilmTime = new PTimePeriodBox();
-    private final PToggleSwitch tglFilmTime = new PToggleSwitch("Zeitraum ausschließen");
+    private final P2TimePeriodBox slFilmTime = new P2TimePeriodBox();
+    private final P2ToggleSwitch tglFilmTime = new P2ToggleSwitch("Zeitraum ausschließen");
     private final Label lblFilmTime = new Label("Sendezeit:");
 
     private final Label lblShowDate = new Label("Sendedatum:");
-    private final PLDatePicker pDatePicker = new PLDatePicker();
+    private final P2LDatePicker pDatePicker = new P2LDatePicker();
     private final Button btnClearDatePicker = new Button("");
 
-    PCheckComboBox checkOnly = new PCheckComboBox();
-    PCheckComboBox checkNot = new PCheckComboBox();
+    P2CheckComboBox checkOnly = new P2CheckComboBox();
+    P2CheckComboBox checkNot = new P2CheckComboBox();
     Label lblOnly = new Label("anzeigen:");
     Label lblNot = new Label("ausschließen:");
 

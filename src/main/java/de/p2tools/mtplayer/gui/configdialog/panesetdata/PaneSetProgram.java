@@ -25,10 +25,10 @@ import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
@@ -55,8 +55,8 @@ public class PaneSetProgram {
     private final TextField txtProgSwitch = new TextField();
     private final TextField txtPrefix = new TextField();
     private final TextField txtSuffix = new TextField();
-    private final PToggleSwitch tglRestart = new PToggleSwitch("Restart:");
-    private final PToggleSwitch tglDown = new PToggleSwitch("Downloadmanager: ");
+    private final P2ToggleSwitch tglRestart = new P2ToggleSwitch("Restart:");
+    private final P2ToggleSwitch tglDown = new P2ToggleSwitch("Downloadmanager: ");
     private ProgramData programData = null;
     private final Stage stage;
     private SetData setData = null;
@@ -197,7 +197,7 @@ public class PaneSetProgram {
             }
         });
 
-        final Button btnHelpProg = PButton.helpButton(stage, "Hilfsprogramme",
+        final Button btnHelpProg = P2Button.helpButton(stage, "Hilfsprogramme",
                 HelpTextPset.PSET_FILE_HELP_PROG);
 
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
@@ -217,9 +217,9 @@ public class PaneSetProgram {
         btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 
-        final Button btnHelpDest = PButton.helpButton(stage, "Zieldateiname",
+        final Button btnHelpDest = P2Button.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
-        final Button btnHelpSwitch = PButton.helpButton(stage, "Programmschalter",
+        final Button btnHelpSwitch = P2Button.helpButton(stage, "Programmschalter",
                 HelpTextPset.PSET_SWITCH);
 
         int row = 0;
@@ -245,11 +245,11 @@ public class PaneSetProgram {
         gridPane.add(tglDown, 2, row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize()
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize()
         );
 
         gridPane.setDisable(true);

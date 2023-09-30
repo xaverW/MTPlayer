@@ -23,9 +23,9 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.tools.log.PLogger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -38,15 +38,15 @@ import java.util.Collection;
 
 public class PaneLogfile {
 
-    private final PToggleSwitch tglSearch = new PToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
-    private final PToggleSwitch tglSearchBeta = new PToggleSwitch("auch nach neuen Vorabversionen suchen");
+    private final P2ToggleSwitch tglSearch = new P2ToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
+    private final P2ToggleSwitch tglSearchBeta = new P2ToggleSwitch("auch nach neuen Vorabversionen suchen");
     private final CheckBox chkDaily = new CheckBox("Zwischenschritte (Dailys) mit einbeziehen");
     private final BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
 
-    private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
-    private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
-    private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
-    private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
+    private final P2ToggleSwitch tglSearchAbo = new P2ToggleSwitch("Abos automatisch suchen:");
+    private final P2ToggleSwitch tglStartDownload = new P2ToggleSwitch("Downloads aus Abos sofort starten:");
+    private final P2ToggleSwitch tglTipOfDay = new P2ToggleSwitch("Tip des Tages anzeigen");
+    private final P2ToggleSwitch tglEnableLog = new P2ToggleSwitch("Ein Logfile anlegen:");
     private TextField txtLogFile;
 
     private final Stage stage;
@@ -87,7 +87,7 @@ public class PaneLogfile {
             }
         }));
 
-        final Button btnHelp = PButton.helpButton(stage, "Logfile", HelpText.LOGFILE);
+        final Button btnHelp = P2Button.helpButton(stage, "Logfile", HelpText.LOGFILE);
 
         txtLogFile = new TextField();
         txtLogFile.textProperty().bindBidirectional(ProgConfig.SYSTEM_LOG_DIR);
@@ -133,10 +133,10 @@ public class PaneLogfile {
         gridPane.add(btnReset, 3, row);
 
         gridPane.add(btnChange, 0, ++row, 2, 1);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize());
 
         lblPath.disableProperty().bind(tglEnableLog.selectedProperty().not());
         txtLogFile.disableProperty().bind(tglEnableLog.selectedProperty().not());

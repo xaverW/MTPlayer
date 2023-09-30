@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -78,8 +78,8 @@ public class DeleteFilmFileDialogController extends PDialogExtra {
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setHgap(25);
         gridPane.setVgap(10);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         int row = 0;
         Label lblPath = new Label("Pfad:");

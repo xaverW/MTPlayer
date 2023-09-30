@@ -29,7 +29,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PTimePicker;
+import de.p2tools.p2lib.guitools.P2TimePicker;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -42,7 +42,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final Button btnPrev = new Button("<");
     private final Button btnNext = new Button(">");
     private final Label lblSum = new Label("");
-    private final PTimePicker pTimePicker = new PTimePicker(true);
+    private final P2TimePicker p2TimePicker = new P2TimePicker(true);
     private final Label lblSet = new Label("Set:");
     private final ComboBox<SetData> cboSetData = new ComboBox<>();
     private final ComboBox<String> cboPath = new ComboBox<>();
@@ -135,7 +135,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         daGui.init(progData, filmsToDownloadList.size());
 
         addOkCancelButtons(btnOk, btnCancel);
-        getHboxLeft().getChildren().addAll(new Label("Download starten: "), rbStartNotYet, rbStartNow, rbAtTime, pTimePicker);
+        getHboxLeft().getChildren().addAll(new Label("Download starten: "), rbStartNotYet, rbStartNow, rbAtTime, p2TimePicker);
 
         if (setData == null) {
             setData = progData.setDataList.getSetDataListSave().get(0);
@@ -246,8 +246,8 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private void initCheckBoxStartDownload() {
         // starten um ...
-        pTimePicker.disableProperty().bind(rbAtTime.selectedProperty().not());
-        pTimePicker.setOnAction(a -> rbAtTime.setSelected(true));
+        p2TimePicker.disableProperty().bind(rbAtTime.selectedProperty().not());
+        p2TimePicker.setOnAction(a -> rbAtTime.setSelected(true));
         rbStartNow.setToggleGroup(toggleGroupStart);
         rbStartNotYet.setToggleGroup(toggleGroupStart);
         rbAtTime.setToggleGroup(toggleGroupStart);
@@ -380,7 +380,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             download.setInfoFile(d.makeInfo);
             download.setSubtitle(d.makeSubTitle);
             if (rbAtTime.isSelected()) {
-                download.setStartTime(pTimePicker.getTime());
+                download.setStartTime(p2TimePicker.getTime());
             }
 
             list.add(download);

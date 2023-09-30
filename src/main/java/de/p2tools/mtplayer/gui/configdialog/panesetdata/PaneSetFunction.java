@@ -22,9 +22,9 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
@@ -40,9 +40,9 @@ import java.util.Collection;
 
 public class PaneSetFunction {
     private final Button btnPlay = new Button("Abspielen setzen");
-    private final PToggleSwitch tglSave = new PToggleSwitch("Speichern:");
-    private final PToggleSwitch tglButton = new PToggleSwitch("Button:");
-    private final PToggleSwitch tglAbo = new PToggleSwitch("Abo:");
+    private final P2ToggleSwitch tglSave = new P2ToggleSwitch("Speichern:");
+    private final P2ToggleSwitch tglButton = new P2ToggleSwitch("Button:");
+    private final P2ToggleSwitch tglAbo = new P2ToggleSwitch("Abo:");
     private final ColorPicker colorPicker = new ColorPicker();
     private final Label lblPlay = new Label("Abspielen:");
     private ChangeListener changeListener;
@@ -95,19 +95,19 @@ public class PaneSetFunction {
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(hBox, 1, row);
-        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+        gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_PLAY), 2, row);
 
         gridPane.add(tglSave, 1, ++row);
-        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+        gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_SAVE), 2, row);
 
         gridPane.add(tglAbo, 1, ++row);
-        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+        gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_ABO), 2, row);
 
         gridPane.add(tglButton, 1, ++row);
-        gridPane.add(PButton.helpButton(stage, "Funktion des Sets",
+        gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_BUTTON), 2, row);
 
         Label lblColor = new Label("Farbe:");
@@ -115,7 +115,7 @@ public class PaneSetFunction {
         btnResetColor.setOnAction(event -> {
             setDataObjectProperty.getValue().setColor(SetData.RESET_COLOR);
         });
-        final Button btnHelpColor = PButton.helpButton(stage, "Schriftfarbe auswählen",
+        final Button btnHelpColor = P2Button.helpButton(stage, "Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR);
 
         lblColor.disableProperty().bind(tglButton.selectedProperty().not());
@@ -129,9 +129,9 @@ public class PaneSetFunction {
         gridPane.add(btnHelpColor, 2, row);
 
         gridPane.getColumnConstraints().addAll(
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
 
         setDataObjectProperty.addListener((u, o, n) -> {
             tpConfig.setDisable(setDataObjectProperty.getValue() == null);

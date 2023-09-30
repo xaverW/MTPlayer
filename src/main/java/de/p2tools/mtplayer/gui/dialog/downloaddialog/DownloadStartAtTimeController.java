@@ -22,9 +22,9 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PTimePicker;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2TimePicker;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -46,7 +46,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
     private Button btnCancel = new Button("_Abbrechen");
 
     private final ToggleGroup toggleGroup = new ToggleGroup();
-    private final PTimePicker pTimePicker = new PTimePicker(true);
+    private final P2TimePicker p2TimePicker = new P2TimePicker(true);
     private final CheckBox chkStartNow = new CheckBox();
     private final RadioButton rbAll = new RadioButton();
     private final RadioButton rbOnlySel = new RadioButton();
@@ -80,7 +80,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
     @Override
     public void make() {
         addOkCancelButtons(btnOk, btnCancel);
-        Button btnHelp = PButton.helpButton(getStage(), "Downloads starten",
+        Button btnHelp = P2Button.helpButton(getStage(), "Downloads starten",
                 HelpText.DOWNLOAD_ADD_AT_TIME);
         addHlpButton(btnHelp);
 
@@ -96,7 +96,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
     }
 
     private void initGui() {
-        pTimePicker.disableProperty().bind(chkStartNow.selectedProperty());
+        p2TimePicker.disableProperty().bind(chkStartNow.selectedProperty());
 
         //linke Seite
         vBoxTable.setPadding(new Insets(10));
@@ -225,7 +225,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
         } else {
             //noch nicht gestartete nach Zeitangabe starten
             //Downloads dessen Start schon auf Fehler steht, werden nicht gestartet
-            final String time = pTimePicker.getTime();
+            final String time = p2TimePicker.getTime();
             downloadList.forEach(download -> download.setStartTime(time));
         }
         downloadList.forEach(DownloadData::resetDownload);
@@ -233,8 +233,8 @@ public class DownloadStartAtTimeController extends PDialogExtra {
     }
 
     private void initGridPane() {
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize());
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -243,7 +243,7 @@ public class DownloadStartAtTimeController extends PDialogExtra {
         gridPane.add(new Label("Sofort starten:"), 0, row);
         gridPane.add(chkStartNow, 1, row);
         gridPane.add(new Label("Startzeit:"), 0, ++row);
-        gridPane.add(pTimePicker, 1, row);
+        gridPane.add(p2TimePicker, 1, row);
     }
 
     private Callback<TableColumn<DownloadData, Integer>, TableCell<DownloadData, Integer>> cellFactoryState

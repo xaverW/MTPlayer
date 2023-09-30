@@ -24,10 +24,10 @@ import de.p2tools.mtplayer.controller.data.download.ReplaceData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -53,8 +53,8 @@ public class PaneReplace {
 
     private TableView<ReplaceData> tableView = new TableView<>();
     private ObjectProperty<ReplaceData> replaceDateProp = new SimpleObjectProperty<>(null);
-    private final PToggleSwitch tglAscii = new PToggleSwitch("Nur ASCII-Zeichen erlauben");
-    private final PToggleSwitch tglReplace = new PToggleSwitch("Ersetzungstabelle");
+    private final P2ToggleSwitch tglAscii = new P2ToggleSwitch("Nur ASCII-Zeichen erlauben");
+    private final P2ToggleSwitch tglReplace = new P2ToggleSwitch("Ersetzungstabelle");
 
     private final Stage stage;
 
@@ -91,11 +91,11 @@ public class PaneReplace {
         vBox.getChildren().add(gridPane);
 
         tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
-        final Button btnHelpAscii = PButton.helpButton(stage, "Nur ASCII-Zeichen",
+        final Button btnHelpAscii = P2Button.helpButton(stage, "Nur ASCII-Zeichen",
                 HelpText.DOWNLOAD_ONLY_ASCII);
 
         tglReplace.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
-        final Button btnHelpReplace = PButton.helpButton(stage, "Ersetzungstabelle",
+        final Button btnHelpReplace = P2Button.helpButton(stage, "Ersetzungstabelle",
                 HelpText.DOWNLOAD_REPLACELIST);
 
         gridPane.add(tglAscii, 0, 0);
@@ -104,8 +104,8 @@ public class PaneReplace {
         gridPane.add(tglReplace, 0, 1);
         gridPane.add(btnHelpReplace, 1, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
     }
 
 
@@ -256,7 +256,7 @@ public class PaneReplace {
         gridPane.add(new Label("Nach: "), 0, 1);
         gridPane.add(txtTo, 1, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
         gridPane.disableProperty().bind(

@@ -24,9 +24,9 @@ import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -46,7 +46,7 @@ public class PaneMediaConfig {
     private final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg)");
     private final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix (z.B.: mp4, m4v)");
     private TextField txtSuff = new TextField();
-    private final PToggleSwitch tglNoHiddenFiles = new PToggleSwitch("keine versteckten Dateien suchen:");
+    private final P2ToggleSwitch tglNoHiddenFiles = new P2ToggleSwitch("keine versteckten Dateien suchen:");
     private final Slider slFileSize = new Slider();
     private final Label lblFileSize = new Label();
     private final String TXT_ALL = "alle Dateien";
@@ -81,7 +81,7 @@ public class PaneMediaConfig {
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
 
-        final Button btnHelp = PButton.helpButton(stage,
+        final Button btnHelp = P2Button.helpButton(stage,
                 "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
         btnExportFile.setTooltip(new Tooltip("Einen Ordner für den Export auswählen"));
         btnExportFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
@@ -139,8 +139,8 @@ public class PaneMediaConfig {
             rowC.setValignment(VPos.CENTER);
             gridPane.getRowConstraints().add(rowC);
         }
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
         vBox.getChildren().addAll(gridPane);
 
         initFileSizeSlider();

@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
@@ -35,8 +35,8 @@ import java.util.Collection;
 
 public class PaneAbo {
 
-    private final PToggleSwitch tglSearchAbo = new PToggleSwitch("Abos automatisch suchen:");
-    private final PToggleSwitch tglStartDownload = new PToggleSwitch("Downloads aus Abos sofort starten:");
+    private final P2ToggleSwitch tglSearchAbo = new P2ToggleSwitch("Abos automatisch suchen:");
+    private final P2ToggleSwitch tglStartDownload = new P2ToggleSwitch("Downloads aus Abos sofort starten:");
     private final ToggleGroup groupOnlyStop = new ToggleGroup();
     private final RadioButton rbOnlyStopAsk = new RadioButton("Vor dem Löschen fragen");
     private final RadioButton rbOnlyStopDelete = new RadioButton("Abo sofort löschen ohne zu fragen");
@@ -62,14 +62,14 @@ public class PaneAbo {
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
 
         tglSearchAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_SEARCH_NOW);
-        final Button btnHelpAbo = PButton.helpButton(stage, "Abos automatisch suchen",
+        final Button btnHelpAbo = P2Button.helpButton(stage, "Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
 
         tglStartDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
-        final Button btnHelpDownload = PButton.helpButton(stage, "Downloads sofort starten",
+        final Button btnHelpDownload = P2Button.helpButton(stage, "Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
 
-        final Button btnHelpStop = PButton.helpButton(stage, "Abos löschen",
+        final Button btnHelpStop = P2Button.helpButton(stage, "Abos löschen",
                 HelpText.ABO_DELETE_CONFIG);
         GridPane.setValignment(btnHelpStop, VPos.TOP);
 
@@ -98,8 +98,8 @@ public class PaneAbo {
         ++row;
         gridPane.add(vBox, 0, ++row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
     }
 
     private void initRadio() {

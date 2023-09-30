@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.gui.mediacleaning;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -38,13 +38,13 @@ public class PaneCleaningConfigController {
     private final Stage stage;
     private boolean media;
 
-    private final PToggleSwitch tglExact = new PToggleSwitch("Exakt den Begriff suchen");
-    private final PToggleSwitch tglClean = new PToggleSwitch("Putzen");
-    private final PToggleSwitch tglAndOr = new PToggleSwitch("Verknüpfen mit UND [sonst ODER]");
-    private final PToggleSwitch tglNum = new PToggleSwitch("Zahlen entfernen: 20, 20.");
-    private final PToggleSwitch tglDate = new PToggleSwitch("Datum entfernen: 20.03.2023");
-    private final PToggleSwitch tglClip = new PToggleSwitch("Klammern entfernen: [], {}, ()");
-    private final PToggleSwitch tglList = new PToggleSwitch("Cleaning Liste anwenden");
+    private final P2ToggleSwitch tglExact = new P2ToggleSwitch("Exakt den Begriff suchen");
+    private final P2ToggleSwitch tglClean = new P2ToggleSwitch("Putzen");
+    private final P2ToggleSwitch tglAndOr = new P2ToggleSwitch("Verknüpfen mit UND [sonst ODER]");
+    private final P2ToggleSwitch tglNum = new P2ToggleSwitch("Zahlen entfernen: 20, 20.");
+    private final P2ToggleSwitch tglDate = new P2ToggleSwitch("Datum entfernen: 20.03.2023");
+    private final P2ToggleSwitch tglClip = new P2ToggleSwitch("Klammern entfernen: [], {}, ()");
+    private final P2ToggleSwitch tglList = new P2ToggleSwitch("Cleaning Liste anwenden");
 
     public PaneCleaningConfigController(Stage stage, boolean media) {
         this.stage = stage;
@@ -102,7 +102,7 @@ public class PaneCleaningConfigController {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(0));
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
         vBox.getChildren().addAll(gridPane);
 
         //Suchen was

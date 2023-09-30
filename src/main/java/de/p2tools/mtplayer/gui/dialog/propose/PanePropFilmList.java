@@ -24,9 +24,9 @@ import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.tools.table.CellFilmButton;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
-import de.p2tools.p2lib.guitools.ptable.CellIntNull;
+import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.date.PDate;
 import javafx.geometry.HPos;
@@ -104,7 +104,7 @@ public class PanePropFilmList {
         timeColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, Integer> durationColumn = new TableColumn<>("Dauer [min]");
-        durationColumn.setCellFactory(new CellIntNull().cellFactory);
+        durationColumn.setCellFactory(new P2CellIntNull().cellFactory);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenterRightPadding_25");
 
@@ -156,8 +156,8 @@ public class PanePropFilmList {
         gridPane.add(new Label(), 0, ++row, 2, 1);
         gridPane.add(slDur, 0, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().addAll(gridPane);
     }
 }

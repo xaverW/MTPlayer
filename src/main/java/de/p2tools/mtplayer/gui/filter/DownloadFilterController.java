@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.guitools.P2MenuButton;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
@@ -44,7 +44,7 @@ public class DownloadFilterController extends FilterController {
 
     private final Spinner<Integer> spinnerAnz = new Spinner<>(1, 9, 1);
     private final Slider sliderBandwidth = new Slider();
-    private final Button btnClear = PButtonClearFilterFactory.getPButtonClearFilter();
+    private final Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
     private final Label lblBandwidth = new Label();
 
     private final VBox vBoxFilter;
@@ -100,7 +100,7 @@ public class DownloadFilterController extends FilterController {
         h.getChildren().addAll(lblText, hh, lblBandwidth);
         addCont(h, sliderBandwidth, vb);
 
-        final Button btnHelp = PButton.helpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
+        final Button btnHelp = P2Button.helpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
         hBox = new HBox(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().addAll(btnHelp);

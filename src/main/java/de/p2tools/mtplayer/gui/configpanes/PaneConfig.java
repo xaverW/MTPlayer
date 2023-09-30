@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.tools.PStringUtils;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -38,11 +38,11 @@ import java.util.Collection;
 
 public class PaneConfig {
 
-    private final PToggleSwitch tglOnlyOneInstance = new PToggleSwitch("Nur eine Instanz des Programms öffnen");
-    private final PToggleSwitch tglSmallFilm = new PToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
-    private final PToggleSwitch tglSmallDownload = new PToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
-    private final PToggleSwitch tglSmallAbo = new PToggleSwitch("In der Tabelle \"Abo\" nur kleine Button anzeigen:");
-    private final PToggleSwitch tglTipOfDay = new PToggleSwitch("Tip des Tages anzeigen");
+    private final P2ToggleSwitch tglOnlyOneInstance = new P2ToggleSwitch("Nur eine Instanz des Programms öffnen");
+    private final P2ToggleSwitch tglSmallFilm = new P2ToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
+    private final P2ToggleSwitch tglSmallDownload = new P2ToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
+    private final P2ToggleSwitch tglSmallAbo = new P2ToggleSwitch("In der Tabelle \"Abo\" nur kleine Button anzeigen:");
+    private final P2ToggleSwitch tglTipOfDay = new P2ToggleSwitch("Tip des Tages anzeigen");
     private TextField txtUserAgent;
 
     private final Stage stage;
@@ -70,7 +70,7 @@ public class PaneConfig {
         result.add(tpConfig);
 
         tglOnlyOneInstance.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ONE_INSTANCE);
-        final Button btnHelpOnlyOneInstance = PButton.helpButton(stage, "Nur eine Instanz des Programms öffnen",
+        final Button btnHelpOnlyOneInstance = P2Button.helpButton(stage, "Nur eine Instanz des Programms öffnen",
                 HelpText.ONLY_ONE_INSTANCE);
         GridPane.setHalignment(btnHelpOnlyOneInstance, HPos.RIGHT);
 
@@ -78,16 +78,16 @@ public class PaneConfig {
         tglSmallFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
         tglSmallDownload.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
         tglSmallAbo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO);
-        final Button btnHelpSize = PButton.helpButton(stage, "Nur kleine Button anzeigen",
+        final Button btnHelpSize = P2Button.helpButton(stage, "Nur kleine Button anzeigen",
                 HelpText.SMALL_BUTTON);
         GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
 
         tglTipOfDay.selectedProperty().bindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
-        final Button btnHelpTipOfDay = PButton.helpButton(stage, "Tip des Tages anzeigen",
+        final Button btnHelpTipOfDay = P2Button.helpButton(stage, "Tip des Tages anzeigen",
                 HelpText.TIP_OF_DAY);
         GridPane.setHalignment(btnHelpTipOfDay, HPos.RIGHT);
 
-        final Button btnHelpUserAgent = PButton.helpButton(stage, "User Agent festlegen",
+        final Button btnHelpUserAgent = P2Button.helpButton(stage, "User Agent festlegen",
                 HelpText.USER_AGENT);
         GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
         txtUserAgent = new TextField() {
@@ -137,7 +137,7 @@ public class PaneConfig {
         gridPane.add(txtUserAgent, 1, row);
         gridPane.add(btnHelpUserAgent, 2, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
     }
 }

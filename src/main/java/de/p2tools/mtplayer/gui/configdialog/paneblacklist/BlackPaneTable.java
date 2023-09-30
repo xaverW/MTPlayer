@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
-import de.p2tools.p2lib.guitools.ptable.CellLocalDate;
+import de.p2tools.p2lib.guitools.ptable.P2CellLocalDate;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -59,7 +59,7 @@ public class BlackPaneTable {
 
         final TableColumn<BlackData, LocalDate> dateColumn = new TableColumn<>("Erstelldatum");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
-        dateColumn.setCellFactory(new CellLocalDate().cellFactory);
+        dateColumn.setCellFactory(new P2CellLocalDate().cellFactory);
 
         final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
         hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));

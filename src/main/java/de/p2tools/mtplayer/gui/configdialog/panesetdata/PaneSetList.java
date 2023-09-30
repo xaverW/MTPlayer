@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
+import de.p2tools.p2lib.guitools.P2Button;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -176,7 +176,7 @@ public class PaneSetList extends VBox {
         btnCheck.setOnAction(event -> SetFactory.checkPrograms(progData));
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        final Button btnHelp = PButton.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
+        final Button btnHelp = P2Button.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, P2GuiTools.getHBoxGrower(), btnUp, btnDown);

@@ -67,15 +67,15 @@ public class AboDialogController extends PDialogExtra {
     final RadioButton rbHd = new RadioButton("HD");
     final RadioButton rbHigh = new RadioButton("hoch");
     final RadioButton rbLow = new RadioButton("niedrig");
-    final TextArea textAreaDescription = new PTextAreaIgnoreTab(false, true);
+    final TextArea textAreaDescription = new P2TextAreaIgnoreTab(false, true);
 
-    final TextArea textAreaTheme = new PTextAreaIgnoreTab(false, true);
-    final TextArea textAreaThemeTitle = new PTextAreaIgnoreTab(false, true);
-    final TextArea textAreaTitle = new PTextAreaIgnoreTab(false, true);
-    final TextArea textAreaSomewhere = new PTextAreaIgnoreTab(false, true);
+    final TextArea textAreaTheme = new P2TextAreaIgnoreTab(false, true);
+    final TextArea textAreaThemeTitle = new P2TextAreaIgnoreTab(false, true);
+    final TextArea textAreaTitle = new P2TextAreaIgnoreTab(false, true);
+    final TextArea textAreaSomewhere = new P2TextAreaIgnoreTab(false, true);
 
     final P2MenuButton mbChannel;
-    final PTimePicker pTimePicker = new PTimePicker();
+    final P2TimePicker p2TimePicker = new P2TimePicker();
     final CheckBox chkStartTime = new CheckBox();
     final ObservableList<AboData> aboList = FXCollections.observableArrayList();
     final AboData aboCopy;
@@ -182,9 +182,9 @@ public class AboDialogController extends PDialogExtra {
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
 
         if (aboList.size() > 1) {
             // dann werden mehre Abos geändert
@@ -221,7 +221,7 @@ public class AboDialogController extends PDialogExtra {
     private void initDialog() {
         getVBoxCont().getChildren().add(gridPane);
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
-        addHlpButton(PButton.helpButton(getStageProp(), "Download", HelpText.ABO_SEARCH));
+        addHlpButton(P2Button.helpButton(getStageProp(), "Download", HelpText.ABO_SEARCH));
         SetData setData = aboCopy.getSetData(progData);
         if (setData == null) {
             Platform.runLater(() -> new NoSetDialogController(progData, NoSetDialogController.TEXT.ABO));

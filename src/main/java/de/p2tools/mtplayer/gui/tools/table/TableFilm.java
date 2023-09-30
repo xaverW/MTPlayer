@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.guitools.PTableFactory;
-import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
-import de.p2tools.p2lib.guitools.ptable.CellIntNull;
+import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
+import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
 import de.p2tools.p2lib.mtfilm.film.FilmSize;
 import de.p2tools.p2lib.tools.date.PDate;
 import javafx.scene.control.SelectionMode;
@@ -59,12 +59,12 @@ public class TableFilm extends PTable<FilmDataMTP> {
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
 
         // bei Farbänderung der Schriftfarbe klappt es damit besser: Table.refresh_table(table)
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> PTableFactory.refreshTable(this));
-        ProgColorList.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
-        ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
-        ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
-        ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
-        ProgColorList.FILM_BOOKMARK.colorProperty().addListener((a, b, c) -> PTableFactory.refreshTable(this));
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
+        ProgColorList.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
+        ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
+        ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
+        ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
+        ProgColorList.FILM_BOOKMARK.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
 
         final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
@@ -95,7 +95,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
         timeColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, Integer> durationColumn = new TableColumn<>("Dauer [min]");
-        durationColumn.setCellFactory(new CellIntNull().cellFactory);
+        durationColumn.setCellFactory(new P2CellIntNull().cellFactory);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenterRightPadding_25");
 
@@ -105,12 +105,12 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
-        hdColumn.setCellFactory(new CellCheckBox().cellFactory);
+        hdColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         hdColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
-        utColumn.setCellFactory(new CellCheckBox().cellFactory);
+        utColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         utColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, String> geoColumn = new TableColumn<>("Geo");
@@ -127,7 +127,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, Boolean> bookmarkColumn = new TableColumn<>("Bookmark");
         bookmarkColumn.setCellValueFactory(new PropertyValueFactory<>("bookmark"));
-        bookmarkColumn.setCellFactory(new CellCheckBox().cellFactory);
+        bookmarkColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         bookmarkColumn.getStyleClass().add("alignCenterLeft");
 
         nrColumn.setPrefWidth(50);

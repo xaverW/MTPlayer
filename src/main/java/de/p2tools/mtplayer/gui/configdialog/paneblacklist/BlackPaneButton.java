@@ -25,9 +25,9 @@ import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PTableFactory;
+import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import javafx.beans.property.BooleanProperty;
@@ -77,7 +77,7 @@ public class BlackPaneButton {
             tableView.scrollTo(blackData);
         });
 
-        final Button btnHelpCount = PButton.helpButton(stage, "Treffer zählen",
+        final Button btnHelpCount = P2Button.helpButton(stage, "Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
         Button btnCountHits = new Button("_Treffer zählen");
@@ -86,7 +86,7 @@ public class BlackPaneButton {
                 "wie viele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
             BlacklistFactory.countHits(list);
-            PTableFactory.refreshTable(tableView);
+            P2TableFactory.refreshTable(tableView);
         });
 
         Button btnAddStandards = new Button("_Standards einfügen");

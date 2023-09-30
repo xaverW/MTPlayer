@@ -29,8 +29,8 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -117,7 +117,7 @@ public class ImportMVDialog extends PDialogExtra {
         });
         btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
 
-        final Button btnHelp = PButton.helpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
+        final Button btnHelp = P2Button.helpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
 
         int row = 0;
         gridPane.add(new Label("Den Pfad zum MediathekView Konfig-Ordner auswählen"), 0, row);
@@ -126,8 +126,8 @@ public class ImportMVDialog extends PDialogExtra {
         gridPane.add(txtMVPath, 0, ++row);
         gridPane.add(btnFile, 1, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
     }
 
     private void addLoad(VBox vBox) {
@@ -136,7 +136,7 @@ public class ImportMVDialog extends PDialogExtra {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelp = PButton.helpButton(getStageProp(), "Konfigordner", HelpText.MV_SEARCH);
+        final Button btnHelp = P2Button.helpButton(getStageProp(), "Konfigordner", HelpText.MV_SEARCH);
 
         final Button btnLoad = new Button();
         btnLoad.setTooltip(new Tooltip("Die Einstellungen suchen"));
@@ -165,8 +165,8 @@ public class ImportMVDialog extends PDialogExtra {
         gridPane.add(new Label("Gefundene Blacks:"), 0, ++row);
         gridPane.add(lblBlack, 1, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcPrefSize());
     }
 
     private void importLoads(VBox vBox) {
@@ -175,7 +175,7 @@ public class ImportMVDialog extends PDialogExtra {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelp = PButton.helpButton(getStageProp(), "Konfigordner", HelpText.MV_IMPORT);
+        final Button btnHelp = P2Button.helpButton(getStageProp(), "Konfigordner", HelpText.MV_IMPORT);
 
         final Label lblFoundAbos = new Label("");
         final Button btnAddAbo = new Button();
@@ -213,7 +213,7 @@ public class ImportMVDialog extends PDialogExtra {
         gridPane.add(new Label("Blacks eingefügt:"), 0, ++row);
         gridPane.add(lblFoundBlacks, 1, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcPrefSize());
     }
 }

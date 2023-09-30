@@ -19,11 +19,11 @@ package de.p2tools.mtplayer.gui.infoPane;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.p2lib.guitools.pclosepane.PClosePaneH;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class AboInfoController extends PClosePaneH {
+public class AboInfoController extends P2ClosePaneH {
 
     private PaneAboInfo paneAboInfo;
 

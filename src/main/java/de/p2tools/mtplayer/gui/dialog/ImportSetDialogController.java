@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.startdialog.PathPane;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PButton;
+import de.p2tools.p2lib.guitools.P2Button;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Priority;
@@ -59,7 +59,7 @@ public class ImportSetDialogController extends PDialogExtra {
     @Override
     public void make() {
         btnCancel.setOnAction(a -> close());
-        final Button btnHelp = PButton.helpButton("Set zurücksetzen",
+        final Button btnHelp = P2Button.helpButton("Set zurücksetzen",
                 "\"Bestehende Sets durch neue ersetzen\"" +
                         P2LibConst.LINE_SEPARATORx2 +
                         "Damit werden alle Sets (auch eigene), die zum Abspielen" + P2LibConst.LINE_SEPARATOR +

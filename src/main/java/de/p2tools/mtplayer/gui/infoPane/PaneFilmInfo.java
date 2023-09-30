@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PHyperlink;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2Hyperlink;
 import de.p2tools.p2lib.mtdownload.DownloadSizeData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import javafx.application.Platform;
@@ -92,7 +92,7 @@ public class PaneFilmInfo extends VBox {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         int row = 0;
         gridPane.add(new Label("Datum: "), 0, row);
@@ -161,7 +161,7 @@ public class PaneFilmInfo extends VBox {
         lblAbo.setText(film.getAboName());
 
         if (!film.arr[FilmDataXml.FILM_WEBSITE].isEmpty()) {
-            PHyperlink hyperlink = new PHyperlink(film.arr[FilmDataXml.FILM_WEBSITE],
+            P2Hyperlink hyperlink = new P2Hyperlink(film.arr[FilmDataXml.FILM_WEBSITE],
                     ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
             hBoxUrl.getChildren().addAll(lblUrl, hyperlink);
         }
@@ -211,7 +211,7 @@ public class PaneFilmInfo extends VBox {
         textArea.textProperty().addListener(changeListener);
 
         if (!downloadData.getUrlWebsite().isEmpty()) {
-            PHyperlink hyperlink = new PHyperlink(downloadData.getUrlWebsite(),
+            P2Hyperlink hyperlink = new P2Hyperlink(downloadData.getUrlWebsite(),
                     ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
             hBoxUrl.getChildren().addAll(lblUrl, hyperlink);
         }

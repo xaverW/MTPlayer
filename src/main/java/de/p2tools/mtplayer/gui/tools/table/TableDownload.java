@@ -20,10 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.tools.MTListener;
-import de.p2tools.p2lib.guitools.PTableFactory;
-import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
-import de.p2tools.p2lib.guitools.ptable.CellIntMax;
-import de.p2tools.p2lib.guitools.ptable.CellIntNull;
+import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
+import de.p2tools.p2lib.guitools.ptable.P2CellIntMax;
+import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
 import de.p2tools.p2lib.mtdownload.DownloadSizeData;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
 import de.p2tools.p2lib.tools.date.PDate;
@@ -63,7 +63,7 @@ public class TableDownload extends PTable<DownloadData> {
 
         final Comparator<String> sorter = GermanStringIntSorter.getInstance();
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> refresh());
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> PTableFactory.refreshTable(this));
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> refresh());
@@ -72,12 +72,12 @@ public class TableDownload extends PTable<DownloadData> {
 
         final TableColumn<DownloadData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
-        nrColumn.setCellFactory(new CellIntMax().cellFactory);
+        nrColumn.setCellFactory(new P2CellIntMax().cellFactory);
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<DownloadData, Integer> filmNrColumn = new TableColumn<>("Filmnr");
         filmNrColumn.setCellValueFactory(new PropertyValueFactory<>("filmNr"));
-        filmNrColumn.setCellFactory(new CellIntMax().cellFactory);
+        filmNrColumn.setCellFactory(new P2CellIntMax().cellFactory);
         filmNrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<DownloadData, String> aboColumn = new TableColumn<>("Abo");
@@ -135,23 +135,23 @@ public class TableDownload extends PTable<DownloadData> {
         timeColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Integer> durationColumn = new TableColumn<>("Dauer [min]");
-        durationColumn.setCellFactory(new CellIntNull().cellFactory);
+        durationColumn.setCellFactory(new P2CellIntNull().cellFactory);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenterRightPadding_25");
 
         final TableColumn<DownloadData, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
-        hdColumn.setCellFactory(new CellCheckBox().cellFactory);
+        hdColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         hdColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
-        utColumn.setCellFactory(new CellCheckBox().cellFactory);
+        utColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         utColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Boolean> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geoBlocked"));
-        geoColumn.setCellFactory(new CellCheckBox().cellFactory);
+        geoColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         geoColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, String> artColumn = new TableColumn<>("Art");

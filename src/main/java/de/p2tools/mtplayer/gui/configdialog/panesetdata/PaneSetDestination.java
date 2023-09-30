@@ -25,10 +25,10 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PComboBoxObject;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2ComboBoxObject;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -41,8 +41,8 @@ import javafx.stage.Stage;
 import java.util.Collection;
 
 public class PaneSetDestination {
-    private final PToggleSwitch tglSubdir = new PToggleSwitch("Bei Abos Unterordner anlegen:");
-    private final PComboBoxObject<AboSubDir.ENSubDir> cboDest = new PComboBoxObject();
+    private final P2ToggleSwitch tglSubdir = new P2ToggleSwitch("Bei Abos Unterordner anlegen:");
+    private final P2ComboBoxObject<AboSubDir.ENSubDir> cboDest = new P2ComboBoxObject();
     private final TextField txtDestPath = new TextField();
     private final TextField txtDestName = new TextField();
     private final Slider slCut = new Slider();
@@ -75,9 +75,9 @@ public class PaneSetDestination {
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen"));
         btnFile.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
 
-        final Button btnHelSubDir = PButton.helpButton(stage, "Unterordner anlegen",
+        final Button btnHelSubDir = P2Button.helpButton(stage, "Unterordner anlegen",
                 HelpText.SETDATA_ABO_SUBDIR);
-        final Button btnHelpDestName = PButton.helpButton(stage, "Zieldateiname",
+        final Button btnHelpDestName = P2Button.helpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_FILE_NAME);
 
         cboDest.init(FXCollections.observableArrayList(AboSubDir.ENSubDir.values()));
@@ -114,9 +114,9 @@ public class PaneSetDestination {
         gridPane.add(txtDestName, 1, row);
         gridPane.add(btnHelpDestName, 2, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
 
         makeCut(vBox);
 
@@ -135,7 +135,7 @@ public class PaneSetDestination {
         Label lblTxtField = new Label("Länge\neinzelne Felder:");
         Label lblSizeField = new Label();
 
-        final Button btnHelpDestSize = PButton.helpButton(stage, "Länge des Zieldateinamens",
+        final Button btnHelpDestSize = P2Button.helpButton(stage, "Länge des Zieldateinamens",
                 HelpTextPset.PSET_DEST_FILE_SIZE);
 
         slCut.setMin(0);
@@ -183,9 +183,9 @@ public class PaneSetDestination {
         gridPane.add(slCutField, 1, row);
         gridPane.add(lblSizeField, 2, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
     }
 
     private void setValueSlider(Slider sl, Label lb, String pre) {

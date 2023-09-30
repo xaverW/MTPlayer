@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -36,7 +36,7 @@ public class PaneGeo {
     private final RadioButton rbAt = new RadioButton("AT - Österreich");
     private final RadioButton rbEu = new RadioButton("EU (EBU - European Broadcasting Union)");
     private final RadioButton rbSonst = new RadioButton("sonst");
-    private final PToggleSwitch tglGeo = new PToggleSwitch("Geblockte Sendungen gelb markieren:");
+    private final P2ToggleSwitch tglGeo = new P2ToggleSwitch("Geblockte Sendungen gelb markieren:");
 
     private final Stage stage;
 
@@ -54,7 +54,7 @@ public class PaneGeo {
 
     public TitledPane makeGeo(Collection<TitledPane> result) {
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
-        final Button btnHelpGeo = PButton.helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
+        final Button btnHelpGeo = P2Button.helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbDe, rbCh, rbAt, rbEu, rbSonst);
@@ -111,9 +111,9 @@ public class PaneGeo {
         gridPane.add(rbEu, 1, ++row);
         gridPane.add(rbSonst, 1, ++row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
 
         TitledPane tpConfig = new TitledPane("Geogeblockte Filme", gridPane);
         if (result != null) {

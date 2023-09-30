@@ -23,8 +23,8 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.guitools.pnotification.P2Notification;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
@@ -52,7 +52,7 @@ public class MTPTester {
     private final ProgData progData;
     private final TextArea textArea = new TextArea();
     private String text = "";
-    private final PMaskerPane maskerPane = new PMaskerPane();
+    private final P2MaskerPane maskerPane = new P2MaskerPane();
     private boolean ard = false;
 
     public MTPTester(final ProgData progData) {
@@ -72,7 +72,7 @@ public class MTPTester {
             gridPane.setHgap(5);
             gridPane.setVgap(5);
             gridPane.setPadding(new Insets(10));
-            gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
+            gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
             maskerPane.switchOffMasker();
             maskerPane.setButtonText("Abbrechen");

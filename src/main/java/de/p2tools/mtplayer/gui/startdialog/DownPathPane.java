@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -61,7 +61,7 @@ public class DownPathPane {
         btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
 
-        final Button btnHelp = PButton.helpButton(stage,
+        final Button btnHelp = P2Button.helpButton(stage,
                 "Zielverzeichnis",
                 "Hier kann das Verzeichnis angegeben werden, " +
                         "in dem die Downloads gespeichert werden.");
@@ -71,7 +71,7 @@ public class DownPathPane {
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnFile, 2, row);
         gridPane.add(btnHelp, 3, row);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(), PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         TitledPane tpConfig = new TitledPane("Pfad für die Downloads", gridPane);
         return tpConfig;

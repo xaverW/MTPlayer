@@ -25,8 +25,8 @@ import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.guitools.POpen;
-import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
+import de.p2tools.p2lib.guitools.P2Open;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.tools.file.PFileUtils;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -86,7 +86,7 @@ public class PaneDialogMedia extends PaneDialog {
 
         final TableColumn<MediaData, Boolean> externalColumn = new TableColumn<>("extern");
         externalColumn.setCellValueFactory(new PropertyValueFactory<>("external"));
-        externalColumn.setCellFactory(new CellCheckBox().cellFactory);
+        externalColumn.setCellFactory(new P2CellCheckBox().cellFactory);
 
         nameColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(45.0 / 100));
         pathColumn.prefWidthProperty().bind(tableMedia.widthProperty().multiply(30.0 / 100));
@@ -175,13 +175,13 @@ public class PaneDialogMedia extends PaneDialog {
         final String path = txtPathMedia.getText();
         final String name = txtTitleMedia.getText();
         if (!name.isEmpty() && !path.isEmpty()) {
-            POpen.playStoredFilm(PFileUtils.addsPath(path, name),
+            P2Open.playStoredFilm(PFileUtils.addsPath(path, name),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         }
     }
 
     private void open() {
         final String s = txtPathMedia.getText();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
     }
 }

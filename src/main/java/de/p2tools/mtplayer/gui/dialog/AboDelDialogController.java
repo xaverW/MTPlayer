@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PButton;
+import de.p2tools.p2lib.guitools.P2Button;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -101,7 +101,7 @@ public class AboDelDialogController extends PDialogExtra {
             state = STATE.STATE_CANCEL;
             quit();
         });
-        Button btnHelp = PButton.helpButton(getStage(),
+        Button btnHelp = P2Button.helpButton(getStage(),
                 "Abo löschen", HelpText.ABO_DELETE_DIALOG);
         addHlpButton(btnHelp);
         addOkCancelButtons(btnDelDl, btnCancel);

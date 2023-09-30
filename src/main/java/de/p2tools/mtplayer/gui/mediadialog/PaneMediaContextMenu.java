@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
-import de.p2tools.p2lib.guitools.POpen;
+import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.tools.file.PFileUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -49,7 +49,7 @@ public class PaneMediaContextMenu {
         miOpen.setOnAction(a -> {
             String path = mediaData.getPath();
             if (!path.isEmpty()) {
-                POpen.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+                P2Open.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
             }
         });
 
@@ -58,7 +58,7 @@ public class PaneMediaContextMenu {
             String path = mediaData.getPath();
             String name = mediaData.getName();
             if (!path.isEmpty() && !name.isEmpty()) {
-                POpen.playStoredFilm(PFileUtils.addsPath(path, name),
+                P2Open.playStoredFilm(PFileUtils.addsPath(path, name),
                         ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
             }
         });

@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PButton;
+import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -127,7 +127,7 @@ public class MediaDialogController extends PDialogExtra {
             VBox.setVgrow(tabPane, Priority.ALWAYS);
             getVBoxCont().getChildren().add(tabPane);
 
-            Button btnHelp = PButton.helpButton(getStage(),
+            Button btnHelp = P2Button.helpButton(getStage(),
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
             addOkButton(btnOk);
             addHlpButton(btnHelp);

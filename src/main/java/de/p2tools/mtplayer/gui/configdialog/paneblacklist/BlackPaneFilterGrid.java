@@ -22,10 +22,10 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2MenuButton;
-import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.beans.property.SimpleStringProperty;
@@ -46,10 +46,10 @@ public class BlackPaneFilterGrid {
     private final TextField txtFilterThema = new TextField();
     private final TextField txtFilterTitel = new TextField();
     private final TextField txtFilterThemaTitel = new TextField();
-    private final PToggleSwitch tglFilterExact = new PToggleSwitch("Thema exakt");
-    private final PToggleSwitch tglFilterActive = new PToggleSwitch("Aktiv");
+    private final P2ToggleSwitch tglFilterExact = new P2ToggleSwitch("Thema exakt");
+    private final P2ToggleSwitch tglFilterActive = new P2ToggleSwitch("Aktiv");
     private final TextField txtFilterAll = new TextField();
-    private final Button btnClearFilter = PButtonClearFilterFactory.getPButtonClear();
+    private final Button btnClearFilter = P2ButtonClearFilterFactory.getPButtonClear();
     private final TableView<BlackData> tableView;
 
 

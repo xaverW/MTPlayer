@@ -23,9 +23,9 @@ import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningData;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptable.CellCheckBox;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -88,7 +88,7 @@ public class PaneCleaningList {
 
         final TableColumn<CleaningData, Boolean> exactColumn = new TableColumn<>("Immer");
         exactColumn.setCellValueFactory(new PropertyValueFactory<>("always"));
-        exactColumn.setCellFactory(new CellCheckBox().cellFactory);
+        exactColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         exactColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
 
         final TableColumn<CleaningData, String> utfCodeColumn = new TableColumn<>("UTF-8 Code");
@@ -167,8 +167,8 @@ public class PaneCleaningList {
         gridPane.add(new Label("Immer:"), 0, ++row);
         gridPane.add(chkExact, 1, row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().add(gridPane);
     }

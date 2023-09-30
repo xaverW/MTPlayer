@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -47,9 +47,9 @@ public class PaneBlack {
     private final Slider slDays = new Slider();
     private final Label lblDays = new Label("");
 
-    private final PToggleSwitch tglAbo = new PToggleSwitch("Die Blacklist beim Suchen der Abos berücksichtigen");
-    private final PToggleSwitch tglFuture = new PToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
-    private final PToggleSwitch tglGeo = new PToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
+    private final P2ToggleSwitch tglAbo = new P2ToggleSwitch("Die Blacklist beim Suchen der Abos berücksichtigen");
+    private final P2ToggleSwitch tglFuture = new P2ToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
+    private final P2ToggleSwitch tglGeo = new P2ToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
 
     private final BooleanProperty blackChanged;
     private Stage stage;
@@ -86,29 +86,29 @@ public class PaneBlack {
         tglAbo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO);
         tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
-        final Button btnHelp = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelp = P2Button.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_ABO);
 
 
         tglFuture.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE);
         tglFuture.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
-        final Button btnHelpFuture = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelpFuture = P2Button.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_FUTURE);
 
 
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO);
         tglGeo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
 
-        final Button btnHelpGeo = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelpGeo = P2Button.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_GEO);
 
         initDays();
 
-        final Button btnHelpSize = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelpSize = P2Button.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_SIZE);
 
-        final Button btnHelpDays = PButton.helpButton(stage, "Blacklist",
+        final Button btnHelpDays = P2Button.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_DAYS);
 
         lblDays.setMinWidth(Region.USE_PREF_SIZE);
@@ -152,9 +152,9 @@ public class PaneBlack {
         GridPane.setValignment(lblSize, VPos.TOP);
         GridPane.setValignment(btnHelpSize, VPos.TOP);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().add(gridPane);
     }

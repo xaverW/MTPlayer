@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
+import de.p2tools.p2lib.guitools.P2Button;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -43,7 +43,7 @@ public class BlackPaneMoveButton {
     static void addMoveButton(Stage stage, VBox vBox, TableView<BlackData> tableView, ProgData progData,
                               boolean controlBlackListNotFilmFilter, BooleanProperty blackDataChanged, BlackList list) {
 
-        final Button btnHelpCount = PButton.helpButton(stage, "Filter kopieren oder verschieben",
+        final Button btnHelpCount = P2Button.helpButton(stage, "Filter kopieren oder verschieben",
                 HelpText.BLACKLIST_MOVE);
 
         Button btnCopy = new Button(controlBlackListNotFilmFilter ? "_Kopieren nach \"Filmliste laden\"" : "_Kopieren nach \"Blacklist\"");

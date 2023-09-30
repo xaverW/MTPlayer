@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -67,10 +67,10 @@ public class PaneDownloadStop {
         TitledPane tpConfig = new TitledPane("Download stoppen", gridPane);
         result.add(tpConfig);
 
-        final Button btnHelpStop = PButton.helpButton(stage, "Download",
+        final Button btnHelpStop = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_STOP);
 
-        final Button btnHelpContinue = PButton.helpButton(stage, "Download",
+        final Button btnHelpContinue = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_CONTINUE);
 
         GridPane.setHalignment(btnHelpStop, HPos.RIGHT);
@@ -126,8 +126,8 @@ public class PaneDownloadStop {
         gridPane.add(vBox, 0, ++row);
         gridPane.add(btnHelpContinue, 1, row, 1, 2);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
     }
 
     private void initRadio() {

@@ -23,9 +23,9 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2MenuButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,7 +45,7 @@ public class AddBlackListDialogController extends PDialogExtra {
 
     private final P2MenuButton mbChannel;
     private final TextField txtTheme = new TextField();
-    private final PToggleSwitch tgTheme = new PToggleSwitch("exakt:");
+    private final P2ToggleSwitch tgTheme = new P2ToggleSwitch("exakt:");
     private final TextField txtTitle = new TextField();
     private final TextField txtThemeTitle = new TextField();
     private final Button btnChannel = new Button();
@@ -145,10 +145,10 @@ public class AddBlackListDialogController extends PDialogExtra {
         txtTitle.textProperty().bindBidirectional(blackData.titleProperty());
         txtThemeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize());
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);

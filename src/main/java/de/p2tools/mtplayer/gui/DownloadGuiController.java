@@ -36,8 +36,8 @@ import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.guitools.POpen;
-import de.p2tools.p2lib.guitools.PTableFactory;
+import de.p2tools.p2lib.guitools.P2Open;
+import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.PSystemUtils;
@@ -96,7 +96,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void tableRefresh() {
-        Platform.runLater(() -> PTableFactory.refreshTable(tableView));
+        Platform.runLater(() -> P2TableFactory.refreshTable(tableView));
     }
 
     public void isShown() {
@@ -140,7 +140,7 @@ public class DownloadGuiController extends AnchorPane {
 
     public void playFilm() {
         final Optional<DownloadData> download = getSel();
-        download.ifPresent(downloadData -> POpen.playStoredFilm(downloadData.getDestPathFile(),
+        download.ifPresent(downloadData -> P2Open.playStoredFilm(downloadData.getDestPathFile(),
                 ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView()));
     }
 
@@ -160,7 +160,7 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         String s = download.get().getDestPath();
-        POpen.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
     }
 
     public void playUrl() {
@@ -260,7 +260,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void invertSelection() {
-        PTableFactory.invertSelection(tableView);
+        P2TableFactory.invertSelection(tableView);
     }
 
     public void saveTable() {
@@ -353,12 +353,12 @@ public class DownloadGuiController extends AnchorPane {
         });
 
         tableView.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-            if (PTableFactory.SPACE.match(event)) {
-                PTableFactory.scrollVisibleRangeDown(tableView);
+            if (P2TableFactory.SPACE.match(event)) {
+                P2TableFactory.scrollVisibleRangeDown(tableView);
                 event.consume();
             }
-            if (PTableFactory.SPACE_SHIFT.match(event)) {
-                PTableFactory.scrollVisibleRangeUp(tableView);
+            if (P2TableFactory.SPACE_SHIFT.match(event)) {
+                P2TableFactory.scrollVisibleRangeUp(tableView);
                 event.consume();
             }
         });

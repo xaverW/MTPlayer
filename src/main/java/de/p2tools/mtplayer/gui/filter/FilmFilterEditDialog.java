@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -48,7 +48,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
     public void make() {
         init(getVBoxCont());
 
-        final Button btnHelp = PButton.helpButton(getStage(), "Filtereinstellungen",
+        final Button btnHelp = P2Button.helpButton(getStage(), "Filtereinstellungen",
                 HelpText.GUI_FILMS_EDIT_FILTER);
 
         Button btnOk = new Button("_Ok");
@@ -60,17 +60,17 @@ public class FilmFilterEditDialog extends PDialogExtra {
     public void init(VBox vBox) {
         vBox.setSpacing(15);
 
-        PToggleSwitch tglChannel = new PToggleSwitch("Sender");
+        P2ToggleSwitch tglChannel = new P2ToggleSwitch("Sender");
         tglChannel.setMaxWidth(Double.MAX_VALUE);
         tglChannel.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().channelVisProperty());
         vBox.getChildren().add(tglChannel);
 
         // Thema
-        PToggleSwitch tglTheme = new PToggleSwitch("Thema");
+        P2ToggleSwitch tglTheme = new P2ToggleSwitch("Thema");
         tglTheme.setMaxWidth(Double.MAX_VALUE);
         tglTheme.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().themeVisProperty());
 
-        PToggleSwitch tglThemeExact = new PToggleSwitch("  -> freie Suche mit Eingabefeld");
+        P2ToggleSwitch tglThemeExact = new P2ToggleSwitch("  -> freie Suche mit Eingabefeld");
         tglThemeExact.disableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty().not());
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
         tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().isThemeExact());
@@ -85,59 +85,59 @@ public class FilmFilterEditDialog extends PDialogExtra {
         v.getChildren().addAll(tglTheme, h);
         vBox.getChildren().add(v);
 
-        PToggleSwitch tglThemeTitle = new PToggleSwitch("Thema oder Titel");
+        P2ToggleSwitch tglThemeTitle = new P2ToggleSwitch("Thema oder Titel");
         tglThemeTitle.setMaxWidth(Double.MAX_VALUE);
         tglThemeTitle.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().themeTitleVisProperty());
         vBox.getChildren().add(tglThemeTitle);
 
-        PToggleSwitch tglTitle = new PToggleSwitch("Titel");
+        P2ToggleSwitch tglTitle = new P2ToggleSwitch("Titel");
         tglTitle.setMaxWidth(Double.MAX_VALUE);
         tglTitle.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().titleVisProperty());
         vBox.getChildren().add(tglTitle);
 
-        PToggleSwitch tglSomewhere = new PToggleSwitch("Irgendwo");
+        P2ToggleSwitch tglSomewhere = new P2ToggleSwitch("Irgendwo");
         tglSomewhere.setMaxWidth(Double.MAX_VALUE);
         tglSomewhere.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().somewhereVisProperty());
         vBox.getChildren().add(tglSomewhere);
 
-        PToggleSwitch tglUrl = new PToggleSwitch("Url");
+        P2ToggleSwitch tglUrl = new P2ToggleSwitch("Url");
         tglUrl.setMaxWidth(Double.MAX_VALUE);
         tglUrl.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().urlVisProperty());
         vBox.getChildren().add(tglUrl);
 
-        PToggleSwitch tglTimeRange = new PToggleSwitch("Zeitraum [Tage]");
+        P2ToggleSwitch tglTimeRange = new P2ToggleSwitch("Zeitraum [Tage]");
         tglTimeRange.setMaxWidth(Double.MAX_VALUE);
         tglTimeRange.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().timeRangeVisProperty());
         vBox.getChildren().add(tglTimeRange);
 
-        PToggleSwitch tglMinMax = new PToggleSwitch("Filmlänge Min/Max");
+        P2ToggleSwitch tglMinMax = new P2ToggleSwitch("Filmlänge Min/Max");
         tglMinMax.setMaxWidth(Double.MAX_VALUE);
         tglMinMax.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
         vBox.getChildren().add(tglMinMax);
 
-        PToggleSwitch tglMinMaxTime = new PToggleSwitch("Sendezeit");
+        P2ToggleSwitch tglMinMaxTime = new P2ToggleSwitch("Sendezeit");
         tglMinMaxTime.setMaxWidth(Double.MAX_VALUE);
         tglMinMaxTime.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
         vBox.getChildren().add(tglMinMaxTime);
 
-        PToggleSwitch tglShowDate = new PToggleSwitch("Sendedatum");
+        P2ToggleSwitch tglShowDate = new P2ToggleSwitch("Sendedatum");
         tglShowDate.setMaxWidth(Double.MAX_VALUE);
         tglShowDate.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().showDateVisProperty());
         vBox.getChildren().add(tglShowDate);
 
-        PToggleSwitch tglOnly = new PToggleSwitch("\"anzeigen\"");
+        P2ToggleSwitch tglOnly = new P2ToggleSwitch("\"anzeigen\"");
         tglOnly.setMaxWidth(Double.MAX_VALUE);
         tglOnly.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().onlyVisProperty());
         vBox.getChildren().add(tglOnly);
 
-        PToggleSwitch tglNot = new PToggleSwitch("\"ausschließen\"");
+        P2ToggleSwitch tglNot = new P2ToggleSwitch("\"ausschließen\"");
         tglNot.setMaxWidth(Double.MAX_VALUE);
         tglNot.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().notVisProperty());
         vBox.getChildren().add(tglNot);
 
 
         //Wartezeit
-        PToggleSwitch tglReturn = new PToggleSwitch("In Textfeldern Suchbeginn erst mit \"Return\" starten");
+        P2ToggleSwitch tglReturn = new P2ToggleSwitch("In Textfeldern Suchbeginn erst mit \"Return\" starten");
         tglReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN);
 
         Label lblValue = new Label();
@@ -161,7 +161,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
         slider.disableProperty().bind(tglReturn.selectedProperty());
         lblValue.disableProperty().bind(tglReturn.selectedProperty());
 
-        PToggleSwitch tglFirstTableRow = new PToggleSwitch("Nach der Suche immer die erste Zeile\n" +
+        P2ToggleSwitch tglFirstTableRow = new P2ToggleSwitch("Nach der Suche immer die erste Zeile\n" +
                 "in der Tabelle auswählen");
         tglFirstTableRow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_FIRST_ROW);
 
@@ -188,8 +188,8 @@ public class FilmFilterEditDialog extends PDialogExtra {
         gridPane.add(tglFirstTableRow, 0, ++row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrowRight());
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrowRight());
 
         Separator sp1 = new Separator();
         sp1.getStyleClass().add("pseperator2");

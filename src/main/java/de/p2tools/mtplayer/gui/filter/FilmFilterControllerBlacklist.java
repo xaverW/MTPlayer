@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,7 +32,7 @@ public class FilmFilterControllerBlacklist extends HBox {
 
     private final ProgData progData;
 
-    private final PToggleSwitch tglBlacklist = new PToggleSwitch("Blacklist:");
+    private final P2ToggleSwitch tglBlacklist = new P2ToggleSwitch("Blacklist:");
 
     public FilmFilterControllerBlacklist() {
         progData = ProgData.getInstance();

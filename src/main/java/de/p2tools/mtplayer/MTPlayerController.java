@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.gui.AboGui;
 import de.p2tools.mtplayer.gui.DownloadGui;
 import de.p2tools.mtplayer.gui.FilmGui;
 import de.p2tools.mtplayer.gui.StatusBarController;
-import de.p2tools.p2lib.guitools.pmask.PMaskerPane;
+import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -51,7 +51,7 @@ public class MTPlayerController extends StackPane {
     private final BorderPane borderPane = new BorderPane();
     private final StackPane stackPaneCont = new StackPane();
 
-    private PMaskerPane maskerPane = new PMaskerPane();
+    private P2MaskerPane maskerPane = new P2MaskerPane();
     private StatusBarController statusBarController;
 
     private SplitPane splitPaneFilm;

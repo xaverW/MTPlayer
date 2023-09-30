@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.guitools.P2MenuButton;
-import de.p2tools.p2lib.guitools.PButtonClearFilterFactory;
+import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -37,7 +37,7 @@ public class AboFilterController extends FilterController {
     private ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
     private TextField txtDescription = new TextField();
     private TextField txtName = new TextField();
-    private Button btnClear = PButtonClearFilterFactory.getPButtonClearFilter();
+    private Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
 
     private final VBox vBoxFilter;
     private final ProgData progData;

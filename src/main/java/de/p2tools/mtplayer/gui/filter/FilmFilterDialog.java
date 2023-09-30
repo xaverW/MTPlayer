@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PSeparatorComboBox;
+import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -84,7 +84,7 @@ public class FilmFilterDialog extends PDialogExtra {
             protected void updateItem(FilmFilter item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
-                    if (PSeparatorComboBox.isSeparator(item.toString())) {
+                    if (P2SeparatorComboBox.isSeparator(item.toString())) {
                         this.setDisable(true);
                         setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
                     } else {
@@ -144,7 +144,7 @@ public class FilmFilterDialog extends PDialogExtra {
                 Label lbl = new Label(filmFilter.getName());
                 hBox.getChildren().add(lbl);
                 setGraphic(hBox);
-                if (PSeparatorComboBox.isSeparator(filmFilter.toString())) {
+                if (P2SeparatorComboBox.isSeparator(filmFilter.toString())) {
                     hBox.setAlignment(Pos.CENTER);
                 }
             }

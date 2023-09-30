@@ -22,11 +22,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PHyperlink;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Hyperlink;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -43,12 +43,12 @@ import java.util.Collection;
 
 public class PaneUpdate {
 
-    private final PToggleSwitch tglSearch = new PToggleSwitch("Einmal am Tag nach einer neuen Programmversion suchen");
-    private final PToggleSwitch tglSearchBeta = new PToggleSwitch("Auch nach neuen Vorabversionen suchen");
+    private final P2ToggleSwitch tglSearch = new P2ToggleSwitch("Einmal am Tag nach einer neuen Programmversion suchen");
+    private final P2ToggleSwitch tglSearchBeta = new P2ToggleSwitch("Auch nach neuen Vorabversionen suchen");
     private final CheckBox chkDaily = new CheckBox("Zwischenschritte (Dailys) mit einbeziehen");
     private final Button btnNow = new Button("_Jetzt suchen");
     private Button btnHelpBeta;
-    private final PToggleSwitch tglEnableLog = new PToggleSwitch("Ein Logfile anlegen:");
+    private final P2ToggleSwitch tglEnableLog = new P2ToggleSwitch("Ein Logfile anlegen:");
     private final Stage stage;
     private final ProgData progData;
 
@@ -75,7 +75,7 @@ public class PaneUpdate {
 
         //einmal am Tag Update suchen
         tglSearch.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);
-        final Button btnHelp = PButton.helpButton(stage, "Programmupdate suchen",
+        final Button btnHelp = P2Button.helpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
                         "Ist eine aktualisierte Version vorhanden, dann wird das gemeldet."
                         + P2LibConst.LINE_SEPARATOR +
@@ -83,7 +83,7 @@ public class PaneUpdate {
 
         tglSearchBeta.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_BETA);
         chkDaily.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
-        btnHelpBeta = PButton.helpButton(stage, "Vorabversionen suchen",
+        btnHelpBeta = P2Button.helpButton(stage, "Vorabversionen suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Vorabversion des Programms gibt. " +
                         P2LibConst.LINE_SEPARATORx2 +
                         "Das sind \"Zwischenschritte\" auf dem Weg zur nächsten Version. Hier ist die " +
@@ -100,7 +100,7 @@ public class PaneUpdate {
         tglSearchBeta.selectedProperty().addListener((ob, ol, ne) -> checkBeta());
 
         btnNow.setOnAction(event -> new SearchProgramUpdate(progData, stage).searchNewProgramVersion(true));
-        PHyperlink hyperlink = new PHyperlink(ProgConst.URL_WEBSITE,
+        P2Hyperlink hyperlink = new P2Hyperlink(ProgConst.URL_WEBSITE,
                 ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
 
         int row = 0;
@@ -117,8 +117,8 @@ public class PaneUpdate {
         gridPane.add(btnNow, 0, ++row, 3, 1);
         GridPane.setHalignment(btnNow, HPos.RIGHT);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
 
         HBox hBoxHyper = new HBox();
         hBoxHyper.setAlignment(Pos.CENTER_LEFT);

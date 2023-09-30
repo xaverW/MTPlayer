@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -41,11 +41,11 @@ import java.util.Collection;
 
 public class PaneDownload {
 
-    private final PToggleSwitch tglFinished = new PToggleSwitch("Benachrichtigung wenn abgeschlossen");
-    private final PToggleSwitch tglError = new PToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
-    private final PToggleSwitch tglOne = new PToggleSwitch("Nur ein Download pro Downloadserver");
-    private final PToggleSwitch tglSSL = new PToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
-    private final PToggleSwitch tglBeep = new PToggleSwitch("Nach jedem Download einen \"Beep\" ausgeben");
+    private final P2ToggleSwitch tglFinished = new P2ToggleSwitch("Benachrichtigung wenn abgeschlossen");
+    private final P2ToggleSwitch tglError = new P2ToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
+    private final P2ToggleSwitch tglOne = new P2ToggleSwitch("Nur ein Download pro Downloadserver");
+    private final P2ToggleSwitch tglSSL = new P2ToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
+    private final P2ToggleSwitch tglBeep = new P2ToggleSwitch("Nach jedem Download einen \"Beep\" ausgeben");
     private final Spinner<Integer> spinnerAnz = new Spinner<>(1, 9, 1);
     private final Slider sliderBandwidth = new Slider();
     private final Label lblBandwidth = new Label();
@@ -71,32 +71,32 @@ public class PaneDownload {
         result.add(tpConfig);
 
         tglFinished.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
-        final Button btnHelpFinished = PButton.helpButton(stage, "Download",
+        final Button btnHelpFinished = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_FINISHED);
 
         tglError.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_ERROR_MSG);
-        final Button btnHelpError = PButton.helpButton(stage, "Download",
+        final Button btnHelpError = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
 
-        final Button btnHelpStop = PButton.helpButton(stage, "Download",
+        final Button btnHelpStop = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_STOP);
 
-        final Button btnHelpContinue = PButton.helpButton(stage, "Download",
+        final Button btnHelpContinue = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_CONTINUE);
 
         tglOne.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER);
-        final Button btnHelpOne = PButton.helpButton(stage, "Download",
+        final Button btnHelpOne = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ONE_SERVER);
 
         tglSSL.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
-        final Button btnHelpSSL = PButton.helpButton(stage, "Download",
+        final Button btnHelpSSL = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_SSL_ALWAYS_TRUE);
 
         tglBeep.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_BEEP);
         final Button btnBeep = new Button("_Test");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
 
-        final Button btnBandwidth = PButton.helpButton(stage, "Download",
+        final Button btnBandwidth = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_BANDWIDTH);
 
 
@@ -151,8 +151,8 @@ public class PaneDownload {
         gridPane.add(h, 0, ++row);
         gridPane.add(sliderBandwidth, 0, ++row);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
 
         initNumberDownloads();
         initBandwidth();

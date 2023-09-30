@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -39,8 +39,8 @@ public class PaneSetDownload {
     private final RadioButton rbHd = new RadioButton("Film in HD laden");
     private final RadioButton rbHeight = new RadioButton("Film in hoher Auflösung laden");
     private final RadioButton rbLow = new RadioButton("Film in kleiner Auflösung laden");
-    private final PToggleSwitch tglInfo = new PToggleSwitch("Infodatei anlegen: \"Filmname.txt\"");
-    private final PToggleSwitch tglSubtitle = new PToggleSwitch("Untertitel speichern: \"Filmname.xxx\"");
+    private final P2ToggleSwitch tglInfo = new P2ToggleSwitch("Infodatei anlegen: \"Filmname.txt\"");
+    private final P2ToggleSwitch tglSubtitle = new P2ToggleSwitch("Untertitel speichern: \"Filmname.xxx\"");
 
     private final Stage stage;
     private SetData setData = null;
@@ -81,7 +81,7 @@ public class PaneSetDownload {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpPrefix = PButton.helpButton(stage, "Direkt speichern",
+        final Button btnHelpPrefix = P2Button.helpButton(stage, "Direkt speichern",
                 HelpText.SETDATA_PREFIX);
         final Label lbl = new Label("Direkt Speichern (Download durch dieses Programm):");
 
@@ -96,9 +96,9 @@ public class PaneSetDownload {
         gridPane.add(txtSuffix, 1, row);
 
         gridPane.getColumnConstraints().addAll(
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
     }
 
     private void makeResolution(VBox vBox) {
@@ -116,7 +116,7 @@ public class PaneSetDownload {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpRes = PButton.helpButton(stage, "Auflösung",
+        final Button btnHelpRes = P2Button.helpButton(stage, "Auflösung",
                 HelpText.SETDATA_RES);
 
         int row = 0;
@@ -126,8 +126,8 @@ public class PaneSetDownload {
         gridPane.add(rbLow, 0, ++row);
 
         gridPane.getColumnConstraints().addAll(
-                PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrowRight());
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrowRight());
     }
 
     private void makeInfo(VBox vBox) {

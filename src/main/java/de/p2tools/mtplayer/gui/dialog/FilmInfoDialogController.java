@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PHyperlink;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2Hyperlink;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -52,12 +52,12 @@ public class FilmInfoDialogController extends PDialogExtra {
     private final ImageView ivHD = new ImageView();
     private final ImageView ivUT = new ImageView();
     private final ImageView ivNew = new ImageView();
-    private final PToggleSwitch tglUrl = new PToggleSwitch("URL");
+    private final P2ToggleSwitch tglUrl = new P2ToggleSwitch("URL");
 
-    private final PHyperlink pHyperlinkUrl = new PHyperlink("",
+    private final P2Hyperlink p2HyperlinkUrl = new P2Hyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
 
-    private final PHyperlink pHyperlinkWebsite = new PHyperlink("",
+    private final P2Hyperlink p2HyperlinkWebsite = new P2Hyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
 
     BooleanProperty urlProperty = ProgConfig.FILM_INFO_DIALOG_SHOW_URL;
@@ -83,8 +83,8 @@ public class FilmInfoDialogController extends PDialogExtra {
                     ivHD.setImage(null);
                     ivUT.setImage(null);
                     ivNew.setImage(null);
-                    pHyperlinkUrl.setUrl("");
-                    pHyperlinkWebsite.setUrl("");
+                    p2HyperlinkUrl.setUrl("");
+                    p2HyperlinkWebsite.setUrl("");
                 } else {
                     switch (i) {
                         case FilmDataXml.FILM_NR:
@@ -94,10 +94,10 @@ public class FilmInfoDialogController extends PDialogExtra {
                             lblCont[i].setText(film.getDurationMinute() + "");
                             break;
                         case FilmDataXml.FILM_URL:
-                            pHyperlinkUrl.setUrl(film.arr[FilmDataXml.FILM_URL]);
+                            p2HyperlinkUrl.setUrl(film.arr[FilmDataXml.FILM_URL]);
                             break;
                         case FilmDataXml.FILM_WEBSITE:
-                            pHyperlinkWebsite.setUrl(film.arr[FilmDataXml.FILM_WEBSITE]);
+                            p2HyperlinkWebsite.setUrl(film.arr[FilmDataXml.FILM_WEBSITE]);
                             break;
                         case FilmDataXml.FILM_DESCRIPTION:
                             textArea.setText(film.arr[i]);
@@ -151,8 +151,8 @@ public class FilmInfoDialogController extends PDialogExtra {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(5));
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         int row = 0;
         for (int i = 0; i < FilmDataXml.MAX_ELEM; ++i) {
@@ -187,11 +187,11 @@ public class FilmInfoDialogController extends PDialogExtra {
                     break;
                 case FilmDataXml.FILM_URL:
                     gridPane.add(textTitle[i], 0, row);
-                    gridPane.add(pHyperlinkUrl, 1, row++);
+                    gridPane.add(p2HyperlinkUrl, 1, row++);
                     break;
                 case FilmDataXml.FILM_WEBSITE:
                     gridPane.add(textTitle[i], 0, row);
-                    gridPane.add(pHyperlinkWebsite, 1, row++);
+                    gridPane.add(p2HyperlinkWebsite, 1, row++);
                     break;
                 case FilmDataXml.FILM_DESCRIPTION:
                     textArea.setMaxHeight(Double.MAX_VALUE);
@@ -216,20 +216,20 @@ public class FilmInfoDialogController extends PDialogExtra {
         textTitle[FilmDataXml.FILM_URL].setVisible(urlProperty.get());
         textTitle[FilmDataXml.FILM_URL].setManaged(urlProperty.get());
 
-        pHyperlinkUrl.setVisible(urlProperty.get());
-        pHyperlinkUrl.setManaged(urlProperty.get());
-        pHyperlinkUrl.setWrapText(true);
-        pHyperlinkUrl.setMinHeight(Region.USE_PREF_SIZE);
-        pHyperlinkUrl.setPadding(new Insets(5));
+        p2HyperlinkUrl.setVisible(urlProperty.get());
+        p2HyperlinkUrl.setManaged(urlProperty.get());
+        p2HyperlinkUrl.setWrapText(true);
+        p2HyperlinkUrl.setMinHeight(Region.USE_PREF_SIZE);
+        p2HyperlinkUrl.setPadding(new Insets(5));
 
         textTitle[FilmDataXml.FILM_WEBSITE].setVisible(urlProperty.get());
         textTitle[FilmDataXml.FILM_WEBSITE].setManaged(urlProperty.get());
 
-        pHyperlinkWebsite.setVisible(urlProperty.get());
-        pHyperlinkWebsite.setManaged(urlProperty.get());
-        pHyperlinkWebsite.setWrapText(true);
-        pHyperlinkWebsite.setMinHeight(Region.USE_PREF_SIZE);
-        pHyperlinkWebsite.setPadding(new Insets(5));
+        p2HyperlinkWebsite.setVisible(urlProperty.get());
+        p2HyperlinkWebsite.setManaged(urlProperty.get());
+        p2HyperlinkWebsite.setWrapText(true);
+        p2HyperlinkWebsite.setMinHeight(Region.USE_PREF_SIZE);
+        p2HyperlinkWebsite.setPadding(new Insets(5));
     }
 
     private void getMenu(Label lbl, ContextMenuEvent event) {

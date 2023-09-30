@@ -27,9 +27,9 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.MTListener;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PSeparatorComboBox;
+import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -42,7 +42,7 @@ import java.util.Optional;
 
 public class FilmFilterControllerProfiles extends VBox {
 
-    private final ComboBox<FilmFilter> cboFilterProfiles = new PSeparatorComboBox<>();
+    private final ComboBox<FilmFilter> cboFilterProfiles = new P2SeparatorComboBox<>();
     private final MenuButton mbFilterTools = new MenuButton("");
     private final Button btnLoadFilter = new Button("laden");
     private final Button btnSaveFilter = new Button("speichern");
@@ -183,7 +183,7 @@ public class FilmFilterControllerProfiles extends VBox {
                         super.updateItem(item, empty);
                         if (!empty) {
                             setText(item.toString());
-                            if (PSeparatorComboBox.isSeparator(item.toString())) {
+                            if (P2SeparatorComboBox.isSeparator(item.toString())) {
                                 this.setDisable(true);
                                 setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
                             } else {
@@ -206,7 +206,7 @@ public class FilmFilterControllerProfiles extends VBox {
                         super.updateItem(item, empty);
                         if (!empty) {
                             setText(item.toString());
-                            if (PSeparatorComboBox.isSeparator(item.toString())) {
+                            if (P2SeparatorComboBox.isSeparator(item.toString())) {
                                 this.setDisable(true);
                                 setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
                             } else {
@@ -238,7 +238,7 @@ public class FilmFilterControllerProfiles extends VBox {
         vBox.getChildren().addAll(new Label("Filterprofile:"), cboFilterProfiles);
         getChildren().add(vBox);
 
-        final Button btnHelp = PButton.helpButton("Filter", HelpText.GUI_FILM_FILTER);
+        final Button btnHelp = P2Button.helpButton("Filter", HelpText.GUI_FILM_FILTER);
         hBox = new HBox(10);
         hBox.getChildren().addAll(mbFilterTools, P2GuiTools.getHBoxGrower(), btnHelp);
         getChildren().add(hBox);

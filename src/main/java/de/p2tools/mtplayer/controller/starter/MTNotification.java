@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.POpen;
+import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.pnotification.P2Notification;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -42,7 +42,7 @@ public class MTNotification {
         btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
         btnFilmStart.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_PLAY.getImageView());
         btnFilmStart.setOnAction((ActionEvent event) -> {
-            POpen.playStoredFilm(download.getDestPathFile(),
+            P2Open.playStoredFilm(download.getDestPathFile(),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         });
 
@@ -51,7 +51,7 @@ public class MTNotification {
         btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
         btnOpenDirectory.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
         btnOpenDirectory.setOnAction((ActionEvent event) -> {
-            POpen.openDir(download.getDestPath(),
+            P2Open.openDir(download.getDestPath(),
                     ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         });
 

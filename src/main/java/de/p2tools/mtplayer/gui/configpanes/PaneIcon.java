@@ -23,10 +23,10 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2WindowIcon;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -37,10 +37,10 @@ import java.util.Collection;
 
 public class PaneIcon {
 
-    private final PToggleSwitch tglOwnProgIcon = new PToggleSwitch("Ein eigenes Programmicon anzeigen");
+    private final P2ToggleSwitch tglOwnProgIcon = new P2ToggleSwitch("Ein eigenes Programmicon anzeigen");
     private final TextField txtProgIconPath = new TextField();
-    private final PToggleSwitch tglTray = new PToggleSwitch("Programm im System Tray anzeigen");
-    private final PToggleSwitch tglOwnTrayIcon = new PToggleSwitch("Ein eigenes Icon anzeigen");
+    private final P2ToggleSwitch tglTray = new P2ToggleSwitch("Programm im System Tray anzeigen");
+    private final P2ToggleSwitch tglOwnTrayIcon = new P2ToggleSwitch("Ein eigenes Icon anzeigen");
     private final TextField txtTrayIconPath = new TextField();
 
     private final Stage stage;
@@ -66,8 +66,8 @@ public class PaneIcon {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(), PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
 
         int row = 0;
         row = addProgIcon(gridPane, row);
@@ -77,7 +77,7 @@ public class PaneIcon {
 
     private int addProgIcon(GridPane gridPane, int row) {
         tglOwnProgIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON);
-        final Button btnHelpProgramIcon = PButton.helpButton(stage, "Eigenes Bild als Programmicon anzeigen",
+        final Button btnHelpProgramIcon = P2Button.helpButton(stage, "Eigenes Bild als Programmicon anzeigen",
                 HelpText.PROGRAM_ICON);
         GridPane.setHalignment(btnHelpProgramIcon, HPos.RIGHT);
 
@@ -119,13 +119,13 @@ public class PaneIcon {
 
     private int addTryIcon(GridPane gridPane, int row) {
         tglTray.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY);
-        final Button btnHelpTray = PButton.helpButton(stage, "Programm im System Tray anzeigen",
+        final Button btnHelpTray = P2Button.helpButton(stage, "Programm im System Tray anzeigen",
                 HelpText.TRAY);
         GridPane.setHalignment(btnHelpTray, HPos.RIGHT);
 
         tglOwnTrayIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY_USE_OWN_ICON);
         tglOwnTrayIcon.disableProperty().bind(tglTray.selectedProperty().not());
-        final Button btnHelpTrayOwnIcon = PButton.helpButton(stage, "Eigenes Bild im Tray anzeigen",
+        final Button btnHelpTrayOwnIcon = P2Button.helpButton(stage, "Eigenes Bild im Tray anzeigen",
                 HelpText.TRAY_OWN_ICON);
         GridPane.setHalignment(btnHelpTrayOwnIcon, HPos.RIGHT);
         btnHelpTrayOwnIcon.disableProperty().bind(tglTray.selectedProperty().not());

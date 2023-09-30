@@ -22,10 +22,10 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.data.PColorData;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.PTableFactory;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.tools.PColorFactory;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -42,7 +42,7 @@ import java.util.Collection;
 
 public class PaneColor {
     private final Stage stage;
-    private final PToggleSwitch tglDarkTheme = new PToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
+    private final P2ToggleSwitch tglDarkTheme = new P2ToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
 
     public PaneColor(Stage stage) {
         this.stage = stage;
@@ -54,7 +54,7 @@ public class PaneColor {
 
     public void makeColor(Collection<TitledPane> result) {
         tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
-        final Button btnHelpTheme = PButton.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
+        final Button btnHelpTheme = P2Button.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
 
         TableView<PColorData> tableViewFont = new TableView<>();
@@ -90,8 +90,8 @@ public class PaneColor {
         gridPane.add(button, 0, ++row, 2, 1);
         GridPane.setHalignment(button, HPos.RIGHT);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
 
         TitledPane tpColor = new TitledPane("Farben", gridPane);
         result.add(tpColor);
@@ -99,7 +99,7 @@ public class PaneColor {
 
     private void initTableColor(TableView<PColorData> tableView) {
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            PTableFactory.refreshTable(tableView);
+            P2TableFactory.refreshTable(tableView);
             tableView.refresh();
         });
 

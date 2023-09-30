@@ -24,11 +24,11 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2MenuButton;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.PToggleSwitch;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -54,11 +54,11 @@ public class PaneBlackList {
 
     private final P2MenuButton mbChannel;
     private final StringProperty mbChannelProp = new SimpleStringProperty();
-    private final PToggleSwitch tgThemeExact = new PToggleSwitch("exakt:");
+    private final P2ToggleSwitch tgThemeExact = new P2ToggleSwitch("exakt:");
     private final TextField txtTheme = new TextField();
     private final TextField txtTitle = new TextField();
     private final TextField txtThemeTitle = new TextField();
-    private final PToggleSwitch tglActive = new PToggleSwitch("Aktiv:");
+    private final P2ToggleSwitch tglActive = new P2ToggleSwitch("Aktiv:");
 
     private final BlackList list;
     private final SortedList<BlackData> sortedList;
@@ -118,7 +118,7 @@ public class PaneBlackList {
     }
 
     private void makeConfigBlackList(VBox vBox) {
-        final Button btnHelp = PButton.helpButton(stage, "Blacklist / Whitelist",
+        final Button btnHelp = P2Button.helpButton(stage, "Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST);
 
         final ToggleGroup toggleGroup = new ToggleGroup();
@@ -165,9 +165,9 @@ public class PaneBlackList {
 
         gridPane.add(tglActive, 0, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcPrefSize(),
-                PColumnConstraints.getCcComputedSizeAndHgrow(),
-                PColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
         gridPane.setDisable(true);
         gridPane.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
 

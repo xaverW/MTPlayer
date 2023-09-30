@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
-import de.p2tools.p2lib.guitools.PColumnConstraints;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.tools.PShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -72,7 +72,7 @@ public class PaneProgs {
         addVideoPlayer(gridPane, 1);
         addWebbrowser(gridPane, 2);
         addSystemCall(gridPane, 3);
-        gridPane.getColumnConstraints().addAll(PColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void addFilemanager(GridPane gridPane, int row) {
@@ -85,7 +85,7 @@ public class PaneProgs {
         btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Dateimanager manuell auswählen"));
 
-        final Button btnHelp = PButton.helpButton(stage, "Dateimanager", HelpText.FILEMANAGER);
+        final Button btnHelp = P2Button.helpButton(stage, "Dateimanager", HelpText.FILEMANAGER);
 
         VBox vBox = new VBox(2);
         HBox hBox = new HBox(5);
@@ -105,7 +105,7 @@ public class PaneProgs {
         btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen"));
 
-        final Button btnHelp = PButton.helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
+        final Button btnHelp = P2Button.helpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
 
         VBox vBox = new VBox(2);
         HBox hBox = new HBox(5);
@@ -125,7 +125,7 @@ public class PaneProgs {
         btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen"));
 
-        final Button btnHelp = PButton.helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
+        final Button btnHelp = P2Button.helpButton(stage, "Webbrowser", HelpText.WEBBROWSER);
 
         VBox vBox = new VBox(2);
         HBox hBox = new HBox(5);
@@ -139,7 +139,7 @@ public class PaneProgs {
         txtSystemCall.textProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL);
         cbxSystemCallOn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL_ON);
 
-        final Button btnHelp = PButton.helpButton(stage, "Webbrowser", HelpText.CONFIG_SHUT_DOWN_CALL);
+        final Button btnHelp = P2Button.helpButton(stage, "Webbrowser", HelpText.CONFIG_SHUT_DOWN_CALL);
 
         Button btnTest = new Button("Testen");
         btnTest.setOnAction(a -> {

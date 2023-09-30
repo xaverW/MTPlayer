@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.PSeparatorComboBox;
+import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -75,7 +75,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
             protected void updateItem(FilmFilter item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
-                    if (PSeparatorComboBox.isSeparator(item.toString())) {
+                    if (P2SeparatorComboBox.isSeparator(item.toString())) {
                         setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
                     } else {
                         setStyle("");
@@ -172,7 +172,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
                 Label lbl = new Label(filmFilter.getName());
                 hBox.getChildren().add(lbl);
                 setGraphic(hBox);
-                if (PSeparatorComboBox.isSeparator(filmFilter.toString())) {
+                if (P2SeparatorComboBox.isSeparator(filmFilter.toString())) {
                     hBox.setAlignment(Pos.CENTER);
                 }
             }
@@ -194,7 +194,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
 
     private void addSeparator() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
-        FilmFilter sf = new FilmFilter(PSeparatorComboBox.SEPARATOR);
+        FilmFilter sf = new FilmFilter(P2SeparatorComboBox.SEPARATOR);
         if (sel < 0) {
             progData.filmFilterWorker.getStoredFilterList().add(sf);
         } else {

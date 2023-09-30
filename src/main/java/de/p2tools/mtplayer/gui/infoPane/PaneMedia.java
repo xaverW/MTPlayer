@@ -33,7 +33,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.PButton;
+import de.p2tools.p2lib.guitools.P2Button;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -113,7 +113,7 @@ public class PaneMedia extends VBox {
     }
 
     private void init() {
-        final Button btnHelpMedia = PButton.helpButton("Mediensammlung", HelpText.DOWNLOAD_GUI_MEDIA);
+        final Button btnHelpMedia = P2Button.helpButton("Mediensammlung", HelpText.DOWNLOAD_GUI_MEDIA);
         HBox hBoxTop = new HBox(P2LibConst.DIST_EDGE);
         hBoxTop.setPadding(new Insets(0));
         hBoxTop.setAlignment(Pos.CENTER);
