@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.controller.film;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.starter.RuntimeExecPlayFilm;
+import de.p2tools.mtplayer.controller.starter.RuntimeExecPlay;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.tools.date.DateFactory;
 import de.p2tools.p2lib.tools.date.PDate;
@@ -71,7 +71,7 @@ public class FilmPlayFactory {
 
         // und starten, dann nur den selektierten
         final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(false, false);
-        filmDataMTP.ifPresent(dataMTP -> ProgData.getInstance().starterClass.startUrlWithProgram(dataMTP, psetData, ""));
+        filmDataMTP.ifPresent(dataMTP -> ProgData.getInstance().startDownload.startUrlWithProgram(dataMTP, psetData, ""));
     }
 
     public static synchronized void playFilmList() {
@@ -115,7 +115,7 @@ public class FilmPlayFactory {
         startMsg(downloadData, list);
 
         ProgData.getInstance().historyList.addFilmDataListToHistory(filmList);
-        final RuntimeExecPlayFilm runtimeExec = new RuntimeExecPlayFilm(downloadData);
+        final RuntimeExecPlay runtimeExec = new RuntimeExecPlay(downloadData);
         Process process = runtimeExec.exec(true /* log */);
         if (process != null) {
             // dann läuft er

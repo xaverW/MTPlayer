@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.io.*;
@@ -31,13 +31,15 @@ import java.nio.file.Paths;
 public class MTInfoFile {
     public static void writeInfoFile(DownloadData download) {
         if (download.getDestPath().isEmpty()) {
-            download.setDestPath(PSystemUtils.getStandardDownloadPath());
+            // das darf nicht sein!
+            // todo
+            PAlert.showErrorAlert("Info File anlegen", "Kann die Info-Datei nicht anlegen.");
+            return;
         }
 
         PLog.sysLog(new String[]{"Infofile schreiben nach: ", download.getDestPath()});
 
         new File(download.getDestPath()).mkdirs();
-        // final Path path = Paths.get(download.getFileNameWithoutSuffix() + ".txt");
         final Path path = getInfoFilePath(download);
         if (path == null) {
             return;

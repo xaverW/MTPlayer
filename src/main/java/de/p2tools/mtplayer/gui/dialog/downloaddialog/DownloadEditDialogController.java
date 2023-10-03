@@ -248,9 +248,10 @@ public class DownloadEditDialogController extends PDialogExtra {
                 P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(5));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.setPadding(new Insets(P2LibConst.DIST_GRIDPANE_PADDING));
+        gridPane.setGridLinesVisible(true);
 
         for (int i = 0; i < DownloadFieldNames.MAX_ELEM; ++i) {
             text[i] = new Text(DownloadFieldNames.COLUMN_NAMES[i] + ":");
@@ -578,8 +579,8 @@ public class DownloadEditDialogController extends PDialogExtra {
         gridPane.add(lblCont[DownloadFieldNames.DOWNLOAD_PROGRESS_NO], 1, row);
 
         if (download.isStateStartedRun() &&
-                download.getStart().getTimeLeftSeconds() > 0) {
-            lblCont[DownloadFieldNames.DOWNLOAD_REMAINING_TIME_NO].setText(DownloadConstants.getTextTimeLeft(download.getStart().getTimeLeftSeconds()));
+                download.getDownloadStartDto().getTimeLeftSeconds() > 0) {
+            lblCont[DownloadFieldNames.DOWNLOAD_REMAINING_TIME_NO].setText(DownloadConstants.getTextTimeLeft(download.getDownloadStartDto().getTimeLeftSeconds()));
         }
         gridPane.add(text[DownloadFieldNames.DOWNLOAD_REMAINING_TIME_NO], 2, row);
         gridPane.add(lblCont[DownloadFieldNames.DOWNLOAD_REMAINING_TIME_NO], 3, row);
@@ -619,14 +620,14 @@ public class DownloadEditDialogController extends PDialogExtra {
         ++row;
 
         //---------------------------------
-        cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO].setSelected(download.getProgramRestart());
+//        cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO].setSelected(download.getProgramRestart());
         if (!download.getProgramDownloadmanager() && !isStarted) {
-            cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO].setDisable(false);
-            final CheckBox box = cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO];
-            cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO].setOnAction(event -> download.setProgramRestart(box.isSelected()));
+//            cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO].setDisable(false);
+//            final CheckBox box = cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO];
+//            cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO].setOnAction(event -> download.setProgramRestart(box.isSelected()));
         }
-        gridPane.add(text[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO], 0, row);
-        gridPane.add(cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO], 1, row);
+//        gridPane.add(text[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO], 0, row);
+//        gridPane.add(cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_RESTART_NO], 1, row);
 
         //---------------------------------
         cbx[DownloadFieldNames.DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO].setSelected(download.getProgramDownloadmanager());

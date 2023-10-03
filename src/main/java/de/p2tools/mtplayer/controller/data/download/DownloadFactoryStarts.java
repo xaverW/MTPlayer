@@ -17,8 +17,7 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.starter.Start;
+import de.p2tools.mtplayer.controller.starter.StartDownloadDto;
 import de.p2tools.p2lib.tools.date.PLTimeFactory;
 import de.p2tools.p2lib.tools.log.PLog;
 
@@ -34,41 +33,10 @@ public class DownloadFactoryStarts {
     private DownloadFactoryStarts() {
     }
 
-    public static DownloadData getRestartDownload(DownloadList downloadList) {
-        //Versuch einen fehlgeschlagenen Download zu finden, um ihn wieder zu starten
-        //die Fehler laufen aber einzeln, vorsichtshalber
-
-        if (!getDown(downloadList, 1)) {
-            // dann läuft noch einer
-            return null;
-        }
-
-        for (final DownloadData download : downloadList) {
-            if (download.isStateInit()) {
-                continue;
-            }
-
-            if (download.isStateError()
-                    && download.getStart().getRestartCounter() < ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue()
-                    && !maxChannelPlay(downloadList, download, 1)) {
-
-                int restarted = download.getStart().getRestartCounter();
-                if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
-                    download.resetDownload();
-                    ProgData.getInstance().downloadList.startDownloads(download);
-                    // UND jetzt den Restartcounter wieder setzen!!
-                    download.getStart().setRestartCounter(++restarted);
-                    return download;
-                }
-            }
-        }
-        return null;
-    }
-
     /**
      * Return a List of all loading but not yet finished downloads.
      *
-     * @param source Use QUELLE_XXX constants from {@link Start}.
+     * @param source Use QUELLE_XXX constants from {@link StartDownloadDto}.
      * @return A list with all download objects.
      */
     static synchronized List<DownloadData> getListOfStartsNotFinished(DownloadList downloadList, String source) {
@@ -84,7 +52,7 @@ public class DownloadFactoryStarts {
     /**
      * Return a List of all started but not loading downloads.
      *
-     * @param source Use QUELLE_XXX constants from {@link Start}.
+     * @param source Use QUELLE_XXX constants from {@link StartDownloadDto}.
      * @return A list with all download objects.
      */
     static synchronized List<DownloadData> getListOfStartsNotLoading(DownloadList downloadList, String source) {
@@ -268,5 +236,4 @@ public class DownloadFactoryStarts {
         }
         return false;
     }
-
 }

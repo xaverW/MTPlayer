@@ -16,13 +16,9 @@
 
 package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
-import de.p2tools.mtplayer.controller.config.ProgColorList;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -57,32 +53,32 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private final GridPane gridPane = new GridPane();
 
     private final DownloadData download;
-    private AskBeforeDeleteState.ContinueDownload result = AskBeforeDeleteState.ContinueDownload.CANCEL;
-    private final boolean directDownload;
+    private ProgConfigAskBeforeDelete.ContinueDownload result = ProgConfigAskBeforeDelete.ContinueDownload.CANCEL;
+    private final boolean httpDownload;
     private final String oldPathFile;
 
     private Timeline timeline = null;
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue();
 
     public DownloadContinueDialogController(StringProperty conf, ProgData progData,
-                                            DownloadData download, boolean directDownload) {
+                                            DownloadData download, boolean httpDownload) {
         super(progData.primaryStage, conf, "Download weiterführen",
                 true, false, DECO.BORDER_SMALL);
 
         this.download = download;
-        this.directDownload = directDownload;
+        this.httpDownload = httpDownload;
         this.oldPathFile = download.getDestPathFile();
 
         if (ProgData.autoMode) {
             // dann schaut ja eh keiner zu, also restart des Downloads
-            result = AskBeforeDeleteState.ContinueDownload.RESTART;
+            result = ProgConfigAskBeforeDelete.ContinueDownload.RESTART;
             return;
         } else {
             init(true);
         }
     }
 
-    public AskBeforeDeleteState.ContinueDownload getResult() {
+    public ProgConfigAskBeforeDelete.ContinueDownload getResult() {
         return result;
     }
 
@@ -104,10 +100,10 @@ public class DownloadContinueDialogController extends PDialogExtra {
         lblFilmTitle.setStyle("-fx-font-weight: bold;");
         lblFilmTitle.setText(download.getTitle());
 
-        btnContinueDownload.setVisible(directDownload);
-        btnContinueDownload.setManaged(directDownload);
+        btnContinueDownload.setVisible(httpDownload);
+        btnContinueDownload.setManaged(httpDownload);
 
-        if (!directDownload && !checkDownload()) {
+        if (!httpDownload && !checkDownload()) {
             // nur für Downloads mit Programm
             txtFileName.setDisable(true);
             cbPath.setDisable(true);
@@ -173,25 +169,25 @@ public class DownloadContinueDialogController extends PDialogExtra {
         btnPath.setOnAction(event -> getDestination());
 
         btnCancel.setOnAction(event -> {
-            result = AskBeforeDeleteState.ContinueDownload.CANCEL;
+            result = ProgConfigAskBeforeDelete.ContinueDownload.CANCEL;
             quit();
         });
 
         btnRestartDownload.setOnAction(event -> {
             if (chkAlways.isSelected()) {
-                ProgConfig.DOWNLOAD_CONTINUE.setValue(AskBeforeDeleteState.DOWNLOAD_RESTART__RESTART);
+                ProgConfig.DOWNLOAD_CONTINUE.setValue(ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__RESTART);
             }
 
-            result = AskBeforeDeleteState.ContinueDownload.RESTART;
+            result = ProgConfigAskBeforeDelete.ContinueDownload.RESTART;
             download.setPathName(cbPath.getSelectionModel().getSelectedItem(), txtFileName.getText());
             quit();
         });
         btnContinueDownload.setOnAction(event -> {
             if (chkAlways.isSelected()) {
-                ProgConfig.DOWNLOAD_CONTINUE.setValue(AskBeforeDeleteState.DOWNLOAD_RESTART__CONTINUE);
+                ProgConfig.DOWNLOAD_CONTINUE.setValue(ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__CONTINUE);
             }
 
-            result = AskBeforeDeleteState.ContinueDownload.CONTINUE;
+            result = ProgConfigAskBeforeDelete.ContinueDownload.CONTINUE;
             quit();
         });
     }
@@ -234,14 +230,14 @@ public class DownloadContinueDialogController extends PDialogExtra {
     private void handleCountDownAction() {
         timeSeconds--;
         if (timeSeconds > 0) {
-            if (!directDownload) {
+            if (!httpDownload) {
                 btnRestartDownload.setText("neu _Starten in " + timeSeconds + " s");
             } else {
                 btnContinueDownload.setText("_Weiterführen in " + timeSeconds + " s");
             }
         } else {
             timeline.stop();
-            result = AskBeforeDeleteState.ContinueDownload.CONTINUE;
+            result = ProgConfigAskBeforeDelete.ContinueDownload.CONTINUE;
             quit();
         }
     }
@@ -258,7 +254,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     }
 
     private void setButtonText() {
-        if (!directDownload) {
+        if (!httpDownload) {
             btnRestartDownload.setText("neu _Starten");
         } else {
             btnContinueDownload.setText("_Weiterführen");

@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -92,7 +92,7 @@ public class AboDelDialogController extends PDialogExtra {
             state = STATE.STATE_OK;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.ABO_ONLY_STOP.setValue(AskBeforeDeleteState.ABO_DELETE__DELETE);
+                ProgConfig.ABO_ONLY_STOP.setValue(ProgConfigAskBeforeDelete.ABO_DELETE__DELETE);
             }
             quit();
         });

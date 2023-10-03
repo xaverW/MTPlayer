@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
+import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -108,16 +108,16 @@ public class PaneAbo {
         rbOnlyStopDelete.setToggleGroup(groupOnlyStop);
 
         ProgConfig.ABO_ONLY_STOP.addListener((v, o, n) -> setRadio());
-        rbOnlyStopAsk.setOnAction(a -> ProgConfig.ABO_ONLY_STOP.setValue(AskBeforeDeleteState.ABO_DELETE__ASK));
-        rbOnlyStopDelete.setOnAction(a -> ProgConfig.ABO_ONLY_STOP.setValue(AskBeforeDeleteState.ABO_DELETE__DELETE));
+        rbOnlyStopAsk.setOnAction(a -> ProgConfig.ABO_ONLY_STOP.setValue(ProgConfigAskBeforeDelete.ABO_DELETE__ASK));
+        rbOnlyStopDelete.setOnAction(a -> ProgConfig.ABO_ONLY_STOP.setValue(ProgConfigAskBeforeDelete.ABO_DELETE__DELETE));
     }
 
     private void setRadio() {
         switch (ProgConfig.ABO_ONLY_STOP.getValue()) {
-            case AskBeforeDeleteState.ABO_DELETE__DELETE:
+            case ProgConfigAskBeforeDelete.ABO_DELETE__DELETE:
                 rbOnlyStopDelete.setSelected(true);
                 break;
-            case AskBeforeDeleteState.ABO_DELETE__ASK:
+            case ProgConfigAskBeforeDelete.ABO_DELETE__ASK:
             default:
                 rbOnlyStopAsk.setSelected(true);
                 break;

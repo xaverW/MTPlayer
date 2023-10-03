@@ -20,6 +20,8 @@ import java.text.DecimalFormat;
 
 public class DownloadConstants {
 
+    public static final String TRENNER_PROG_ARRAY = "<>";
+
     // Fortschritt
     public static final double PROGRESS_1_PERCENT = 0.01; // 1%
 
@@ -61,7 +63,6 @@ public class DownloadConstants {
     public static final String STATE_COMBO_ERROR = "Fehlerhaft";
 
     //Download wird so oft gestartet, falls er beim ersten Mal nicht anspringt
-    public static final int START_COUNTER_MAX = 3;
     public static final int REMAINING_NOT_STARTET = Integer.MIN_VALUE; // Restzeit wenn noch nicht gestartet
 
     private static final DecimalFormat df = new DecimalFormat("###,##0.0");

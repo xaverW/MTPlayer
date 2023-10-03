@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.starter.RuntimeExec;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
@@ -32,6 +31,7 @@ import de.p2tools.p2lib.tools.log.PLog;
 import de.p2tools.p2lib.tools.net.PUrlTools;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.Date;
 
 
@@ -49,7 +49,7 @@ public class DownloadFactoryProgram {
             }
 
             // Direkter Download nur wenn url passt und wenn im Programm ein Zielpfad ist sonst Abspielen
-            //legt fest, dass NICHT Abspielen, Abspielen immer über Programm!
+            // legt fest, dass NICHT Abspielen, Abspielen immer über Programm!
             download.setType((download.getSetData().checkDownloadDirect(download.getUrl()) && download.getSetData().progsContainPath()) ?
                     DownloadConstants.TYPE_DOWNLOAD : DownloadConstants.TYPE_PROGRAM);
 
@@ -59,7 +59,6 @@ public class DownloadFactoryProgram {
                 download.setProgramName(programData.getName());
             }
 
-            download.setProgramRestart(programData.isRestart());
             download.setProgramDownloadmanager(programData.isDownManager());
 
             buildFileNamePath(download, download.getSetData(), film, abo, name, path);
@@ -97,15 +96,14 @@ public class DownloadFactoryProgram {
         // ##############################################
         // Name
         // ##############################################
-        if (!nname.equals("")) {
+        if (!nname.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
             name = nname;
         } else {
             name = setData.getDestFileName(download.getUrl());
-            download.setDestFileName(name);
             // ##############################
             // Name sinnvoll belegen
-            if (name.equals("")) {
+            if (name.isEmpty()) {
                 name = getToday_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
             }
 
@@ -234,10 +232,7 @@ public class DownloadFactoryProgram {
         // ".txt" dazu)
         final String[] pathName = {path, name};
         PFileUtils.checkLengthPath(pathName);
-
-        download.setDestFileName(pathName[1]);
-        download.setDestPath(pathName[0]);
-        download.setDestPathFile(PFileUtils.addsPath(pathName[0], pathName[1]));
+        download.setFile(Paths.get(pathName[0], pathName[1]).toFile());
     }
 
     private static String replaceString(DownloadData download, String replStr, FilmDataMTP film) {
@@ -423,9 +418,9 @@ public class DownloadFactoryProgram {
 
         final String TRENNER;
         // dann sind es mehrere Filme
-        if (execString.contains(RuntimeExec.TRENNER_PROG_ARRAY)) {
+        if (execString.contains(DownloadConstants.TRENNER_PROG_ARRAY)) {
             // dann solls das Array sein
-            TRENNER = RuntimeExec.TRENNER_PROG_ARRAY;
+            TRENNER = DownloadConstants.TRENNER_PROG_ARRAY;
         } else {
             // dann ist der einfache Aufruf
             TRENNER = " ";

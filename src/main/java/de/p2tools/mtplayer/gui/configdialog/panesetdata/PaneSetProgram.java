@@ -55,7 +55,6 @@ public class PaneSetProgram {
     private final TextField txtProgSwitch = new TextField();
     private final TextField txtPrefix = new TextField();
     private final TextField txtSuffix = new TextField();
-    private final P2ToggleSwitch tglRestart = new P2ToggleSwitch("Restart:");
     private final P2ToggleSwitch tglDown = new P2ToggleSwitch("Downloadmanager: ");
     private ProgramData programData = null;
     private final Stage stage;
@@ -112,11 +111,6 @@ public class PaneSetProgram {
         final TableColumn<ProgramData, String> suffixColumn = new TableColumn<>("Suffix");
         suffixColumn.setCellValueFactory(new PropertyValueFactory<>("suffix"));
 
-        final TableColumn<ProgramData, Boolean> restartColumn = new TableColumn<>("Restart");
-        restartColumn.setCellValueFactory(new PropertyValueFactory<>("restart"));
-        restartColumn.setCellFactory(CheckBoxTableCell.forTableColumn(restartColumn));
-        restartColumn.getStyleClass().add("center");
-
         final TableColumn<ProgramData, Boolean> downManagerColumn = new TableColumn<>("Downloadmanager");
         downManagerColumn.setCellValueFactory(new PropertyValueFactory<>("downManager"));
         downManagerColumn.setCellFactory(CheckBoxTableCell.forTableColumn(downManagerColumn));
@@ -127,7 +121,7 @@ public class PaneSetProgram {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         tableView.getColumns().addAll(nameColumn, destNameColumn, progColumn, switchColumn,
-                prefixColumn, suffixColumn, restartColumn, downManagerColumn);
+                prefixColumn, suffixColumn, downManagerColumn);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::bindActTableData));
         tableView.setOnMousePressed(m -> {
@@ -241,8 +235,7 @@ public class PaneSetProgram {
         gridPane.add(new Label("Suffix: "), 2, row);
         gridPane.add(txtSuffix, 3, row);
 
-        gridPane.add(tglRestart, 0, ++row, 2, 1);
-        gridPane.add(tglDown, 2, row, 2, 1);
+        gridPane.add(tglDown, 0, ++row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
                 P2ColumnConstraints.getCcPrefSize(),
@@ -281,7 +274,6 @@ public class PaneSetProgram {
             txtProgSwitch.textProperty().bindBidirectional(programData.progSwitchProperty());
             txtPrefix.textProperty().bindBidirectional(programData.prefixProperty());
             txtSuffix.textProperty().bindBidirectional(programData.suffixProperty());
-            tglRestart.selectedProperty().bindBidirectional(programData.restartProperty());
             tglDown.selectedProperty().bindBidirectional(programData.downManagerProperty());
         }
     }
@@ -302,7 +294,6 @@ public class PaneSetProgram {
             txtPrefix.setText("");
             txtSuffix.setText("");
 
-            tglRestart.selectedProperty().unbindBidirectional(programData.restartProperty());
             tglDown.selectedProperty().unbindBidirectional(programData.downManagerProperty());
         }
     }

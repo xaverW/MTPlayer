@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
+
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
@@ -25,10 +26,11 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.tools.date.PDate;
 import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.file.PFileUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
-import org.apache.commons.io.FilenameUtils;
 
+import java.nio.file.Paths;
 import java.util.*;
 
 public class DownloadFactoryAbo {
@@ -122,7 +124,7 @@ public class DownloadFactoryAbo {
                 return;
             }
 
-            //dann haben wird einen Treffer :)
+            //dann haben wir einen Treffer :)
             //und dann auch in die Liste schreiben
             aboData.setDate(new PDate());
             final SetData setData = aboData.getSetData(ProgData.getInstance());
@@ -144,21 +146,22 @@ public class DownloadFactoryAbo {
         PDuration.counterStop("searchForNewDownloads");
     }
 
-    public static void checkDoubleNames(List<DownloadData> foundDownloads, List<DownloadData> downloadList) {
+    private static void checkDoubleNames(List<DownloadData> foundNewDownloads, List<DownloadData> downloadList) {
         // prüfen ob schon ein Download mit dem Zieldateinamen in der Downloadliste existiert
         try {
             final List<DownloadData> alreadyDone = new ArrayList<>();
 
-            foundDownloads.stream().forEach(download -> {
-                final String oldName = download.getDestFileName();
+            foundNewDownloads.forEach(download -> {
+                final String oldName = download.getDestPathFile();
                 String newName = oldName;
-                int i = 1;
+                int i = 0;
                 while (searchName(downloadList, newName) || searchName(alreadyDone, newName)) {
-                    newName = getNewName(oldName, ++i);
+                    ++i;
+                    newName = getNextFileName(oldName, i);
                 }
 
                 if (!oldName.equals(newName)) {
-                    download.setDestFileName(newName);
+                    download.setFile(newName);
                 }
 
                 alreadyDone.add(download);
@@ -168,13 +171,15 @@ public class DownloadFactoryAbo {
         }
     }
 
-    private static String getNewName(String oldName, int i) {
-        String base = FilenameUtils.getBaseName(oldName);
-        String suff = FilenameUtils.getExtension(oldName);
-        return base + "_" + i + "." + suff;
+    private static String getNextFileName(String file, int i) {
+        String suffix = PFileUtils.getFileNameSuffix(file);
+        String name = PFileUtils.getFileNameWithOutExtension(file);
+        String path = PFileUtils.getPath(file);
+        return Paths.get(path, name + "_" + i + "." + suffix).toString();
     }
 
+
     private static boolean searchName(List<DownloadData> searchDownloadList, String name) {
-        return searchDownloadList.stream().anyMatch(download -> download.getDestFileName().equals(name));
+        return searchDownloadList.stream().anyMatch(download -> download.getDestPathFile().equals(name));
     }
 }

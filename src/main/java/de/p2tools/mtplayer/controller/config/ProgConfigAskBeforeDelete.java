@@ -14,9 +14,9 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.starter;
+package de.p2tools.mtplayer.controller.config;
 
-public class AskBeforeDeleteState {
+public class ProgConfigAskBeforeDelete {
 
     //die Vorgaben des Users:
     public static final int ABO_DELETE__ASK = 0;

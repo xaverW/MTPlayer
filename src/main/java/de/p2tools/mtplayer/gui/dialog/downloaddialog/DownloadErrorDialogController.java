@@ -91,6 +91,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
         lblUrl.setText(download.getUrl());
 
         txtCont.setEditable(false);
+        txtCont.setWrapText(true);
         txtCont.setText(message);
 
         btnOk.setOnAction(event -> {

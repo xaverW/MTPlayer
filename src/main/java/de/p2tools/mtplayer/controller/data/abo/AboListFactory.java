@@ -18,10 +18,10 @@
 package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -101,7 +101,7 @@ public class AboListFactory {
             return;
         }
 
-        if (ProgConfig.ABO_ONLY_STOP.getValue() == AskBeforeDeleteState.ABO_DELETE__ASK) {
+        if (ProgConfig.ABO_ONLY_STOP.getValue() == ProgConfigAskBeforeDelete.ABO_DELETE__ASK) {
             // dann erst mal fragen
             AboDelDialogController aboDelDialog =
                     new AboDelDialogController(lAbo);

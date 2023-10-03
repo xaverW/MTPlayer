@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.tools.log.PLog;
 
-public class RuntimeExecPlayFilm {
+public class RuntimeExecPlay {
 
     public static final String TRENNER_PROG_ARRAY = "<>";
     private final String strProgCall;
@@ -27,7 +27,7 @@ public class RuntimeExecPlayFilm {
     private final String strProgCallArray;
     private Process process = null;
 
-    public RuntimeExecPlayFilm(DownloadData downloadData) {
+    public RuntimeExecPlay(DownloadData downloadData) {
         this.strProgCall = downloadData.getProgramCall();
         this.strProgCallArray = downloadData.getProgramCallArray();
         arrProgCallArray = strProgCallArray.split(TRENNER_PROG_ARRAY);

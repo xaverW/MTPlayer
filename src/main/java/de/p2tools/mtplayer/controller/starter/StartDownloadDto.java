@@ -21,23 +21,28 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.mtdownload.MLInputStream;
 import de.p2tools.p2lib.tools.date.PDate;
 
-public class Start {
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StartDownloadDto {
 
     private int startCounter = 0;
-    private int restartCounter = 0; // zählt die Anzahl der Neustarts bei einem Downloadfeheler->Summe Starts = erster Start + Restarts
-
     private boolean startViewing = false;
 
-    private long bandwidth = -1; // Downloadbandbreite: bytes per second
+    private long bandwidth = -1; // DownloadBandbreite: bytes per second
     private long timeLeftSeconds = -1; // restliche Laufzeit [s] des Downloads
+    private long downloaded = 0;
 
     private Process process = null; //Prozess des Download
     private PDate startTime = null;
     private MLInputStream inputStream = null;
+    private File file = null;
+    private final List<String> errMsgList = new ArrayList<>();
 
-    private DownloadData download; //Referenz auf den Download dazu
+    private final DownloadData download; //Referenz auf den Download dazu
 
-    public Start(DownloadData download) {
+    public StartDownloadDto(DownloadData download) {
         this.download = download;
     }
 
@@ -61,6 +66,14 @@ public class Start {
         } else {
             download.setRemaining(DownloadConstants.REMAINING_NOT_STARTET);
         }
+    }
+
+    public long getDownloaded() {
+        return downloaded;
+    }
+
+    public void setDownloaded(long downloaded) {
+        this.downloaded = downloaded;
     }
 
     public void startDownload() {
@@ -99,12 +112,8 @@ public class Start {
         this.startCounter = startCounter;
     }
 
-    public int getRestartCounter() {
-        return restartCounter;
-    }
-
-    public void setRestartCounter(int restartCounter) {
-        this.restartCounter = restartCounter;
+    public void addStartCounter() {
+        ++startCounter;
     }
 
     public Process getProcess() {
@@ -113,5 +122,17 @@ public class Start {
 
     public void setProcess(Process process) {
         this.process = process;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public List<String> getErrMsgList() {
+        return errMsgList;
     }
 }

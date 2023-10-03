@@ -23,5 +23,6 @@ module mtplayer {
 
     requires okhttp3;
     requires org.apache.commons.lang3;
+    requires org.apache.commons.io;
 }
 

@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -135,7 +135,7 @@ public class DownloadStopDialogController extends PDialogExtra {
             state = STATE.STATE_1;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.DOWNLOAD_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_STOP__DELETE_FILE);
+                ProgConfig.DOWNLOAD_STOP.setValue(ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DELETE_FILE);
             }
             quit();
         });
@@ -144,7 +144,7 @@ public class DownloadStopDialogController extends PDialogExtra {
             state = STATE.STATE_2;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.DOWNLOAD_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_STOP__DO_NOT_DELETE);
+                ProgConfig.DOWNLOAD_STOP.setValue(ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DO_NOT_DELETE);
             }
             quit();
         });

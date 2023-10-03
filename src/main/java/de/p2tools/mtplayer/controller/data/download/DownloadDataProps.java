@@ -33,9 +33,7 @@ import java.util.ArrayList;
 
 public class DownloadDataProps extends PDataSample<DownloadData> {
 
-    private final ObservableList<String> urlList = FXCollections.observableArrayList();
-    ; // wenn mehrere Filme gestartet werden sollen
-
+    private final ObservableList<String> urlList = FXCollections.observableArrayList(); // wenn mehrere Filme gestartet werden sollen
     private final IntegerProperty no = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
     private final IntegerProperty filmNr = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
 
@@ -64,14 +62,12 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final StringProperty filmUrl = new SimpleStringProperty(""); //in normaler Auflösung
     private final StringProperty urlWebsite = new SimpleStringProperty("");
     private final StringProperty historyUrl = new SimpleStringProperty("");
-    //    private final StringProperty url = new SimpleStringProperty(""); //in der gewählte Auflösung
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
 
     private final StringProperty setDataId = new SimpleStringProperty("");
     private final StringProperty programName = new SimpleStringProperty("");
     private final StringProperty programCall = new SimpleStringProperty("");
     private final StringProperty programCallArray = new SimpleStringProperty("");
-    private final BooleanProperty programRestart = new SimpleBooleanProperty(false);
     private final BooleanProperty programDownloadmanager = new SimpleBooleanProperty(false);
     private final StringProperty startTime = new SimpleStringProperty("");
 
@@ -88,8 +84,8 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     public final Property[] properties = {no, filmNr, aboName, channel, theme, title, description,
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, time, durationMinute,
-            hd, ut, geoBlocked, filmUrl, urlWebsite, historyUrl, /*url,*/ urlSubtitle,
-            setDataId, programName, programCall, programCallArray, programRestart, programDownloadmanager, startTime,
+            hd, ut, geoBlocked, filmUrl, urlWebsite, historyUrl, urlSubtitle,
+            setDataId, programName, programCall, programCallArray, programDownloadmanager, startTime,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
 
@@ -118,7 +114,6 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_stringProp("theme", theme));
         list.add(new Config_stringProp("title", title));
         list.add(new Config_stringProp("description", description));
-//        list.add(new Config_intProp("state", state)); Downloads starten immer in "init" damit sie nicht automatisch starten
         list.add(new Config_doubleProp("progress", progress));
         list.add(new Config_intProp("remaining", remaining));
         list.add(new Config_longProp("bandwidth", bandwidth));
@@ -130,17 +125,13 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_stringProp("filmUrl", filmUrl));
         list.add(new Config_stringProp("urlWebsite", urlWebsite));
         list.add(new Config_stringProp("historyUrl", historyUrl));
-
-//        list.add(new Config_stringProp("url", url));
         list.add(new ConfigStringList("url", urlList));
-
 
         list.add(new Config_stringProp("urlSubtitle", urlSubtitle));
         list.add(new Config_stringProp("setDataId", setDataId));
         list.add(new Config_stringProp("program", programName));
         list.add(new Config_stringProp("programCall", programCall));
         list.add(new Config_stringProp("programCallArray", programCallArray));
-        list.add(new Config_boolProp("programRestart", programRestart));
         list.add(new Config_boolProp("programDownloadmanager", programDownloadmanager));
         list.add(new Config_stringProp("startTime", startTime));
         list.add(new Config_stringProp("destFileName", destFileName));
@@ -509,18 +500,6 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.programCallArray.set(programCallArray);
     }
 
-    public boolean getProgramRestart() {
-        return programRestart.get();
-    }
-
-    public BooleanProperty programRestartProperty() {
-        return programRestart;
-    }
-
-    public void setProgramRestart(boolean programRestart) {
-        this.programRestart.set(programRestart);
-    }
-
     public boolean getProgramDownloadmanager() {
         return programDownloadmanager.get();
     }
@@ -545,16 +524,15 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.startTime.set(startTime);
     }
 
+
+    // ===== File
+    // setzen immer!!! über File im dto
     public String getDestFileName() {
         return destFileName.get();
     }
 
     public StringProperty destFileNameProperty() {
         return destFileName;
-    }
-
-    public void setDestFileName(String destFileName) {
-        this.destFileName.set(destFileName);
     }
 
     public String getDestPath() {
@@ -565,10 +543,6 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         return destPath;
     }
 
-    public void setDestPath(String destPath) {
-        this.destPath.set(destPath);
-    }
-
     public String getDestPathFile() {
         return destPathFile.get();
     }
@@ -576,10 +550,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     public StringProperty destPathFileProperty() {
         return destPathFile;
     }
-
-    public void setDestPathFile(String destPathFile) {
-        this.destPathFile.set(destPathFile);
-    }
+    //======
 
     public String getType() {
         return type.get();

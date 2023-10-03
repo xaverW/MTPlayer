@@ -16,12 +16,11 @@
 
 package de.p2tools.mtplayer.controller.data.setdata;
 
-import de.p2tools.mtplayer.controller.starter.RuntimeExec;
+import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 
 public class ProgramData extends ProgramDataProps {
 
     public ProgramData() {
-        setRestart(false);
         setDownManager(false);
     }
 
@@ -29,7 +28,6 @@ public class ProgramData extends ProgramDataProps {
         setName(name);
         setProgPath(programmPath);
         setProgSwitch(schalter);
-        setRestart(restart.equals("") ? false : Boolean.parseBoolean(restart));
         setDownManager(downloadmanager.equals("") ? false : Boolean.parseBoolean(downloadmanager));
     }
 
@@ -63,13 +61,13 @@ public class ProgramData extends ProgramDataProps {
         ret = getProgPath();
         final String[] ar = getProgSwitch().split(" ");
         for (final String s : ar) {
-            ret = ret + RuntimeExec.TRENNER_PROG_ARRAY + s;
+            ret = ret + DownloadConstants.TRENNER_PROG_ARRAY + s;
         }
         return ret;
     }
 
     public static String makeProgAufrufArray(String pArray) {
-        final String[] progArray = pArray.split(RuntimeExec.TRENNER_PROG_ARRAY);
+        final String[] progArray = pArray.split(DownloadConstants.TRENNER_PROG_ARRAY);
         String execStr = "";
         for (final String s : progArray) {
             execStr = execStr + s + " ";

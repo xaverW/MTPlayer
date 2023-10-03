@@ -16,12 +16,11 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.starter.Start;
+import de.p2tools.mtplayer.controller.starter.StartDownloadDto;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
@@ -33,12 +32,13 @@ import de.p2tools.p2lib.tools.net.PUrlTools;
 import javafx.application.Platform;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
 public final class DownloadData extends DownloadDataProps {
 
-    private Start start = new Start(this);
+    private StartDownloadDto downloadStartDto = new StartDownloadDto(this);
     private FilmDataMTP film = null;
     private SetData setData = null;
     private AboData abo = null;
@@ -136,7 +136,10 @@ public final class DownloadData extends DownloadDataProps {
         setState(DownloadConstants.STATE_FINISHED);
     }
 
-    public void setStateError() {
+    public void setStateError(String error) {
+        if (!error.isEmpty()) {
+            getDownloadStartDto().getErrMsgList().add(error);
+        }
         setState(DownloadConstants.STATE_ERROR);
     }
 
@@ -161,8 +164,8 @@ public final class DownloadData extends DownloadDataProps {
 
     public void initStartDownload() {
         // Download zum Start vorbereiten
-        getStart().setRestartCounter(0);
-        getStart().setBandwidth(0);
+        getDownloadStartDto().setStartCounter(0);
+        getDownloadStartDto().setBandwidth(0);
         setStateStartedWaiting();
         setErrorMessage("");
     }
@@ -181,10 +184,7 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public void stopDownload() {
-        if (isStateError()) {
-            // damit fehlerhafte nicht wieder starten
-            getStart().setRestartCounter(ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue());
-        } else {
+        if (!isStateError()) {
             setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
             setState(DownloadConstants.STATE_STOPPED);
         }
@@ -192,21 +192,12 @@ public final class DownloadData extends DownloadDataProps {
         getDownloadSize().reset();
         setRemaining(DownloadConstants.REMAINING_NOT_STARTET);
         setBandwidth(0);
-        getStart().setBandwidth(0);
+        getDownloadStartDto().setBandwidth(0);
         setNo(P2LibConst.NUMBER_NOT_STARTED);
     }
 
     public void makeProgParameter() {
         DownloadFactoryProgram.makeProgParameter(this, getFilm(), abo, getDestFileName(), getDestPath());
-    }
-
-    public String getFileNameWithoutSuffix() {
-        return PUrlTools.getFileNameWithoutSuffix(getDestPathFile());
-    }
-
-
-    public String getFileNameSuffix() {
-        return PFileUtils.getFileNameSuffix(getDestPathFile());
     }
 
     public void setSizeDownloadFromWeb(String size) {
@@ -230,12 +221,20 @@ public final class DownloadData extends DownloadDataProps {
     //==============================================
     // Get/Set
     //==============================================
-    public Start getStart() {
-        return start;
+    public StartDownloadDto getDownloadStartDto() {
+        return downloadStartDto;
     }
 
-    public void setStart(Start start) {
-        this.start = start;
+    public String getFileNameWithoutSuffix() {
+        return PUrlTools.getFileNameWithoutSuffix(getDestPathFile());
+    }
+
+    public String getFileNameSuffix() {
+        return PFileUtils.getFileNameSuffix(getDestPathFile());
+    }
+
+    public void setDownloadStartDto(StartDownloadDto startDownloadDto) {
+        this.downloadStartDto = startDownloadDto;
     }
 
     public FilmDataMTP getFilm() {
@@ -297,9 +296,27 @@ public final class DownloadData extends DownloadDataProps {
         }
     }
 
+    public File getFile() {
+        return downloadStartDto.getFile();
+    }
+
+    public void setFile(File file) {
+        this.downloadStartDto.setFile(file);
+        destFileNameProperty().setValue(file.getName());
+        destPathProperty().setValue(file.getParent());
+        destPathFileProperty().setValue(file.getAbsolutePath());
+    }
+
+    public void setFile(String file) {
+        downloadStartDto.setFile(Path.of(file).toFile());
+        destFileNameProperty().setValue(downloadStartDto.getFile().getName());
+        destPathProperty().setValue(downloadStartDto.getFile().getParent());
+        destPathFileProperty().setValue(downloadStartDto.getFile().getAbsolutePath());
+    }
+
+
     public void setPathName(String path, String name) {
         // setzt den neuen Namen/Pfad und kontrolliert nochmal
-
         if (path.endsWith(File.separator)) {
             path = path.substring(0, path.length() - 1);
         }
@@ -324,9 +341,7 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         //=====================================================
-        setDestFileName(name);
-        setDestPath(path);
-        setDestPathFile(PFileUtils.addsPath(path, name));
+        setFile(PFileUtils.addsPath(path, name));
     }
 
     public String getErrorMessage() {
@@ -345,7 +360,7 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         downloadData.film = film;
-        downloadData.setStart(getStart());
+        downloadData.setDownloadStartDto(getDownloadStartDto());
         downloadData.setData = setData;
         downloadData.abo = abo;
         downloadData.getUrlList().addAll(getUrl());
@@ -360,7 +375,7 @@ public final class DownloadData extends DownloadDataProps {
         film = downloadData.film;
         getDownloadSize().setSize(downloadData.getDownloadSize().getSize()); // die Auflösung des Films kann sich ändern
 
-        setStart(downloadData.getStart());
+        setDownloadStartDto(downloadData.getDownloadStartDto());
         setData = downloadData.setData;
         abo = downloadData.abo;
         getUrlList().addAll(downloadData.getUrlList());

@@ -241,14 +241,14 @@ public class DownloadInfos {
                 ++numberLoadingDownloads;
                 byteLoadingDownloads += (download.getDownloadSize().getSize() > 0 ? download.getDownloadSize().getSize() : 0);
 
-                bandwidth += download.getStart().getBandwidth(); // bytes per second
+                bandwidth += download.getDownloadStartDto().getBandwidth(); // bytes per second
                 if (bandwidth < 0) {
                     bandwidth = 0;
                 }
                 byteLoadingDownloadsAlreadyLoaded += (download.getDownloadSize().getActFileSize() > 0 ? download.getDownloadSize().getActFileSize() : 0);
-                if (download.getStart().getTimeLeftSeconds() > timeLeftLoadingDownloads) {
+                if (download.getDownloadStartDto().getTimeLeftSeconds() > timeLeftLoadingDownloads) {
                     // der längste gibt die aktuelle Restzeit vor
-                    timeLeftLoadingDownloads = download.getStart().getTimeLeftSeconds();
+                    timeLeftLoadingDownloads = download.getDownloadStartDto().getTimeLeftSeconds();
                 }
 
             }

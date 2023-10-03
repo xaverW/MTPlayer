@@ -29,13 +29,10 @@ import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RuntimeExec {
+public class RuntimeExecDownload {
 
-    public static final String TRENNER_PROG_ARRAY = "<>";
     private static final int INPUT = 1;
     private static final int ERROR = 2;
-    Thread clearIn;
-    Thread clearOut;
     private Process process = null;
     private static final Pattern patternFfmpeg = Pattern.compile("(?<=  Duration: )[^,]*"); // Duration: 00:00:30.28, start: 0.000000, bitrate: N/A
     private static final Pattern patternTime = Pattern.compile("(?<=time=)[^ ]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
@@ -51,20 +48,20 @@ public class RuntimeExec {
     private String strProgCallArray = "";
     private PlayerMessage playerMessage = new PlayerMessage();
 
-    public RuntimeExec(DownloadData download) {
+    public RuntimeExecDownload(DownloadData download) {
         this.download = download;
 
         this.mVFilmSize = download.getDownloadSize();
         this.strProgCall = download.getProgramCall();
 
         this.strProgCallArray = download.getProgramCallArray();
-        arrProgCallArray = strProgCallArray.split(TRENNER_PROG_ARRAY);
+        arrProgCallArray = strProgCallArray.split(DownloadConstants.TRENNER_PROG_ARRAY);
         if (arrProgCallArray.length <= 1) {
             arrProgCallArray = null;
         }
     }
 
-    public RuntimeExec(String p) {
+    public RuntimeExecDownload(String p) {
         strProgCall = p;
     }
 
@@ -91,12 +88,11 @@ public class RuntimeExec {
                 process = Runtime.getRuntime().exec(strProgCall);
             }
 
-            clearIn = new Thread(new ClearInOut(INPUT, process));
-            clearOut = new Thread(new ClearInOut(ERROR, process));
-
+            Thread clearIn = new Thread(new ClearInOut(INPUT, process));
             clearIn.setName("exec-in");
             clearIn.start();
 
+            Thread clearOut = new Thread(new ClearInOut(ERROR, process));
             clearOut.setName("exec-out");
             clearOut.start();
         } catch (final Exception ex) {
@@ -178,9 +174,9 @@ public class RuntimeExec {
                         try {
                             final long aktSize = Integer.parseInt(s.replace("kB", ""));
                             mVFilmSize.setActFileSize(aktSize * 1_000);
-                            final long akt = download.getStart().getStartTime().diffInSeconds();
+                            final long akt = download.getDownloadStartDto().getStartTime().diffInSeconds();
                             if (oldSecs < akt - 5) {
-                                download.getStart().setBandwidth((aktSize - oldSize) * 1_000 / (akt - oldSecs));
+                                download.getDownloadStartDto().setBandwidth((aktSize - oldSize) * 1_000 / (akt - oldSecs));
                                 oldSecs = akt;
                                 oldSize = aktSize;
                             }
@@ -218,7 +214,6 @@ public class RuntimeExec {
             // d = 0 - 100%
             final double pNeu = d / 100;
             download.setProgress(pNeu);
-//            MLProperty.setProperty(download.progressProperty(), pNeu);
             if (pNeu != percent) {
                 percent = pNeu;
                 if (percent_start == DownloadConstants.PROGRESS_NOT_STARTED) {
@@ -227,10 +222,10 @@ public class RuntimeExec {
                 }
                 if (percent > (percent_start + 5 * DownloadConstants.PROGRESS_1_PERCENT)) {
                     // sonst macht es noch keinen Sinn
-                    final int diffTime = download.getStart().getStartTime().diffInSeconds();
+                    final int diffTime = download.getDownloadStartDto().getStartTime().diffInSeconds();
                     final double diffPercent = percent - percent_start;
                     final double restPercent = DownloadConstants.PROGRESS_FINISHED - percent;
-                    download.getStart().setTimeLeftSeconds((int) (diffTime * restPercent / diffPercent));
+                    download.getDownloadStartDto().setTimeLeftSeconds((int) (diffTime * restPercent / diffPercent));
                 }
             }
         }

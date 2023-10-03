@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
+import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.gui.dialog.DeleteFilmFileDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadOnlyStopDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadStopDialogController;
@@ -127,7 +127,7 @@ public class DownloadFactoryDelFilmFile {
 
     private static boolean askForDownload(ObservableList<DownloadData> foundDownloadList, boolean delete) {
         boolean delDownload;
-        if (ProgConfig.DOWNLOAD_ONLY_STOP.getValue() == AskBeforeDeleteState.DOWNLOAD_ONLY_STOP__DELETE) {
+        if (ProgConfig.DOWNLOAD_ONLY_STOP.getValue() == ProgConfigAskBeforeDelete.DOWNLOAD_ONLY_STOP__DELETE) {
             // DL löschen, Dateien nicht
             PLog.sysLog("Stop Download: DL löschen");
             foundDownloadList.forEach(DownloadData::stopDownload);
@@ -158,14 +158,14 @@ public class DownloadFactoryDelFilmFile {
         boolean delDownload;
         try {
             switch (ProgConfig.DOWNLOAD_STOP.getValue()) {
-                case AskBeforeDeleteState.DOWNLOAD_STOP__DO_NOT_DELETE:
+                case ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DO_NOT_DELETE:
                     // DL löschen, Dateien nicht
                     PLog.sysLog("Stop Download: DL löschen, Dateien nicht");
                     foundDownloadList.forEach(DownloadData::stopDownload);
                     delDownload = true;
                     break;
 
-                case AskBeforeDeleteState.DOWNLOAD_STOP__DELETE_FILE:
+                case ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DELETE_FILE:
                     // DL und Dateien löschen
                     PLog.sysLog("Stop Download: DL und Dateien löschen");
                     foundDownloadList.forEach(DownloadData::stopDownload);

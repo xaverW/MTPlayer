@@ -32,14 +32,13 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
     public static final int PROGRAM_SCHALTER = 3;
     public static final int PROGRAM_PREFIX = 4;
     public static final int PROGRAM_SUFFIX = 5;
-    public static final int PROGRAM_RESTART = 6;
-    public static final int PROGRAM_DOWNLOADMANAGER = 7;
+    public static final int PROGRAM_DOWNLOADMANAGER = 6;
 
     public static final int MAX_ELEM = 8;
     public static final String[] COLUMN_NAMES = {"Beschreibung", "Zieldateiname", "Programm",
-            "Schalter", "Präfix", "Suffix", "Restart", "Downloadmanager"};
+            "Schalter", "Präfix", "Suffix", "Downloadmanager"};
     public static final String[] XML_NAMES = {"Programmname", "Zieldateiname", "Programmpfad",
-            "Programmschalter", "Praefix", "Suffix", "Restart", "Downloadmanager"};
+            "Programmschalter", "Praefix", "Suffix", "Downloadmanager"};
 
     public String[] arr;
 
@@ -49,10 +48,9 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
     private StringProperty progSwitch = new SimpleStringProperty("");
     private StringProperty prefix = new SimpleStringProperty("");
     private StringProperty suffix = new SimpleStringProperty("");
-    private BooleanProperty restart = new SimpleBooleanProperty(false);
     private BooleanProperty downManager = new SimpleBooleanProperty(false);
 
-    public final Property[] properties = {name, destName, progPath, progSwitch, prefix, suffix, restart, downManager};
+    public final Property[] properties = {name, destName, progPath, progSwitch, prefix, suffix, downManager};
 
     public ProgramDataProps() {
         makeArr();
@@ -66,14 +64,13 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
     @Override
     public Config[] getConfigsArr() {
         return new Config[]{
-                new Config_stringProp("name", ProgramDataFieldNames.PROGRAM_NAME, name),
-                new Config_stringProp("destName", ProgramDataFieldNames.PROGRAM_DEST_FILENAME, destName),
-                new Config_stringProp("progPath", ProgramDataFieldNames.PROGRAM_PROGRAM_PATH, progPath),
-                new Config_stringProp("progSwitch", ProgramDataFieldNames.PROGRAM_SWITCH, progSwitch),
-                new Config_stringProp("prefix", ProgramDataFieldNames.PROGRAM_PREFIX, prefix),
-                new Config_stringProp("suffix", ProgramDataFieldNames.PROGRAM_SWITCH, suffix),
-                new Config_boolProp("restart", ProgramDataFieldNames.PROGRAM_RESTART, restart),
-                new Config_boolProp("downManager", ProgramDataFieldNames.PROGRAM_DOWNLOADMANAGER, downManager),
+                new Config_stringProp("name", name),
+                new Config_stringProp("destName", destName),
+                new Config_stringProp("progPath", progPath),
+                new Config_stringProp("progSwitch", progSwitch),
+                new Config_stringProp("prefix", prefix),
+                new Config_stringProp("suffix", suffix),
+                new Config_boolProp("downManager", downManager),
         };
     }
 
@@ -149,18 +146,6 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
         this.suffix.set(suffix);
     }
 
-    public boolean isRestart() {
-        return restart.get();
-    }
-
-    public BooleanProperty restartProperty() {
-        return restart;
-    }
-
-    public void setRestart(boolean restart) {
-        this.restart.set(restart);
-    }
-
     public boolean isDownManager() {
         return downManager.get();
     }
@@ -204,7 +189,6 @@ public class ProgramDataProps extends PDataSample<ProgramData> {
         setProgSwitch(arr[PROGRAM_SCHALTER]);
         setPrefix(arr[PROGRAM_PREFIX]);
         setSuffix(arr[PROGRAM_SUFFIX]);
-        setRestart(Boolean.parseBoolean(arr[PROGRAM_RESTART]));
         setDownManager(Boolean.parseBoolean(arr[PROGRAM_DOWNLOADMANAGER]));
     }
 }

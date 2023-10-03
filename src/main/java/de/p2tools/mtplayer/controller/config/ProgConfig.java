@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmfilter.FastFilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.data.PDataProgConfig;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
@@ -54,8 +53,8 @@ public class ProgConfig extends PDataProgConfig {
     public static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT = 3;
     public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addIntProp("__system-parameter__download-max-restart_5__", SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT);
     // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
-    public static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT = 5;
-    public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addIntProp("__system-parameter__download-max-restart-http_10__", SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT);
+//    public static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT = 5;
+//    public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addIntProp("__system-parameter__download-max-restart-http_10__", SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT);
     // Beim Dialog "Download weiterführen" wird nach dieser Zeit der Download weitergeführt
     public static int SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT = 60;
     public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS = addIntProp("__system-parameter__download-continue-second_60__", SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT);
@@ -192,9 +191,9 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_BEEP = addBoolProp("download-beep");
     public static BooleanProperty DOWNLOAD_ERROR_MSG = addBoolProp("download-error-msg", Boolean.TRUE);
-    public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", AskBeforeDeleteState.DOWNLOAD_STOP__ASK); // das sind Downloads ohne Dateien
-    public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", AskBeforeDeleteState.DOWNLOAD_STOP__ASK); // das sind Downloads mit bereits geladenen Dateien
-    public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", AskBeforeDeleteState.DOWNLOAD_RESTART__ASK);
+    public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads ohne Dateien
+    public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads mit bereits geladenen Dateien
+    public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__ASK);
     public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 1);
     public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBoolProp("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
     public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_KBYTE = addIntProp("download-max-bandwidth-kilobyte", MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
@@ -291,7 +290,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty ABO_GUI_TABLE_ORDER = addStrProp("abo-gui-table-order");
     public static DoubleProperty ABO_GUI_INFO_DIVIDER = addDoubleProp("abo-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
     public static StringProperty ABO_DEL_DIALOG_SIZE = addStrProp("abo-del-dialog-size", "600:400");
-    public static IntegerProperty ABO_ONLY_STOP = addIntProp("abo-only-stop", AskBeforeDeleteState.DOWNLOAD_STOP__ASK);
+    public static IntegerProperty ABO_ONLY_STOP = addIntProp("abo-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK);
 
 
     // GuiPaneDialog
@@ -433,8 +432,8 @@ public class ProgConfig extends PDataProgConfig {
             "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
                     SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue(),
             "  *" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download,",
-            "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
-                    + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue(),
+//            "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
+//                    + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue(),
             "  *" + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
                     + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue(),
             "  *" + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
@@ -447,7 +446,7 @@ public class ProgConfig extends PDataProgConfig {
     static {
         check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT, 5, 200);
         check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT, 0, 10);
-        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT, 0, 10);
+//        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT, 0, 10);
         check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS, SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT, 5, 200);
         check(SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS, SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS_INIT, 5, 200);
         check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND_INIT, 5, 200);

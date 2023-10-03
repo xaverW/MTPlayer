@@ -30,8 +30,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 
 
-public class MTNotification {
-    public static void addNotification(DownloadData download, boolean error) {
+public class NotificationDownFinished {
+
+    public void addNotification(DownloadData download, boolean error) {
         String text = ("Film:   " + download.getTitle() + P2LibConst.LINE_SEPARATOR +
                 "Sender: " + download.getChannel() + P2LibConst.LINE_SEPARATOR +
                 "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getSize(), true) + P2LibConst.LINE_SEPARATOR +
@@ -62,7 +63,7 @@ public class MTNotification {
         add(text, error, hBoxBottom);
     }
 
-    private static void add(String text, boolean error, HBox hBoxBottom) {
+    private void add(String text, boolean error, HBox hBoxBottom) {
         if (!ProgConfig.DOWNLOAD_SHOW_NOTIFICATION.getValue()) {
             return;
         }

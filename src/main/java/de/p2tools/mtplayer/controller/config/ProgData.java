@@ -32,7 +32,7 @@ import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
-import de.p2tools.mtplayer.controller.starter.StarterClass;
+import de.p2tools.mtplayer.controller.starter.StartDownload;
 import de.p2tools.mtplayer.controller.worker.CheckForNewFilmlist;
 import de.p2tools.mtplayer.controller.worker.Worker;
 import de.p2tools.mtplayer.gui.AboGuiController;
@@ -77,7 +77,7 @@ public class ProgData {
     public static String filmListUrl = ""; //URL von der die Filmliste geladen werde soll
 
     // zentrale Klassen
-    public StarterClass starterClass; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
+    public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public ProgShortcut progShortcut; // verwendete Shortcuts
     public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile
     public FilmFilterRunner filmFilterRunner;
@@ -154,7 +154,7 @@ public class ProgData {
 
         proposeList = new ProposeList(this);
 
-        starterClass = new StarterClass(this);
+        startDownload = new StartDownload(this);
         downloadInfos = new DownloadInfos(this);
         chartData = new ChartData();
         progTray = new ProgTray(this);

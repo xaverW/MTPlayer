@@ -69,6 +69,8 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
 
     public synchronized void initDownloads() {
         this.forEach(download -> {
+            download.setFile(download.getDestPathFile());
+
             //ist bei gespeicherten Downloads der Fall
             SetData setData = progData.setDataList.getSetDataForDownloads(download.getSetDataId());
             if (setData != null) { //todo und dann??
@@ -176,11 +178,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     public synchronized List<DownloadData> getListOfStartsNotLoading(String source) {
         return DownloadFactoryStarts.getListOfStartsNotLoading(this, source);
     }
-
-    public synchronized DownloadData getRestartDownload() {
-        return DownloadFactoryStarts.getRestartDownload(this);
-    }
-
 
     public synchronized void cleanUpButtonStarts() {
         DownloadFactoryStarts.cleanUpButtonStarts(this);

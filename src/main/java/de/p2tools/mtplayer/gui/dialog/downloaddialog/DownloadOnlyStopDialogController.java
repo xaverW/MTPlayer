@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.starter.AskBeforeDeleteState;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -101,7 +101,7 @@ public class DownloadOnlyStopDialogController extends PDialogExtra {
             state = STATE.STATE_OK;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
-                ProgConfig.DOWNLOAD_ONLY_STOP.setValue(AskBeforeDeleteState.DOWNLOAD_ONLY_STOP__DELETE);
+                ProgConfig.DOWNLOAD_ONLY_STOP.setValue(ProgConfigAskBeforeDelete.DOWNLOAD_ONLY_STOP__DELETE);
             }
             quit();
         });

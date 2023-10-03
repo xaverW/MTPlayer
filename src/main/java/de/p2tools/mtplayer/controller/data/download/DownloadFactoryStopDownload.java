@@ -42,7 +42,7 @@ public class DownloadFactoryStopDownload {
             return false;
         }
         // das Starten von neuen Downloads etwas Pausieren
-        ProgData.getInstance().starterClass.setPaused();
+        ProgData.getInstance().startDownload.setPaused();
 
 
         if (!DownloadFactoryDelFilmFile.stopDownloadDeleteFilmFile(list, true)) {
@@ -80,7 +80,7 @@ public class DownloadFactoryStopDownload {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        ProgData.getInstance().starterClass.setPaused();
+        ProgData.getInstance().startDownload.setPaused();
         return DownloadFactoryDelFilmFile.stopDownloadDeleteFilmFile(list, false);
     }
 
@@ -97,7 +97,7 @@ public class DownloadFactoryStopDownload {
         }
 
         // das Starten von neuen Downloads etwas Pausieren
-        ProgData.getInstance().starterClass.setPaused();
+        ProgData.getInstance().startDownload.setPaused();
 
         for (final DownloadData download : list) {
             if (download.isStateInit() || download.isStateStopped()) {

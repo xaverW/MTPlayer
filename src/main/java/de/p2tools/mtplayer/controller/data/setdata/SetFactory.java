@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.starter.RuntimeExec;
+import de.p2tools.mtplayer.controller.starter.RuntimeExecDownload;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
@@ -206,7 +206,7 @@ public class SetFactory {
                         text += PIPE + LEER + LEER + "Pfad: " + progData.getProgPath() + P2LibConst.LINE_SEPARATOR;
                     } else if (!new File(progData.getProgPath()).canExecute()) {
                         // dann noch mit RuntimeExec versuchen
-                        final RuntimeExec r = new RuntimeExec(progData.getProgPath());
+                        final RuntimeExecDownload r = new RuntimeExecDownload(progData.getProgPath());
                         final Process pr = r.exec(false /*log*/);
                         if (pr != null) {
                             // dann passts ja

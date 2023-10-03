@@ -54,7 +54,6 @@ public class DownloadFieldNames {
     public static final String DOWNLOAD_PROGRAM = "Programm";
     public static final String DOWNLOAD_PROGRAM_CALL = "Programmaufruf";
     public static final String DOWNLOAD_PROGRAM_CALL_ARRAY = "Programmaufruf Array";
-    public static final String DOWNLOAD_PROGRAM_RESTART = "Restart";
 
     public static final String DOWNLOAD_DEST_FILE_NAME = "Dateiname";
     public static final String DOWNLOAD_DEST_PATH = "Pfad";
@@ -104,21 +103,20 @@ public class DownloadFieldNames {
     public static final int DOWNLOAD_PROGRAM_NO = 24;
     public static final int DOWNLOAD_PROGRAM_CALL_NO = 25;
     public static final int DOWNLOAD_PROGRAM_CALL_ARRAY_NO = 26;
-    public static final int DOWNLOAD_PROGRAM_RESTART_NO = 27;
 
-    public static final int DOWNLOAD_DEST_FILE_NAME_NO = 28;
-    public static final int DOWNLOAD_DEST_PATH_NO = 29;
-    public static final int DOWNLOAD_DEST_PATH_FILE_NAME_NO = 30;
+    public static final int DOWNLOAD_DEST_FILE_NAME_NO = 27;
+    public static final int DOWNLOAD_DEST_PATH_NO = 28;
+    public static final int DOWNLOAD_DEST_PATH_FILE_NAME_NO = 29;
 
-    public static final int DOWNLOAD_TYPE_NO = 31;
-    public static final int DOWNLOAD_SOURCE_NO = 32;
-    public static final int DOWNLOAD_PLACED_BACK_NO = 33;
-    public static final int DOWNLOAD_INFO_FILE_NO = 34;
-    public static final int DOWNLOAD_SPOTLIGHT_NO = 35;
-    public static final int DOWNLOAD_SUBTITLE_NO = 36;
-    public static final int DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO = 37;
-    public static final int DOWNLOAD_START_TIME_NO = 38;
-    public static final int DOWNLOAD_REF_NO = 39;
+    public static final int DOWNLOAD_TYPE_NO = 30;
+    public static final int DOWNLOAD_SOURCE_NO = 31;
+    public static final int DOWNLOAD_PLACED_BACK_NO = 32;
+    public static final int DOWNLOAD_INFO_FILE_NO = 33;
+    public static final int DOWNLOAD_SPOTLIGHT_NO = 34;
+    public static final int DOWNLOAD_SUBTITLE_NO = 35;
+    public static final int DOWNLOAD_PROGRAM_DOWNLOADMANAGER_NO = 36;
+    public static final int DOWNLOAD_START_TIME_NO = 37;
+    public static final int DOWNLOAD_REF_NO = 38;
 
     public static final String[] COLUMN_NAMES = {
             DOWNLOAD_NO,
@@ -150,7 +148,6 @@ public class DownloadFieldNames {
             DOWNLOAD_PROGRAM,
             DOWNLOAD_PROGRAM_CALL,
             DOWNLOAD_PROGRAM_CALL_ARRAY,
-            DOWNLOAD_PROGRAM_RESTART,
 
             DOWNLOAD_DEST_FILE_NAME,
             DOWNLOAD_DEST_PATH,
@@ -197,7 +194,6 @@ public class DownloadFieldNames {
             "Programm",
             "Programmaufruf_",
             "Programmaufruf",
-            "Restart",
             "Dateiname",
             "Pfad",
             "Pfad-Dateiname",

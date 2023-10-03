@@ -54,7 +54,7 @@ public class DownloadFactoryStartDownload {
         final ArrayList<DownloadData> listStartDownloads = new ArrayList<>();
 
         // das Starten von neuen Downloads etwas Pausieren
-        ProgData.getInstance().starterClass.setPaused();
+        ProgData.getInstance().startDownload.setPaused();
 
         // nicht gestartete einfach starten
         list.stream().filter(DownloadData::isStateInit).forEach(listStartDownloads::add);
@@ -126,7 +126,7 @@ public class DownloadFactoryStartDownload {
         ProgData.getInstance().historyListAbos.removeDownloadDataFromHistory(listDownloadsRemoveAboHistory);
 
         // jetzt noch die Starts stoppen
-        listDelDownloads.stream().forEach(download -> download.stopDownload());
+        listDelDownloads.forEach(download -> download.stopDownload());
         return true;
     }
 }
