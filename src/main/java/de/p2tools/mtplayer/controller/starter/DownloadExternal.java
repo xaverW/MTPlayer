@@ -60,8 +60,13 @@ public class DownloadExternal extends Thread {
 
     @Override
     public synchronized void run() {
+        LogDownloadFactory.startMsg(download);
         StartDownloadFactory.makeDirAndLoadInfoSubtitle(download);
+        runWhile();
+        StartDownloadFactory.finalizeDownload(download);
+    }
 
+    private void runWhile() {
         int stat = stat_start;
         if (!new CheckDownloadFileExists().checkIfContinue(progData, download, false)) {
             // dann abbrechen
@@ -83,7 +88,6 @@ public class DownloadExternal extends Thread {
             download.setStateError(ex.getLocalizedMessage());
             download.setErrorMessage(exMessage);
         }
-        StartDownloadFactory.finalizeDownload(download);
     }
 
     private int downloadLoop(int stat) {
@@ -179,7 +183,7 @@ public class DownloadExternal extends Thread {
         // erst mal die alte Datei löschen
         try {
             Files.deleteIfExists(download.getDownloadStartDto().getFile().toPath());
-            download.getDownloadStartDto().setFile(new File(download.getDestPathFile()));
+            download.setFile(new File(download.getDestPathFile()));
         } catch (final Exception ex) {
             // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
             PLog.errorLog(989895674, ex,

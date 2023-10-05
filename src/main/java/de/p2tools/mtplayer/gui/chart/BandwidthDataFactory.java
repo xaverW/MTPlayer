@@ -77,7 +77,7 @@ public class BandwidthDataFactory {
             final DownloadData download = bandwidthData.getDownload();
             if (download != null && download.isStateStartedRun()) {
                 // sonst läuft er noch nicht/nicht mehr
-                final long bandwidth = download.getDownloadStartDto().getBandwidth();
+                final long bandwidth = download.getBandwidth();
                 bandwidthData.addData(bandwidth);
             } else {
                 bandwidthData.addData(0L);

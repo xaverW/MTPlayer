@@ -30,11 +30,10 @@ public class StartDownloadDto {
     private int startCounter = 0;
     private boolean startViewing = false;
 
-    private long bandwidth = -1; // DownloadBandbreite: bytes per second
     private long timeLeftSeconds = -1; // restliche Laufzeit [s] des Downloads
     private long downloaded = 0;
 
-    private Process process = null; //Prozess des Download
+    private Process process = null; //Prozess des Downloads
     private PDate startTime = null;
     private MLInputStream inputStream = null;
     private File file = null;
@@ -44,15 +43,6 @@ public class StartDownloadDto {
 
     public StartDownloadDto(DownloadData download) {
         this.download = download;
-    }
-
-    public long getBandwidth() {
-        return bandwidth;
-    }
-
-    public void setBandwidth(long bandwidth) {
-        this.bandwidth = bandwidth;
-        download.setBandwidth(bandwidth/* == 0 ? "" : SizeTools.humanReadableByteCount(bandwidth, true)*/);
     }
 
     public long getTimeLeftSeconds() {

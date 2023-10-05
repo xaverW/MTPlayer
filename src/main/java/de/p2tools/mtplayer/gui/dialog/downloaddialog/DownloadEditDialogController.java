@@ -251,7 +251,6 @@ public class DownloadEditDialogController extends PDialogExtra {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.DIST_GRIDPANE_PADDING));
-        gridPane.setGridLinesVisible(true);
 
         for (int i = 0; i < DownloadFieldNames.MAX_ELEM; ++i) {
             text[i] = new Text(DownloadFieldNames.COLUMN_NAMES[i] + ":");

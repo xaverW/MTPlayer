@@ -33,12 +33,16 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.nio.file.Paths;
+
 public class DownloadContinueDialogController extends PDialogExtra {
 
-    private final Label lblHeader = new Label("Die Filmdatei existiert bereits");
+    private final Label lblHeader = new Label("Die Filmdatei existiert bereits,\n" +
+            "wie soll der Download weitergeführt werden?");
     private final Button btnRestartDownload = new Button("neu _Starten");
     private final Button btnCancel = new Button("_Abbrechen");
     private final Button btnContinueDownload = new Button("_Weiterführen");
@@ -62,7 +66,8 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
     public DownloadContinueDialogController(StringProperty conf, ProgData progData,
                                             DownloadData download, boolean httpDownload) {
-        super(progData.primaryStage, conf, "Download weiterführen",
+        super(progData.primaryStage, conf,
+                download.getDownloadStartDto().getStartCounter() == 1 ? "Download starten" : "Download abgebrochen",
                 true, false, DECO.BORDER_SMALL);
 
         this.download = download;
@@ -122,6 +127,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
 
     private void initCont() {
         getHBoxTitle().getChildren().add(lblHeader);
+        lblHeader.setMinHeight(Region.USE_PREF_SIZE);
 
         // Gridpane
         gridPane.setHgap(10);
@@ -151,9 +157,6 @@ public class DownloadContinueDialogController extends PDialogExtra {
         getVBoxCont().setPadding(new Insets(5));
         getVBoxCont().setSpacing(20);
         getVBoxCont().getChildren().addAll(gridPane);
-
-//        getHBoxOverButtons().getChildren().addAll(chkSave);
-//        getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
 
         addCancelButton(btnCancel);
         addOkButton(btnRestartDownload);
@@ -206,6 +209,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
             stopCounter();
             if (newValue != null) {
                 btnContinueDownload.setDisable(!download.getDestPath().equals(newValue));
+                download.setFile(Paths.get(cbPath.getValue(), txtFileName.getText()).toFile());
             }
 
             DownloadFactory.calculateAndCheckDiskSpace(download, cbPath.getSelectionModel().getSelectedItem(), lblSizeFree);
@@ -217,6 +221,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
             stopCounter();
             if (newValue != null) {
                 btnContinueDownload.setDisable(!download.getDestFileName().equals(newValue));
+                download.setFile(Paths.get(cbPath.getValue(), txtFileName.getText()).toFile());
             }
 
             if (!txtFileName.getText().equals(FileNameUtils.checkFileName(txtFileName.getText(), false /* pfad */))) {

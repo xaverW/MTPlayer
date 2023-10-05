@@ -148,7 +148,7 @@ public class DownloadFactory {
             // jetzt noch prüfen, obs auf die Platte passt
             usableSpace /= 1_000_000;
             if (usableSpace > 0) {
-                long size = download.getDownloadSize().getSize();
+                long size = download.getDownloadSize().getFileSizeUrl();
                 size /= 1_000_000;
                 if (size > usableSpace) {
                     noSize = " [ nicht genug Speicher: ";

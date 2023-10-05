@@ -138,7 +138,10 @@ public final class DownloadData extends DownloadDataProps {
 
     public void setStateError(String error) {
         if (!error.isEmpty()) {
-            getDownloadStartDto().getErrMsgList().add(error);
+            if (!getDownloadStartDto().getErrMsgList().contains(error)) {
+                // gleiche nicht mehrfach eintragen
+                getDownloadStartDto().getErrMsgList().add(error);
+            }
         }
         setState(DownloadConstants.STATE_ERROR);
     }
@@ -165,7 +168,7 @@ public final class DownloadData extends DownloadDataProps {
     public void initStartDownload() {
         // Download zum Start vorbereiten
         getDownloadStartDto().setStartCounter(0);
-        getDownloadStartDto().setBandwidth(0);
+        setBandwidth(0);
         setStateStartedWaiting();
         setErrorMessage("");
     }
@@ -189,10 +192,9 @@ public final class DownloadData extends DownloadDataProps {
             setState(DownloadConstants.STATE_STOPPED);
         }
 
-        getDownloadSize().reset();
+        getDownloadSize().resetActFileSize();
         setRemaining(DownloadConstants.REMAINING_NOT_STARTET);
         setBandwidth(0);
-        getDownloadStartDto().setBandwidth(0);
         setNo(P2LibConst.NUMBER_NOT_STARTED);
     }
 
@@ -202,18 +204,18 @@ public final class DownloadData extends DownloadDataProps {
 
     public void setSizeDownloadFromWeb(String size) {
         if (!size.isEmpty()) {
-            getDownloadSize().setSize(size);
+            getDownloadSize().setFileSizeUrl(size);
         } else if (getFilm() != null) {
-            getDownloadSize().setSize(FilmFactory.getSizeFromWeb(getFilm(), getUrl()));
+            getDownloadSize().setFileSizeUrl(FilmFactory.getSizeFromWeb(getFilm(), getUrl()));
         }
     }
 
     public void setSizeDownloadFromFilm() {
         if (getFilm() != null) {
             if (getFilm().arr[FilmDataMTP.FILM_URL].equals(getUrl())) {
-                getDownloadSize().setSize(getFilm().arr[FilmDataMTP.FILM_SIZE]);
+                getDownloadSize().setFileSizeUrl(getFilm().arr[FilmDataMTP.FILM_SIZE]);
             } else {
-                getDownloadSize().setSize("");
+                getDownloadSize().setFileSizeUrl("");
             }
         }
     }
@@ -373,8 +375,7 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         film = downloadData.film;
-        getDownloadSize().setSize(downloadData.getDownloadSize().getSize()); // die Auflösung des Films kann sich ändern
-
+//        getDownloadSize().setFileSize(downloadData.getDownloadSize().getFileSize()); // die Auflösung des Films kann sich ändern
         setDownloadStartDto(downloadData.getDownloadStartDto());
         setData = downloadData.setData;
         abo = downloadData.abo;

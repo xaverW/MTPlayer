@@ -126,10 +126,15 @@ public class LogDownloadFactory {
         if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             if (startDownloadDto.getInputStream() != null) {
                 list.add("==== ==== ==== ==== ==== ==== ==== ==== ==== ");
-                list.add("Bytes gelesen: " + SizeTools.humanReadableByteCount(startDownloadDto.getInputStream().getSumByte(), true));
-                list.add("Bytes gelesen: " + startDownloadDto.getInputStream().getSumByte());
-                list.add("Bytes soll: " + download.getDownloadSize().getSize());
-                list.add("Bandbreite: " + SizeTools.humanReadableByteCount(startDownloadDto.getInputStream().getSumBandwidth(), true));
+                list.add("Bandbreite:    " + SizeTools.humanReadableByteCount(startDownloadDto.getInputStream().getSumBandwidth(), true));
+                list.add("Bytes geladen (letzter Ladezyklus): " + SizeTools.humanReadableByteCount(startDownloadDto.getInputStream().getSumByte(), true));
+                list.add("Bytes geladen (letzter Ladezyklus): " + startDownloadDto.getInputStream().getSumByte());
+                list.add("");
+                list.add("Bytes soll (aus der URL):      " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileSizeUrl(), true));
+                list.add("Bytes soll (aus der URL):      " + download.getDownloadSize().getFileSizeUrl() + " Byte");
+                list.add("");
+                list.add("Bytes ist (aus der Zieldatei): " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileSizeLoaded(), true));
+                list.add("Bytes ist (aus der Zieldatei): " + download.getDownloadSize().getFileSizeLoaded() + " Byte");
             }
         }
 
@@ -149,5 +154,4 @@ public class LogDownloadFactory {
             new NotificationDownFinished().addNotification(download, download.isStateError());
         }
     }
-
 }

@@ -136,7 +136,6 @@ public class StarterThread extends Thread {
         download.getDownloadStartDto().startDownload();
         Thread downloadThread;
 
-        System.out.println("=========> ein neuer Download-Start");
         switch (download.getType()) {
             case DownloadConstants.TYPE_PROGRAM:
                 downloadThread = new DownloadExternal(progData, download);

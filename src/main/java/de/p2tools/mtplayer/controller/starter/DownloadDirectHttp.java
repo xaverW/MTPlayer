@@ -50,16 +50,16 @@ public class DownloadDirectHttp extends Thread {
     private final ProgData progData;
     private final DownloadData download;
     private final java.util.Timer bandwidthCalculationTimer;
-    private long aktBandwidth = 0, aktSize = 0;
-    private double percent, ppercent = DownloadConstants.PROGRESS_WAITING,
-            startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
+    private long fileSizeLoaded = 0;
+    private double percentOld = DownloadConstants.PROGRESS_WAITING;
+    private double startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
     private HttpURLConnection conn = null;
-    private boolean work = false;
+    private boolean updateDownloadInfos = false;
 
     private final MTListener listener = new MTListener(MTListener.EVENT_TIMER_HALF_SECOND, DownloadDirectHttp.class.getSimpleName()) {
         @Override
         public void ping() {
-            work = true;
+            updateDownloadInfos = true;
         }
     };
     private FileOutputStream fos = null;
@@ -78,23 +78,7 @@ public class DownloadDirectHttp extends Thread {
     public synchronized void run() {
         LogDownloadFactory.startMsg(download);
         StartDownloadFactory.makeDirAndLoadInfoSubtitle(download);
-
         runWhile();
-
-        try {
-            if (download.getDownloadStartDto().getInputStream() != null) {
-                download.getDownloadStartDto().getInputStream().close();
-            }
-            if (fos != null) {
-                fos.close();
-            }
-            if (conn != null) {
-                conn.disconnect();
-            }
-        } catch (final Exception ignored) {
-        }
-
-        System.out.println("=========> ein Start fertig");
         StartDownloadFactory.finalizeDownload(download);
         MTListener.removeListener(listener);
     }
@@ -103,17 +87,16 @@ public class DownloadDirectHttp extends Thread {
         BooleanProperty restartWithOutSSL = new SimpleBooleanProperty(false);
         boolean restart = true;
 
-        download.getDownloadStartDto().setStartCounter(1);
         while (restart) {
             restart = false;
 
             try {
                 if (!new CheckDownloadFileExists().checkIfContinue(progData, download, true)) {
                     // dann abbrechen
-                    StartDownloadFactory.finalizeDownload(download);
+                    closeConn();
                     return;
                 }
-
+                download.getDownloadStartDto().addStartCounter();
                 openConnForDownload(restartWithOutSSL);
                 if (download.isStateStartedRun()) {
                     // dann passts, und der Download startet
@@ -137,10 +120,11 @@ public class DownloadDirectHttp extends Thread {
                 }
             }
             if (download.isStateError() &&
-                    download.getDownloadStartDto().getStartCounter() <= StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP) {
+                    download.getDownloadStartDto().getStartCounter() <
+                            StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP) {
                 // dann nochmal starten
-                download.getDownloadStartDto().addStartCounter();
                 restart = true;
+                download.setStateStartedRun();
                 try {
                     // vor den nächsten Versuchen etwas warten
                     sleep(2_000);
@@ -148,12 +132,28 @@ public class DownloadDirectHttp extends Thread {
                 }
             }
         }
+        closeConn();
+    }
+
+    private void closeConn() {
+        try {
+            if (download.getDownloadStartDto().getInputStream() != null) {
+                download.getDownloadStartDto().getInputStream().close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+            if (conn != null) {
+                conn.disconnect();
+            }
+        } catch (final Exception ignored) {
+        }
     }
 
     private void openConnForDownload(BooleanProperty restartWithOutSSL) throws IOException {
         final URL url = new URL(download.getUrl());
-        download.getDownloadSize().setSize(getContentLength(url));
-        download.getDownloadSize().setActFileSize(0);
+        download.getDownloadSize().setFileSize(getContentLength(url));
+        download.getDownloadSize().setFileSizeLoaded(0);
         conn = (HttpURLConnection) url.openConnection();
         conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
         conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
@@ -174,13 +174,14 @@ public class DownloadDirectHttp extends Thread {
             PLog.errorLog(915235789, responseCode);
 
             if (httpResponseCode == 416) {
+                // 416 = Range Not Satisfiable
                 conn.disconnect();
-                // Get a new connection and reset download param...
+                // dann nochmal mit Start von Anfang an versuchen
                 conn = (HttpURLConnection) url.openConnection();
                 download.getDownloadStartDto().setDownloaded(0);
                 setupHttpConnection(conn);
                 conn.connect();
-                // hier war es dann nun wirklich...
+                // hier wars es dann nun wirklich...
                 if (conn.getResponseCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
                     download.setStateError("DownloadFehler, httpResponseCode 416: Der angeforderte Teil einer " +
                             "Ressource war ungültig oder steht auf dem Server nicht zur Verfügung.");
@@ -250,31 +251,34 @@ public class DownloadDirectHttp extends Thread {
                 ProgData.FILMLIST_IS_DOWNLOADING));
 
         fos = new FileOutputStream(download.getDownloadStartDto().getFile(), (download.getDownloadStartDto().getDownloaded() != 0));
-        download.getDownloadSize().setActFileSize(download.getDownloadStartDto().getDownloaded());
+        download.getDownloadSize().setFileSizeLoaded(download.getDownloadStartDto().getDownloaded());
         final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
         int len;
-
 
         while ((len = download.getDownloadStartDto().getInputStream().read(buffer)) != -1 && (!download.isStateStopped())) {
             download.getDownloadStartDto().setDownloaded(download.getDownloadStartDto().getDownloaded() + len);
             fos.write(buffer, 0, len);
 
-            if (!work) {
+            // die Infos zum Download aktualisieren
+            if (!updateDownloadInfos) {
                 continue;
             }
-            work = false;
-            setDownloaded();
+            updateDownloadInfos = false;
+            setDownloadProgress(false);
         }
-        setDownloaded();
+
+        setDownloadProgress(true);
 
         if (!download.isStateStopped()) {
             StringProperty strErrorMsg = new SimpleStringProperty();
             if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
                 // direkter Start mit dem Button
                 download.setStateFinished();
+
             } else if (StartDownloadFactory.checkDownloadWasOK(progData, download, strErrorMsg)) {
-                // Anzeige ändern - fertig
+                // prüfen und Anzeige ändern - fertig
                 download.setStateFinished();
+
             } else {
                 // Anzeige ändern - bei Fehler fehlt der Eintrag
                 download.setStateError(strErrorMsg.getValueSafe());
@@ -284,33 +288,57 @@ public class DownloadDirectHttp extends Thread {
         }
     }
 
-    private void setDownloaded() {
-        download.getDownloadSize().setActFileSize(download.getDownloadStartDto().getDownloaded());
+    private void setDownloadProgress(boolean withExactFileSize) {
+        // hier wird die Anzeige des Fortschritts in der Tabelle Downloads gemacht
+        if (withExactFileSize) {
+            // dann die tatsächliche Dateigröße ermitten
+            if (download.getFile().exists()) {
+                download.getDownloadSize().setFileSizeLoaded(download.getFile().length());
+            } else {
+                download.getDownloadSize().setFileSizeLoaded(0);
+            }
+            download.getDownloadSize().setFileSizeLoaded(10);
 
-        // für die Anzeige prüfen ob sich was geändert hat
-        if (aktSize != download.getDownloadSize().getActFileSize()) {
-            aktSize = download.getDownloadSize().getActFileSize();
+        } else {
+            // schnell nur das was geladen wurde nehmen
+            download.getDownloadSize().setFileSizeLoaded(download.getDownloadStartDto().getDownloaded());
         }
-        if (download.getDownloadSize().getSize() > 0) {
-            percent = 1.0 * aktSize / download.getDownloadSize().getSize();
+
+        if (fileSizeLoaded == download.getDownloadSize().getFileSizeLoaded()) {
+            // für die Anzeige prüfen ob sich was geändert hat
+            return;
+        }
+
+        long aktBandwidth = download.getDownloadStartDto().getInputStream().getBandwidth(); // bytes per second
+        if (aktBandwidth != download.getBandwidth()) {
+            download.setBandwidth(aktBandwidth);
+        }
+
+        fileSizeLoaded = download.getDownloadSize().getFileSizeLoaded();
+        long fileSizeUrl = download.getDownloadSize().getFileSizeUrl();
+        if (fileSizeUrl > 0) {
+            double percentActProgress = 1.0 * fileSizeLoaded / fileSizeUrl;
             if (startPercent == DownloadConstants.PROGRESS_NOT_STARTED) {
-                startPercent = percent;
+                startPercent = percentActProgress;
             }
 
             // percent muss zwischen 0 und 1 liegen
-            if (percent == DownloadConstants.PROGRESS_WAITING) {
-                percent = DownloadConstants.PROGRESS_STARTED;
-            } else if (percent >= DownloadConstants.PROGRESS_FINISHED) {
-                percent = DownloadConstants.PROGRESS_NEARLY_FINISHED;
+            if (percentActProgress == DownloadConstants.PROGRESS_WAITING) {
+                percentActProgress = DownloadConstants.PROGRESS_STARTED;
+            } else if (percentActProgress >= DownloadConstants.PROGRESS_FINISHED) {
+                percentActProgress = DownloadConstants.PROGRESS_NEARLY_FINISHED;
             }
-            download.setProgress(percent);
-            if (percent != ppercent) {
-                ppercent = percent;
+            download.setProgress(percentActProgress);
+
+            if (percentActProgress != percentOld) {
+                // dann hat sich die percent geändert und muss neu berechnet werden
+                percentOld = percentActProgress;
 
                 // Restzeit ermitteln
-                if (percent > (DownloadConstants.PROGRESS_STARTED) && percent > startPercent) {
+                if (percentActProgress > DownloadConstants.PROGRESS_STARTED &&
+                        percentActProgress > startPercent) {
                     long timeLeft = 0;
-                    long sizeLeft = download.getDownloadSize().getSize() - download.getDownloadSize().getActFileSize();
+                    long sizeLeft = fileSizeUrl - fileSizeLoaded;
                     if (sizeLeft > 0 && aktBandwidth > 0) {
                         timeLeft = sizeLeft / aktBandwidth;
                     }
@@ -318,13 +346,9 @@ public class DownloadDirectHttp extends Thread {
 
                     // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
                     // als die bereits geladene Spielzeit des Films
-                    canAlreadyStarted(download);
+                    StartDownloadFactory.canAlreadyStarted(download);
                 }
             }
-        }
-        aktBandwidth = download.getDownloadStartDto().getInputStream().getBandwidth(); // bytes per second
-        if (aktBandwidth != download.getDownloadStartDto().getBandwidth()) {
-            download.getDownloadStartDto().setBandwidth(aktBandwidth);
         }
     }
 
@@ -332,7 +356,7 @@ public class DownloadDirectHttp extends Thread {
         final ArrayList<String> text = new ArrayList<>();
         text.add("Ziel: " + download.getDestPathFile());
         text.add("URL: " + download.getUrl());
-        PLog.sysLog(text.toArray(new String[text.size()]));
+        PLog.sysLog(text.toArray(new String[0]));
 
         AtomicBoolean dialog = new AtomicBoolean(true);
         AtomicBoolean ret = new AtomicBoolean(false);
@@ -349,30 +373,10 @@ public class DownloadDirectHttp extends Thread {
 
         while (dialog.get()) {
             try {
-                wait(100);
+                wait(200);
             } catch (final Exception ignored) {
             }
         }
         return ret.get();
-    }
-
-    private void canAlreadyStarted(DownloadData downloadData) {
-        if (downloadData.isStateStartedRun()) {
-
-            if (downloadData.getDurationMinute() > 0
-                    && downloadData.getDownloadStartDto().getTimeLeftSeconds() > 0
-                    && downloadData.getDownloadSize().getActFileSize() > 0
-                    && downloadData.getDownloadSize().getSize() > 0) {
-
-                // macht nur dann Sinn
-                final long filetimeAlreadyLoadedSeconds = downloadData.getDurationMinute() * 60
-                        * downloadData.getDownloadSize().getActFileSize()
-                        / downloadData.getDownloadSize().getSize();
-
-                if (filetimeAlreadyLoadedSeconds > (downloadData.getDownloadStartDto().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {
-                    downloadData.getDownloadStartDto().setStartViewing(true);
-                }
-            }
-        }
     }
 }

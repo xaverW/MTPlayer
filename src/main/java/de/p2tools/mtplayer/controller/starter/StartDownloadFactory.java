@@ -57,8 +57,7 @@ public class StartDownloadFactory {
 
     static void finalizeDownload(DownloadData download) {
         final StartDownloadDto startDownloadDto = download.getDownloadStartDto();
-        deleteIfEmpty(new File(download.getDestPathFile()));
-        setFileSize(download);
+        cleanUpDestFile(download);
 
         if (download.isStateError()) {
             final String errMsg;
@@ -73,7 +72,7 @@ public class StartDownloadFactory {
             Platform.runLater(() -> new DownloadErrorDialogController(download, errMsg));
         }
 
-        // und die Finished-MSG ausgeben
+        // und die Finished-Msg ausgeben
         LogDownloadFactory.finishedMsg(download);
 
         if (download.isStateError()) {
@@ -82,7 +81,7 @@ public class StartDownloadFactory {
             //dann ist er gelaufen
             startDownloadDto.setTimeLeftSeconds(0);
             download.setProgress(DownloadConstants.PROGRESS_FINISHED);
-            download.getDownloadSize().setActFileSize(-1);
+            download.getDownloadSize().setFileSizeLoaded(-1);
 
             if (startDownloadDto.getInputStream() != null) {
                 download.setBandwidthEnd(startDownloadDto.getInputStream().getSumBandwidth());
@@ -98,55 +97,45 @@ public class StartDownloadFactory {
         startDownloadDto.setStartTime(null);
     }
 
-    static void deleteIfEmpty(File file) {
+    static void cleanUpDestFile(DownloadData download) {
+        File destFile = download.getFile();
+        if (!destFile.exists()) {
+            return;
+        }
+
         try {
-            if (file.exists()) {
+            // zum Wiederstarten/Aufräumen die leer/zu kleine Datei löschen, alles auf Anfang
+            final long length = download.getDownloadSize().getFileSizeLoaded();
+            if (length == 0) {
                 // zum Wiederstarten/Aufräumen die leer/zu kleine Datei löschen, alles auf Anfang
-                if (file.length() == 0) {
-                    // zum Wiederstarten/Aufräumen die leer/zu kleine Datei löschen, alles auf Anfang
-                    PLog.sysLog(new String[]{"Restart/Aufräumen: leere Datei löschen", file.getAbsolutePath()});
-                    if (!file.delete()) {
-                        throw new Exception();
-                    }
-                } else if (file.length() < ProgConst.MIN_DATEI_GROESSE_FILM) {
-                    PLog.sysLog(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", file.getAbsolutePath()});
-                    if (!file.delete()) {
-                        throw new Exception();
-                    }
+                PLog.sysLog(new String[]{"Restart/Aufräumen: leere Datei löschen", destFile.getAbsolutePath()});
+                if (!destFile.delete()) {
+                    throw new Exception();
+                }
+            } else if (length < ProgConst.MIN_DATEI_GROESSE_FILM) {
+                PLog.sysLog(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", destFile.getAbsolutePath()});
+                if (!destFile.delete()) {
+                    throw new Exception();
                 }
             }
         } catch (final Exception ex) {
-            PLog.errorLog(795632500, "Fehler beim löschen" + file.getAbsolutePath());
-        }
-    }
-
-    static void setFileSize(DownloadData download) {
-        try {
-            final File destFile = new File(download.getDestPathFile());
-            if (destFile.exists()) {
-                final long length = destFile.length();
-                if (length > 0)
-                    if (download.getDownloadSize().getSize() > 0) {
-                        //nur wenn der Download schon eine Größe hatte, nicht bei m3u8!
-                        download.getDownloadSize().setSize(length);
-                    } else {
-                        //bei m3u8 nur die aktSize setzen!
-                        download.getDownloadSize().setActFileSize(length);
-                    }
-            }
-        } catch (final Exception ex) {
-            PLog.errorLog(461204780,
-                    "Fehler beim Ermitteln der Dateigröße: " + download.getDestPathFile());
+            PLog.errorLog(959874589, "Fehler beim Überprüfen/Löschen der gespeicherten Datei" +
+                    destFile.getAbsolutePath());
         }
     }
 
     static boolean checkDownloadWasOK(ProgData progData, DownloadData download, StringProperty errorMsg) {
         // prüfen, ob der Download geklappt hat und die Datei existiert und eine min. Größe hat
+        // dazu die tatsächliche Dateigröße ermitteln
         boolean ret = false;
+
         final double progress = download.getProgress();
         if (progress > DownloadConstants.PROGRESS_NOT_STARTED && progress < DownloadConstants.PROGRESS_NEARLY_FINISHED) {
             // *progress* Prozent werden berechnet und es wurde vor 99,5% abgebrochen
-            String str = "Download fehlgeschlagen: 99,5% wurden nicht erreicht: " + progress + "%, " + download.getDestPathFile();
+            String str = "Download fehlgeschlagen, Datei zu klein, nur " + String.format("%.0f", progress) + " % erreicht.\n" +
+                    "Soll aus der URL: " + download.getDownloadSize().getFileSizeUrl() + " Byte\n" +
+                    "Ist aus der Datei: " + download.getDownloadSize().getFileSizeLoaded() + " Byte\n"/* +
+                    "Datei: " + download.getDestPathFile()*/;
             errorMsg.setValue(str);
             PLog.errorLog(696510258, str);
             return false;
@@ -171,5 +160,26 @@ public class StartDownloadFactory {
         }
 
         return ret;
+    }
+
+    public static void canAlreadyStarted(DownloadData downloadData) {
+        if (downloadData.isStateStartedRun()) {
+
+            if (downloadData.getDurationMinute() > 0
+                    && downloadData.getDownloadStartDto().getTimeLeftSeconds() > 0
+                    && downloadData.getDownloadSize().getFileSizeLoaded() > 0
+                    && downloadData.getDownloadSize().getFileSizeUrl() > 0) {
+
+                // macht nur dann Sinn
+                final long alreadyLoadedSeconds = downloadData.getDurationMinute() * 60
+                        * downloadData.getDownloadSize().getFileSizeLoaded()
+                        / downloadData.getDownloadSize().getFileSizeUrl();
+
+                if (alreadyLoadedSeconds >
+                        (downloadData.getDownloadStartDto().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {
+                    downloadData.getDownloadStartDto().setStartViewing(true);
+                }
+            }
+        }
     }
 }

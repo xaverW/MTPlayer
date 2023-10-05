@@ -41,7 +41,7 @@ public class CheckDownloadFileExists {
             return false;
         }
 
-        if (!download.getDownloadStartDto().getFile().exists()) {
+        if (!download.getFile().exists()) {
             // dann ist alles OK
             return true;
         }
@@ -64,7 +64,7 @@ public class CheckDownloadFileExists {
     }
 
     private boolean checkContinue(ProgData progData, DownloadData download, boolean httpDownload) {
-        if (!download.getDownloadStartDto().getFile().exists()) {
+        if (!download.getFile().exists()) {
             // dann passts
             return true;
         }
@@ -87,6 +87,8 @@ public class CheckDownloadFileExists {
                     new DownloadContinueDialogController(ProgConfig.DOWNLOAD_DIALOG_CONTINUE_SIZE,
                             progData, download, httpDownload);
             result = downloadContinueDialogController.getResult();
+            isNewName = downloadContinueDialogController.isNewName();
+
         }
         if (!httpDownload && result == ProgConfigAskBeforeDelete.ContinueDownload.CONTINUE) {
             // geht dann nicht
@@ -101,21 +103,15 @@ public class CheckDownloadFileExists {
                 break;
 
             case CONTINUE:
-                download.getDownloadStartDto().setDownloaded(download.getDownloadStartDto().getFile().length());
+                // aktuelle File Größe setzen
+                download.getDownloadStartDto().setDownloaded(download.getFile().length());
                 break;
 
             case RESTART:
-                if (!isNewName) {
-                    // dann mit gleichem Namen und Datei vorher löschen
-                    try {
-                        Files.deleteIfExists(download.getDownloadStartDto().getFile().toPath());
-                        download.getDownloadStartDto().setFile(new File(download.getDestPathFile()));
-                    } catch (final Exception ex) {
-                        // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
-                        PLog.errorLog(945757586, ex,
-                                "file exists: " + download.getDestPathFile());
-                    }
-                } else {
+                // dann bei Null beginnen
+                download.getDownloadStartDto().setDownloaded(0);
+                if (isNewName) {
+                    download.setFile(new File(download.getDestPathFile()));
                     if (!httpDownload) {
                         // wenn Name geändert den Programmaufruf nochmal mit dem geänderten Dateinamen bauen
                         download.makeProgParameter();
@@ -124,7 +120,16 @@ public class CheckDownloadFileExists {
                         Files.createDirectories(Paths.get(download.getDestPath()));
                     } catch (final IOException ignored) {
                     }
-                    download.getDownloadStartDto().setFile(new File(download.getDestPathFile()));
+
+                } else {
+                    // dann mit gleichem Namen und Datei vorher löschen
+                    try {
+                        Files.deleteIfExists(download.getFile().toPath());
+                    } catch (final Exception ex) {
+                        // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
+                        PLog.errorLog(945757586, ex,
+                                "file exists: " + download.getDestPathFile());
+                    }
                 }
                 break;
         }
