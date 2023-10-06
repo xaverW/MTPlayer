@@ -138,7 +138,7 @@ public class RuntimeExecDownload {
                 buff = new BufferedReader(new InputStreamReader(in));
                 String inStr;
                 while ((inStr = buff.readLine()) != null) {
-                    GetPercentageFromErrorStream(inStr);
+                    getPercentageFromErrorStream(inStr);
                     playerMessage.playerMessage(title + ": " + inStr);
                 }
             } catch (final IOException ignored) {
@@ -150,7 +150,7 @@ public class RuntimeExecDownload {
             }
         }
 
-        private void GetPercentageFromErrorStream(String input) {
+        private void getPercentageFromErrorStream(String input) {
             Matcher matcher;
             // für ffmpeg
             // ffmpeg muss dazu mit dem Parameter -i gestartet werden:
@@ -166,6 +166,7 @@ public class RuntimeExecDownload {
                             + Integer.parseInt(hms[1]) * 60
                             + Double.parseDouble(hms[2]);
                 }
+
                 // Bandbreite
                 matcher = patternSize.matcher(input);
                 if (matcher.find()) {
@@ -176,7 +177,8 @@ public class RuntimeExecDownload {
                             mVFilmSize.setFileSizeLoaded(aktSize * 1_000);
                             final long akt = download.getDownloadStartDto().getStartTime().diffInSeconds();
                             if (oldSecs < akt - 5) {
-                                download.setBandwidth((aktSize - oldSize) * 1_000 / (akt - oldSecs));
+                                // nur alle 5s machen
+                                download.setBandwidth((aktSize - oldSize) * 1_000 / (akt - oldSecs)); // bytes per second
                                 oldSecs = akt;
                                 oldSize = aktSize;
                             }
@@ -184,6 +186,7 @@ public class RuntimeExecDownload {
                         }
                     }
                 }
+
                 // Fortschritt
                 matcher = patternTime.matcher(input);
                 if (totalSecs > 0 && matcher.find()) {

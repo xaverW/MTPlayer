@@ -48,7 +48,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final DoubleProperty progress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
     private final DoubleProperty guiProgress = new SimpleDoubleProperty(DownloadConstants.PROGRESS_NOT_STARTED);
     private final IntegerProperty remaining = new SimpleIntegerProperty(DownloadConstants.REMAINING_NOT_STARTET);
-    private final LongProperty bandwidth = new SimpleLongProperty();
+    private final LongProperty bandwidth = new SimpleLongProperty(); // bytes per second
 
     private final DownloadSize downloadSize = new DownloadSize();
     private final PDateProperty filmDate = new PDateProperty(new PDate(0));

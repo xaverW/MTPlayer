@@ -128,7 +128,7 @@ public class LogDownloadFactory {
                 list.add("==== ==== ==== ==== ==== ==== ==== ==== ==== ");
                 list.add("Bandbreite:    " + SizeTools.humanReadableByteCount(startDownloadDto.getInputStream().getSumBandwidth(), true));
                 list.add("Bytes geladen (letzter Ladezyklus): " + SizeTools.humanReadableByteCount(startDownloadDto.getInputStream().getSumByte(), true));
-                list.add("Bytes geladen (letzter Ladezyklus): " + startDownloadDto.getInputStream().getSumByte());
+                list.add("Bytes geladen (letzter Ladezyklus): " + startDownloadDto.getInputStream().getSumByte() + " Byte");
                 list.add("");
                 list.add("Bytes soll (aus der URL):      " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileSizeUrl(), true));
                 list.add("Bytes soll (aus der URL):      " + download.getDownloadSize().getFileSizeUrl() + " Byte");

@@ -118,23 +118,6 @@ public class BandwidthDataFactory {
                 }
             }
         }
-
-        // fertige Downloads abschließen, Download gibts nicht mehr oder läuft nicht mehr,
-        // dann einen Wert "0" anfügen, wenn noch nicht geschehen
-//        it = progData.chartData.getBandwidthDataList().listIterator();
-//        while (it.hasNext()) {
-//            BandwidthData bandwidthData = it.next();
-//            foundDownload = false;
-//            for (final DownloadData download : progData.downloadList.getListOfStartsNotFinished(DownloadConstants.ALL)) {
-//                if (bandwidthData.getDownload() != null && bandwidthData.getDownload().equals(download)) {
-//                    foundDownload = true;
-//                    break;
-//                }
-//            }
-//            if (!foundDownload) {
-//                bandwidthData.cleanUpData();
-//            }
-//        }
     }
 
     public static synchronized void setsBandwidthDataShowingOrNot(ChartData chartData) {

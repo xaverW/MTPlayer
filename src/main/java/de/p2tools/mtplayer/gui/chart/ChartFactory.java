@@ -101,9 +101,9 @@ public class ChartFactory {
 
     private static void setYAxisLabel(LineChart<Number, Number> lineChart, int scale) {
         switch (scale) {
-            case 1 -> lineChart.getYAxis().setLabel("Bandbreite [kB/s]");
-            case 1_000 -> lineChart.getYAxis().setLabel("Bandbreite [MB/s]");
-            case 1_000_000 -> lineChart.getYAxis().setLabel("Bandbreite [GB/s]");
+            case 1 -> lineChart.getYAxis().setLabel("Bandbreite [kB/s]"); // kByte
+            case 1_000 -> lineChart.getYAxis().setLabel("Bandbreite [MB/s]"); // MByte
+            case 1_000_000 -> lineChart.getYAxis().setLabel("Bandbreite [GB/s]"); // GByte
         }
     }
 }

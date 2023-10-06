@@ -291,7 +291,7 @@ public class DownloadDirectHttp extends Thread {
     private void setDownloadProgress(boolean withExactFileSize) {
         // hier wird die Anzeige des Fortschritts in der Tabelle Downloads gemacht
         if (withExactFileSize) {
-            // dann die tatsächliche Dateigröße ermitten
+            // dann die tatsächliche Dateigröße ermitteln
             if (download.getFile().exists()) {
                 download.getDownloadSize().setFileSizeLoaded(download.getFile().length());
             } else {
