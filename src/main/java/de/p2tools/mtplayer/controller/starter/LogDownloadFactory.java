@@ -136,6 +136,11 @@ public class LogDownloadFactory {
                 list.add("Bytes ist (aus der Zieldatei): " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileSizeLoaded(), true));
                 list.add("Bytes ist (aus der Zieldatei): " + download.getDownloadSize().getFileSizeLoaded() + " Byte");
             }
+
+        } else {
+            list.add("==== ==== ==== ==== ==== ==== ==== ==== ==== ");
+            list.add("Bytes ist (aus der Zieldatei): " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileSizeLoaded(), true));
+            list.add("Bytes ist (aus der Zieldatei): " + download.getDownloadSize().getFileSizeLoaded() + " Byte");
         }
 
         list.add("==== ==== ==== ==== ==== ==== ==== ==== ==== ");

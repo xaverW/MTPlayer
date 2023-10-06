@@ -77,10 +77,15 @@ public class StartDownloadFactory {
 
         if (download.isStateError()) {
             download.setProgress(DownloadConstants.PROGRESS_NOT_STARTED);
+
         } else if (!download.isStateStopped()) {
             //dann ist er gelaufen
             startDownloadDto.setTimeLeftSeconds(0);
             download.setProgress(DownloadConstants.PROGRESS_FINISHED);
+            if (download.getType().equals(DownloadConstants.TYPE_PROGRAM)) {
+                // dann muss sizeUrl gesetzt werden, damit was angezeigt wird
+                download.getDownloadSize().setFileSizeUrl(download.getDownloadSize().getFileSizeLoaded());
+            }
             download.getDownloadSize().setFileSizeLoaded(-1);
 
             if (startDownloadDto.getInputStream() != null) {

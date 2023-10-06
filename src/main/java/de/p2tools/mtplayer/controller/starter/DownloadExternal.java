@@ -190,19 +190,25 @@ public class DownloadExternal extends Thread {
     }
 
     private int checkDownload() {
-        int retStatus;
         if (download.getSource().equals(DownloadConstants.SRC_BUTTON) || download.getProgramDownloadmanager()) {
             // für die direkten Starts mit dem Button und die remote downloads wars das dann
-            retStatus = stat_finished_ok;
+            return stat_finished_ok;
+        }
 
-        } else if (StartDownloadFactory.checkDownloadWasOK(progData, download, errMsg)) {
+        // dann noch die tatsächliche Größe setzen
+        if (download.getFile().exists()) {
+            download.getDownloadSize().setFileSizeLoaded(download.getFile().length());
+        } else {
+            download.getDownloadSize().setFileSizeLoaded(0);
+        }
+
+        if (StartDownloadFactory.checkDownloadWasOK(progData, download, errMsg)) {
             // fertig und OK
-            retStatus = stat_finished_ok;
+            return stat_finished_ok;
 
         } else {
             // fertig und fehlerhaft
-            retStatus = stat_finished_error;
+            return stat_finished_error;
         }
-        return retStatus;
     }
 }

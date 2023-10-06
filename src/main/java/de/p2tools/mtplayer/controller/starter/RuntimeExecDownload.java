@@ -173,14 +173,14 @@ public class RuntimeExecDownload {
                     final String s = matcher.group().trim();
                     if (!s.isEmpty()) {
                         try {
-                            final long aktSize = Integer.parseInt(s.replace("kB", ""));
-                            mVFilmSize.setFileSizeLoaded(aktSize * 1_000);
+                            final long actSize = Integer.parseInt(s.replace("kB", ""));
+                            mVFilmSize.setFileSizeLoaded(actSize * 1_000);
                             final long akt = download.getDownloadStartDto().getStartTime().diffInSeconds();
                             if (oldSecs < akt - 5) {
                                 // nur alle 5s machen
-                                download.setBandwidth((aktSize - oldSize) * 1_000 / (akt - oldSecs)); // bytes per second
+                                download.setBandwidth((actSize - oldSize) * 1_000 / (akt - oldSecs)); // bytes per second
                                 oldSecs = akt;
-                                oldSize = aktSize;
+                                oldSize = actSize;
                             }
                         } catch (final NumberFormatException ignored) {
                         }
