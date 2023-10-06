@@ -19,13 +19,10 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogController;
 import de.p2tools.p2lib.tools.log.PLog;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.io.File;
 import java.nio.file.Files;
 
 /**
@@ -35,7 +32,6 @@ public class DownloadExternal extends Thread {
 
     private final ProgData progData;
     private final DownloadData download;
-    private String exMessage = "";
     private final StringProperty errMsg = new SimpleStringProperty();
 
     private final int stat_start = 0;
@@ -70,7 +66,6 @@ public class DownloadExternal extends Thread {
         int stat = stat_start;
         if (!new CheckDownloadFileExists().checkIfContinue(progData, download, false)) {
             // dann abbrechen
-            StartDownloadFactory.finalizeDownload(download);
             return;
         }
 
@@ -79,14 +74,8 @@ public class DownloadExternal extends Thread {
                 stat = downloadLoop(stat);
             }
         } catch (final Exception ex) {
-            exMessage = ex.getLocalizedMessage();
             PLog.errorLog(395623710, ex);
-            if (download.getDownloadStartDto().getStartCounter() == 1) {
-                // nur beim ersten Mal melden -> nervt sonst
-                Platform.runLater(() -> new DownloadErrorDialogController(download, exMessage));
-            }
             download.setStateError(ex.getLocalizedMessage());
-            download.setErrorMessage(exMessage);
         }
     }
 
@@ -132,8 +121,7 @@ public class DownloadExternal extends Thread {
         // versuch das Programm zu starten
         // die Reihenfolge: startCounter - startmeldung ist wichtig!
         int retStat;
-        download.getDownloadStartDto().setStartCounter(download.getDownloadStartDto().getStartCounter() + 1);
-        LogDownloadFactory.startMsg(download);
+        download.getDownloadStartDto().addStartCounter();
         final RuntimeExecDownload runtimeExecDownload = new RuntimeExecDownload(download);
         download.getDownloadStartDto().setProcess(runtimeExecDownload.exec(true /* log */));
         if (download.getDownloadStartDto().getProcess() != null) {
@@ -182,8 +170,7 @@ public class DownloadExternal extends Thread {
         int retStatus = stat_restart;
         // erst mal die alte Datei löschen
         try {
-            Files.deleteIfExists(download.getDownloadStartDto().getFile().toPath());
-            download.setFile(new File(download.getDestPathFile()));
+            Files.deleteIfExists(download.getFile().toPath());
         } catch (final Exception ex) {
             // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
             PLog.errorLog(989895674, ex,
@@ -191,7 +178,7 @@ public class DownloadExternal extends Thread {
         }
 
         // counter prüfen und bei einem Maxwert checkIfCancelDownload, sonst endlos
-        if (download.getDownloadStartDto().getStartCounter() < StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP) {
+        if (download.getDownloadStartDto().getStartCounter() < StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART) {
             // dann nochmal von vorne
             retStatus = stat_start;
         } else {

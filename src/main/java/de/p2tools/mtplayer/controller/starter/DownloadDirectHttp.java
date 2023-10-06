@@ -121,7 +121,7 @@ public class DownloadDirectHttp extends Thread {
             }
             if (download.isStateError() &&
                     download.getDownloadStartDto().getStartCounter() <
-                            StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP) {
+                            StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART) {
                 // dann nochmal starten
                 restart = true;
                 download.setStateStartedRun();
@@ -297,7 +297,6 @@ public class DownloadDirectHttp extends Thread {
             } else {
                 download.getDownloadSize().setFileSizeLoaded(0);
             }
-            download.getDownloadSize().setFileSizeLoaded(10);
 
         } else {
             // schnell nur das was geladen wurde nehmen

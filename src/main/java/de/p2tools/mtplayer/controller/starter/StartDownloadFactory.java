@@ -35,7 +35,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class StartDownloadFactory {
-    static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = 3;
+    static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = 3;
 
     private StartDownloadFactory() {
     }
@@ -127,18 +127,18 @@ public class StartDownloadFactory {
     static boolean checkDownloadWasOK(ProgData progData, DownloadData download, StringProperty errorMsg) {
         // prüfen, ob der Download geklappt hat und die Datei existiert und eine min. Größe hat
         // dazu die tatsächliche Dateigröße ermitteln
-        boolean ret = false;
-
-        final double progress = download.getProgress();
-        if (progress > DownloadConstants.PROGRESS_NOT_STARTED && progress < DownloadConstants.PROGRESS_NEARLY_FINISHED) {
-            // *progress* Prozent werden berechnet und es wurde vor 99,5% abgebrochen
-            String str = "Download fehlgeschlagen, Datei zu klein, nur " + String.format("%.0f", progress) + " % erreicht.\n" +
-                    "Soll aus der URL: " + download.getDownloadSize().getFileSizeUrl() + " Byte\n" +
-                    "Ist aus der Datei: " + download.getDownloadSize().getFileSizeLoaded() + " Byte\n"/* +
-                    "Datei: " + download.getDestPathFile()*/;
-            errorMsg.setValue(str);
-            PLog.errorLog(696510258, str);
-            return false;
+        if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
+            // nur dann stimmt der Progress
+            final double progress = download.getProgress();
+            if (progress > DownloadConstants.PROGRESS_NOT_STARTED && progress < DownloadConstants.PROGRESS_NEARLY_FINISHED) {
+                // *progress* Prozent werden berechnet und es wurde vor 99,5% abgebrochen
+                String str = "Download fehlgeschlagen, Datei zu klein, nur " + String.format("%.0f", progress) + " % erreicht.\n" +
+                        "Soll aus der URL: " + download.getDownloadSize().getFileSizeUrl() + " Byte\n" +
+                        "Ist aus der Datei: " + download.getDownloadSize().getFileSizeLoaded() + " Byte\n";
+                errorMsg.setValue(str);
+                PLog.errorLog(696510258, str);
+                return false;
+            }
         }
 
         final File file = new File(download.getDestPathFile());
@@ -146,20 +146,20 @@ public class StartDownloadFactory {
             String str = "Download fehlgeschlagen: Datei existiert nicht: " + download.getDestPathFile();
             errorMsg.setValue(str);
             PLog.errorLog(550236231, str);
+            return false;
 
         } else if (file.length() < ProgConst.MIN_DATEI_GROESSE_FILM) {
             String str = "Download fehlgeschlagen: Datei zu klein: " + download.getDestPathFile();
             errorMsg.setValue(str);
             PLog.errorLog(795632500, str);
+            return false;
 
         } else {
             if (download.isAbo()) {
                 progData.historyListAbos.addHistoryDataToHistory(download.getTheme(), download.getTitle(), download.getHistoryUrl());
             }
-            ret = true;
+            return true;
         }
-
-        return ret;
     }
 
     public static void canAlreadyStarted(DownloadData downloadData) {

@@ -41,14 +41,12 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
     private final HBox hBoxTitle;
     private final VBox vBoxCont;
-//    private final HBox hBoxOk;
 
     private final Label lblHeader = new Label("Downloadfehler");
-    private Button btnOk = new Button("_Ok");
+    private final Button btnOk = new Button("_Ok");
 
     private final Label lblFilmTitle = new Label("ARD: Tatort, ..");
-    private final Label lblUrl = new Label();
-    private final Label lblFile = new Label();
+    private final TextArea txtUrl = new TextArea();
     private final TextArea txtCont = new TextArea();
 
     private final Label lblTime = new Label("");
@@ -89,8 +87,12 @@ public class DownloadErrorDialogController extends PDialogExtra {
         lblFilmTitle.setStyle("-fx-font-weight: bold;");
         lblFilmTitle.setText(download.getTitle());
 
-        lblUrl.setText(download.getUrl());
-        lblFile.setText(download.getDestPathFile());
+        txtUrl.setEditable(false);
+        txtUrl.setWrapText(true);
+        String txt = "Url: \n" + download.getUrl() + "\n\n" +
+                "Datei: \n" + download.getDestPathFile();
+
+        txtUrl.setText(txt);
 
         txtCont.setEditable(false);
         txtCont.setWrapText(true);
@@ -130,11 +132,9 @@ public class DownloadErrorDialogController extends PDialogExtra {
         gridPane.add(new Label("Film:"), 0, row);
         gridPane.add(lblFilmTitle, 1, row);
 
-        gridPane.add(new Label("URL:"), 0, ++row);
-        gridPane.add(lblUrl, 1, row);
-
-        gridPane.add(new Label("Datei:"), 0, ++row);
-        gridPane.add(lblFile, 1, row);
+        GridPane.setHgrow(txtUrl, Priority.ALWAYS);
+        GridPane.setVgrow(txtUrl, Priority.ALWAYS);
+        gridPane.add(txtUrl, 1, ++row);
 
         GridPane.setHgrow(txtCont, Priority.ALWAYS);
         GridPane.setVgrow(txtCont, Priority.ALWAYS);
