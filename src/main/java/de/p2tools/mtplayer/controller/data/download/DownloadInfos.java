@@ -229,23 +229,23 @@ public class DownloadInfos {
             if (download.isStateInit()) {
                 // noch nicht gestartet
                 ++numberNotStartedDownloads;
-                byteNotStartedDownloads += (download.getDownloadSize().getFileTargetSize() > 0 ? download.getDownloadSize().getFileTargetSize() : 0);
+                byteNotStartedDownloads += (download.getDownloadSize().getTargetSize() > 0 ? download.getDownloadSize().getTargetSize() : 0);
 
             } else if (download.isStateStartedWaiting()) {
                 // gestartet und warten auf den Download
                 ++numberWaitingDownloads;
-                byteWaitingDownloads += (download.getDownloadSize().getFileTargetSize() > 0 ? download.getDownloadSize().getFileTargetSize() : 0);
+                byteWaitingDownloads += (download.getDownloadSize().getTargetSize() > 0 ? download.getDownloadSize().getTargetSize() : 0);
 
             } else if (download.isStateStartedRun()) {
                 // die Downloads laufen gerade
                 ++numberLoadingDownloads;
-                byteLoadingDownloads += (download.getDownloadSize().getFileTargetSize() > 0 ? download.getDownloadSize().getFileTargetSize() : 0);
+                byteLoadingDownloads += (download.getDownloadSize().getTargetSize() > 0 ? download.getDownloadSize().getTargetSize() : 0);
 
                 bandwidth += download.getBandwidth(); // bytes per second
                 if (bandwidth < 0) {
                     bandwidth = 0;
                 }
-                byteLoadingDownloadsAlreadyLoaded += (download.getDownloadSize().getFileActuallySize() > 0 ? download.getDownloadSize().getFileActuallySize() : 0);
+                byteLoadingDownloadsAlreadyLoaded += (download.getDownloadSize().getActuallySize() > 0 ? download.getDownloadSize().getActuallySize() : 0);
                 if (download.getDownloadStartDto().getTimeLeftSeconds() > timeLeftLoadingDownloads) {
                     // der längste gibt die aktuelle Restzeit vor
                     timeLeftLoadingDownloads = download.getDownloadStartDto().getTimeLeftSeconds();

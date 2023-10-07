@@ -130,17 +130,17 @@ public class LogDownloadFactory {
                 list.add("Bytes geladen (letzter Ladezyklus): " + SizeTools.humanReadableByteCount(startDownloadDto.getInputStream().getSumByte(), true));
                 list.add("Bytes geladen (letzter Ladezyklus): " + startDownloadDto.getInputStream().getSumByte() + " Byte");
                 list.add("");
-                list.add("Bytes soll (aus der URL):      " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileTargetSize(), true));
-                list.add("Bytes soll (aus der URL):      " + download.getDownloadSize().getFileTargetSize() + " Byte");
+                list.add("Bytes soll (aus der URL):      " + SizeTools.humanReadableByteCount(download.getDownloadSize().getTargetSize(), true));
+                list.add("Bytes soll (aus der URL):      " + download.getDownloadSize().getTargetSize() + " Byte");
                 list.add("");
-                list.add("Bytes ist (aus der Zieldatei): " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileActuallySize(), true));
-                list.add("Bytes ist (aus der Zieldatei): " + download.getDownloadSize().getFileActuallySize() + " Byte");
+                list.add("Bytes ist (aus der Zieldatei): " + SizeTools.humanReadableByteCount(download.getDownloadSize().getActuallySize(), true));
+                list.add("Bytes ist (aus der Zieldatei): " + download.getDownloadSize().getActuallySize() + " Byte");
             }
 
         } else {
             list.add("==== ==== ==== ==== ==== ==== ==== ==== ==== ");
-            list.add("Bytes ist (aus der Zieldatei): " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileActuallySize(), true));
-            list.add("Bytes ist (aus der Zieldatei): " + download.getDownloadSize().getFileActuallySize() + " Byte");
+            list.add("Bytes ist (aus der Zieldatei): " + SizeTools.humanReadableByteCount(download.getDownloadSize().getActuallySize(), true));
+            list.add("Bytes ist (aus der Zieldatei): " + download.getDownloadSize().getActuallySize() + " Byte");
         }
 
         list.add("==== ==== ==== ==== ==== ==== ==== ==== ==== ");

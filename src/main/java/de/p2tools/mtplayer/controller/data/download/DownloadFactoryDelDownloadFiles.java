@@ -35,9 +35,9 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 
-public class DownloadFactoryDelFilmFile {
+public class DownloadFactoryDelDownloadFiles {
 
-    private DownloadFactoryDelFilmFile() {
+    private DownloadFactoryDelDownloadFiles() {
     }
 
     public static void deleteFilesOfDownload(DownloadData download) {
@@ -61,7 +61,7 @@ public class DownloadFactoryDelFilmFile {
 
         if (ProgConfig.DOWNLOAD_STOP.getValue() == ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DELETE_FILE) {
             // dann soll immer sofort gelöscht werden
-            deleteDownloadFiles(download);
+            deleteDownloadFiles(download, true);
 
         } else {
             // erst mal fragen
@@ -70,7 +70,7 @@ public class DownloadFactoryDelFilmFile {
                             DownloadStopDialogController.DOWN_ONLY_DEL);
             if (downloadStopDialogController.getState() == PDialogExtra.STATE.STATE_DOWN_AND_FILE) {
                 // dann muss er hier auch gleich gelöscht werden
-                deleteDownloadFiles(download);
+                deleteDownloadFiles(download, true);
             }
         }
     }
@@ -182,7 +182,7 @@ public class DownloadFactoryDelFilmFile {
 
                             } else {
                                 // dann muss er hier auch gleich gelöscht werden
-                                deleteDownloadFiles(downloadData);
+                                deleteDownloadFiles(downloadData, true);
                             }
                         });
                         delDownload = true;
@@ -255,7 +255,7 @@ public class DownloadFactoryDelFilmFile {
         return delFileList;
     }
 
-    public static void deleteDownloadFiles(DownloadData downloadData) {
+    public static void deleteDownloadFiles(DownloadData downloadData, boolean showErrorDialog) {
         List<File> fileList = getDownloadFileList(downloadData);
         if (fileList.isEmpty()) {
             return;
@@ -272,12 +272,14 @@ public class DownloadFactoryDelFilmFile {
             }
         } catch (Exception ex) {
             final String df = delFile;
-            Platform.runLater(() -> {
-                PAlert.showErrorAlert("Datei löschen",
-                        "Konnte die Datei nicht löschen!",
-                        "Fehler beim Löschen von:" + P2LibConst.LINE_SEPARATORx2 + df);
-                PLog.errorLog(989754125, "Fehler beim löschen: " + df);
-            });
+            if (showErrorDialog) {
+                Platform.runLater(() -> {
+                    PAlert.showErrorAlert("Datei löschen",
+                            "Konnte die Datei nicht löschen!",
+                            "Fehler beim Löschen von:" + P2LibConst.LINE_SEPARATORx2 + df);
+                    PLog.errorLog(989754125, "Fehler beim löschen: " + df);
+                });
+            }
         }
     }
 }

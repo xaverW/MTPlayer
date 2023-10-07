@@ -45,7 +45,7 @@ public class DownloadFactoryStopDownload {
         ProgData.getInstance().startDownload.setPaused();
 
 
-        if (!DownloadFactoryDelFilmFile.stopDownloadAndDeleteFile(list, true)) {
+        if (!DownloadFactoryDelDownloadFiles.stopDownloadAndDeleteFile(list, true)) {
             // dann wurden keine Downloads gestoppt, abgebrochen
             return false;
         }
@@ -81,7 +81,7 @@ public class DownloadFactoryStopDownload {
 
         // das Starten von neuen Downloads etwas Pausieren
         ProgData.getInstance().startDownload.setPaused();
-        return DownloadFactoryDelFilmFile.stopDownloadAndDeleteFile(list, false);
+        return DownloadFactoryDelDownloadFiles.stopDownloadAndDeleteFile(list, false);
     }
 
     /**

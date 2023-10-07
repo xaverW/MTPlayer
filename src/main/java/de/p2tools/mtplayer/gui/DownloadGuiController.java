@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelFilmFile;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFiles;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
@@ -150,7 +150,7 @@ public class DownloadGuiController extends AnchorPane {
         if (download.isEmpty()) {
             return;
         }
-        DownloadFactoryDelFilmFile.deleteFilesOfDownload(download.get());
+        DownloadFactoryDelDownloadFiles.deleteFilesOfDownload(download.get());
     }
 
     public void openDestinationDir() {

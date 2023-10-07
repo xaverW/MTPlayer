@@ -209,18 +209,18 @@ public final class DownloadData extends DownloadDataProps {
 
     public void setSizeDownloadFromWeb(String size) {
         if (!size.isEmpty()) {
-            getDownloadSize().setFileTargetSize(size);
+            getDownloadSize().setTargetSize(size);
         } else if (getFilm() != null) {
-            getDownloadSize().setFileTargetSize(FilmFactory.getSizeFromWeb(getFilm(), getUrl()));
+            getDownloadSize().setTargetSize(FilmFactory.getSizeFromWeb(getFilm(), getUrl()));
         }
     }
 
     public void setSizeDownloadFromFilm() {
         if (getFilm() != null) {
             if (getFilm().arr[FilmDataMTP.FILM_URL].equals(getUrl())) {
-                getDownloadSize().setFileTargetSize(getFilm().arr[FilmDataMTP.FILM_SIZE]);
+                getDownloadSize().setTargetSize(getFilm().arr[FilmDataMTP.FILM_SIZE]);
             } else {
-                getDownloadSize().setFileTargetSize("");
+                getDownloadSize().setTargetSize("");
             }
         }
     }

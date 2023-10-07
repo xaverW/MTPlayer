@@ -36,6 +36,15 @@ public class CheckDownloadFileExists {
     }
 
     boolean checkIfContinue(ProgData progData, DownloadData download, boolean httpDownload) {
+        // erst mal die Größen setzen
+        if (!httpDownload) {
+            // dann auch die Dateigröße löschen, ist unbekannt
+            download.getDownloadSize().clearSize();
+        }
+
+        // und das wird dann danach wieder gesetzt wenn weitergeführt wird
+        download.getDownloadStartDto().setDownloaded(0);
+
         if (!httpDownload && download.getProgramDownloadmanager()) {
             // da kümmert sich ein anderes Programm darum
             return false;
@@ -57,7 +66,6 @@ public class CheckDownloadFileExists {
             try {
                 wait(200);
             } catch (final Exception ignored) {
-
             }
         }
         return retBreak.get();
