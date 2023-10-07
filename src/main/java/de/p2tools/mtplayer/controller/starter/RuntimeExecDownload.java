@@ -174,7 +174,7 @@ public class RuntimeExecDownload {
                     if (!s.isEmpty()) {
                         try {
                             final long actSize = Integer.parseInt(s.replace("kB", ""));
-                            mVFilmSize.setFileSizeLoaded(actSize * 1_000);
+                            mVFilmSize.setFileActuallySize(actSize * 1_000);
                             final long akt = download.getDownloadStartDto().getStartTime().diffInSeconds();
                             if (oldSecs < akt - 5) {
                                 // nur alle 5s machen

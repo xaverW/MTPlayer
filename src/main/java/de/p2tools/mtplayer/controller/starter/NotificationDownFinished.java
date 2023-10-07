@@ -35,7 +35,7 @@ public class NotificationDownFinished {
     public void addNotification(DownloadData download, boolean error) {
         String text = ("Film:   " + download.getTitle() + P2LibConst.LINE_SEPARATOR +
                 "Sender: " + download.getChannel() + P2LibConst.LINE_SEPARATOR +
-                "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileSizeUrl(), true) + P2LibConst.LINE_SEPARATOR +
+                "Größe:  " + SizeTools.humanReadableByteCount(download.getDownloadSize().getFileTargetSize(), true) + P2LibConst.LINE_SEPARATOR +
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
         Button btnFilmStart = new Button();

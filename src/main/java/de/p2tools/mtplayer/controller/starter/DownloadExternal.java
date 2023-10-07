@@ -197,9 +197,9 @@ public class DownloadExternal extends Thread {
 
         // dann noch die tatsächliche Größe setzen
         if (download.getFile().exists()) {
-            download.getDownloadSize().setFileSizeLoaded(download.getFile().length());
+            download.getDownloadSize().setFileActuallySize(download.getFile().length());
         } else {
-            download.getDownloadSize().setFileSizeLoaded(0);
+            download.getDownloadSize().setFileActuallySize(0);
         }
 
         if (StartDownloadFactory.checkDownloadWasOK(progData, download, errMsg)) {

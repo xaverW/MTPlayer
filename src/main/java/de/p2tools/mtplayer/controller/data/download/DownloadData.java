@@ -181,9 +181,14 @@ public final class DownloadData extends DownloadDataProps {
 
     public void resetDownload() {
         // stoppen und alles zurücksetzen
-        stopDownload();
+        stopDownload(false);
         setProgress(DownloadConstants.PROGRESS_NOT_STARTED); // damit auch fehlerhafte zurückgesetzt werden
         setState(DownloadConstants.STATE_INIT);
+    }
+
+    public void stopDownload(boolean deleteAfterStop) {
+        getDownloadStartDto().setDeleteAfterStop(deleteAfterStop);
+        stopDownload();
     }
 
     public void stopDownload() {
@@ -204,18 +209,18 @@ public final class DownloadData extends DownloadDataProps {
 
     public void setSizeDownloadFromWeb(String size) {
         if (!size.isEmpty()) {
-            getDownloadSize().setFileSizeUrl(size);
+            getDownloadSize().setFileTargetSize(size);
         } else if (getFilm() != null) {
-            getDownloadSize().setFileSizeUrl(FilmFactory.getSizeFromWeb(getFilm(), getUrl()));
+            getDownloadSize().setFileTargetSize(FilmFactory.getSizeFromWeb(getFilm(), getUrl()));
         }
     }
 
     public void setSizeDownloadFromFilm() {
         if (getFilm() != null) {
             if (getFilm().arr[FilmDataMTP.FILM_URL].equals(getUrl())) {
-                getDownloadSize().setFileSizeUrl(getFilm().arr[FilmDataMTP.FILM_SIZE]);
+                getDownloadSize().setFileTargetSize(getFilm().arr[FilmDataMTP.FILM_SIZE]);
             } else {
-                getDownloadSize().setFileSizeUrl("");
+                getDownloadSize().setFileTargetSize("");
             }
         }
     }
@@ -375,7 +380,6 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         film = downloadData.film;
-//        getDownloadSize().setFileSize(downloadData.getDownloadSize().getFileSize()); // die Auflösung des Films kann sich ändern
         setDownloadStartDto(downloadData.getDownloadStartDto());
         setData = downloadData.setData;
         abo = downloadData.abo;

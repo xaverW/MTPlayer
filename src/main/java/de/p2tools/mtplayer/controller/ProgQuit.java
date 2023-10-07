@@ -85,7 +85,7 @@ public class ProgQuit {
         //erst mal alle Downloads stoppen und da evtl. auch aus AUTO: kein Dialog
         ProgData.getInstance().downloadList.forEach(download -> {
             if (download.isStateStartedRun()) {
-                download.stopDownload();
+                download.stopDownload(false);
             }
         });
 

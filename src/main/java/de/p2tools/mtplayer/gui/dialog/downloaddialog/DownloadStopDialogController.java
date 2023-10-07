@@ -38,22 +38,27 @@ import java.io.File;
 
 public class DownloadStopDialogController extends PDialogExtra {
 
+    public static final int DOWN_STOP_DEL = 0;
+    public static final int DOWN_ONLY_DEL = 1;
+    public static final int DOWN_ONLY_STOP = 2;
+
+    private final int howToDel;
+
     private final VBox vBoxCont;
     private final Button btnDelDlFile = new Button();
     private final Button btnDelDl = new Button("DL löschen, Datei behalten");
     private final Button btnCancel = new Button("Abbrechen");
     private final CheckBox chkAlways = new CheckBox("Nicht mehr fragen");
     private final ObservableList<File> list;
-    private final boolean delete;// nur zur Anzeige des Button-Textes
     private final ObservableList<DownloadData> foundDownloadList;
     private STATE state;
 
-    public DownloadStopDialogController(ObservableList<DownloadData> foundDownloadList, ObservableList<File> list, boolean delete) {
+    public DownloadStopDialogController(ObservableList<DownloadData> foundDownloadList, ObservableList<File> list, int howToDel) {
         super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_STOP_DIALOG_SIZE, "Datei löschen",
                 true, false, DECO.BORDER_SMALL);
         this.foundDownloadList = foundDownloadList;
         this.list = list;
-        this.delete = delete;
+        this.howToDel = howToDel;
 
         vBoxCont = getVBoxCont();
         init(true);
@@ -65,19 +70,28 @@ public class DownloadStopDialogController extends PDialogExtra {
 
     @Override
     public void make() {
-        if (delete) {
-            // dann werden die Downloads gelöscht
-            btnDelDlFile.setText("DL und Datei löschen");
-            btnDelDl.setText("DL löschen, Datei behalten");
-        } else {
-            // dann werden die Downloads nur gestoppt
-            btnDelDlFile.setText("DL abbrechen, Datei löschen");
-            btnDelDl.setText("DL abbrechen, Datei behalten");
+        switch (howToDel) {
+            case DOWN_STOP_DEL:
+                // dann werden die Downloads gelöscht
+                btnDelDlFile.setText("DL und Datei löschen");
+                btnDelDl.setText("DL löschen, Datei behalten");
+                break;
+            case DOWN_ONLY_DEL:
+                // dann werden die Downloads nur gestoppt
+                btnDelDlFile.setText("Datei löschen");
+                btnDelDl.setText("Datei behalten");
+                btnDelDl.setVisible(false); // macht ja hier keinen Sinn>
+                btnDelDl.setManaged(false);
+                break;
+            case DOWN_ONLY_STOP:
+                // dann werden die Downloads nur gestoppt
+                btnDelDlFile.setText("DL abbrechen, Datei löschen");
+                btnDelDl.setText("DL abbrechen, Datei behalten");
         }
 
         getHBoxTitle().getChildren().add(list.isEmpty() ?
-                new Label("Es liegen noch keine angebrochene Filmdateien vor") :
-                new Label("Angebrochene Filmdateien existieren bereits"));
+                new Label("Es liegen keine Filmdateien vor") :
+                new Label("Filmdateien existieren bereits"));
 
         vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
         vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
@@ -130,18 +144,20 @@ public class DownloadStopDialogController extends PDialogExtra {
         btnDelDl.setTooltip(new Tooltip("Der Download wird abgebrochen oder gelöscht," +
                 "\ndie angefangenen Filmdateien werden aber NICHT gelöscht."));
         btnCancel.setTooltip(new Tooltip("Es wird nichts abgebrochen oder gelöscht."));
+
         btnDelDlFile.setOnAction(event -> {
             // löschen: DL und Dateien
-            state = STATE.STATE_1;
+            state = STATE.STATE_DOWN_AND_FILE;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
                 ProgConfig.DOWNLOAD_STOP.setValue(ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DELETE_FILE);
             }
             quit();
         });
+
         btnDelDl.setOnAction(event -> {
             // löschen: nur Download
-            state = STATE.STATE_2;
+            state = STATE.STATE_ONLY_DOWNLOAD;
             if (chkAlways.isSelected()) {
                 // dann merken wir uns das
                 ProgConfig.DOWNLOAD_STOP.setValue(ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DO_NOT_DELETE);

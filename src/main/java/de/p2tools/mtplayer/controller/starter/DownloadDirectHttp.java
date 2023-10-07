@@ -153,7 +153,7 @@ public class DownloadDirectHttp extends Thread {
     private void openConnForDownload(BooleanProperty restartWithOutSSL) throws IOException {
         final URL url = new URL(download.getUrl());
         download.getDownloadSize().setFileSizeUrl(getContentLength(url));
-        download.getDownloadSize().setFileSizeLoaded(0);
+        download.getDownloadSize().setFileActuallySize(0);
         conn = (HttpURLConnection) url.openConnection();
         conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
         conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
@@ -251,7 +251,7 @@ public class DownloadDirectHttp extends Thread {
                 ProgData.FILMLIST_IS_DOWNLOADING));
 
         fos = new FileOutputStream(download.getDownloadStartDto().getFile(), (download.getDownloadStartDto().getDownloaded() != 0));
-        download.getDownloadSize().setFileSizeLoaded(download.getDownloadStartDto().getDownloaded());
+        download.getDownloadSize().setFileActuallySize(download.getDownloadStartDto().getDownloaded());
         final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
         int len;
 
@@ -292,17 +292,17 @@ public class DownloadDirectHttp extends Thread {
         if (withExactFileSize) {
             // dann die tatsächliche Dateigröße ermitteln
             if (download.getFile().exists()) {
-                download.getDownloadSize().setFileSizeLoaded(download.getFile().length());
+                download.getDownloadSize().setFileActuallySize(download.getFile().length());
             } else {
-                download.getDownloadSize().setFileSizeLoaded(0);
+                download.getDownloadSize().setFileActuallySize(0);
             }
 
         } else {
             // schnell nur das was geladen wurde nehmen
-            download.getDownloadSize().setFileSizeLoaded(download.getDownloadStartDto().getDownloaded());
+            download.getDownloadSize().setFileActuallySize(download.getDownloadStartDto().getDownloaded());
         }
 
-        if (fileSizeLoaded == download.getDownloadSize().getFileSizeLoaded()) {
+        if (fileSizeLoaded == download.getDownloadSize().getFileActuallySize()) {
             // für die Anzeige prüfen ob sich was geändert hat
             return;
         }
@@ -312,10 +312,10 @@ public class DownloadDirectHttp extends Thread {
             download.setBandwidth(aktBandwidth);
         }
 
-        fileSizeLoaded = download.getDownloadSize().getFileSizeLoaded();
-        long fileSizeUrl = download.getDownloadSize().getFileSizeUrl();
-        if (fileSizeUrl > 0) {
-            double percentActProgress = 1.0 * fileSizeLoaded / fileSizeUrl;
+        fileSizeLoaded = download.getDownloadSize().getFileActuallySize();
+        long fileTargetSize = download.getDownloadSize().getFileTargetSize();
+        if (fileTargetSize > 0) {
+            double percentActProgress = 1.0 * fileSizeLoaded / fileTargetSize;
             if (startPercent == DownloadConstants.PROGRESS_NOT_STARTED) {
                 startPercent = percentActProgress;
             }
@@ -336,7 +336,7 @@ public class DownloadDirectHttp extends Thread {
                 if (percentActProgress > DownloadConstants.PROGRESS_STARTED &&
                         percentActProgress > startPercent) {
                     long timeLeft = 0;
-                    long sizeLeft = fileSizeUrl - fileSizeLoaded;
+                    long sizeLeft = fileTargetSize - fileSizeLoaded;
                     if (sizeLeft > 0 && aktBandwidth > 0) {
                         timeLeft = sizeLeft / aktBandwidth;
                     }

@@ -126,7 +126,7 @@ public class DownloadFactoryStartDownload {
         ProgData.getInstance().historyListAbos.removeDownloadDataFromHistory(listDownloadsRemoveAboHistory);
 
         // jetzt noch die Starts stoppen
-        listDelDownloads.forEach(download -> download.stopDownload());
+        listDelDownloads.forEach(download -> download.stopDownload(false));
         return true;
     }
 }

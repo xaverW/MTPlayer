@@ -150,7 +150,7 @@ public class DownloadGuiController extends AnchorPane {
         if (download.isEmpty()) {
             return;
         }
-        DownloadFactoryDelFilmFile.deleteFilmFile(download.get());
+        DownloadFactoryDelFilmFile.deleteFilesOfDownload(download.get());
     }
 
     public void openDestinationDir() {

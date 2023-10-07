@@ -32,6 +32,7 @@ public class StartDownloadDto {
 
     private long timeLeftSeconds = -1; // restliche Laufzeit [s] des Downloads
     private long downloaded = 0;
+    private boolean deleteAfterStop = false;
 
     private Process process = null; //Prozess des Downloads
     private PDate startTime = null;
@@ -64,6 +65,14 @@ public class StartDownloadDto {
 
     public void setDownloaded(long downloaded) {
         this.downloaded = downloaded;
+    }
+
+    public boolean isDeleteAfterStop() {
+        return deleteAfterStop;
+    }
+
+    public void setDeleteAfterStop(boolean deleteAfterStop) {
+        this.deleteAfterStop = deleteAfterStop;
     }
 
     public void startDownload() {
