@@ -117,6 +117,7 @@ public class FilmFilterSamples {
         progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
+        // nur Bookmark
         sf = getBookmarkFilter();
         progData.filmFilterWorker.getStoredFilterList().add(sf);
 
