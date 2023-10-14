@@ -38,8 +38,7 @@ public class FilmMenu {
     final private VBox vBox;
     final private ProgData progData;
     private FilmFilter storedActFilterSettings = null;
-    private FilmFilter storedBookmarkFilter = null;
-    private static final String FILM_FILTER_BOOKMARK_TEXT = "Alle angelegte Bookmarks anzeigen\n\n" +
+    private static final String FILM_FILTER_BOOKMARK_TEXT = "Alle angelegte Bookmarks anzeigen\n" +
             "der zweite Klick stellt den\n" +
             "eingestellten Filter wieder her";
 
@@ -84,43 +83,31 @@ public class FilmMenu {
                 "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_DEL_BOOKMARK.getImageView());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
                 "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIconsMTPlayer.ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
-        final ToolBarButton btFilterBookmakr = new ToolBarButton(vBox,
+        final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
                 "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIconsMTPlayer.ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
 
         btBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm(true));
         btDelBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
         btDelAllBookmark.setOnAction(a -> progData.historyListBookmarks.clearAll(progData.primaryStage));
 
-        btFilterBookmakr.setOnAction(a -> {
-            if (storedActFilterSettings != null && storedBookmarkFilter != null) {
-                // prüfen, ob sich der Filter geändert hat, wenn ja, dann auf Anfang
-                FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
-                if (storedBookmarkFilter.isSame(sf, false)) {
-                    // dann hat sich der Filter geändert
+        btFilterBookmark.setOnAction(a -> {
+            FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
+            FilmFilter black = FilmFilterSamples.getBookmarkFilter();
+
+            if (sf.isSame(black, false)) {
+                // dann ist der BlackFilter aktiv, dann zurückschalten
+                if (storedActFilterSettings != null) {
+                    // dann haben wir einen gespeicherten Filter
+                    progData.filmFilterWorker.setActFilterSettings(storedActFilterSettings);
                     storedActFilterSettings = null;
-                }
-            }
-
-            if (storedActFilterSettings == null) {
-                // dann wurde es noch nicht aufgerufen
-                if (progData.filmFilterWorker.getActFilterSettings().isOnlyVis() &&
-                        progData.filmFilterWorker.getActFilterSettings().isOnlyBookmark()) {
-                    // dann ist Bookmark schon gesetzt, dann erst mal ausschalten
-                    storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
-                    progData.filmFilterWorker.getActFilterSettings().clearFilter();
-
                 } else {
-                    // dann setzen des Bookmarkfilters
-                    storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
-                    storedBookmarkFilter = FilmFilterSamples.getBookmarkFilter(storedActFilterSettings);
-                    progData.filmFilterWorker.setActFilterSettings(storedBookmarkFilter);
+                    // dann gibts keinen gespeicherten, dann einfach löschen
+                    progData.filmFilterWorker.getActFilterSettings().clearFilter();
                 }
-
             } else {
-                // dann den gemerkten Filter wieder setzen, aber ohne Bookmark
-                storedActFilterSettings.setOnlyBookmark(false);
-                progData.filmFilterWorker.setActFilterSettings(storedActFilterSettings);
-                storedActFilterSettings = null;
+                // dann ist es ein anderer Filter, Black einschalten und ActFilter merken
+                storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
+                progData.filmFilterWorker.setActFilterSettings(black);
             }
         });
 

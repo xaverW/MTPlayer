@@ -24,8 +24,8 @@ public class FilmFilterSamples {
     private FilmFilterSamples() {
     }
 
-    public static FilmFilter getBookmarkFilter(FilmFilter filmFilter) {
-        FilmFilter sf = filmFilter.getCopy();
+    public static FilmFilter getBookmarkFilter() {
+        FilmFilter sf = new FilmFilter("nur Bookmarks");
         sf.clearFilter();
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(true);
@@ -93,7 +93,7 @@ public class FilmFilterSamples {
         sf.setMinMaxDurVis(true);
         sf.setMinDur(40);
         sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-        
+
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(0);
@@ -117,43 +117,7 @@ public class FilmFilterSamples {
         progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
-        sf = new FilmFilter("nur Bookmarks");
-
-        sf.setChannelVis(true);
-        sf.setThemeVis(false);
-        sf.setThemeExact(true);
-        sf.setThemeTitleVis(true);
-        sf.setTitleVis(false);
-        sf.setSomewhereVis(false);
-        sf.setUrlVis(false);
-
-        sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
-
-        sf.setMinMaxDurVis(false);
-        sf.setMinDur(0);
-        sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-
-        sf.setMinMaxTimeVis(false);
-        sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(0);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
-
-        sf.setOnlyVis(true);
-        sf.setOnlyBookmark(true);
-        sf.setOnlyHd(false);
-        sf.setOnlyNew(false);
-        sf.setOnlyUt(false);
-        sf.setOnlyLive(false);
-        sf.setOnlyActHistory(false);
-
-        sf.setNotVis(true);
-        sf.setNotAbo(false);
-        sf.setNotHistory(false);
-        sf.setNotDouble(false);
-        sf.setNotGeo(false);
-        sf.setNotFuture(false);
-
+        sf = getBookmarkFilter();
         progData.filmFilterWorker.getStoredFilterList().add(sf);
 
         //========================================================
