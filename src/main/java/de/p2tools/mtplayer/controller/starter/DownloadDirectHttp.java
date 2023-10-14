@@ -152,7 +152,7 @@ public class DownloadDirectHttp extends Thread {
 
     private void openConnForDownload(BooleanProperty restartWithOutSSL) throws IOException {
         final URL url = new URL(download.getUrl());
-        download.getDownloadSize().setFileTargetSize(getContentLength(url));
+        download.getDownloadSize().setTargetSize(getContentLength(url));
         download.getDownloadSize().setActuallySize(0);
         conn = (HttpURLConnection) url.openConnection();
         conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
