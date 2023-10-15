@@ -59,7 +59,12 @@ public class NotificationDownFinished {
         HBox hBoxBottom = new HBox();
         hBoxBottom.setSpacing(P2LibConst.DIST_HBOX);
         hBoxBottom.setAlignment(Pos.CENTER_RIGHT);
-        hBoxBottom.getChildren().addAll(btnFilmStart, btnOpenDirectory);
+        if (download.isStateError()) {
+            // dann ist er fehlerhaft, also kein Abspielen
+            hBoxBottom.getChildren().addAll(btnOpenDirectory);
+        } else {
+            hBoxBottom.getChildren().addAll(btnFilmStart, btnOpenDirectory);
+        }
         add(text, error, hBoxBottom);
     }
 
