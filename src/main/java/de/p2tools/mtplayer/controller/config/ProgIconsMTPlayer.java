@@ -58,6 +58,8 @@ public class ProgIconsMTPlayer {
     public static P2IconMTViewer IMAGE_TABLE_ABO_DEL = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-abo-del.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_FILM_PLAY = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-film-play.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_FILM_SAVE = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-film-save.png", 14, 14);
+    public static P2IconMTViewer IMAGE_TABLE_FILM_BOOKMARK = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-film-bookmark.png", 14, 14);
+    public static P2IconMTViewer IMAGE_TABLE_FILM_DEL_BOOKMARK = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-film-del-bookmark.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_DOWNLOAD_START = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-download-start.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_DOWNLOAD_DEL = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-download-del.png", 14, 14);
     public static P2IconMTViewer IMAGE_TABLE_DOWNLOAD_STOP = new P2IconMTViewer(ICON_PATH_LONG, ICON_PATH, "table-download-stop.png", 14, 14);

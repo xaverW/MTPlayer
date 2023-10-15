@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
+import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -56,6 +57,7 @@ public class CellFilmButton<S, T> extends TableCell<S, T> {
 
                 final Button btnPlay;
                 final Button btnSave;
+                final Button btnBookmark;
 
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("btnFunction", "btnFuncTable");
@@ -65,11 +67,17 @@ public class CellFilmButton<S, T> extends TableCell<S, T> {
                 btnSave.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnSave.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_SAVE.getImageView());
 
+                btnBookmark = new Button("");
+                btnBookmark.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                btnBookmark.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_BOOKMARK.getImageView());
+
                 if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.get()) {
                     btnPlay.setMaxHeight(18);
                     btnPlay.setMinHeight(18);
                     btnSave.setMaxHeight(18);
                     btnSave.setMinHeight(18);
+                    btnBookmark.setMaxHeight(18);
+                    btnBookmark.setMinHeight(18);
                 }
 
                 btnPlay.setOnAction(e -> {
@@ -80,7 +88,11 @@ public class CellFilmButton<S, T> extends TableCell<S, T> {
                     FilmDataMTP film = getTableView().getItems().get(getIndex());
                     FilmSaveFactory.saveFilm(film);
                 });
-                hbox.getChildren().addAll(btnPlay, btnSave);
+                btnBookmark.setOnAction(e -> {
+                    FilmDataMTP film = getTableView().getItems().get(getIndex());
+                    FilmToolsFactory.changeBookmarkFilm(film);
+                });
+                hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);
                 setGraphic(hbox);
             }
         };
