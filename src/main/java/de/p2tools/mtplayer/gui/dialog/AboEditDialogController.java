@@ -31,10 +31,7 @@ import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.util.StringConverter;
 
 import java.util.ArrayList;
@@ -144,6 +141,12 @@ public class AboEditDialogController extends AboDialogController {
     private void addLabel(int i) {
         final int grid = getGridLine(i);
         switch (i) {
+            case AboFieldNames.ABO_HIT_NO:
+                if (aboList.size() == 1) {
+                    // nur dann macht es Sinn
+                    gridPane.add(lbl[i], 0, grid);
+                }
+                break;
             case AboFieldNames.ABO_THEME_EXACT_NO:
                 lbl[i].setText("   Exakt:");
                 gridPane.add(lbl[i], 0, grid);
@@ -195,6 +198,10 @@ public class AboEditDialogController extends AboDialogController {
                 gridPane.add(lblNo, 1, grid);
                 break;
             case AboFieldNames.ABO_HIT_NO:
+                if (aboList.size() > 1) {
+                    // nur dann brauchts das
+                    break;
+                }
                 final Label lblHit = new Label();
                 lblHit.textProperty().bind(aboList.get(0).hitProperty().asString());
                 gridPane.add(lblHit, 1, grid);
@@ -342,15 +349,10 @@ public class AboEditDialogController extends AboDialogController {
                 break;
             case AboFieldNames.ABO_TIME_RANGE_NO:
                 initTimeRange();
-
-                Label l = new Label("50 Tage");
-                l.setVisible(false);
-                StackPane stackPane = new StackPane(); // um die Breite konstant zu halten :)
-                stackPane.getChildren().addAll(l, lblTimeRange);
-                HBox hBox = new HBox(15);
-                hBox.getChildren().addAll(slTimeRange, stackPane);
-                HBox.setHgrow(slTimeRange, Priority.ALWAYS);
-                this.gridPane.add(hBox, 1, grid);
+                VBox vBox = new VBox(2);
+                vBox.getChildren().addAll(lblTimeRange, slTimeRange);
+                vBox.setAlignment(Pos.CENTER_RIGHT);
+                this.gridPane.add(vBox, 1, grid);
                 break;
             case AboFieldNames.ABO_MIN_DURATION_NO:
                 initDur();
@@ -360,8 +362,8 @@ public class AboEditDialogController extends AboDialogController {
             case AboFieldNames.ABO_MAX_DURATION_NO:
                 break;
             case AboFieldNames.ABO_START_TIME_NO:
-                hBox = new HBox(10);
-                hBox.setAlignment(Pos.CENTER_LEFT);
+                HBox hB = new HBox(10);
+                hB.setAlignment(Pos.CENTER_LEFT);
 
                 chkStartTime.setSelected(!aboCopy.getStartTime().isEmpty());
                 chkStartTime.setOnAction(a -> {
@@ -387,8 +389,8 @@ public class AboEditDialogController extends AboDialogController {
                 HBox.setHgrow(hb, Priority.ALWAYS);
                 hb.getChildren().add(btnHelpStartTime);
 
-                hBox.getChildren().addAll(chkStartTime, p2TimePicker, hb);
-                gridPane.add(hBox, 1, grid);
+                hB.getChildren().addAll(chkStartTime, p2TimePicker, hb);
+                gridPane.add(hB, 1, grid);
                 break;
             default:
                 setDefaultTxt(i, grid);
@@ -398,12 +400,14 @@ public class AboEditDialogController extends AboDialogController {
     }
 
     private int getGridLine(int i) {
-        if (i >= AboFieldNames.ABO_MAX_DURATION_NO) {
-            //gibts nicht
-            return i;
-        } else {
-            return ++i;
+        int ret = i;
+        if (aboList.size() > 1 && i >= AboFieldNames.ABO_HIT_NO) {
+            --ret;
         }
+        if (i >= AboFieldNames.ABO_MAX_DURATION_NO) {
+            --ret;
+        }
+        return ret;
     }
 
     private void initDur() {
@@ -426,7 +430,7 @@ public class AboEditDialogController extends AboDialogController {
         slTimeRange.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == FilterCheck.FILTER_ALL_OR_MIN) return "alles";
+                if (x == FilterCheck.FILTER_ALL_OR_MIN) return "Alles";
                 return x.intValue() + "";
             }
 
@@ -453,7 +457,7 @@ public class AboEditDialogController extends AboDialogController {
     }
 
     private void setLabelSlider() {
-        final String txtAll = "alles";
+        final String txtAll = "Alles";
 
         int i = (int) slTimeRange.getValue();
         String tNr = i + "";
@@ -511,7 +515,6 @@ public class AboEditDialogController extends AboDialogController {
             case AboFieldNames.ABO_DEST_PATH_NO:
                 gridPane.add(cbxEditAll[i], 2, grid);
                 break;
-
             case AboFieldNames.ABO_SET_DATA_ID_NO:
                 if (progData.setDataList.getSetDataListAbo().size() > 1) {
                     // nur dann kann man was ändern

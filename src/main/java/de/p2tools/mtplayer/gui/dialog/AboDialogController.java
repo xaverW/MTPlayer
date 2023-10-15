@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.*;
@@ -58,7 +59,7 @@ public class AboDialogController extends PDialogExtra {
     final ComboBox<String> cboDestination = new ComboBox<>();
     final Slider slTimeRange = new Slider();
     final Label lblTimeRange = new Label();
-    final P2RangeBox p2RangeBoxTime = new P2RangeBox("", false, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
+    final P2RangeBox p2RangeBoxTime = new P2RangeBox("", true, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
     final CheckBox cbxOn = new CheckBox();
     final Label[] lbl = new Label[AboFieldNames.MAX_ELEM];
     final TextField[] txt = new TextField[AboFieldNames.MAX_ELEM];
@@ -176,8 +177,8 @@ public class AboDialogController extends PDialogExtra {
 
         btnCancel.setOnAction(a -> close());
 
-        gridPane.setHgap(5);
-        gridPane.setVgap(10);
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setMinWidth(Control.USE_PREF_SIZE);
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -193,7 +194,7 @@ public class AboDialogController extends PDialogExtra {
             gridPane.add(l1, 1, 0);
             GridPane.setValignment(l1, VPos.CENTER);
 
-            Label l2 = new Label("nur diese\nFelder\nändern");
+            Label l2 = new Label("Für alle\nändern");
             l2.setMinHeight(Region.USE_PREF_SIZE);
             l2.setTextAlignment(TextAlignment.CENTER);
             VBox vBox = new VBox();
