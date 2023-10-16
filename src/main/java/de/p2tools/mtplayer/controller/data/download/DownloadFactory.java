@@ -55,7 +55,7 @@ public class DownloadFactory {
 
         PDuration.counterStart("searchForAbosAndMaybeStart");
         PLog.sysLog("Downloads aus Abos suchen");
-        //erledigte entfernen, nicht gestartete Abos entfernen und nach neu Abos suchen
+        //erledigte entfernen, nicht gestartete Abos entfernen und nach neuen Abos suchen
         ProgData.getInstance().downloadList.searchForDownloadsFromAbos();
 
         if (ProgConfig.DOWNLOAD_START_NOW.getValue() || ProgData.autoMode) {

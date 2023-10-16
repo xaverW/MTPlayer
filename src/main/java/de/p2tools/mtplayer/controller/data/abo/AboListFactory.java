@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
-import de.p2tools.mtplayer.gui.dialog.AboEditDialogController;
+import de.p2tools.mtplayer.gui.dialog.abodialog.AboEditDialogController;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -81,7 +81,6 @@ public class AboListFactory {
                 minDuration,
                 maxDuration,
                 namePath);
-
         new AboEditDialogController(ProgData.getInstance(), abo);
     }
 
@@ -178,11 +177,9 @@ public class AboListFactory {
                 minDuration,
                 maxDuration,
                 searchTitle);
-
         if (!theme.isEmpty()) {
             abo.setThemeExact(themeExact);
         }
-
         new AboEditDialogController(ProgData.getInstance(), abo);
     }
 

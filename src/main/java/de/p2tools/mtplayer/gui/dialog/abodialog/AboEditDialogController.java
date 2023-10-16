@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.dialog;
+package de.p2tools.mtplayer.gui.dialog.abodialog;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -40,12 +40,12 @@ import java.util.List;
 public class AboEditDialogController extends AboDialogController {
 
     public AboEditDialogController(ProgData progData, AboData abo) {
-        //hier wird ein neues Abo angelegt -> Button
+        //hier wird ein neues Abo angelegt -> Button, abo ist immer neu
         super(progData, abo);
     }
 
     public AboEditDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
-        //hier wird ein Abo an dem Filter angepasst -> Button
+        //hier wird ein bestehendes Abo an dem Filter angepasst -> Button
         super(progData, filmFilter, abo);
     }
 
@@ -141,6 +141,7 @@ public class AboEditDialogController extends AboDialogController {
     private void addLabel(int i) {
         final int grid = getGridLine(i);
         switch (i) {
+            case AboFieldNames.ABO_NO_NO:
             case AboFieldNames.ABO_HIT_NO:
                 if (aboList.size() == 1) {
                     // nur dann macht es Sinn
@@ -193,8 +194,12 @@ public class AboEditDialogController extends AboDialogController {
                 break;
 
             case AboFieldNames.ABO_NO_NO:
+                if (aboList.size() > 1) {
+                    // nur dann brauchts das
+                    break;
+                }
                 final Label lblNo = new Label();
-                lblNo.setText(aboCopy.getNo() + "");
+                lblNo.setText(aboList.get(0).getNo() + "");
                 gridPane.add(lblNo, 1, grid);
                 break;
             case AboFieldNames.ABO_HIT_NO:
@@ -230,10 +235,10 @@ public class AboEditDialogController extends AboDialogController {
                 HBox.setHgrow(h, Priority.ALWAYS);
                 h.getChildren().add(btnHelpRes);
 
-                HBox hAufloeung = new HBox(10);
-                hAufloeung.setAlignment(Pos.CENTER_LEFT);
-                hAufloeung.getChildren().addAll(rbHd, rbHigh, rbLow, h);
-                this.gridPane.add(hAufloeung, 1, grid);
+                HBox hRes = new HBox(10);
+                hRes.setAlignment(Pos.CENTER_LEFT);
+                hRes.getChildren().addAll(rbHd, rbHigh, rbLow, h);
+                this.gridPane.add(hRes, 1, grid);
                 break;
             case AboFieldNames.ABO_THEME_EXACT_NO:
                 cbx[i].selectedProperty().bindBidirectional(aboCopy.properties[i]);
@@ -279,7 +284,6 @@ public class AboEditDialogController extends AboDialogController {
                 }
                 break;
             case AboFieldNames.ABO_CHANNEL_NO:
-//                mbChannel.setMaxWidth(Double.MAX_VALUE);
                 this.gridPane.add(mbChannel, 1, grid);
                 break;
             case AboFieldNames.ABO_DEST_PATH_NO:

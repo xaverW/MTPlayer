@@ -37,8 +37,17 @@ public class Worker {
     public Worker(ProgData progData) {
         this.progData = progData;
         getAboNames();
-        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) ->
-                getAboNames());
+        ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
+            }
+        });
+        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
+            }
+            getAboNames();
+        });
 
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 getAboNames());

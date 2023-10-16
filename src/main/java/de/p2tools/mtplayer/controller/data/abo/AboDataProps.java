@@ -372,7 +372,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     }
 
     public synchronized void incrementCountHit() {
-        this.countHit = ++countHit;
+        ++countHit;
     }
 
     public void setCountedHits() {

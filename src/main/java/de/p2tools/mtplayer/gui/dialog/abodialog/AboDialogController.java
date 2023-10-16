@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.dialog;
+package de.p2tools.mtplayer.gui.dialog.abodialog;
 
 import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
+import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -78,8 +79,8 @@ public class AboDialogController extends PDialogExtra {
     final P2MenuButton mbChannel;
     final P2TimePicker p2TimePicker = new P2TimePicker();
     final CheckBox chkStartTime = new CheckBox();
-    final ObservableList<AboData> aboList = FXCollections.observableArrayList();
-    final AboData aboCopy;
+    final ObservableList<AboData> aboList = FXCollections.observableArrayList(); // Liste der Org-Abos!
+    final AboData aboCopy; // Kopie vom ersten Abo, Anzeige im Dialog
     boolean addNewAbo;
     BooleanProperty okProp = new SimpleBooleanProperty(true);
     String memory = "";
@@ -93,7 +94,7 @@ public class AboDialogController extends PDialogExtra {
         this.progData = progData;
         this.addNewAbo = true;
         aboList.add(abo);
-        this.aboCopy = abo.getCopy();
+        this.aboCopy = abo;
         this.mbChannel = new P2MenuButton(aboCopy.channelProperty(),
                 ThemeListFactory.allChannelList, true);
 
@@ -101,7 +102,7 @@ public class AboDialogController extends PDialogExtra {
     }
 
     public AboDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
-        // hier wird ein Abo an den Filter angepasst
+        // hier wird ein bestehendes Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false, DECO.BORDER, true);
 
@@ -136,7 +137,7 @@ public class AboDialogController extends PDialogExtra {
     }
 
     public AboDialogController(ProgData progData, List<AboData> aboList) {
-        // hier werden Abos geändert
+        // hier werden bestehende Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", false, false, DECO.BORDER, true);
 

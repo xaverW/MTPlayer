@@ -38,7 +38,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
     public static final String TAG = "AboList";
     private int nr;
     private static final GermanStringSorter sorter = GermanStringSorter.getInstance();
-    private BooleanProperty listChanged = new SimpleBooleanProperty(true);
+    private final BooleanProperty listChanged = new SimpleBooleanProperty(true);
     private final ObservableList<AboData> undoList = FXCollections.observableArrayList();
 
     public AboList(ProgData progData) {

@@ -298,16 +298,16 @@ public class DownloadGuiController extends AnchorPane {
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setFilter));
 
-        ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
-            }
-        });
-        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
-            }
-        });
+//        ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
+//            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+//                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
+//            }
+//        });
+//        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+//                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
+//            }
+//        });
     }
 
     private void initTable() {
