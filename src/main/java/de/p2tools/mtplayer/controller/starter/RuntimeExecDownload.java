@@ -34,9 +34,13 @@ public class RuntimeExecDownload {
     private static final int INPUT = 1;
     private static final int ERROR = 2;
     private Process process = null;
-    private static final Pattern patternFfmpeg = Pattern.compile("(?<=  Duration: )[^,]*"); // Duration: 00:00:30.28, start: 0.000000, bitrate: N/A
-    private static final Pattern patternTime = Pattern.compile("(?<=time=)[^ ]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
-    private static final Pattern patternSize = Pattern.compile("(?<=size=)[^k]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
+    private static final Pattern patternYtDlp = Pattern.compile("(?<=\\[download\\] [ ])[^%]*"); // [download]   1.8% of ~   9.91MiB at  239.18KiB/s ETA Unknown (frag 3/146)
+    private static final Pattern patternYtDlpSize = Pattern.compile("(?<=of ~[ ])[^M]*");  // [download]   1.8% of ~   9.91MiB at  239.18KiB/s ETA Unknown (frag 3/146)
+    private static final Pattern patternYtDlpBandwidth = Pattern.compile("(?<=at [ ])[^.]*");  // [download]   1.8% of ~   9.91MiB at  239.18KiB/s ETA Unknown (frag 3/146)
+
+    private static final Pattern patternFfmpegDuration = Pattern.compile("(?<=  Duration: )[^,]*"); // Duration: 00:00:30.28, start: 0.000000, bitrate: N/A
+    private static final Pattern patternFfmpegTime = Pattern.compile("(?<=time=)[^ ]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
+    private static final Pattern patternFfmpegSize = Pattern.compile("(?<=size=)[^k]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
 
     private double totalSecs = 0;
     private long oldSize = 0;
@@ -129,7 +133,6 @@ public class RuntimeExecDownload {
                         break;
                     case ERROR:
                         in = process.getErrorStream();
-                        //TH
                         synchronized (this) {
                             title = "ERRORSTREAM";
                         }
@@ -138,7 +141,11 @@ public class RuntimeExecDownload {
                 buff = new BufferedReader(new InputStreamReader(in));
                 String inStr;
                 while ((inStr = buff.readLine()) != null) {
-                    getPercentageFromErrorStream(inStr);
+                    if (download.getProgramCall().contains("ffmpeg")) {
+                        getPercentageFromErrorStreamFfmpeg(inStr);
+                    } else if (download.getProgramCall().contains("yt-dlp")) {
+                        getPercentageFromErrorStreamYtDlp(inStr);
+                    }
                     playerMessage.playerMessage(title + ": " + inStr);
                 }
             } catch (final IOException ignored) {
@@ -150,14 +157,14 @@ public class RuntimeExecDownload {
             }
         }
 
-        private void getPercentageFromErrorStream(String input) {
+        private void getPercentageFromErrorStreamFfmpeg(String input) {
             Matcher matcher;
             // für ffmpeg
             // ffmpeg muss dazu mit dem Parameter -i gestartet werden:
             // -i %f -acodec copy -vcodec copy -y **
             try {
-                // Gesamtzeit
-                matcher = patternFfmpeg.matcher(input);
+                // Gesamtzeit ffmpeg
+                matcher = patternFfmpegDuration.matcher(input);
                 if (matcher.find()) {
                     // Find duration
                     final String duration = matcher.group().trim();
@@ -167,13 +174,13 @@ public class RuntimeExecDownload {
                             + Double.parseDouble(hms[2]);
                 }
 
-                // Bandbreite
-                matcher = patternSize.matcher(input);
+                // Bandbreite ffmpeg
+                matcher = patternFfmpegSize.matcher(input);
                 if (matcher.find()) {
-                    final String s = matcher.group().trim();
-                    if (!s.isEmpty()) {
+                    final String size = matcher.group().trim();
+                    if (!size.isEmpty()) {
                         try {
-                            final long actSize = Integer.parseInt(s.replace("kB", ""));
+                            final long actSize = Integer.parseInt(size.replace("kB", ""));
                             mVFilmSize.setActuallySize(actSize * 1_000);
                             final long akt = download.getDownloadStartDto().getStartTime().diffInSeconds();
                             if (oldSecs < akt - 5) {
@@ -187,8 +194,8 @@ public class RuntimeExecDownload {
                     }
                 }
 
-                // Fortschritt
-                matcher = patternTime.matcher(input);
+                // Fortschritt ffmpeg
+                matcher = patternFfmpegTime.matcher(input);
                 if (totalSecs > 0 && matcher.find()) {
                     // ffmpeg    1611kB time=00:00:06.73 bitrate=1959.7kbits/s   
                     // avconv    size=   26182kB time=100.96 bitrate=2124.5kbits/s 
@@ -206,9 +213,67 @@ public class RuntimeExecDownload {
                         notifyDouble(d);
                     }
                 }
+
             } catch (final Exception ex) {
                 if (ProgData.debug) {
-                    PLog.errorLog(912036780, input);
+                    PLog.errorLog(320154795, input);
+                }
+            }
+        }
+
+        private void getPercentageFromErrorStreamYtDlp(String input) {
+            Matcher matcher;
+            try {
+                // Size yt-dlp
+                matcher = patternYtDlpSize.matcher(input);
+                if (matcher.find()) {
+                    // [download]   1.8% of ~   9.91MiB at  239.18KiB/s ETA Unknown (frag 3/146)
+                    // [download]  90.1% of ~  20.04MiB at    1.21MiB/s ETA 00:02 (frag 196/218)
+                    final String size = matcher.group().trim();
+                    if (!size.isEmpty()) {
+                        try {
+                            final double targetSize = Double.parseDouble(size) * 1_000 * 1_000;
+                            final long targetLong = (long) targetSize;
+                            if (mVFilmSize.getTargetSize() < targetLong) {
+                                // sonst springt die Anzeige
+                                mVFilmSize.setTargetSize(targetLong);
+                            }
+                        } catch (final NumberFormatException ignored) {
+                        }
+                    }
+                }
+
+                // Bandbreite yt-dlp
+                matcher = patternYtDlpBandwidth.matcher(input);
+                if (matcher.find()) {
+                    // [download]   1.8% of ~   9.91MiB at  239.18KiB/s ETA Unknown (frag 3/146)
+                    final String bandwidth = matcher.group().trim();
+                    if (!bandwidth.isEmpty()) {
+                        try {
+                            final long b = Long.parseLong(bandwidth);
+                            final long akt = download.getDownloadStartDto().getStartTime().diffInSeconds();
+                            if (oldSecs < akt - 5) {
+                                // nur alle 5s machen
+                                download.setBandwidth(b * 1_000 * 1_000); // bytes per second
+                                oldSecs = akt;
+                            }
+                        } catch (final NumberFormatException ignored) {
+                        }
+                    }
+                }
+
+                // Fortschritt yt-dlp
+                matcher = patternYtDlp.matcher(input);
+                if (matcher.find()) {
+                    // [download]   1.8% of ~   9.91MiB at  239.18KiB/s ETA Unknown (frag 3/146)
+                    final String percent = matcher.group().trim();
+                    double d = Double.parseDouble(percent);
+                    notifyDouble(d);
+                }
+
+            } catch (final Exception ex) {
+                if (ProgData.debug) {
+                    PLog.errorLog(951254697, input);
                 }
             }
         }
