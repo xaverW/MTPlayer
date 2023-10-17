@@ -33,10 +33,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import de.p2tools.p2lib.guitools.P2Hyperlink;
-import de.p2tools.p2lib.guitools.P2TimePicker;
+import de.p2tools.p2lib.guitools.*;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
@@ -46,6 +43,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
@@ -63,8 +61,8 @@ import java.io.File;
 public class DownloadEditDialogController extends PDialogExtra {
 
     private boolean ok = false;
-    private Button btnOk = new Button("_Ok");
-    private Button btnCancel = new Button("_Abbrechen");
+    private final Button btnOk = new Button("_Ok");
+    private final Button btnCancel = new Button("_Abbrechen");
 
     private final GridPane gridPane = new GridPane();
     private final Text[] text = new Text[DownloadFieldNames.MAX_ELEM];
@@ -77,7 +75,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     private final ComboBox<String> cbPath = new ComboBox<>();
     private final Button btnPath = new Button();
     private final Label lblSizeFree = new Label();
-    private final TextArea textAreaProg = new TextArea();
+    private final P2MultiLineLabel textAreaProg = new P2MultiLineLabel();
     private final TextArea textAreaCallArray = new TextArea();
     private final P2ToggleSwitch tglUrl = new P2ToggleSwitch("URL");
     P2Hyperlink p2HyperlinkUrlFilm = new P2Hyperlink("",
@@ -162,6 +160,8 @@ public class DownloadEditDialogController extends PDialogExtra {
 
     private void setUrlVis() {
         text[DownloadFieldNames.DOWNLOAD_FILM_URL_NO].setVisible(urlProperty.get());
+        text[DownloadFieldNames.DOWNLOAD_URL_NO].setVisible(urlProperty.get());
+        text[DownloadFieldNames.DOWNLOAD_FILM_URL_NO].setManaged(urlProperty.get());
         text[DownloadFieldNames.DOWNLOAD_URL_NO].setManaged(urlProperty.get());
 
         p2HyperlinkUrlFilm.setVisible(urlProperty.get());
@@ -360,6 +360,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         if (download.getType().equals(DownloadConstants.TYPE_PROGRAM)) {
             // nur bei Downloads über ein Programm
             gridPane.add(text[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO], 0, row);
+            GridPane.setValignment(text[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO], VPos.TOP);
 
             Tooltip t = new Tooltip();
             t.setWrapText(true);
@@ -403,9 +404,6 @@ public class DownloadEditDialogController extends PDialogExtra {
                 HBox.setHgrow(textAreaProg, Priority.ALWAYS);
                 hBoxArray1.getChildren().addAll(btnHelp, textAreaProg);
                 textAreaProg.textProperty().bindBidirectional(txt[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_NO].textProperty());
-                textAreaProg.setMaxHeight(Double.MAX_VALUE);
-                textAreaProg.setPrefRowCount(4);
-                textAreaProg.setWrapText(true);
 
                 HBox hBoxArray2 = new HBox(10);
                 HBox.setHgrow(textAreaCallArray, Priority.ALWAYS);
@@ -427,6 +425,7 @@ public class DownloadEditDialogController extends PDialogExtra {
         txt[DownloadFieldNames.DOWNLOAD_DEST_PATH_NO].setEditable(!isStarted); // für die LabelFarbe
         txt[DownloadFieldNames.DOWNLOAD_DEST_PATH_NO].setText(download.getDestPath());
         gridPane.add(text[DownloadFieldNames.DOWNLOAD_DEST_PATH_NO], 0, row);
+        GridPane.setValignment(text[DownloadFieldNames.DOWNLOAD_DEST_PATH_NO], VPos.TOP);
 
         VBox vBox = new VBox(5);
         HBox hBoxPath = new HBox(10);
