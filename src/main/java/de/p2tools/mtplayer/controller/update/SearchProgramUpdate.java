@@ -49,7 +49,7 @@ public class SearchProgramUpdate {
     /**
      * @return
      */
-    public void searchNewProgramVersion(final boolean showAllways) {
+    public void searchNewProgramVersion(final boolean showAlways) {
         final String SEARCH_URL;
         final String SEARCH_URL_DOWNLOAD;
         SEARCH_URL = "https://www.p2tools.de";
@@ -91,7 +91,7 @@ public class SearchProgramUpdate {
                 ProgramToolsFactory.getBuild(),
                 buildDate,
                 ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
-                showAllways
+                showAlways
         );
 
         new Thread(() -> {
