@@ -17,34 +17,25 @@
 
 package de.p2tools.mtplayer;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
-import de.p2tools.p2lib.guitools.pnotification.P2Notification;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
-import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.mtfilter.Filter;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.awt.*;
 import java.util.function.Predicate;
 
 public class MTPTester {
@@ -85,99 +76,8 @@ public class MTPTester {
             final Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
 
-//            Button btnMarkFilm = new Button("Diakrit");
-//            btnMarkFilm.setMaxWidth(Double.MAX_VALUE);
-//            btnMarkFilm.setOnAction(a -> check());
-//
-//            Button btnMarkBlack = new Button("MarkBlack");
-//            btnMarkBlack.setMaxWidth(Double.MAX_VALUE);
-//            btnMarkBlack.setOnAction(a -> new Thread(() ->
-//                    BlacklistFilterFactory.markFilmBlack(true)).start());
-
-
             int row = 0;
-//            gridPane.add(text, 0, row, 2, 1);
-//            gridPane.add(btnMarkFilm, 0, ++row);
-//            gridPane.add(btnMarkBlack, 0, ++row);
-//
-//            gridPane.add(textArea, 0, ++row, 2, 1);
-
-//            Button btnShutDown = new Button("ShutDownDialog");
-//            btnShutDown.setOnAction(a -> new QuitDialogController(false));
-//            gridPane.add(new Label(), 0, ++row);
-//            gridPane.add(btnShutDown, 0, ++row);
-//
-//            Button btnCloseDialog = new Button("Alle Dialoge schließen");
-//            btnCloseDialog.setOnAction(a -> PDialogExtra.closeAllDialog());
-//            gridPane.add(new Label(), 0, ++row);
-//            gridPane.add(btnCloseDialog, 0, ++row);
-//
-//            gridPane.add(new Label(), 0, ++row);
-//            PToggleSwitch tglDownloading = new PToggleSwitch("ProgData.FILMLIST_IS_DOWNLOADING");
-//            tglDownloading.selectedProperty().bindBidirectional(ProgData.FILMLIST_IS_DOWNLOADING);
-//            gridPane.add(tglDownloading, 0, ++row);
-//
-//            gridPane.add(new Label(), 0, ++row);
-//            Button btnPropose = new Button("Film vorschlagen");
-//            gridPane.add(btnPropose, 0, ++row);
-//            btnPropose.setOnAction(a -> {
-//                new ProposeDialogController(progData, ProgConfig.PROPOSE_DIALOG_CONTROLLER_SIZE);
-//            });
-
-//            gridPane.add(new Label(), 0, ++row);
-//            Button btnMTNotify1 = new Button("p2Notification");
-//            gridPane.add(btnMTNotify1, 0, ++row);
-//            btnMTNotify1.setOnAction(a -> {
-//                P2Notification.addNotification("Download beendet",
-//                        "text fjksdladf \n jfksalödfj \n jfksdalöjf \n jfksdalöfj ",
-//                        false);
-//            });
-//
-//
             gridPane.add(new Label(), 0, ++row);
-            Button btnMTNotify2 = new Button("p2Notification");
-            gridPane.add(btnMTNotify2, 0, ++row);
-            btnMTNotify2.setOnAction(a -> {
-                Button btnFilmStart = new Button();
-                btnFilmStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
-                btnFilmStart.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_PLAY.getImageView());
-
-                Button btnOpenDirectory = new Button();
-                btnOpenDirectory.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-                btnOpenDirectory.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
-
-                HBox hBoxBottom = new HBox();
-                hBoxBottom.setSpacing(P2LibConst.DIST_HBOX);
-                hBoxBottom.setAlignment(Pos.CENTER_RIGHT);
-                hBoxBottom.getChildren().addAll(btnFilmStart, btnOpenDirectory);
-
-                P2Notification.addNotification("Download beendet",
-                        "text fjksdladf\ntext aölskdjf ",
-                        P2Notification.STATE.INFO, hBoxBottom);
-            });
-//
-//            gridPane.add(new Label(), 0, ++row);
-//            Button btnNotify = new Button("controlFx");
-//            gridPane.add(btnNotify, 0, ++row);
-//            btnNotify.setOnAction(a -> {
-//                Notifications.create()
-//                        .title("Title Text")
-//                        .text("Hello World 0!")
-//                        .threshold(0, Notifications.create().title("Collapsed Notification"))
-//                        .darkStyle()
-//                        .showWarning();
-//
-//            });
-
-//            gridPane.add(new Label(), 0, ++row);
-//            Button btnTryNotify = new Button("AWS Tray");
-//            gridPane.add(btnTryNotify, 0, ++row);
-//            btnTryNotify.setOnAction(a -> {
-//                tray();
-//            });
-
 
             final CheckBox chkFilter = new CheckBox("Filtern");
             final CheckBox chkSelect = new CheckBox("Select");
@@ -187,6 +87,12 @@ public class MTPTester {
             gridPane.add(btnTable, 0, ++row);
             gridPane.add(chkFilter, 1, row);
             gridPane.add(chkSelect, 2, row);
+
+            Button btnError = new Button("Fehler");
+            btnError.setOnAction(a -> {
+                Platform.runLater(() -> new DownloadErrorDialogController(new DownloadData(), "so ein Mist"));
+            });
+            gridPane.add(btnError, 0, ++row);
 
             btnTable.setOnAction(a -> {
                 TableView<FilmDataMTP> tableView = ProgData.getInstance().filmGuiController.tableView;
@@ -208,45 +114,6 @@ public class MTPTester {
                 }
             });
         }
-    }
-
-    private void tray() {
-        try {
-            //Obtain only one instance of the SystemTray object
-            SystemTray tray = SystemTray.getSystemTray();
-
-            // If you want to create an icon in the system tray to preview
-            Image image = Toolkit.getDefaultToolkit().createImage("some-icon.png");
-            //Alternative (if the icon is on the classpath):
-            //Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
-
-            TrayIcon trayIcon = new TrayIcon(image, "Java AWT Tray Demo");
-            //Let the system resize the image if needed
-            trayIcon.setImageAutoSize(true);
-            //Set tooltip text for the tray icon
-            trayIcon.setToolTip("System tray icon demo");
-            tray.add(trayIcon);
-
-            // Display info notification:
-            trayIcon.displayMessage("Hello, World", "Java Notification Demo", TrayIcon.MessageType.INFO);
-            // Error:
-            // trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.ERROR);
-            // Warning:
-            // trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.WARNING);
-        } catch (Exception ex) {
-            System.err.print(ex);
-        }
-    }
-
-    String test = "äöü ń ǹ ň ñ ṅ ņ ṇ ṋ    ( ç/č/c => c; a/á/à/â/ă/ȁ/å/ā/ã => a aber ä => ä )";
-
-    private void check() {
-        PDuration.counterStart("MTPTester diakritische Zeichen");
-        ProgConfig.SYSTEM_REMOVE_DIACRITICS.setValue(ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue());
-        if (ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue()) {
-            FilmFactory.flattenDiacritic(progData.filmList);
-        }
-        PDuration.counterStop("MTPTester diakritische Zeichen");
     }
 
     public void close() {

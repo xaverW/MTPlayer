@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.animation.KeyFrame;
@@ -41,19 +42,15 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
     private final HBox hBoxTitle;
     private final VBox vBoxCont;
-
     private final Label lblHeader = new Label("Downloadfehler");
     private final Button btnOk = new Button("_Ok");
 
     private final Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private final TextArea txtUrl = new TextArea();
     private final TextArea txtCont = new TextArea();
-
     private final Label lblTime = new Label("");
-
     private final ImageView imageView = new ImageView();
     private final GridPane gridPane = new GridPane();
-
 
     private Timeline timeline = null;
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue();
@@ -74,7 +71,6 @@ public class DownloadErrorDialogController extends PDialogExtra {
         if (ProgData.autoMode) {
             // dann schaut ja eh keiner zu
             return;
-
         } else {
             init(true);
         }
@@ -89,14 +85,13 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
         txtUrl.setEditable(false);
         txtUrl.setWrapText(true);
-        String txt = "Url: \n" + download.getUrl() + "\n\n" +
+        String txt = "Url: \n" + download.getUrl() + "\n" +
                 "Datei: \n" + download.getDestPathFile();
-
         txtUrl.setText(txt);
 
         txtCont.setEditable(false);
         txtCont.setWrapText(true);
-        txtCont.setText(message);
+        txtCont.setText("Fehler:" + "\n" + message);
 
         btnOk.setOnAction(event -> {
             stopCounter();
@@ -112,45 +107,32 @@ public class DownloadErrorDialogController extends PDialogExtra {
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),
                 new CountdownAction()));
         timeline.playFromStart();
-
     }
 
     private void initCont() {
         hBoxTitle.getChildren().add(lblHeader);
 
-        VBox vBox = new VBox();
-        vBox.setPadding(new Insets(20));
-        vBox.getChildren().add(imageView);
-
-
         gridPane.setMaxWidth(Double.MAX_VALUE);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(5));
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         int row = 0;
         gridPane.add(new Label("Film:"), 0, row);
         gridPane.add(lblFilmTitle, 1, row);
 
-        GridPane.setHgrow(txtUrl, Priority.ALWAYS);
-        GridPane.setVgrow(txtUrl, Priority.ALWAYS);
-        gridPane.add(txtUrl, 1, ++row);
-
-        GridPane.setHgrow(txtCont, Priority.ALWAYS);
-        GridPane.setVgrow(txtCont, Priority.ALWAYS);
-        gridPane.add(new Label("Fehler:"), 0, ++row);
-        gridPane.add(txtCont, 1, row);
-
+        gridPane.add(txtUrl, 0, ++row, 2, 1);
+        gridPane.add(txtCont, 0, ++row, 2, 1);
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         HBox hBox = new HBox(10);
-        VBox.setVgrow(hBox, Priority.ALWAYS);
-        hBox.getChildren().addAll(vBox, gridPane);
+        hBox.getChildren().addAll(imageView, gridPane);
+        HBox.setHgrow(gridPane, Priority.ALWAYS);
 
         vBoxCont.setPadding(new Insets(5));
-        vBoxCont.setSpacing(10);
         vBoxCont.getChildren().add(hBox);
+        VBox.setVgrow(hBox, Priority.ALWAYS);
 
         addOkButton(btnOk);
         getHboxLeft().getChildren().add(lblTime);
