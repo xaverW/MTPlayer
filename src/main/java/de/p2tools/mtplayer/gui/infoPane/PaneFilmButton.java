@@ -42,7 +42,8 @@ public class PaneFilmButton extends TilePane {
         getChildren().clear();
         SetDataList setDataList = ProgData.getInstance().setDataList.getSetDataListButton();
         setDataList.forEach(setData -> {
-            Button btn = new Button(setData.getVisibleName());
+            Button btn = new Button();
+            btn.textProperty().bind(setData.visibleNameProperty());
             btn.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
             btn.setMaxWidth(Double.MAX_VALUE);
             if (!setData.getColor().equals(SetData.RESET_COLOR)) {
