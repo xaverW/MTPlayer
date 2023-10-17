@@ -410,7 +410,7 @@ public class DownloadEditDialogController extends PDialogExtra {
                 hBoxArray2.getChildren().addAll(btnReset, textAreaCallArray);
                 textAreaCallArray.textProperty().bindBidirectional(txt[DownloadFieldNames.DOWNLOAD_PROGRAM_CALL_ARRAY_NO].textProperty());
                 textAreaCallArray.setMaxHeight(Double.MAX_VALUE);
-                textAreaCallArray.setPrefRowCount(4);
+                textAreaCallArray.setPrefRowCount(6);
                 textAreaCallArray.setWrapText(true);
 
                 vBox.getChildren().addAll(hBoxArray1, hBoxArray2);
