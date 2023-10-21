@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.gui.dialog.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -53,7 +52,7 @@ public class ProposeDialogController extends PDialogExtra {
         getHBoxTitle().getChildren().add(lblHeader);
 
         final Button btnOk = new Button("_Ok");
-        final Button btnHelp = P2Button.helpButton(getStage(), "Medien", HelpText.MEDIA_CLEANING_CONFIG_DIALOG);
+        final Button btnHelp = P2Button.helpButton(getStage(), "Medien", "");
         btnOk.setOnAction(a -> quit());
         addOkButton(btnOk);
         addHlpButton(btnHelp);
