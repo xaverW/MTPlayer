@@ -17,11 +17,11 @@
 
 package de.p2tools.mtplayer.controller.mediadb;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
+import javafx.beans.property.IntegerProperty;
 
 import java.util.function.Predicate;
 
@@ -29,7 +29,7 @@ public class MediaSearchPredicateFactory {
     private MediaSearchPredicateFactory() {
     }
 
-    public static Predicate<MediaData> getPredicateMediaData(String searchStr) {
+    public static Predicate<MediaData> getPredicateMediaData(IntegerProperty searchInProperty, String searchStr) {
         final String search = searchStr.trim();
         return media -> {
             if (search.isEmpty()) {
@@ -37,9 +37,9 @@ public class MediaSearchPredicateFactory {
             }
 
             Filter filter = new Filter(search, true);
-            if (ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
+            if (searchInProperty.getValue() == ProgConst.MEDIA_SEARCH_THEME_OR_PATH) {
                 return FilterCheck.check(filter, media.getPath());
-            } else if (ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL) {
+            } else if (searchInProperty.getValue() == ProgConst.MEDIA_SEARCH_TITEL_OR_NAME) {
                 return FilterCheck.check(filter, media.getName());
             } else {
                 return FilterCheck.check(filter, media.getPath()) ||
@@ -48,7 +48,7 @@ public class MediaSearchPredicateFactory {
         };
     }
 
-    public static Predicate<HistoryData> getPredicateHistoryData(String searchStr) {
+    public static Predicate<HistoryData> getPredicateHistoryData(IntegerProperty searchInProperty, String searchStr) {
         final String search = searchStr.trim();
         return historyData -> {
             if (search.isEmpty()) {
@@ -56,9 +56,9 @@ public class MediaSearchPredicateFactory {
             }
 
             Filter filter = new Filter(search, true);
-            if (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_THEME) {
+            if (searchInProperty.getValue() == ProgConst.MEDIA_SEARCH_THEME_OR_PATH) {
                 return FilterCheck.check(filter, historyData.getTheme());
-            } else if (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL) {
+            } else if (searchInProperty.getValue() == ProgConst.MEDIA_SEARCH_TITEL_OR_NAME) {
                 return FilterCheck.check(filter, historyData.getTitle());
             } else {
                 return FilterCheck.check(filter, historyData.getTheme()) ||

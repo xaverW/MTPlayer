@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.configdialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.gui.configpanes.PaneMediaConfig;
 import de.p2tools.mtplayer.gui.configpanes.PaneMediaDataPath;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediadialog.PaneDialogMedia;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
 import javafx.scene.control.TitledPane;
@@ -57,11 +58,18 @@ public class ControllerMedia extends PAccordionPane {
 
         paneMediaConfig = new PaneMediaConfig(stage);
         paneMediaConfig.make(result);
+
         panePathIntern = new PaneMediaDataPath(stage, false);
         panePathIntern.make(result);
+
         panePathExtern = new PaneMediaDataPath(stage, true);
         panePathExtern.make(result);
-        paneDialogMedia = new PaneDialogMedia(stage);
+
+        MediaDataDto mediaDataDtoMedia = new MediaDataDto();
+        mediaDataDtoMedia.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_MEDIA;
+        mediaDataDtoMedia.buildSearchFrom = ProgConfig.DIALOG_BUILD_SEARCH_FROM_FOR_MEDIA;
+        mediaDataDtoMedia.searchInWhat = ProgConfig.DIALOG_SEARCH_IN_WHAT_FOR_MEDIA;
+        paneDialogMedia = new PaneDialogMedia(stage, mediaDataDtoMedia);
         paneDialogMedia.make(result);
 
         return result;

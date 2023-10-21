@@ -16,15 +16,14 @@
 
 package de.p2tools.mtplayer.gui.mediadialog;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.alert.PAlert;
 import javafx.application.Platform;
-import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
@@ -38,9 +37,9 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PaneDialogAbo extends PaneDialog {
+public class PaneDialogAbo extends PaneDialogScrollPane {
 
-    private final boolean abo;
+    //    private final boolean aboNotHistory;
     private final HistoryList list;
     private final Stage stage;
     private final FilteredList<HistoryData> filteredList;
@@ -48,30 +47,32 @@ public class PaneDialogAbo extends PaneDialog {
 
     private ProgData progData = ProgData.getInstance();
 
-    public PaneDialogAbo(Stage stage, String searchThemeOrg, String searchTitelOrg, StringProperty searchStringProp, boolean abo) {
-        super(searchThemeOrg, searchTitelOrg, searchStringProp, false, abo);
+    public PaneDialogAbo(Stage stage, MediaDataDto mediaDataDto) {
+        // nur im MediaDialog
+        super(mediaDataDto);
         this.stage = stage;
-        this.abo = abo;
-        if (abo) {
+        if (mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_ABO) {
             list = progData.historyListAbos;
-            textSearch = new Text("Abos, suchen im: " +
-                    (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL ?
-                            "Titel des Abos" : "Thema oder Titel des Abos"));
             textSearch.setFont(Font.font(null, FontWeight.BOLD, -1));
             textSearch.getStyleClass().add("downloadGuiMediaText");
-            ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> textSearch.setText("Abos, suchen im: " +
-                    (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL ?
+
+            textSearch = new Text("Abos, suchen im: " +
+                    (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_TITEL_OR_NAME ?
+                            "Titel des Abos" : "Thema oder Titel des Abos"));
+            mediaDataDto.searchInWhat.addListener((u, o, n) -> textSearch.setText("Abos, suchen im: " +
+                    (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_TITEL_OR_NAME ?
                             "Titel des Abos" : "Thema oder Titel des Abos")));
 
         } else {
             list = progData.historyList;
-            textSearch = new Text("History, suchen im: " +
-                    (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL ?
-                            "Titel des History-Films" : "Thema oder Titel des History-Films"));
             textSearch.setFont(Font.font(null, FontWeight.BOLD, -1));
             textSearch.getStyleClass().add("downloadGuiMediaText");
-            ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> textSearch.setText("History, suchen im: " +
-                    (ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.getValue() == ProgConst.MEDIA_COLLECTION_SEARCH_TITEL ?
+
+            textSearch = new Text("History, suchen im: " +
+                    (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_TITEL_OR_NAME ?
+                            "Titel des History-Films" : "Thema oder Titel des History-Films"));
+            mediaDataDto.searchInWhat.addListener((u, o, n) -> textSearch.setText("History, suchen im: " +
+                    (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_TITEL_OR_NAME ?
                             "Titel des History-Films" : "Thema oder Titel des History-Films")));
         }
         this.filteredList = new FilteredList<>(list, p -> true);
@@ -85,10 +86,10 @@ public class PaneDialogAbo extends PaneDialog {
 
     @Override
     void initTable() {
-        tableAbo.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-        tableAbo.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        tableAbo.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        tableAbo.setEditable(true);
+        tableAboOrHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
+        tableAboOrHistory.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tableAboOrHistory.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        tableAboOrHistory.setEditable(true);
 
         final TableColumn<HistoryData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
@@ -104,45 +105,46 @@ public class PaneDialogAbo extends PaneDialog {
         final TableColumn<HistoryData, String> pathColumn = new TableColumn<>("Url");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
 
-        themeColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(20.0 / 100));
-        titleColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(50.0 / 100));
-        dateColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(15.0 / 100));
-        pathColumn.prefWidthProperty().bind(tableAbo.widthProperty().multiply(14.0 / 100));
+        themeColumn.prefWidthProperty().bind(tableAboOrHistory.widthProperty().multiply(20.0 / 100));
+        titleColumn.prefWidthProperty().bind(tableAboOrHistory.widthProperty().multiply(50.0 / 100));
+        dateColumn.prefWidthProperty().bind(tableAboOrHistory.widthProperty().multiply(15.0 / 100));
+        pathColumn.prefWidthProperty().bind(tableAboOrHistory.widthProperty().multiply(14.0 / 100));
 
-        tableAbo.getColumns().addAll(themeColumn, titleColumn, dateColumn, pathColumn);
+        tableAboOrHistory.getColumns().addAll(themeColumn, titleColumn, dateColumn, pathColumn);
 
-        tableAbo.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
+        tableAboOrHistory.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
             setTableSel(dataNew);
         });
-        tableAbo.setOnMousePressed(m -> {
+        tableAboOrHistory.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 ArrayList<HistoryData> historyDataArrayList = new ArrayList<>();
-                historyDataArrayList.addAll(tableAbo.getSelectionModel().getSelectedItems());
+                historyDataArrayList.addAll(tableAboOrHistory.getSelectionModel().getSelectedItems());
                 if (historyDataArrayList.isEmpty()) {
                     PAlert.showInfoNoSelection();
 
                 } else {
                     ContextMenu contextMenu =
-                            new PaneHistoryContextMenu(stage, historyDataArrayList, !abo).getContextMenu();
-                    tableAbo.setContextMenu(contextMenu);
+                            new PaneHistoryContextMenu(stage, historyDataArrayList,
+                                    mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_HISTORY).getContextMenu();
+                    tableAboOrHistory.setContextMenu(contextMenu);
                 }
             }
         });
-        tableAbo.setRowFactory(tv -> {
+        tableAboOrHistory.setRowFactory(tv -> {
             TableRow<HistoryData> row = new TableRow<>();
             row.hoverProperty().addListener((observable) -> {
                 final HistoryData historyData = row.getItem();
                 if (row.isHover() && historyData != null) {
                     setTableSel(historyData);
                 } else {
-                    setTableSel(tableAbo.getSelectionModel().getSelectedItem());
+                    setTableSel(tableAboOrHistory.getSelectionModel().getSelectedItem());
                 }
             });
             return row;
         });
 
-        sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());
-        tableAbo.setItems(sortedList);
+        sortedList.comparatorProperty().bind(tableAboOrHistory.comparatorProperty());
+        tableAboOrHistory.setItems(sortedList);
     }
 
     private void setTableSel(HistoryData historyData) {
@@ -173,7 +175,8 @@ public class PaneDialogAbo extends PaneDialog {
 
     @Override
     public void filter() {
-        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateHistoryData(txtSearch.getText()));
+        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateHistoryData(
+                mediaDataDto.searchInWhat, txtSearch.getText()));
         lblHits.setText(filteredList.size() + "");
     }
 }

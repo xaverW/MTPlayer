@@ -42,6 +42,7 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
     private final List<MediaData> undoMediaDataInternal = new ArrayList<>();
 
     public MediaCollectionDataList() {
+        // Liste der Mediensammlungen
         super(FXCollections.observableArrayList());
     }
 

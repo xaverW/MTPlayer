@@ -14,10 +14,10 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.mediacleaning;
+package de.p2tools.mtplayer.gui.mediacleaningdialog;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -36,23 +36,24 @@ public class PaneCleaningConfigController {
 
     private final ProgData progData;
     private final Stage stage;
-    private boolean media;
+    private final MediaDataDto mediaDataDto;
 
     private final P2ToggleSwitch tglExact = new P2ToggleSwitch("Exakt den Begriff suchen");
     private final P2ToggleSwitch tglClean = new P2ToggleSwitch("Putzen");
-    private final P2ToggleSwitch tglAndOr = new P2ToggleSwitch("Verknüpfen mit UND [sonst ODER]");
-    private final P2ToggleSwitch tglNum = new P2ToggleSwitch("Zahlen entfernen: 20, 20.");
-    private final P2ToggleSwitch tglDate = new P2ToggleSwitch("Datum entfernen: 20.03.2023");
-    private final P2ToggleSwitch tglClip = new P2ToggleSwitch("Klammern entfernen: [], {}, ()");
-    private final P2ToggleSwitch tglList = new P2ToggleSwitch("Cleaning Liste anwenden");
+    private final P2ToggleSwitch tglList = new P2ToggleSwitch("Zusätzlich Cleaning-Liste anwenden");
+    private final P2ToggleSwitch tglAndOr = new P2ToggleSwitch("Suchbegriffe verknüpfen mit UND [sonst ODER]");
 
-    public PaneCleaningConfigController(Stage stage, boolean media) {
+    public PaneCleaningConfigController(Stage stage, MediaDataDto mediaDataDto) {
         this.stage = stage;
-        this.media = media;
         progData = ProgData.getInstance();
+        this.mediaDataDto = mediaDataDto;
     }
 
     public void close() {
+        tglExact.selectedProperty().unbindBidirectional(mediaDataDto.cleaningExact);
+        tglClean.selectedProperty().unbindBidirectional(mediaDataDto.cleaning);
+        tglAndOr.selectedProperty().unbindBidirectional(mediaDataDto.cleaningAndOr);
+        tglList.selectedProperty().unbindBidirectional(mediaDataDto.cleaningList);
     }
 
     public AnchorPane makePane() {
@@ -71,29 +72,16 @@ public class PaneCleaningConfigController {
 
 
     private void initPane() {
-        tglExact.selectedProperty().bindBidirectional(media ? ProgConfig.GUI_MEDIA_CLEAN_EXACT_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_EXACT_ABO);
+        tglExact.selectedProperty().bindBidirectional(mediaDataDto.cleaningExact);
 
         tglClean.disableProperty().bind(tglExact.selectedProperty());
-        tglClean.selectedProperty().bindBidirectional(media ? ProgConfig.GUI_MEDIA_CLEAN_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_ABO);
+        tglClean.selectedProperty().bindBidirectional(mediaDataDto.cleaning);
 
         tglAndOr.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
-        tglAndOr.selectedProperty().bindBidirectional(media ? ProgConfig.GUI_MEDIA_CLEAN_AND_OR_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_AND_OR_ABO);
-
-        tglNum.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
-        tglNum.selectedProperty().bindBidirectional(media ?
-                ProgConfig.GUI_MEDIA_CLEAN_NUMBER_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_NUMBER_ABO);
-
-        tglDate.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
-        tglDate.selectedProperty().bindBidirectional(media ?
-                ProgConfig.GUI_MEDIA_CLEAN_DATE_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_DATE_ABO);
-
-        tglClip.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
-        tglClip.selectedProperty().bindBidirectional(media ?
-                ProgConfig.GUI_MEDIA_CLEAN_CLIP_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_CLIP_ABO);
+        tglAndOr.selectedProperty().bindBidirectional(mediaDataDto.cleaningAndOr);
 
         tglList.disableProperty().bind(tglExact.selectedProperty().or(tglClean.selectedProperty().not()));
-        tglList.selectedProperty().bindBidirectional(media ?
-                ProgConfig.GUI_MEDIA_CLEAN_LIST_MEDIA : ProgConfig.GUI_MEDIA_CLEAN_LIST_ABO);
+        tglList.selectedProperty().bindBidirectional(mediaDataDto.cleaningList);
     }
 
     private void addGrid(VBox vBox) {
@@ -105,8 +93,8 @@ public class PaneCleaningConfigController {
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
         vBox.getChildren().addAll(gridPane);
 
-        //Suchen was
-        if (media) {
+        //Suchen was: Medien/Abo
+        if (mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_MEDIA) {
             Text text = new Text("Suche in der ");
             text.setFont(Font.font(null, FontWeight.BOLD, -1));
             text.getStyleClass().add("downloadGuiMediaText");
@@ -136,13 +124,8 @@ public class PaneCleaningConfigController {
 
         gridPane.add(new Label(), 0, ++row);
         gridPane.add(tglClean, 0, ++row);
-
         ++row;
-        ++row;
-        gridPane.add(tglAndOr, 0, ++row);
-        gridPane.add(tglNum, 0, ++row);
-        gridPane.add(tglDate, 0, ++row);
-        gridPane.add(tglClip, 0, ++row);
         gridPane.add(tglList, 0, ++row);
+        gridPane.add(tglAndOr, 0, ++row);
     }
 }

@@ -53,7 +53,6 @@ public class CleaningFactory {
             /*Sender*/
     };
 
-
     private CleaningFactory() {
     }
 }

@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.infoPane;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
@@ -78,7 +79,10 @@ public class FilmInfoController extends P2ClosePaneH {
     private void initInfoPane() {
         paneFilmInfo = new PaneFilmInfo(ProgConfig.FILM_GUI_INFO_DIVIDER);
         paneButton = new PaneFilmButton();
-        paneMedia = new PaneMedia();
+        MediaDataDto mDtoMedia = new MediaDataDto();
+        MediaDataDto mDtoAbo = new MediaDataDto();
+        initDto(mDtoMedia, mDtoAbo);
+        paneMedia = new PaneMedia(mDtoMedia, mDtoAbo);
         tabFilmInfo = new Tab("Beschreibung");
         tabFilmInfo.setClosable(false);
         tabButton = new Tab("Startbutton");
@@ -111,6 +115,24 @@ public class FilmInfoController extends P2ClosePaneH {
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> setTabs());
 
         setTabs();
+    }
+
+    private void initDto(MediaDataDto mediaDataDtoMedia, MediaDataDto mediaDataDtoAbo) {
+        mediaDataDtoMedia.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_MEDIA;
+        mediaDataDtoMedia.buildSearchFrom = ProgConfig.INFO_FILM_BUILD_SEARCH_FROM_FOR_MEDIA;
+        mediaDataDtoMedia.searchInWhat = ProgConfig.INFO_FILM_SEARCH_IN_WHAT_FOR_MEDIA;
+        mediaDataDtoMedia.cleaning = ProgConfig.INFO_FILM_CLEAN_MEDIA;
+        mediaDataDtoMedia.cleaningExact = ProgConfig.INFO_FILM_CLEAN_EXACT_MEDIA;
+        mediaDataDtoMedia.cleaningAndOr = ProgConfig.INFO_FILM_CLEAN_AND_OR_MEDIA;
+        mediaDataDtoMedia.cleaningList = ProgConfig.INFO_FILM_CLEAN_LIST_MEDIA;
+
+        mediaDataDtoAbo.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_ABO;
+        mediaDataDtoAbo.buildSearchFrom = ProgConfig.INFO_FILM_BUILD_SEARCH_FROM_FOR_ABO;
+        mediaDataDtoAbo.searchInWhat = ProgConfig.INFO_FILM_SEARCH_IN_WHAT_FOR_ABO;
+        mediaDataDtoAbo.cleaning = ProgConfig.INFO_FILM_CLEAN_ABO;
+        mediaDataDtoAbo.cleaningExact = ProgConfig.INFO_FILM_CLEAN_EXACT_ABO;
+        mediaDataDtoAbo.cleaningAndOr = ProgConfig.INFO_FILM_CLEAN_AND_OR_ABO;
+        mediaDataDtoAbo.cleaningList = ProgConfig.INFO_FILM_CLEAN_LIST_ABO;
     }
 
     private void setDialogInfo() {

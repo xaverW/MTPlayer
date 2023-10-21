@@ -107,9 +107,6 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_ABO = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_MEDIA = new SimpleIntegerProperty(-1);
 
-    // MediaDialog, Dialog nach Start immer gleich öffnen
-    public static BooleanProperty SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA = new SimpleBooleanProperty(true);
-
     // MediaDB
     public static StringProperty MEDIA_DIALOG_SIZE = addStrProp("media-dialog-size", "800:700");
     public static StringProperty MEDIA_DB_SUFFIX = addStrProp("media-db-suffix");
@@ -247,25 +244,47 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "950:600");
     public static StringProperty DOWNLOAD_ONLY_STOP_DIALOG_SIZE = addStrProp("download-only-stop-dialog-size", "600:400");
 
-    //Gui Media (Search) Dialog
-    public static IntegerProperty GUI_MEDIA_BUILD_SEARCH_MEDIA = addIntProp("gui-media-build-search-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //aus was der Suchbegriff gebaut wird: T/Th/TT
-    public static IntegerProperty GUI_MEDIA_BUILD_SEARCH_ABO = addIntProp("gui-media-build-search-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //aus was der Suchbegriff gebaut wird: T/Th/TT
-    public static IntegerProperty GUI_MEDIA_SEARCH_IN_MEDIA = addIntProp("gui-media-search-in-media", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //wo bei Medien gesucht wird: T/Th/TT
-    public static IntegerProperty GUI_MEDIA_SEARCH_IN_ABO = addIntProp("gui-media-search-in-abo", ProgConst.MEDIA_COLLECTION_SEARCH_TITEL); //wo bei Abos gesucht wird: T/Th/TT
-    public static BooleanProperty GUI_MEDIA_CLEAN_MEDIA = addBoolProp("gui-media-clean-media", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_ABO = addBoolProp("gui-media-clean-abo", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_EXACT_MEDIA = addBoolProp("gui-media-clean-exact-media", Boolean.FALSE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_EXACT_ABO = addBoolProp("gui-media-clean-exact-abo", Boolean.FALSE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_AND_OR_MEDIA = addBoolProp("gui-media-clean-and-or-media", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_AND_OR_ABO = addBoolProp("gui-media-clean-and-or-abo", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_NUMBER_MEDIA = addBoolProp("gui-media-clean-number-media", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_NUMBER_ABO = addBoolProp("gui-media-clean-number-abo", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_DATE_MEDIA = addBoolProp("gui-media-clean-date-media", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_DATE_ABO = addBoolProp("gui-media-clean-date-abo", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_CLIP_MEDIA = addBoolProp("gui-media-clean-clip-media", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_CLIP_ABO = addBoolProp("gui-media-clean-clip-abo", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_LIST_MEDIA = addBoolProp("gui-media-clean-list-media", Boolean.TRUE);
-    public static BooleanProperty GUI_MEDIA_CLEAN_LIST_ABO = addBoolProp("gui-media-clean-list-abo", Boolean.TRUE);
+    // ===================== MEDIA ===================================
+    // Gui Media Search -> Infobereich Film
+    public static IntegerProperty INFO_FILM_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("info-film-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty INFO_FILM_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("info-film-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static BooleanProperty INFO_FILM_CLEAN_MEDIA = addBoolProp("info-film-clean-media", Boolean.TRUE);
+    public static BooleanProperty INFO_FILM_CLEAN_EXACT_MEDIA = addBoolProp("info-film-clean-exact-media", Boolean.FALSE);
+    public static BooleanProperty INFO_FILM_CLEAN_AND_OR_MEDIA = addBoolProp("info-film-clean-and-or-media", Boolean.FALSE);
+    public static BooleanProperty INFO_FILM_CLEAN_LIST_MEDIA = addBoolProp("info-film-clean-list-media", Boolean.TRUE);
+
+    public static IntegerProperty INFO_FILM_BUILD_SEARCH_FROM_FOR_ABO = addIntProp("info-film-build-search-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty INFO_FILM_SEARCH_IN_WHAT_FOR_ABO = addIntProp("info-film-search-in-what-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static BooleanProperty INFO_FILM_CLEAN_ABO = addBoolProp("info-film-clean-abo", Boolean.TRUE);
+    public static BooleanProperty INFO_FILM_CLEAN_EXACT_ABO = addBoolProp("info-film-clean-exact-abo", Boolean.FALSE);
+    public static BooleanProperty INFO_FILM_CLEAN_AND_OR_ABO = addBoolProp("info-film-clean-and-or-abo", Boolean.FALSE);
+    public static BooleanProperty INFO_FILM_CLEAN_LIST_ABO = addBoolProp("info-film-clean-list-abo", Boolean.TRUE);
+
+    // Gui Media Search -> Infobereich Download
+    public static IntegerProperty INFO_DOWNLOAD_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("info-download-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty INFO_DOWNLOAD_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("info-download-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static BooleanProperty INFO_DOWNLOAD_CLEAN_MEDIA = addBoolProp("info-download-clean-media", Boolean.TRUE);
+    public static BooleanProperty INFO_DOWNLOAD_CLEAN_EXACT_MEDIA = addBoolProp("info-download-clean-exact-media", Boolean.FALSE);
+    public static BooleanProperty INFO_DOWNLOAD_CLEAN_AND_OR_MEDIA = addBoolProp("info-download-clean-and-or-media", Boolean.FALSE);
+    public static BooleanProperty INFO_DOWNLOAD_CLEAN_LIST_MEDIA = addBoolProp("info-download-clean-list-media", Boolean.TRUE);
+
+    public static IntegerProperty INFO_DOWNLOAD_BUILD_SEARCH_FROM_FOR_ABO = addIntProp("info-download-build-search-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty INFO_DOWNLOAD_SEARCH_IN_WHAT_FOR_ABO = addIntProp("info-download-search-in-what-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static BooleanProperty INFO_DOWNLOAD_CLEAN_ABO = addBoolProp("info-download-clean-abo", Boolean.TRUE);
+    public static BooleanProperty INFO_DOWNLOAD_CLEAN_EXACT_ABO = addBoolProp("info-download-clean-exact-abo", Boolean.FALSE);
+    public static BooleanProperty INFO_DOWNLOAD_CLEAN_AND_OR_ABO = addBoolProp("info-download-clean-and-or-abo", Boolean.FALSE);
+    public static BooleanProperty INFO_DOWNLOAD_CLEAN_LIST_ABO = addBoolProp("info-download-clean-list-abo", Boolean.TRUE);
+
+    // Gui Media Search -> MediaDialog
+    public static IntegerProperty DIALOG_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("dialog-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty DIALOG_BUILD_SEARCH_FROM_FOR_ABO = addIntProp("dialog-build-search-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty DIALOG_BUILD_SEARCH_FROM_FOR_HISTORY = addIntProp("dialog-build-search-for-history", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+
+    public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("dialog-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_ABO = addIntProp("dialog-search-in-what-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_HISTORY = addIntProp("dialog-search-in-what-for-history", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    // ========================================================
+
     public static StringProperty GUI_MEDIA_CONFIG_DIALOG_SIZE = addStrProp("gui-media-config-dialog-size", "800:700");
 
     // Downloadchart

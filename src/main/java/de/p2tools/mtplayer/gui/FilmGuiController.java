@@ -335,7 +335,7 @@ public class FilmGuiController extends AnchorPane {
         if (ProgConfig.FILM_GUI_DIVIDER_ON.getValue()) {
             boundSplitPaneDivPos = true;
             if (splitPane.getItems().size() != 2) {
-                //erst mal splitPane einrichten, dass Tabelle und Infos angezeigt werden
+                // erst mal splitPane einrichten, dass Tabelle und Infos angezeigt werden
                 splitPane.getItems().clear();
                 splitPane.getItems().addAll(scrollPaneTableFilm, filmInfoController);
                 SplitPane.setResizableWithParent(filmInfoController, false);

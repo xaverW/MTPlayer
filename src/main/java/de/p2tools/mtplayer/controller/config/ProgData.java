@@ -92,6 +92,7 @@ public class ProgData {
     public AboGuiController aboGuiController = null; // Tab mit den Abos
     public AboFilterController aboFilterController = null;
     public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
+    public CheckForNewFilmlist checkForNewFilmlist;
     public final ChartData chartData;
     public final ProgTray progTray;
 
@@ -104,23 +105,19 @@ public class ProgData {
     public FilmListMTP filmListFiltered; // Filmliste, wie im TabFilme angezeigt
 
     public DownloadList downloadList; // Filme die als "Download" geladen werden sollen
-    //    public DownloadList downloadListButton; // Filme die über "Tab Filme" als Button/Film abspielen, gestartet werden
     public AboList aboList;
     public BlackList filmListFilter;
     public BlackList blackList;
     public CleaningDataList cleaningDataListMedia;
     public CleaningDataList cleaningDataListPropose;
     public SetDataList setDataList;
-    public MediaDataList mediaDataList;
-    public MediaCollectionDataList mediaCollectionDataList = null;
-
     public ReplaceList replaceList;
 
+    public MediaDataList mediaDataList;
+    public MediaCollectionDataList mediaCollectionDataList = null;
     public HistoryList historyList; // alle angesehenen Filme
     public HistoryList historyListAbos; // erfolgreich geladenen Abos
     public HistoryList historyListBookmarks; // markierte Filme
-    public CheckForNewFilmlist checkForNewFilmlist;
-
     public ProposeList proposeList;
 
     private ProgData() {

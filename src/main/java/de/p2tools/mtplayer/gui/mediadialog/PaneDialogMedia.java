@@ -24,13 +24,12 @@ import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.tools.file.PFileUtils;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
@@ -38,23 +37,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
-public class PaneDialogMedia extends PaneDialog {
+public class PaneDialogMedia extends PaneDialogScrollPane {
 
     private final Stage stage;
     private final FilteredList<MediaData> filteredList;
     private final SortedList<MediaData> sortedList;
 
-    private ProgData progData = ProgData.getInstance();
+    private final ProgData progData = ProgData.getInstance();
+    private final MediaDataDto mediaDataDto;
 
-    public PaneDialogMedia(Stage stage) {
-        super("", "", new SimpleStringProperty(), true, false);
-        this.stage = stage;
-        this.filteredList = new FilteredList<>(progData.mediaDataList, p -> true);
-        this.sortedList = new SortedList<>(filteredList);
-    }
-
-    public PaneDialogMedia(Stage stage, String searchThemeOrg, String searchTitelOrg, StringProperty searchStringProp) {
-        super(searchThemeOrg, searchTitelOrg, searchStringProp, true, false);
+    public PaneDialogMedia(Stage stage, MediaDataDto mediaDataDto) {
+        // aus den Einstellungen -> Mediensammlung
+        // Dialog Mediensammlung aus Menü/Tabelle Kontextmenü
+        super(mediaDataDto);
+        this.mediaDataDto = mediaDataDto;
         this.stage = stage;
         this.filteredList = new FilteredList<>(progData.mediaDataList, p -> true);
         this.sortedList = new SortedList<>(filteredList);
@@ -167,7 +163,9 @@ public class PaneDialogMedia extends PaneDialog {
 
     @Override
     public void filter() {
-        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateMediaData(txtSearch.getText()));
+        filteredList.setPredicate(MediaSearchPredicateFactory.getPredicateMediaData(
+                mediaDataDto.searchInWhat, txtSearch.getText()));
+
         lblHits.setText(filteredList.size() + "");
     }
 

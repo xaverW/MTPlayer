@@ -21,19 +21,21 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningMediaFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
-import de.p2tools.mtplayer.gui.mediacleaning.MediaCleaningDialogController;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaSearchFactory;
+import de.p2tools.mtplayer.gui.mediacleaningdialog.MediaCleaningDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.PaneMediaContextMenu;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.mtfilm.film.FilmData;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -57,35 +59,37 @@ public class PaneMedia extends VBox {
     private final Button btnConfig = new Button();
     private final Button btnDialogMedia = new Button();
     private final Button btnClear = new Button();
-    private boolean searchIsNull = true;
-    private String searchTheme = "";
-    private String searchTitle = "";
 
     private final Label lblSumMedia = new Label();
     private final Label lblSumAbo = new Label();
+    private final MediaDataDto mediaDataDtoMedia;
+    private final MediaDataDto mediaDataDtoAbo;
 
     private final ProgData progData;
 
-    public PaneMedia() {
+    public PaneMedia(MediaDataDto mediaDataDtoMedia, MediaDataDto mediaDataDtoAbo) {
+        // sind die Media im Infobereich unter "Filme" und "Download", wird also 2x verwendet
+        this.mediaDataDtoMedia = mediaDataDtoMedia;
+        this.mediaDataDtoAbo = mediaDataDtoAbo;
         progData = ProgData.getInstance();
         init();
-        initMenu(true);
-        initMenu(false);
+        initMenu();
         initTableMedia();
         initTableAbo();
         initSearch();
     }
 
-    public void setSearchPredicate(FilmDataMTP filmDataMTP) {
+    public void setSearchPredicate(FilmData filmDataMTP) {
         if (!this.isVisible()) {
             return;
         }
 
-        this.searchIsNull = filmDataMTP == null;
-        this.searchTheme = searchIsNull ? "" : filmDataMTP.getTheme();
-        this.searchTitle = searchIsNull ? "" : filmDataMTP.getTitle();
-        setSearchString(true);
-        setSearchString(false);
+        mediaDataDtoMedia.searchTheme = filmDataMTP == null ? "" : filmDataMTP.getTheme().trim();
+        mediaDataDtoMedia.searchTitle = filmDataMTP == null ? "" : filmDataMTP.getTitle().trim();
+        mediaDataDtoAbo.searchTheme = filmDataMTP == null ? "" : filmDataMTP.getTheme().trim();
+        mediaDataDtoAbo.searchTitle = filmDataMTP == null ? "" : filmDataMTP.getTitle().trim();
+        setSearchStringMedia();
+        setSearchStringAbo();
     }
 
     public void setSearchPredicate(DownloadData downloadData) {
@@ -93,23 +97,26 @@ public class PaneMedia extends VBox {
             return;
         }
 
-        this.searchIsNull = downloadData == null;
-        this.searchTheme = searchIsNull ? "" : downloadData.getTheme();
-        this.searchTitle = searchIsNull ? "" : downloadData.getTitle();
-        setSearchString(true);
-        setSearchString(false);
+        mediaDataDtoMedia.searchTheme = downloadData == null ? "" : downloadData.getTheme().trim();
+        mediaDataDtoMedia.searchTitle = downloadData == null ? "" : downloadData.getTitle().trim();
+        mediaDataDtoAbo.searchTheme = downloadData == null ? "" : downloadData.getTheme().trim();
+        mediaDataDtoAbo.searchTitle = downloadData == null ? "" : downloadData.getTitle().trim();
+        setSearchStringMedia();
+        setSearchStringAbo();
     }
 
-    private void setSearchString(boolean media) {
-        if (searchIsNull) {
+    private void setSearchStringMedia() {
+        if (mediaDataDtoMedia.searchTheme.isEmpty() && mediaDataDtoMedia.searchTitle.isEmpty()) {
             return;
         }
+        txtSearchMedia.setText(CleaningMediaFactory.cleanSearchText(mediaDataDtoMedia));
+    }
 
-        if (media) {
-            txtSearchMedia.setText(CleaningMediaFactory.cleanSearchText(searchTheme, searchTitle, media));
-        } else {
-            txtSearchAbo.setText(CleaningMediaFactory.cleanSearchText(searchTheme, searchTitle, media));
+    private void setSearchStringAbo() {
+        if (mediaDataDtoAbo.searchTheme.isEmpty() && mediaDataDtoAbo.searchTitle.isEmpty()) {
+            return;
         }
+        txtSearchAbo.setText(CleaningMediaFactory.cleanSearchText(mediaDataDtoAbo));
     }
 
     private void init() {
@@ -125,15 +132,21 @@ public class PaneMedia extends VBox {
         HBox.setHgrow(txtSearchAbo, Priority.ALWAYS);
 
         // Suchen in den Medien
-        VBox vLeft = MediaSearchFactory.getSearchMedia(lblSumMedia, true);
+        VBox vLeft = MediaSearchFactory.getSearchVbox(mediaDataDtoMedia, lblSumMedia, true);
         vLeft.getChildren().add(tableMedia);
-        VBox vRight = MediaSearchFactory.getSearchAbo(lblSumAbo, true, true);
+        VBox vRight = MediaSearchFactory.getSearchVbox(mediaDataDtoAbo, lblSumAbo, true);
         vRight.getChildren().add(tableAbo);
 
-        ProgConfig.GUI_MEDIA_SEARCH_IN_MEDIA.addListener((u, o, n) -> filter(true));
-        ProgConfig.GUI_MEDIA_SEARCH_IN_ABO.addListener((u, o, n) -> filter(false));
-        ProgConfig.GUI_MEDIA_BUILD_SEARCH_MEDIA.addListener((u, o, n) -> setSearchString(true));
-        ProgConfig.GUI_MEDIA_BUILD_SEARCH_ABO.addListener((u, o, n) -> setSearchString(false));
+        mediaDataDtoMedia.searchInWhat.addListener((u, o, n) -> filter(mediaDataDtoMedia));
+        mediaDataDtoAbo.searchInWhat.addListener((u, o, n) -> filter(mediaDataDtoAbo));
+        mediaDataDtoMedia.buildSearchFrom.addListener((u, o, n) -> {
+            setSearchStringMedia();
+            filter(mediaDataDtoMedia);
+        });
+        mediaDataDtoAbo.buildSearchFrom.addListener((u, o, n) -> {
+            setSearchStringAbo();
+            filter(mediaDataDtoAbo);
+        });
 
         tableMedia.setStyle("-fx-border-width: 1px;");
         tableMedia.setStyle("-fx-border-color: -text-color-blue;");
@@ -150,47 +163,23 @@ public class PaneMedia extends VBox {
         super.getChildren().addAll(hBoxTop, splitPane);
     }
 
-    private void initMenu(boolean media) {
-        btnConfig.setTooltip(new Tooltip("Einstellungen anzeigen:\n" +
-                " -> linke Maustaste: Mediensammlung voreingestellt,\n" +
-                " -> rechte Maustaste: Abos voreingestellt"));
+    private void initMenu() {
+        btnConfig.setTooltip(new Tooltip("Einstellungen anzeigen"));
         btnConfig.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_EDIT.getImageView());
         btnConfig.setOnAction(a -> {
-            new MediaCleaningDialogController(true);
-            setSearchString(true);
-            setSearchString(false);
-        });
-        btnConfig.setOnMouseClicked(e -> {
-            if (e.getButton() == MouseButton.SECONDARY) {
-                new MediaCleaningDialogController(false);
-                setSearchString(true);
-                setSearchString(false);
-            }
+            new MediaCleaningDialogController(mediaDataDtoMedia, mediaDataDtoAbo);
+            setSearchStringMedia();
+            setSearchStringAbo();
         });
 
-        btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen:\n" +
-                " -> linke Maustaste: Mediensammlung voreingestellt,\n" +
-                " -> rechte Maustaste: Abos voreingestellt"));
+        btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen"));
         btnDialogMedia.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MENU.getImageView());
         btnDialogMedia.setOnAction(a -> {
-            new MediaDialogController(
-                    searchTheme,
-                    searchIsNull ? txtSearchMedia.getText() : searchTitle, true);
-            setSearchString(true);
-            setSearchString(false);
-            filter(true);// wegen Dialog, wenn vorher schon leer
-            filter(false);
-        });
-        btnDialogMedia.setOnMouseClicked(e -> {
-            if (e.getButton() == MouseButton.SECONDARY) {
-                new MediaDialogController(
-                        searchTheme,
-                        searchIsNull ? txtSearchAbo.getText() : searchTitle, false);
-                setSearchString(true);
-                setSearchString(false);
-                filter(true);// wegen Dialog, wenn vorher schon leer
-                filter(false);
-            }
+            new MediaDialogController(mediaDataDtoMedia);
+            setSearchStringMedia();
+            setSearchStringAbo();
+            filter(mediaDataDtoMedia);// wegen Dialog, wenn vorher schon leer
+            filter(mediaDataDtoAbo);
         });
 
         btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
@@ -204,13 +193,14 @@ public class PaneMedia extends VBox {
     private void initSearch() {
         lblSumMedia.setText(progData.mediaDataList.getFilteredList().size() + "");
         lblSumAbo.setText(progData.historyListAbos.getFilteredList().size() + "");
+
         progData.mediaDataList.getFilteredList().addListener((ListChangeListener<MediaData>) c ->
                 Platform.runLater(() -> lblSumMedia.setText(progData.mediaDataList.getFilteredList().size() + "")));
         progData.historyListAbos.getFilteredList().addListener((ListChangeListener<HistoryData>) c ->
                 Platform.runLater(() -> lblSumAbo.setText(progData.historyListAbos.getFilteredList().size() + "")));
 
         txtSearchMedia.textProperty().addListener((u, o, n) -> {
-            filter(true);
+            filter(mediaDataDtoMedia);
         });
         txtSearchMedia.setOnMouseClicked(event -> {
             if (event.getClickCount() > 1) {
@@ -219,7 +209,7 @@ public class PaneMedia extends VBox {
             }
         });
         txtSearchAbo.textProperty().addListener((u, o, n) -> {
-            filter(false);
+            filter(mediaDataDtoAbo);
         });
         txtSearchAbo.setOnMouseClicked(event -> {
             if (event.getClickCount() > 1) {
@@ -229,13 +219,15 @@ public class PaneMedia extends VBox {
         });
     }
 
-    void filter(boolean media) {
-        if (media) {
+    void filter(MediaDataDto mediaDataDto) {
+        if (mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_MEDIA) {
             progData.mediaDataList.filteredListSetPredicate(
-                    MediaSearchPredicateFactory.getPredicateMediaData(txtSearchMedia.getText()));
+                    MediaSearchPredicateFactory.getPredicateMediaData(
+                            mediaDataDtoMedia.searchInWhat, txtSearchMedia.getText()));
         } else {
             progData.historyListAbos.filteredListSetPredicate(
-                    MediaSearchPredicateFactory.getPredicateHistoryData(txtSearchAbo.getText()));
+                    MediaSearchPredicateFactory.getPredicateHistoryData(
+                            mediaDataDtoAbo.searchInWhat, txtSearchAbo.getText()));
         }
     }
 
@@ -255,10 +247,8 @@ public class PaneMedia extends VBox {
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
         sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
 
-
         tableMedia.getColumns().addAll(nameColumn, pathColumn, sizeColumn);
         tableMedia.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-
 
         SortedList<MediaData> sortedList = progData.mediaDataList.getSortedList();
         sortedList.comparatorProperty().bind(tableMedia.comparatorProperty());

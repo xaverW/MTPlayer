@@ -14,11 +14,12 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.mediacleaning;
+package de.p2tools.mtplayer.gui.mediacleaningdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.propose.PaneCleaningList;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -35,19 +36,21 @@ public class MediaCleaningDialogController extends PDialogExtra {
 
     private final TabPane tabPane = new TabPane();
     private final Button btnOk = new Button("_Ok");
-    private final boolean media;
     private final ProgData progData;
 
     private PaneCleaningConfigController paneCleaningConfigControllerMedia;
     private PaneCleaningConfigController paneCleaningConfigControllerAbo;
     private PaneCleaningList paneCleaningList;
+    private final MediaDataDto mediaDataDtoMedia;
+    private final MediaDataDto mediaDataDtoAbo;
 
-    public MediaCleaningDialogController(boolean media) {
+    public MediaCleaningDialogController(MediaDataDto mediaDataDtoMedia, MediaDataDto mediaDataDtoAbo) {
         super(ProgData.getInstance().primaryStage, ProgConfig.GUI_MEDIA_CONFIG_DIALOG_SIZE, "Einstellungen",
                 true, false, DECO.NO_BORDER);
 
         this.progData = ProgData.getInstance();
-        this.media = media;
+        this.mediaDataDtoMedia = mediaDataDtoMedia;
+        this.mediaDataDtoAbo = mediaDataDtoAbo;
         init(true);
     }
 
@@ -78,14 +81,14 @@ public class MediaCleaningDialogController extends PDialogExtra {
             Tab tabConfig;
             Tab tabCleaningList;
 
-            paneCleaningConfigControllerMedia = new PaneCleaningConfigController(getStage(), true);
+            paneCleaningConfigControllerMedia = new PaneCleaningConfigController(getStage(), mediaDataDtoMedia);
             tabConfig = new Tab("Einstellungen Mediensammlung");
             tabConfig.setClosable(false);
             tabConfig.setContent(paneCleaningConfigControllerMedia.makePane());
             tabPane.getTabs().add(tabConfig);
 
-            paneCleaningConfigControllerAbo = new PaneCleaningConfigController(getStage(), false);
-            tabConfig = new Tab("Einstellungen Abos und History");
+            paneCleaningConfigControllerAbo = new PaneCleaningConfigController(getStage(), mediaDataDtoAbo);
+            tabConfig = new Tab("Einstellungen Abos");
             tabConfig.setClosable(false);
             tabConfig.setContent(paneCleaningConfigControllerAbo.makePane());
             tabPane.getTabs().add(tabConfig);
@@ -95,8 +98,6 @@ public class MediaCleaningDialogController extends PDialogExtra {
             tabCleaningList.setClosable(false);
             tabCleaningList.setContent(paneCleaningList.makePane());
             tabPane.getTabs().add(tabCleaningList);
-
-            tabPane.getSelectionModel().select(media ? 0 : 1);
         } catch (final Exception ex) {
             PLog.errorLog(962104652, ex);
         }

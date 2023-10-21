@@ -18,12 +18,11 @@ package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.PLog;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -34,42 +33,46 @@ import javafx.scene.layout.VBox;
 
 public class MediaDialogController extends PDialogExtra {
 
-    private TabPane tabPane = new TabPane();
-    private Tab tabMedia;
-    private Tab tabAbo;
-    private Tab tabHistory;
+    private final TabPane tabPane = new TabPane();
     private final Button btnOk = new Button("_Ok");
 
-    private final String searchTitelOrg;
-    private final String searchThemeOrg;
-
-    private final StringProperty searchStringProp = new SimpleStringProperty();
     private final ProgData progData = ProgData.getInstance();
 
     private PaneDialogMedia paneDialogMedia;
     private PaneDialogAbo paneDialogAbo;
-    private PaneDialogAbo paneHistory;
+    private PaneDialogAbo paneDialogHistory;
 
-    public MediaDialogController(String searchTheme, String searchTitel, boolean openMedia) {
+    private final MediaDataDto mediaDataDtoMedia;
+    private final MediaDataDto mediaDataDtoAbo;
+    private final MediaDataDto mediaDataDtoHistory;
+
+
+    public MediaDialogController(MediaDataDto mediaDataDto) {
+        // Aufruf mit Button aus dem Infobereich der Tabelle Filme/Download,
+        // also 2x möglich
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
                 true, false, DECO.BORDER);
 
-        this.searchThemeOrg = searchTheme.trim();
-        this.searchTitelOrg = searchTitel.trim();
-        searchStringProp.setValue(searchThemeOrg + " " + searchTitelOrg);
-        ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.setValue(openMedia);
-
+        this.mediaDataDtoMedia = mediaDataDto;
+        this.mediaDataDtoAbo = new MediaDataDto();
+        this.mediaDataDtoHistory = new MediaDataDto();
+        initDto();
         init(true);
     }
 
     public MediaDialogController(String searchTheme, String searchTitel) {
+        // Hauptmenü, Menüpunkt: "Mediensammlung",
+        // im Tab Filme/Downloads im Menü/Table Kontextmenü/ShorCut: "Film in Mediensammlung suchen"
+        // also 6x möglich
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
                 true, false, DECO.BORDER);
 
-        this.searchThemeOrg = searchTheme.trim();
-        this.searchTitelOrg = searchTitel.trim();
-        searchStringProp.setValue(searchTheme + " " + searchTitel);
-
+        this.mediaDataDtoMedia = new MediaDataDto();
+        this.mediaDataDtoAbo = new MediaDataDto();
+        this.mediaDataDtoHistory = new MediaDataDto();
+        mediaDataDtoMedia.searchTheme = searchTheme;
+        mediaDataDtoMedia.searchTitle = searchTitel;
+        initDto();
         init(true);
     }
 
@@ -77,50 +80,70 @@ public class MediaDialogController extends PDialogExtra {
     public void make() {
         initPanel();
         initAction();
-        setPane();
-        paneDialogMedia.filter(searchStringProp.getValueSafe());
-        paneDialogAbo.filter(searchStringProp.getValueSafe());
-        paneHistory.filter(searchStringProp.getValueSafe());
+        paneDialogMedia.filter(mediaDataDtoMedia.searchStringProp.getValueSafe());
+        paneDialogAbo.filter(mediaDataDtoAbo.searchStringProp.getValueSafe());
+        paneDialogHistory.filter(mediaDataDtoHistory.searchStringProp.getValueSafe());
     }
 
     @Override
     public void close() {
         paneDialogMedia.close();
         paneDialogAbo.close();
-        paneHistory.close();
-
-        progData.historyListAbos.filteredListSetPredFalse();
-        progData.mediaDataList.filterdListSetPredFalse();
+        paneDialogHistory.close();
         super.close();
+    }
+
+    private void initDto() {
+        mediaDataDtoMedia.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_MEDIA;
+        mediaDataDtoMedia.searchStringProp.setValue((mediaDataDtoMedia.searchTheme + " " + mediaDataDtoMedia.searchTitle).trim());
+
+        mediaDataDtoAbo.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_ABO;
+        mediaDataDtoAbo.searchTheme = mediaDataDtoMedia.searchTheme;
+        mediaDataDtoAbo.searchTitle = mediaDataDtoMedia.searchTitle;
+        mediaDataDtoAbo.searchStringProp.setValue(mediaDataDtoMedia.searchStringProp.getValueSafe());
+
+        mediaDataDtoHistory.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_HISTORY;
+        mediaDataDtoHistory.searchTheme = mediaDataDtoMedia.searchTheme;
+        mediaDataDtoHistory.searchTitle = mediaDataDtoMedia.searchTitle;
+        mediaDataDtoHistory.searchStringProp.setValue(mediaDataDtoMedia.searchStringProp.getValueSafe());
+
+        mediaDataDtoMedia.buildSearchFrom = ProgConfig.DIALOG_BUILD_SEARCH_FROM_FOR_MEDIA;
+        mediaDataDtoMedia.searchInWhat = ProgConfig.DIALOG_SEARCH_IN_WHAT_FOR_MEDIA;
+
+        mediaDataDtoAbo.buildSearchFrom = ProgConfig.DIALOG_BUILD_SEARCH_FROM_FOR_ABO;
+        mediaDataDtoAbo.searchInWhat = ProgConfig.DIALOG_SEARCH_IN_WHAT_FOR_ABO;
+
+        mediaDataDtoHistory.buildSearchFrom = ProgConfig.DIALOG_BUILD_SEARCH_FROM_FOR_HISTORY;
+        mediaDataDtoHistory.searchInWhat = ProgConfig.DIALOG_SEARCH_IN_WHAT_FOR_HISTORY;
     }
 
     private void initPanel() {
         try {
-            paneDialogMedia = new PaneDialogMedia(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp);
+            paneDialogMedia = new PaneDialogMedia(getStage(), mediaDataDtoMedia);
             paneDialogMedia.make();
 
-            paneDialogAbo = new PaneDialogAbo(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp, true);
+            paneDialogAbo = new PaneDialogAbo(getStage(), mediaDataDtoAbo);
             paneDialogAbo.make();
 
-            paneHistory = new PaneDialogAbo(getStage(), searchThemeOrg, searchTitelOrg, searchStringProp, false);
-            paneHistory.make();
+            paneDialogHistory = new PaneDialogAbo(getStage(), mediaDataDtoHistory);
+            paneDialogHistory.make();
 
-            tabMedia = new Tab("Mediensammlung");
+            Tab tabMedia = new Tab("Mediensammlung");
             tabMedia.setTooltip(new Tooltip("Hier wird der Inhalt der Mediensammlung angezeigt"));
             tabMedia.setClosable(false);
             tabMedia.setContent(paneDialogMedia);
             tabPane.getTabs().add(tabMedia);
 
-            tabAbo = new Tab("Erledigte Abos");
+            Tab tabAbo = new Tab("Erledigte Abos");
             tabAbo.setTooltip(new Tooltip("Hier werden erledigte Abos angezeigt"));
             tabAbo.setClosable(false);
             tabAbo.setContent(paneDialogAbo);
             tabPane.getTabs().add(tabAbo);
 
-            tabHistory = new Tab("History");
+            Tab tabHistory = new Tab("History");
             tabHistory.setTooltip(new Tooltip("Hier werden die bereits gesehenen Filme angezeigt"));
             tabHistory.setClosable(false);
-            tabHistory.setContent(paneHistory);
+            tabHistory.setContent(paneDialogHistory);
             tabPane.getTabs().add(tabHistory);
 
             getVBoxCont().setPadding(new Insets(0));
@@ -138,17 +161,5 @@ public class MediaDialogController extends PDialogExtra {
 
     private void initAction() {
         btnOk.setOnAction(a -> close());
-
-        tabPane.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
-            ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.setValue(tabPane.getSelectionModel().getSelectedItem().equals(tabMedia));
-        });
-    }
-
-    private void setPane() {
-        if (ProgConfig.SYSTEM_MEDIA_DIALOG_SEARCH_MEDIA.getValue()) {
-            tabPane.getSelectionModel().select(tabMedia);
-        } else {
-            tabPane.getSelectionModel().select(tabAbo);
-        }
     }
 }
