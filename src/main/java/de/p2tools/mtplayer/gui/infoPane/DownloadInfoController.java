@@ -35,7 +35,7 @@ public class DownloadInfoController extends P2ClosePaneH {
 
     private PaneFilmInfo paneFilmInfo;
     private PaneMedia paneMedia;
-    private PaneDownloadChart paneDownloadChart;
+    private PaneBandwidthChart paneBandwidthChart;
     private PaneDownloadInfo paneDownloadInfo;
     private Tab tabFilmInfo;
     private Tab tabMedia;
@@ -52,8 +52,8 @@ public class DownloadInfoController extends P2ClosePaneH {
         MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, DownloadInfoController.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                paneDownloadChart.searchInfos(MTPlayerController.paneShown == MTPlayerController.PANE_SHOWN.DOWNLOAD &&
-                        paneIsVisible(paneDownloadChart, ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON));
+                paneBandwidthChart.searchInfos(MTPlayerController.paneShown == MTPlayerController.PANE_SHOWN.DOWNLOAD &&
+                        paneIsVisible(paneBandwidthChart, ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON));
             }
         });
     }
@@ -64,7 +64,7 @@ public class DownloadInfoController extends P2ClosePaneH {
         MediaDataDto mDtoAbo = new MediaDataDto();
         initDto(mDtoMedia, mDtoAbo);
         paneMedia = new PaneMedia(mDtoMedia, mDtoAbo);
-        paneDownloadChart = new PaneDownloadChart(progData);
+        paneBandwidthChart = new PaneBandwidthChart(progData);
         paneDownloadInfo = new PaneDownloadInfo();
 
         tabFilmInfo = new Tab("Beschreibung");
@@ -173,7 +173,7 @@ public class DownloadInfoController extends P2ClosePaneH {
 
     private void dialogChart() {
         tabDownloadChart.setContent(null);
-        new InfoPaneDialog(paneDownloadChart, "Downloadchart",
+        new InfoPaneDialog(paneBandwidthChart, "Downloadchart",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON,
                 ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
@@ -211,7 +211,7 @@ public class DownloadInfoController extends P2ClosePaneH {
         if (ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON.getValue()) {
             tabPane.getTabs().remove(tabDownloadChart);
         } else {
-            tabDownloadChart.setContent(paneDownloadChart);
+            tabDownloadChart.setContent(paneBandwidthChart);
             if (!tabPane.getTabs().contains(tabDownloadChart)) {
                 tabPane.getTabs().add(i, tabDownloadChart);
             }

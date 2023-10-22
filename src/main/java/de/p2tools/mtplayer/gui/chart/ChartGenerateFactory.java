@@ -29,6 +29,11 @@ import javafx.scene.control.Label;
 import java.util.Set;
 
 public class ChartGenerateFactory {
+    public final static int GEN_CHART_SHOW_ALL = 0;
+    public final static int GEN_CHART_SHOW_DOWN = 1;
+    public final static int GEN_CHART_SHOW_SUM = 2;
+    public final static String CHART_LINE_NAME_SUM = "Summe";
+    public final static int POS_LINE_SUM = 0;
 
     private ChartGenerateFactory() {
     }
@@ -36,51 +41,74 @@ public class ChartGenerateFactory {
     public static synchronized void generateChartData(LineChart<Number, Number> lineChart, ChartData chartData) {
         // und jetzt die sichtbaren Daten eintragen
         ChartDataFactory.genActShowingTimeValues(chartData);
-        if (ProgConfig.DOWNLOAD_CHART_SEPARAT.getValue()) {
-            //für die Einzel-Charts
-            generateChartDataSeparated(lineChart, chartData);
-
-        } else {
-            //für das "Gesamt-Chart"
-            generateChartDataAll(lineChart, chartData);
-        }
+        generateChartSeries(chartData);
         colorChartName(lineChart, chartData);
     }
 
-    public static synchronized void generateChartDataSeparated(LineChart<Number, Number> lineChart, ChartData chartData) {
+    public static synchronized void generateChartSeries(ChartData chartData) {
         int countChartSeries = 0;
-        for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
-            if (!bandwidthData.isShowing() /*|| bandwidthData.isEmpty()*/) {
-                // hat dann keine sichtbaren Daten mehr
-                continue;
-            }
-
-            if (chartData.getChartSeriesList_SeparateCharts().size() <= countChartSeries) {
-                // dann eine neue einfügen
+        if (ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.getValue() == GEN_CHART_SHOW_ALL ||
+                ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.getValue() == GEN_CHART_SHOW_SUM) {
+            // SUMME anzeigen
+            if (chartData.getChartSeriesList().isEmpty()) {
+                // dann erst mal die für ALLE einfügen
                 final XYChart.Series<Number, Number> chartSeries =
-                        new XYChart.Series<>("", FXCollections.observableArrayList());
+                        new XYChart.Series<>(FXCollections.observableArrayList());
                 ChartDataFactory.initChartSeries(chartSeries);
-                chartData.getChartSeriesList_SeparateCharts().add(chartSeries);
+                chartData.getChartSeriesList().add(chartSeries);
             }
-
-            // und jetzt mit Daten füllen
-            final XYChart.Series<Number, Number> chartSeries =
-                    chartData.getChartSeriesList_SeparateCharts().get(countChartSeries);
-            fillData(chartData, bandwidthData, chartSeries);
+            fillSumDate(chartData);
+            chartData.getChartSeriesList().get(POS_LINE_SUM).setName(CHART_LINE_NAME_SUM);
+            Node line = chartData.getChartSeriesList().get(POS_LINE_SUM).getNode().lookup(".chart-series-line");
+            if (line != null) {
+                //set some styles
+                line.setStyle("-fx-stroke-width: 2px; -fx-effect: null; -fx-stroke-dash-array: 10 5 2 5;");
+            }
             ++countChartSeries;
+
+        } else if (!chartData.getChartSeriesList().isEmpty()) {
+            Node line = chartData.getChartSeriesList().get(POS_LINE_SUM).getNode().lookup(".chart-series-line");
+            if (line != null) {
+                //dann muss der Style gelöscht werden
+                line.setStyle("");
+            }
         }
 
-        int sumChartSeries = chartData.getChartSeriesList_SeparateCharts().size();
+        if (ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.getValue() == GEN_CHART_SHOW_ALL ||
+                ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.getValue() == GEN_CHART_SHOW_DOWN) {
+            // DOWNLOADS anzeigen
+            for (BandwidthData bandwidthData : chartData.getBandwidthDataList()) {
+                if (!bandwidthData.isShowing()) {
+                    // hat dann keine sichtbaren Daten mehr
+                    continue;
+                }
+
+                if (chartData.getChartSeriesList().size() <= countChartSeries) {
+                    // dann eine neue einfügen
+                    final XYChart.Series<Number, Number> chartSeries =
+                            new XYChart.Series<>("", FXCollections.observableArrayList());
+                    ChartDataFactory.initChartSeries(chartSeries);
+                    chartData.getChartSeriesList().add(chartSeries);
+                }
+
+                // und jetzt mit Daten füllen
+                final XYChart.Series<Number, Number> chartSeries =
+                        chartData.getChartSeriesList().get(countChartSeries);
+                fillDownloadData(chartData, bandwidthData, chartSeries);
+                ++countChartSeries;
+            }
+        }
+
+        int sumChartSeries = chartData.getChartSeriesList().size();
         if (sumChartSeries > countChartSeries) {
             //zu viele
-            chartData.getChartSeriesList_SeparateCharts().remove(countChartSeries, sumChartSeries);
+            chartData.getChartSeriesList().remove(countChartSeries, sumChartSeries);
         }
     }
 
-    private static synchronized void generateChartDataAll(LineChart<Number, Number> lineChart, ChartData chartData) {
+    private static synchronized void fillSumDate(ChartData chartData) {
         final double secondsPerPixel = chartData.getSecondsPerPixel();
         final double dataPerPixel = chartData.getDataPerPixel();
-
         for (int chartPos = 0; chartPos < BandwidthDataFactory.CHART_SUM_PIXEL; ++chartPos) {
             //0 ..... ChartFactory.MAX_CHART_DATA_PER_SCREEN-1
             long yValue = 0;
@@ -89,16 +117,13 @@ public class ChartGenerateFactory {
                 final long value = getValue(bandwidthData, chartPos, dataPerPixel);
                 yValue += value;
             }
-            setValues(chartData.getChartSeriesOneSumChart(), chartPos, yValue, actTimeMin);
+            setValues(chartData.getChartSeriesList().get(POS_LINE_SUM), chartPos, yValue, actTimeMin);
         }
     }
 
-    private static void fillData(ChartData chartData, BandwidthData bandwidthData, XYChart.Series<Number, Number> chartSeries) {
+    private static void fillDownloadData(ChartData chartData, BandwidthData bandwidthData, XYChart.Series<Number, Number> chartSeries) {
         final double secondsPerPixel = chartData.getSecondsPerPixel(); //nur vom Slider und den max. vorhandenen Daten abhängig
         final double dataPerPixel = chartData.getDataPerPixel();
-//        System.out.println("sPerPixel: " + secondsPerPixel);
-//        System.out.println("dPerPixel: " + dataPerPixel);
-
         chartSeries.setName(bandwidthData.getName());
         for (int chartPos = 0; chartPos < BandwidthDataFactory.CHART_SUM_PIXEL; ++chartPos) {
             // 0 == der aktuellste Wert und der steht am SCHLUSS!!
@@ -113,13 +138,6 @@ public class ChartGenerateFactory {
                 (BandwidthDataFactory.SHOW_MINUTES.getValue() ? 60.0 : 1.0);
     }
 
-    private static long getValue(BandwidthData bandwidthData, int chartPos, double dataPerPixel) {
-        int dataPos = (int) Math.round(BandwidthDataFactory.MAX_DATA - chartPos * dataPerPixel);
-        dataPos = Math.max(dataPos, 0);
-        dataPos = Math.min(dataPos, BandwidthDataFactory.MAX_DATA - 1);
-        return Math.round(bandwidthData.data[dataPos]);
-    }
-
     private static void setValues(final XYChart.Series<Number, Number> chartSeries, int chartPos, double yValue, double actTimeMin) {
         if (actTimeMin <= 0) {
             chartSeries.getData().get(chartPos).setYValue(0);
@@ -129,6 +147,13 @@ public class ChartGenerateFactory {
 
         chartSeries.getData().get(chartPos).setYValue(yValue / ProgData.getInstance().chartData.getyScale());
         chartSeries.getData().get(chartPos).setXValue(actTimeMin);
+    }
+
+    private static long getValue(BandwidthData bandwidthData, int chartPos, double dataPerPixel) {
+        int dataPos = (int) Math.round(BandwidthDataFactory.MAX_DATA - chartPos * dataPerPixel);
+        dataPos = Math.max(dataPos, 0);
+        dataPos = Math.min(dataPos, BandwidthDataFactory.MAX_DATA - 1);
+        return Math.round(bandwidthData.data[dataPos]);
     }
 
     private static synchronized void colorChartName(LineChart<Number, Number> lineChart, ChartData chartData) {

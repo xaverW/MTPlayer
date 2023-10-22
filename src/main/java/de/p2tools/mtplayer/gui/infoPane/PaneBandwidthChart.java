@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.chart.BandwidthDataFactory;
 import de.p2tools.mtplayer.gui.chart.ChartDataFactory;
 import de.p2tools.mtplayer.gui.chart.ChartFactory;
+import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Side;
@@ -31,22 +32,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-public class PaneDownloadChart extends AnchorPane {
+public class PaneBandwidthChart extends AnchorPane {
 
-    private BooleanProperty separatChartProp = ProgConfig.DOWNLOAD_CHART_SEPARAT;
-    private BooleanProperty chartOnlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING;
-    private BooleanProperty chartOnlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING;
+    private final BooleanProperty chartOnlyExistingProp = ProgConfig.DOWNLOAD_CHART_ONLY_EXISTING;
+    private final BooleanProperty chartOnlyRunningProp = ProgConfig.DOWNLOAD_CHART_ONLY_RUNNING;
     private final ProgData progData;
 
     private LineChart<Number, Number> lineChart = null;
     private ContextMenu cm = null;
 
-    public PaneDownloadChart(ProgData progData) {
+    public PaneBandwidthChart(ProgData progData) {
         this.progData = progData;
 
         initList();
         initCharts();
-        selectChartData();
     }
 
     private synchronized void initList() {
@@ -57,9 +56,9 @@ public class PaneDownloadChart extends AnchorPane {
         lineChart = new LineChart<>(ChartFactory.createXAxis(), ChartFactory.createYAxis());
         lineChart.getStyleClass().add("thick-chart");
         lineChart.setLegendSide(Side.RIGHT);
-        lineChart.setLegendVisible(true); // rechts die Anzeige der lines namen
+        lineChart.setLegendVisible(true); // rechts die Anzeige der lines Namen
         lineChart.setAnimated(false);
-        lineChart.setCreateSymbols(ProgData.debug ? true : false);
+        lineChart.setCreateSymbols(false);
         lineChart.setTitle("Downloads");
 
         lineChart.setOnMouseClicked(e -> {
@@ -72,20 +71,13 @@ public class PaneDownloadChart extends AnchorPane {
                 cm.show(lineChart, e.getScreenX(), e.getScreenY());
             }
         });
+        lineChart.setData(progData.chartData.getChartSeriesList());
 
         AnchorPane.setLeftAnchor(lineChart, 0.0);
         AnchorPane.setBottomAnchor(lineChart, 0.0);
         AnchorPane.setRightAnchor(lineChart, 0.0);
         AnchorPane.setTopAnchor(lineChart, 0.0);
         getChildren().add(lineChart);
-    }
-
-    private void selectChartData() {
-        if (separatChartProp.get()) {
-            lineChart.setData(progData.chartData.getChartSeriesList_SeparateCharts());
-        } else {
-            lineChart.setData(progData.chartData.getChartSeriesList_OneSumChart());
-        }
     }
 
     private synchronized void clearChart() {
@@ -126,11 +118,25 @@ public class PaneDownloadChart extends AnchorPane {
         HBox.setHgrow(slMaxTime, Priority.ALWAYS);
         CustomMenuItem cmiTime = new CustomMenuItem(hBox);
 
-
-        final CheckMenuItem chkAllDowns = new CheckMenuItem("jeden Download einzeln zeichnen und nicht alle zusammenfassen");
-        chkAllDowns.selectedProperty().bindBidirectional(separatChartProp);
-        chkAllDowns.setOnAction(e -> selectChartData());
-
+        ToggleGroup tg = new ToggleGroup();
+        final RadioMenuItem rbShowAll = new RadioMenuItem("Summe und alle Downloads anzeigen");
+        rbShowAll.setToggleGroup(tg);
+        rbShowAll.setSelected(ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.getValue() == ChartGenerateFactory.GEN_CHART_SHOW_ALL);
+        rbShowAll.setOnAction(e -> {
+            ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.setValue(ChartGenerateFactory.GEN_CHART_SHOW_ALL);
+        });
+        final RadioMenuItem rbShowDown = new RadioMenuItem("Nur Downloads anzeigen");
+        rbShowDown.setToggleGroup(tg);
+        rbShowDown.setSelected(ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.getValue() == ChartGenerateFactory.GEN_CHART_SHOW_DOWN);
+        rbShowDown.setOnAction(e -> {
+            ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.setValue(ChartGenerateFactory.GEN_CHART_SHOW_DOWN);
+        });
+        final RadioMenuItem rbShowSum = new RadioMenuItem("Nur Summe anzeigen");
+        rbShowSum.setToggleGroup(tg);
+        rbShowSum.setSelected(ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.getValue() == ChartGenerateFactory.GEN_CHART_SHOW_SUM);
+        rbShowSum.setOnAction(e -> {
+            ProgConfig.DOWNLOAD_CHART_SHOW_WHAT.setValue(ChartGenerateFactory.GEN_CHART_SHOW_SUM);
+        });
 
         final RadioMenuItem rbAll = new RadioMenuItem("alle Downloads immer anzeigen");
         final RadioMenuItem rbOnlyExisting = new RadioMenuItem("nur noch vorhandene Downloads anzeigen");
@@ -144,10 +150,9 @@ public class PaneDownloadChart extends AnchorPane {
         rbOnlyExisting.selectedProperty().bindBidirectional(chartOnlyExistingProp);
         rbOnlyRunning.selectedProperty().bindBidirectional(chartOnlyRunningProp);
 
-        rbAll.disableProperty().bind(chkAllDowns.selectedProperty().not());
-        rbOnlyExisting.disableProperty().bind(chkAllDowns.selectedProperty().not());
-        rbOnlyRunning.disableProperty().bind(chkAllDowns.selectedProperty().not());
-
+        rbAll.disableProperty().bind(rbShowAll.selectedProperty().not().and(rbShowDown.selectedProperty().not()));
+        rbOnlyExisting.disableProperty().bind(rbShowAll.selectedProperty().not().and(rbShowDown.selectedProperty().not()));
+        rbOnlyRunning.disableProperty().bind(rbShowAll.selectedProperty().not().and(rbShowDown.selectedProperty().not()));
 
         final MenuItem delData = new MenuItem("Diagramm löschen");
         delData.setOnAction(e -> clearChart());
@@ -155,8 +160,9 @@ public class PaneDownloadChart extends AnchorPane {
 
         final ContextMenu cm = new ContextMenu();
         cm.getItems().addAll(cmiTime,
+                new SeparatorMenuItem(), rbShowAll, rbShowDown, rbShowSum,
                 new SeparatorMenuItem(), rbAll, rbOnlyExisting, rbOnlyRunning,
-                new SeparatorMenuItem(), chkAllDowns, delData);
+                new SeparatorMenuItem(), delData);
         return cm;
     }
 

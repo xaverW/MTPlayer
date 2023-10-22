@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmfilter.FastFilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
+import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.data.PDataProgConfig;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
@@ -287,8 +288,8 @@ public class ProgConfig extends PDataProgConfig {
 
     public static StringProperty GUI_MEDIA_CONFIG_DIALOG_SIZE = addStrProp("gui-media-config-dialog-size", "800:700");
 
-    // Downloadchart
-    public static BooleanProperty DOWNLOAD_CHART_SEPARAT = addBoolProp("download-chart-separat", Boolean.TRUE);
+    // DownloadChart
+    public static IntegerProperty DOWNLOAD_CHART_SHOW_WHAT = addIntProp("download-chart-show-what", ChartGenerateFactory.GEN_CHART_SHOW_DOWN);
     public static BooleanProperty DOWNLOAD_CHART_ONLY_EXISTING = addBoolProp("download-chart-only-existing", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_CHART_ONLY_RUNNING = addBoolProp("download-chart-only-running", Boolean.FALSE);
     public static IntegerProperty DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN = addIntProp("download-chart-max-time-to-show-min", 30); //MAX Minuten im Chart

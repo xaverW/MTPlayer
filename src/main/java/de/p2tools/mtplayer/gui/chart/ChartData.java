@@ -27,20 +27,13 @@ public class ChartData {
     private double dataPerPixel = 1;
     private double secondsPerPixel = 1;
 
-    // ist die eine LineChart für den Gesamtwert
-    private final XYChart.Series<Number, Number> chartSeriesOneSumChart = new XYChart.Series<>("Summe", FXCollections.observableArrayList());
-
-    // Liste der LineCharts für Gesamt -> hat nur eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesList_OneSumChart = FXCollections.observableArrayList(chartSeriesOneSumChart);
-
     // Liste der LineCharts für einzelne Downloads -> für jeden Download eine LineChart
-    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesList_SeparateCharts = FXCollections.observableArrayList();
+    private final ObservableList<XYChart.Series<Number, Number>> chartSeriesList = FXCollections.observableArrayList();
 
     // ist die Liste mit ALLEN BandwidthData (auch denen die nicht angezeigt werden sollen)
     private final ObservableList<BandwidthData> bandwidthDataList = FXCollections.observableArrayList();
 
     public ChartData() {
-        ChartDataFactory.initChartSeries(chartSeriesOneSumChart);
         ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.addListener((ob, ol, ne) -> {
             //die muss dann neu gesetzt werden!!
             ChartDataFactory.genActShowingTimeValues(this);
@@ -71,16 +64,8 @@ public class ChartData {
         this.secondsPerPixel = secondsPerPixel;
     }
 
-    public XYChart.Series<Number, Number> getChartSeriesOneSumChart() {
-        return chartSeriesOneSumChart;
-    }
-
-    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesList_OneSumChart() {
-        return chartSeriesList_OneSumChart;
-    }
-
-    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesList_SeparateCharts() {
-        return chartSeriesList_SeparateCharts;
+    public ObservableList<XYChart.Series<Number, Number>> getChartSeriesList() {
+        return chartSeriesList;
     }
 
     public ObservableList<BandwidthData> getBandwidthDataList() {
