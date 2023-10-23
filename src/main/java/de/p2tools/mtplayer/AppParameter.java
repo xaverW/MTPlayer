@@ -40,6 +40,7 @@ public class AppParameter {
         AUTOMODE("a", "auto", false, "use automode: start, load, quit"),
         DURATION("t", "time", false, "show timekeeping info"),
         START_MINIMIZED("m", "minimize", false, "start minimized"),
+        SHOW_UPDATE("s", "showUpdate", false, "always show new version"),
         FILMLIST_URL("u", "url", true, "use url for filmList download");
 
         final String shortname;
@@ -107,6 +108,11 @@ public class AppParameter {
             if (hasOption(line, ProgParameter.START_MINIMIZED)) {
                 ProgData.startMinimized = true;
             }
+
+            if (hasOption(line, ProgParameter.SHOW_UPDATE)) {
+                ProgData.showUpdate = true;
+            }
+
             if (hasOption(line, ProgParameter.FILMLIST_URL)) {
                 String url = line.getOptionValue(ProgParameter.FILMLIST_URL.name);
                 setFilmlistUrl(url);

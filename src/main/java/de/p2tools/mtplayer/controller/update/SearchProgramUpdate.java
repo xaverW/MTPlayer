@@ -24,6 +24,8 @@ import de.p2tools.p2lib.checkforactinfos.FoundSearchData;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import de.p2tools.p2lib.tools.date.PDate;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.stage.Stage;
 
 import static java.lang.Thread.sleep;
@@ -33,17 +35,14 @@ public class SearchProgramUpdate {
     private static final String TITLE_TEXT_PROGRAM_VERSION_IS_UPTODATE = "Programmversion ist aktuell";
     private static final String TITLE_TEXT_PROGRAMMUPDATE_EXISTS = "Ein Programmupdate ist verfügbar";
     private final ProgData progData;
-    private final Stage stage;
     private String title = "";
 
     public SearchProgramUpdate(final ProgData progData) {
         this.progData = progData;
-        this.stage = progData.primaryStage;
     }
 
     public SearchProgramUpdate(final ProgData progData, final Stage stage) {
         this.progData = progData;
-        this.stage = stage;
     }
 
     /**
@@ -70,30 +69,55 @@ public class SearchProgramUpdate {
         final PDate pd = new PDate(ProgramToolsFactory.getCompileDate());
         final String buildDate = pd.get_yyyy_MM_dd();
 
-        final FoundSearchData foundSearchData = new FoundSearchData(
-                stage,
-                SEARCH_URL,
-                SEARCH_URL_DOWNLOAD,
+        final FoundSearchData foundSearchData;
+        if (ProgData.showUpdate) {
+            foundSearchData = new FoundSearchData(
+                    progData.primaryStage,
+                    SEARCH_URL,
+                    SEARCH_URL_DOWNLOAD,
 
-                ProgConfig.SYSTEM_UPDATE_SEARCH_ACT,
-                ProgConfig.SYSTEM_UPDATE_SEARCH_BETA,
-                ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY,
+                    new SimpleBooleanProperty(true), // ProgConfig.SYSTEM_UPDATE_SEARCH_ACT,
+                    new SimpleBooleanProperty(true), // ProgConfig.SYSTEM_UPDATE_SEARCH_BETA,
+                    new SimpleBooleanProperty(true), // ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY,
 
-                ProgConfig.SYSTEM_UPDATE_LAST_INFO,
-                ProgConfig.SYSTEM_UPDATE_LAST_ACT,
-                ProgConfig.SYSTEM_UPDATE_LAST_BETA,
-                ProgConfig.SYSTEM_UPDATE_LAST_DAILY,
+                    new SimpleStringProperty("2020.10.20"), // ProgConfig.SYSTEM_UPDATE_LAST_INFO,
+                    new SimpleStringProperty("2020.10.20"), // ProgConfig.SYSTEM_UPDATE_LAST_ACT,
+                    new SimpleStringProperty("2020.10.20"), // ProgConfig.SYSTEM_UPDATE_LAST_BETA,
+                    new SimpleStringProperty("2020.10.20"), // ProgConfig.SYSTEM_UPDATE_LAST_DAILY,
 
-                ProgConst.URL_WEBSITE,
-                ProgConst.URL_WEBSITE_DOWNLOAD,
-                ProgConst.PROGRAM_NAME,
-                ProgramToolsFactory.getProgVersion(),
-                ProgramToolsFactory.getBuild(),
-                buildDate,
-                ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
-                showAlways
-        );
+                    ProgConst.URL_WEBSITE,
+                    ProgConst.URL_WEBSITE_DOWNLOAD,
+                    ProgConst.PROGRAM_NAME,
+                    "0", // ProgramToolsFactory.getProgVersion(),
+                    "1", // ProgramToolsFactory.getBuild(),
+                    "2020.10.20", // buildDate,
+                    ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
+                    true); //showAlways);
 
+        } else {
+            foundSearchData = new FoundSearchData(
+                    progData.primaryStage,
+                    SEARCH_URL,
+                    SEARCH_URL_DOWNLOAD,
+
+                    ProgConfig.SYSTEM_UPDATE_SEARCH_ACT,
+                    ProgConfig.SYSTEM_UPDATE_SEARCH_BETA,
+                    ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY,
+
+                    ProgConfig.SYSTEM_UPDATE_LAST_INFO,
+                    ProgConfig.SYSTEM_UPDATE_LAST_ACT,
+                    ProgConfig.SYSTEM_UPDATE_LAST_BETA,
+                    ProgConfig.SYSTEM_UPDATE_LAST_DAILY,
+
+                    ProgConst.URL_WEBSITE,
+                    ProgConst.URL_WEBSITE_DOWNLOAD,
+                    ProgConst.PROGRAM_NAME,
+                    ProgramToolsFactory.getProgVersion(),
+                    ProgramToolsFactory.getBuild(),
+                    buildDate,
+                    ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
+                    showAlways);
+        }
         new Thread(() -> {
             FoundAll.foundAll(foundSearchData);
             setTitleInfo(foundSearchData.foundNewVersionProperty().getValue());
