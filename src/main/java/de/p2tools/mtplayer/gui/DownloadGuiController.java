@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
-import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadEditDialogController;
+import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadStartAtTimeController;
 import de.p2tools.mtplayer.gui.infoPane.DownloadInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
@@ -462,15 +462,16 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private synchronized void change() {
-        final Optional<DownloadData> download = getSel();
-        if (download.isPresent()) {
-            DownloadData downloadCopy = download.get().getCopy();
-            DownloadEditDialogController downloadEditDialogController =
-                    new DownloadEditDialogController(progData, downloadCopy, download.get().isStateStartedRun());
+        ArrayList<DownloadData> list = getSelList();
+        if (!list.isEmpty()) {
+            new DownloadAddDialogController(progData, list);
 
-            if (downloadEditDialogController.isOk()) {
-                download.get().copyToMe(downloadCopy);
-            }
+//            DownloadData downloadCopy = download.get().getCopy();
+//            DownloadEditDialogController downloadEditDialogController =
+//                    new DownloadEditDialogController(progData, downloadCopy, download.get().isStateStartedRun());
+//            if (downloadEditDialogController.isOk()) {
+//                download.get().copyToMe(downloadCopy);
+//            }
         }
     }
 

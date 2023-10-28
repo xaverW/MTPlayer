@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.gui.dialog.downloaddialog;
+package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
@@ -26,6 +26,10 @@ import de.p2tools.p2lib.tools.date.DateFactory;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.File;
@@ -38,6 +42,17 @@ import java.util.Date;
 public class DownloadAddDialogFactory {
 
     private DownloadAddDialogFactory() {
+    }
+
+    public static Text getText(String text) {
+        Text t = new Text(text);
+        t.setFont(Font.font(null, FontWeight.BOLD, -1));
+        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+            t.setFill(Color.rgb(31, 162, 206));
+        } else {
+            t.setFill(Color.BLUE);
+        }
+        return t;
     }
 
     public static boolean getTime(String name, FastDateFormat format) {

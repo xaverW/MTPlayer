@@ -159,7 +159,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     }
 
     public void setUrl(String url) {
-        urlList.add(0, url);
+        urlList.setAll(url);
     }
 
 

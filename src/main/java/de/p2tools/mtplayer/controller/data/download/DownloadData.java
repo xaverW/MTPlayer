@@ -370,7 +370,7 @@ public final class DownloadData extends DownloadDataProps {
         downloadData.setDownloadStartDto(getDownloadStartDto());
         downloadData.setData = setData;
         downloadData.abo = abo;
-        downloadData.getUrlList().addAll(getUrl());
+        downloadData.getUrlList().setAll(getUrl());
         return downloadData;
     }
 
@@ -383,6 +383,6 @@ public final class DownloadData extends DownloadDataProps {
         setDownloadStartDto(downloadData.getDownloadStartDto());
         setData = downloadData.setData;
         abo = downloadData.abo;
-        getUrlList().addAll(downloadData.getUrlList());
+        getUrlList().setAll(downloadData.getUrlList());
     }
 }

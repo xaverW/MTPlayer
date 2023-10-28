@@ -324,7 +324,7 @@ public class DownloadEditDialogController extends PDialogExtra {
     }
 
     private void changeRes() {
-        // RadioButton sind nur enabled wenn "datenDownload.film" vorhanden
+        // RadioButton sind nur enabled, wenn "datenDownload.film" vorhanden
         final String res;
         if (rbHd.isSelected()) {
             res = FilmDataMTP.RESOLUTION_HD;
@@ -516,7 +516,7 @@ public class DownloadEditDialogController extends PDialogExtra {
 
         final ContextMenu contextMenu = new ContextMenu();
 
-        MenuItem menuItem = new MenuItem("kopieren");
+        MenuItem menuItem = new MenuItem("Kopieren");
         menuItem.setOnAction(a -> {
             final Clipboard clipboard = Clipboard.getSystemClipboard();
             final ClipboardContent content = new ClipboardContent();
