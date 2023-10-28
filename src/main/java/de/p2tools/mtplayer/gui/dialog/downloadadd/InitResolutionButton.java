@@ -101,7 +101,6 @@ public class InitResolutionButton {
     }
 
     public void makeAct() {
-        System.out.println("REA-ACT");
         addDto.rbHigh.setOnAction(null);
         addDto.rbHd.setOnAction(null);
         addDto.rbSmall.setOnAction(null);

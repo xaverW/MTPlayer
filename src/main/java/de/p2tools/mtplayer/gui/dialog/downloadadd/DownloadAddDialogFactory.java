@@ -21,10 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
-import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.date.DateFactory;
 import de.p2tools.p2lib.tools.log.PLog;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -200,26 +198,5 @@ public class DownloadAddDialogFactory {
             default:
                 return downloadAddData.fileSize_high;
         }
-    }
-
-    public static void proposeDestination(ComboBox<String> cboPath,
-                                          DownloadAddData[] downloadAddInfosArr, int actFilmIsShown) {
-        String actPath = cboPath.getEditor().getText();
-        if (actPath == null) {
-            actPath = "";
-        }
-
-        String stdPath;
-        if (downloadAddInfosArr[actFilmIsShown].setData.getDestPath().isEmpty()) {
-            stdPath = PSystemUtils.getStandardDownloadPath();
-        } else {
-            stdPath = downloadAddInfosArr[actFilmIsShown].setData.getDestPath();
-        }
-
-        actPath = DownloadAddDialogFactory.getNextName(stdPath, actPath, downloadAddInfosArr[actFilmIsShown].download.getTheme());
-        if (!cboPath.getItems().contains(actPath)) {
-            cboPath.getItems().add(actPath);
-        }
-        cboPath.getSelectionModel().select(actPath);
     }
 }

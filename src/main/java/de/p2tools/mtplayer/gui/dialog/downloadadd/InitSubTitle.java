@@ -45,7 +45,6 @@ public class InitSubTitle {
     }
 
     public void makeAct() {
-        System.out.println("SUBTITLE_ACT");
         addDto.chkInfo.setDisable(addDto.getAct().downloadIsRunning());
         addDto.chkSubtitle.setDisable(addDto.getAct().downloadIsRunning());
 

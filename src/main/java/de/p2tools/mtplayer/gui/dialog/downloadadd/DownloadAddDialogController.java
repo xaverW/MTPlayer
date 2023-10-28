@@ -104,7 +104,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         addDto.btnPropose.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_PROPOSE.getImageView());
         addDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
         addDto.btnPropose.setOnAction(event ->
-                DownloadAddDialogFactory.proposeDestination(addDto.cboPath, addDto.downloadAddData, addDto.actFilmIsShown.getValue()));
+                addDto.initPathName.proposeDestination());
 
         addDto.btnClean.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAN.getImageView());
         addDto.btnClean.setTooltip(new Tooltip("Die Liste der Pfade löschen"));

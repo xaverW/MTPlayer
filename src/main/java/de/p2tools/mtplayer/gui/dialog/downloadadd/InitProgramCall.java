@@ -51,7 +51,6 @@ public class InitProgramCall {
     }
 
     public void makeAct() {
-        System.out.println("PROG_CALL_ACT");
         addDto.textAreaCallArray.setDisable(addDto.getAct().downloadIsRunning());
 
         addDto.lblProgramIsDownload.setVisible(!addDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
@@ -66,11 +65,9 @@ public class InitProgramCall {
 
     public static void setProgrammCall(AddDto addDto, DownloadAddData downloadAddData) {
         DownloadData download = downloadAddData.download;
-        if (download.getType().equals(DownloadConstants.TYPE_PROGRAM) && download.getSetData() != null) {
-            // muss noch der Programmaufruf neu gebaut werden
-            download.setPathName(downloadAddData.path, downloadAddData.name);
-            download.makeProgParameter();
-        }
+        // muss noch der Programmaufruf neu gebaut werden
+        download.setPathName(downloadAddData.path, downloadAddData.name);
+        download.makeProgParameter();
 
         addDto.textAreaProg.setText(addDto.getAct().download.getProgramCall());
         addDto.textAreaCallArray.setText(addDto.getAct().download.getProgramCallArray());

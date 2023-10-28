@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
+import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -87,7 +88,6 @@ public class InitPathName {
         makeAct();
         addDto.cboPath.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (!addDto.cboPath.isFocused()) {
-                System.out.println("no focus");
                 return;
             }
             if (oldValue != null && newValue != null && !oldValue.equals(newValue)) {
@@ -96,7 +96,6 @@ public class InitPathName {
         });
         addDto.txtName.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!addDto.txtName.isFocused()) {
-                System.out.println("no focus");
                 return;
             }
             if (oldValue != null && newValue != null && !oldValue.equals(newValue)) {
@@ -118,7 +117,6 @@ public class InitPathName {
     private void pathChanged() {
         // beim Ändern der cbo oder manuellem Eintragen
         final String s = addDto.cboPath.getEditor().getText();
-        System.out.println("s: " + s);
         if (!addDto.cboPath.getItems().contains(s)) {
             addDto.cboPath.getItems().add(s);
         }
@@ -129,17 +127,20 @@ public class InitPathName {
     private void setPath(String path, boolean all) {
         if (all) {
             Arrays.stream(addDto.downloadAddData).forEach(downloadAddData -> {
-                downloadAddData.path = path;
-                InitProgramCall.setProgrammCall(addDto, downloadAddData);
+                if (!downloadAddData.path.equals(path)) {
+                    downloadAddData.path = path;
+                    InitProgramCall.setProgrammCall(addDto, downloadAddData);
+                }
             });
         } else {
-            addDto.getAct().path = path;
-            InitProgramCall.setProgrammCall(addDto, addDto.getAct());
+            if (!addDto.getAct().path.equals(path)) {
+                addDto.getAct().path = path;
+                InitProgramCall.setProgrammCall(addDto, addDto.getAct());
+            }
         }
     }
 
     public void makeAct() {
-        System.out.println("PATH_ACT");
         // nach dem actFilm setzen, z.B. beim Wechsel
         addDto.cboPath.setDisable(addDto.getAct().downloadIsRunning());
         addDto.txtName.setDisable(addDto.getAct().downloadIsRunning());
@@ -153,12 +154,33 @@ public class InitPathName {
         DownloadAddDialogFactory.calculateAndCheckDiskSpace(
                 addDto.getAct().path, addDto.lblFree,
                 addDto.getAct());
-        System.out.println("makeAct-2");
     }
 
     public void clearPath() {
         pathList.clear();
         ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.clear();
+        pathChanged();
+    }
+
+    public void proposeDestination() {
+        String actPath = addDto.cboPath.getEditor().getText();
+        if (actPath == null) {
+            actPath = "";
+        }
+
+        String stdPath;
+        if (addDto.getAct().setData.getDestPath().isEmpty()) {
+            stdPath = PSystemUtils.getStandardDownloadPath();
+        } else {
+            stdPath = addDto.getAct().setData.getDestPath();
+        }
+
+        actPath = DownloadAddDialogFactory.getNextName(stdPath, actPath, addDto.getAct().download.getTheme());
+        if (!addDto.cboPath.getItems().contains(actPath)) {
+            addDto.cboPath.getItems().add(actPath);
+        }
+        addDto.cboPath.getSelectionModel().select(actPath);
+        pathChanged();
     }
 
     public void setUsedPaths() {

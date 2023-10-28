@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -55,7 +54,6 @@ public class InitSetData {
     }
 
     public void makeAct() {
-        System.out.println("SET_ACT");
         addDto.cboSetData.setDisable(addDto.getAct().downloadIsRunning());
 
         addDto.cboSetData.setOnAction(null);
@@ -82,17 +80,5 @@ public class InitSetData {
         downloadAddData.setData = psetData;
         downloadAddData.download.setSetData(psetData, false);
         InitProgramCall.setProgrammCall(addDto, downloadAddData);
-        // die Werte passend zum Film setzen
-        if (downloadAddData.setData.getResolution().equals(FilmDataMTP.RESOLUTION_HD)
-                && downloadAddData.download.getFilm().isHd()) {
-            downloadAddData.resolution = FilmDataMTP.RESOLUTION_HD;
-
-        } else if (downloadAddData.setData.getResolution().equals(FilmDataMTP.RESOLUTION_SMALL)
-                && downloadAddData.download.getFilm().isSmall()) {
-            downloadAddData.resolution = FilmDataMTP.RESOLUTION_SMALL;
-
-        } else {
-            downloadAddData.resolution = FilmDataMTP.RESOLUTION_NORMAL;
-        }
     }
 }

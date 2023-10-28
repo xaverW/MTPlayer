@@ -82,7 +82,6 @@ public class InitStartTime {
     }
 
     public void makeAct() {
-        System.out.println("TIME_ACT");
         addDto.p2TimePicker.setDisable(addDto.getAct().downloadIsRunning());
         addDto.rbStartNow.setDisable(addDto.getAct().downloadIsRunning());
         addDto.rbStartNotYet.setDisable(addDto.getAct().downloadIsRunning());

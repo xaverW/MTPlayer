@@ -78,9 +78,9 @@ public class FilmFilterRunner {
             research.set(false);
             try {
                 Platform.runLater(() -> {
-                    System.out.println("=======================================");
-                    System.out.println("   ===== FILTERN: " + ++count + " =====");
-                    System.out.println("=======================================");
+//                    System.out.println("=======================================");
+//                    System.out.println("   ===== FILTERN: " + ++count + " =====");
+//                    System.out.println("=======================================");
 
 //                    progData.filmListFiltered.filteredListSetPred(PredicateFactory.getPredicate(progData));
                     progData.filmGuiController.setFilterPred();
