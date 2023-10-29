@@ -347,10 +347,9 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty START_DIALOG_DOWNLOAD_PATH = addStrProp("start-dialog-download-path", PSystemUtils.getStandardDownloadPath());
 
     // FilmInfoDialog
-    public static BooleanProperty FILM_INFO_DIALOG_SHOW_URL = addBoolProp("film-info-dialog-show-url", Boolean.TRUE);
-
-    // DownloadAddDialog
-    public static BooleanProperty DOWNLOAD_INFO_DIALOG_SHOW_URL = addBoolProp("download-info-dialog-show-url", Boolean.TRUE);
+    public static BooleanProperty FILM_INFO_DIALOG_SHOW_URL = addBoolProp("film-info-dialog-show-url", Boolean.FALSE);
+    public static BooleanProperty FILM_INFO_DIALOG_SHOW_WEBSITE_URL = addBoolProp("film-info-dialog-show-website-url", Boolean.FALSE);
+    public static BooleanProperty FILM_INFO_DIALOG_SHOW_DESCRIPTION = addBoolProp("film-info-dialog-show-description", Boolean.TRUE);
 
     // Filter Filme
     public static IntegerProperty FILTER_FILM_SEL_FILTER = addIntProp("filter-film-sel-filter");
