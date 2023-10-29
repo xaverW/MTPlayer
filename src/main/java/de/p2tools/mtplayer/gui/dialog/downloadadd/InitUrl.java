@@ -18,10 +18,10 @@
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 public class InitUrl {
-    AddDto addDto;
+    AddDownloadDto addDownloadDto;
 
-    public InitUrl(AddDto addDto) {
-        this.addDto = addDto;
+    public InitUrl(AddDownloadDto addDownloadDto) {
+        this.addDownloadDto = addDownloadDto;
         init();
     }
 
@@ -30,7 +30,7 @@ public class InitUrl {
     }
 
     public void makeAct() {
-        addDto.p2HyperlinkUrlFilm.setUrl(addDto.getAct().download.getFilmUrl());
-        addDto.p2HyperlinkUrlDownload.setUrl(addDto.getAct().download.getUrl());
+        addDownloadDto.p2HyperlinkUrlFilm.setUrl(addDownloadDto.getAct().download.getFilmUrl());
+        addDownloadDto.p2HyperlinkUrlDownload.setUrl(addDownloadDto.getAct().download.getUrl());
     }
 }

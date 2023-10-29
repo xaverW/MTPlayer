@@ -33,10 +33,10 @@ import java.util.List;
 
 public class InitPathName {
     private final ObservableList<String> pathList;
-    private final AddDto addDto;
+    private final AddDownloadDto addDownloadDto;
 
-    public InitPathName(AddDto addDto) {
-        this.addDto = addDto;
+    public InitPathName(AddDownloadDto addDownloadDto) {
+        this.addDownloadDto = addDownloadDto;
         this.pathList = FXCollections.observableArrayList();
         this.pathList.addAll(ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH);
         init();
@@ -49,15 +49,15 @@ public class InitPathName {
             //leer oder und nur ein leerer Eintrag
             pathList.clear();
             String path;
-            if (addDto.getAct().setData.getDestPath().isEmpty()) {
+            if (addDownloadDto.getAct().setData.getDestPath().isEmpty()) {
                 path = System.getProperty("user.home");
             } else {
-                path = addDto.getAct().setData.getDestPath();
+                path = addDownloadDto.getAct().setData.getDestPath();
             }
             pathList.add(path);
         }
 
-        Arrays.stream(addDto.downloadAddData).toList().forEach(downloadAddData -> {
+        Arrays.stream(addDownloadDto.addDownloadData).toList().forEach(downloadAddData -> {
             if (downloadAddData.path.isEmpty()) {
                 setPath(pathList.get(0), false);
             }
@@ -66,36 +66,36 @@ public class InitPathName {
             }
         });
 
-        addDto.cboPath.setEditable(true);
-        addDto.cboPath.setItems(pathList);
-        addDto.chkPathAll.setOnAction(a -> {
-            if (addDto.chkPathAll.isSelected()) {
+        addDownloadDto.cboPath.setEditable(true);
+        addDownloadDto.cboPath.setItems(pathList);
+        addDownloadDto.chkPathAll.setOnAction(a -> {
+            if (addDownloadDto.chkPathAll.isSelected()) {
                 pathChanged();
             }
         });
 
         // Dateiname
-        Arrays.stream(addDto.downloadAddData).toList().forEach(downloadAddData -> {
+        Arrays.stream(addDownloadDto.addDownloadData).toList().forEach(downloadAddData -> {
             if (downloadAddData.name.isEmpty()) {
                 if (!downloadAddData.setData.getDestName().isEmpty()) {
-                    addDto.txtName.setText(downloadAddData.setData.getDestName());
+                    addDownloadDto.txtName.setText(downloadAddData.setData.getDestName());
                 } else {
-                    addDto.txtName.setText(downloadAddData.download.getFilm().getTitle());
+                    addDownloadDto.txtName.setText(downloadAddData.download.getFilm().getTitle());
                 }
             }
         });
 
         makeAct();
-        addDto.cboPath.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!addDto.cboPath.isFocused()) {
+        addDownloadDto.cboPath.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!addDownloadDto.cboPath.isFocused()) {
                 return;
             }
             if (oldValue != null && newValue != null && !oldValue.equals(newValue)) {
                 pathChanged();
             }
         });
-        addDto.txtName.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!addDto.txtName.isFocused()) {
+        addDownloadDto.txtName.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!addDownloadDto.txtName.isFocused()) {
                 return;
             }
             if (oldValue != null && newValue != null && !oldValue.equals(newValue)) {
@@ -105,55 +105,55 @@ public class InitPathName {
     }
 
     private void nameChanged() {
-        addDto.getAct().name = addDto.txtName.getText();
-        if (!addDto.txtName.getText().equals(FileNameUtils.checkFileName(addDto.txtName.getText(), false /* pfad */))) {
-            addDto.txtName.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
+        addDownloadDto.getAct().name = addDownloadDto.txtName.getText();
+        if (!addDownloadDto.txtName.getText().equals(FileNameUtils.checkFileName(addDownloadDto.txtName.getText(), false /* pfad */))) {
+            addDownloadDto.txtName.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
         } else {
-            addDto.txtName.setStyle("");
+            addDownloadDto.txtName.setStyle("");
         }
-        InitProgramCall.setProgrammCall(addDto, addDto.getAct());
+        InitProgramCall.setProgrammCall(addDownloadDto, addDownloadDto.getAct());
     }
 
     private void pathChanged() {
         // beim Ändern der cbo oder manuellem Eintragen
-        final String s = addDto.cboPath.getEditor().getText();
-        if (!addDto.cboPath.getItems().contains(s)) {
-            addDto.cboPath.getItems().add(s);
+        final String s = addDownloadDto.cboPath.getEditor().getText();
+        if (!addDownloadDto.cboPath.getItems().contains(s)) {
+            addDownloadDto.cboPath.getItems().add(s);
         }
-        setPath(s, addDto.chkPathAll.isSelected());
-        DownloadAddDialogFactory.calculateAndCheckDiskSpace(s, addDto.lblFree, addDto.getAct());
+        setPath(s, addDownloadDto.chkPathAll.isSelected());
+        DownloadAddDialogFactory.calculateAndCheckDiskSpace(s, addDownloadDto.lblFree, addDownloadDto.getAct());
     }
 
     private void setPath(String path, boolean all) {
         if (all) {
-            Arrays.stream(addDto.downloadAddData).forEach(downloadAddData -> {
+            Arrays.stream(addDownloadDto.addDownloadData).forEach(downloadAddData -> {
                 if (!downloadAddData.path.equals(path)) {
                     downloadAddData.path = path;
-                    InitProgramCall.setProgrammCall(addDto, downloadAddData);
+                    InitProgramCall.setProgrammCall(addDownloadDto, downloadAddData);
                 }
             });
         } else {
-            if (!addDto.getAct().path.equals(path)) {
-                addDto.getAct().path = path;
-                InitProgramCall.setProgrammCall(addDto, addDto.getAct());
+            if (!addDownloadDto.getAct().path.equals(path)) {
+                addDownloadDto.getAct().path = path;
+                InitProgramCall.setProgrammCall(addDownloadDto, addDownloadDto.getAct());
             }
         }
     }
 
     public void makeAct() {
         // nach dem actFilm setzen, z.B. beim Wechsel
-        addDto.cboPath.setDisable(addDto.getAct().downloadIsRunning());
-        addDto.txtName.setDisable(addDto.getAct().downloadIsRunning());
+        addDownloadDto.cboPath.setDisable(addDownloadDto.getAct().downloadIsRunning());
+        addDownloadDto.txtName.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
-        if (!addDto.cboPath.getItems().contains(addDto.getAct().path)) {
-            addDto.cboPath.getItems().add(addDto.getAct().path);
+        if (!addDownloadDto.cboPath.getItems().contains(addDownloadDto.getAct().path)) {
+            addDownloadDto.cboPath.getItems().add(addDownloadDto.getAct().path);
         }
-        addDto.cboPath.getSelectionModel().select(addDto.getAct().path);
-        addDto.txtName.setText(addDto.getAct().name);
+        addDownloadDto.cboPath.getSelectionModel().select(addDownloadDto.getAct().path);
+        addDownloadDto.txtName.setText(addDownloadDto.getAct().name);
 
         DownloadAddDialogFactory.calculateAndCheckDiskSpace(
-                addDto.getAct().path, addDto.lblFree,
-                addDto.getAct());
+                addDownloadDto.getAct().path, addDownloadDto.lblFree,
+                addDownloadDto.getAct());
     }
 
     public void clearPath() {
@@ -163,29 +163,29 @@ public class InitPathName {
     }
 
     public void proposeDestination() {
-        String actPath = addDto.cboPath.getEditor().getText();
+        String actPath = addDownloadDto.cboPath.getEditor().getText();
         if (actPath == null) {
             actPath = "";
         }
 
         String stdPath;
-        if (addDto.getAct().setData.getDestPath().isEmpty()) {
+        if (addDownloadDto.getAct().setData.getDestPath().isEmpty()) {
             stdPath = PSystemUtils.getStandardDownloadPath();
         } else {
-            stdPath = addDto.getAct().setData.getDestPath();
+            stdPath = addDownloadDto.getAct().setData.getDestPath();
         }
 
-        actPath = DownloadAddDialogFactory.getNextName(stdPath, actPath, addDto.getAct().download.getTheme());
-        if (!addDto.cboPath.getItems().contains(actPath)) {
-            addDto.cboPath.getItems().add(actPath);
+        actPath = DownloadAddDialogFactory.getNextName(stdPath, actPath, addDownloadDto.getAct().download.getTheme());
+        if (!addDownloadDto.cboPath.getItems().contains(actPath)) {
+            addDownloadDto.cboPath.getItems().add(actPath);
         }
-        addDto.cboPath.getSelectionModel().select(actPath);
+        addDownloadDto.cboPath.getSelectionModel().select(actPath);
         pathChanged();
     }
 
     public void setUsedPaths() {
         // Dialog-Ende: Die verwendeten Pfade einfügen
-        List<DownloadAddData> list = new ArrayList<>(Arrays.stream(addDto.downloadAddData).toList());
+        List<AddDownloadData> list = new ArrayList<>(Arrays.stream(addDownloadDto.addDownloadData).toList());
         Collections.reverse(list);
         list.forEach(downloadAddData -> ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.add(0, downloadAddData.path));
 

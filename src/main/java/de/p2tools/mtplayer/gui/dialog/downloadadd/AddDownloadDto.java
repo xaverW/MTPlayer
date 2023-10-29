@@ -37,7 +37,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
-public class AddDto {
+public class AddDownloadDto {
 
     public boolean addNewDownloads = true;
 
@@ -50,7 +50,7 @@ public class AddDto {
     public InitStartTime initStartTime;
 
     public ProgData progData;
-    public DownloadAddData[] downloadAddData;
+    public AddDownloadData[] addDownloadData;
 
     public IntegerProperty actFilmIsShown = new SimpleIntegerProperty(0);
     public final String filterResolution;
@@ -112,13 +112,13 @@ public class AddDto {
     public final RadioButton rbStartNow = new RadioButton("sofort");
     public final RadioButton rbStartAtTime = new RadioButton("um: ");
 
-    public AddDto(ProgData progData, SetData setDataStart,
-                  ArrayList<FilmDataMTP> filmsToDownloadList, String filterResolution) {
+    public AddDownloadDto(ProgData progData, SetData setDataStart,
+                          ArrayList<FilmDataMTP> filmsToDownloadList, String filterResolution) {
         this.progData = progData;
         this.setDataStart = setDataStart;
         this.filterResolution = filterResolution;
 
-        downloadAddData = InitDownloadAddArray.initDownloadInfoArrayFilm(filmsToDownloadList, this);
+        addDownloadData = InitDownloadAddArray.initDownloadInfoArrayFilm(filmsToDownloadList, this);
 
         initSetData = new InitSetData(this);
         initPathName = new InitPathName(this);
@@ -129,13 +129,13 @@ public class AddDto {
         initStartTime = new InitStartTime(this);
     }
 
-    public AddDto(ProgData progData, ArrayList<DownloadData> downloadDataArrayList) {
+    public AddDownloadDto(ProgData progData, ArrayList<DownloadData> downloadDataArrayList) {
         this.progData = progData;
         this.setDataStart = null;
         this.filterResolution = "";
 
         this.addNewDownloads = false;
-        downloadAddData = InitDownloadAddArray.initDownloadInfoArrayDownload(downloadDataArrayList, this);
+        addDownloadData = InitDownloadAddArray.initDownloadInfoArrayDownload(downloadDataArrayList, this);
 
         initSetData = new InitSetData(this);
         initPathName = new InitPathName(this);
@@ -146,18 +146,18 @@ public class AddDto {
         initStartTime = new InitStartTime(this);
     }
 
-    public DownloadAddData getAct() {
-        return downloadAddData[actFilmIsShown.getValue()];
+    public AddDownloadData getAct() {
+        return addDownloadData[actFilmIsShown.getValue()];
     }
 
     public void updateAct() {
         final int nr = actFilmIsShown.getValue() + 1;
-        lblSum.setText("Film " + nr + " von " + downloadAddData.length + " Filmen");
+        lblSum.setText("Film " + nr + " von " + addDownloadData.length + " Filmen");
 
         if (actFilmIsShown.getValue() == 0) {
             btnPrev.setDisable(true);
             btnNext.setDisable(false);
-        } else if (actFilmIsShown.getValue() == downloadAddData.length - 1) {
+        } else if (actFilmIsShown.getValue() == addDownloadData.length - 1) {
             btnPrev.setDisable(false);
             btnNext.setDisable(true);
         } else {
@@ -165,11 +165,11 @@ public class AddDto {
             btnNext.setDisable(false);
         }
 
-        lblFilmTitle.setText(downloadAddData[actFilmIsShown.getValue()].download.getFilm().getChannel()
-                + "  -  " + downloadAddData[actFilmIsShown.getValue()].download.getFilm().getTitle());
-        lblFilmDateTime.setText("Datum: " + downloadAddData[actFilmIsShown.getValue()].download.getFilm().getDate()
-                + "       Zeit: " + downloadAddData[actFilmIsShown.getValue()].download.getFilm().getTime()
-                + "       Dauer [min]: " + downloadAddData[actFilmIsShown.getValue()].download.getFilm().getDurationMinute());
+        lblFilmTitle.setText(addDownloadData[actFilmIsShown.getValue()].download.getFilm().getChannel()
+                + "  -  " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getTitle());
+        lblFilmDateTime.setText("Datum: " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getDate()
+                + "       Zeit: " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getTime()
+                + "       Dauer [min]: " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getDurationMinute());
 
         initSetData.makeAct();
         initPathName.makeAct();

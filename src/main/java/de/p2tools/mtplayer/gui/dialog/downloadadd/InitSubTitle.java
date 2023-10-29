@@ -21,64 +21,64 @@ import java.util.Arrays;
 
 public class InitSubTitle {
 
-    private final AddDto addDto;
+    private final AddDownloadDto addDownloadDto;
 
-    public InitSubTitle(AddDto addDto) {
-        this.addDto = addDto;
+    public InitSubTitle(AddDownloadDto addDownloadDto) {
+        this.addDownloadDto = addDownloadDto;
         init();
     }
 
     private void init() {
         makeAct();
-        addDto.chkInfo.setOnAction(a -> setInfoSubTitle());
-        addDto.chkInfoAll.setOnAction(a -> {
-            if (addDto.chkInfoAll.isSelected()) {
+        addDownloadDto.chkInfo.setOnAction(a -> setInfoSubTitle());
+        addDownloadDto.chkInfoAll.setOnAction(a -> {
+            if (addDownloadDto.chkInfoAll.isSelected()) {
                 setInfoSubTitle();
             }
         });
-        addDto.chkSubtitle.setOnAction(a -> setInfoSubTitle());
-        addDto.chkSubTitleAll.setOnAction(a -> {
-            if (addDto.chkSubTitleAll.isSelected()) {
+        addDownloadDto.chkSubtitle.setOnAction(a -> setInfoSubTitle());
+        addDownloadDto.chkSubTitleAll.setOnAction(a -> {
+            if (addDownloadDto.chkSubTitleAll.isSelected()) {
                 setInfoSubTitle();
             }
         });
     }
 
     public void makeAct() {
-        addDto.chkInfo.setDisable(addDto.getAct().downloadIsRunning());
-        addDto.chkSubtitle.setDisable(addDto.getAct().downloadIsRunning());
+        addDownloadDto.chkInfo.setDisable(addDownloadDto.getAct().downloadIsRunning());
+        addDownloadDto.chkSubtitle.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
-        addDto.chkInfo.setSelected(addDto.getAct().download.getInfoFile());
-        addDto.chkSubtitle.setDisable(addDto.getAct().subIsDisabled);
-        addDto.chkSubtitle.setSelected(addDto.getAct().download.isSubtitle());
+        addDownloadDto.chkInfo.setSelected(addDownloadDto.getAct().download.getInfoFile());
+        addDownloadDto.chkSubtitle.setDisable(addDownloadDto.getAct().subIsDisabled);
+        addDownloadDto.chkSubtitle.setSelected(addDownloadDto.getAct().download.isSubtitle());
     }
 
     private void setInfoSubTitle() {
         // Info
-        if (addDto.chkInfoAll.isSelected()) {
-            Arrays.stream(addDto.downloadAddData).forEach(downloadAddData ->
-                    downloadAddData.download.setInfoFile(addDto.chkInfo.isSelected()));
+        if (addDownloadDto.chkInfoAll.isSelected()) {
+            Arrays.stream(addDownloadDto.addDownloadData).forEach(downloadAddData ->
+                    downloadAddData.download.setInfoFile(addDownloadDto.chkInfo.isSelected()));
         } else {
-            addDto.getAct().download.setInfoFile(addDto.chkInfo.isSelected());
+            addDownloadDto.getAct().download.setInfoFile(addDownloadDto.chkInfo.isSelected());
         }
 
         // SubTitle
-        if (addDto.chkSubTitleAll.isSelected()) {
-            Arrays.stream(addDto.downloadAddData).forEach(downloadAddData -> {
+        if (addDownloadDto.chkSubTitleAll.isSelected()) {
+            Arrays.stream(addDownloadDto.addDownloadData).forEach(downloadAddData -> {
                 if (downloadAddData.subIsDisabled) {
                     // dann immer false, gibts nicht
                     downloadAddData.download.setSubtitle(false);
                 } else {
-                    downloadAddData.download.setSubtitle(addDto.chkSubtitle.isSelected());
+                    downloadAddData.download.setSubtitle(addDownloadDto.chkSubtitle.isSelected());
                 }
             });
 
         } else {
-            if (addDto.getAct().subIsDisabled) {
+            if (addDownloadDto.getAct().subIsDisabled) {
                 // dann immer false, gibts nicht
-                addDto.getAct().download.setSubtitle(false);
+                addDownloadDto.getAct().download.setSubtitle(false);
             } else {
-                addDto.getAct().download.setSubtitle(addDto.chkSubtitle.isSelected());
+                addDownloadDto.getAct().download.setSubtitle(addDownloadDto.chkSubtitle.isSelected());
             }
         }
     }

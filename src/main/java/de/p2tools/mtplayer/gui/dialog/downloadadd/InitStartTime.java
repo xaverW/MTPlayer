@@ -24,99 +24,99 @@ import java.util.Arrays;
 
 public class InitStartTime {
 
-    private final AddDto addDto;
+    private final AddDownloadDto addDownloadDto;
 
-    public InitStartTime(AddDto addDto) {
-        this.addDto = addDto;
+    public InitStartTime(AddDownloadDto addDownloadDto) {
+        this.addDownloadDto = addDownloadDto;
         init();
     }
 
     private void init() {
-        addDto.chkStartTimeAll.setSelected(true); // soll stand. für alle gelten
+        addDownloadDto.chkStartTimeAll.setSelected(true); // soll stand. für alle gelten
 
         final ToggleGroup toggleGroupStart = new ToggleGroup();
-        addDto.rbStartNow.setToggleGroup(toggleGroupStart);
-        addDto.rbStartNotYet.setToggleGroup(toggleGroupStart);
-        addDto.rbStartAtTime.setToggleGroup(toggleGroupStart);
+        addDownloadDto.rbStartNow.setToggleGroup(toggleGroupStart);
+        addDownloadDto.rbStartNotYet.setToggleGroup(toggleGroupStart);
+        addDownloadDto.rbStartAtTime.setToggleGroup(toggleGroupStart);
 
-        addDto.rbStartNow.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW);
-        addDto.rbStartNotYet.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT);
-        addDto.rbStartAtTime.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME);
+        addDownloadDto.rbStartNow.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW);
+        addDownloadDto.rbStartNotYet.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT);
+        addDownloadDto.rbStartAtTime.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME);
 
-        addDto.p2TimePicker.getSelectionModel().selectFirst();
-        addDto.p2TimePicker.setDisable(!addDto.rbStartAtTime.isSelected());
+        addDownloadDto.p2TimePicker.getSelectionModel().selectFirst();
+        addDownloadDto.p2TimePicker.setDisable(!addDownloadDto.rbStartAtTime.isSelected());
 
-        if (addDto.addNewDownloads) {
+        if (addDownloadDto.addNewDownloads) {
             makeAct();
             setStartTime();
         } else {
             // wenn schon eine Startzeit, dann jetzt setzen
-            if (!addDto.getAct().download.getStartTime().isEmpty()) {
-                addDto.rbStartAtTime.setSelected(true);
-                addDto.p2TimePicker.setTime(addDto.getAct().download.getStartTime());
+            if (!addDownloadDto.getAct().download.getStartTime().isEmpty()) {
+                addDownloadDto.rbStartAtTime.setSelected(true);
+                addDownloadDto.p2TimePicker.setTime(addDownloadDto.getAct().download.getStartTime());
             } else {
-                addDto.rbStartNotYet.setSelected(true);
+                addDownloadDto.rbStartNotYet.setSelected(true);
             }
         }
 
-        addDto.chkStartTimeAll.setOnAction(a -> {
-            if (addDto.chkStartTimeAll.isSelected()) {
+        addDownloadDto.chkStartTimeAll.setOnAction(a -> {
+            if (addDownloadDto.chkStartTimeAll.isSelected()) {
                 setStartTime();
             }
         });
-        addDto.rbStartNow.setOnAction(a -> {
+        addDownloadDto.rbStartNow.setOnAction(a -> {
             setStartTime();
         });
-        addDto.rbStartNotYet.setOnAction(a -> {
+        addDownloadDto.rbStartNotYet.setOnAction(a -> {
             setStartTime();
         });
-        addDto.rbStartAtTime.selectedProperty().addListener((u, o, n) ->
-                addDto.p2TimePicker.setDisable(!addDto.rbStartAtTime.isSelected()));
-        addDto.rbStartAtTime.setOnAction(a -> {
+        addDownloadDto.rbStartAtTime.selectedProperty().addListener((u, o, n) ->
+                addDownloadDto.p2TimePicker.setDisable(!addDownloadDto.rbStartAtTime.isSelected()));
+        addDownloadDto.rbStartAtTime.setOnAction(a -> {
             setStartTime();
         });
 
-        addDto.p2TimePicker.setOnAction(a -> {
+        addDownloadDto.p2TimePicker.setOnAction(a -> {
             setStartTime();
         });
     }
 
     public void makeAct() {
-        addDto.p2TimePicker.setDisable(addDto.getAct().downloadIsRunning());
-        addDto.rbStartNow.setDisable(addDto.getAct().downloadIsRunning());
-        addDto.rbStartNotYet.setDisable(addDto.getAct().downloadIsRunning());
-        addDto.p2TimePicker.setDisable(!addDto.rbStartAtTime.isSelected());
+        addDownloadDto.p2TimePicker.setDisable(addDownloadDto.getAct().downloadIsRunning());
+        addDownloadDto.rbStartNow.setDisable(addDownloadDto.getAct().downloadIsRunning());
+        addDownloadDto.rbStartNotYet.setDisable(addDownloadDto.getAct().downloadIsRunning());
+        addDownloadDto.p2TimePicker.setDisable(!addDownloadDto.rbStartAtTime.isSelected());
 
-        if (!addDto.getAct().download.getStartTime().isEmpty()) {
+        if (!addDownloadDto.getAct().download.getStartTime().isEmpty()) {
             // dann Startzeit
-            addDto.p2TimePicker.setTime(addDto.getAct().download.getStartTime());
-            addDto.rbStartAtTime.setSelected(true);
-        } else if (addDto.getAct().startNow) {
+            addDownloadDto.p2TimePicker.setTime(addDownloadDto.getAct().download.getStartTime());
+            addDownloadDto.rbStartAtTime.setSelected(true);
+        } else if (addDownloadDto.getAct().startNow) {
             // dann starten
-            addDto.rbStartNow.setSelected(true);
+            addDownloadDto.rbStartNow.setSelected(true);
         } else {
             // nix
-            addDto.rbStartNotYet.setSelected(true);
+            addDownloadDto.rbStartNotYet.setSelected(true);
         }
     }
 
     private void setStartTime() {
-        if (addDto.chkStartTimeAll.isSelected()) {
-            Arrays.stream(addDto.downloadAddData).forEach(this::setTime);
+        if (addDownloadDto.chkStartTimeAll.isSelected()) {
+            Arrays.stream(addDownloadDto.addDownloadData).forEach(this::setTime);
         } else {
-            setTime(addDto.getAct());
+            setTime(addDownloadDto.getAct());
         }
     }
 
-    private void setTime(DownloadAddData downloadAddData) {
-        if (addDto.rbStartAtTime.isSelected()) {
-            downloadAddData.download.setStartTime(addDto.p2TimePicker.getTime());
-        } else if (addDto.rbStartNow.isSelected()) {
-            downloadAddData.download.setStartTime("");
-            downloadAddData.startNow = true;
+    private void setTime(AddDownloadData addDownloadData) {
+        if (addDownloadDto.rbStartAtTime.isSelected()) {
+            addDownloadData.download.setStartTime(addDownloadDto.p2TimePicker.getTime());
+        } else if (addDownloadDto.rbStartNow.isSelected()) {
+            addDownloadData.download.setStartTime("");
+            addDownloadData.startNow = true;
         } else {
-            downloadAddData.download.setStartTime("");
-            downloadAddData.startNow = false;
+            addDownloadData.download.setStartTime("");
+            addDownloadData.startNow = false;
         }
     }
 }

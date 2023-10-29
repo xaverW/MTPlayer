@@ -114,7 +114,7 @@ public class DownloadAddDialogFactory {
     /**
      * Calculate free disk space on volume and checkIfExists if the movies can be safely downloaded.
      */
-    public static void calculateAndCheckDiskSpace(String path, Label lblFree, DownloadAddData downloadAddData) {
+    public static void calculateAndCheckDiskSpace(String path, Label lblFree, AddDownloadData addDownloadData) {
         if (path == null || path.isEmpty()) {
             return;
         }
@@ -134,21 +134,21 @@ public class DownloadAddDialogFactory {
 
             } else {
                 int size;
-                if (!downloadAddData.fileSize_HD.isEmpty()) {
-                    size = Integer.parseInt(downloadAddData.fileSize_HD);
+                if (!addDownloadData.fileSize_HD.isEmpty()) {
+                    size = Integer.parseInt(addDownloadData.fileSize_HD);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für HD";
 
                     }
                 }
-                if (!downloadAddData.fileSize_high.isEmpty()) {
-                    size = Integer.parseInt(downloadAddData.fileSize_high);
+                if (!addDownloadData.fileSize_high.isEmpty()) {
+                    size = Integer.parseInt(addDownloadData.fileSize_high);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für \"hoch\"";
                     }
                 }
-                if (!downloadAddData.fileSize_small.isEmpty()) {
-                    size = Integer.parseInt(downloadAddData.fileSize_small);
+                if (!addDownloadData.fileSize_small.isEmpty()) {
+                    size = Integer.parseInt(addDownloadData.fileSize_small);
                     if (size > usableSpace) {
                         noSize = ", nicht genug für \"klein\"";
                     }
@@ -186,17 +186,17 @@ public class DownloadAddDialogFactory {
         return usableSpace;
     }
 
-    public static String getFilmSize(DownloadAddData downloadAddData) {
-        switch (downloadAddData.resolution) {
+    public static String getFilmSize(AddDownloadData addDownloadData) {
+        switch (addDownloadData.resolution) {
             case FilmDataMTP.RESOLUTION_HD:
-                return downloadAddData.fileSize_HD;
+                return addDownloadData.fileSize_HD;
 
             case FilmDataMTP.RESOLUTION_SMALL:
-                return downloadAddData.fileSize_small;
+                return addDownloadData.fileSize_small;
 
             case FilmDataMTP.RESOLUTION_NORMAL:
             default:
-                return downloadAddData.fileSize_high;
+                return addDownloadData.fileSize_high;
         }
     }
 }

@@ -41,7 +41,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     private boolean ok = false;
 
     private final ArrayList filmsToDownloadList;
-    private final AddDto addDto;
+    private final AddDownloadDto addDownloadDto;
 
     public DownloadAddDialogController(ProgData progData, ArrayList<FilmDataMTP> filmsToDownloadList,
                                        SetData setDataStart, String filterResolution) {
@@ -57,7 +57,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         if (setDataStart == null) {
             setDataStart = progData.setDataList.getSetDataListSave().get(0);
         }
-        this.addDto = new AddDto(progData, setDataStart, filmsToDownloadList, filterResolution);
+        this.addDownloadDto = new AddDownloadDto(progData, setDataStart, filmsToDownloadList, filterResolution);
         init(true);
     }
 
@@ -70,7 +70,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         // bestehende Downloads ändern
         this.progData = progData;
         this.filmsToDownloadList = downloadDataArrayList;
-        this.addDto = new AddDto(progData, downloadDataArrayList);
+        this.addDownloadDto = new AddDownloadDto(progData, downloadDataArrayList);
         init(true);
     }
 
@@ -78,7 +78,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     public void make() {
         initGui();
         initButton();
-        addDto.updateAct();
+        addDownloadDto.updateAct();
     }
 
     private void initGui() {
@@ -90,33 +90,33 @@ public class DownloadAddDialogController extends PDialogExtra {
             return;
         }
 
-        DownloadAddDialogGui downloadAddDialogGui = new DownloadAddDialogGui(progData, addDto, getVBoxCont());
+        DownloadAddDialogGui downloadAddDialogGui = new DownloadAddDialogGui(progData, addDownloadDto, getVBoxCont());
         downloadAddDialogGui.addCont();
         downloadAddDialogGui.init();
         addOkCancelButtons(btnOk, btnCancel);
     }
 
     private void initButton() {
-        addDto.btnDest.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
-        addDto.btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
-        addDto.btnDest.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, addDto.cboPath));
+        addDownloadDto.btnDest.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        addDownloadDto.btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
+        addDownloadDto.btnDest.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, addDownloadDto.cboPath));
 
-        addDto.btnPropose.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_PROPOSE.getImageView());
-        addDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
-        addDto.btnPropose.setOnAction(event ->
-                addDto.initPathName.proposeDestination());
+        addDownloadDto.btnPropose.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_PROPOSE.getImageView());
+        addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
+        addDownloadDto.btnPropose.setOnAction(event ->
+                addDownloadDto.initPathName.proposeDestination());
 
-        addDto.btnClean.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAN.getImageView());
-        addDto.btnClean.setTooltip(new Tooltip("Die Liste der Pfade löschen"));
-        addDto.btnClean.setOnAction(a -> addDto.initPathName.clearPath());
+        addDownloadDto.btnClean.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAN.getImageView());
+        addDownloadDto.btnClean.setTooltip(new Tooltip("Die Liste der Pfade löschen"));
+        addDownloadDto.btnClean.setOnAction(a -> addDownloadDto.initPathName.clearPath());
 
-        addDto.btnPrev.setOnAction(event -> {
-            addDto.actFilmIsShown.setValue(addDto.actFilmIsShown.getValue() - 1);
-            addDto.updateAct();
+        addDownloadDto.btnPrev.setOnAction(event -> {
+            addDownloadDto.actFilmIsShown.setValue(addDownloadDto.actFilmIsShown.getValue() - 1);
+            addDownloadDto.updateAct();
         });
-        addDto.btnNext.setOnAction(event -> {
-            addDto.actFilmIsShown.setValue(addDto.actFilmIsShown.getValue() + 1);
-            addDto.updateAct();
+        addDownloadDto.btnNext.setOnAction(event -> {
+            addDownloadDto.actFilmIsShown.setValue(addDownloadDto.actFilmIsShown.getValue() + 1);
+            addDownloadDto.updateAct();
         });
         btnOk.setOnAction(event -> {
             if (check()) {
@@ -131,7 +131,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private boolean check() {
         ok = false;
-        for (DownloadAddData d : addDto.downloadAddData) {
+        for (AddDownloadData d : addDownloadDto.addDownloadData) {
             if (d.download == null) {
                 PAlert.showErrorAlert("Fehlerhafter Download!", "Fehlerhafter Download!",
                         "Download konnte nicht erstellt werden.");
@@ -154,7 +154,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private void quit() {
         //damit der Focus nicht aus der Tabelle verloren geht
-        addDto.initPathName.setUsedPaths();
+        addDownloadDto.initPathName.setUsedPaths();
         progData.mtPlayerController.setFocus();
 
         if (!ok) {
@@ -162,7 +162,7 @@ public class DownloadAddDialogController extends PDialogExtra {
             return;
         }
 
-        if (addDto.addNewDownloads) {
+        if (addDownloadDto.addNewDownloads) {
             // dann neue Downloads anlegen
             addNewDownloads();
         } else {
@@ -178,13 +178,13 @@ public class DownloadAddDialogController extends PDialogExtra {
     private void addNewDownloads() {
         List<DownloadData> list = new ArrayList<>();
         List<DownloadData> listStarts = new ArrayList<>();
-        for (DownloadAddData downloadAddData : addDto.downloadAddData) {
-            final DownloadData downloadData = downloadAddData.download;
-            downloadData.setSetData(downloadAddData.setData, false);
-            downloadData.setPathName(downloadAddData.path, downloadAddData.name);
-            downloadData.setUrl(downloadData.getFilm().getUrlForResolution(downloadAddData.resolution));
-            downloadData.setSizeDownloadFromWeb(DownloadAddDialogFactory.getFilmSize(downloadAddData));
-            if (downloadData.getStartTime().isEmpty() && downloadAddData.startNow) {
+        for (AddDownloadData addDownloadData : addDownloadDto.addDownloadData) {
+            final DownloadData downloadData = addDownloadData.download;
+            downloadData.setSetData(addDownloadData.setData, false);
+            downloadData.setPathName(addDownloadData.path, addDownloadData.name);
+            downloadData.setUrl(downloadData.getFilm().getUrlForResolution(addDownloadData.resolution));
+            downloadData.setSizeDownloadFromWeb(DownloadAddDialogFactory.getFilmSize(addDownloadData));
+            if (downloadData.getStartTime().isEmpty() && addDownloadData.startNow) {
                 listStarts.add(downloadData);
             }
             list.add(downloadData);
@@ -196,19 +196,19 @@ public class DownloadAddDialogController extends PDialogExtra {
 
     private void changeDownloads() {
         List<DownloadData> list = new ArrayList<>();
-        for (DownloadAddData downloadAddData : addDto.downloadAddData) {
-            if (downloadAddData.downloadIsRunning()) {
+        for (AddDownloadData addDownloadData : addDownloadDto.addDownloadData) {
+            if (addDownloadData.downloadIsRunning()) {
                 // schon gestartet
                 continue;
             }
 
-            final DownloadData downloadData = downloadAddData.download;
-            final DownloadData downloadDataOrg = downloadAddData.downloadOrg;
+            final DownloadData downloadData = addDownloadData.download;
+            final DownloadData downloadDataOrg = addDownloadData.downloadOrg;
             downloadDataOrg.copyToMe(downloadData);
-            downloadDataOrg.setSetData(downloadAddData.setData, false);
-            downloadDataOrg.setPathName(downloadAddData.path, downloadAddData.name);
-            if (downloadData.getStartTime().isEmpty() && downloadAddData.startNow) {
-                list.add(downloadAddData.downloadOrg);
+            downloadDataOrg.setSetData(addDownloadData.setData, false);
+            downloadDataOrg.setPathName(addDownloadData.path, addDownloadData.name);
+            if (downloadData.getStartTime().isEmpty() && addDownloadData.startNow) {
+                list.add(addDownloadData.downloadOrg);
             }
         }
         progData.downloadList.startDownloads(list, false);

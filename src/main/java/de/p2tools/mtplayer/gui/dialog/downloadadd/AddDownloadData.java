@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 
-public class DownloadAddData {
+public class AddDownloadData {
     String fileSize_HD = "";
     String fileSize_high = "";
     String fileSize_small = "";
@@ -39,7 +39,7 @@ public class DownloadAddData {
     String path = "";
     String name = "";
 
-    public DownloadAddData() {
+    public AddDownloadData() {
     }
 
     public boolean downloadIsRunning() {

@@ -31,27 +31,27 @@ import javafx.scene.text.Text;
 
 public class DownloadAddDialogGui {
 
-    private final AddDto addDto;
+    private final AddDownloadDto addDownloadDto;
     private final ProgData progData;
     private final VBox vBoxCont;
     private final HBox hBoxTop = new HBox();
 
-    public DownloadAddDialogGui(ProgData progData, AddDto addDto, VBox vBoxCont) {
+    public DownloadAddDialogGui(ProgData progData, AddDownloadDto addDownloadDto, VBox vBoxCont) {
         this.progData = progData;
-        this.addDto = addDto;
+        this.addDownloadDto = addDownloadDto;
         this.vBoxCont = vBoxCont;
     }
 
     public void addCont() {
-        addDto.lblFilm.setStyle("-fx-font-weight: bold;");
-        addDto.lblFilmTitle.setStyle("-fx-font-weight: bold;");
+        addDownloadDto.lblFilm.setStyle("-fx-font-weight: bold;");
+        addDownloadDto.lblFilmTitle.setStyle("-fx-font-weight: bold;");
 
         // Top
         hBoxTop.getStyleClass().add("downloadDialog");
         hBoxTop.setSpacing(20);
         hBoxTop.setAlignment(Pos.CENTER);
         hBoxTop.setPadding(new Insets(5));
-        hBoxTop.getChildren().addAll(addDto.btnPrev, addDto.lblSum, addDto.btnNext);
+        hBoxTop.getChildren().addAll(addDownloadDto.btnPrev, addDownloadDto.lblSum, addDownloadDto.btnNext);
 
         vBoxCont.getChildren().add(hBoxTop);
 
@@ -62,18 +62,18 @@ public class DownloadAddDialogGui {
         VBox.setVgrow(gridPane, Priority.ALWAYS);
         vBoxCont.setPadding(new Insets(10));
 
-        gridPane.setDisable(addDto.getAct().downloadIsRunning());
-        addDto.actFilmIsShown.addListener((u, o, n) -> gridPane.setDisable(addDto.getAct().downloadIsRunning()));
+        gridPane.setDisable(addDownloadDto.getAct().downloadIsRunning());
+        addDownloadDto.actFilmIsShown.addListener((u, o, n) -> gridPane.setDisable(addDownloadDto.getAct().downloadIsRunning()));
 
         int row = 0;
         // Titel
-        gridPane.add(addDto.lblFilm, 0, row);
-        gridPane.add(addDto.lblFilmTitle, 1, row);
-        gridPane.add(addDto.lblAll, 3, row, 1, 2);
-        addDto.lblAll.setMinHeight(Region.USE_PREF_SIZE);
-        GridPane.setValignment(addDto.lblAll, VPos.TOP);
+        gridPane.add(addDownloadDto.lblFilm, 0, row);
+        gridPane.add(addDownloadDto.lblFilmTitle, 1, row);
+        gridPane.add(addDownloadDto.lblAll, 3, row, 1, 2);
+        addDownloadDto.lblAll.setMinHeight(Region.USE_PREF_SIZE);
+        GridPane.setValignment(addDownloadDto.lblAll, VPos.TOP);
         // Datum - Zeit - Länge
-        gridPane.add(addDto.lblFilmDateTime, 1, ++row);
+        gridPane.add(addDownloadDto.lblFilmDateTime, 1, ++row);
 
         ++row;
         // Auflösung
@@ -82,42 +82,42 @@ public class DownloadAddDialogGui {
         hBoxSize.getStyleClass().add("downloadDialog");
         hBoxSize.setSpacing(20);
         hBoxSize.setPadding(new Insets(5));
-        hBoxSize.getChildren().addAll(addDto.rbHd, addDto.rbHigh, addDto.rbSmall);
+        hBoxSize.getChildren().addAll(addDownloadDto.rbHd, addDownloadDto.rbHigh, addDownloadDto.rbSmall);
         gridPane.add(hBoxSize, 1, row, 2, 1);
-        gridPane.add(addDto.chkResolutionAll, 3, row);
+        gridPane.add(addDownloadDto.chkResolutionAll, 3, row);
 
         // Set
-        gridPane.add(addDto.textSet, 0, ++row);
-        addDto.cboSetData.setMaxWidth(Double.MAX_VALUE);
-        gridPane.add(addDto.cboSetData, 1, row, 2, 1);
-        gridPane.add(addDto.chkSetAll, 3, row);
+        gridPane.add(addDownloadDto.textSet, 0, ++row);
+        addDownloadDto.cboSetData.setMaxWidth(Double.MAX_VALUE);
+        gridPane.add(addDownloadDto.cboSetData, 1, row, 2, 1);
+        gridPane.add(addDownloadDto.chkSetAll, 3, row);
 
         // Programmaufruf
         GridPane gCall = new GridPane();
         // -> und wenn Download
-        gCall.add(addDto.lblProgramIsDownload, 0, 0);
+        gCall.add(addDownloadDto.lblProgramIsDownload, 0, 0);
 
         // -> oder für Downloads über ein Programm
-        addDto.btnProgramCallReset.setTooltip(new Tooltip("Reset"));
-        addDto.btnProgramCallReset.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
+        addDownloadDto.btnProgramCallReset.setTooltip(new Tooltip("Reset"));
+        addDownloadDto.btnProgramCallReset.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
 
         HBox hBoxArray1 = new HBox(P2LibConst.DIST_HBOX);
-        HBox.setHgrow(addDto.textAreaProg, Priority.ALWAYS);
+        HBox.setHgrow(addDownloadDto.textAreaProg, Priority.ALWAYS);
         hBoxArray1.setAlignment(Pos.CENTER_LEFT);
-        hBoxArray1.getChildren().addAll(addDto.btnProgramCallHelp, addDto.textAreaProg);
+        hBoxArray1.getChildren().addAll(addDownloadDto.btnProgramCallHelp, addDownloadDto.textAreaProg);
 
         HBox hBoxArray2 = new HBox(P2LibConst.DIST_HBOX);
-        HBox.setHgrow(addDto.textAreaCallArray, Priority.ALWAYS);
+        HBox.setHgrow(addDownloadDto.textAreaCallArray, Priority.ALWAYS);
         hBoxArray2.setAlignment(Pos.CENTER_LEFT);
-        hBoxArray2.getChildren().addAll(addDto.btnProgramCallReset, addDto.textAreaCallArray);
+        hBoxArray2.getChildren().addAll(addDownloadDto.btnProgramCallReset, addDownloadDto.textAreaCallArray);
 
-        addDto.textAreaCallArray.setMaxHeight(Double.MAX_VALUE);
-        addDto.textAreaCallArray.setPrefRowCount(6);
-        addDto.textAreaCallArray.setWrapText(true);
+        addDownloadDto.textAreaCallArray.setMaxHeight(Double.MAX_VALUE);
+        addDownloadDto.textAreaCallArray.setPrefRowCount(6);
+        addDownloadDto.textAreaCallArray.setWrapText(true);
 
-        addDto.vBoxProgramCall.getChildren().addAll(hBoxArray1, hBoxArray2);
+        addDownloadDto.vBoxProgramCall.getChildren().addAll(hBoxArray1, hBoxArray2);
 
-        gCall.add(addDto.vBoxProgramCall, 0, 1);
+        gCall.add(addDownloadDto.vBoxProgramCall, 0, 1);
 
         TitledPane tpCall = new TitledPane("", new HBox());
         tpCall.setExpanded(false);
@@ -129,21 +129,21 @@ public class DownloadAddDialogGui {
         // -> Programmaufruf
 
         // URL
-        addDto.p2HyperlinkUrlFilm.setWrapText(true);
-        addDto.p2HyperlinkUrlFilm.setMinHeight(Region.USE_PREF_SIZE);
-        addDto.p2HyperlinkUrlFilm.setPadding(new Insets(5));
+        addDownloadDto.p2HyperlinkUrlFilm.setWrapText(true);
+        addDownloadDto.p2HyperlinkUrlFilm.setMinHeight(Region.USE_PREF_SIZE);
+        addDownloadDto.p2HyperlinkUrlFilm.setPadding(new Insets(5));
 
-        addDto.p2HyperlinkUrlDownload.setWrapText(true);
-        addDto.p2HyperlinkUrlDownload.setMinHeight(Region.USE_PREF_SIZE);
-        addDto.p2HyperlinkUrlDownload.setPadding(new Insets(5));
+        addDownloadDto.p2HyperlinkUrlDownload.setWrapText(true);
+        addDownloadDto.p2HyperlinkUrlDownload.setMinHeight(Region.USE_PREF_SIZE);
+        addDownloadDto.p2HyperlinkUrlDownload.setPadding(new Insets(5));
 
         TitledPane tpUrl = new TitledPane("", new HBox());
         tpUrl.setExpanded(false);
         GridPane g = new GridPane();
         g.add(new Label("Film-URL: "), 0, row);
-        g.add(addDto.p2HyperlinkUrlFilm, 1, row++, 3, 1);
+        g.add(addDownloadDto.p2HyperlinkUrlFilm, 1, row++, 3, 1);
         g.add(new Label("URL: "), 0, row);
-        g.add(addDto.p2HyperlinkUrlDownload, 1, row++, 3, 1);
+        g.add(addDownloadDto.p2HyperlinkUrlDownload, 1, row++, 3, 1);
         tpUrl.setContent(g);
 
         gridPane.add(new Label("URL:"), 0, ++row);
@@ -151,32 +151,32 @@ public class DownloadAddDialogGui {
 
         // Dateiname
         gridPane.add(DownloadAddDialogFactory.getText("Dateiname:"), 0, ++row);
-        gridPane.add(addDto.txtName, 1, row, 2, 1);
+        gridPane.add(addDownloadDto.txtName, 1, row, 2, 1);
 
         // Pfad
         gridPane.add(DownloadAddDialogFactory.getText("Pfad:"), 0, ++row);
-        addDto.cboPath.setMaxWidth(Double.MAX_VALUE);
+        addDownloadDto.cboPath.setMaxWidth(Double.MAX_VALUE);
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
-        hBox.getChildren().addAll(addDto.btnDest, addDto.btnPropose, addDto.btnClean);
+        hBox.getChildren().addAll(addDownloadDto.btnDest, addDownloadDto.btnPropose, addDownloadDto.btnClean);
 
-        gridPane.add(addDto.cboPath, 1, row);
+        gridPane.add(addDownloadDto.cboPath, 1, row);
         gridPane.add(hBox, 2, row);
-        gridPane.add(addDto.chkPathAll, 3, row);
+        gridPane.add(addDownloadDto.chkPathAll, 3, row);
 
         HBox hBox2 = new HBox();
-        hBox2.getChildren().add(addDto.lblFree);
+        hBox2.getChildren().add(addDownloadDto.lblFree);
         hBox2.setAlignment(Pos.CENTER_RIGHT);
         gridPane.add(hBox2, 1, ++row, 2, 1);
 
         // Subtitle
         gridPane.add(DownloadAddDialogFactory.getText("Untertitel:"), 0, ++row);
-        gridPane.add(addDto.chkSubtitle, 1, row);
-        gridPane.add(addDto.chkSubTitleAll, 3, row);
+        gridPane.add(addDownloadDto.chkSubtitle, 1, row);
+        gridPane.add(addDownloadDto.chkSubTitleAll, 3, row);
 
         // Info
         gridPane.add(DownloadAddDialogFactory.getText("Infodatei:"), 0, ++row);
-        gridPane.add(addDto.chkInfo, 1, row);
-        gridPane.add(addDto.chkInfoAll, 3, row);
+        gridPane.add(addDownloadDto.chkInfo, 1, row);
+        gridPane.add(addDownloadDto.chkInfoAll, 3, row);
 
         // Startzeit
         final HBox hBoxStartTime = new HBox();
@@ -184,12 +184,12 @@ public class DownloadAddDialogGui {
         hBoxStartTime.setAlignment(Pos.CENTER_LEFT);
         hBoxStartTime.setSpacing(20);
         hBoxStartTime.setPadding(new Insets(5));
-        hBoxStartTime.getChildren().addAll(addDto.rbStartNotYet,
-                addDto.rbStartNow, addDto.rbStartAtTime,
-                addDto.p2TimePicker);
+        hBoxStartTime.getChildren().addAll(addDownloadDto.rbStartNotYet,
+                addDownloadDto.rbStartNow, addDownloadDto.rbStartAtTime,
+                addDownloadDto.p2TimePicker);
         gridPane.add(DownloadAddDialogFactory.getText("Startzeit:"), 0, ++row);
         gridPane.add(hBoxStartTime, 1, row, 2, 1);
-        gridPane.add(addDto.chkStartTimeAll, 3, row);
+        gridPane.add(addDownloadDto.chkStartTimeAll, 3, row);
 
 
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
@@ -202,33 +202,33 @@ public class DownloadAddDialogGui {
     public void init() {
         if (progData.setDataList.getSetDataListSave().size() == 1) {
             // wenns nur ein Set gibt, macht dann keinen Sinn
-            addDto.textSet.setVisible(false);
-            addDto.textSet.setManaged(false);
-            addDto.cboSetData.setVisible(false);
-            addDto.cboSetData.setManaged(false);
-            addDto.chkSetAll.setVisible(false);
-            addDto.chkSetAll.setManaged(false);
+            addDownloadDto.textSet.setVisible(false);
+            addDownloadDto.textSet.setManaged(false);
+            addDownloadDto.cboSetData.setVisible(false);
+            addDownloadDto.cboSetData.setManaged(false);
+            addDownloadDto.chkSetAll.setVisible(false);
+            addDownloadDto.chkSetAll.setManaged(false);
         }
 
-        if (addDto.downloadAddData.length == 1) {
+        if (addDownloadDto.addDownloadData.length == 1) {
             // wenns nur einen Download gibt, macht dann keinen Sinn
             hBoxTop.setVisible(false);
             hBoxTop.setManaged(false);
-            addDto.lblAll.setVisible(false);
-            addDto.lblAll.setManaged(false);
+            addDownloadDto.lblAll.setVisible(false);
+            addDownloadDto.lblAll.setManaged(false);
 
-            addDto.chkSetAll.setVisible(false);
-            addDto.chkSetAll.setManaged(false);
-            addDto.chkResolutionAll.setVisible(false);
-            addDto.chkResolutionAll.setManaged(false);
-            addDto.chkPathAll.setVisible(false);
-            addDto.chkPathAll.setManaged(false);
-            addDto.chkSubTitleAll.setVisible(false);
-            addDto.chkSubTitleAll.setManaged(false);
-            addDto.chkInfoAll.setVisible(false);
-            addDto.chkInfoAll.setManaged(false);
-            addDto.chkStartTimeAll.setVisible(false);
-            addDto.chkStartTimeAll.setManaged(false);
+            addDownloadDto.chkSetAll.setVisible(false);
+            addDownloadDto.chkSetAll.setManaged(false);
+            addDownloadDto.chkResolutionAll.setVisible(false);
+            addDownloadDto.chkResolutionAll.setManaged(false);
+            addDownloadDto.chkPathAll.setVisible(false);
+            addDownloadDto.chkPathAll.setManaged(false);
+            addDownloadDto.chkSubTitleAll.setVisible(false);
+            addDownloadDto.chkSubTitleAll.setManaged(false);
+            addDownloadDto.chkInfoAll.setVisible(false);
+            addDownloadDto.chkInfoAll.setManaged(false);
+            addDownloadDto.chkStartTimeAll.setVisible(false);
+            addDownloadDto.chkStartTimeAll.setManaged(false);
         }
     }
 }

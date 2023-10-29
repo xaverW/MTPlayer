@@ -29,45 +29,45 @@ import javafx.scene.text.TextAlignment;
 import java.util.Arrays;
 
 public class InitResolutionButton {
-    private final AddDto addDto;
+    private final AddDownloadDto addDownloadDto;
     private EventHandler<ActionEvent> onAction;
 
-    public InitResolutionButton(AddDto addDto) {
-        this.addDto = addDto;
+    public InitResolutionButton(AddDownloadDto addDownloadDto) {
+        this.addDownloadDto = addDownloadDto;
         init();
     }
 
     private void init() {
         onAction = (a) -> {
             setRes();
-            addDto.updateAct();
+            addDownloadDto.updateAct();
         };
 
         // und jetzt für den aktuellen Film das GUI setzen
         makeAct();
 
         final ToggleGroup toggleGroupSize = new ToggleGroup();
-        addDto.rbHd.setToggleGroup(toggleGroupSize);
-        addDto.rbHigh.setToggleGroup(toggleGroupSize);
-        addDto.rbSmall.setToggleGroup(toggleGroupSize);
+        addDownloadDto.rbHd.setToggleGroup(toggleGroupSize);
+        addDownloadDto.rbHigh.setToggleGroup(toggleGroupSize);
+        addDownloadDto.rbSmall.setToggleGroup(toggleGroupSize);
 
-        addDto.rbHd.setOnAction(onAction);
-        addDto.rbHigh.setOnAction(onAction);
-        addDto.rbSmall.setOnAction(onAction);
-        addDto.chkResolutionAll.setOnAction(a -> {
-            if (addDto.chkResolutionAll.isSelected()) {
+        addDownloadDto.rbHd.setOnAction(onAction);
+        addDownloadDto.rbHigh.setOnAction(onAction);
+        addDownloadDto.rbSmall.setOnAction(onAction);
+        addDownloadDto.chkResolutionAll.setOnAction(a -> {
+            if (addDownloadDto.chkResolutionAll.isSelected()) {
                 setRes();
-                addDto.updateAct();
+                addDownloadDto.updateAct();
             }
         });
     }
 
     private void setRes() {
-        if (addDto.rbHd.isSelected()) {
+        if (addDownloadDto.rbHd.isSelected()) {
             setResolution(FilmDataMTP.RESOLUTION_HD);
             ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_HD);
 
-        } else if (addDto.rbHigh.isSelected()) {
+        } else if (addDownloadDto.rbHigh.isSelected()) {
             setResolution(FilmDataMTP.RESOLUTION_NORMAL);
             ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_NORMAL);
 
@@ -78,78 +78,78 @@ public class InitResolutionButton {
     }
 
     private void setResolution(String resolution) {
-        if (addDto.chkResolutionAll.isSelected()) {
-            Arrays.stream(addDto.downloadAddData).forEach(downloadAddData -> {
+        if (addDownloadDto.chkResolutionAll.isSelected()) {
+            Arrays.stream(addDownloadDto.addDownloadData).forEach(downloadAddData -> {
                 if (resolution.equals(FilmDataMTP.RESOLUTION_HD) && downloadAddData.download.getFilm().isHd()) {
                     downloadAddData.resolution = FilmDataMTP.RESOLUTION_HD;
 
-                } else if (resolution.equals(FilmDataMTP.RESOLUTION_SMALL) && addDto.getAct().download.getFilm().isSmall()) {
+                } else if (resolution.equals(FilmDataMTP.RESOLUTION_SMALL) && addDownloadDto.getAct().download.getFilm().isSmall()) {
                     downloadAddData.resolution = FilmDataMTP.RESOLUTION_SMALL;
 
                 } else {
                     downloadAddData.resolution = FilmDataMTP.RESOLUTION_NORMAL;
                 }
                 downloadAddData.download.setUrl(downloadAddData.download.getFilm().getUrlForResolution(downloadAddData.resolution));
-                InitProgramCall.setProgrammCall(addDto, downloadAddData);
+                InitProgramCall.setProgrammCall(addDownloadDto, downloadAddData);
             });
 
         } else {
-            addDto.getAct().resolution = resolution;
-            addDto.getAct().download.setUrl(addDto.getAct().download.getFilm().getUrlForResolution(resolution));
-            InitProgramCall.setProgrammCall(addDto, addDto.getAct());
+            addDownloadDto.getAct().resolution = resolution;
+            addDownloadDto.getAct().download.setUrl(addDownloadDto.getAct().download.getFilm().getUrlForResolution(resolution));
+            InitProgramCall.setProgrammCall(addDownloadDto, addDownloadDto.getAct());
         }
     }
 
     public void makeAct() {
-        addDto.rbHigh.setOnAction(null);
-        addDto.rbHd.setOnAction(null);
-        addDto.rbSmall.setOnAction(null);
+        addDownloadDto.rbHigh.setOnAction(null);
+        addDownloadDto.rbHd.setOnAction(null);
+        addDownloadDto.rbSmall.setOnAction(null);
 
-        addDto.rbHigh.setDisable(addDto.getAct().downloadIsRunning());
-        addDto.rbHd.setDisable(addDto.getAct().downloadIsRunning());
-        addDto.rbSmall.setDisable(addDto.getAct().downloadIsRunning());
+        addDownloadDto.rbHigh.setDisable(addDownloadDto.getAct().downloadIsRunning());
+        addDownloadDto.rbHd.setDisable(addDownloadDto.getAct().downloadIsRunning());
+        addDownloadDto.rbSmall.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
-        addDto.rbHd.setDisable(!addDto.getAct().download.getFilm().isHd());
-        addDto.rbSmall.setDisable(!addDto.getAct().download.getFilm().isSmall());
+        addDownloadDto.rbHd.setDisable(!addDownloadDto.getAct().download.getFilm().isHd());
+        addDownloadDto.rbSmall.setDisable(!addDownloadDto.getAct().download.getFilm().isSmall());
 
-        switch (addDto.getAct().resolution) {
-            case FilmDataMTP.RESOLUTION_HD -> addDto.rbHd.setSelected(true);
-            case FilmDataMTP.RESOLUTION_SMALL -> addDto.rbSmall.setSelected(true);
-            default -> addDto.rbHigh.setSelected(true);
+        switch (addDownloadDto.getAct().resolution) {
+            case FilmDataMTP.RESOLUTION_HD -> addDownloadDto.rbHd.setSelected(true);
+            case FilmDataMTP.RESOLUTION_SMALL -> addDownloadDto.rbSmall.setSelected(true);
+            default -> addDownloadDto.rbHigh.setSelected(true);
         }
 
         String textHd = "HD";
-        if (!addDto.rbHd.isDisable() && !addDto.getAct().fileSize_HD.isEmpty()) {
-            addDto.rbHd.setText(textHd + P2LibConst.LINE_SEPARATOR +
-                    "[ " + addDto.getAct().fileSize_HD + " MB ]");
-            addDto.rbHd.setTextAlignment(TextAlignment.CENTER);
-            addDto.rbHd.setMinHeight(Region.USE_PREF_SIZE);
+        if (!addDownloadDto.rbHd.isDisable() && !addDownloadDto.getAct().fileSize_HD.isEmpty()) {
+            addDownloadDto.rbHd.setText(textHd + P2LibConst.LINE_SEPARATOR +
+                    "[ " + addDownloadDto.getAct().fileSize_HD + " MB ]");
+            addDownloadDto.rbHd.setTextAlignment(TextAlignment.CENTER);
+            addDownloadDto.rbHd.setMinHeight(Region.USE_PREF_SIZE);
         } else {
-            addDto.rbHd.setText(textHd);
+            addDownloadDto.rbHd.setText(textHd);
         }
 
         String textHeight = "hohe Auflösung";
-        if (!addDto.getAct().fileSize_high.isEmpty()) {
-            addDto.rbHigh.setText(textHeight + P2LibConst.LINE_SEPARATOR +
-                    "[ " + addDto.getAct().fileSize_high + " MB ]");
-            addDto.rbHigh.setTextAlignment(TextAlignment.CENTER);
-            addDto.rbHigh.setMinHeight(Region.USE_PREF_SIZE);
+        if (!addDownloadDto.getAct().fileSize_high.isEmpty()) {
+            addDownloadDto.rbHigh.setText(textHeight + P2LibConst.LINE_SEPARATOR +
+                    "[ " + addDownloadDto.getAct().fileSize_high + " MB ]");
+            addDownloadDto.rbHigh.setTextAlignment(TextAlignment.CENTER);
+            addDownloadDto.rbHigh.setMinHeight(Region.USE_PREF_SIZE);
         } else {
-            addDto.rbHigh.setText(textHeight);
+            addDownloadDto.rbHigh.setText(textHeight);
         }
 
         String textLow = "niedrige Auflösung";
-        if (!addDto.rbSmall.isDisable() && !addDto.getAct().fileSize_small.isEmpty()) {
-            addDto.rbSmall.setText(textLow + P2LibConst.LINE_SEPARATOR +
-                    "[ " + addDto.getAct().fileSize_small + " MB ]");
-            addDto.rbSmall.setTextAlignment(TextAlignment.CENTER);
-            addDto.rbSmall.setMinHeight(Region.USE_PREF_SIZE);
+        if (!addDownloadDto.rbSmall.isDisable() && !addDownloadDto.getAct().fileSize_small.isEmpty()) {
+            addDownloadDto.rbSmall.setText(textLow + P2LibConst.LINE_SEPARATOR +
+                    "[ " + addDownloadDto.getAct().fileSize_small + " MB ]");
+            addDownloadDto.rbSmall.setTextAlignment(TextAlignment.CENTER);
+            addDownloadDto.rbSmall.setMinHeight(Region.USE_PREF_SIZE);
         } else {
-            addDto.rbSmall.setText(textLow);
+            addDownloadDto.rbSmall.setText(textLow);
         }
 
-        addDto.rbHigh.setOnAction(onAction);
-        addDto.rbHd.setOnAction(onAction);
-        addDto.rbSmall.setOnAction(onAction);
+        addDownloadDto.rbHigh.setOnAction(onAction);
+        addDownloadDto.rbHd.setOnAction(onAction);
+        addDownloadDto.rbSmall.setOnAction(onAction);
     }
 }

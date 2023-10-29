@@ -24,61 +24,61 @@ import javafx.event.EventHandler;
 import java.util.Arrays;
 
 public class InitSetData {
-    private final AddDto addDto;
+    private final AddDownloadDto addDownloadDto;
     private EventHandler<ActionEvent> onAction;
 
-    public InitSetData(AddDto addDto) {
-        this.addDto = addDto;
-        init(addDto.setDataStart);
+    public InitSetData(AddDownloadDto addDownloadDto) {
+        this.addDownloadDto = addDownloadDto;
+        init(addDownloadDto.setDataStart);
     }
 
     private void init(SetData setData) {
         onAction = (a) -> {
             makeSetDataChange();
-            addDto.updateAct();
+            addDownloadDto.updateAct();
         };
-        addDto.cboSetData.setOnAction(onAction);
+        addDownloadDto.cboSetData.setOnAction(onAction);
 
-        addDto.chkSetAll.setOnAction(a -> {
-            if (addDto.chkSetAll.isSelected()) {
-                addDto.initSetData.makeSetDataChange();
-                addDto.updateAct();
+        addDownloadDto.chkSetAll.setOnAction(a -> {
+            if (addDownloadDto.chkSetAll.isSelected()) {
+                addDownloadDto.initSetData.makeSetDataChange();
+                addDownloadDto.updateAct();
             }
         });
 
-        if (addDto.progData.setDataList.getSetDataListSave().size() > 1) {
+        if (addDownloadDto.progData.setDataList.getSetDataListSave().size() > 1) {
             // nur dann machts Sinn
-            addDto.cboSetData.getItems().addAll(addDto.progData.setDataList.getSetDataListSave());
-            addDto.cboSetData.getSelectionModel().select(setData);
+            addDownloadDto.cboSetData.getItems().addAll(addDownloadDto.progData.setDataList.getSetDataListSave());
+            addDownloadDto.cboSetData.getSelectionModel().select(setData);
         }
     }
 
     public void makeAct() {
-        addDto.cboSetData.setDisable(addDto.getAct().downloadIsRunning());
+        addDownloadDto.cboSetData.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
-        addDto.cboSetData.setOnAction(null);
-        addDto.cboSetData.getSelectionModel().select(addDto.getAct().setData);
-        addDto.cboSetData.setOnAction(onAction);
+        addDownloadDto.cboSetData.setOnAction(null);
+        addDownloadDto.cboSetData.getSelectionModel().select(addDownloadDto.getAct().setData);
+        addDownloadDto.cboSetData.setOnAction(onAction);
     }
 
 
     private void makeSetDataChange() {
-        if (addDto.chkSetAll.isSelected()) {
-            Arrays.stream(addDto.downloadAddData).forEach(this::makeSetDataChange);
+        if (addDownloadDto.chkSetAll.isSelected()) {
+            Arrays.stream(addDownloadDto.addDownloadData).forEach(this::makeSetDataChange);
         } else {
-            makeSetDataChange(addDto.getAct());
+            makeSetDataChange(addDownloadDto.getAct());
         }
     }
 
-    private void makeSetDataChange(DownloadAddData downloadAddData) {
-        SetData psetData = addDto.cboSetData.getSelectionModel().getSelectedItem();
-        if (downloadAddData.setData == psetData) {
+    private void makeSetDataChange(AddDownloadData addDownloadData) {
+        SetData psetData = addDownloadDto.cboSetData.getSelectionModel().getSelectedItem();
+        if (addDownloadData.setData == psetData) {
             // dann passts eh
             return;
         }
 
-        downloadAddData.setData = psetData;
-        downloadAddData.download.setSetData(psetData, false);
-        InitProgramCall.setProgrammCall(addDto, downloadAddData);
+        addDownloadData.setData = psetData;
+        addDownloadData.download.setSetData(psetData, false);
+        InitProgramCall.setProgrammCall(addDownloadDto, addDownloadData);
     }
 }

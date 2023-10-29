@@ -25,51 +25,51 @@ import java.util.Arrays;
 
 public class InitProgramCall {
 
-    private final AddDto addDto;
+    private final AddDownloadDto addDownloadDto;
 
-    public InitProgramCall(AddDto addDto) {
-        this.addDto = addDto;
+    public InitProgramCall(AddDownloadDto addDownloadDto) {
+        this.addDownloadDto = addDownloadDto;
         init();
     }
 
     private void init() {
-        Arrays.stream(addDto.downloadAddData).toList().forEach(downloadAddData -> {
+        Arrays.stream(addDownloadDto.addDownloadData).toList().forEach(downloadAddData -> {
             downloadAddData.orgProgArray = downloadAddData.download.getProgramCallArray();
         });
 
         makeAct();
-        addDto.btnProgramCallReset.setOnAction(e -> addDto.textAreaCallArray.setText(addDto.getAct().orgProgArray));
-        addDto.textAreaCallArray.textProperty().addListener((u, o, n) -> {
-            addDto.getAct().download.setProgramCallArray(n.trim());
-            addDto.getAct().download.setProgramCall(ProgramData.makeProgAufrufArray(addDto.getAct().download.getProgramCallArray()));
-            addDto.textAreaProg.setText(addDto.getAct().download.getProgramCall());
+        addDownloadDto.btnProgramCallReset.setOnAction(e -> addDownloadDto.textAreaCallArray.setText(addDownloadDto.getAct().orgProgArray));
+        addDownloadDto.textAreaCallArray.textProperty().addListener((u, o, n) -> {
+            addDownloadDto.getAct().download.setProgramCallArray(n.trim());
+            addDownloadDto.getAct().download.setProgramCall(ProgramData.makeProgAufrufArray(addDownloadDto.getAct().download.getProgramCallArray()));
+            addDownloadDto.textAreaProg.setText(addDownloadDto.getAct().download.getProgramCall());
         });
 
-        addDto.textAreaProg.textProperty().addListener((observable, oldValue, newValue) -> {
-            addDto.getAct().download.setProgramCall(newValue.trim());
+        addDownloadDto.textAreaProg.textProperty().addListener((observable, oldValue, newValue) -> {
+            addDownloadDto.getAct().download.setProgramCall(newValue.trim());
         });
     }
 
     public void makeAct() {
-        addDto.textAreaCallArray.setDisable(addDto.getAct().downloadIsRunning());
+        addDownloadDto.textAreaCallArray.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
-        addDto.lblProgramIsDownload.setVisible(!addDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
-        addDto.lblProgramIsDownload.setManaged(!addDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
+        addDownloadDto.lblProgramIsDownload.setVisible(!addDownloadDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
+        addDownloadDto.lblProgramIsDownload.setManaged(!addDownloadDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
 
-        addDto.vBoxProgramCall.setVisible(addDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
-        addDto.vBoxProgramCall.setManaged(addDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
+        addDownloadDto.vBoxProgramCall.setVisible(addDownloadDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
+        addDownloadDto.vBoxProgramCall.setManaged(addDownloadDto.getAct().download.getType().equals(DownloadConstants.TYPE_PROGRAM));
 
-        addDto.textAreaProg.setText(addDto.getAct().download.getProgramCall());
-        addDto.textAreaCallArray.setText(addDto.getAct().download.getProgramCallArray());
+        addDownloadDto.textAreaProg.setText(addDownloadDto.getAct().download.getProgramCall());
+        addDownloadDto.textAreaCallArray.setText(addDownloadDto.getAct().download.getProgramCallArray());
     }
 
-    public static void setProgrammCall(AddDto addDto, DownloadAddData downloadAddData) {
-        DownloadData download = downloadAddData.download;
+    public static void setProgrammCall(AddDownloadDto addDownloadDto, AddDownloadData addDownloadData) {
+        DownloadData download = addDownloadData.download;
         // muss noch der Programmaufruf neu gebaut werden
-        download.setPathName(downloadAddData.path, downloadAddData.name);
+        download.setPathName(addDownloadData.path, addDownloadData.name);
         download.makeProgParameter();
 
-        addDto.textAreaProg.setText(addDto.getAct().download.getProgramCall());
-        addDto.textAreaCallArray.setText(addDto.getAct().download.getProgramCallArray());
+        addDownloadDto.textAreaProg.setText(addDownloadDto.getAct().download.getProgramCall());
+        addDownloadDto.textAreaCallArray.setText(addDownloadDto.getAct().download.getProgramCallArray());
     }
 }
