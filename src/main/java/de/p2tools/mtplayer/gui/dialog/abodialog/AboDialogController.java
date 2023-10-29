@@ -89,7 +89,7 @@ public class AboDialogController extends PDialogExtra {
     public AboDialogController(ProgData progData, AboData abo) {
         // hier wird ein neues Abo angelegt!
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false, DECO.BORDER, true);
+                "Abo anlegen", false, false, DECO.BORDER_SMALL, true);
 
         this.progData = progData;
         this.addNewAbo = true;
@@ -104,7 +104,7 @@ public class AboDialogController extends PDialogExtra {
     public AboDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
         // hier wird ein bestehendes Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false, DECO.BORDER, true);
+                "Abo anlegen", false, false, DECO.BORDER_SMALL, true);
 
         this.progData = progData;
         this.addNewAbo = false;
@@ -139,7 +139,7 @@ public class AboDialogController extends PDialogExtra {
     public AboDialogController(ProgData progData, List<AboData> aboList) {
         // hier werden bestehende Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo ändern", false, false, DECO.BORDER, true);
+                "Abo ändern", false, false, DECO.BORDER_SMALL, true);
 
         this.progData = progData;
         this.addNewAbo = false;

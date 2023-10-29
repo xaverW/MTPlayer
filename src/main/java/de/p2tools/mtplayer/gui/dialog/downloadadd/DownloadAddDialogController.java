@@ -65,7 +65,7 @@ public class DownloadAddDialogController extends PDialogExtra {
         super(progData.primaryStage,
                 downloadDataArrayList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE :
                         ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
-                "Download ändern", true, false);
+                "Download ändern", true, false, DECO.BORDER_SMALL);
 
         // bestehende Downloads ändern
         this.progData = progData;
