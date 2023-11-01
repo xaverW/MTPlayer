@@ -197,13 +197,9 @@ public class AboAddDialogGui {
         final Button btnHelpStartTime = P2Button.helpButton(addAboDto.stage, "Startzeit",
                 HelpText.ABO_START_TIME);
 
-        HBox hBoxGrow = new HBox();
-        HBox.setHgrow(hBoxGrow, Priority.ALWAYS);
-
         HBox hBoxTime = new HBox(10);
         hBoxTime.setAlignment(Pos.CENTER_LEFT);
-        hBoxGrow.getChildren().add(btnHelpStartTime);
-        hBoxTime.getChildren().addAll(addAboDto.chkStartTime, addAboDto.p2TimePicker, hBoxGrow);
+        hBoxTime.getChildren().addAll(addAboDto.chkStartTime, addAboDto.p2TimePicker, P2GuiTools.getHBoxGrower(), btnHelpStartTime);
 
         gridPane.add(DownloadAddDialogFactory.getText(AboFieldNames.ABO_START_TIME + ":"), 0, ++row);
         gridPane.add(hBoxTime, 1, row);
