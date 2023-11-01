@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
-import de.p2tools.mtplayer.gui.dialog.abodialog.AboEditDialogController;
+import de.p2tools.mtplayer.gui.dialog.abodialog.AboAddDialogController;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -81,7 +81,7 @@ public class AboListFactory {
                 minDuration,
                 maxDuration,
                 namePath);
-        new AboEditDialogController(ProgData.getInstance(), abo);
+        new AboAddDialogController(ProgData.getInstance(), abo);
     }
 
     public static void deleteAbo() {
@@ -119,14 +119,14 @@ public class AboListFactory {
         //Abos aus Tab Abo (Menü, Doppelklick Tabelle) ändern
         List<AboData> aboList = ProgData.getInstance().aboGuiController.getSelList();
         if (!aboList.isEmpty()) {
-            new AboEditDialogController(ProgData.getInstance(), aboList);
+            new AboAddDialogController(ProgData.getInstance(), aboList);
         }
     }
 
     public static void editAbo(AboData abo) {
         //Abo aus Tab Filme/Download ändern
         if (abo != null) {
-            new AboEditDialogController(ProgData.getInstance(), FXCollections.observableArrayList(abo));
+            new AboAddDialogController(ProgData.getInstance(), FXCollections.observableArrayList(abo));
         }
     }
 
@@ -180,7 +180,7 @@ public class AboListFactory {
         if (!theme.isEmpty()) {
             abo.setThemeExact(themeExact);
         }
-        new AboEditDialogController(ProgData.getInstance(), abo);
+        new AboAddDialogController(ProgData.getInstance(), abo);
     }
 
     public static void changeAboFromFilterButton(Optional<AboData> oAbo, FilmFilter filmFilter) {
@@ -190,6 +190,6 @@ public class AboListFactory {
         }
 
         final AboData abo = oAbo.get();
-        new AboEditDialogController(ProgData.getInstance(), filmFilter, abo);
+        new AboAddDialogController(ProgData.getInstance(), filmFilter, abo);
     }
 }

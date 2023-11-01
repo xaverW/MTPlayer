@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
-import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.alert.PAlert;
@@ -32,7 +31,7 @@ import javafx.scene.control.Button;
 
 import java.util.List;
 
-public class AboEditDialogController extends PDialogExtra {
+public class AboAddDialogController extends PDialogExtra {
 
     final Button btnOk = new Button("_Ok");
     final Button btnApply = new Button("_Anwenden");
@@ -43,23 +42,23 @@ public class AboEditDialogController extends PDialogExtra {
 
     final AddAboDto addAboDto;
 
-    public AboEditDialogController(ProgData progData, AboData abo) {
+    public AboAddDialogController(ProgData progData, AboData abo) {
         // hier wird ein neues Abo angelegt!
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false, DECO.BORDER_SMALL, true);
 
         this.progData = progData;
-        this.addAboDto = new AddAboDto(true, abo);
+        this.addAboDto = new AddAboDto(progData, true, abo);
         init(true);
     }
 
-    public AboEditDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
+    public AboAddDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
         // hier wird ein bestehendes Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo anlegen", false, false, DECO.BORDER_SMALL, true);
 
         this.progData = progData;
-        this.addAboDto = new AddAboDto(false, abo);
+        this.addAboDto = new AddAboDto(progData, false, abo);
 
         final String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         final String theme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
@@ -71,26 +70,26 @@ public class AboEditDialogController extends PDialogExtra {
         final int minDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMinDur() : FilterCheck.FILTER_ALL_OR_MIN;
         final int maxDuration = filmFilter.isMinMaxDurVis() ? filmFilter.getMaxDur() : FilterCheck.FILTER_DURATION_MAX_MINUTE;
 
-        addAboDto.aboCopy.setChannel(channel);
-        addAboDto.aboCopy.setTheme(theme);
-        addAboDto.aboCopy.setThemeExact(themeExact);
-        addAboDto.aboCopy.setTitle(title);
-        addAboDto.aboCopy.setThemeTitle(themeTitle);
-        addAboDto.aboCopy.setSomewhere(somewhere);
-        addAboDto.aboCopy.setTimeRange(timeRange);
-        addAboDto.aboCopy.setMinDurationMinute(minDuration);
-        addAboDto.aboCopy.setMaxDurationMinute(maxDuration);
+        addAboDto.getAct().abo.setChannel(channel);
+        addAboDto.getAct().abo.setTheme(theme);
+        addAboDto.getAct().abo.setThemeExact(themeExact);
+        addAboDto.getAct().abo.setTitle(title);
+        addAboDto.getAct().abo.setThemeTitle(themeTitle);
+        addAboDto.getAct().abo.setSomewhere(somewhere);
+        addAboDto.getAct().abo.setTimeRange(timeRange);
+        addAboDto.getAct().abo.setMinDurationMinute(minDuration);
+        addAboDto.getAct().abo.setMaxDurationMinute(maxDuration);
 
         init(true);
     }
 
-    public AboEditDialogController(ProgData progData, List<AboData> aboList) {
+    public AboAddDialogController(ProgData progData, List<AboData> aboList) {
         // hier werden bestehende Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
                 "Abo ändern", false, false, DECO.BORDER_SMALL, true);
 
         this.progData = progData;
-        this.addAboDto = new AddAboDto(false, aboList);
+        this.addAboDto = new AddAboDto(progData, false, aboList);
         init(true);
     }
 
@@ -98,6 +97,7 @@ public class AboEditDialogController extends PDialogExtra {
     public void make() {
         initGui();
         initButton();
+        addAboDto.updateAct();
     }
 
     private void initGui() {
@@ -109,9 +109,9 @@ public class AboEditDialogController extends PDialogExtra {
             return;
         }
 
-        AboEditDialogGui aboEditDialogGui = new AboEditDialogGui(progData, addAboDto, getVBoxCont());
-        aboEditDialogGui.addCont();
-        aboEditDialogGui.init();
+        AboAddDialogGui aboAddDialogGui = new AboAddDialogGui(progData, addAboDto, getVBoxCont());
+        aboAddDialogGui.addCont();
+        aboAddDialogGui.init();
 
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
         addHlpButton(P2Button.helpButton(getStageProp(), "Download", HelpText.ABO_SEARCH));
@@ -122,6 +122,14 @@ public class AboEditDialogController extends PDialogExtra {
         setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
             setMaskerPane();
+        });
+        addAboDto.btnPrev.setOnAction(event -> {
+            addAboDto.actAboIsShown.setValue(addAboDto.actAboIsShown.getValue() - 1);
+            addAboDto.updateAct();
+        });
+        addAboDto.btnNext.setOnAction(event -> {
+            addAboDto.actAboIsShown.setValue(addAboDto.actAboIsShown.getValue() + 1);
+            addAboDto.updateAct();
         });
 
 //        btnOk.disableProperty().bind(addAboDto.aboCopy.nameProperty().isEmpty().or(okProp.not()));
@@ -156,7 +164,7 @@ public class AboEditDialogController extends PDialogExtra {
 
     private boolean check() {
         AboData abo;
-        if (addAboDto.addNewAbo && (abo = AboFactory.aboExistsAlready(addAboDto.aboCopy)) != null) {
+        if (addAboDto.addNewAbo && (abo = AboFactory.aboExistsAlready(addAboDto.getAct().abo)) != null) {
             // dann gibts das Abo schon
             if (PAlert.showAlert_yes_no(getStage(), "Fehler", "Abo anlegen",
                     "Ein Abo mit den Einstellungen existiert bereits:" +
@@ -172,32 +180,28 @@ public class AboEditDialogController extends PDialogExtra {
             }
         }
 
-        if (addAboDto.addNewAbo && addAboDto.aboCopy.isEmpty()) {
+        if (addAboDto.addNewAbo && addAboDto.getAct().abo.isEmpty()) {
             // dann ists leer
             PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
                     "Das Abo ist \"leer\", es enthält keine Filter.");
             return false;
         }
 
-        if (addAboDto.aboList.size() == 1) {
-            // entweder nur ein Abo
-            addAboDto.aboList.get(0).copyToMe(addAboDto.aboCopy);
-
-        } else {
-            // oder nur die markierten Felder bei ALLEN Abos
-            updateAboList();
-        }
         return true;
     }
 
     private void apply() {
         if (addAboDto.addNewAbo) {
-            addAboDto.addNewAbo = false;
-            progData.aboList.addAbo(addAboDto.aboCopy);
+            // dann soll ein neues angelegt werden
+            addNewAbos();
+        } else {
+            // dann bestehende anpassen
+            updateAboList();
         }
+
         // als Vorgabe merken
-        ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(addAboDto.aboCopy.getMinDurationMinute());
-        ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(addAboDto.aboCopy.getMaxDurationMinute());
+        ProgConfig.ABO_MINUTE_MIN_SIZE.setValue(addAboDto.getAct().abo.getMinDurationMinute());
+        ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(addAboDto.getAct().abo.getMaxDurationMinute());
 
         // da nicht modal!!
         progData.aboList.notifyChanges();
@@ -206,25 +210,23 @@ public class AboEditDialogController extends PDialogExtra {
         ProgSave.saveAll();
     }
 
+    private void addNewAbos() {
+        // dann erst mal die ORG anlegen und diese dann einpflegen
+        for (AddAboData addAboData : addAboDto.addAboData) {
+            final AboData aboData = addAboData.abo;
+            final AboData aboDataOrg = aboData.getCopy();
+            progData.aboList.addAbo(aboDataOrg);
+        }
+
+        // ab jetzt ists ein Update!!
+        addAboDto.addNewAbo = false;
+    }
+
     private void updateAboList() {
-        for (int i = 0; i < addAboDto.cbxEditAll.length; ++i) {
-            if (addAboDto.cbxEditAll[i] == null || !addAboDto.cbxEditAll[i].isSelected()) {
-                continue;
-            }
-
-            // dann wird das Feld bei allen Abos geändert
-            for (final AboData abo : addAboDto.aboList) {
-                if (i == AboFieldNames.ABO_MIN_DURATION_NO) {
-                    // duration MIN dann AUCH max
-                    abo.properties[AboFieldNames.ABO_MAX_DURATION_NO].setValue(addAboDto.aboCopy.properties[AboFieldNames.ABO_MAX_DURATION_NO].getValue());
-
-                } else if (i == AboFieldNames.ABO_SET_DATA_ID_NO) {
-                    // dann auch SetData
-                    abo.setSetData(addAboDto.aboCopy.getSetData());
-                }
-
-                abo.properties[i].setValue(addAboDto.aboCopy.properties[i].getValue());
-            }
+        for (AddAboData addAboData : addAboDto.addAboData) {
+            final AboData abo = addAboData.abo;
+            final AboData aboOrg = addAboData.aboOrg;
+            aboOrg.copyToMe(abo);
         }
     }
 }

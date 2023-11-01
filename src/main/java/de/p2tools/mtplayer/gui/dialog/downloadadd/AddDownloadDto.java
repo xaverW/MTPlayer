@@ -41,13 +41,13 @@ public class AddDownloadDto {
 
     public boolean addNewDownloads = true;
 
-    public InitSetData initSetData;
+    public InitSetDataDownload initSetDataDownload;
     public InitPathName initPathName;
     public InitResolutionButton initResolutionButton;
     public InitSubTitle initSubTitle;
     public InitProgramCall initProgramCall;
     public InitUrl initUrl;
-    public InitStartTime initStartTime;
+    public InitStartTimeDownload initStartTimeDownload;
 
     public ProgData progData;
     public AddDownloadData[] addDownloadData;
@@ -120,13 +120,13 @@ public class AddDownloadDto {
 
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayFilm(filmsToDownloadList, this);
 
-        initSetData = new InitSetData(this);
+        initSetDataDownload = new InitSetDataDownload(this);
         initPathName = new InitPathName(this);
         initResolutionButton = new InitResolutionButton(this);
         initSubTitle = new InitSubTitle(this);
         initProgramCall = new InitProgramCall(this);
         initUrl = new InitUrl(this);
-        initStartTime = new InitStartTime(this);
+        initStartTimeDownload = new InitStartTimeDownload(this);
     }
 
     public AddDownloadDto(ProgData progData, ArrayList<DownloadData> downloadDataArrayList) {
@@ -137,13 +137,13 @@ public class AddDownloadDto {
         this.addNewDownloads = false;
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayDownload(downloadDataArrayList, this);
 
-        initSetData = new InitSetData(this);
+        initSetDataDownload = new InitSetDataDownload(this);
         initPathName = new InitPathName(this);
         initResolutionButton = new InitResolutionButton(this);
         initSubTitle = new InitSubTitle(this);
         initProgramCall = new InitProgramCall(this);
         initUrl = new InitUrl(this);
-        initStartTime = new InitStartTime(this);
+        initStartTimeDownload = new InitStartTimeDownload(this);
     }
 
     public AddDownloadData getAct() {
@@ -171,12 +171,12 @@ public class AddDownloadDto {
                 + "       Zeit: " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getTime()
                 + "       Dauer [min]: " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getDurationMinute());
 
-        initSetData.makeAct();
+        initSetDataDownload.makeAct();
         initPathName.makeAct();
         initResolutionButton.makeAct();
         initSubTitle.makeAct();
         initProgramCall.makeAct();
         initUrl.makeAct();
-        initStartTime.makeAct();
+        initStartTimeDownload.makeAct();
     }
 }

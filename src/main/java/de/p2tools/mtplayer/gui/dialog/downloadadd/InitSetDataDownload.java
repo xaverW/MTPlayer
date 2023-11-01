@@ -23,11 +23,11 @@ import javafx.event.EventHandler;
 
 import java.util.Arrays;
 
-public class InitSetData {
+public class InitSetDataDownload {
     private final AddDownloadDto addDownloadDto;
     private EventHandler<ActionEvent> onAction;
 
-    public InitSetData(AddDownloadDto addDownloadDto) {
+    public InitSetDataDownload(AddDownloadDto addDownloadDto) {
         this.addDownloadDto = addDownloadDto;
         init(addDownloadDto.setDataStart);
     }
@@ -41,7 +41,7 @@ public class InitSetData {
 
         addDownloadDto.chkSetAll.setOnAction(a -> {
             if (addDownloadDto.chkSetAll.isSelected()) {
-                addDownloadDto.initSetData.makeSetDataChange();
+                makeSetDataChange();
                 addDownloadDto.updateAct();
             }
         });

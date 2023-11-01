@@ -73,7 +73,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
     }
 
     public synchronized void initAboList() {
-        this.stream().forEach(abo -> abo.initAbo(progData));
+        this.forEach(abo -> abo.initAbo(progData));
     }
 
     public synchronized void addAbo(AboData abo) {

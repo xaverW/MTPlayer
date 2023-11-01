@@ -22,11 +22,11 @@ import javafx.scene.control.ToggleGroup;
 
 import java.util.Arrays;
 
-public class InitStartTime {
+public class InitStartTimeDownload {
 
     private final AddDownloadDto addDownloadDto;
 
-    public InitStartTime(AddDownloadDto addDownloadDto) {
+    public InitStartTimeDownload(AddDownloadDto addDownloadDto) {
         this.addDownloadDto = addDownloadDto;
         init();
     }

@@ -52,7 +52,6 @@ public class DownloadAddDialogGui {
         hBoxTop.setAlignment(Pos.CENTER);
         hBoxTop.setPadding(new Insets(5));
         hBoxTop.getChildren().addAll(addDownloadDto.btnPrev, addDownloadDto.lblSum, addDownloadDto.btnNext);
-
         vBoxCont.getChildren().add(hBoxTop);
 
         GridPane gridPane = new GridPane();
