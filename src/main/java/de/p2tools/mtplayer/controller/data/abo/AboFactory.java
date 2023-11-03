@@ -104,11 +104,12 @@ public class AboFactory {
         }
     }
 
-    public static AboData aboExistsAlready(AboData checkAbo) {
-        // prüfen ob "aboExistiert" das "aboPrüfen" mit abdeckt, also die gleichen (oder mehr)
+    public static AboData aboExistsAlready(AboData checkAbo, boolean no) {
+        // prüfen ob checkAbo schon existiert, also die gleichen (oder mehr)
         // Filme findet, dann wäre das neue Abo hinfällig
+        // "no": dann wird auch die AboNo verglichen, da es ja schon in der Liste
+        // sein kann (bei einem Update)
 
-        // true, wenn es das Abo schon gibt
         for (final AboData dataAbo : ProgData.getInstance().aboList) {
             if (checkAboExist(dataAbo.getChannel(), checkAbo.getChannel(), true) &&
 
@@ -121,9 +122,16 @@ public class AboFactory {
                     checkAboExist(dataAbo.getThemeTitle(), checkAbo.getThemeTitle(), false) &&
                     checkAboExist(dataAbo.getTitle(), checkAbo.getTitle(), false) &&
                     checkAboExist(dataAbo.getSomewhere(), checkAbo.getSomewhere(), false)) {
-                return dataAbo;
+                if (no) {
+                    if (dataAbo.getNo() != checkAbo.getNo()) {
+                        return dataAbo;
+                    }
+                } else {
+                    return dataAbo;
+                }
             }
         }
+
         return null;
     }
 

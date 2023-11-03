@@ -26,7 +26,7 @@ public class InitAddAboArray {
     private InitAddAboArray() {
     }
 
-    public static AddAboData[] initDownloadInfoArrayFilm(AboData abo, AddAboDto addDto) {
+    public static AddAboData[] initAboArray(AboData abo) {
         // AboArr anlegen
         AddAboData[] addAboData = new AddAboData[1];
         addAboData[0] = new AddAboData();
@@ -37,7 +37,7 @@ public class InitAddAboArray {
         return addAboData;
     }
 
-    public static AddAboData[] initDownloadInfoArrayFilm(List<AboData> abos, AddAboDto addDto) {
+    public static AddAboData[] initAboArray(List<AboData> abos) {
         // AboArr anlegen
         AddAboData[] addAboData = new AddAboData[abos.size()];
         for (int i = 0; i < abos.size(); ++i) {

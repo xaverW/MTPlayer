@@ -32,7 +32,44 @@ public class InitDestination {
 
     private void init() {
         addAboDto.chkDestination.setOnAction(event -> {
-            setCheck();
+            if (addAboDto.chkDestination.isFocused()) {
+                // dann durch den User
+                if (addAboDto.chkDestination.isSelected()) {
+                    // dann gespeicherten SubDir wieder setzen
+                    if (addAboDto.chkDestDirAll.isSelected()) {
+                        Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
+//                            addAboData.abo.setAboSubDir(addAboData.aboSubDir); // da wird der "jeweilige alte" wieder gesetzt
+                            addAboData.abo.setAboSubDir(addAboDto.getAct().aboSubDir); // da wird immer der "erste alte" gesetzt
+                        });
+                    } else {
+                        addAboDto.getAct().abo.setAboSubDir(addAboDto.getAct().aboSubDir);
+                    }
+
+                } else {
+                    // dann SubDir speichern
+                    if (addAboDto.chkDestDirAll.isSelected()) {
+                        Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
+                            addAboData.aboSubDir = addAboData.abo.getAboSubDir();
+                            addAboData.abo.setAboSubDir("");
+                        });
+                    } else {
+                        addAboDto.getAct().aboSubDir = addAboDto.getAct().abo.getAboSubDir();
+                        addAboDto.getAct().abo.setAboSubDir("");
+                    }
+                }
+            }
+            if (addAboDto.chkDestination.isSelected()) {
+                // dann einen eigenen Pfad eingeben
+                addAboDto.lblDestination.setVisible(false);
+                addAboDto.cboDestination.setVisible(true);
+                addAboDto.cboDestination.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
+
+            } else {
+                // Standard des Sets verwenden
+                addAboDto.lblDestination.setVisible(true);
+                addAboDto.cboDestination.setVisible(false);
+                addAboDto.cboDestination.getEditor().setText("");
+            }
         });
 
         ArrayList<String> path = addAboDto.progData.aboList.getAboDestinationPathList();
@@ -62,9 +99,15 @@ public class InitDestination {
         if (addAboDto.chkDestDirAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setAboSubDir(addAboDto.cboDestination.getEditor().getText());
+                if (addAboDto.chkDestination.isSelected()) {
+                    addAboData.aboSubDir = addAboData.abo.getAboSubDir();
+                }
             });
         } else {
             addAboDto.getAct().abo.setAboSubDir(addAboDto.cboDestination.getEditor().getText());
+            if (addAboDto.chkDestination.isSelected()) {
+                addAboDto.getAct().aboSubDir = addAboDto.getAct().abo.getAboSubDir();
+            }
         }
     }
 
@@ -75,49 +118,19 @@ public class InitDestination {
         }
     }
 
-    private void setCheck() {
-        if (addAboDto.chkDestination.isFocused()) {
-            // dann durch den User
-            if (addAboDto.chkDestination.isSelected()) {
-                if (addAboDto.chkDestDirAll.isSelected()) {
-                    Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
-                        addAboData.abo.setAboSubDir(addAboData.aboSubDir);
-                    });
-                } else {
-                    addAboDto.getAct().abo.setAboSubDir(addAboDto.getAct().aboSubDir);
-                }
-            } else {
-                if (addAboDto.chkDestDirAll.isSelected()) {
-                    Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
-                        addAboData.aboSubDir = addAboData.abo.getAboSubDir();
-                        addAboData.abo.setAboSubDir("");
-                    });
-                } else {
-                    addAboDto.getAct().aboSubDir = addAboDto.getAct().abo.getAboSubDir();
-                    addAboDto.getAct().abo.setAboSubDir("");
-                }
-            }
-        }
-
+    public void makeAct() {
+        addAboDto.cboDestination.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
+        addAboDto.chkDestination.setSelected(!addAboDto.getAct().abo.getAboSubDir().isEmpty());
         if (addAboDto.chkDestination.isSelected()) {
             // dann einen eigenen Pfad eingeben
             addAboDto.lblDestination.setVisible(false);
             addAboDto.cboDestination.setVisible(true);
-            addAboDto.cboDestination.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
-
         } else {
             // Standard des Sets verwenden
             addAboDto.lblDestination.setVisible(true);
             addAboDto.cboDestination.setVisible(false);
-            addAboDto.getAct().abo.setAboSubDir("");
-            addAboDto.cboDestination.setValue("");
         }
-    }
 
-    public void makeAct() {
-        addAboDto.cboDestination.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
-        addAboDto.chkDestination.setSelected(!addAboDto.getAct().abo.getAboSubDir().isEmpty());
         addMissingPath();
-        setCheck();
     }
 }

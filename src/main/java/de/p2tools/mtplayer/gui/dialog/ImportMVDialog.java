@@ -28,9 +28,9 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -175,7 +175,7 @@ public class ImportMVDialog extends PDialogExtra {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelp = P2Button.helpButton(getStageProp(), "Konfigordner", HelpText.MV_IMPORT);
+        final Button btnHelp = P2Button.helpButton(getStageProp(), "Config-Ordner", HelpText.MV_IMPORT);
 
         final Label lblFoundAbos = new Label("");
         final Button btnAddAbo = new Button();

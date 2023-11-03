@@ -54,7 +54,7 @@ public class MVFactory {
         for (AboData aboData : aboList) {
             AboData abo;
 
-            if ((abo = AboFactory.aboExistsAlready(aboData)) != null) {
+            if ((abo = AboFactory.aboExistsAlready(aboData, false)) != null) {
                 // dann gibts das Abo schon, "themeExact" gibts hier nicht, ist immer false
                 PAlert.BUTTON btn;
                 if (!remember.getValue()) {

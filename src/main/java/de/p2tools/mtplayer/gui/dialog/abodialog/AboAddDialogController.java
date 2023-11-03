@@ -163,27 +163,43 @@ public class AboAddDialogController extends PDialogExtra {
     }
 
     private boolean check() {
-        AboData abo;
-        if (addAboDto.addNewAbo && (abo = AboFactory.aboExistsAlready(addAboDto.getAct().abo)) != null) {
+        AboData abo = null;
+        for (AddAboData addAboData : addAboDto.addAboData) {
+            if ((abo = AboFactory.aboExistsAlready(addAboData.abo, true)) != null) {
+                break;
+            }
+        }
+        if (abo != null) {
             // dann gibts das Abo schon
             if (PAlert.showAlert_yes_no(getStage(), "Fehler", "Abo anlegen",
-                    "Ein Abo mit den Einstellungen existiert bereits:" +
+                    "Ein Abo mit den Einstellungen existiert bereits, es " +
+                            "findet die gleichen (oder mehr) Filme:" +
                             "\n\n" +
+                            ("Abo-Nr: " + abo.getNo() + "\n") +
                             (abo.getChannel().isEmpty() ? "" : "Sender: " + abo.getChannel() + "\n") +
                             (abo.getTheme().isEmpty() ? "" : "Thema: " + abo.getTheme() + "\n") +
                             (abo.getThemeTitle().isEmpty() ? "" : "Thema-Titel: " + abo.getThemeTitle() + "\n") +
                             (abo.getTitle().isEmpty() ? "" : "Titel: " + abo.getTitle() + "\n") +
                             (abo.getSomewhere().isEmpty() ? "" : "Irgendwo: " + abo.getSomewhere()) +
                             "\n\n" +
-                            "Trotzdem anlegen?").equals(PAlert.BUTTON.NO)) {
+                            (addAboDto.isNewAbo ? "Trotzdem anlegen?" : "Trotzdem aktualisieren?")).equals(PAlert.BUTTON.NO)) {
                 return false;
             }
         }
 
-        if (addAboDto.addNewAbo && addAboDto.getAct().abo.isEmpty()) {
+        boolean empty = false;
+        for (AddAboData addAboData : addAboDto.addAboData) {
+            abo = addAboData.abo;
+            if (abo.isEmpty()) {
+                empty = true;
+                break;
+            }
+        }
+        if (empty) {
             // dann ists leer
             PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
-                    "Das Abo ist \"leer\", es enthält keine Filter.");
+                    "Abo-Nr: " + abo.getNo() + "\n" +
+                            "Das Abo ist \"leer\", es enthält keine Filter.");
             return false;
         }
 
@@ -191,7 +207,7 @@ public class AboAddDialogController extends PDialogExtra {
     }
 
     private void apply() {
-        if (addAboDto.addNewAbo) {
+        if (addAboDto.isNewAbo) {
             // dann soll ein neues angelegt werden
             addNewAbos();
         } else {
@@ -213,20 +229,18 @@ public class AboAddDialogController extends PDialogExtra {
     private void addNewAbos() {
         // dann erst mal die ORG anlegen und diese dann einpflegen
         for (AddAboData addAboData : addAboDto.addAboData) {
-            final AboData aboData = addAboData.abo;
-            final AboData aboDataOrg = aboData.getCopy();
-            progData.aboList.addAbo(aboDataOrg);
+            addAboData.aboOrg.copyToMe(addAboData.abo);
+            progData.aboList.addAbo(addAboData.aboOrg);
+            addAboData.abo.setNo(addAboData.aboOrg.getNo()); // die wird beim Einfügen neu gesetzt
         }
 
         // ab jetzt ists ein Update!!
-        addAboDto.addNewAbo = false;
+        addAboDto.isNewAbo = false;
     }
 
     private void updateAboList() {
         for (AddAboData addAboData : addAboDto.addAboData) {
-            final AboData abo = addAboData.abo;
-            final AboData aboOrg = addAboData.aboOrg;
-            aboOrg.copyToMe(abo);
+            addAboData.aboOrg.copyToMe(addAboData.abo);
         }
     }
 }

@@ -42,7 +42,7 @@ import java.util.List;
 
 public class AddAboDto {
 
-    public boolean addNewAbo = true;
+    public boolean isNewAbo = true;
     public final InitChannelTTDescription initChannelTTDescription;
     public final InitName initName;
     public final InitResolution initResolution;
@@ -112,12 +112,13 @@ public class AddAboDto {
     public final ObservableList<AboData> aboList = FXCollections.observableArrayList(); // Liste der Org-Abos!
 
 
-    public AddAboDto(ProgData progData, boolean addNewAbo, AboData abo) {
+    public AddAboDto(ProgData progData, boolean isNewAbo, AboData abo) {
         this.progData = progData;
-        this.addNewAbo = addNewAbo;
+        this.isNewAbo = isNewAbo;
         this.aboList.setAll(abo);
 
-        addAboData = InitAddAboArray.initDownloadInfoArrayFilm(abo, this);
+        addAboData = InitAddAboArray.initAboArray(abo);
+
         this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelList, true);
         channelProperty.addListener((u, o, n) -> getAct().abo.setChannel(channelProperty.getValueSafe()));
 
@@ -130,11 +131,12 @@ public class AddAboDto {
         initSetDataAbo = new InitSetDataAbo(this);
     }
 
-    public AddAboDto(ProgData progData, boolean addNewAbo, List<AboData> aboList) {
+    public AddAboDto(ProgData progData, boolean isNewAbo, List<AboData> aboList) {
         this.progData = progData;
-        this.addNewAbo = addNewAbo;
+        this.isNewAbo = isNewAbo;
         this.aboList.setAll(aboList);
-        addAboData = InitAddAboArray.initDownloadInfoArrayFilm(aboList, this);
+        addAboData = InitAddAboArray.initAboArray(aboList);
+
         this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelList, true);
         channelProperty.addListener((u, o, n) -> getAct().abo.setChannel(channelProperty.getValueSafe()));
 
@@ -155,6 +157,7 @@ public class AddAboDto {
         final int nr = actAboIsShown.getValue() + 1;
         lblSum.setText("Abo " + nr + " von " + addAboData.length + " Abos");
         lblHit.textProperty().bind(getAct().aboOrg.hitProperty().asString());
+        lblAboNo.textProperty().bind(getAct().aboOrg.noProperty().asString());
 
         if (actAboIsShown.getValue() == 0) {
             btnPrev.setDisable(true);
