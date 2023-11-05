@@ -54,14 +54,14 @@ public class MTPlayerMenu extends MenuButton {
 
         final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung");
         miSearchMediaCollection.setOnAction(a -> new MediaDialogController("", ""));
-        PShortcutWorker.addShortCut(miSearchMediaCollection, ProgShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
+        PShortcutWorker.addShortCut(miSearchMediaCollection, PShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
         final CheckMenuItem miDarkMode = new CheckMenuItem("Dark Mode");
         miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
-        PShortcutWorker.addShortCut(miQuit, ProgShortcut.SHORTCUT_QUIT_PROGRAM);
+        PShortcutWorker.addShortCut(miQuit, PShortcut.SHORTCUT_QUIT_PROGRAM);
 
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);

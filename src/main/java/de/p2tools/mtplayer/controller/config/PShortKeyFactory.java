@@ -15,90 +15,89 @@
  */
 
 
-package de.p2tools.mtplayer;
+package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.mtplayer.controller.config.ProgShortcut;
-import de.p2tools.p2lib.tools.shortcut.PShortcut;
+import de.p2tools.mtplayer.MTPlayerFactory;
+import de.p2tools.p2lib.tools.shortcut.PShortcutKey;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 
-public class ShortKeyFactory {
+public class PShortKeyFactory {
 
     public static String SHORT_CUT_LEER = "              ";
 
-    private ShortKeyFactory() {
+    private PShortKeyFactory() {
     }
 
-
     public static void addShortKey(Scene scene) {
-        PShortcut pShortcut;
+        PShortcutKey pShortcut;
         KeyCombination kc;
         Runnable rn;
 
         // quitt and wait
-        pShortcut = ProgShortcut.SHORTCUT_QUIT_PROGRAM_WAIT;
+        pShortcut = PShortcut.SHORTCUT_QUIT_PROGRAM_WAIT;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::quitAndWait;
         scene.getAccelerators().put(kc, rn);
 
         // Center GUI
-        pShortcut = ProgShortcut.SHORTCUT_CENTER_GUI;
+        pShortcut = PShortcut.SHORTCUT_CENTER_GUI;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::centerGui;
         scene.getAccelerators().put(kc, rn);
 
         // Info
-        pShortcut = ProgShortcut.SHORTCUT_SHOW_INFOS;
+        pShortcut = PShortcut.SHORTCUT_SHOW_INFOS;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::setInfos;
         scene.getAccelerators().put(kc, rn);
 
         // Filter
-        pShortcut = ProgShortcut.SHORTCUT_SHOW_FILTER;
+        pShortcut = PShortcut.SHORTCUT_SHOW_FILTER;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::setFilter;
         scene.getAccelerators().put(kc, rn);
 
         // Mediensammlung
-        pShortcut = ProgShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION;
+        pShortcut = PShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::setMediaCollection;
         scene.getAccelerators().put(kc, rn);
 
         // FilmInfos
-        pShortcut = ProgShortcut.SHORTCUT_INFO_FILM;
+        pShortcut = PShortcut.SHORTCUT_INFO_FILM;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::showFilmInfos;
         scene.getAccelerators().put(kc, rn);
 
 
         // Thema kopieren
-        pShortcut = ProgShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD;
+        pShortcut = PShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::copyTheme;
         scene.getAccelerators().put(kc, rn);
 
         // Titel kopieren
-        pShortcut = ProgShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD;
+        pShortcut = PShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::copyTitle;
         scene.getAccelerators().put(kc, rn);
 
         // Blacklist
-        pShortcut = ProgShortcut.SHORTCUT_ADD_BLACKLIST;
+        pShortcut = PShortcut.SHORTCUT_ADD_BLACKLIST;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::addBlacklist;
         scene.getAccelerators().put(kc, rn);
 
         // Blacklist, Thema
-        pShortcut = ProgShortcut.SHORTCUT_ADD_BLACKLIST_THEME;
+        pShortcut = PShortcut.SHORTCUT_ADD_BLACKLIST_THEME;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::addBlacklistTheme;
         scene.getAccelerators().put(kc, rn);
 
         // Undo, gelöschte (Downloads, Abos) wieder herstellen
-        pShortcut = ProgShortcut.SHORTCUT_UNDO_DELETE;
+        pShortcut = PShortcut.SHORTCUT_UNDO_DELETE;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
         rn = MTPlayerFactory::undoDels;
         scene.getAccelerators().put(kc, rn);

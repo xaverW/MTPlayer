@@ -78,7 +78,7 @@ public class ProgData {
 
     // zentrale Klassen
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
-    public ProgShortcut progShortcut; // verwendete Shortcuts
+    public PShortcut pShortcut; // verwendete Shortcuts
     public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile
     public FilmFilterRunner filmFilterRunner;
 
@@ -121,7 +121,7 @@ public class ProgData {
     public ProposeList proposeList;
 
     private ProgData() {
-        progShortcut = new ProgShortcut();
+        pShortcut = new PShortcut();
         replaceList = new ReplaceList();
 
         filmFilterWorker = new FilmFilterWorker();

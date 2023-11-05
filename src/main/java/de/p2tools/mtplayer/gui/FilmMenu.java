@@ -18,11 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
-import de.p2tools.mtplayer.ShortKeyFactory;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.config.ProgShortcut;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
@@ -136,7 +132,7 @@ public class FilmMenu {
             }
             FilmPlayFactory.playFilm();
         });
-        PShortcutWorker.addShortCut(mbPlay, ProgShortcut.SHORTCUT_PLAY_FILM);
+        PShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
 
         final MenuItem mbPlayAll = new MenuItem("Alle markierten Film abspielen");
         mbPlayAll.setOnAction(a -> {
@@ -145,7 +141,7 @@ public class FilmMenu {
             }
             FilmPlayFactory.playFilmList();
         });
-        PShortcutWorker.addShortCut(mbPlayAll, ProgShortcut.SHORTCUT_PLAY_FILM_ALL);
+        PShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
 
         final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> {
@@ -154,7 +150,7 @@ public class FilmMenu {
             }
             FilmSaveFactory.saveFilmList();
         });
-        PShortcutWorker.addShortCut(mbSave, ProgShortcut.SHORTCUT_SAVE_FILM);
+        PShortcutWorker.addShortCut(mbSave, PShortcut.SHORTCUT_SAVE_FILM);
 
         mb.getItems().addAll(mbPlay, mbPlayAll, mbSave);
 
@@ -165,7 +161,7 @@ public class FilmMenu {
             }
             progData.filmGuiController.setFilmShown(true);
         });
-        PShortcutWorker.addShortCut(miFilmShown, ProgShortcut.SHORTCUT_FILM_SHOWN);
+        PShortcutWorker.addShortCut(miFilmShown, PShortcut.SHORTCUT_FILM_SHOWN);
 
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> {
@@ -174,36 +170,36 @@ public class FilmMenu {
             }
             progData.filmGuiController.setFilmShown(false);
         });
-        PShortcutWorker.addShortCut(miFilmNotShown, ProgShortcut.SHORTCUT_FILM_NOT_SHOWN);
+        PShortcutWorker.addShortCut(miFilmNotShown, PShortcut.SHORTCUT_FILM_NOT_SHOWN);
 
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_INFO_FILM.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_INFO_FILM.getActShortcut());
         miFilmInfo.setOnAction(a -> {
             progData.filmGuiController.showFilmInfo();
         });
 
         final MenuItem miFilmMediaCollection = new MenuItem("Film in der Mediensammlung suchen" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION.getActShortcut());
         miFilmMediaCollection.setOnAction(a -> {
             progData.filmGuiController.searchFilmInMediaCollection();
         });
 
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD.getActShortcut());
         miCopyTheme.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(true));
 
         final MenuItem miCopyTitle = new MenuItem("Titel in die Zwischenablage kopieren" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD.getActShortcut());
         miCopyTitle.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(false));
 
         //Blacklist
         Menu submenuBlacklist = new Menu("Blacklist");
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
         miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(true));
 
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut());
         miBlackTheme.setOnAction(event -> {
             BlacklistFactory.addBlackThemeFilm();
         });
@@ -226,11 +222,11 @@ public class FilmMenu {
         mb.getItems().add(submenuBookmark);
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
         miShowFilter.setOnAction(a -> MTPlayerFactory.setFilter());
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
         miShowInfo.setOnAction(a -> MTPlayerFactory.setInfos());
 
         mb.getItems().add(new SeparatorMenuItem());

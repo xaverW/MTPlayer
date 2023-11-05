@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
-import de.p2tools.mtplayer.ShortKeyFactory;
+import de.p2tools.mtplayer.controller.config.PShortKeyFactory;
+import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import javafx.beans.binding.Bindings;
@@ -102,8 +102,8 @@ public class AboMenu {
             AboListFactory.addNewAboFromFilterButton(filmFilter);
         });
 
-        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + ShortKeyFactory.SHORT_CUT_LEER +
-                ProgShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + PShortKeyFactory.SHORT_CUT_LEER +
+                PShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
         miUndo.setOnAction(a -> {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.ABO) {
                 return;
@@ -124,12 +124,12 @@ public class AboMenu {
         mb.getItems().addAll(miSelectAll, miSelection);
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
         //ausgeführt wird aber der Button im Tab Filme!!
         miShowFilter.setOnAction(a -> MTPlayerFactory.setFilter());
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden" +
-                ShortKeyFactory.SHORT_CUT_LEER + ProgShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
         miShowInfo.setOnAction(a -> MTPlayerFactory.setInfos());
 
         mb.getItems().add(new SeparatorMenuItem());

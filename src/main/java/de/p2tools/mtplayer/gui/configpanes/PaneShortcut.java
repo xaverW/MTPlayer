@@ -16,14 +16,14 @@
 
 package de.p2tools.mtplayer.gui.configpanes;
 
+import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.PLog;
-import de.p2tools.p2lib.tools.shortcut.PShortcut;
+import de.p2tools.p2lib.tools.shortcut.PShortcutKey;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -43,7 +43,7 @@ public class PaneShortcut {
     private boolean released = true; // damits beim ersten Mal schon passt
     private String newShortcutValue = "";
     private final TextArea txtLongDescription = new TextArea();
-    private final TableView<PShortcut> tableView = new TableView<>();
+    private final TableView<PShortcutKey> tableView = new TableView<>();
 
     private final Stage stage;
 
@@ -83,24 +83,24 @@ public class PaneShortcut {
         result.add(tpShortcut);
     }
 
-    private void initTable(TableView<PShortcut> tableView) {
-        final TableColumn<PShortcut, String> descriptionColumn = new TableColumn<>("Beschreibung");
+    private void initTable(TableView<PShortcutKey> tableView) {
+        final TableColumn<PShortcutKey, String> descriptionColumn = new TableColumn<>("Beschreibung");
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         descriptionColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<PShortcut, String> actShortcutColumn = new TableColumn<>("Tastenkürzel");
+        final TableColumn<PShortcutKey, String> actShortcutColumn = new TableColumn<>("Tastenkürzel");
         actShortcutColumn.setCellValueFactory(new PropertyValueFactory<>("actShortcut"));
         actShortcutColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<PShortcut, String> changeColumn = new TableColumn<>("");
+        final TableColumn<PShortcutKey, String> changeColumn = new TableColumn<>("");
         changeColumn.getStyleClass().add("alignCenter");
         changeColumn.setCellFactory(cellFactoryChange);
 
-        final TableColumn<PShortcut, String> resetColumn = new TableColumn<>("");
+        final TableColumn<PShortcutKey, String> resetColumn = new TableColumn<>("");
         resetColumn.getStyleClass().add("alignCenter");
         resetColumn.setCellFactory(cellFactoryReset);
 
-        final TableColumn<PShortcut, String> orgShortcutColumn = new TableColumn<>("Original");
+        final TableColumn<PShortcutKey, String> orgShortcutColumn = new TableColumn<>("Original");
         orgShortcutColumn.setCellValueFactory(new PropertyValueFactory<>("orgShortcut"));
         orgShortcutColumn.getStyleClass().add("alignCenter");
 
@@ -114,14 +114,14 @@ public class PaneShortcut {
         orgShortcutColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(15.0 / 100));
 
         tableView.getColumns().addAll(descriptionColumn, actShortcutColumn, changeColumn, resetColumn, orgShortcutColumn);
-        tableView.setItems(ProgShortcut.getShortcutList());
+        tableView.setItems(PShortcut.getShortcutList());
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActReplaceData));
 
     }
 
     private void setActReplaceData() {
-        PShortcut pShortcutAct = tableView.getSelectionModel().getSelectedItem();
+        PShortcutKey pShortcutAct = tableView.getSelectionModel().getSelectedItem();
         txtLongDescription.setDisable(pShortcutAct == null);
         if (pShortcutAct != null) {
             txtLongDescription.setText(pShortcutAct.getLongDescription());
@@ -130,113 +130,103 @@ public class PaneShortcut {
         }
     }
 
-    private Callback<TableColumn<PShortcut, String>, TableCell<PShortcut, String>> cellFactoryChange
-            = (final TableColumn<PShortcut, String> param) -> {
+    private final Callback<TableColumn<PShortcutKey, String>, TableCell<PShortcutKey, String>> cellFactoryChange
+            = (final TableColumn<PShortcutKey, String> param) -> new TableCell<>() {
 
-        final TableCell<PShortcut, String> cell = new TableCell<>() {
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setGraphic(null);
+                setText(null);
+                return;
+            }
 
-            @Override
-            public void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                    setText(null);
+            PShortcutKey pShortcutKey = getTableView().getItems().get(getIndex());
+            newShortcutValue = pShortcutKey.getActShortcut();
+
+            final Button btnChange = new Button("Ändern");
+            btnChange.setTooltip(new Tooltip("Button klicken und dann das neue Tastenkürzel eingeben"));
+            btnChange.setOnAction(a -> getTableView().getSelectionModel().select(getIndex()));
+            btnChange.addEventFilter(KeyEvent.KEY_RELEASED, ke -> {
+                released = true;
+                if (newShortcutValue.isEmpty()) {
+                    PLog.sysLog("Shortcut: nicht ändern");
                     return;
                 }
 
-                PShortcut pShortcut = getTableView().getItems().get(getIndex());
-                newShortcutValue = pShortcut.getActShortcut();
+                //neu setzen
+                PLog.sysLog("Shortcut: " + pShortcutKey.getDescription() + " ändern von: " + pShortcutKey.getActShortcut() + " nach: " + newShortcutValue);
+                pShortcutKey.setActShortcut(newShortcutValue);
 
-                final Button btnChange = new Button("Ändern");
-                btnChange.setTooltip(new Tooltip("Button klicken und dann das neue Tastenkürzel eingeben"));
-                btnChange.setOnAction(a -> getTableView().getSelectionModel().select(getIndex()));
-                btnChange.addEventFilter(KeyEvent.KEY_RELEASED, ke -> {
-                    released = true;
+                //Prüfen auf Doppelte
+                if (PShortcut.checkDoubleShortcutList()) {
+                    PAlert.showErrorAlert("Tastenkürzel", "das angegebene Tastenkürzel " +
+                            "wird zweimal verwendet.");
+                }
+            });
+            btnChange.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+                if (released) {
+                    released = false;
+                    newShortcutValue = "";
+                }
+
+                if (newShortcutValue.isEmpty() &&
+                        !ke.getCode().equals(KeyCode.ALT) &&
+                        !ke.getCode().equals(KeyCode.ALT_GRAPH) &&
+                        !ke.getCode().equals(KeyCode.CONTROL) &&
+                        !ke.getCode().equals(KeyCode.META) &&
+                        !ke.getCode().equals(KeyCode.SHIFT) &&
+                        !ke.getCode().equals(KeyCode.WINDOWS)) {
+                    // dann ist ein neuer Versuch und muss ein Steuerzeichen enthalten
+                    newShortcutValue = "";
+
+                } else {
                     if (newShortcutValue.isEmpty()) {
-                        PLog.sysLog("Shortcut: nicht ändern");
-                        return;
-                    }
-
-                    //neu setzen
-                    PLog.sysLog("Shortcut: " + pShortcut.getDescription() + " ändern von: " + pShortcut.getActShortcut() + " nach: " + newShortcutValue);
-                    pShortcut.setActShortcut(newShortcutValue);
-
-                    //Prüfen auf Doppelte
-                    if (ProgShortcut.checkDoubleShortcutList()) {
-                        PAlert.showErrorAlert("Tastenkürzel", "das angegebene Tastenkürzel " +
-                                "wird zweimal verwendet.");
-                    }
-                });
-                btnChange.addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
-                    if (released) {
-                        released = false;
-                        newShortcutValue = "";
-                    }
-
-                    if (newShortcutValue.isEmpty() &&
-                            !ke.getCode().equals(KeyCode.ALT) &&
-                            !ke.getCode().equals(KeyCode.ALT_GRAPH) &&
-                            !ke.getCode().equals(KeyCode.CONTROL) &&
-                            !ke.getCode().equals(KeyCode.META) &&
-                            !ke.getCode().equals(KeyCode.SHIFT) &&
-                            !ke.getCode().equals(KeyCode.WINDOWS)) {
-                        // dann ist ein neuer Versuch und muss ein Steuerzeichen enthalten
-                        newShortcutValue = "";
-
+                        newShortcutValue = ke.getCode().getName();
                     } else {
-                        if (newShortcutValue.isEmpty()) {
-                            newShortcutValue = ke.getCode().getName();
-                        } else {
-                            newShortcutValue = newShortcutValue + "+" + ke.getCode().getName();
-                        }
+                        newShortcutValue = newShortcutValue + "+" + ke.getCode().getName();
                     }
-                    ke.consume();
-                });
+                }
+                ke.consume();
+            });
 
-                final HBox hbox = new HBox();
-                hbox.setSpacing(5);
-                hbox.setAlignment(Pos.CENTER);
-                hbox.setPadding(new Insets(0, 2, 0, 2));
-                hbox.getChildren().addAll(btnChange);
-                setGraphic(hbox);
-            }
-        };
-
-        return cell;
+            final HBox hbox = new HBox();
+            hbox.setSpacing(5);
+            hbox.setAlignment(Pos.CENTER);
+            hbox.setPadding(new Insets(0, 2, 0, 2));
+            hbox.getChildren().addAll(btnChange);
+            setGraphic(hbox);
+        }
     };
 
-    private Callback<TableColumn<PShortcut, String>, TableCell<PShortcut, String>> cellFactoryReset
-            = (final TableColumn<PShortcut, String> param) -> {
+    private final Callback<TableColumn<PShortcutKey, String>, TableCell<PShortcutKey, String>> cellFactoryReset
+            = (final TableColumn<PShortcutKey, String> param) -> new TableCell<>() {
 
-        final TableCell<PShortcut, String> cell = new TableCell<PShortcut, String>() {
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
 
-            @Override
-            public void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-                PShortcut pShortcut = getTableView().getItems().get(getIndex());
-
-                final Button btnResete = new Button("Zurücksetzen");
-                btnResete.setTooltip(new Tooltip("Ein Klick setzt wieder das Original Tastenkürzel"));
-                btnResete.setOnAction(a -> {
-                    getTableView().getSelectionModel().select(getIndex());
-                    pShortcut.resetShortcut();
-                });
-
-                final HBox hbox = new HBox();
-                hbox.setSpacing(5);
-                hbox.setAlignment(Pos.CENTER);
-                hbox.setPadding(new Insets(0, 2, 0, 2));
-                hbox.getChildren().add(btnResete);
-                setGraphic(hbox);
+            if (empty) {
+                setGraphic(null);
+                setText(null);
+                return;
             }
-        };
+            PShortcutKey pShortcutKey = getTableView().getItems().get(getIndex());
 
-        return cell;
+            final Button btnResete = new Button("Zurücksetzen");
+            btnResete.setTooltip(new Tooltip("Ein Klick setzt wieder das Original Tastenkürzel"));
+            btnResete.setOnAction(a -> {
+                getTableView().getSelectionModel().select(getIndex());
+                pShortcutKey.resetShortcut();
+            });
+
+            final HBox hbox = new HBox();
+            hbox.setSpacing(5);
+            hbox.setAlignment(Pos.CENTER);
+            hbox.setPadding(new Insets(0, 2, 0, 2));
+            hbox.getChildren().add(btnResete);
+            setGraphic(hbox);
+        }
     };
 }

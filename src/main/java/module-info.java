@@ -9,6 +9,8 @@ module mtplayer {
     opens de.p2tools.mtplayer.controller.mediadb;
     opens de.p2tools.mtplayer.controller.data.abo;
     opens de.p2tools.mtplayer.controller.data.blackdata;
+    exports de.p2tools.mtplayer.controller.config;
+    opens de.p2tools.mtplayer.controller.config;
 
     requires de.p2tools.p2lib;
     requires javafx.controls;
