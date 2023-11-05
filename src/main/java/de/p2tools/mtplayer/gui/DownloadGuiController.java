@@ -31,7 +31,7 @@ import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadStartAtTimeController;
 import de.p2tools.mtplayer.gui.infoPane.DownloadInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
-import de.p2tools.mtplayer.gui.tools.PListener;
+import de.p2tools.mtplayer.controller.PListener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;

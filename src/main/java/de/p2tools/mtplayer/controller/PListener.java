@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.tools;
+package de.p2tools.mtplayer.controller;
 
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
