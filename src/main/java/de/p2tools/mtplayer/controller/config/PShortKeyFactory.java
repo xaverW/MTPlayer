@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.MTPlayerFactory;
-import de.p2tools.p2lib.tools.shortcut.PShortcutKey;
+import de.p2tools.p2lib.tools.shortcut.P2ShortcutKey;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -31,7 +31,7 @@ public class PShortKeyFactory {
     }
 
     public static void addShortKey(Scene scene) {
-        PShortcutKey pShortcut;
+        P2ShortcutKey pShortcut;
         KeyCombination kc;
         Runnable rn;
 

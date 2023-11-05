@@ -23,7 +23,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.PLog;
-import de.p2tools.p2lib.tools.shortcut.PShortcutKey;
+import de.p2tools.p2lib.tools.shortcut.P2ShortcutKey;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -43,7 +43,7 @@ public class PaneShortcut {
     private boolean released = true; // damits beim ersten Mal schon passt
     private String newShortcutValue = "";
     private final TextArea txtLongDescription = new TextArea();
-    private final TableView<PShortcutKey> tableView = new TableView<>();
+    private final TableView<P2ShortcutKey> tableView = new TableView<>();
 
     private final Stage stage;
 
@@ -83,24 +83,24 @@ public class PaneShortcut {
         result.add(tpShortcut);
     }
 
-    private void initTable(TableView<PShortcutKey> tableView) {
-        final TableColumn<PShortcutKey, String> descriptionColumn = new TableColumn<>("Beschreibung");
+    private void initTable(TableView<P2ShortcutKey> tableView) {
+        final TableColumn<P2ShortcutKey, String> descriptionColumn = new TableColumn<>("Beschreibung");
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         descriptionColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<PShortcutKey, String> actShortcutColumn = new TableColumn<>("Tastenkürzel");
+        final TableColumn<P2ShortcutKey, String> actShortcutColumn = new TableColumn<>("Tastenkürzel");
         actShortcutColumn.setCellValueFactory(new PropertyValueFactory<>("actShortcut"));
         actShortcutColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<PShortcutKey, String> changeColumn = new TableColumn<>("");
+        final TableColumn<P2ShortcutKey, String> changeColumn = new TableColumn<>("");
         changeColumn.getStyleClass().add("alignCenter");
         changeColumn.setCellFactory(cellFactoryChange);
 
-        final TableColumn<PShortcutKey, String> resetColumn = new TableColumn<>("");
+        final TableColumn<P2ShortcutKey, String> resetColumn = new TableColumn<>("");
         resetColumn.getStyleClass().add("alignCenter");
         resetColumn.setCellFactory(cellFactoryReset);
 
-        final TableColumn<PShortcutKey, String> orgShortcutColumn = new TableColumn<>("Original");
+        final TableColumn<P2ShortcutKey, String> orgShortcutColumn = new TableColumn<>("Original");
         orgShortcutColumn.setCellValueFactory(new PropertyValueFactory<>("orgShortcut"));
         orgShortcutColumn.getStyleClass().add("alignCenter");
 
@@ -121,7 +121,7 @@ public class PaneShortcut {
     }
 
     private void setActReplaceData() {
-        PShortcutKey pShortcutAct = tableView.getSelectionModel().getSelectedItem();
+        P2ShortcutKey pShortcutAct = tableView.getSelectionModel().getSelectedItem();
         txtLongDescription.setDisable(pShortcutAct == null);
         if (pShortcutAct != null) {
             txtLongDescription.setText(pShortcutAct.getLongDescription());
@@ -130,8 +130,8 @@ public class PaneShortcut {
         }
     }
 
-    private final Callback<TableColumn<PShortcutKey, String>, TableCell<PShortcutKey, String>> cellFactoryChange
-            = (final TableColumn<PShortcutKey, String> param) -> new TableCell<>() {
+    private final Callback<TableColumn<P2ShortcutKey, String>, TableCell<P2ShortcutKey, String>> cellFactoryChange
+            = (final TableColumn<P2ShortcutKey, String> param) -> new TableCell<>() {
 
         @Override
         public void updateItem(String item, boolean empty) {
@@ -142,8 +142,8 @@ public class PaneShortcut {
                 return;
             }
 
-            PShortcutKey pShortcutKey = getTableView().getItems().get(getIndex());
-            newShortcutValue = pShortcutKey.getActShortcut();
+            P2ShortcutKey p2ShortcutKey = getTableView().getItems().get(getIndex());
+            newShortcutValue = p2ShortcutKey.getActShortcut();
 
             final Button btnChange = new Button("Ändern");
             btnChange.setTooltip(new Tooltip("Button klicken und dann das neue Tastenkürzel eingeben"));
@@ -156,8 +156,8 @@ public class PaneShortcut {
                 }
 
                 //neu setzen
-                PLog.sysLog("Shortcut: " + pShortcutKey.getDescription() + " ändern von: " + pShortcutKey.getActShortcut() + " nach: " + newShortcutValue);
-                pShortcutKey.setActShortcut(newShortcutValue);
+                PLog.sysLog("Shortcut: " + p2ShortcutKey.getDescription() + " ändern von: " + p2ShortcutKey.getActShortcut() + " nach: " + newShortcutValue);
+                p2ShortcutKey.setActShortcut(newShortcutValue);
 
                 //Prüfen auf Doppelte
                 if (PShortcut.checkDoubleShortcutList()) {
@@ -200,8 +200,8 @@ public class PaneShortcut {
         }
     };
 
-    private final Callback<TableColumn<PShortcutKey, String>, TableCell<PShortcutKey, String>> cellFactoryReset
-            = (final TableColumn<PShortcutKey, String> param) -> new TableCell<>() {
+    private final Callback<TableColumn<P2ShortcutKey, String>, TableCell<P2ShortcutKey, String>> cellFactoryReset
+            = (final TableColumn<P2ShortcutKey, String> param) -> new TableCell<>() {
 
         @Override
         public void updateItem(String item, boolean empty) {
@@ -212,13 +212,13 @@ public class PaneShortcut {
                 setText(null);
                 return;
             }
-            PShortcutKey pShortcutKey = getTableView().getItems().get(getIndex());
+            P2ShortcutKey p2ShortcutKey = getTableView().getItems().get(getIndex());
 
             final Button btnResete = new Button("Zurücksetzen");
             btnResete.setTooltip(new Tooltip("Ein Klick setzt wieder das Original Tastenkürzel"));
             btnResete.setOnAction(a -> {
                 getTableView().getSelectionModel().select(getIndex());
-                pShortcutKey.resetShortcut();
+                p2ShortcutKey.resetShortcut();
             });
 
             final HBox hbox = new HBox();
