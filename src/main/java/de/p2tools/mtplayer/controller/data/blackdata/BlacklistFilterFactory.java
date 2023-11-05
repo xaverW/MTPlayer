@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.blackdata;
 
-import de.p2tools.mtplayer.controller.PListener;
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;

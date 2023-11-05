@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.controller.PListener;
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

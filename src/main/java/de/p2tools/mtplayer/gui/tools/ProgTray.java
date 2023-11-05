@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.gui.tools;
 
-import de.p2tools.mtplayer.controller.PListener;
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;

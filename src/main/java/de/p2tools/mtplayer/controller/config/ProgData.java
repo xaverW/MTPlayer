@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.controller.PListener;
 import de.p2tools.mtplayer.controller.data.abo.AboList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;

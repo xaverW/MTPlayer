@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.history;
 
-import de.p2tools.mtplayer.controller.PListener;
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;

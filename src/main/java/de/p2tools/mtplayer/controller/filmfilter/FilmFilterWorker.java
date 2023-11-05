@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
-import de.p2tools.mtplayer.controller.PListener;
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.p2lib.alert.PAlert;

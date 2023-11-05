@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.worker;
 
-import de.p2tools.mtplayer.controller.PListener;
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
