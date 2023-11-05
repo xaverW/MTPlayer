@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.film;
 
 
+import de.p2tools.mtplayer.controller.PListener;
 import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.UpdateCheckFactory;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -26,7 +27,6 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
-import de.p2tools.mtplayer.controller.PListener;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.mtfilm.film.Filmlist;
 import de.p2tools.p2lib.mtfilm.film.FilmlistFactory;

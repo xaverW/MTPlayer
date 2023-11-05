@@ -17,12 +17,12 @@
 
 package de.p2tools.mtplayer;
 
+import de.p2tools.mtplayer.controller.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearch;
-import de.p2tools.mtplayer.controller.PListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

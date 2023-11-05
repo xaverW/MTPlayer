@@ -16,8 +16,8 @@
 
 package de.p2tools.mtplayer.gui.infoPane;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.PListener;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.tools.file.PFileSize;
 import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;

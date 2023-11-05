@@ -17,11 +17,11 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
+import de.p2tools.mtplayer.controller.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
-import de.p2tools.mtplayer.controller.PListener;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.text.DecimalFormat;

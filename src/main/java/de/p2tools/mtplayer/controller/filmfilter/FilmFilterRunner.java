@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.PListener;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.application.Platform;
 
