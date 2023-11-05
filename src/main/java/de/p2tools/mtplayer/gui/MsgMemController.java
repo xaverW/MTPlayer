@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.gui;
 
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,7 +56,7 @@ public class MsgMemController extends AnchorPane {
         vBoxCont.getChildren().addAll(lblMem, lineChart);
         this.getChildren().add(vBoxCont);
 
-        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, MsgMemController.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, MsgMemController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 searchInfos();

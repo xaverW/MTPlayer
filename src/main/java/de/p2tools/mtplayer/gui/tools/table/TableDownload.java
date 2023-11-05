@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntMax;
@@ -198,7 +198,7 @@ public class TableDownload extends PTable<DownloadData> {
                 hdColumn, utColumn, geoColumn, artColumn, srcColumn, /*placedBackColumn,*/
                 programColumn, setColumn, urlColumn, fileNameColumn, pathColumn);
 
-        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
             @Override
             public void ping() {
                 if (!getSortOrder().isEmpty() &&

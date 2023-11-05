@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearch;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -109,7 +109,7 @@ public class SearchFast extends HBox {
             } else {
                 ProgConfig.FAST_SEARCH_WHERE.setValue(1 + ProgConfig.FAST_SEARCH_WHERE.getValue());
             }
-            MTListener.notify(MTListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
+            PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
         });
         btnClear.setOnAction(a -> cboSearch.getEditor().clear());
     }
@@ -125,7 +125,7 @@ public class SearchFast extends HBox {
             getStyleClass().add("fast-search-off");
         }
         if (andSearch) {
-            MTListener.notify(MTListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
+            PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
         }
     }
 

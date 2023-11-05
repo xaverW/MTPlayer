@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.EventListener;
 
 
-public class MTListener implements EventListener {
-    private static final ArrayList<MTListener> listeners = new ArrayList<>();
+public class PListener implements EventListener {
+    private static final ArrayList<PListener> listeners = new ArrayList<>();
     static int count = 0;
     public static final int EVENT_BLACKLIST_CHANGED = count++;
     public static final int EVENT_DIACRITIC_CHANGED = count++;
@@ -38,25 +38,25 @@ public class MTListener implements EventListener {
     public int[] event = {-1};
     public String eventClass = "";
 
-    public MTListener() {
+    public PListener() {
     }
 
-    public MTListener(int event, String eventClass) {
+    public PListener(int event, String eventClass) {
         this.event = new int[]{event};
         this.eventClass = eventClass;
     }
 
-    public MTListener(int[] event, String eventClass) {
+    public PListener(int[] event, String eventClass) {
         this.event = event;
         this.eventClass = eventClass;
     }
 
-    public static synchronized void addListener(MTListener listener) {
+    public static synchronized void addListener(PListener listener) {
         PLog.debugLog("Anz. Listener: " + listeners.size());
         listeners.add(listener);
     }
 
-    public static synchronized void removeListener(MTListener listener) {
+    public static synchronized void removeListener(PListener listener) {
         listeners.remove(listener);
     }
 

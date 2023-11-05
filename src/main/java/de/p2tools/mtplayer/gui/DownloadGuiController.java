@@ -31,7 +31,7 @@ import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadStartAtTimeController;
 import de.p2tools.mtplayer.gui.infoPane.DownloadInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
@@ -268,7 +268,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
@@ -278,7 +278,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-        MTListener.addListener(new MTListener(MTListener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode)
@@ -288,7 +288,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-        MTListener.addListener(new MTListener(MTListener.EVENT_SET_DATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_SET_DATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 tableView.refresh();

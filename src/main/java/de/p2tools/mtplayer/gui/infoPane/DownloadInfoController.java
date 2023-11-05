@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
@@ -49,7 +49,7 @@ public class DownloadInfoController extends P2ClosePaneH {
         super(ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, false, true);
         progData = ProgData.getInstance();
         initInfoPane();
-        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, DownloadInfoController.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadInfoController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 paneBandwidthChart.searchInfos(MTPlayerController.paneShown == MTPlayerController.PANE_SHOWN.DOWNLOAD &&

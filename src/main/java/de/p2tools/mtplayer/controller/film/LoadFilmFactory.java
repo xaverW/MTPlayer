@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.mtfilm.film.Filmlist;
 import de.p2tools.p2lib.mtfilm.film.FilmlistFactory;
@@ -171,7 +171,7 @@ public class LoadFilmFactory {
 
             ProgData.getInstance().maskerPane.setMaskerText("Abos suchen");
             ProgData.getInstance().worker.workOnFilmListLoadFinished();
-            MTListener.notify(MTListener.EVENT_FILTER_CHANGED, LoadFilmFactory.class.getSimpleName());
+            PListener.notify(PListener.EVENT_FILTER_CHANGED, LoadFilmFactory.class.getSimpleName());
 
             String filmDate = FilmlistFactory.getAgeAsStringDate(ProgData.getInstance().filmList.metaData);
             ProgConfig.SYSTEM_FILMLIST_DATE.setValue(ProgData.getInstance().filmList.isEmpty() ? "" : filmDate);

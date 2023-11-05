@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaSearchFactory;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -62,8 +62,8 @@ public class PaneDialogScrollPane extends ScrollPane {
     TextField txtTitleMedia = new TextField();
     TextField txtPathMedia = new TextField();
 
-    private final MTListener listenerDbStart;
-    private final MTListener listenerDbStop;
+    private final PListener listenerDbStart;
+    private final PListener listenerDbStop;
 
     private final boolean mediaDataExist;
     private final ProgData progData = ProgData.getInstance();
@@ -80,14 +80,14 @@ public class PaneDialogScrollPane extends ScrollPane {
         this.mediaDataDto = mediaDataDto;
         this.mediaDataExist = !mediaDataDto.searchTheme.isEmpty() || !mediaDataDto.searchTitle.isEmpty();
 
-        listenerDbStart = new MTListener(MTListener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
+        listenerDbStart = new PListener(PListener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 // neue DB suchen
                 txtSearch.setDisable(true);
             }
         };
-        listenerDbStop = new MTListener(MTListener.EVENT_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
+        listenerDbStop = new PListener(PListener.EVENT_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 // neue DB liegt vor
@@ -115,8 +115,8 @@ public class PaneDialogScrollPane extends ScrollPane {
     }
 
     public void close() {
-        MTListener.removeListener(listenerDbStart);
-        MTListener.removeListener(listenerDbStop);
+        PListener.removeListener(listenerDbStart);
+        PListener.removeListener(listenerDbStop);
     }
 
     private void initPanel() {
@@ -246,8 +246,8 @@ public class PaneDialogScrollPane extends ScrollPane {
             }
         });
 
-        MTListener.addListener(listenerDbStart);
-        MTListener.addListener(listenerDbStop);
+        PListener.addListener(listenerDbStart);
+        PListener.addListener(listenerDbStop);
     }
 
     void filter(String searStr) {

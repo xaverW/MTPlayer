@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
@@ -56,7 +56,7 @@ public class DownloadDirectHttp extends Thread {
     private HttpURLConnection conn = null;
     private boolean updateDownloadInfos = false;
 
-    private final MTListener listener = new MTListener(MTListener.EVENT_TIMER_HALF_SECOND, DownloadDirectHttp.class.getSimpleName()) {
+    private final PListener listener = new PListener(PListener.EVENT_TIMER_HALF_SECOND, DownloadDirectHttp.class.getSimpleName()) {
         @Override
         public void ping() {
             updateDownloadInfos = true;
@@ -71,7 +71,7 @@ public class DownloadDirectHttp extends Thread {
         download = d;
         setName("DIRECT DL THREAD: " + d.getTitle());
         download.setStateStartedRun();
-        MTListener.addListener(listener);
+        PListener.addListener(listener);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class DownloadDirectHttp extends Thread {
         StartDownloadFactory.makeDirAndLoadInfoSubtitle(download);
         runWhile();
         StartDownloadFactory.finalizeDownload(download);
-        MTListener.removeListener(listener);
+        PListener.removeListener(listener);
     }
 
     private void runWhile() {

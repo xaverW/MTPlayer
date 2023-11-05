@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
@@ -97,7 +97,7 @@ public class BlacklistFilterFactory {
             ProgData.getInstance().maskerPane.switchOffMasker();
         }
         if (notify) {
-            MTListener.notify(MTListener.EVENT_BLACKLIST_CHANGED, BlacklistFilterFactory.class.getSimpleName());
+            PListener.notify(PListener.EVENT_BLACKLIST_CHANGED, BlacklistFilterFactory.class.getSimpleName());
         }
     }
 

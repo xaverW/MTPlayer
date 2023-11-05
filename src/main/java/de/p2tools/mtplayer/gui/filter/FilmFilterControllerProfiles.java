@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -60,7 +60,7 @@ public class FilmFilterControllerProfiles extends VBox {
         initRest();
 
         // ist zum Markieren, ob sich der eingestellte Filter geändert hat
-        MTListener.addListener(new MTListener(MTListener.EVENT_FILTER_CHANGED, FilmFilterControllerProfiles.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterControllerProfiles.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 checkCboFilter();

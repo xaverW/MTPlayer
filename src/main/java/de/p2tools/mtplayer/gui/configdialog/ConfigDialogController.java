@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
@@ -170,7 +170,7 @@ public class ConfigDialogController extends PDialogExtra {
                 ProgData.getInstance().maskerPane.setMaskerText("Diakritika entfernen");
                 ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
                 FilmFactory.flattenDiacritic(progData.filmList);
-                MTListener.notify(MTListener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
+                PListener.notify(PListener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
                 ProgData.getInstance().maskerPane.switchOffMasker();
             }).start();
         }
@@ -187,7 +187,7 @@ public class ConfigDialogController extends PDialogExtra {
         controllerMedia.close();
         controllerSet.close();
 
-        MTListener.notify(MTListener.EVENT_SET_DATA_CHANGED, ConfigDialogController.class.getSimpleName());
+        PListener.notify(PListener.EVENT_SET_DATA_CHANGED, ConfigDialogController.class.getSimpleName());
         LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.removeListenerLoadFilmlist(listener);
         dialogIsRunning.setValue(false);
         super.close();

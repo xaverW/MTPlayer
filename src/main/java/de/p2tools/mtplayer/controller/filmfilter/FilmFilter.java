@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.animation.PauseTransition;
@@ -48,7 +48,7 @@ public final class FilmFilter extends FilmFilterProps {
 //        }
         PLog.debugLog("reportFilterReturn");
         pause.stop();
-        MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
     }
 
     private void reportFilterChange() {
@@ -60,7 +60,7 @@ public final class FilmFilter extends FilmFilterProps {
 //            System.out.println("     -----------------");
 //        }
         if (!filterIsOff) {
-            MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
         }
     }
 
@@ -73,7 +73,7 @@ public final class FilmFilter extends FilmFilterProps {
 //        }
         if (!filterIsOff) { // todo ??
             BlacklistFilterFactory.getBlackFilteredFilmlist();
-            MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
         }
     }
 

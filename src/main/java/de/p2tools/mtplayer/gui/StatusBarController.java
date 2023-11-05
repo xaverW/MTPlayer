@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
@@ -173,7 +173,7 @@ public class StatusBarController extends AnchorPane {
             }
         });
 
-        MTListener.addListener(new MTListener(MTListener.EVENT_TIMER_SECOND, StatusBarController.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, StatusBarController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 halfSecond = !halfSecond;

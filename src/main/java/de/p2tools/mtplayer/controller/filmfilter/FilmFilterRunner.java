@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.application.Platform;
 
@@ -38,13 +38,13 @@ public class FilmFilterRunner {
         this.progData = progData;
 
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
-        MTListener.addListener(new MTListener(MTListener.EVENT_FILTER_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void ping() {
                 filterList();
             }
         });
-        MTListener.addListener(new MTListener(MTListener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void ping() {
                 FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
@@ -55,13 +55,13 @@ public class FilmFilterRunner {
                 }
             }
         });
-        MTListener.addListener(new MTListener(MTListener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void ping() {
                 filterList();
             }
         });
-        MTListener.addListener(new MTListener(MTListener.EVENT_DIACRITIC_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_DIACRITIC_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void ping() {
                 filterList();

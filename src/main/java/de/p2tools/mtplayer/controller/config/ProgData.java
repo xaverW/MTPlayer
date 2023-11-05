@@ -42,7 +42,7 @@ import de.p2tools.mtplayer.gui.chart.ChartData;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.tools.duration.PDuration;
@@ -183,11 +183,11 @@ public class ProgData {
 
     private void doTimerWorkOneSecond() {
         ++countRunningTimeSeconds;
-        MTListener.notify(MTListener.EVENT_TIMER_SECOND, ProgData.class.getName());
+        PListener.notify(PListener.EVENT_TIMER_SECOND, ProgData.class.getName());
     }
 
     private void doTimerWorkHalfSecond() {
-        MTListener.notify(MTListener.EVENT_TIMER_HALF_SECOND, ProgData.class.getName());
+        PListener.notify(PListener.EVENT_TIMER_HALF_SECOND, ProgData.class.getName());
     }
 
     public synchronized static final ProgData getInstance(String dir) {

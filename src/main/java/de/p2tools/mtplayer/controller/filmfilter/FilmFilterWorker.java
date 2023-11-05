@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.mtplayer.gui.tools.MTListener;
+import de.p2tools.mtplayer.gui.tools.PListener;
 import de.p2tools.p2lib.alert.PAlert;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -354,12 +354,12 @@ public final class FilmFilterWorker {
 
     public void postFilterChange() {
         addBackward();
-        MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
     }
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
         BlacklistFilterFactory.getBlackFilteredFilmlist();
-        MTListener.notify(MTListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
     }
 }
