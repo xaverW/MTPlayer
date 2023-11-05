@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.mediadialog;
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
@@ -149,12 +149,12 @@ public class PaneDialogScrollPane extends ScrollPane {
     private VBox getVBoxSearch() {
         // Suchen was
         final Button btnReset = new Button("");
-        btnReset.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
+        btnReset.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
         btnReset.setOnAction(a -> txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle));
 
         final Button btnClear = new Button();
-        btnClear.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
+        btnClear.setGraphic(ProgIcons.ICON_BUTTON_STOP.getImageView());
         btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
         btnClear.setOnAction(a -> txtSearch.clear());
 
@@ -221,7 +221,7 @@ public class PaneDialogScrollPane extends ScrollPane {
         progress.setMaxHeight(Double.MAX_VALUE);
         progress.setMaxWidth(Double.MAX_VALUE);
 
-        btnStopSearching.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
+        btnStopSearching.setGraphic(ProgIcons.ICON_BUTTON_STOP.getImageView());
         btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
         btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         hBoxProgress.getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);

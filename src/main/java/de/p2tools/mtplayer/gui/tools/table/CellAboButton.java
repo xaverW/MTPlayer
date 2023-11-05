@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import javafx.geometry.Insets;
@@ -60,9 +60,9 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 btnActivate.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 if (aboData.isActive()) {
                     // dann ausschalen
-                    btnActivate.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_ABO_OFF.getImageView());
+                    btnActivate.setGraphic(ProgIcons.IMAGE_TABLE_ABO_OFF.getImageView());
                 } else {
-                    btnActivate.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_ABO_ON.getImageView());
+                    btnActivate.setGraphic(ProgIcons.IMAGE_TABLE_ABO_ON.getImageView());
                 }
                 btnActivate.setOnAction(a -> ProgData.getInstance().aboList.setAboActive(aboData, !aboData.isActive()));
 
@@ -70,7 +70,7 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 btnDel = new Button("");
                 btnDel.setTooltip(new Tooltip("Abo löschen"));
                 btnDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnDel.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_ABO_DEL.getImageView());
+                btnDel.setGraphic(ProgIcons.IMAGE_TABLE_ABO_DEL.getImageView());
                 btnDel.setOnAction(a -> AboListFactory.deleteAbo(aboData));
 
                 if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO.get()) {

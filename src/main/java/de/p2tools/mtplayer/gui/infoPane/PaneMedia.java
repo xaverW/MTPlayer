@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningMediaFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.history.HistoryData;
@@ -165,7 +165,7 @@ public class PaneMedia extends VBox {
 
     private void initMenu() {
         btnConfig.setTooltip(new Tooltip("Einstellungen anzeigen"));
-        btnConfig.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_EDIT.getImageView());
+        btnConfig.setGraphic(ProgIcons.ICON_BUTTON_EDIT.getImageView());
         btnConfig.setOnAction(a -> {
             new MediaCleaningDialogController(mediaDataDtoMedia, mediaDataDtoAbo);
             setSearchStringMedia();
@@ -173,7 +173,7 @@ public class PaneMedia extends VBox {
         });
 
         btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen"));
-        btnDialogMedia.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MENU.getImageView());
+        btnDialogMedia.setGraphic(ProgIcons.ICON_BUTTON_MENU.getImageView());
         btnDialogMedia.setOnAction(a -> {
             new MediaDialogController(mediaDataDtoMedia);
             setSearchStringMedia();
@@ -183,7 +183,7 @@ public class PaneMedia extends VBox {
         });
 
         btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
-        btnClear.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_STOP.getImageView());
+        btnClear.setGraphic(ProgIcons.ICON_BUTTON_STOP.getImageView());
         btnClear.setOnAction(a -> {
             txtSearchMedia.clear();
             txtSearchAbo.clear();

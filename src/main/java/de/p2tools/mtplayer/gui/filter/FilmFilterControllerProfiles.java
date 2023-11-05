@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
@@ -81,7 +81,7 @@ public class FilmFilterControllerProfiles extends VBox {
     private void initButton() {
         btnLoadFilter.setOnAction(a -> loadFilter());
         btnLoadFilter.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
-        btnLoadFilter.setGraphic(ProgIconsMTPlayer.ICON_FILTER_FILM_LOAD.getImageView());
+        btnLoadFilter.setGraphic(ProgIcons.ICON_FILTER_FILM_LOAD.getImageView());
         btnLoadFilter.setText("");
         btnLoadFilter.setTooltip(new Tooltip("Filterprofil wieder laden"));
 
@@ -92,12 +92,12 @@ public class FilmFilterControllerProfiles extends VBox {
                 saveFilter();
             }
         });
-        btnSaveFilter.setGraphic(ProgIconsMTPlayer.ICON_FILTER_FILM_SAVE.getImageView());
+        btnSaveFilter.setGraphic(ProgIcons.ICON_FILTER_FILM_SAVE.getImageView());
         btnSaveFilter.setText("");
         btnSaveFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als Filterprofil speichern"));
 
         btnNewFilter.setOnAction(a -> newFilter());
-        btnNewFilter.setGraphic(ProgIconsMTPlayer.ICON_FILTER_FILM_NEW.getImageView());
+        btnNewFilter.setGraphic(ProgIcons.ICON_FILTER_FILM_NEW.getImageView());
         btnNewFilter.setText("");
         btnNewFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als neues Filterprofil anlegen"));
     }
@@ -160,7 +160,7 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miReset = new MenuItem("alle Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter());
 
-        mbFilterTools.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MENU.getImageView());
+        mbFilterTools.setGraphic(ProgIcons.ICON_BUTTON_MENU.getImageView());
         mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo,
                 new SeparatorMenuItem(), miResort, miFilterDialog,
                 new SeparatorMenuItem(), miReset);

@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.dialog.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningData;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
 import de.p2tools.p2lib.P2LibConst;
@@ -109,7 +109,7 @@ public class PaneCleaningList {
 
     private void addButton(VBox vBox) {
         Button btnDel = new Button("");
-        btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             final ObservableList<CleaningData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
@@ -121,7 +121,7 @@ public class PaneCleaningList {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_ADD.getImageView());
+        btnNew.setGraphic(ProgIcons.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
             CleaningData blackData = new CleaningData();
             cleaningDataList.add(blackData);

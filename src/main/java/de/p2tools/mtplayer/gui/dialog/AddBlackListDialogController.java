@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
@@ -114,31 +114,31 @@ public class AddBlackListDialogController extends PDialogExtra {
             blackData.setChannel(channel);
         });
         btnChannel.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnChannel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
+        btnChannel.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
 
         btnTheme.setOnAction(a -> blackData.setTheme(theme));
         btnTheme.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnTheme.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
+        btnTheme.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
 
         btnTitel.setOnAction(a -> blackData.setTitle(title));
         btnTitel.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnTitel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_RESET.getImageView());
+        btnTitel.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
 
         btnClearChannel.setOnAction(a -> blackData.channelProperty().setValue(""));
         btnClearChannel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearChannel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAR.getImageView());
+        btnClearChannel.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
 
         btnClearTheme.setOnAction(a -> blackData.setTheme(""));
         btnClearTheme.setTooltip(new Tooltip("Feld löschen"));
-        btnClearTheme.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAR.getImageView());
+        btnClearTheme.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
 
         btnClearTitel.setOnAction(a -> blackData.setTitle(""));
         btnClearTitel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearTitel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAR.getImageView());
+        btnClearTitel.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
 
         btnClearThemeTitel.setOnAction(a -> blackData.setThemeTitle(""));
         btnClearThemeTitel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearThemeTitel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAR.getImageView());
+        btnClearThemeTitel.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
 
         txtTheme.textProperty().bindBidirectional(blackData.themeProperty());
         tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());

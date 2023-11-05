@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog.downloadadd;
 import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
@@ -97,16 +97,16 @@ public class DownloadAddDialogController extends PDialogExtra {
     }
 
     private void initButton() {
-        addDownloadDto.btnDest.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        addDownloadDto.btnDest.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         addDownloadDto.btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         addDownloadDto.btnDest.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, addDownloadDto.cboPath));
 
-        addDownloadDto.btnPropose.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_PROPOSE.getImageView());
+        addDownloadDto.btnPropose.setGraphic(ProgIcons.ICON_BUTTON_PROPOSE.getImageView());
         addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
         addDownloadDto.btnPropose.setOnAction(event ->
                 addDownloadDto.initPathName.proposeDestination());
 
-        addDownloadDto.btnClean.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAN.getImageView());
+        addDownloadDto.btnClean.setGraphic(ProgIcons.ICON_BUTTON_CLEAN.getImageView());
         addDownloadDto.btnClean.setTooltip(new Tooltip("Die Liste der Pfade löschen"));
         addDownloadDto.btnClean.setOnAction(a -> addDownloadDto.initPathName.clearPath());
 

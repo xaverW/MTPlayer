@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -62,14 +62,14 @@ public class ResetDialogController extends PDialogExtra {
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
         // Set zurücksetzen
-        P2BigButton cancelButton = new P2BigButton(ProgIconsMTPlayer.ICON_BUTTON_QUIT.getImageView(),
+        P2BigButton cancelButton = new P2BigButton(ProgIcons.ICON_BUTTON_QUIT.getImageView(),
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
         final Button btnHelp = P2Button.helpButton(this.getStage(), "Programm zurücksetzen",
                 HelpText.RESET_DIALOG);
 
-        P2BigButton setButton = new P2BigButton(ProgIconsMTPlayer.ICON_BUTTON_QUIT.getImageView(),
+        P2BigButton setButton = new P2BigButton(ProgIcons.ICON_BUTTON_QUIT.getImageView(),
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",
                 "Es werden alle Programmsets (auch eigene)" + P2LibConst.LINE_SEPARATOR +
                         "zum Abspielen und Aufzeichnen gelöscht" + P2LibConst.LINE_SEPARATOR +
@@ -85,7 +85,7 @@ public class ResetDialogController extends PDialogExtra {
         });
 
         // alle Einstellungen
-        P2BigButton allButton = new P2BigButton(ProgIconsMTPlayer.ICON_BUTTON_QUIT.getImageView(), "" +
+        P2BigButton allButton = new P2BigButton(ProgIcons.ICON_BUTTON_QUIT.getImageView(), "" +
                 "Alle Einstellungen zurücksetzen!",
                 "Alle Einstellungen gehen verloren." + P2LibConst.LINE_SEPARATORx2 +
                         "ACHTUNG" + P2LibConst.LINE_SEPARATOR +
@@ -115,7 +115,7 @@ public class ResetDialogController extends PDialogExtra {
             }
         });
 
-        gridPane.add(ProgIconsMTPlayer.ICON_DIALOG_QUIT.getImageView(), 0, 0, 1, 1);
+        gridPane.add(ProgIcons.ICON_DIALOG_QUIT.getImageView(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(btnHelp, 2, 1);

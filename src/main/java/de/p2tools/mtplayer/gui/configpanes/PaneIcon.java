@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.configpanes;
 import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
@@ -90,7 +90,7 @@ public class PaneIcon {
                 txtProgIconPath.setText(s);
             }
         });
-        btnProgIconFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnProgIconFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         txtProgIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROGRAM_ICON_PATH);
         tglOwnProgIcon.selectedProperty().addListener((v, o, n) -> {
             ProgStartAfterGui.setProgramIcon();
@@ -140,7 +140,7 @@ public class PaneIcon {
                 txtTrayIconPath.setText(s);
             }
         });
-        btnTrayFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnTrayFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnTrayFile.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
 
         txtTrayIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY_ICON_PATH);

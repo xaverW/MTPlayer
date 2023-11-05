@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryStopDownload;
@@ -70,7 +70,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStart = new Button("");
                     btnDownStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStart.setTooltip(new Tooltip("Download starten"));
-                    btnDownStart.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_START.getImageView());
+                    btnDownStart.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_START.getImageView());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.startDownloads(download);
@@ -79,7 +79,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
+                    btnDownDel.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.delDownloads(download);
@@ -98,7 +98,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStop = new Button("");
                     btnDownStop.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStop.setTooltip(new Tooltip("Download stoppen"));
-                    btnDownStop.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_STOP.getImageView());
+                    btnDownStop.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_STOP.getImageView());
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         DownloadFactoryStopDownload.stopDownloads(new PGetList<DownloadData>().getArrayList(download));
@@ -108,7 +108,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
+                    btnDownDel.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.delDownloads(download);
@@ -127,21 +127,21 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnFilmStart = new Button("");
                     btnFilmStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
-                    btnFilmStart.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_PLAY.getImageView());
+                    btnFilmStart.setGraphic(ProgIcons.IMAGE_TABLE_FILM_PLAY.getImageView());
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         P2Open.playStoredFilm(download.getDestPathFile(),
-                                ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+                                ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
                     });
 
                     btnOpenDirectory = new Button();
                     btnOpenDirectory.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-                    btnOpenDirectory.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
+                    btnOpenDirectory.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
                     btnOpenDirectory.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         P2Open.openDir(download.getDestPath(),
-                                ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+                                ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
                     });
 
                     if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.get()) {
@@ -157,7 +157,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStart = new Button("");
                     btnDownStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStart.setTooltip(new Tooltip("Download wieder starten"));
-                    btnDownStart.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_START.getImageView());
+                    btnDownStart.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_START.getImageView());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         List<DownloadData> list = new ArrayList<>();
@@ -168,7 +168,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
+                    btnDownDel.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
                     btnDownDel.setOnAction(event -> {
                         DownloadData download = getTableView().getItems().get(getIndex());
                         ProgData.getInstance().downloadList.delDownloads(download);

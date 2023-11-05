@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.mediaSearch;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
@@ -106,7 +106,7 @@ public class MediaSearchFactory {
         } else {
             btnChange.setTooltip(new Tooltip("Einstellung wo gesucht wird"));
         }
-        btnChange.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CHANGE.getImageView());
+        btnChange.setGraphic(ProgIcons.ICON_BUTTON_CHANGE.getImageView());
         btnChange.setOnAction(a -> {
             if (buildSearchFrom) {
                 if (mediaDataDto.buildSearchFrom.getValue() == ProgConst.MEDIA_SEARCH_THEME_OR_PATH) {

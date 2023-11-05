@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.configpanes;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -84,7 +84,7 @@ public class PaneMediaConfig {
         final Button btnHelp = P2Button.helpButton(stage,
                 "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
         btnExportFile.setTooltip(new Tooltip("Einen Ordner für den Export auswählen"));
-        btnExportFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnExportFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
 
         final ToggleGroup tg = new ToggleGroup();
         rbWithOutSuff.setToggleGroup(tg);

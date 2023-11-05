@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
@@ -50,29 +50,29 @@ public class DownloadMenu {
         // Button
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnRefresh = new ToolBarButton(vBox,
-                "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
+                "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIcons.ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnStart = new ToolBarButton(vBox,
-                "Downloads Starten", "Markierte Downloads starten", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_START.getImageView());
+                "Downloads Starten", "Markierte Downloads starten", ProgIcons.ICON_TOOLBAR_DOWNLOAD_START.getImageView());
         final ToolBarButton btnStartAll = new ToolBarButton(vBox,
-                "Alle Downloads starten", "Alle Downloads starten", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_START_ALL.getImageView());
+                "Alle Downloads starten", "Alle Downloads starten", ProgIcons.ICON_TOOLBAR_DOWNLOAD_START_ALL.getImageView());
         final ToolBarButton btStartAllTime = new ToolBarButton(vBox,
-                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME.getImageView());
+                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", ProgIcons.ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME.getImageView());
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnBack = new ToolBarButton(vBox,
-                "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
+                "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
         final ToolBarButton btnDel = new ToolBarButton(vBox,
-                "Downloads löschen", "Markierte Downloads löschen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
+                "Downloads löschen", "Markierte Downloads löschen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
         final ToolBarButton btnChange = new ToolBarButton(vBox,
-                "Downloads ändern", "Markierte Downloads ändern", ProgIconsMTPlayer.ICON_TOOLBAR_ABO_CONFIG.getImageView());
+                "Downloads ändern", "Markierte Downloads ändern", ProgIcons.ICON_TOOLBAR_ABO_CONFIG.getImageView());
         final ToolBarButton btnClear = new ToolBarButton(vBox,
-                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
+                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
-                "Film Starten", "Gespeicherten Film abspielen", ProgIconsMTPlayer.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
+                "Film Starten", "Gespeicherten Film abspielen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
         btnRefresh.setOnAction(a -> DownloadFactory.searchForAbosAndMaybeStart());
         btnClear.setOnAction(a -> DownloadFactory.cleanUpList(progData.downloadList));
@@ -89,7 +89,7 @@ public class DownloadMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
-        mb.setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU.getImageView());
+        mb.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-2");
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.mv.LoadMV;
@@ -115,7 +115,7 @@ public class ImportMVDialog extends PDialogExtra {
         btnFile.setOnAction(event -> {
             PDirFileChooser.DirChooser(getStage(), txtMVPath);
         });
-        btnFile.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
 
         final Button btnHelp = P2Button.helpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
 
@@ -141,7 +141,7 @@ public class ImportMVDialog extends PDialogExtra {
         final Button btnLoad = new Button();
         btnLoad.setTooltip(new Tooltip("Die Einstellungen suchen"));
         btnLoad.setOnAction(event -> new LoadMV(aboList, blackList).readConfiguration(Path.of(txtMVPath.getText())));
-        btnLoad.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_PLAY.getImageView());
+        btnLoad.setGraphic(ProgIcons.ICON_BUTTON_PLAY.getImageView());
         GridPane.setHalignment(btnLoad, HPos.RIGHT);
 
         final Label lblAbo = new Label();
@@ -184,7 +184,7 @@ public class ImportMVDialog extends PDialogExtra {
             int found = MVFactory.addAbos(this.getStage(), aboList);
             lblFoundAbos.setText(found + "");
         });
-        btnAddAbo.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_UPDATE.getImageView());
+        btnAddAbo.setGraphic(ProgIcons.ICON_BUTTON_UPDATE.getImageView());
         GridPane.setHalignment(btnAddAbo, HPos.RIGHT);
 
         final Label lblFoundBlacks = new Label("");
@@ -194,7 +194,7 @@ public class ImportMVDialog extends PDialogExtra {
             int found = MVFactory.addBlacks(blackList);
             lblFoundBlacks.setText(found + "");
         });
-        btnAddBlack.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_UPDATE.getImageView());
+        btnAddBlack.setGraphic(ProgIcons.ICON_BUTTON_UPDATE.getImageView());
         GridPane.setHalignment(btnAddBlack, HPos.RIGHT);
 
         int row = 0;

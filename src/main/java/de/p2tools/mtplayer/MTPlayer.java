@@ -69,7 +69,7 @@ public class MTPlayer extends Application {
     }
 
     private void initLib() {
-        ProgIconsMTPlayer.initIcons();
+        ProgIcons.initIcons();
         ProgIconsP2Lib.initIcons();
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAM_NAME,
                 "", ProgConfig.SYSTEM_DARK_THEME,

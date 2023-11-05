@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
@@ -61,15 +61,15 @@ public class CellFilmButton<S, T> extends TableCell<S, T> {
 
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnPlay.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_PLAY.getImageView());
+                btnPlay.setGraphic(ProgIcons.IMAGE_TABLE_FILM_PLAY.getImageView());
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnSave.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_SAVE.getImageView());
+                btnSave.setGraphic(ProgIcons.IMAGE_TABLE_FILM_SAVE.getImageView());
 
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnBookmark.setGraphic(ProgIconsMTPlayer.IMAGE_TABLE_FILM_BOOKMARK.getImageView());
+                btnBookmark.setGraphic(ProgIcons.IMAGE_TABLE_FILM_BOOKMARK.getImageView());
 
                 if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.get()) {
                     btnPlay.setMaxHeight(18);

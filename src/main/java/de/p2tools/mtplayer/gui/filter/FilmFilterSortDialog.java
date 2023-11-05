@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.filter;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -92,15 +92,15 @@ public class FilmFilterSortDialog extends PDialogExtra {
         tableView.setItems(progData.filmFilterWorker.getStoredFilterList());
 
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
-        btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(e -> delFilter());
 
         btnSeparator.setTooltip(new Tooltip("einen Trenner einfügen"));
-        btnSeparator.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_SEPARATOR.getImageView());
+        btnSeparator.setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR.getImageView());
         btnSeparator.setOnAction(e -> addSeparator());
 
         btnTop.setTooltip(new Tooltip("aktuelles Filterprofil an den Anfang verschieben"));
-        btnTop.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MOVE_TOP.getImageView());
+        btnTop.setGraphic(ProgIcons.ICON_BUTTON_MOVE_TOP.getImageView());
         btnTop.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -113,7 +113,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         });
 
         btnBottom.setTooltip(new Tooltip("aktuelles Filterprofil an das Ende verschieben"));
-        btnBottom.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MOVE_BOTTOM.getImageView());
+        btnBottom.setGraphic(ProgIcons.ICON_BUTTON_MOVE_BOTTOM.getImageView());
         btnBottom.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -126,7 +126,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         });
 
         btnUp.setTooltip(new Tooltip("aktuelles Filterprofil nach oben verschieben"));
-        btnUp.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MOVE_UP.getImageView());
+        btnUp.setGraphic(ProgIcons.ICON_BUTTON_MOVE_UP.getImageView());
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -139,7 +139,7 @@ public class FilmFilterSortDialog extends PDialogExtra {
         });
 
         btnDown.setTooltip(new Tooltip("aktuelles Filterprofil nach unten verschieben"));
-        btnDown.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MOVE_DOWN.getImageView());
+        btnDown.setGraphic(ProgIcons.ICON_BUTTON_MOVE_DOWN.getImageView());
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 

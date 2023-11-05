@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearch;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -83,11 +83,11 @@ public class SearchFast extends HBox {
         vBox.visibleProperty().bind(ProgConfig.FAST_SEARCH_ON);
         HBox.setHgrow(vBox, Priority.ALWAYS);
 
-        btnSearch.setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_BUTTON_SEARCH.getImageView());
+        btnSearch.setGraphic(ProgIcons.ICON_TOOLBAR_BUTTON_SEARCH.getImageView());
         btnSearch.getStyleClass().addAll("btnFunction", "btnFunc-1");
-        btnSelectWhere.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_UP_DOWN_H.getImageView());
+        btnSelectWhere.setGraphic(ProgIcons.ICON_BUTTON_UP_DOWN_H.getImageView());
         btnSelectWhere.getStyleClass().addAll("selectButton");
-        btnClear.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_CLEAR.getImageView());
+        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         lblTitel.setFont(new Font(10));
 
         setAlignment(Pos.CENTER_RIGHT);

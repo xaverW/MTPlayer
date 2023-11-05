@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
@@ -98,7 +98,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
             quit();
         });
 
-        imageView.setImage(ProgIconsMTPlayer.IMAGE_ACHTUNG_64.getImage());
+        imageView.setImage(ProgIcons.IMAGE_ACHTUNG_64.getImage());
 
         //start the countdown...
         lblTime.setText("");

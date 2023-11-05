@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
@@ -113,7 +113,7 @@ public class PaneSetList extends VBox {
     private void initButton(VBox vBox) {
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Markiertes Set löschen"));
-        btnDel.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             SetData setData = getSelectedSelData();
             if (setData != null) {
@@ -124,7 +124,7 @@ public class PaneSetList extends VBox {
 
         Button btnNew = new Button("");
         btnNew.setTooltip(new Tooltip("Ein neues Set anlegen"));
-        btnNew.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_ADD.getImageView());
+        btnNew.setGraphic(ProgIcons.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
             progData.setDataList.addSetData(setData);
@@ -132,7 +132,7 @@ public class PaneSetList extends VBox {
 
         Button btnUp = new Button("");
         btnUp.setTooltip(new Tooltip("Markiertes Set nach oben schieben"));
-        btnUp.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MOVE_UP.getImageView());
+        btnUp.setGraphic(ProgIcons.ICON_BUTTON_MOVE_UP.getImageView());
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -143,7 +143,7 @@ public class PaneSetList extends VBox {
 
         Button btnDown = new Button("");
         btnDown.setTooltip(new Tooltip("Markiertes Set nach unten schieben"));
-        btnDown.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_MOVE_DOWN.getImageView());
+        btnDown.setGraphic(ProgIcons.ICON_BUTTON_MOVE_DOWN.getImageView());
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {

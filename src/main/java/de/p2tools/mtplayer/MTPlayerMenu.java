@@ -67,7 +67,7 @@ public class MTPlayerMenu extends MenuButton {
         setMinWidth(Region.USE_PREF_SIZE);
         getStyleClass().addAll("btnFunction", "btnFunc-2");
         setText("");
-        setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU_TOP.getImageView());
+        setGraphic(ProgIcons.ICON_TOOLBAR_MENU_TOP.getImageView());
         getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode, addHelp(progData),
                 new SeparatorMenuItem(), miQuit);
     }
@@ -76,7 +76,7 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miUrlHelp = new MenuItem("Anleitung im Web");
         miUrlHelp.setOnAction(event -> {
             P2Open.openURL(ProgConst.URL_WEBSITE_HELP,
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         });
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {

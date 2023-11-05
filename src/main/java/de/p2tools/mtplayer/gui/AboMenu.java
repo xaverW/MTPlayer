@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.ShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.config.ProgShortcut;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
@@ -56,7 +56,7 @@ public class AboMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btNew = new ToolBarButton(vBox,
-                "Neues Abo", "Neus Abo anlegen", ProgIconsMTPlayer.ICON_TOOLBAR_ABO_NEW.getImageView());
+                "Neues Abo", "Neus Abo anlegen", ProgIcons.ICON_TOOLBAR_ABO_NEW.getImageView());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -64,13 +64,13 @@ public class AboMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btOn = new ToolBarButton(vBox,
-                "Abos einschalten", "Markierte Abos einschalten", ProgIconsMTPlayer.ICON_TOOLBAR_ABO_ON.getImageView());
+                "Abos einschalten", "Markierte Abos einschalten", ProgIcons.ICON_TOOLBAR_ABO_ON.getImageView());
         final ToolBarButton btOff = new ToolBarButton(vBox,
-                "Abos ausschalten", "Markierte Abos ausschalten", ProgIconsMTPlayer.ICON_TOOLBAR_ABO_OFF.getImageView());
+                "Abos ausschalten", "Markierte Abos ausschalten", ProgIcons.ICON_TOOLBAR_ABO_OFF.getImageView());
         final ToolBarButton btDel = new ToolBarButton(vBox,
-                "Abos löschen", "Markierte Abos löschen", ProgIconsMTPlayer.ICON_TOOLBAR_ABO_DEL.getImageView());
+                "Abos löschen", "Markierte Abos löschen", ProgIcons.ICON_TOOLBAR_ABO_DEL.getImageView());
         final ToolBarButton btChange = new ToolBarButton(vBox,
-                "Abos ändern", "Markierte Abos ändern", ProgIconsMTPlayer.ICON_TOOLBAR_ABO_CONFIG.getImageView());
+                "Abos ändern", "Markierte Abos ändern", ProgIcons.ICON_TOOLBAR_ABO_CONFIG.getImageView());
 
         btNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
         btOn.setOnAction(a -> AboListFactory.setAboActive(true));
@@ -83,7 +83,7 @@ public class AboMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Abomenü anzeigen"));
-        mb.setGraphic(ProgIconsMTPlayer.ICON_TOOLBAR_MENU.getImageView());
+        mb.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-2");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");

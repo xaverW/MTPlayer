@@ -167,7 +167,7 @@ public class DownloadContinueDialogController extends PDialogExtra {
     }
 
     private void initButton() {
-        btnPath.setGraphic(ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnPath.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
         btnPath.setOnAction(event -> getDestination());
 

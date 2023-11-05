@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIconsMTPlayer;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDialogFileChooser;
@@ -77,7 +77,7 @@ public class SetReplacePatternFactory {
         if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_VLC.setValue(PDialogFileChooser.showFileChooser(ProgData.getInstance().primaryStage, "VLC",
                     "VLC wird nicht gefunden.", "Bitte den Pfad zum" + P2LibConst.LINE_SEPARATOR +
-                            "VLC-Player angeben.", false, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView()));
+                            "VLC-Player angeben.", false, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView()));
         }
         return ProgConfig.SYSTEM_PATH_VLC.get();
     }
@@ -87,7 +87,7 @@ public class SetReplacePatternFactory {
         if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FFMPEG.setValue(PDialogFileChooser.showFileChooser(ProgData.getInstance().primaryStage, "ffmpeg",
                     "ffmpeg wird nicht gefunden.", "Bitte den Pfad zu" + P2LibConst.LINE_SEPARATOR +
-                            "ffmpeg angeben.", false, ProgIconsMTPlayer.ICON_BUTTON_FILE_OPEN.getImageView()));
+                            "ffmpeg angeben.", false, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView()));
         }
         return ProgConfig.SYSTEM_PATH_FFMPEG.get();
     }
