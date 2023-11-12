@@ -64,14 +64,30 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 } else {
                     btnActivate.setGraphic(ProgIcons.IMAGE_TABLE_ABO_ON.getImageView());
                 }
-                btnActivate.setOnAction(a -> ProgData.getInstance().aboList.setAboActive(aboData, !aboData.isActive()));
+                btnActivate.setOnAction(a -> {
+                    getTableView().getSelectionModel().clearSelection();
+                    getTableView().getSelectionModel().select(getIndex());
+
+                    ProgData.getInstance().aboList.setAboActive(aboData, !aboData.isActive());
+
+                    getTableView().refresh();
+                    getTableView().requestFocus();
+                });
 
                 final Button btnDel;
                 btnDel = new Button("");
                 btnDel.setTooltip(new Tooltip("Abo löschen"));
                 btnDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnDel.setGraphic(ProgIcons.IMAGE_TABLE_ABO_DEL.getImageView());
-                btnDel.setOnAction(a -> AboListFactory.deleteAbo(aboData));
+                btnDel.setOnAction(a -> {
+                    getTableView().getSelectionModel().clearSelection();
+                    getTableView().getSelectionModel().select(getIndex());
+
+                    AboListFactory.deleteAbo(aboData);
+
+                    getTableView().refresh();
+                    getTableView().requestFocus();
+                });
 
                 if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO.get()) {
                     btnActivate.setMaxHeight(18);

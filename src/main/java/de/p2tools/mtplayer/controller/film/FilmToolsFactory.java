@@ -41,16 +41,7 @@ public class FilmToolsFactory {
     }
 
     public static void changeBookmarkFilm(FilmDataMTP film) {
-        if (film.isBookmark()) {
-            // dann ausschalten
-            ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>(1);
-            filmArrayList.add(film);
-            bookmarkFilmList(filmArrayList, false);
-        } else {
-            ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>(1);
-            filmArrayList.add(film);
-            bookmarkFilmList(filmArrayList, true);
-        }
+        bookmarkFilm(film, !film.isBookmark());
     }
 
     public static void bookmarkFilm(FilmDataMTP film, boolean bookmark) {

@@ -81,16 +81,34 @@ public class CellFilmButton<S, T> extends TableCell<S, T> {
                 }
 
                 btnPlay.setOnAction(e -> {
+                    getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
-                    FilmPlayFactory.playFilm();
+
+                    FilmDataMTP film = getTableView().getItems().get(getIndex());
+                    FilmPlayFactory.playFilm(film);
+
+                    getTableView().refresh();
+                    getTableView().requestFocus();
                 });
                 btnSave.setOnAction(e -> {
+                    getTableView().getSelectionModel().clearSelection();
+                    getTableView().getSelectionModel().select(getIndex());
+
                     FilmDataMTP film = getTableView().getItems().get(getIndex());
                     FilmSaveFactory.saveFilm(film);
+
+                    getTableView().refresh();
+                    getTableView().requestFocus();
                 });
                 btnBookmark.setOnAction(e -> {
+                    getTableView().getSelectionModel().clearSelection();
+                    getTableView().getSelectionModel().select(getIndex());
+
                     FilmDataMTP film = getTableView().getItems().get(getIndex());
                     FilmToolsFactory.changeBookmarkFilm(film);
+
+                    getTableView().refresh();
+                    getTableView().requestFocus();
                 });
                 hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);
                 setGraphic(hbox);
