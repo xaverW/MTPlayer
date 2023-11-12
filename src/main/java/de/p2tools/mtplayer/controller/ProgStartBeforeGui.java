@@ -133,7 +133,6 @@ public class ProgStartBeforeGui {
     private static void initAfterLoad() {
         ProgData.getInstance().downloadList.initDownloads();
         ProgData.getInstance().aboList.initAboList();
-        ProgData.getInstance().aboList.sort();
         ProgData.getInstance().cleaningDataListMedia.initList();
         ProgData.getInstance().cleaningDataListPropose.initList();
 

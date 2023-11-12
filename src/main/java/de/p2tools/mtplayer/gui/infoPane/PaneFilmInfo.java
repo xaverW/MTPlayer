@@ -197,7 +197,7 @@ public class PaneFilmInfo extends VBox {
         lblTheme.setText(downloadData.getChannel() + "  -  " + downloadData.getTheme());
         lblTitle.setText(downloadData.getTitle());
         lblDate.setText(downloadData.getFilmDate().get_dd_MM_yyyy());
-        lblTime.setText(downloadData.getTime());
+        lblTime.setText(downloadData.getFilmTime());
         lblDuration.setText(downloadData.getDurationMinute() + " [min]");
 
         setSize(false); // die kann bim Film abweichen: HD, small

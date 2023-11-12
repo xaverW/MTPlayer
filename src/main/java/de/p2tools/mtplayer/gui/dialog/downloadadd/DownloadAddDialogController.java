@@ -136,12 +136,12 @@ public class DownloadAddDialogController extends PDialogExtra {
                 PAlert.showErrorAlert("Fehlerhafter Download!", "Fehlerhafter Download!",
                         "Download konnte nicht erstellt werden.");
 
-            } else if (d.path.isEmpty() || d.name.isEmpty()) {
+            } else if (d.download.getDestPath().isEmpty() || d.download.getDestFileName().isEmpty()) {
                 PAlert.showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
                         "Pfad oder Name ist leer.");
 
             } else {
-                if (SetFactory.checkPathWritable(d.path)) {
+                if (SetFactory.checkPathWritable(d.download.getDestPath())) {
                     ok = true;
                 } else {
                     PAlert.showErrorAlert("Fehlerhafter Pfad/Name!", "Fehlerhafter Pfad/Name!",
@@ -172,6 +172,7 @@ public class DownloadAddDialogController extends PDialogExtra {
 
         // und jetzt noch die Einstellungen speichern
         ProgSave.saveAll();
+        progData.downloadGuiController.tableRefresh();
         close();
     }
 
@@ -180,10 +181,6 @@ public class DownloadAddDialogController extends PDialogExtra {
         List<DownloadData> listStarts = new ArrayList<>();
         for (AddDownloadData addDownloadData : addDownloadDto.addDownloadData) {
             final DownloadData downloadData = addDownloadData.download;
-            downloadData.setSetData(addDownloadData.setData, false);
-            downloadData.setPathName(addDownloadData.path, addDownloadData.name);
-            downloadData.setUrl(downloadData.getFilm().getUrlForResolution(addDownloadData.resolution));
-            downloadData.setSizeDownloadFromWeb(DownloadAddDialogFactory.getFilmSize(addDownloadData));
             if (downloadData.getStartTime().isEmpty() && addDownloadData.startNow) {
                 listStarts.add(downloadData);
             }
@@ -205,8 +202,6 @@ public class DownloadAddDialogController extends PDialogExtra {
             final DownloadData downloadData = addDownloadData.download;
             final DownloadData downloadDataOrg = addDownloadData.downloadOrg;
             downloadDataOrg.copyToMe(downloadData);
-            downloadDataOrg.setSetData(addDownloadData.setData, false);
-            downloadDataOrg.setPathName(addDownloadData.path, addDownloadData.name);
             if (downloadData.getStartTime().isEmpty() && addDownloadData.startNow) {
                 list.add(addDownloadData.downloadOrg);
             }

@@ -28,6 +28,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class DownloadAddDialogGui {
 
@@ -35,11 +36,14 @@ public class DownloadAddDialogGui {
     private final ProgData progData;
     private final VBox vBoxCont;
     private final HBox hBoxTop = new HBox();
+    private final GridPane gridPane = new GridPane();
 
     public DownloadAddDialogGui(ProgData progData, AddDownloadDto addDownloadDto, VBox vBoxCont) {
         this.progData = progData;
         this.addDownloadDto = addDownloadDto;
         this.vBoxCont = vBoxCont;
+        addDownloadDto.actFilmIsShown.addListener((u, o, n) ->
+                gridPane.setDisable(addDownloadDto.getAct().downloadIsRunning()));
     }
 
     public void addCont() {
@@ -54,7 +58,6 @@ public class DownloadAddDialogGui {
         hBoxTop.getChildren().addAll(addDownloadDto.btnPrev, addDownloadDto.lblSum, addDownloadDto.btnNext);
         vBoxCont.getChildren().add(hBoxTop);
 
-        GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(5));
@@ -82,6 +85,13 @@ public class DownloadAddDialogGui {
         hBoxSize.setSpacing(20);
         hBoxSize.setPadding(new Insets(5));
         hBoxSize.getChildren().addAll(addDownloadDto.rbHd, addDownloadDto.rbHigh, addDownloadDto.rbSmall);
+        addDownloadDto.rbHd.setTextAlignment(TextAlignment.CENTER);
+        addDownloadDto.rbHd.setMinHeight(Region.USE_PREF_SIZE);
+        addDownloadDto.rbHigh.setTextAlignment(TextAlignment.CENTER);
+        addDownloadDto.rbHigh.setMinHeight(Region.USE_PREF_SIZE);
+        addDownloadDto.rbSmall.setTextAlignment(TextAlignment.CENTER);
+        addDownloadDto.rbSmall.setMinHeight(Region.USE_PREF_SIZE);
+
         gridPane.add(hBoxSize, 1, row, 2, 1);
         gridPane.add(addDownloadDto.chkResolutionAll, 3, row);
 

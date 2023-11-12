@@ -37,6 +37,16 @@ public class AboListFactory {
     private AboListFactory() {
     }
 
+//    public static synchronized void initAboList() {
+//        ProgData progData = ProgData.getInstance();
+//        progData.aboList.forEach(abo -> abo.initAbo(progData));
+//        Collections.sort(progData.aboList);
+//        int nr = 0;
+//        for (AboData abo : progData.aboList) {
+//            abo.setNo(++nr);
+//        }
+//    }
+
     public static void setFilmFilterFromAbo() {
         Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
         ProgData.getInstance().filmFilterWorker.loadStoredFilterFromAbo(abo);

@@ -49,20 +49,20 @@ public class InitPathName {
             //leer oder und nur ein leerer Eintrag
             pathList.clear();
             String path;
-            if (addDownloadDto.getAct().setData.getDestPath().isEmpty()) {
+            if (addDownloadDto.getAct().download.getSetData().getDestPath().isEmpty()) {
                 path = System.getProperty("user.home");
             } else {
-                path = addDownloadDto.getAct().setData.getDestPath();
+                path = addDownloadDto.getAct().download.getSetData().getDestPath();
             }
             pathList.add(path);
         }
 
         Arrays.stream(addDownloadDto.addDownloadData).toList().forEach(downloadAddData -> {
-            if (downloadAddData.path.isEmpty()) {
+            if (downloadAddData.download.getDestPath().isEmpty()) {
                 setPath(pathList.get(0), false);
             }
-            if (!pathList.contains(downloadAddData.path)) {
-                pathList.add(downloadAddData.path);
+            if (!pathList.contains(downloadAddData.download.getDestPath())) {
+                pathList.add(downloadAddData.download.getDestPath());
             }
         });
 
@@ -76,11 +76,11 @@ public class InitPathName {
 
         // Dateiname
         Arrays.stream(addDownloadDto.addDownloadData).toList().forEach(downloadAddData -> {
-            if (downloadAddData.name.isEmpty()) {
-                if (!downloadAddData.setData.getDestName().isEmpty()) {
-                    addDownloadDto.txtName.setText(downloadAddData.setData.getDestName());
+            if (downloadAddData.download.getDestFileName().isEmpty()) {
+                if (!downloadAddData.download.getSetData().getDestName().isEmpty()) {
+                    addDownloadDto.txtName.setText(downloadAddData.download.getSetData().getDestName());
                 } else {
-                    addDownloadDto.txtName.setText(downloadAddData.download.getFilm().getTitle());
+                    addDownloadDto.txtName.setText(downloadAddData.download.getTitle());
                 }
             }
         });
@@ -105,7 +105,7 @@ public class InitPathName {
     }
 
     private void nameChanged() {
-        addDownloadDto.getAct().name = addDownloadDto.txtName.getText();
+        addDownloadDto.getAct().download.setFile(addDownloadDto.cboPath.getEditor().getText(), addDownloadDto.txtName.getText());
         if (!addDownloadDto.txtName.getText().equals(FileNameUtils.checkFileName(addDownloadDto.txtName.getText(), false /* pfad */))) {
             addDownloadDto.txtName.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
         } else {
@@ -127,14 +127,14 @@ public class InitPathName {
     private void setPath(String path, boolean all) {
         if (all) {
             Arrays.stream(addDownloadDto.addDownloadData).forEach(downloadAddData -> {
-                if (!downloadAddData.path.equals(path)) {
-                    downloadAddData.path = path;
+                if (!downloadAddData.download.getDestPath().equals(path)) {
+                    downloadAddData.download.setFile(path, addDownloadDto.txtName.getText());
                     InitProgramCall.setProgrammCall(addDownloadDto, downloadAddData);
                 }
             });
         } else {
-            if (!addDownloadDto.getAct().path.equals(path)) {
-                addDownloadDto.getAct().path = path;
+            if (!addDownloadDto.getAct().download.getDestPath().equals(path)) {
+                addDownloadDto.getAct().download.setFile(path, addDownloadDto.txtName.getText());
                 InitProgramCall.setProgrammCall(addDownloadDto, addDownloadDto.getAct());
             }
         }
@@ -145,14 +145,14 @@ public class InitPathName {
         addDownloadDto.cboPath.setDisable(addDownloadDto.getAct().downloadIsRunning());
         addDownloadDto.txtName.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
-        if (!addDownloadDto.cboPath.getItems().contains(addDownloadDto.getAct().path)) {
-            addDownloadDto.cboPath.getItems().add(addDownloadDto.getAct().path);
+        if (!addDownloadDto.cboPath.getItems().contains(addDownloadDto.getAct().download.getDestPath())) {
+            addDownloadDto.cboPath.getItems().add(addDownloadDto.getAct().download.getDestPath());
         }
-        addDownloadDto.cboPath.getSelectionModel().select(addDownloadDto.getAct().path);
-        addDownloadDto.txtName.setText(addDownloadDto.getAct().name);
+        addDownloadDto.cboPath.getSelectionModel().select(addDownloadDto.getAct().download.getDestPath());
+        addDownloadDto.txtName.setText(addDownloadDto.getAct().download.getDestFileName());
 
         DownloadAddDialogFactory.calculateAndCheckDiskSpace(
-                addDownloadDto.getAct().path, addDownloadDto.lblFree,
+                addDownloadDto.getAct().download.getDestPath(), addDownloadDto.lblFree,
                 addDownloadDto.getAct());
     }
 
@@ -169,10 +169,10 @@ public class InitPathName {
         }
 
         String stdPath;
-        if (addDownloadDto.getAct().setData.getDestPath().isEmpty()) {
+        if (addDownloadDto.getAct().download.getSetData().getDestPath().isEmpty()) {
             stdPath = PSystemUtils.getStandardDownloadPath();
         } else {
-            stdPath = addDownloadDto.getAct().setData.getDestPath();
+            stdPath = addDownloadDto.getAct().download.getSetData().getDestPath();
         }
 
         actPath = DownloadAddDialogFactory.getNextName(stdPath, actPath, addDownloadDto.getAct().download.getTheme());
@@ -187,7 +187,7 @@ public class InitPathName {
         // Dialog-Ende: Die verwendeten Pfade einfügen
         List<AddDownloadData> list = new ArrayList<>(Arrays.stream(addDownloadDto.addDownloadData).toList());
         Collections.reverse(list);
-        list.forEach(downloadAddData -> ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.add(0, downloadAddData.path));
+        list.forEach(downloadAddData -> ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.add(0, downloadAddData.download.getDestPath()));
 
         // doppelte aussortieren
         final ArrayList<String> tmpPathList = new ArrayList<>();

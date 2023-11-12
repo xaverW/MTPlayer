@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
@@ -35,7 +36,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
 
     private final ObservableList<String> urlList = FXCollections.observableArrayList(); // wenn mehrere Filme gestartet werden sollen
     private final IntegerProperty no = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
-    private final IntegerProperty filmNr = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
+    private final IntegerProperty filmNo = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
 
     private final StringProperty aboName = new SimpleStringProperty("");
     private final StringProperty channel = new SimpleStringProperty("");
@@ -52,14 +53,22 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
 
     private final DownloadSize downloadSize = new DownloadSize();
     private final PDateProperty filmDate = new PDateProperty(new PDate(0));
+    private final StringProperty filmDateStr = new SimpleStringProperty("");
+    private final StringProperty filmTime = new SimpleStringProperty("");
 
-    private final StringProperty time = new SimpleStringProperty("");
     private final IntegerProperty durationMinute = new SimpleIntegerProperty(0);
     private final BooleanProperty hd = new SimpleBooleanProperty(false);
+    private final BooleanProperty small = new SimpleBooleanProperty(false);
     private final BooleanProperty ut = new SimpleBooleanProperty(false);
     private final BooleanProperty geoBlocked = new SimpleBooleanProperty(false);
 
-    private final StringProperty filmUrl = new SimpleStringProperty(""); //in normaler Auflösung
+    private final StringProperty resolution = new SimpleStringProperty(FilmDataMTP.RESOLUTION_NORMAL); // Dateigröße in normaler Auflösung
+    private final StringProperty filmSizeNormal = new SimpleStringProperty(""); // Dateigröße in normaler Auflösung
+    private final StringProperty filmSizeHd = new SimpleStringProperty(""); // Dateigröße in normaler Auflösung
+    private final StringProperty filmSizeSmall = new SimpleStringProperty(""); // Dateigröße in normaler Auflösung
+    private final StringProperty filmUrlNormal = new SimpleStringProperty(""); // URL in normaler Auflösung
+    private final StringProperty filmUrlHd = new SimpleStringProperty("");
+    private final StringProperty filmUrlSmall = new SimpleStringProperty("");
     private final StringProperty urlWebsite = new SimpleStringProperty("");
     private final StringProperty historyUrl = new SimpleStringProperty("");
     private final StringProperty urlSubtitle = new SimpleStringProperty("");
@@ -81,10 +90,11 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
-    public final Property[] properties = {no, filmNr, aboName, channel, theme, title, description,
+    public final Property[] properties = {no, filmNo, aboName, channel, theme, title, description,
             state, progress, remaining, bandwidth, downloadSize,
-            filmDate, time, durationMinute,
-            hd, ut, geoBlocked, filmUrl, urlWebsite, historyUrl, urlSubtitle,
+            filmDate, filmDateStr, filmTime, durationMinute,
+            hd, small, ut, geoBlocked, resolution, filmSizeNormal, filmSizeHd, filmSizeSmall, filmUrlNormal, filmUrlHd, filmUrlSmall,
+            urlWebsite, historyUrl, urlSubtitle,
             setDataId, programName, programCall, programCallArray, programDownloadmanager, startTime,
             destFileName, destPath, destPathFile,
             type, source, placedBack, infoFile, subtitle};
@@ -108,7 +118,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
         list.add(new Config_intProp("no", no));
-        list.add(new Config_intProp("filmNr", filmNr));
+        list.add(new Config_intProp("filmNr", filmNo));
         list.add(new Config_stringProp("aboName", aboName));
         list.add(new Config_stringProp("channel", channel));
         list.add(new Config_stringProp("theme", theme));
@@ -117,12 +127,19 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         list.add(new Config_doubleProp("progress", progress));
         list.add(new Config_intProp("remaining", remaining));
         list.add(new Config_longProp("bandwidth", bandwidth));
-        list.add(new Config_stringProp("time", time));
+        list.add(new Config_stringProp("time", filmTime));
         list.add(new Config_intProp("durationMinute", durationMinute));
         list.add(new Config_boolProp("hd", hd));
+        list.add(new Config_boolProp("small", small));
         list.add(new Config_boolProp("ut", ut));
         list.add(new Config_boolProp("geoBlocked", geoBlocked));
-        list.add(new Config_stringProp("filmUrl", filmUrl));
+        list.add(new Config_stringProp("resolution", resolution));
+        list.add(new Config_stringProp("filmSizeNormal", filmSizeNormal));
+        list.add(new Config_stringProp("filmSizeHd", filmSizeHd));
+        list.add(new Config_stringProp("filmSizeSmall", filmSizeSmall));
+        list.add(new Config_stringProp("filmUrl", filmUrlNormal));
+        list.add(new Config_stringProp("filmUrlHd", filmUrlHd));
+        list.add(new Config_stringProp("filmUrlSmall", filmUrlSmall));
         list.add(new Config_stringProp("urlWebsite", urlWebsite));
         list.add(new Config_stringProp("historyUrl", historyUrl));
         list.add(new ConfigStringList("url", urlList));
@@ -181,6 +198,18 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.filmDate.setValue(d);
     }
 
+    public String getFilmDateStr() {
+        return filmDateStr.get();
+    }
+
+    public StringProperty filmDateStrProperty() {
+        return filmDateStr;
+    }
+
+    public void setFilmDateStr(String filmDateStr) {
+        this.filmDateStr.set(filmDateStr);
+    }
+
     // GuiProps
     public int getGuiState() {
         return guiState.get();
@@ -210,16 +239,16 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.no.set(no);
     }
 
-    public int getFilmNr() {
-        return filmNr.get();
+    public int getFilmNo() {
+        return filmNo.get();
     }
 
-    public IntegerProperty filmNrProperty() {
-        return filmNr;
+    public IntegerProperty filmNoProperty() {
+        return filmNo;
     }
 
-    public void setFilmNr(int filmNr) {
-        this.filmNr.set(filmNr);
+    public void setFilmNo(int filmNo) {
+        this.filmNo.set(filmNo);
     }
 
     public String getAboName() {
@@ -344,16 +373,16 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         return downloadSize;
     }
 
-    public String getTime() {
-        return time.get();
+    public String getFilmTime() {
+        return filmTime.get();
     }
 
-    public StringProperty timeProperty() {
-        return time;
+    public StringProperty filmTimeProperty() {
+        return filmTime;
     }
 
-    public void setTime(String time) {
-        this.time.set(time);
+    public void setFilmTime(String filmTime) {
+        this.filmTime.set(filmTime);
     }
 
     public int getDurationMinute() {
@@ -380,6 +409,18 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.hd.set(hd);
     }
 
+    public boolean isSmall() {
+        return small.get();
+    }
+
+    public BooleanProperty smallProperty() {
+        return small;
+    }
+
+    public void setSmall(boolean small) {
+        this.small.set(small);
+    }
+
     public boolean isUt() {
         return ut.get();
     }
@@ -404,16 +445,88 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.geoBlocked.set(geoBlocked);
     }
 
-    public String getFilmUrl() {
-        return filmUrl.get();
+    public String getResolution() {
+        return resolution.get();
     }
 
-    public StringProperty filmUrlProperty() {
-        return filmUrl;
+    public StringProperty resolutionProperty() {
+        return resolution;
     }
 
-    public void setFilmUrl(String filmUrl) {
-        this.filmUrl.set(filmUrl);
+    public void setResolution(String resolution) {
+        this.resolution.set(resolution);
+    }
+
+    public String getFilmSizeNormal() {
+        return filmSizeNormal.get();
+    }
+
+    public StringProperty filmSizeNormalProperty() {
+        return filmSizeNormal;
+    }
+
+    public void setFilmSizeNormal(String filmSizeNormal) {
+        this.filmSizeNormal.set(filmSizeNormal);
+    }
+
+    public String getFilmSizeHd() {
+        return filmSizeHd.get();
+    }
+
+    public StringProperty filmSizeHdProperty() {
+        return filmSizeHd;
+    }
+
+    public void setFilmSizeHd(String filmSizeHd) {
+        this.filmSizeHd.set(filmSizeHd);
+    }
+
+    public String getFilmSizeSmall() {
+        return filmSizeSmall.get();
+    }
+
+    public StringProperty filmSizeSmallProperty() {
+        return filmSizeSmall;
+    }
+
+    public void setFilmSizeSmall(String filmSizeSmall) {
+        this.filmSizeSmall.set(filmSizeSmall);
+    }
+
+    public String getFilmUrlNormal() {
+        return filmUrlNormal.get();
+    }
+
+    public StringProperty filmUrlNormalProperty() {
+        return filmUrlNormal;
+    }
+
+    public void setFilmUrlNormal(String filmUrlNormal) {
+        this.filmUrlNormal.set(filmUrlNormal);
+    }
+
+    public String getFilmUrlHd() {
+        return filmUrlHd.get();
+    }
+
+    public StringProperty filmUrlHdProperty() {
+        return filmUrlHd;
+    }
+
+    public void setFilmUrlHd(String filmUrlHd) {
+        this.filmUrlHd.set(filmUrlHd);
+    }
+
+    public String getFilmUrlSmall() {
+        return filmUrlSmall.get();
+    }
+
+    public StringProperty filmUrlSmallProperty() {
+        return filmUrlSmall;
+    }
+
+    public void setFilmUrlSmall(String filmUrlSmall) {
+        this.filmUrlSmall.set(filmUrlSmall);
     }
 
     public String getUrlWebsite() {

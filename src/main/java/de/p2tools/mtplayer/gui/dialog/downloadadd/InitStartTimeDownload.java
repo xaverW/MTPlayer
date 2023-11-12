@@ -44,7 +44,8 @@ public class InitStartTimeDownload {
         addDownloadDto.rbStartAtTime.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME);
 
         addDownloadDto.p2TimePicker.getSelectionModel().selectFirst();
-        addDownloadDto.p2TimePicker.setDisable(!addDownloadDto.rbStartAtTime.isSelected());
+        addDownloadDto.p2TimePicker.disableProperty().bind(addDownloadDto.rbStartAtTime.selectedProperty().not()
+                .or(addDownloadDto.rbStartAtTime.disableProperty()));
 
         if (addDownloadDto.addNewDownloads) {
             makeAct();
@@ -70,8 +71,6 @@ public class InitStartTimeDownload {
         addDownloadDto.rbStartNotYet.setOnAction(a -> {
             setStartTime();
         });
-        addDownloadDto.rbStartAtTime.selectedProperty().addListener((u, o, n) ->
-                addDownloadDto.p2TimePicker.setDisable(!addDownloadDto.rbStartAtTime.isSelected()));
         addDownloadDto.rbStartAtTime.setOnAction(a -> {
             setStartTime();
         });
@@ -82,18 +81,19 @@ public class InitStartTimeDownload {
     }
 
     public void makeAct() {
-        addDownloadDto.p2TimePicker.setDisable(addDownloadDto.getAct().downloadIsRunning());
         addDownloadDto.rbStartNow.setDisable(addDownloadDto.getAct().downloadIsRunning());
         addDownloadDto.rbStartNotYet.setDisable(addDownloadDto.getAct().downloadIsRunning());
-        addDownloadDto.p2TimePicker.setDisable(!addDownloadDto.rbStartAtTime.isSelected());
+        addDownloadDto.rbStartAtTime.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
         if (!addDownloadDto.getAct().download.getStartTime().isEmpty()) {
             // dann Startzeit
             addDownloadDto.p2TimePicker.setTime(addDownloadDto.getAct().download.getStartTime());
             addDownloadDto.rbStartAtTime.setSelected(true);
+
         } else if (addDownloadDto.getAct().startNow) {
             // dann starten
             addDownloadDto.rbStartNow.setSelected(true);
+
         } else {
             // nix
             addDownloadDto.rbStartNotYet.setSelected(true);

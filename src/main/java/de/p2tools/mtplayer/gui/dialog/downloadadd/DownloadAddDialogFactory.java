@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2lib.tools.date.DateFactory;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -134,21 +133,21 @@ public class DownloadAddDialogFactory {
 
             } else {
                 int size;
-                if (!addDownloadData.fileSize_HD.isEmpty()) {
-                    size = Integer.parseInt(addDownloadData.fileSize_HD);
+                if (!addDownloadData.download.getFilmSizeHd().isEmpty()) {
+                    size = Integer.parseInt(addDownloadData.download.getFilmSizeHd());
                     if (size > usableSpace) {
                         noSize = ", nicht genug für HD";
 
                     }
                 }
-                if (!addDownloadData.fileSize_high.isEmpty()) {
-                    size = Integer.parseInt(addDownloadData.fileSize_high);
+                if (!addDownloadData.download.getFilmSizeNormal().isEmpty()) {
+                    size = Integer.parseInt(addDownloadData.download.getFilmSizeNormal());
                     if (size > usableSpace) {
                         noSize = ", nicht genug für \"hoch\"";
                     }
                 }
-                if (!addDownloadData.fileSize_small.isEmpty()) {
-                    size = Integer.parseInt(addDownloadData.fileSize_small);
+                if (!addDownloadData.download.getFilmSizeSmall().isEmpty()) {
+                    size = Integer.parseInt(addDownloadData.download.getFilmSizeSmall());
                     if (size > usableSpace) {
                         noSize = ", nicht genug für \"klein\"";
                     }
@@ -184,19 +183,5 @@ public class DownloadAddDialogFactory {
             }
         }
         return usableSpace;
-    }
-
-    public static String getFilmSize(AddDownloadData addDownloadData) {
-        switch (addDownloadData.resolution) {
-            case FilmDataMTP.RESOLUTION_HD:
-                return addDownloadData.fileSize_HD;
-
-            case FilmDataMTP.RESOLUTION_SMALL:
-                return addDownloadData.fileSize_small;
-
-            case FilmDataMTP.RESOLUTION_NORMAL:
-            default:
-                return addDownloadData.fileSize_high;
-        }
     }
 }

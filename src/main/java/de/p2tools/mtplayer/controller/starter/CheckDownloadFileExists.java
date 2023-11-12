@@ -25,7 +25,6 @@ import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadContinueDialogContr
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -119,7 +118,6 @@ public class CheckDownloadFileExists {
                 // dann bei Null beginnen
                 download.getDownloadStartDto().setDownloaded(0);
                 if (isNewName) {
-                    download.setFile(new File(download.getDestPathFile()));
                     if (!httpDownload) {
                         // wenn Name geändert den Programmaufruf nochmal mit dem geänderten Dateinamen bauen
                         download.makeProgParameter();

@@ -108,8 +108,8 @@ public class DownloadContinueDialogController extends PDialogExtra {
         btnContinueDownload.setVisible(httpDownload);
         btnContinueDownload.setManaged(httpDownload);
 
-        if (!httpDownload && !checkDownload()) {
-            // nur für Downloads mit Programm
+        if (!httpDownload && download.getSetData() == null) {
+            // nur für Downloads mit Programm, dann kann man Pfad, .. nicht ändern
             txtFileName.setDisable(true);
             cbPath.setDisable(true);
         }
@@ -221,7 +221,6 @@ public class DownloadContinueDialogController extends PDialogExtra {
             stopCounter();
             if (newValue != null) {
                 btnContinueDownload.setDisable(!download.getDestFileName().equals(newValue));
-                download.setFile(Paths.get(cbPath.getValue(), txtFileName.getText()).toFile());
             }
 
             if (!txtFileName.getText().equals(FileNameUtils.checkFileName(txtFileName.getText(), false /* pfad */))) {
@@ -245,10 +244,6 @@ public class DownloadContinueDialogController extends PDialogExtra {
             result = ProgConfigAskBeforeDelete.ContinueDownload.CONTINUE;
             quit();
         }
-    }
-
-    private boolean checkDownload() {
-        return (download.getSetData() != null && download.getFilm() != null);
     }
 
     private void stopCounter() {

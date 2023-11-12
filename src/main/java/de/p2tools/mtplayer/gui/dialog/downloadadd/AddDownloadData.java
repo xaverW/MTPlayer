@@ -18,26 +18,13 @@
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 
 public class AddDownloadData {
-    String fileSize_HD = "";
-    String fileSize_high = "";
-    String fileSize_small = "";
-
-    String resolution = FilmDataMTP.RESOLUTION_NORMAL;
-    boolean subIsDisabled = false;
-
-    String orgProgArray = "";
-
     DownloadData download; // ist der neu angelegte / Kopie vom OrgDownload
     DownloadData downloadOrg = null; // ist der OrgDownload der geändert werden soll
-    SetData setData;
-    boolean startNow = false;
 
-    String path = "";
-    String name = "";
+    String orgProgArray = "";
+    boolean startNow = false;
 
     public AddDownloadData() {
     }

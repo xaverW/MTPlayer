@@ -30,7 +30,7 @@ public class InitUrl {
     }
 
     public void makeAct() {
-        addDownloadDto.p2HyperlinkUrlFilm.setUrl(addDownloadDto.getAct().download.getFilmUrl());
+        addDownloadDto.p2HyperlinkUrlFilm.setUrl(addDownloadDto.getAct().download.getFilmUrlNormal());
         addDownloadDto.p2HyperlinkUrlDownload.setUrl(addDownloadDto.getAct().download.getUrl());
     }
 }

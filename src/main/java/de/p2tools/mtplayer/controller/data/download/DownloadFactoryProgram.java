@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
-import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.date.DateFactory;
@@ -40,7 +39,7 @@ public class DownloadFactoryProgram {
     private DownloadFactoryProgram() {
     }
 
-    public static boolean makeProgParameter(DownloadData download, FilmDataMTP film, AboData abo, String name, String path) {
+    public static boolean makeProgParameter(DownloadData download, AboData abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
         try {
             final ProgramData programData = download.getSetData().getProgUrl(download.getUrl());
@@ -61,7 +60,7 @@ public class DownloadFactoryProgram {
 
             download.setProgramDownloadmanager(programData.isDownManager());
 
-            buildFileNamePath(download, download.getSetData(), film, abo, name, path);
+            buildFileNamePath(download, download.getSetData(), abo, name, path);
             buildProgParameter(download, programData);
         } catch (final Exception ex) {
             PLog.errorLog(825600145, ex);
@@ -86,7 +85,7 @@ public class DownloadFactoryProgram {
         }
     }
 
-    private static void buildFileNamePath(DownloadData download, SetData setData, FilmDataMTP film,
+    private static void buildFileNamePath(DownloadData download, SetData setData,
                                           AboData abo, String nname, String ppath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
@@ -108,7 +107,7 @@ public class DownloadFactoryProgram {
             }
 
             // Tags ersetzen
-            name = replaceString(download, name, film); // %D ... ersetzen
+            name = replaceString(download, name); // %D ... ersetzen
 
             String suff = "";
             if (name.contains(".")) {
@@ -212,7 +211,7 @@ public class DownloadFactoryProgram {
                                 ProgConfig.SYSTEM_ONLY_ASCII.getValue()));
             }
 
-            path = replaceString(download, path, film); // %D ... ersetzen
+            path = replaceString(download, path); // %D ... ersetzen
         }
 
         if (path.endsWith(File.separator)) {
@@ -235,49 +234,49 @@ public class DownloadFactoryProgram {
         download.setFile(Paths.get(pathName[0], pathName[1]).toFile());
     }
 
-    private static String replaceString(DownloadData download, String replStr, FilmDataMTP film) {
+    private static String replaceString(DownloadData download, String replStr) {
         // hier wird nur ersetzt!
         // Felder mit variabler Länge, evtl. vorher kürzen
 
         int length = download.getSetData().getMaxField();
 
-        replStr = replStr.replace("%t", getField(film.getTheme(), length));
-        replStr = replStr.replace("%T", getField(film.getTitle(), length));
-        replStr = replStr.replace("%s", getField(film.getChannel(), length));
+        replStr = replStr.replace("%t", getField(download.getTheme(), length));
+        replStr = replStr.replace("%T", getField(download.getTitle(), length));
+        replStr = replStr.replace("%s", getField(download.getChannel(), length));
         replStr = replStr.replace("%N", getField(PUrlTools.getFileName(download.getUrl()), length));
 
         // Felder mit fester Länge werden immer ganz geschrieben
         replStr = replStr.replace("%D",
-                film.arr[FilmDataXml.FILM_DATE].equals("") ? getToday_yyyyMMdd()
-                        : cleanDate(turnDate(film.arr[FilmDataXml.FILM_DATE])));
+                download.getFilmDate().isEmpty() ? getToday_yyyyMMdd()
+                        : cleanDate(turnDate(download.getFilmDateStr())));
         replStr = replStr.replace("%d",
-                film.arr[FilmDataXml.FILM_TIME].equals("") ? getNow_HHMMSS()
-                        : cleanDate(film.arr[FilmDataXml.FILM_TIME]));
+                download.getFilmTime().isEmpty() ? getNow_HHMMSS()
+                        : cleanDate(download.getFilmTime()));
         replStr = replStr.replace("%H", getToday_yyyyMMdd());
         replStr = replStr.replace("%h", getNow_HHMMSS());
 
         replStr = replStr.replace("%1",
-                getDMY("%1", film.arr[FilmDataXml.FILM_DATE].equals("") ? getToday__yyyy_o_MM_o_dd() : film.arr[FilmDataXml.FILM_DATE]));
+                getDMY("%1", download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
         replStr = replStr.replace("%2",
-                getDMY("%2", film.arr[FilmDataXml.FILM_DATE].equals("") ? getToday__yyyy_o_MM_o_dd() : film.arr[FilmDataXml.FILM_DATE]));
+                getDMY("%2", download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
         replStr = replStr.replace("%3",
-                getDMY("%3", film.arr[FilmDataXml.FILM_DATE].equals("") ? getToday__yyyy_o_MM_o_dd() : film.arr[FilmDataXml.FILM_DATE]));
+                getDMY("%3", download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
 
         replStr = replStr.replace("%4",
-                getHMS("%4", film.arr[FilmDataXml.FILM_TIME].equals("") ? getNow_HH_MM_SS() : film.arr[FilmDataXml.FILM_TIME]));
+                getHMS("%4", download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
         replStr = replStr.replace("%5",
-                getHMS("%5", film.arr[FilmDataXml.FILM_TIME].equals("") ? getNow_HH_MM_SS() : film.arr[FilmDataXml.FILM_TIME]));
+                getHMS("%5", download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
         replStr = replStr.replace("%6",
-                getHMS("%6", film.arr[FilmDataXml.FILM_TIME].equals("") ? getNow_HH_MM_SS() : film.arr[FilmDataXml.FILM_TIME]));
+                getHMS("%6", download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
 
-        replStr = replStr.replace("%i", String.valueOf(film.no));
+        replStr = replStr.replace("%i", String.valueOf(download.getFilmNo()));
 
         String res = "";
-        if (download.getUrl().equals(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL))) {
+        if (download.getUrl().equals(download.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL))) {
             res = "H";
-        } else if (download.getUrl().equals(film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD))) {
+        } else if (download.getUrl().equals(download.getUrlForResolution(FilmDataMTP.RESOLUTION_HD))) {
             res = "HD";
-        } else if (download.getUrl().equals(film.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL))) {
+        } else if (download.getUrl().equals(download.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL))) {
             res = "L";
         }
         replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")

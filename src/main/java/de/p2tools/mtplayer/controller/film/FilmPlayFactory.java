@@ -36,13 +36,7 @@ public class FilmPlayFactory {
 
     public static void playUrl(DownloadData download) {
         // aus Menü
-        FilmDataMTP film;
-        if (download.getFilm() == null) {
-            film = new FilmDataMTP();
-        } else {
-            film = download.getFilm().getCopy();
-        }
-
+        FilmDataMTP film = new FilmDataMTP();
         // und jetzt die tatsächlichen URLs des Downloads eintragen
         film.arr[FilmDataMTP.FILM_URL] = download.getUrl();
         film.arr[FilmDataMTP.FILM_URL_SMALL] = "";
@@ -106,11 +100,6 @@ public class FilmPlayFactory {
         }
 
         DownloadData downloadData = new DownloadData(filmList, setData);
-        playNow(filmList, downloadData);
-    }
-
-    private static void playNow(List<FilmDataMTP> filmList, DownloadData downloadData) {
-        // versuch das Programm zu starten
         final ArrayList<String> list = new ArrayList<>();
         startMsg(downloadData, list);
 

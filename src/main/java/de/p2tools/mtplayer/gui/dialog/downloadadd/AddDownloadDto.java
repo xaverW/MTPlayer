@@ -165,11 +165,11 @@ public class AddDownloadDto {
             btnNext.setDisable(false);
         }
 
-        lblFilmTitle.setText(addDownloadData[actFilmIsShown.getValue()].download.getFilm().getChannel()
-                + "  -  " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getTitle());
-        lblFilmDateTime.setText("Datum: " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getDate()
-                + "       Zeit: " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getTime()
-                + "       Dauer [min]: " + addDownloadData[actFilmIsShown.getValue()].download.getFilm().getDurationMinute());
+        lblFilmTitle.setText(addDownloadData[actFilmIsShown.getValue()].download.getChannel()
+                + "  -  " + addDownloadData[actFilmIsShown.getValue()].download.getTitle());
+        lblFilmDateTime.setText("Datum: " + addDownloadData[actFilmIsShown.getValue()].download.getFilmDate()
+                + "       Zeit: " + addDownloadData[actFilmIsShown.getValue()].download.getFilmTime()
+                + "       Dauer [min]: " + addDownloadData[actFilmIsShown.getValue()].download.getDurationMinute());
 
         initSetDataDownload.makeAct();
         initPathName.makeAct();

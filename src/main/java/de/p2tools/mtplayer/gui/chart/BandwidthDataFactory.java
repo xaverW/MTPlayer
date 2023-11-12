@@ -87,10 +87,8 @@ public class BandwidthDataFactory {
             if (download != null && download.getNo() != P2LibConst.NUMBER_NOT_STARTED) {
                 bandwidthData.setName(String.valueOf(download.getNo()));
 
-            } else if (download != null && download.getFilm() != null) {
-                final String fNo = download.getFilm().getNo() == P2LibConst.NUMBER_NOT_STARTED ?
-                        " " : "[" + download.getFilm().getNo() + "]";
-                bandwidthData.setName(fNo);
+            } else if (download != null) {
+                bandwidthData.setName("[" + download.getFilmNo() + "]");
             }
         }
 

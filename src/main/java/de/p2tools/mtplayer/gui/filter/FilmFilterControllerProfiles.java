@@ -16,11 +16,7 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
-import de.p2tools.mtplayer.controller.config.PListener;
-import de.p2tools.mtplayer.controller.config.ProgColorList;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;

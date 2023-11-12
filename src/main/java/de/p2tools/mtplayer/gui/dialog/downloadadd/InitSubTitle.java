@@ -49,7 +49,7 @@ public class InitSubTitle {
         addDownloadDto.chkSubtitle.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
         addDownloadDto.chkInfo.setSelected(addDownloadDto.getAct().download.getInfoFile());
-        addDownloadDto.chkSubtitle.setDisable(addDownloadDto.getAct().subIsDisabled);
+        addDownloadDto.chkSubtitle.setDisable(addDownloadDto.getAct().download.getUrlSubtitle().isEmpty());
         addDownloadDto.chkSubtitle.setSelected(addDownloadDto.getAct().download.isSubtitle());
     }
 
@@ -65,7 +65,7 @@ public class InitSubTitle {
         // SubTitle
         if (addDownloadDto.chkSubTitleAll.isSelected()) {
             Arrays.stream(addDownloadDto.addDownloadData).forEach(downloadAddData -> {
-                if (downloadAddData.subIsDisabled) {
+                if (downloadAddData.download.getUrlSubtitle().isEmpty()) {
                     // dann immer false, gibts nicht
                     downloadAddData.download.setSubtitle(false);
                 } else {
@@ -74,7 +74,7 @@ public class InitSubTitle {
             });
 
         } else {
-            if (addDownloadDto.getAct().subIsDisabled) {
+            if (addDownloadDto.getAct().download.getUrlSubtitle().isEmpty()) {
                 // dann immer false, gibts nicht
                 addDownloadDto.getAct().download.setSubtitle(false);
             } else {

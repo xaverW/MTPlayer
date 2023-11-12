@@ -422,7 +422,7 @@ public class DownloadGuiController extends AnchorPane {
         final ArrayList<DownloadData> arrayDownloadData = getSelList();
         final ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>();
 
-        arrayDownloadData.stream().forEach(download -> {
+        arrayDownloadData.forEach(download -> {
             if (download.getFilm() != null) {
                 filmArrayList.add(download.getFilm());
             }

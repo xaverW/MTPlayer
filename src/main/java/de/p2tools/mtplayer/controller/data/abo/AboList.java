@@ -30,7 +30,6 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class AboList extends SimpleListProperty<AboData> implements PDataList<AboData> {
@@ -118,15 +117,6 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
             AboFactory.setAboForFilmlist();
         }
         listChanged.setValue(!listChanged.get());
-    }
-
-    public synchronized void sort() {
-        Collections.sort(this);
-
-        nr = 0;
-        for (AboData abo : this) {
-            abo.setNo(++nr);
-        }
     }
 
     public synchronized ArrayList<String> getAboDestinationPathList() {

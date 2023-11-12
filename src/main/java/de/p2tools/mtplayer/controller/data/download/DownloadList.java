@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import de.p2tools.p2lib.tools.PGetList;
-import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -130,29 +129,13 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         return ret;
     }
 
-    public synchronized void addFilmInDownloads() {
-        // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
-        // den Film wieder eintragen
-        PDuration.counterStart("addFilmInList");
-        int counter = 50; //todo das dauert sonst viel zu lang
-        for (DownloadData d : this) {
-            --counter;
-            if (counter < 0) {
-                break;
-            }
-            d.setFilm(progData.filmList.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
-            d.setSizeDownloadFromFilm();
-        }
-        PDuration.counterStop("addFilmInList");
-    }
-
     public synchronized void preferDownloads(ArrayList<DownloadData> prefDownList) {
         DownloadFactory.preferDownloads(this, prefDownList);
     }
 
     public synchronized DownloadData getDownloadWithFilmUrl(String urlFilm) {
         for (final DownloadData dataDownload : this) {
-            if (dataDownload.getFilmUrl().equals(urlFilm)) {
+            if (dataDownload.getFilmUrlNormal().equals(urlFilm)) {
                 return dataDownload;
             }
         }

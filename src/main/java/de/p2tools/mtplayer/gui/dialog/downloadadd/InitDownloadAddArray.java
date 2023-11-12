@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.mtfilm.film.FilmFactory;
+import de.p2tools.p2lib.mtdownload.DownloadFactory;
 
 import java.util.ArrayList;
 
@@ -42,60 +42,39 @@ public class InitDownloadAddArray {
         AddDownloadData[] addDownloadData = new AddDownloadData[filmsToDownloadList.size()];
         for (int i = 0; i < filmsToDownloadList.size(); ++i) {
             addDownloadData[i] = new AddDownloadData();
-            addDownloadData[i].setData = addDownloadDto.setDataStart;
             addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
                     addDownloadDto.setDataStart, filmsToDownloadList.get(i),
                     null, "", aktPath, "");
 
-            addDownloadData[i].path = addDownloadData[i].download.getDestPath();
-            addDownloadData[i].name = addDownloadData[i].download.getDestFileName();
-
             // Dateigröße
-            if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
-                addDownloadData[i].fileSize_HD = addDownloadData[i].download.getFilm().isHd() ?
-                        FilmFactory.getSizeFromWeb(addDownloadData[i].download.getFilm(), addDownloadData[i].download.getFilm().getUrlForResolution(FilmDataMTP.RESOLUTION_HD)) : "";
-                addDownloadData[i].fileSize_high = FilmFactory.getSizeFromWeb(addDownloadData[i].download.getFilm(),
-                        addDownloadData[i].download.getFilm().getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL));
-                addDownloadData[i].fileSize_small = addDownloadData[i].download.getFilm().isSmall() ?
-                        FilmFactory.getSizeFromWeb(addDownloadData[i].download.getFilm(), addDownloadData[i].download.getFilm().getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL)) : "";
-
-            } else {
-                // filesize->wenn die Liste länger als ~5 ist, dauert das viel zu lang
-                addDownloadData[i].fileSize_HD = "";
-                addDownloadData[i].fileSize_high = FilmFactory.getSizeFromWeb(addDownloadData[i].download.getFilm(),
-                        addDownloadData[i].download.getFilm().getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL));
-                addDownloadData[i].fileSize_small = "";
-            }
-
-            // Infofile
-            addDownloadData[i].download.setInfoFile(addDownloadData[i].setData.isInfoFile());
-
-            // Subtitle
-            if (addDownloadData[i].download.getFilm().getUrlSubtitle().isEmpty()) {
-                // dann gibts keinen Subtitle
-                addDownloadData[i].subIsDisabled = true;
-                addDownloadData[i].download.setSubtitle(false);
-            } else {
-                addDownloadData[i].subIsDisabled = false;
-                addDownloadData[i].download.setSubtitle(addDownloadData[i].setData.isSubtitle());
-            }
+            addSize(addDownloadData, i);
 
             // Auflösung: Die Werte passend zum Film setzen
             if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(FilmDataMTP.RESOLUTION_HD) ||
                     addDownloadDto.filterResolution.equals(FilmDataMTP.RESOLUTION_HD) ||
-                    addDownloadData[i].setData.getResolution().equals(FilmDataMTP.RESOLUTION_HD))
-                    && addDownloadData[i].download.getFilm().isHd()) {
-
+                    addDownloadData[i].download.getSetData().getResolution().equals(FilmDataMTP.RESOLUTION_HD))
+                    && addDownloadData[i].download.isHd()) {
                 //Dann wurde im Filter oder Set HD ausgewählt und wird voreingestellt
-                addDownloadData[i].resolution = FilmDataMTP.RESOLUTION_HD;
+                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_HD);
 
             } else if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(FilmDataMTP.RESOLUTION_SMALL) ||
-                    addDownloadData[i].setData.getResolution().equals(FilmDataMTP.RESOLUTION_SMALL))
-                    && addDownloadData[i].download.getFilm().isSmall()) {
-                addDownloadData[i].resolution = FilmDataMTP.RESOLUTION_SMALL;
+                    addDownloadData[i].download.getSetData().getResolution().equals(FilmDataMTP.RESOLUTION_SMALL))
+                    && addDownloadData[i].download.isSmall()) {
+                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_SMALL);
 
             } else {
-                addDownloadData[i].resolution = FilmDataMTP.RESOLUTION_NORMAL;
+                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
+            }
+
+            // Infofile
+            addDownloadData[i].download.setInfoFile(addDownloadData[i].download.getSetData().isInfoFile());
+
+            // Subtitle
+            if (addDownloadData[i].download.getUrlSubtitle().isEmpty()) {
+                // dann gibts keinen Subtitle
+                addDownloadData[i].download.setSubtitle(false);
+            } else {
+                addDownloadData[i].download.setSubtitle(addDownloadData[i].download.getSetData().isSubtitle());
             }
         }
         return addDownloadData;
@@ -109,54 +88,51 @@ public class InitDownloadAddArray {
             addDownloadData[i].download = downloadDataArrayList.get(i).getCopy();
             addDownloadData[i].downloadOrg = downloadDataArrayList.get(i);
 
-            addDownloadData[i].path = addDownloadData[i].download.getDestPath();
-            addDownloadData[i].name = addDownloadData[i].download.getDestFileName();
-            addDownloadData[i].setData = addDownloadData[i].download.getSetData();
-
             // Dateigröße
-            if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
-                addDownloadData[i].fileSize_HD = addDownloadData[i].download.getFilm().isHd() ?
-                        FilmFactory.getSizeFromWeb(addDownloadData[i].download.getFilm(), addDownloadData[i].download.getFilm().getUrlForResolution(FilmDataMTP.RESOLUTION_HD)) : "";
-                addDownloadData[i].fileSize_high = FilmFactory.getSizeFromWeb(addDownloadData[i].download.getFilm(),
-                        addDownloadData[i].download.getFilm().getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL));
-                addDownloadData[i].fileSize_small = addDownloadData[i].download.getFilm().isSmall() ?
-                        FilmFactory.getSizeFromWeb(addDownloadData[i].download.getFilm(), addDownloadData[i].download.getFilm().getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL)) : "";
+            addSize(addDownloadData, i);
+
+            // Auflösung: Die Werte passend zum Film setzen
+            if (addDownloadData[i].download.isHd() &&
+                    addDownloadData[i].download.getUrl().equals(addDownloadData[i].download.getFilmUrlHd())) {
+                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_HD);
+
+            } else if (addDownloadData[i].download.isSmall() &&
+                    addDownloadData[i].download.getUrl().equals(addDownloadData[i].download.getFilmUrlSmall())) {
+                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_SMALL);
 
             } else {
-                // filesize->wenn die Liste länger als ~5 ist, dauert das viel zu lang
-                addDownloadData[i].fileSize_HD = "";
-                addDownloadData[i].fileSize_high = FilmFactory.getSizeFromWeb(addDownloadData[i].download.getFilm(),
-                        addDownloadData[i].download.getFilm().getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL));
-                addDownloadData[i].fileSize_small = "";
+                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
             }
 
             // Subtitle
-            if (addDownloadData[i].download.getFilm().getUrlSubtitle().isEmpty()) {
+            if (addDownloadData[i].download.getUrlSubtitle().isEmpty()) {
                 // dann gibts keinen Subtitle
-                addDownloadData[i].subIsDisabled = true;
                 addDownloadData[i].download.setSubtitle(false);
-            }
-
-            // Auflösung: Die Werte passend zum Film setzen
-            if (addDownloadData[i].download.getFilm() != null) {
-
-                if (addDownloadData[i].download.getFilm().isHd() &&
-                        addDownloadData[i].download.getUrl().equals(addDownloadData[i].download.getFilm()
-                                .getUrlForResolution(FilmDataMTP.RESOLUTION_HD))) {
-                    addDownloadData[i].resolution = FilmDataMTP.RESOLUTION_HD;
-
-                } else if (addDownloadData[i].download.getFilm().isSmall() &&
-                        addDownloadData[i].download.getUrl().equals(addDownloadData[i].download.getFilm()
-                                .getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL))) {
-                    addDownloadData[i].resolution = FilmDataMTP.RESOLUTION_SMALL;
-
-                } else {
-                    addDownloadData[i].resolution = FilmDataMTP.RESOLUTION_NORMAL;
-                }
-            } else {
-                addDownloadData[i].resolution = FilmDataMTP.RESOLUTION_NORMAL;
             }
         }
         return addDownloadData;
     }
+
+    private static void addSize(AddDownloadData[] addDownloadData, int i) {
+        // Dateigröße
+        // https://srf-vod-amd.....x-f1-v1-a1.m3u8
+        final String M3U8 = ".m3u8";
+
+        if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
+            if (addDownloadData[i].download.getFilmSizeHd().isEmpty() &&
+                    !addDownloadData[i].download.getFilmUrlHd().endsWith(M3U8)) {
+
+                addDownloadData[i].download.setFilmSizeHd(addDownloadData[i].download.getFilmUrlHd().isEmpty() ?
+                        "" : DownloadFactory.getContentLengthMB(addDownloadData[i].download.getFilmUrlHd()));
+            }
+
+            if (addDownloadData[i].download.getFilmSizeSmall().isEmpty() &&
+                    !addDownloadData[i].download.getFilmUrlSmall().endsWith(M3U8)) {
+
+                addDownloadData[i].download.setFilmSizeSmall(addDownloadData[i].download.getFilmUrlSmall().isEmpty() ?
+                        "" : DownloadFactory.getContentLengthMB(addDownloadData[i].download.getFilmUrlSmall()));
+            }
+        }
+    }
 }
+

@@ -56,7 +56,7 @@ public class MTInfoFile {
             br.write(P2LibConst.LINE_SEPARATORx2);
             br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DATE] + ":         " + download.getFilmDate().toString());
             br.write(P2LibConst.LINE_SEPARATOR);
-            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TIME] + ":          " + download.getTime());
+            br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TIME] + ":          " + download.getFilmTime());
             br.write(P2LibConst.LINE_SEPARATOR);
             br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DURATION] + ":   " + download.getDurationMinute());
             br.write(P2LibConst.LINE_SEPARATOR);

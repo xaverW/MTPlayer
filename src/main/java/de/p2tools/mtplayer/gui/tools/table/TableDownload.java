@@ -76,7 +76,7 @@ public class TableDownload extends PTable<DownloadData> {
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         final TableColumn<DownloadData, Integer> filmNrColumn = new TableColumn<>("Filmnr");
-        filmNrColumn.setCellValueFactory(new PropertyValueFactory<>("filmNr"));
+        filmNrColumn.setCellValueFactory(new PropertyValueFactory<>("filmNo"));
         filmNrColumn.setCellFactory(new P2CellIntMax().cellFactory);
         filmNrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
@@ -131,7 +131,7 @@ public class TableDownload extends PTable<DownloadData> {
         datumColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, String> timeColumn = new TableColumn<>("Zeit");
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("filmTime"));
         timeColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Integer> durationColumn = new TableColumn<>("Dauer [min]");
