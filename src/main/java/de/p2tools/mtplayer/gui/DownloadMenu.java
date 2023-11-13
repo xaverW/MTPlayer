@@ -74,15 +74,51 @@ public class DownloadMenu {
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
                 "Film Starten", "Gespeicherten Film abspielen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
-        btnRefresh.setOnAction(a -> DownloadFactory.searchForAbosAndMaybeStart());
-        btnClear.setOnAction(a -> DownloadFactory.cleanUpList(progData.downloadList));
-        btnChange.setOnAction(a -> progData.downloadGuiController.changeDownload());
-        btnStart.setOnAction(a -> progData.downloadGuiController.startDownload(false));
-        btnStartAll.setOnAction(a -> progData.downloadGuiController.startDownload(true));
-        btStartAllTime.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
-        btnBack.setOnAction(a -> progData.downloadGuiController.moveDownloadBack());
-        btnDel.setOnAction(a -> progData.downloadGuiController.deleteDownloads());
-        btnDownloadFilm.setOnAction(a -> progData.downloadGuiController.playFilm());
+        btnRefresh.setOnAction(a -> {
+            DownloadFactory.searchForAbosAndMaybeStart();
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
+        btnClear.setOnAction(a -> {
+            DownloadFactory.cleanUpList(progData.downloadList);
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
+        btnChange.setOnAction(a -> {
+            progData.downloadGuiController.changeDownload();
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
+        btnStart.setOnAction(a -> {
+            progData.downloadGuiController.startDownload(false);
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
+        btnStartAll.setOnAction(a -> {
+            progData.downloadGuiController.startDownload(true);
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
+        btStartAllTime.setOnAction(a -> {
+            progData.downloadGuiController.startDownloadTime();
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
+        btnBack.setOnAction(a -> {
+            progData.downloadGuiController.moveDownloadBack();
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
+        btnDel.setOnAction(a -> {
+            progData.downloadGuiController.deleteDownloads();
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
+        btnDownloadFilm.setOnAction(a -> {
+            progData.downloadGuiController.playFilm();
+            progData.downloadGuiController.tableView.refresh();
+            progData.downloadGuiController.tableView.requestFocus();
+        });
     }
 
     private void initMenu() {

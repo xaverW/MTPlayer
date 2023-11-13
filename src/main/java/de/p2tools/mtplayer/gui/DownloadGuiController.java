@@ -60,7 +60,7 @@ public class DownloadGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
-    private final TableDownload tableView;
+    public final TableDownload tableView;
     private final DownloadInfoController downloadInfoController;
     private final ProgData progData;
     private final FilteredList<DownloadData> filteredListDownloads;

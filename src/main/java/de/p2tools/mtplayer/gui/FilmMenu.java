@@ -64,9 +64,21 @@ public class FilmMenu {
         final ToolBarButton btSave = new ToolBarButton(vBox,
                 "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_FILM_REC.getImageView());
 
-        btPlay.setOnAction(a -> FilmPlayFactory.playFilm());
-        btPlayAll.setOnAction(a -> FilmPlayFactory.playFilmList());
-        btSave.setOnAction(a -> FilmSaveFactory.saveFilmList());
+        btPlay.setOnAction(a -> {
+            FilmPlayFactory.playFilm();
+            progData.filmGuiController.tableView.refresh();
+            progData.filmGuiController.tableView.requestFocus();
+        });
+        btPlayAll.setOnAction(a -> {
+            FilmPlayFactory.playFilmList();
+            progData.filmGuiController.tableView.refresh();
+            progData.filmGuiController.tableView.requestFocus();
+        });
+        btSave.setOnAction(a -> {
+            FilmSaveFactory.saveFilmList();
+            progData.filmGuiController.tableView.refresh();
+            progData.filmGuiController.tableView.requestFocus();
+        });
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -82,15 +94,28 @@ public class FilmMenu {
         final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
                 "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
 
-        btBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm(true));
-        btDelBookmark.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
-        btDelAllBookmark.setOnAction(a -> progData.historyListBookmarks.clearAll(progData.primaryStage));
+        btBookmark.setOnAction(a -> {
+            progData.filmGuiController.bookmarkFilm(true);
+            progData.filmGuiController.tableView.refresh();
+            progData.filmGuiController.tableView.requestFocus();
+            ;
+        });
+        btDelBookmark.setOnAction(a -> {
+            progData.filmGuiController.bookmarkFilm(false);
+            progData.filmGuiController.tableView.refresh();
+            progData.filmGuiController.tableView.requestFocus();
+        });
+        btDelAllBookmark.setOnAction(a -> {
+            progData.historyListBookmarks.clearAll(progData.primaryStage);
+            progData.filmGuiController.tableView.refresh();
+            progData.filmGuiController.tableView.requestFocus();
+        });
 
         btFilterBookmark.setOnAction(a -> {
             FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
-            FilmFilter black = FilmFilterSamples.getBookmarkFilter();
+            FilmFilter bookmarkFilter = FilmFilterSamples.getBookmarkFilter();
 
-            if (sf.isSame(black, false)) {
+            if (sf.isSame(bookmarkFilter, false)) {
                 // dann ist der BlackFilter aktiv, dann zurückschalten
                 if (storedActFilterSettings != null) {
                     // dann haben wir einen gespeicherten Filter
@@ -103,8 +128,10 @@ public class FilmMenu {
             } else {
                 // dann ist es ein anderer Filter, Black einschalten und ActFilter merken
                 storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
-                progData.filmFilterWorker.setActFilterSettings(black);
+                progData.filmFilterWorker.setActFilterSettings(bookmarkFilter);
             }
+            progData.filmGuiController.tableView.refresh();
+            progData.filmGuiController.tableView.requestFocus();
         });
 
         if (ProgData.debug) {

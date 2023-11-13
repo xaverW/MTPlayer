@@ -49,7 +49,7 @@ public class AboGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
-    private final TableAbo tableView;
+    public final TableAbo tableView;
     private final AboInfoController aboInfoController;
 
     private final ProgData progData;

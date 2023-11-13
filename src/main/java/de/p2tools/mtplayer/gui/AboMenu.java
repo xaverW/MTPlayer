@@ -72,11 +72,31 @@ public class AboMenu {
         final ToolBarButton btChange = new ToolBarButton(vBox,
                 "Abos ändern", "Markierte Abos ändern", ProgIcons.ICON_TOOLBAR_ABO_CONFIG.getImageView());
 
-        btNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
-        btOn.setOnAction(a -> AboListFactory.setAboActive(true));
-        btOff.setOnAction(a -> AboListFactory.setAboActive(false));
-        btDel.setOnAction(a -> AboListFactory.deleteAbo());
-        btChange.setOnAction(a -> AboListFactory.editAbo());
+        btNew.setOnAction(a -> {
+            AboListFactory.addNewAbo("Neu", "", "", "");
+            progData.aboGuiController.tableView.refresh();
+            progData.aboGuiController.tableView.requestFocus();
+        });
+        btOn.setOnAction(a -> {
+            AboListFactory.setAboActive(true);
+            progData.aboGuiController.tableView.refresh();
+            progData.aboGuiController.tableView.requestFocus();
+        });
+        btOff.setOnAction(a -> {
+            AboListFactory.setAboActive(false);
+            progData.aboGuiController.tableView.refresh();
+            progData.aboGuiController.tableView.requestFocus();
+        });
+        btDel.setOnAction(a -> {
+            AboListFactory.deleteAbo();
+            progData.aboGuiController.tableView.refresh();
+            progData.aboGuiController.tableView.requestFocus();
+        });
+        btChange.setOnAction(a -> {
+            AboListFactory.editAbo();
+            progData.aboGuiController.tableView.refresh();
+            progData.aboGuiController.tableView.requestFocus();
+        });
     }
 
     private void initMenu() {
