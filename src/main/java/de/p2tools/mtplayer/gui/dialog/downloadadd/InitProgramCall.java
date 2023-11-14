@@ -20,9 +20,7 @@ package de.p2tools.mtplayer.gui.dialog.downloadadd;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
-import de.p2tools.p2lib.tools.PSystemUtils;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
+import de.p2tools.p2lib.guitools.P2ClipBoardContext;
 
 import java.util.Arrays;
 
@@ -36,13 +34,7 @@ public class InitProgramCall {
     }
 
     private void init() {
-        final MenuItem miCopyName = new MenuItem("Programmaufruf kopieren");
-        miCopyName.setOnAction(a -> {
-            PSystemUtils.copyToClipboard(addDownloadDto.textAreaProg.getText());
-        });
-        ContextMenu contextMenu = new ContextMenu();
-        contextMenu.getItems().add(miCopyName);
-        addDownloadDto.textAreaProg.setContextMenu(contextMenu);
+        P2ClipBoardContext.addMenu("Programmaufruf kopieren", addDownloadDto.textAreaProg.textProperty(), addDownloadDto.textAreaProg);
 
         Arrays.stream(addDownloadDto.addDownloadData).toList().forEach(downloadAddData -> {
             downloadAddData.orgProgArray = downloadAddData.download.getProgramCallArray();
