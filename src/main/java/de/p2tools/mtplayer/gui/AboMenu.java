@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -118,8 +117,7 @@ public class AboMenu {
         miNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
         final MenuItem miAboAddFilter = new MenuItem("Aus dem Film-Filter ein Abo erstellen");
         miAboAddFilter.setOnAction(a -> {
-            FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
-            AboListFactory.addNewAboFromFilterButton(filmFilter);
+            AboListFactory.addNewAboFromFilterButton();
         });
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + PShortKeyFactory.SHORT_CUT_LEER +

@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
@@ -158,8 +157,7 @@ public class FilmTableContextMenu {
 
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
-            FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
-            AboListFactory.addNewAboFromFilterButton(filmFilter);
+            AboListFactory.addNewAboFromFilterButton();
         });
         AboData aboData = film == null ? null : BlacklistFilterFactory.findAbo(film);
         if (aboData == null) {

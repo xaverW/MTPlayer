@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
 import de.p2tools.mtplayer.gui.dialog.abodialog.AboAddDialogController;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.collections.FXCollections;
@@ -140,8 +141,9 @@ public class AboListFactory {
         }
     }
 
-    public static void addNewAboFromFilterButton(FilmFilter filmFilter) {
+    public static void addNewAboFromFilterButton() {
         //abo anlegen, oder false wenns schon existiert
+        FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
         String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         String theme = filmFilter.isThemeVis() ? filmFilter.getTheme().trim() : "";
         boolean themeExact = filmFilter.isThemeExact();
@@ -167,10 +169,14 @@ public class AboListFactory {
             searchTitle = searchChannel + somewhere;
         }
 
+        if (searchTitle.startsWith(Filter.FILTER_REG_EX)) {
+            searchTitle = searchTitle.replaceFirst(Filter.FILTER_REG_EX, "");
+        } else if (searchTitle.startsWith(Filter.FILTER_EXCLUDE)) {
+            searchTitle = searchTitle.replaceFirst(Filter.FILTER_EXCLUDE, "");
+        }
         if (searchTitle.isEmpty()) {
             searchTitle = "Abo aus Filter";
         }
-
         searchTitle = DownloadFactory.replaceEmptyFileName(searchTitle,
                 false /* nur ein Ordner */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),

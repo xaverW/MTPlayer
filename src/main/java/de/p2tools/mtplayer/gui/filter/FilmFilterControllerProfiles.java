@@ -143,8 +143,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
         final MenuItem miAbo = new MenuItem("aus den Filtereinstellungen ein Abo erstellen");
         miAbo.setOnAction(a -> {
-            FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
-            AboListFactory.addNewAboFromFilterButton(filmFilter);
+            AboListFactory.addNewAboFromFilterButton();
         });
 
         final MenuItem miResort = new MenuItem("Filterprofile sortieren");
