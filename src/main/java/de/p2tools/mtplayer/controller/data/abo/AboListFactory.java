@@ -63,6 +63,10 @@ public class AboListFactory {
         ProgData.getInstance().aboList.setAboActive(lAbo, on);
     }
 
+    public static void setAboActive(AboData abo, boolean on) {
+        ProgData.getInstance().aboList.setAboActive(abo, on);
+    }
+
     public static void addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
         // abo anlegen, oder false wenns schon existiert
         int minDuration, maxDuration;

@@ -173,21 +173,25 @@ public class DownloadTableContextMenu {
 
     private Menu addSubMenuAbo(DownloadData download) {
         final MenuItem miChangeAbo = new MenuItem("Abo ändern");
+        final MenuItem miDeactivateAbo = new MenuItem("Abo ausschalten");
         final MenuItem miDelAbo = new MenuItem("Abo löschen");
         // shon hier, wird evtl. nochmal passive
         miChangeAbo.setDisable(download == null);
+        miDeactivateAbo.setDisable(download == null);
         miDelAbo.setDisable(download == null);
 
         if (download != null && download.getAbo() != null) {
             miChangeAbo.setOnAction(event -> AboListFactory.editAbo(download.getAbo()));
+            miDeactivateAbo.setOnAction(event -> AboListFactory.setAboActive(download.getAbo(), false));
             miDelAbo.setOnAction(event -> AboListFactory.deleteAbo(download.getAbo()));
         } else {
             miChangeAbo.setDisable(true);
+            miDeactivateAbo.setDisable(true);
             miDelAbo.setDisable(true);
         }
 
         final Menu submenuAbo = new Menu("Abo");
-        submenuAbo.getItems().addAll(miChangeAbo, miDelAbo);
+        submenuAbo.getItems().addAll(miChangeAbo, miDeactivateAbo, miDelAbo);
         return submenuAbo;
     }
 
