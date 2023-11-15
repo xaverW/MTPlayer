@@ -196,7 +196,7 @@ public class TableDownload extends PTable<DownloadData> {
                 progressColumn, remainingColumn, speedColumn, startTimeColumn, sizeColumn,
                 datumColumn, timeColumn, durationColumn,
                 hdColumn, utColumn, geoColumn, artColumn, srcColumn, /*placedBackColumn,*/
-                programColumn, setColumn, urlColumn, fileNameColumn, pathColumn);
+                programColumn, setColumn, fileNameColumn, pathColumn, urlColumn);
 
         PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
             @Override

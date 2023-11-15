@@ -128,7 +128,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
         final TableColumn<FilmDataMTP, Boolean> bookmarkColumn = new TableColumn<>("Bookmark");
         bookmarkColumn.setCellValueFactory(new PropertyValueFactory<>("bookmark"));
         bookmarkColumn.setCellFactory(new P2CellCheckBox().cellFactory);
-        bookmarkColumn.getStyleClass().add("alignCenterLeft");
+        bookmarkColumn.getStyleClass().add("alignCenter");
 
         nrColumn.setPrefWidth(50);
         channelColumn.setPrefWidth(80);
@@ -141,8 +141,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
                 channelColumn, themeColumn, titleColumn,
                 startColumn,
                 dateColumn, timeColumn, durationColumn, sizeColumn,
-                hdColumn, utColumn,
-                geoColumn,
-                urlColumn, aboColumn, bookmarkColumn);
+                hdColumn, utColumn, bookmarkColumn,
+                geoColumn, aboColumn, urlColumn);
     }
 }

@@ -28,13 +28,13 @@ import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -113,7 +113,7 @@ public class PaneSetProgram {
 
         final TableColumn<ProgramData, Boolean> downManagerColumn = new TableColumn<>("Downloadmanager");
         downManagerColumn.setCellValueFactory(new PropertyValueFactory<>("downManager"));
-        downManagerColumn.setCellFactory(CheckBoxTableCell.forTableColumn(downManagerColumn));
+        downManagerColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         downManagerColumn.getStyleClass().add("center");
 
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT_LOW);

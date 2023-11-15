@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellLocalDate;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 
@@ -45,7 +45,8 @@ public class BlackPaneTable {
 
         final TableColumn<BlackData, Boolean> themeExactColumn = new TableColumn<>("Thema exakt");
         themeExactColumn.setCellValueFactory(new PropertyValueFactory<>("themeExact"));
-        themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
+        themeExactColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+//        themeExactColumn.setCellFactory(CheckBoxTableCell.forTableColumn(themeExactColumn));
 
         final TableColumn<BlackData, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -55,7 +56,8 @@ public class BlackPaneTable {
 
         final TableColumn<BlackData, Boolean> activeColumn = new TableColumn<>("Aktiv");
         activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
-        activeColumn.setCellFactory(CheckBoxTableCell.forTableColumn(activeColumn));
+        activeColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+//        activeColumn.setCellFactory(CheckBoxTableCell.forTableColumn(activeColumn));
 
         final TableColumn<BlackData, LocalDate> dateColumn = new TableColumn<>("Erstelldatum");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
