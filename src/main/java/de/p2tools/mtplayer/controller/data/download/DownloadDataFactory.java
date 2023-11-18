@@ -213,4 +213,22 @@ public class DownloadFactory {
         }
         return ret;
     }
+
+    public static void setDownloadSize(DownloadData download) {
+        // https://srf-vod-amd.....x-f1-v1-a1.m3u8
+        final String M3U8 = ".m3u8";
+        if (download.getFilmSizeHd().isEmpty() &&
+                !download.getFilmUrlHd().endsWith(M3U8)) {
+
+            download.setFilmSizeHd(download.getFilmUrlHd().isEmpty() ?
+                    "" : de.p2tools.p2lib.mtdownload.DownloadFactory.getContentLengthMB(download.getFilmUrlHd()));
+        }
+
+        if (download.getFilmSizeSmall().isEmpty() &&
+                !download.getFilmUrlSmall().endsWith(M3U8)) {
+
+            download.setFilmSizeSmall(download.getFilmUrlSmall().isEmpty() ?
+                    "" : de.p2tools.p2lib.mtdownload.DownloadFactory.getContentLengthMB(download.getFilmUrlSmall()));
+        }
+    }
 }
