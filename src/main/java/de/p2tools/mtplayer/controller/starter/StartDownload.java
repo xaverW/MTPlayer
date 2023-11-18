@@ -61,7 +61,8 @@ public class StartDownload {
         // Quelle "Button" ist immer ein vom User gestarteter Film, also Quelle_Button!!!!!!!!!!!
         final String url = film.arr[FilmDataXml.FILM_URL];
         if (!url.isEmpty()) {
-            final DownloadData download = new DownloadData(DownloadConstants.SRC_BUTTON, pSet, film, null, "", "", resolution);
+            final DownloadData download = new DownloadData(DownloadConstants.SRC_BUTTON, pSet, film, null,
+                    "", "", resolution, false);
             progData.downloadList.startDownloads(download);
             starterThread.startDownload(download); // da nicht in der ListeDownloads
         }

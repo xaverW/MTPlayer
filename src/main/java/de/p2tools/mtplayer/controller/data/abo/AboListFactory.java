@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
 import de.p2tools.mtplayer.gui.dialog.abodialog.AboAddDialogController;
@@ -80,7 +80,7 @@ public class AboListFactory {
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilterCheck.FILTER_DURATION_MAX_MINUTE);
         }
 
-        String namePath = DownloadFactory.replaceEmptyFileName(aboName,
+        String namePath = DownloadDataFactory.replaceEmptyFileName(aboName,
                 false /* nur ein Ordner */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());
@@ -181,7 +181,7 @@ public class AboListFactory {
         if (searchTitle.isEmpty()) {
             searchTitle = "Abo aus Filter";
         }
-        searchTitle = DownloadFactory.replaceEmptyFileName(searchTitle,
+        searchTitle = DownloadDataFactory.replaceEmptyFileName(searchTitle,
                 false /* nur ein Ordner */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());

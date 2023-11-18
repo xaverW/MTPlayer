@@ -130,7 +130,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     }
 
     public synchronized void preferDownloads(ArrayList<DownloadData> prefDownList) {
-        DownloadFactory.preferDownloads(this, prefDownList);
+        DownloadDataFactory.preferDownloads(this, prefDownList);
     }
 
     public synchronized DownloadData getDownloadWithFilmUrl(String urlFilm) {

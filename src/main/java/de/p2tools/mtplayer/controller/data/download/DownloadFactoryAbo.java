@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.controller.data.download;
 
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboDataProps;
@@ -128,7 +129,15 @@ public class DownloadFactoryAbo {
             //und dann auch in die Liste schreiben
             aboData.setDate(new PDate());
             final SetData setData = aboData.getSetData(ProgData.getInstance());
-            syncDownloadArrayList.add(new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData, "", "", ""));
+            DownloadData downloadData;
+            if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
+                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData,
+                        "", "", "", true);
+            } else {
+                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData,
+                        "", "", "", false);
+            }
+            syncDownloadArrayList.add(downloadData);
             found = true;
         });
 

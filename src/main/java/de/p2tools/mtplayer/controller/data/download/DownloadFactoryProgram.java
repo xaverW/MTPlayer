@@ -121,7 +121,7 @@ public class DownloadFactoryProgram {
                 }
             }
 
-            name = DownloadFactory.replaceEmptyFileName(name,
+            name = DownloadDataFactory.replaceEmptyFileName(name,
                     false /* pfad */,
                     ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                     ProgConfig.SYSTEM_ONLY_ASCII.getValue());
@@ -205,7 +205,7 @@ public class DownloadFactoryProgram {
                 // --> das wird aber nur beim ersten mal klappen, dann wird im
                 // Downloaddialog immer der letzte Pfad zuerst angeboten
                 path = PFileUtils.addsPath(path,
-                        DownloadFactory.replaceEmptyFileName(download.getTheme(),
+                        DownloadDataFactory.replaceEmptyFileName(download.getTheme(),
                                 true /* pfad */,
                                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                                 ProgConfig.SYSTEM_ONLY_ASCII.getValue()));
@@ -291,7 +291,7 @@ public class DownloadFactoryProgram {
     }
 
     private static String getField(String name, int length) {
-        name = DownloadFactory.replaceEmptyFileName(name,
+        name = DownloadDataFactory.replaceEmptyFileName(name,
                 false /* pfad */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());

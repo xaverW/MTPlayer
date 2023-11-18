@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2lib.tools.date.DateFactory;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -71,7 +71,7 @@ public class DownloadAddDialogFactory {
     public static String getNextName(String stdPath, String actDownPath, String theme) {
         String ret = actDownPath;
 
-        theme = DownloadFactory.replaceEmptyFileName(theme,
+        theme = DownloadDataFactory.replaceEmptyFileName(theme,
                 false /* pfad */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());

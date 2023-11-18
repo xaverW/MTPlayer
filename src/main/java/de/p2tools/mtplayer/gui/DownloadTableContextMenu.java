@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
@@ -223,9 +223,9 @@ public class DownloadTableContextMenu {
         final MenuItem miStopWaiting = new MenuItem("Alle wartenden Downloads stoppen");
         miStopWaiting.setOnAction(a -> downloadGuiController.stopWaitingDownloads());
         final MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
-        miUpdate.setOnAction(e -> DownloadFactory.searchForAbosAndMaybeStart());
+        miUpdate.setOnAction(e -> DownloadDataFactory.searchForAbosAndMaybeStart());
         final MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
-        miCleanUp.setOnAction(e -> DownloadFactory.cleanUpList(progData.downloadList));
+        miCleanUp.setOnAction(e -> DownloadDataFactory.cleanUpList(progData.downloadList));
 
         miStartAll.setDisable(download == null);
         miStartTimeAll.setDisable(download == null);

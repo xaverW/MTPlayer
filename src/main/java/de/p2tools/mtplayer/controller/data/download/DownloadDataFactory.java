@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.mtdownload.DownloadFactory;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.duration.PDuration;
@@ -36,9 +37,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class DownloadFactory {
+public class DownloadDataFactory {
 
-    private DownloadFactory() {
+    private DownloadDataFactory() {
     }
 
     public static void searchForAbosAndMaybeStart() {
@@ -221,14 +222,14 @@ public class DownloadFactory {
                 !download.getFilmUrlHd().endsWith(M3U8)) {
 
             download.setFilmSizeHd(download.getFilmUrlHd().isEmpty() ?
-                    "" : de.p2tools.p2lib.mtdownload.DownloadFactory.getContentLengthMB(download.getFilmUrlHd()));
+                    "" : DownloadFactory.getContentLengthMB(download.getFilmUrlHd()));
         }
 
         if (download.getFilmSizeSmall().isEmpty() &&
                 !download.getFilmUrlSmall().endsWith(M3U8)) {
 
             download.setFilmSizeSmall(download.getFilmUrlSmall().isEmpty() ?
-                    "" : de.p2tools.p2lib.mtdownload.DownloadFactory.getContentLengthMB(download.getFilmUrlSmall()));
+                    "" : DownloadFactory.getContentLengthMB(download.getFilmUrlSmall()));
         }
     }
 }

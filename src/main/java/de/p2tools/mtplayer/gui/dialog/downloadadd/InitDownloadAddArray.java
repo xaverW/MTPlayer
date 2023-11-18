@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.mtdownload.DownloadFactory;
 
 import java.util.ArrayList;
 
@@ -42,9 +42,15 @@ public class InitDownloadAddArray {
         AddDownloadData[] addDownloadData = new AddDownloadData[filmsToDownloadList.size()];
         for (int i = 0; i < filmsToDownloadList.size(); ++i) {
             addDownloadData[i] = new AddDownloadData();
-            addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
-                    addDownloadDto.setDataStart, filmsToDownloadList.get(i),
-                    null, "", aktPath, "");
+            if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
+                addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
+                        addDownloadDto.setDataStart, filmsToDownloadList.get(i),
+                        null, "", aktPath, "", true);
+            } else {
+                addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
+                        addDownloadDto.setDataStart, filmsToDownloadList.get(i),
+                        null, "", aktPath, "", false);
+            }
 
             // Dateigröße
             addSize(addDownloadData, i);
@@ -115,23 +121,8 @@ public class InitDownloadAddArray {
 
     private static void addSize(AddDownloadData[] addDownloadData, int i) {
         // Dateigröße
-        // https://srf-vod-amd.....x-f1-v1-a1.m3u8
-        final String M3U8 = ".m3u8";
-
         if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
-            if (addDownloadData[i].download.getFilmSizeHd().isEmpty() &&
-                    !addDownloadData[i].download.getFilmUrlHd().endsWith(M3U8)) {
-
-                addDownloadData[i].download.setFilmSizeHd(addDownloadData[i].download.getFilmUrlHd().isEmpty() ?
-                        "" : DownloadFactory.getContentLengthMB(addDownloadData[i].download.getFilmUrlHd()));
-            }
-
-            if (addDownloadData[i].download.getFilmSizeSmall().isEmpty() &&
-                    !addDownloadData[i].download.getFilmUrlSmall().endsWith(M3U8)) {
-
-                addDownloadData[i].download.setFilmSizeSmall(addDownloadData[i].download.getFilmUrlSmall().isEmpty() ?
-                        "" : DownloadFactory.getContentLengthMB(addDownloadData[i].download.getFilmUrlSmall()));
-            }
+            DownloadDataFactory.setDownloadSize(addDownloadData[i].download);
         }
     }
 }

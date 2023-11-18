@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.worker;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -39,12 +39,12 @@ public class Worker {
         getAboNames();
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
+                Platform.runLater(DownloadDataFactory::searchForAbosAndMaybeStart);
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
+                Platform.runLater(DownloadDataFactory::searchForAbosAndMaybeStart);
             }
             getAboNames();
         });
@@ -89,7 +89,7 @@ public class Worker {
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
             ThemeListFactory.createThemeList(progData, progData.filmFilterWorker.getActFilterSettings().getChannel());
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                DownloadFactory.searchForAbosAndMaybeStart();
+                DownloadDataFactory.searchForAbosAndMaybeStart();
             }
 
             // activate the saved filter
