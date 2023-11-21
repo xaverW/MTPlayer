@@ -31,7 +31,9 @@ public class InitDownloadAddArray {
     private InitDownloadAddArray() {
     }
 
-    public static AddDownloadData[] initDownloadInfoArrayFilm(ArrayList<FilmDataMTP> filmsToDownloadList, AddDownloadDto addDownloadDto) {
+    public static AddDownloadData[] initDownloadInfoArrayFilm(ArrayList<FilmDataMTP> filmsToDownloadList,
+                                                              AddDownloadDto addDownloadDto) {
+        // neue Downloads anlegen
         String aktPath = "";
         if (!ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.isEmpty()) {
             // dann den ersten Pfad setzen
@@ -50,6 +52,17 @@ public class InitDownloadAddArray {
                 addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
                         addDownloadDto.setDataStart, filmsToDownloadList.get(i),
                         null, "", aktPath, "", false);
+            }
+
+            if (ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW.getValue()) {
+                // dann sofort starten
+                addDownloadData[i].startNow = true;
+            } else if (ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT.getValue()) {
+                // dann nicht sofort starten
+                addDownloadData[i].startNow = false;
+            } else if (ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME.getValue()) {
+                // dann mit Startzeit starten
+                addDownloadData[i].download.setStartTime(addDownloadDto.p2TimePicker.getTime());
             }
 
             // Dateigröße
@@ -86,7 +99,9 @@ public class InitDownloadAddArray {
         return addDownloadData;
     }
 
-    public static AddDownloadData[] initDownloadInfoArrayDownload(ArrayList<DownloadData> downloadDataArrayList, AddDownloadDto addDownloadDto) {
+    public static AddDownloadData[] initDownloadInfoArrayDownload(ArrayList<DownloadData> downloadDataArrayList,
+                                                                  AddDownloadDto addDownloadDto) {
+        // Downloads ändern
         // DownloadArr anlegen
         AddDownloadData[] addDownloadData = new AddDownloadData[downloadDataArrayList.size()];
         for (int i = 0; i < downloadDataArrayList.size(); ++i) {

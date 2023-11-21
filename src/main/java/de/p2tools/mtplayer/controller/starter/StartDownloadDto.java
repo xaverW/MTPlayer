@@ -34,8 +34,8 @@ public class StartDownloadDto {
     private long downloaded = 0;
     private boolean deleteAfterStop = false;
 
-    private Process process = null; //Prozess des Downloads
-    private PDate startTime = null;
+    private Process process = null; // Prozess des Downloads
+    private PDate startTime = null; // Zeit, zu der der Download tatsächlich gestartet wurde
     private MLInputStream inputStream = null;
     private File file = null;
     private final List<String> errMsgList = new ArrayList<>();

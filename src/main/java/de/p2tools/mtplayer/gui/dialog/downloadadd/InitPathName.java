@@ -128,13 +128,13 @@ public class InitPathName {
         if (all) {
             Arrays.stream(addDownloadDto.addDownloadData).forEach(downloadAddData -> {
                 if (!downloadAddData.download.getDestPath().equals(path)) {
-                    downloadAddData.download.setFile(path, addDownloadDto.txtName.getText());
+                    downloadAddData.download.setFile(path, downloadAddData.download.getDestFileName());
                     InitProgramCall.setProgrammCall(addDownloadDto, downloadAddData);
                 }
             });
         } else {
             if (!addDownloadDto.getAct().download.getDestPath().equals(path)) {
-                addDownloadDto.getAct().download.setFile(path, addDownloadDto.txtName.getText());
+                addDownloadDto.getAct().download.setFile(path, addDownloadDto.getAct().download.getDestFileName());
                 InitProgramCall.setProgrammCall(addDownloadDto, addDownloadDto.getAct());
             }
         }

@@ -111,6 +111,7 @@ public class InitStartTimeDownload {
     private void setTime(AddDownloadData addDownloadData) {
         if (addDownloadDto.rbStartAtTime.isSelected()) {
             addDownloadData.download.setStartTime(addDownloadDto.p2TimePicker.getTime());
+            addDownloadData.startNow = false;
         } else if (addDownloadDto.rbStartNow.isSelected()) {
             addDownloadData.download.setStartTime("");
             addDownloadData.startNow = true;

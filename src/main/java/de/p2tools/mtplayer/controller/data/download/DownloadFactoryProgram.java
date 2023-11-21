@@ -231,7 +231,7 @@ public class DownloadFactoryProgram {
         // ".txt" dazu)
         final String[] pathName = {path, name};
         PFileUtils.checkLengthPath(pathName);
-        download.setFile(Paths.get(pathName[0], pathName[1]).toFile());
+        download.setFile(Paths.get(path, name).toFile());
     }
 
     private static String replaceString(DownloadData download, String replStr) {
