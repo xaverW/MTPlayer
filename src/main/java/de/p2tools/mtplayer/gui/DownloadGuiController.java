@@ -453,9 +453,8 @@ public class DownloadGuiController extends AnchorPane {
     private void stopDownloads(boolean all) {
         // stoppen aus Menü
         // bezieht sich auf "alle" oder nur die markierten Filme
-        final ArrayList<DownloadData> listDownloadsSelected = new ArrayList<>();
-        // die URLs sammeln
-        listDownloadsSelected.addAll(all ? tableView.getItems() : getSelList());
+        final ArrayList<DownloadData> listDownloadsSelected =
+                new ArrayList<>(all ? tableView.getItems() : getSelList());
 
         progData.downloadList.stopDownloads(listDownloadsSelected);
         setFilter();
@@ -465,13 +464,6 @@ public class DownloadGuiController extends AnchorPane {
         ArrayList<DownloadData> list = getSelList();
         if (!list.isEmpty()) {
             new DownloadAddDialogController(progData, list);
-
-//            DownloadData downloadCopy = download.get().getCopy();
-//            DownloadEditDialogController downloadEditDialogController =
-//                    new DownloadEditDialogController(progData, downloadCopy, download.get().isStateStartedRun());
-//            if (downloadEditDialogController.isOk()) {
-//                download.get().copyToMe(downloadCopy);
-//            }
         }
     }
 

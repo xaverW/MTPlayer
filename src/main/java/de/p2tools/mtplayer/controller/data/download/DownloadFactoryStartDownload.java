@@ -86,7 +86,8 @@ public class DownloadFactoryStartDownload {
             if (download.isStateStopped()) {
                 listDelDownloads.add(download);
                 if (download.isAbo()) {
-                    // wenn er schon feritg ist und ein Abos ist, Url auch aus dem Logfile löschen, der Film ist damit wieder auf "Anfang"
+                    // wenn er schon fertig ist und ein Abos ist, Url auch aus dem Logfile löschen,
+                    // der Film ist damit wieder auf "Anfang"
                     listDownloadsRemoveAboHistory.add(download);
                 }
                 listStartDownloads.add(download);
@@ -116,7 +117,6 @@ public class DownloadFactoryStartDownload {
                 }
             }
         }
-
         if (answer.equals(PAlert.BUTTON.CANCEL)) {
             // dann machmer nix
             return false;

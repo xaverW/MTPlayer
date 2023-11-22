@@ -199,10 +199,9 @@ public class DownloadAddDialogController extends PDialogExtra {
                 continue;
             }
 
-            final DownloadData downloadData = addDownloadData.download;
-            final DownloadData downloadDataOrg = addDownloadData.downloadOrg;
-            downloadDataOrg.copyToMe(downloadData);
-            if (downloadData.getStartTime().isEmpty() && addDownloadData.startNow) {
+            addDownloadData.download.resetDownload(); // Status wieder zurücksetzen
+            addDownloadData.downloadOrg.copyToMe(addDownloadData.download);
+            if (addDownloadData.download.getStartTime().isEmpty() && addDownloadData.startNow) {
                 list.add(addDownloadData.downloadOrg);
             }
         }

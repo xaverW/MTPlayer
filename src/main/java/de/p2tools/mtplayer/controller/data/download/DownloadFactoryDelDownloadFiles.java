@@ -53,10 +53,10 @@ public class DownloadFactoryDelDownloadFiles {
 
         ObservableList<File> fileList = getDownloadFileList(download);
         ObservableList<DownloadData> downloadList = FXCollections.observableArrayList(download);
-        if (fileList.isEmpty()) {
-            PAlert.showErrorAlert("Film löschen", "Es gibt keine Datei", "Der Download hat noch keine Filmdatei.");
-            return;
-        }
+//        if (fileList.isEmpty()) {
+//            PAlert.showErrorAlert("Film löschen", "Es gibt keine Datei", "Der Download hat noch keine Filmdatei.");
+//            return;
+//        }
 
 
         if (ProgConfig.DOWNLOAD_STOP.getValue() == ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DELETE_FILE) {
@@ -152,8 +152,8 @@ public class DownloadFactoryDelDownloadFiles {
                     // DL und Dateien löschen
                     PLog.sysLog("Stop Download: DL und Dateien löschen");
                     foundDownloadList.forEach(downloadData -> {
-                        if (downloadData.isStateStartedRun()) {
-                            // dann wird er gestoppt und danach gelöscht
+                        if (downloadData.isStateStartedRun() || downloadData.isStateStartedWaiting()) {
+                            // dann wird er gestoppt und danach gelöscht, klappt aber nur bei Downloads die schon gestartet sind
                             downloadData.stopDownload(true);
 
                         } else {
@@ -176,8 +176,8 @@ public class DownloadFactoryDelDownloadFiles {
                         PLog.sysLog("Stop Download: DL und Dateien löschen");
 
                         foundDownloadList.forEach(downloadData -> {
-                            if (downloadData.isStateStartedRun()) {
-                                // dann wird er gestoppt und danach gelöscht
+                            if (downloadData.isStateStartedRun() || downloadData.isStateStartedWaiting()) {
+                                // dann wird er gestoppt und danach gelöscht, klappt aber nur bei Downloads die schon gestartet sind
                                 downloadData.stopDownload(true);
 
                             } else {

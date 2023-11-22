@@ -264,6 +264,7 @@ public final class DownloadData extends DownloadDataProps {
 
     public void initStartDownload() {
         // Download zum Start vorbereiten
+        getDownloadStartDto().setDeleteAfterStop(false);
         getDownloadStartDto().setStartCounter(0);
         setBandwidth(0);
         setStateStartedWaiting();
