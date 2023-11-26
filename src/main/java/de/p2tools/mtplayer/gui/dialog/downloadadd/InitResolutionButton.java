@@ -42,7 +42,7 @@ public class InitResolutionButton {
         };
 
         // und jetzt für den aktuellen Film das GUI setzen
-        makeAct();
+//        makeAct();
 
         final ToggleGroup toggleGroupSize = new ToggleGroup();
         addDownloadDto.rbHd.setToggleGroup(toggleGroupSize);
@@ -87,7 +87,7 @@ public class InitResolutionButton {
                 } else {
                     addDownloadData.download.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
                 }
-                addDownloadData.download.setResolution();
+//                addDownloadData.download.setResolution();
 //                DownloadAddDialogFactory.setUrlForResolution(addDownloadData);
                 InitProgramCall.setProgrammCall(addDownloadDto, addDownloadData);
             });

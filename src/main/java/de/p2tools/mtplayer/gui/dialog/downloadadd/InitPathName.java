@@ -85,7 +85,7 @@ public class InitPathName {
             }
         });
 
-        makeAct();
+//        makeAct();
         addDownloadDto.cboPath.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (!addDownloadDto.cboPath.isFocused()) {
                 return;

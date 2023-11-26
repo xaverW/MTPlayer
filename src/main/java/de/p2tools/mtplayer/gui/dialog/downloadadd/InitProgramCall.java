@@ -39,7 +39,7 @@ public class InitProgramCall {
             downloadAddData.orgProgArray = downloadAddData.download.getProgramCallArray();
         });
 
-        makeAct();
+//        makeAct();
         addDownloadDto.btnProgramCallReset.setOnAction(e -> addDownloadDto.textAreaCallArray.setText(addDownloadDto.getAct().orgProgArray));
         addDownloadDto.textAreaCallArray.textProperty().addListener((u, o, n) -> {
             addDownloadDto.getAct().download.setProgramCallArray(n.trim());

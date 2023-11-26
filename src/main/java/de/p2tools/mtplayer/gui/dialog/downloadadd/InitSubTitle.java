@@ -29,7 +29,7 @@ public class InitSubTitle {
     }
 
     private void init() {
-        makeAct();
+//        makeAct();
         addDownloadDto.chkInfo.setOnAction(a -> setInfoSubTitle());
         addDownloadDto.chkInfoAll.setOnAction(a -> {
             if (addDownloadDto.chkInfoAll.isSelected()) {

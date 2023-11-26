@@ -242,6 +242,7 @@ public class DownloadAddDialogGui {
             addDownloadDto.chkInfoAll.setManaged(false);
             addDownloadDto.chkStartTimeAll.setVisible(false);
             addDownloadDto.chkStartTimeAll.setManaged(false);
+
         } else {
             addDownloadDto.chkSetAll.getStyleClass().add("checkBoxAll");
             addDownloadDto.chkResolutionAll.getStyleClass().add("checkBoxAll");
@@ -258,18 +259,29 @@ public class DownloadAddDialogGui {
             addDownloadDto.chkStartTimeAll.setOnAction(a -> addCheckAllCss());
 
             addDownloadDto.textAll.setFont(Font.font(null, FontWeight.BOLD, -1));
+            addDownloadDto.textAll.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    changeAll();
+                }
+            });
             addCheckAllCss();
         }
     }
 
-    private void addCheckAllCss() {
-        if (addDownloadDto.chkSetAll.isSelected() ||
-                addDownloadDto.chkResolutionAll.isSelected() ||
-                addDownloadDto.chkPathAll.isSelected() ||
-                addDownloadDto.chkSubTitleAll.isSelected() ||
-                addDownloadDto.chkInfoAll.isSelected() ||
-                addDownloadDto.chkStartTimeAll.isSelected()) {
+    private void changeAll() {
+        boolean isNotSelected = !isSelected();
+        addDownloadDto.chkSetAll.setSelected(isNotSelected);
+        addDownloadDto.chkResolutionAll.setSelected(isNotSelected);
+        addDownloadDto.chkPathAll.setSelected(isNotSelected);
+        addDownloadDto.chkSubTitleAll.setSelected(isNotSelected);
+        addDownloadDto.chkInfoAll.setSelected(isNotSelected);
+        addDownloadDto.chkStartTimeAll.setSelected(isNotSelected);
 
+        addCheckAllCss();
+    }
+
+    private void addCheckAllCss() {
+        if (isSelected()) {
             addDownloadDto.textAll.setFill(DownloadAddDialogFactory.getBlue());
 
         } else {
@@ -279,5 +291,14 @@ public class DownloadAddDialogGui {
                 addDownloadDto.textAll.setFill(Color.BLACK);
             }
         }
+    }
+
+    private boolean isSelected() {
+        return addDownloadDto.chkSetAll.isSelected() ||
+                addDownloadDto.chkResolutionAll.isSelected() ||
+                addDownloadDto.chkPathAll.isSelected() ||
+                addDownloadDto.chkSubTitleAll.isSelected() ||
+                addDownloadDto.chkInfoAll.isSelected() ||
+                addDownloadDto.chkStartTimeAll.isSelected();
     }
 }

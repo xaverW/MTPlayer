@@ -114,9 +114,18 @@ public class AddDownloadDto {
 
     public AddDownloadDto(ProgData progData, SetData setDataStart,
                           ArrayList<FilmDataMTP> filmsToDownloadList, String filterResolution) {
+        // einen neuen Download anlegen
         this.progData = progData;
         this.setDataStart = setDataStart;
         this.filterResolution = filterResolution;
+
+        // bei neuen Downloads immer "ALLE" selektieren
+        chkSetAll.setSelected(true);
+        chkResolutionAll.setSelected(true);
+        chkPathAll.setSelected(true);
+        chkSubTitleAll.setSelected(true);
+        chkInfoAll.setSelected(true);
+        chkStartTimeAll.setSelected(true);
 
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayFilm(filmsToDownloadList, this);
 
@@ -130,11 +139,15 @@ public class AddDownloadDto {
     }
 
     public AddDownloadDto(ProgData progData, ArrayList<DownloadData> downloadDataArrayList) {
+        // bestehende Downloads ändern
         this.progData = progData;
         this.setDataStart = null;
         this.filterResolution = "";
 
         this.addNewDownloads = false;
+        // bei bestehenden Downloads nur "STARTEN" selektieren
+        chkStartTimeAll.setSelected(true);
+
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayDownload(downloadDataArrayList, this);
 
         initSetDataDownload = new InitSetDataDownload(this);

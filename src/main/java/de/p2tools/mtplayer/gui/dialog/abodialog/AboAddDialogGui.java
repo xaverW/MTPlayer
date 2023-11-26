@@ -323,12 +323,49 @@ public class AboAddDialogGui {
             addAboDto.chkSetAll.setOnAction(a -> addCheckAllCss());
 
             addAboDto.textAll.setFont(Font.font(null, FontWeight.BOLD, -1));
+            addAboDto.textAll.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    changeAll();
+                }
+            });
             addCheckAllCss();
         }
     }
 
     private void addCheckAllCss() {
-        if (addAboDto.chkActiveAll.isSelected() ||
+        if (isAllSelected()) {
+            addAboDto.textAll.setFill(DownloadAddDialogFactory.getBlue());
+
+        } else {
+            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+                addAboDto.textAll.setFill(Color.WHITE);
+            } else {
+                addAboDto.textAll.setFill(Color.BLACK);
+            }
+        }
+    }
+
+    private void changeAll() {
+        boolean notSelected = !isAllSelected();
+        addAboDto.chkActiveAll.setSelected(notSelected);
+        addAboDto.chkDescriptionAll.setSelected(notSelected);
+        addAboDto.chkResolutionAll.setSelected(notSelected);
+        addAboDto.chkChannelAll.setSelected(notSelected);
+        addAboDto.chkThemeAll.setSelected(notSelected);
+        addAboDto.chkThemeExactAll.setSelected(notSelected);
+        addAboDto.chkThemeTitleAll.setSelected(notSelected);
+        addAboDto.chkTitleAll.setSelected(notSelected);
+        addAboDto.chkSomewhereAll.setSelected(notSelected);
+        addAboDto.chkTimeRangeAll.setSelected(notSelected);
+        addAboDto.chkDurationAll.setSelected(notSelected);
+        addAboDto.chkStartTimeAll.setSelected(notSelected);
+        addAboDto.chkDestDirAll.setSelected(notSelected);
+        addAboDto.chkSetAll.setSelected(notSelected);
+        addCheckAllCss();
+    }
+
+    private boolean isAllSelected() {
+        return addAboDto.chkActiveAll.isSelected() ||
                 addAboDto.chkDescriptionAll.isSelected() ||
                 addAboDto.chkResolutionAll.isSelected() ||
                 addAboDto.chkChannelAll.isSelected() ||
@@ -341,16 +378,7 @@ public class AboAddDialogGui {
                 addAboDto.chkDurationAll.isSelected() ||
                 addAboDto.chkStartTimeAll.isSelected() ||
                 addAboDto.chkDestDirAll.isSelected() ||
-                addAboDto.chkSetAll.isSelected()) {
-
-            addAboDto.textAll.setFill(DownloadAddDialogFactory.getBlue());
-        } else {
-            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-                addAboDto.textAll.setFill(Color.WHITE);
-            } else {
-                addAboDto.textAll.setFill(Color.BLACK);
-            }
-        }
+                addAboDto.chkSetAll.isSelected();
     }
 
     private void setTextArea(TextArea textArea) {

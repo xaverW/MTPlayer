@@ -26,7 +26,7 @@ public class InitUrl {
     }
 
     private void init() {
-        makeAct();
+//        makeAct();
     }
 
     public void makeAct() {

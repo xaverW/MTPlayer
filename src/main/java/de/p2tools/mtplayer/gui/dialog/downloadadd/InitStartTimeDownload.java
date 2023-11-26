@@ -32,8 +32,6 @@ public class InitStartTimeDownload {
     }
 
     private void init() {
-        addDownloadDto.chkStartTimeAll.setSelected(true); // soll stand. für alle gelten
-
         final ToggleGroup toggleGroupStart = new ToggleGroup();
         addDownloadDto.rbStartNow.setToggleGroup(toggleGroupStart);
         addDownloadDto.rbStartNotYet.setToggleGroup(toggleGroupStart);
@@ -48,7 +46,7 @@ public class InitStartTimeDownload {
                 .or(addDownloadDto.rbStartAtTime.disableProperty()));
 
         if (addDownloadDto.addNewDownloads) {
-            makeAct();
+//            makeAct();
             setStartTime();
         } else {
             // wenn schon eine Startzeit, dann jetzt setzen
