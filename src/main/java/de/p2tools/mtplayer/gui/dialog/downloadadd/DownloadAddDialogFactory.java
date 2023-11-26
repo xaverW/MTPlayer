@@ -41,14 +41,18 @@ public class DownloadAddDialogFactory {
     private DownloadAddDialogFactory() {
     }
 
+    public static Color getBlue() {
+        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+            return Color.rgb(31, 162, 206);
+        } else {
+            return Color.BLUE;
+        }
+    }
+
     public static Text getText(String text) {
         Text t = new Text(text);
         t.setFont(Font.font(null, FontWeight.BOLD, -1));
-        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-            t.setFill(Color.rgb(31, 162, 206));
-        } else {
-            t.setFill(Color.BLUE);
-        }
+        t.setFill(getBlue());
         return t;
     }
 

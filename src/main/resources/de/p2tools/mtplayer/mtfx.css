@@ -113,3 +113,7 @@
     -fx-border-width: 2;
     -fx-padding: 0 4;
 }
+
+.checkBoxAll:selected .mark {
+    -fx-background-color: blue;
+}

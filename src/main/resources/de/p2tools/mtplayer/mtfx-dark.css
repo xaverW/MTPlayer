@@ -34,3 +34,6 @@
     -fx-background-color: #3a3a3a;
 }
 
+.checkBoxAll:selected .mark {
+    -fx-background-color: #1fa2ce;
+}

@@ -62,7 +62,7 @@ public class AddDownloadDto {
     public final Button btnPrev = new Button("<");
     public final Button btnNext = new Button(">");
     public final Label lblSum = new Label("");
-    public Label lblAll = new Label("Für alle\nändern");
+    public Text textAll = new Text("Für alle\nändern");
 
     public CheckBox chkSetAll = new CheckBox();
     public CheckBox chkResolutionAll = new CheckBox();

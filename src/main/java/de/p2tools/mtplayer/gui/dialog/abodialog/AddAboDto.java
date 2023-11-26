@@ -64,7 +64,7 @@ public class AddAboDto {
     public final Label lblLastAbo = new Label("2023, ...");
     public final Label lblGenDate = new Label("2023, ...");
     public final Label lblSum = new Label("");
-    public final Label lblAll = new Label("Für alle\nändern");
+    public final Text textAll = new Text("Für alle\nändern");
 
     public final CheckBox chkActiveAll = new CheckBox();
     public final CheckBox chkDescriptionAll = new CheckBox();

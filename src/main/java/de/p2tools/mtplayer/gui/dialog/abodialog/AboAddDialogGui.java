@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui.dialog.abodialog;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
@@ -34,6 +35,9 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class AboAddDialogGui {
 
@@ -89,9 +93,9 @@ public class AboAddDialogGui {
         gridPane.add(hHit, 1, row);
         gridPane.getRowConstraints().add(row, P2ColumnConstraints.getRcPrefSizeTop());
 
-        gridPane.add(addAboDto.lblAll, 2, row);
-        addAboDto.lblAll.setMinHeight(Region.USE_PREF_SIZE);
-        GridPane.setValignment(addAboDto.lblAll, VPos.TOP);
+        gridPane.add(addAboDto.textAll, 2, row);
+//        addAboDto.lblAll.setMinHeight(Region.USE_PREF_SIZE);
+        GridPane.setValignment(addAboDto.textAll, VPos.TOP);
 
         // Aktiv
         gridPane.add(DownloadAddDialogFactory.getText(AboFieldNames.ABO_ACTIVE + ":"), 0, ++row);
@@ -256,8 +260,8 @@ public class AboAddDialogGui {
             hBoxTop.setVisible(false);
             hBoxTop.setManaged(false);
 
-            addAboDto.lblAll.setVisible(false);
-            addAboDto.lblAll.setManaged(false);
+            addAboDto.textAll.setVisible(false);
+            addAboDto.textAll.setManaged(false);
 
             addAboDto.chkActiveAll.setVisible(false);
             addAboDto.chkActiveAll.setManaged(false);
@@ -287,6 +291,65 @@ public class AboAddDialogGui {
             addAboDto.chkDestDirAll.setManaged(false);
             addAboDto.chkSetAll.setVisible(false);
             addAboDto.chkSetAll.setManaged(false);
+        } else {
+            addAboDto.chkActiveAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkDescriptionAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkResolutionAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkChannelAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkThemeAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkThemeExactAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkThemeTitleAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkTitleAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkSomewhereAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkTimeRangeAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkDurationAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkStartTimeAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkDestDirAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkSetAll.getStyleClass().add("checkBoxAll");
+
+            addAboDto.chkActiveAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkDescriptionAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkResolutionAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkChannelAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkThemeAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkThemeExactAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkThemeTitleAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkTitleAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkSomewhereAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkTimeRangeAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkDurationAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkStartTimeAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkDestDirAll.setOnAction(a -> addCheckAllCss());
+            addAboDto.chkSetAll.setOnAction(a -> addCheckAllCss());
+
+            addAboDto.textAll.setFont(Font.font(null, FontWeight.BOLD, -1));
+            addCheckAllCss();
+        }
+    }
+
+    private void addCheckAllCss() {
+        if (addAboDto.chkActiveAll.isSelected() ||
+                addAboDto.chkDescriptionAll.isSelected() ||
+                addAboDto.chkResolutionAll.isSelected() ||
+                addAboDto.chkChannelAll.isSelected() ||
+                addAboDto.chkThemeAll.isSelected() ||
+                addAboDto.chkThemeExactAll.isSelected() ||
+                addAboDto.chkThemeTitleAll.isSelected() ||
+                addAboDto.chkTitleAll.isSelected() ||
+                addAboDto.chkSomewhereAll.isSelected() ||
+                addAboDto.chkTimeRangeAll.isSelected() ||
+                addAboDto.chkDurationAll.isSelected() ||
+                addAboDto.chkStartTimeAll.isSelected() ||
+                addAboDto.chkDestDirAll.isSelected() ||
+                addAboDto.chkSetAll.isSelected()) {
+
+            addAboDto.textAll.setFill(DownloadAddDialogFactory.getBlue());
+        } else {
+            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+                addAboDto.textAll.setFill(Color.WHITE);
+            } else {
+                addAboDto.textAll.setFill(Color.BLACK);
+            }
         }
     }
 

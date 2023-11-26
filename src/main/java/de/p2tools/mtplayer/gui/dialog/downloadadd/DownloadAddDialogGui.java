@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
@@ -27,6 +28,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -71,9 +75,9 @@ public class DownloadAddDialogGui {
         // Titel
         gridPane.add(addDownloadDto.lblFilm, 0, row);
         gridPane.add(addDownloadDto.lblFilmTitle, 1, row);
-        gridPane.add(addDownloadDto.lblAll, 3, row, 1, 2);
-        addDownloadDto.lblAll.setMinHeight(Region.USE_PREF_SIZE);
-        GridPane.setValignment(addDownloadDto.lblAll, VPos.TOP);
+        gridPane.add(addDownloadDto.textAll, 3, row, 1, 2);
+//        addDownloadDto.lblAll.setMinHeight(Region.USE_PREF_SIZE);
+        GridPane.setValignment(addDownloadDto.textAll, VPos.TOP);
         // Datum - Zeit - Länge
         gridPane.add(addDownloadDto.lblFilmDateTime, 1, ++row);
 
@@ -223,8 +227,8 @@ public class DownloadAddDialogGui {
             // wenns nur einen Download gibt, macht dann keinen Sinn
             hBoxTop.setVisible(false);
             hBoxTop.setManaged(false);
-            addDownloadDto.lblAll.setVisible(false);
-            addDownloadDto.lblAll.setManaged(false);
+            addDownloadDto.textAll.setVisible(false);
+            addDownloadDto.textAll.setManaged(false);
 
             addDownloadDto.chkSetAll.setVisible(false);
             addDownloadDto.chkSetAll.setManaged(false);
@@ -238,6 +242,42 @@ public class DownloadAddDialogGui {
             addDownloadDto.chkInfoAll.setManaged(false);
             addDownloadDto.chkStartTimeAll.setVisible(false);
             addDownloadDto.chkStartTimeAll.setManaged(false);
+        } else {
+            addDownloadDto.chkSetAll.getStyleClass().add("checkBoxAll");
+            addDownloadDto.chkResolutionAll.getStyleClass().add("checkBoxAll");
+            addDownloadDto.chkPathAll.getStyleClass().add("checkBoxAll");
+            addDownloadDto.chkSubTitleAll.getStyleClass().add("checkBoxAll");
+            addDownloadDto.chkInfoAll.getStyleClass().add("checkBoxAll");
+            addDownloadDto.chkStartTimeAll.getStyleClass().add("checkBoxAll");
+
+            addDownloadDto.chkSetAll.setOnAction(a -> addCheckAllCss());
+            addDownloadDto.chkResolutionAll.setOnAction(a -> addCheckAllCss());
+            addDownloadDto.chkPathAll.setOnAction(a -> addCheckAllCss());
+            addDownloadDto.chkSubTitleAll.setOnAction(a -> addCheckAllCss());
+            addDownloadDto.chkInfoAll.setOnAction(a -> addCheckAllCss());
+            addDownloadDto.chkStartTimeAll.setOnAction(a -> addCheckAllCss());
+
+            addDownloadDto.textAll.setFont(Font.font(null, FontWeight.BOLD, -1));
+            addCheckAllCss();
+        }
+    }
+
+    private void addCheckAllCss() {
+        if (addDownloadDto.chkSetAll.isSelected() ||
+                addDownloadDto.chkResolutionAll.isSelected() ||
+                addDownloadDto.chkPathAll.isSelected() ||
+                addDownloadDto.chkSubTitleAll.isSelected() ||
+                addDownloadDto.chkInfoAll.isSelected() ||
+                addDownloadDto.chkStartTimeAll.isSelected()) {
+
+            addDownloadDto.textAll.setFill(DownloadAddDialogFactory.getBlue());
+
+        } else {
+            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+                addDownloadDto.textAll.setFill(Color.WHITE);
+            } else {
+                addDownloadDto.textAll.setFill(Color.BLACK);
+            }
         }
     }
 }
