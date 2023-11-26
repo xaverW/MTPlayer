@@ -69,7 +69,7 @@ public class AboGui {
 
         // Menü
         final MenuController menuController = new MenuController(MenuController.StartupMode.ABO);
-        menuController.setId("abo-menu-pane");
+//        menuController.setId("abo-menu-pane");
 
         // Abo Gui
         progData.aboGuiController = aboGuiController;

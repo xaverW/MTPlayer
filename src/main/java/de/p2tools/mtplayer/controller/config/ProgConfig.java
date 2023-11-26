@@ -165,7 +165,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStrProp("system-download-dir-new-version", "");
 
     // Fenstereinstellungen
-    public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1000:900");
+    public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
     public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "300:600");
 
     // Einstellungen Filmliste
@@ -415,7 +415,7 @@ public class ProgConfig extends PDataProgConfig {
     public static String SHORTCUT_PLAY_FILM_INIT = "Ctrl+P";
     public static StringProperty SHORTCUT_PLAY_FILM = addStrProp("SHORTCUT_PLAY_FILM", SHORTCUT_PLAY_FILM_INIT);
 
-    public static String SHORTCUT_PLAY_FILM_ALL_INIT = "Ctrl+A";
+    public static String SHORTCUT_PLAY_FILM_ALL_INIT = "Ctrl+Shift+P";
     public static StringProperty SHORTCUT_PLAY_FILM_ALL = addStrProp("SHORTCUT_PLAY_FILM_ALL", SHORTCUT_PLAY_FILM_ALL_INIT);
 
     public static String SHORTCUT_SAVE_FILM_INIT = "Ctrl+S";

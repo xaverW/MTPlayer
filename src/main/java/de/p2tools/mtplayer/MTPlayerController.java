@@ -79,7 +79,7 @@ public class MTPlayerController extends StackPane {
             tilePane.getChildren().addAll(btnFilm, btnDownload, btnAbo);
 
             HBox hBoxTop = new HBox();
-            hBoxTop.setPadding(new Insets(10));
+            hBoxTop.setPadding(new Insets(2, 10, 2, 10));
             hBoxTop.setSpacing(10);
             hBoxTop.setAlignment(Pos.CENTER);
             HBox.setHgrow(tilePane, Priority.SOMETIMES);

@@ -186,8 +186,6 @@ public class FilmGuiController extends AnchorPane {
         });
     }
 
-    int i = 0;
-
     private void initTable() {
         Table.setTable(tableView);
         tableView.setItems(sortedList);

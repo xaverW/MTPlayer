@@ -61,7 +61,7 @@ public class FilmGui {
     public SplitPane pack() {
         // Menü
         final MenuController menuController = new MenuController(MenuController.StartupMode.Film);
-        menuController.setId("film-menu-pane");
+//        menuController.setId("film-menu-pane");
 
         // Gui
         progData.filmGuiController = guiController;
