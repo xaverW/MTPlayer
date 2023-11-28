@@ -111,12 +111,12 @@ public class TableDownload extends PTable<DownloadData> {
         final TableColumn<DownloadData, Integer> remainingColumn = new TableColumn<>("Restzeit");
         remainingColumn.setCellValueFactory(new PropertyValueFactory<>("remaining"));
         remainingColumn.setCellFactory(new CellDownloadRemaining<>().cellFactory);
-        remainingColumn.getStyleClass().add("alignCenterRightPadding_25");
+        remainingColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Long> speedColumn = new TableColumn<>("Geschwindigkeit");
         speedColumn.setCellValueFactory(new PropertyValueFactory<>("bandwidth"));
         speedColumn.setCellFactory(new CellDownloadBandwidth<>().cellFactory);
-        speedColumn.getStyleClass().add("alignCenterRightPadding_25");
+        speedColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, String> startTimeColumn = new TableColumn<>("Startzeit");
         startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));

@@ -112,9 +112,9 @@ public class DownloadConstants {
             // dann ist er fertig
             final int dauer = l / 60;
             if (dauer == 0) {
-                return "Dauer: " + -1 * l + " s";
+                return "∑:  " + -1 * l + " s";
             } else {
-                return "Dauer: " + -1 * dauer + " Min";
+                return "∑:  " + -1 * dauer + " Min";
             }
 
         } else {
