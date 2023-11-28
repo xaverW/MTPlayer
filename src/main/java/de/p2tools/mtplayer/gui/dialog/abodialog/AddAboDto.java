@@ -64,7 +64,7 @@ public class AddAboDto {
     public final Label lblLastAbo = new Label("2023, ...");
     public final Label lblGenDate = new Label("2023, ...");
     public final Label lblSum = new Label("");
-    public final Text textAll = new Text("Für alle\nändern");
+    public final Button btnAll = new Button("Für alle\nändern");
 
     public final CheckBox chkActiveAll = new CheckBox();
     public final CheckBox chkDescriptionAll = new CheckBox();
@@ -132,6 +132,7 @@ public class AddAboDto {
     }
 
     public AddAboDto(ProgData progData, boolean isNewAbo, List<AboData> aboList) {
+        // hier werden Abos geändert
         this.progData = progData;
         this.isNewAbo = isNewAbo;
         this.aboList.setAll(aboList);

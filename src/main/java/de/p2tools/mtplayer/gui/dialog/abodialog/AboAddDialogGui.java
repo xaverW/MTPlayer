@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2Color;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
@@ -35,7 +36,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -93,9 +93,13 @@ public class AboAddDialogGui {
         gridPane.add(hHit, 1, row);
         gridPane.getRowConstraints().add(row, P2ColumnConstraints.getRcPrefSizeTop());
 
-        gridPane.add(addAboDto.textAll, 2, row);
-//        addAboDto.lblAll.setMinHeight(Region.USE_PREF_SIZE);
-        GridPane.setValignment(addAboDto.textAll, VPos.TOP);
+        Font font = Font.font(null, FontWeight.BOLD, -1);
+        addAboDto.btnAll.setFont(font);
+        addAboDto.btnAll.setWrapText(true);
+        addAboDto.btnAll.setMinHeight(Region.USE_PREF_SIZE);
+        
+        gridPane.add(addAboDto.btnAll, 2, row);
+        GridPane.setValignment(addAboDto.btnAll, VPos.TOP);
 
         // Aktiv
         gridPane.add(DownloadAddDialogFactory.getText(AboFieldNames.ABO_ACTIVE + ":"), 0, ++row);
@@ -260,8 +264,8 @@ public class AboAddDialogGui {
             hBoxTop.setVisible(false);
             hBoxTop.setManaged(false);
 
-            addAboDto.textAll.setVisible(false);
-            addAboDto.textAll.setManaged(false);
+            addAboDto.btnAll.setVisible(false);
+            addAboDto.btnAll.setManaged(false);
 
             addAboDto.chkActiveAll.setVisible(false);
             addAboDto.chkActiveAll.setManaged(false);
@@ -291,6 +295,7 @@ public class AboAddDialogGui {
             addAboDto.chkDestDirAll.setManaged(false);
             addAboDto.chkSetAll.setVisible(false);
             addAboDto.chkSetAll.setManaged(false);
+
         } else {
             addAboDto.chkActiveAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkDescriptionAll.getStyleClass().add("checkBoxAll");
@@ -322,46 +327,46 @@ public class AboAddDialogGui {
             addAboDto.chkDestDirAll.setOnAction(a -> addCheckAllCss());
             addAboDto.chkSetAll.setOnAction(a -> addCheckAllCss());
 
-            addAboDto.textAll.setFont(Font.font(null, FontWeight.BOLD, -1));
-            addAboDto.textAll.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    changeAll();
-                }
-            });
+            addAboDto.btnAll.setOnAction(a -> changeAll());
             addCheckAllCss();
         }
     }
 
+    private void changeAll() {
+        boolean isNotSelected = !isAllSelected();
+
+        if (progData.setDataList.getSetDataListSave().size() > 1) {
+            // nur dann wird er angezeigt
+            addAboDto.chkSetAll.setSelected(isNotSelected);
+        }
+        addAboDto.chkActiveAll.setSelected(isNotSelected);
+        addAboDto.chkDescriptionAll.setSelected(isNotSelected);
+        addAboDto.chkResolutionAll.setSelected(isNotSelected);
+        addAboDto.chkChannelAll.setSelected(isNotSelected);
+        addAboDto.chkThemeAll.setSelected(isNotSelected);
+        addAboDto.chkThemeExactAll.setSelected(isNotSelected);
+        addAboDto.chkThemeTitleAll.setSelected(isNotSelected);
+        addAboDto.chkTitleAll.setSelected(isNotSelected);
+        addAboDto.chkSomewhereAll.setSelected(isNotSelected);
+        addAboDto.chkTimeRangeAll.setSelected(isNotSelected);
+        addAboDto.chkDurationAll.setSelected(isNotSelected);
+        addAboDto.chkStartTimeAll.setSelected(isNotSelected);
+        addAboDto.chkDestDirAll.setSelected(isNotSelected);
+        addCheckAllCss();
+    }
+
     private void addCheckAllCss() {
         if (isAllSelected()) {
-            addAboDto.textAll.setFill(DownloadAddDialogFactory.getBlue());
+            final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
+            addAboDto.btnAll.setStyle("-fx-text-fill: #" + c);
 
         } else {
             if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-                addAboDto.textAll.setFill(Color.WHITE);
+                addAboDto.btnAll.setStyle("-fx-text-fill: white");
             } else {
-                addAboDto.textAll.setFill(Color.BLACK);
+                addAboDto.btnAll.setStyle("-fx-text-fill: black");
             }
         }
-    }
-
-    private void changeAll() {
-        boolean notSelected = !isAllSelected();
-        addAboDto.chkActiveAll.setSelected(notSelected);
-        addAboDto.chkDescriptionAll.setSelected(notSelected);
-        addAboDto.chkResolutionAll.setSelected(notSelected);
-        addAboDto.chkChannelAll.setSelected(notSelected);
-        addAboDto.chkThemeAll.setSelected(notSelected);
-        addAboDto.chkThemeExactAll.setSelected(notSelected);
-        addAboDto.chkThemeTitleAll.setSelected(notSelected);
-        addAboDto.chkTitleAll.setSelected(notSelected);
-        addAboDto.chkSomewhereAll.setSelected(notSelected);
-        addAboDto.chkTimeRangeAll.setSelected(notSelected);
-        addAboDto.chkDurationAll.setSelected(notSelected);
-        addAboDto.chkStartTimeAll.setSelected(notSelected);
-        addAboDto.chkDestDirAll.setSelected(notSelected);
-        addAboDto.chkSetAll.setSelected(notSelected);
-        addCheckAllCss();
     }
 
     private boolean isAllSelected() {

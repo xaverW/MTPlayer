@@ -41,6 +41,11 @@ public class DownloadAddDialogFactory {
     private DownloadAddDialogFactory() {
     }
 
+    public static String getBlueStr() {
+        Color c = getBlue();
+        return c.getRed() + "," + c.getGreen() + "," + c.getBlue();
+    }
+
     public static Color getBlue() {
         if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
             return Color.rgb(31, 162, 206);

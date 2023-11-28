@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2Color;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,7 +29,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -73,11 +73,15 @@ public class DownloadAddDialogGui {
 
         int row = 0;
         // Titel
+        Font font = Font.font(null, FontWeight.BOLD, -1);
+        addDownloadDto.btnAll.setFont(font);
+        addDownloadDto.btnAll.setWrapText(true);
+        addDownloadDto.btnAll.setMinHeight(Region.USE_PREF_SIZE);
+
         gridPane.add(addDownloadDto.lblFilm, 0, row);
         gridPane.add(addDownloadDto.lblFilmTitle, 1, row);
-        gridPane.add(addDownloadDto.textAll, 3, row, 1, 2);
-//        addDownloadDto.lblAll.setMinHeight(Region.USE_PREF_SIZE);
-        GridPane.setValignment(addDownloadDto.textAll, VPos.TOP);
+        gridPane.add(addDownloadDto.btnAll, 3, row, 1, 2);
+        GridPane.setValignment(addDownloadDto.btnAll, VPos.TOP);
         // Datum - Zeit - Länge
         gridPane.add(addDownloadDto.lblFilmDateTime, 1, ++row);
 
@@ -227,8 +231,9 @@ public class DownloadAddDialogGui {
             // wenns nur einen Download gibt, macht dann keinen Sinn
             hBoxTop.setVisible(false);
             hBoxTop.setManaged(false);
-            addDownloadDto.textAll.setVisible(false);
-            addDownloadDto.textAll.setManaged(false);
+
+            addDownloadDto.btnAll.setVisible(false);
+            addDownloadDto.btnAll.setManaged(false);
 
             addDownloadDto.chkSetAll.setVisible(false);
             addDownloadDto.chkSetAll.setManaged(false);
@@ -258,19 +263,18 @@ public class DownloadAddDialogGui {
             addDownloadDto.chkInfoAll.setOnAction(a -> addCheckAllCss());
             addDownloadDto.chkStartTimeAll.setOnAction(a -> addCheckAllCss());
 
-            addDownloadDto.textAll.setFont(Font.font(null, FontWeight.BOLD, -1));
-            addDownloadDto.textAll.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    changeAll();
-                }
-            });
+            addDownloadDto.btnAll.setOnAction(a -> changeAll());
             addCheckAllCss();
         }
     }
 
     private void changeAll() {
-        boolean isNotSelected = !isSelected();
-        addDownloadDto.chkSetAll.setSelected(isNotSelected);
+        boolean isNotSelected = !isAllSelected();
+
+        if (progData.setDataList.getSetDataListSave().size() > 1) {
+            // nur dann wird er angezeigt
+            addDownloadDto.chkSetAll.setSelected(isNotSelected);
+        }
         addDownloadDto.chkResolutionAll.setSelected(isNotSelected);
         addDownloadDto.chkPathAll.setSelected(isNotSelected);
         addDownloadDto.chkSubTitleAll.setSelected(isNotSelected);
@@ -281,19 +285,20 @@ public class DownloadAddDialogGui {
     }
 
     private void addCheckAllCss() {
-        if (isSelected()) {
-            addDownloadDto.textAll.setFill(DownloadAddDialogFactory.getBlue());
+        if (isAllSelected()) {
+            final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
+            addDownloadDto.btnAll.setStyle("-fx-text-fill: #" + c);
 
         } else {
             if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-                addDownloadDto.textAll.setFill(Color.WHITE);
+                addDownloadDto.btnAll.setStyle("-fx-text-fill: white");
             } else {
-                addDownloadDto.textAll.setFill(Color.BLACK);
+                addDownloadDto.btnAll.setStyle("-fx-text-fill: black");
             }
         }
     }
 
-    private boolean isSelected() {
+    private boolean isAllSelected() {
         return addDownloadDto.chkSetAll.isSelected() ||
                 addDownloadDto.chkResolutionAll.isSelected() ||
                 addDownloadDto.chkPathAll.isSelected() ||

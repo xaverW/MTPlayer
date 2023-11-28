@@ -62,7 +62,7 @@ public class AddDownloadDto {
     public final Button btnPrev = new Button("<");
     public final Button btnNext = new Button(">");
     public final Label lblSum = new Label("");
-    public Text textAll = new Text("Für alle\nändern");
+    public Button btnAll = new Button("Für alle\nändern");
 
     public CheckBox chkSetAll = new CheckBox();
     public CheckBox chkResolutionAll = new CheckBox();
@@ -120,7 +120,7 @@ public class AddDownloadDto {
         this.filterResolution = filterResolution;
 
         // bei neuen Downloads immer "ALLE" selektieren
-        chkSetAll.setSelected(true);
+        chkSetAll.setSelected(progData.setDataList.getSetDataListSave().size() > 1); // nur wenns auch eine Auswahl gibt
         chkResolutionAll.setSelected(true);
         chkPathAll.setSelected(true);
         chkSubTitleAll.setSelected(true);
