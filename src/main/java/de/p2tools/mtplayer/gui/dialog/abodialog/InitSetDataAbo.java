@@ -35,16 +35,8 @@ public class InitSetDataAbo {
     private void init() {
         onAction = (a) -> {
             makeSetDataChange();
-            addAboDto.updateAct();
         };
         addAboDto.cboSetData.setOnAction(onAction);
-
-        addAboDto.chkSetAll.setOnAction(a -> {
-            if (addAboDto.chkSetAll.isSelected()) {
-                makeSetDataChange();
-                addAboDto.updateAct();
-            }
-        });
 
         if (addAboDto.progData.setDataList.getSetDataListSave().size() > 1) {
             // nur dann machts Sinn
@@ -67,12 +59,13 @@ public class InitSetDataAbo {
     }
 
 
-    private void makeSetDataChange() {
+    public void makeSetDataChange() {
         if (addAboDto.chkSetAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(this::makeSetDataChange);
         } else {
             makeSetDataChange(addAboDto.getAct());
         }
+        addAboDto.updateAct();
     }
 
     private void makeSetDataChange(AddAboData addAboData) {

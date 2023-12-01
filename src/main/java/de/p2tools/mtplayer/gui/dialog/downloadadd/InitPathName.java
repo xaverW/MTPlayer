@@ -68,11 +68,6 @@ public class InitPathName {
 
         addDownloadDto.cboPath.setEditable(true);
         addDownloadDto.cboPath.setItems(pathList);
-        addDownloadDto.chkPathAll.setOnAction(a -> {
-            if (addDownloadDto.chkPathAll.isSelected()) {
-                pathChanged();
-            }
-        });
 
         // Dateiname
         Arrays.stream(addDownloadDto.addDownloadData).toList().forEach(downloadAddData -> {
@@ -85,7 +80,6 @@ public class InitPathName {
             }
         });
 
-//        makeAct();
         addDownloadDto.cboPath.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (!addDownloadDto.cboPath.isFocused()) {
                 return;
@@ -114,9 +108,9 @@ public class InitPathName {
         InitProgramCall.setProgrammCall(addDownloadDto, addDownloadDto.getAct());
     }
 
-    private void pathChanged() {
+    public void pathChanged() {
         // beim Ändern der cbo oder manuellem Eintragen
-        final String s = addDownloadDto.cboPath.getEditor().getText();
+        String s = addDownloadDto.cboPath.getEditor().getText();
         if (!addDownloadDto.cboPath.getItems().contains(s)) {
             addDownloadDto.cboPath.getItems().add(s);
         }

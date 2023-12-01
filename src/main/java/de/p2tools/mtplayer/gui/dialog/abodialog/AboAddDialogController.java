@@ -132,7 +132,6 @@ public class AboAddDialogController extends PDialogExtra {
             addAboDto.updateAct();
         });
 
-//        btnOk.disableProperty().bind(addAboDto.aboCopy.nameProperty().isEmpty().or(okProp.not()));
         btnOk.setOnAction(a -> {
             if (check()) {
                 apply();
@@ -140,7 +139,6 @@ public class AboAddDialogController extends PDialogExtra {
             }
         });
 
-//        btnApply.disableProperty().bind(addAboDto.aboCopy.nameProperty().isEmpty().or(okProp.not()));
         btnApply.setOnAction(a -> {
             if (check()) {
                 apply();

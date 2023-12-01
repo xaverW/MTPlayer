@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ToggleGroup;
 
 import java.util.Arrays;
 
@@ -38,29 +37,15 @@ public class InitResolutionButton {
     private void init() {
         onAction = (a) -> {
             setRes();
-            addDownloadDto.updateAct();
         };
 
         // und jetzt für den aktuellen Film das GUI setzen
-//        makeAct();
-
-        final ToggleGroup toggleGroupSize = new ToggleGroup();
-        addDownloadDto.rbHd.setToggleGroup(toggleGroupSize);
-        addDownloadDto.rbHigh.setToggleGroup(toggleGroupSize);
-        addDownloadDto.rbSmall.setToggleGroup(toggleGroupSize);
-
         addDownloadDto.rbHd.setOnAction(onAction);
         addDownloadDto.rbHigh.setOnAction(onAction);
         addDownloadDto.rbSmall.setOnAction(onAction);
-        addDownloadDto.chkResolutionAll.setOnAction(a -> {
-            if (addDownloadDto.chkResolutionAll.isSelected()) {
-                setRes();
-                addDownloadDto.updateAct();
-            }
-        });
     }
 
-    private void setRes() {
+    public void setRes() {
         if (addDownloadDto.rbHd.isSelected()) {
             setResolution(FilmDataMTP.RESOLUTION_HD);
             ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_HD);
@@ -73,6 +58,7 @@ public class InitResolutionButton {
             setResolution(FilmDataMTP.RESOLUTION_SMALL);
             ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_SMALL);
         }
+        addDownloadDto.updateAct();
     }
 
     private void setResolution(String resolution) {
@@ -87,8 +73,6 @@ public class InitResolutionButton {
                 } else {
                     addDownloadData.download.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
                 }
-//                addDownloadData.download.setResolution();
-//                DownloadAddDialogFactory.setUrlForResolution(addDownloadData);
                 InitProgramCall.setProgrammCall(addDownloadDto, addDownloadData);
             });
 

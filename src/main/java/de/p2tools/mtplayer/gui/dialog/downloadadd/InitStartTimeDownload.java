@@ -46,7 +46,6 @@ public class InitStartTimeDownload {
                 .or(addDownloadDto.rbStartAtTime.disableProperty()));
 
         if (addDownloadDto.addNewDownloads) {
-//            makeAct();
             setStartTime();
         } else {
             // wenn schon eine Startzeit, dann jetzt setzen
@@ -58,11 +57,6 @@ public class InitStartTimeDownload {
             }
         }
 
-        addDownloadDto.chkStartTimeAll.setOnAction(a -> {
-            if (addDownloadDto.chkStartTimeAll.isSelected()) {
-                setStartTime();
-            }
-        });
         addDownloadDto.rbStartNow.setOnAction(a -> {
             setStartTime();
         });
@@ -98,7 +92,7 @@ public class InitStartTimeDownload {
         }
     }
 
-    private void setStartTime() {
+    public void setStartTime() {
         if (addDownloadDto.chkStartTimeAll.isSelected()) {
             Arrays.stream(addDownloadDto.addDownloadData).forEach(this::setTime);
         } else {

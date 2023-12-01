@@ -245,6 +245,14 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_STOP_DIALOG_SIZE = addStrProp("download-stop-dialog-size", "950:600");
     public static StringProperty DOWNLOAD_ONLY_STOP_DIALOG_SIZE = addStrProp("download-only-stop-dialog-size", "600:400");
 
+    public static BooleanProperty DOWNLOAD_DIALOG_ADD_SET_ALL = addBoolProp("download-dialog-add-set-all", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_DIALOG_ADD_RESOLUTION_ALL = addBoolProp("download-dialog-add-resolution-all", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_DIALOG_ADD_PATH_ALL = addBoolProp("download-dialog-add-path-all", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_DIALOG_ADD_SUBTITLE_ALL = addBoolProp("download-dialog-add-subtitle-all", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_DIALOG_ADD_INFO_ALL = addBoolProp("download-dialog-add-info-all", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_DIALOG_ADD_START_TIME_ALL = addBoolProp("download-dialog-add-start-time-all", Boolean.TRUE);
+
+
     // ===================== MEDIA ===================================
     // Gui Media Search -> Infobereich Film
     public static IntegerProperty INFO_FILM_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("info-film-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT

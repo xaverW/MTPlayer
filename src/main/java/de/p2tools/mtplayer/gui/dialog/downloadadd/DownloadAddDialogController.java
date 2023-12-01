@@ -39,6 +39,7 @@ public class DownloadAddDialogController extends PDialogExtra {
     private final Button btnOk = new Button("_Ok");
     private final Button btnCancel = new Button("_Abbrechen");
     private boolean ok = false;
+    private boolean setAll = false;
 
     private final ArrayList filmsToDownloadList;
     private final AddDownloadDto addDownloadDto;
@@ -57,7 +58,11 @@ public class DownloadAddDialogController extends PDialogExtra {
         if (setDataStart == null) {
             setDataStart = progData.setDataList.getSetDataListSave().get(0);
         }
+
+        setAll = true;
         this.addDownloadDto = new AddDownloadDto(progData, setDataStart, filmsToDownloadList, filterResolution);
+        initAll();
+
         init(true);
     }
 
@@ -70,7 +75,10 @@ public class DownloadAddDialogController extends PDialogExtra {
         // bestehende Downloads ändern
         this.progData = progData;
         this.filmsToDownloadList = downloadDataArrayList;
+
         this.addDownloadDto = new AddDownloadDto(progData, downloadDataArrayList);
+        initAll();
+
         init(true);
     }
 
@@ -79,6 +87,37 @@ public class DownloadAddDialogController extends PDialogExtra {
         initGui();
         initButton();
         addDownloadDto.updateAct();
+    }
+
+    @Override
+    public void close() {
+        if (setAll) {
+            addDownloadDto.chkSetAll.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_SET_ALL);
+            addDownloadDto.chkResolutionAll.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_RESOLUTION_ALL);
+            addDownloadDto.chkPathAll.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_PATH_ALL);
+            addDownloadDto.chkSubTitleAll.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_SUBTITLE_ALL);
+            addDownloadDto.chkInfoAll.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_INFO_ALL);
+            addDownloadDto.chkStartTimeAll.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_START_TIME_ALL);
+        }
+        super.close();
+    }
+
+    private void initAll() {
+        if (setAll) {
+            // "ALLE" setzen
+            addDownloadDto.chkSetAll.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_SET_ALL);
+            addDownloadDto.chkResolutionAll.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_RESOLUTION_ALL);
+            addDownloadDto.chkPathAll.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_PATH_ALL);
+            addDownloadDto.chkSubTitleAll.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_SUBTITLE_ALL);
+            addDownloadDto.chkInfoAll.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_INFO_ALL);
+            addDownloadDto.chkStartTimeAll.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_START_TIME_ALL);
+        } else {
+            addDownloadDto.chkStartTimeAll.setSelected(true);
+        }
+        if (progData.setDataList.getSetDataListSave().size() <= 1) {
+            // nur wenns auch eine Auswahl gibt
+            addDownloadDto.chkSetAll.setSelected(false);
+        }
     }
 
     private void initGui() {
@@ -99,7 +138,10 @@ public class DownloadAddDialogController extends PDialogExtra {
     private void initButton() {
         addDownloadDto.btnDest.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         addDownloadDto.btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
-        addDownloadDto.btnDest.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, addDownloadDto.cboPath));
+        addDownloadDto.btnDest.setOnAction(event -> {
+            PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, addDownloadDto.cboPath);
+            addDownloadDto.initPathName.pathChanged();
+        });
 
         addDownloadDto.btnPropose.setGraphic(ProgIcons.ICON_BUTTON_PROPOSE.getImageView());
         addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));

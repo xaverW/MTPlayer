@@ -37,16 +37,8 @@ public class InitSetDataDownload {
     private void init(SetData setData) {
         onAction = (a) -> {
             makeSetDataChange();
-            addDownloadDto.updateAct();
         };
         addDownloadDto.cboSetData.setOnAction(onAction);
-
-        addDownloadDto.chkSetAll.setOnAction(a -> {
-            if (addDownloadDto.chkSetAll.isSelected()) {
-                makeSetDataChange();
-                addDownloadDto.updateAct();
-            }
-        });
 
         if (addDownloadDto.progData.setDataList.getSetDataListSave().size() > 1) {
             // nur dann machts Sinn
@@ -64,12 +56,13 @@ public class InitSetDataDownload {
     }
 
 
-    private void makeSetDataChange() {
+    public void makeSetDataChange() {
         if (addDownloadDto.chkSetAll.isSelected()) {
             Arrays.stream(addDownloadDto.addDownloadData).forEach(this::makeSetDataChange);
         } else {
             makeSetDataChange(addDownloadDto.getAct());
         }
+        addDownloadDto.updateAct();
     }
 
     private void makeSetDataChange(AddDownloadData addDownloadData) {

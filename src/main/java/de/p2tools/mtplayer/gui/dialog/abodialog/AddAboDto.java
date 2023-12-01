@@ -46,7 +46,7 @@ public class AddAboDto {
     public final InitChannelTTDescription initChannelTTDescription;
     public final InitName initName;
     public final InitResolution initResolution;
-    public final InitRange initRange;
+    public final InitTimeRangeAndDuration initTimeRangeAndDuration;
     public final InitStartTimeAbo initStartTimeAbo;
     public final InitDestination initDestination;
     public final InitSetDataAbo initSetDataAbo;
@@ -78,7 +78,7 @@ public class AddAboDto {
     public final CheckBox chkTimeRangeAll = new CheckBox();
     public final CheckBox chkDurationAll = new CheckBox();
     public final CheckBox chkStartTimeAll = new CheckBox();
-    public final CheckBox chkDestDirAll = new CheckBox();
+    public final CheckBox chkDestinationAll = new CheckBox();
     public final CheckBox chkSetAll = new CheckBox();
 
     public final CheckBox chkActive = new CheckBox();
@@ -125,7 +125,7 @@ public class AddAboDto {
         initChannelTTDescription = new InitChannelTTDescription(this);
         initName = new InitName(this);
         initResolution = new InitResolution(this);
-        initRange = new InitRange(this);
+        initTimeRangeAndDuration = new InitTimeRangeAndDuration(this);
         initStartTimeAbo = new InitStartTimeAbo(this);
         initDestination = new InitDestination(this);
         initSetDataAbo = new InitSetDataAbo(this);
@@ -144,7 +144,7 @@ public class AddAboDto {
         initChannelTTDescription = new InitChannelTTDescription(this);
         initName = new InitName(this);
         initResolution = new InitResolution(this);
-        initRange = new InitRange(this);
+        initTimeRangeAndDuration = new InitTimeRangeAndDuration(this);
         initStartTimeAbo = new InitStartTimeAbo(this);
         initDestination = new InitDestination(this);
         initSetDataAbo = new InitSetDataAbo(this);
@@ -174,7 +174,7 @@ public class AddAboDto {
         initChannelTTDescription.makeAct();
         initName.makeAct();
         initResolution.makeAct();
-        initRange.makeAct();
+        initTimeRangeAndDuration.makeAct();
         initStartTimeAbo.makeAct();
         initDestination.makeAct();
         initSetDataAbo.makeAct();

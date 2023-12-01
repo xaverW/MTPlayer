@@ -36,9 +36,8 @@ public class InitDestination {
                 // dann durch den User
                 if (addAboDto.chkDestination.isSelected()) {
                     // dann gespeicherten SubDir wieder setzen
-                    if (addAboDto.chkDestDirAll.isSelected()) {
+                    if (addAboDto.chkDestinationAll.isSelected()) {
                         Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
-//                            addAboData.abo.setAboSubDir(addAboData.aboSubDir); // da wird der "jeweilige alte" wieder gesetzt
                             addAboData.abo.setAboSubDir(addAboDto.getAct().aboSubDir); // da wird immer der "erste alte" gesetzt
                         });
                     } else {
@@ -47,7 +46,7 @@ public class InitDestination {
 
                 } else {
                     // dann SubDir speichern
-                    if (addAboDto.chkDestDirAll.isSelected()) {
+                    if (addAboDto.chkDestinationAll.isSelected()) {
                         Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                             addAboData.aboSubDir = addAboData.abo.getAboSubDir();
                             addAboData.abo.setAboSubDir("");
@@ -87,16 +86,11 @@ public class InitDestination {
             }
             setPath();
         });
-        addAboDto.chkDestDirAll.setOnAction(a -> {
-            if (addAboDto.chkDestDirAll.isSelected()) {
-                setPath();
-            }
-        });
     }
 
-    private void setPath() {
+    public void setPath() {
         addMissingPath();
-        if (addAboDto.chkDestDirAll.isSelected()) {
+        if (addAboDto.chkDestinationAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setAboSubDir(addAboDto.cboDestination.getEditor().getText());
                 if (addAboDto.chkDestination.isSelected()) {

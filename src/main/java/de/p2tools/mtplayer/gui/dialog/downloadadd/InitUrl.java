@@ -22,11 +22,6 @@ public class InitUrl {
 
     public InitUrl(AddDownloadDto addDownloadDto) {
         this.addDownloadDto = addDownloadDto;
-        init();
-    }
-
-    private void init() {
-//        makeAct();
     }
 
     public void makeAct() {

@@ -73,48 +73,6 @@ public class InitChannelTTDescription {
             }
             setThemeExact();
         });
-
-        // all
-        addAboDto.chkActiveAll.setOnAction(a -> {
-            if (addAboDto.chkActiveAll.isSelected()) {
-                setActive();
-            }
-        });
-        addAboDto.chkDescriptionAll.setOnAction(a -> {
-            if (addAboDto.chkDescriptionAll.isSelected()) {
-                setDescription();
-            }
-        });
-        addAboDto.chkChannelAll.setOnAction(a -> {
-            if (addAboDto.chkChannelAll.isSelected()) {
-                setChannel();
-            }
-        });
-        addAboDto.chkThemeAll.setOnAction(a -> {
-            if (addAboDto.chkThemeAll.isSelected()) {
-                setTheme();
-            }
-        });
-        addAboDto.chkThemeTitleAll.setOnAction(a -> {
-            if (addAboDto.chkThemeTitleAll.isSelected()) {
-                setThemeTitle();
-            }
-        });
-        addAboDto.chkTitleAll.setOnAction(a -> {
-            if (addAboDto.chkTitleAll.isSelected()) {
-                setTitle();
-            }
-        });
-        addAboDto.chkSomewhereAll.setOnAction(a -> {
-            if (addAboDto.chkSomewhereAll.isSelected()) {
-                setSomewhere();
-            }
-        });
-        addAboDto.chkThemeExactAll.setOnAction(a -> {
-            if (addAboDto.chkThemeExactAll.isSelected()) {
-                setThemeExact();
-            }
-        });
     }
 
     public void makeAct() {
@@ -131,7 +89,7 @@ public class InitChannelTTDescription {
         addAboDto.lblGenDate.setText(addAboDto.getAct().abo.getGenDate().toString());
     }
 
-    private void setActive() {
+    public void setActive() {
         if (addAboDto.chkActiveAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setActive(addAboDto.chkActive.isSelected());
@@ -141,7 +99,7 @@ public class InitChannelTTDescription {
         }
     }
 
-    private void setDescription() {
+    public void setDescription() {
         if (addAboDto.chkDescriptionAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setDescription(addAboDto.textAreaDescription.getText());
@@ -151,7 +109,7 @@ public class InitChannelTTDescription {
         }
     }
 
-    private void setChannel() {
+    public void setChannel() {
         if (addAboDto.chkChannelAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setChannel(addAboDto.channelProperty.getValueSafe());
@@ -161,7 +119,7 @@ public class InitChannelTTDescription {
         }
     }
 
-    private void setTheme() {
+    public void setTheme() {
         if (addAboDto.chkThemeAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setTheme(addAboDto.textAreaTheme.getText());
@@ -171,7 +129,7 @@ public class InitChannelTTDescription {
         }
     }
 
-    private void setThemeTitle() {
+    public void setThemeTitle() {
         if (addAboDto.chkThemeTitleAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setThemeTitle(addAboDto.textAreaThemeTitle.getText());
@@ -181,7 +139,7 @@ public class InitChannelTTDescription {
         }
     }
 
-    private void setTitle() {
+    public void setTitle() {
         if (addAboDto.chkTitleAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setTitle(addAboDto.textAreaTitle.getText());
@@ -191,7 +149,7 @@ public class InitChannelTTDescription {
         }
     }
 
-    private void setSomewhere() {
+    public void setSomewhere() {
         if (addAboDto.chkSomewhereAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setSomewhere(addAboDto.textAreaSomewhere.getText());
@@ -201,7 +159,7 @@ public class InitChannelTTDescription {
         }
     }
 
-    private void setThemeExact() {
+    public void setThemeExact() {
         if (addAboDto.chkThemeExactAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 addAboData.abo.setThemeExact(addAboDto.chkThemeExact.isSelected());

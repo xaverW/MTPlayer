@@ -22,17 +22,17 @@ import javafx.util.StringConverter;
 
 import java.util.Arrays;
 
-public class InitRange {
+public class InitTimeRangeAndDuration {
     private final AddAboDto addAboDto;
 
-    public InitRange(AddAboDto addAboDto) {
+    public InitTimeRangeAndDuration(AddAboDto addAboDto) {
         this.addAboDto = addAboDto;
         init();
     }
 
     private void init() {
         initDuration();
-        initTimeTange();
+        initTimeRange();
     }
 
     public void makeAct() {
@@ -53,7 +53,7 @@ public class InitRange {
         });
     }
 
-    private void setDurationMin() {
+    public void setDurationMin() {
         if (addAboDto.chkDurationAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(downloadAddData -> {
                 downloadAddData.abo.setMinDurationMinute(addAboDto.p2RangeBoxDuration.getActMinValue());
@@ -64,7 +64,7 @@ public class InitRange {
         }
     }
 
-    private void setDurationMax() {
+    public void setDurationMax() {
         if (addAboDto.chkDurationAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(downloadAddData -> {
                 downloadAddData.abo.setMaxDurationMinute(addAboDto.p2RangeBoxDuration.getActMaxValue());
@@ -75,7 +75,7 @@ public class InitRange {
         }
     }
 
-    private void initTimeTange() {
+    private void initTimeRange() {
         addAboDto.slTimeRange.setMin(FilterCheck.FILTER_ALL_OR_MIN);
         addAboDto.slTimeRange.setMax(FilterCheck.FILTER_TIME_RANGE_MAX_VALUE);
         addAboDto.slTimeRange.setShowTickLabels(true);
@@ -101,11 +101,6 @@ public class InitRange {
                 setTimeRange();
             }
         });
-        addAboDto.chkTimeRangeAll.setOnAction(a -> {
-            if (addAboDto.chkTimeRangeAll.isSelected()) {
-                setTimeRange();
-            }
-        });
         addAboDto.slTimeRange.valueProperty().addListener((observable, oldValue, newValue) -> {
             setLabelSlider();
         });
@@ -123,7 +118,7 @@ public class InitRange {
         }
     }
 
-    private void setTimeRange() {
+    public void setTimeRange() {
         if (addAboDto.chkTimeRangeAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(downloadAddData -> {
                 downloadAddData.abo.setTimeRange((int) addAboDto.slTimeRange.getValue());

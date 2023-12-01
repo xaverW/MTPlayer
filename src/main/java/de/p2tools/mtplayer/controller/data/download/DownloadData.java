@@ -415,9 +415,12 @@ public final class DownloadData extends DownloadDataProps {
 
     public void setFile(String file) {
         downloadStartDto.setFile(Path.of(file).toFile());
-        destFileNameProperty().setValue(downloadStartDto.getFile().getName());
-        destPathProperty().setValue(downloadStartDto.getFile().getParent());
-        destPathFileProperty().setValue(downloadStartDto.getFile().getAbsolutePath());
+        String name = downloadStartDto.getFile().getName();
+        String path = downloadStartDto.getFile().getParent();
+        String pathFile = downloadStartDto.getFile().getAbsolutePath();
+        destFileNameProperty().setValue(name == null ? "" : name);
+        destPathProperty().setValue(path == null ? "" : path);
+        destPathFileProperty().setValue(pathFile == null ? "" : pathFile);
     }
 
 

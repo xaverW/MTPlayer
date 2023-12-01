@@ -119,16 +119,7 @@ public class AddDownloadDto {
         this.setDataStart = setDataStart;
         this.filterResolution = filterResolution;
 
-        // bei neuen Downloads immer "ALLE" selektieren
-        chkSetAll.setSelected(progData.setDataList.getSetDataListSave().size() > 1); // nur wenns auch eine Auswahl gibt
-        chkResolutionAll.setSelected(true);
-        chkPathAll.setSelected(true);
-        chkSubTitleAll.setSelected(true);
-        chkInfoAll.setSelected(true);
-        chkStartTimeAll.setSelected(true);
-
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayFilm(filmsToDownloadList, this);
-
         initSetDataDownload = new InitSetDataDownload(this);
         initPathName = new InitPathName(this);
         initResolutionButton = new InitResolutionButton(this);
@@ -143,13 +134,9 @@ public class AddDownloadDto {
         this.progData = progData;
         this.setDataStart = null;
         this.filterResolution = "";
-
         this.addNewDownloads = false;
-        // bei bestehenden Downloads nur "STARTEN" selektieren
-        chkStartTimeAll.setSelected(true);
 
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayDownload(downloadDataArrayList, this);
-
         initSetDataDownload = new InitSetDataDownload(this);
         initPathName = new InitPathName(this);
         initResolutionButton = new InitResolutionButton(this);

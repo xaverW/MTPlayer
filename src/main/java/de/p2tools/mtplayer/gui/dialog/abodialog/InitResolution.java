@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.gui.dialog.abodialog;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import javafx.scene.control.ToggleGroup;
 
 import java.util.Arrays;
 
@@ -31,19 +30,9 @@ public class InitResolution {
     }
 
     private void init() {
-        ToggleGroup tg = new ToggleGroup();
-        addAboDto.rbHd.setToggleGroup(tg);
-        addAboDto.rbHigh.setToggleGroup(tg);
-        addAboDto.rbLow.setToggleGroup(tg);
-
         addAboDto.rbHd.setOnAction(a -> setRes());
         addAboDto.rbHigh.setOnAction(a -> setRes());
         addAboDto.rbLow.setOnAction(a -> setRes());
-        addAboDto.chkResolutionAll.setOnAction(a -> {
-            if (addAboDto.chkResolutionAll.isSelected()) {
-                setRes();
-            }
-        });
     }
 
     public void makeAct() {
@@ -55,7 +44,7 @@ public class InitResolution {
         }
     }
 
-    private void setRes() {
+    public void setRes() {
         if (addAboDto.rbHd.isSelected()) {
             setResolution(FilmDataMTP.RESOLUTION_HD);
 

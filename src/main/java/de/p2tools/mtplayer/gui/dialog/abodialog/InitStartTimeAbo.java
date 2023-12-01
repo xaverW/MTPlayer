@@ -34,11 +34,6 @@ public class InitStartTimeAbo {
 
         addAboDto.chkStartTime.setOnAction(a -> setStartTimePick());
         addAboDto.p2TimePicker.setOnAction(a -> setStartTimePick());
-        addAboDto.chkStartTimeAll.setOnAction(a -> {
-            if (addAboDto.chkStartTimeAll.isSelected()) {
-                setStartTimePick();
-            }
-        });
     }
 
     public void makeAct() {
@@ -48,7 +43,7 @@ public class InitStartTimeAbo {
         }
     }
 
-    private void setStartTimePick() {
+    public void setStartTimePick() {
         if (addAboDto.chkStartTimeAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(this::setTime);
         } else {

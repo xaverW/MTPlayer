@@ -16,17 +16,16 @@
 
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Color;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -93,6 +92,12 @@ public class DownloadAddDialogGui {
         hBoxSize.setSpacing(20);
         hBoxSize.setPadding(new Insets(5));
         hBoxSize.getChildren().addAll(addDownloadDto.rbHd, addDownloadDto.rbHigh, addDownloadDto.rbSmall);
+
+        final ToggleGroup toggleGroupSize = new ToggleGroup();
+        addDownloadDto.rbHd.setToggleGroup(toggleGroupSize);
+        addDownloadDto.rbHigh.setToggleGroup(toggleGroupSize);
+        addDownloadDto.rbSmall.setToggleGroup(toggleGroupSize);
+
         addDownloadDto.rbHd.setTextAlignment(TextAlignment.CENTER);
         addDownloadDto.rbHd.setMinHeight(Region.USE_PREF_SIZE);
         addDownloadDto.rbHigh.setTextAlignment(TextAlignment.CENTER);
@@ -217,93 +222,11 @@ public class DownloadAddDialogGui {
     }
 
     public void init() {
-        if (progData.setDataList.getSetDataListSave().size() == 1) {
-            // wenns nur ein Set gibt, macht dann keinen Sinn
-            addDownloadDto.textSet.setVisible(false);
-            addDownloadDto.textSet.setManaged(false);
-            addDownloadDto.cboSetData.setVisible(false);
-            addDownloadDto.cboSetData.setManaged(false);
-            addDownloadDto.chkSetAll.setVisible(false);
-            addDownloadDto.chkSetAll.setManaged(false);
-        }
-
         if (addDownloadDto.addDownloadData.length == 1) {
             // wenns nur einen Download gibt, macht dann keinen Sinn
             hBoxTop.setVisible(false);
             hBoxTop.setManaged(false);
-
-            addDownloadDto.btnAll.setVisible(false);
-            addDownloadDto.btnAll.setManaged(false);
-
-            addDownloadDto.chkSetAll.setVisible(false);
-            addDownloadDto.chkSetAll.setManaged(false);
-            addDownloadDto.chkResolutionAll.setVisible(false);
-            addDownloadDto.chkResolutionAll.setManaged(false);
-            addDownloadDto.chkPathAll.setVisible(false);
-            addDownloadDto.chkPathAll.setManaged(false);
-            addDownloadDto.chkSubTitleAll.setVisible(false);
-            addDownloadDto.chkSubTitleAll.setManaged(false);
-            addDownloadDto.chkInfoAll.setVisible(false);
-            addDownloadDto.chkInfoAll.setManaged(false);
-            addDownloadDto.chkStartTimeAll.setVisible(false);
-            addDownloadDto.chkStartTimeAll.setManaged(false);
-
-        } else {
-            addDownloadDto.chkSetAll.getStyleClass().add("checkBoxAll");
-            addDownloadDto.chkResolutionAll.getStyleClass().add("checkBoxAll");
-            addDownloadDto.chkPathAll.getStyleClass().add("checkBoxAll");
-            addDownloadDto.chkSubTitleAll.getStyleClass().add("checkBoxAll");
-            addDownloadDto.chkInfoAll.getStyleClass().add("checkBoxAll");
-            addDownloadDto.chkStartTimeAll.getStyleClass().add("checkBoxAll");
-
-            addDownloadDto.chkSetAll.setOnAction(a -> addCheckAllCss());
-            addDownloadDto.chkResolutionAll.setOnAction(a -> addCheckAllCss());
-            addDownloadDto.chkPathAll.setOnAction(a -> addCheckAllCss());
-            addDownloadDto.chkSubTitleAll.setOnAction(a -> addCheckAllCss());
-            addDownloadDto.chkInfoAll.setOnAction(a -> addCheckAllCss());
-            addDownloadDto.chkStartTimeAll.setOnAction(a -> addCheckAllCss());
-
-            addDownloadDto.btnAll.setOnAction(a -> changeAll());
-            addCheckAllCss();
         }
-    }
-
-    private void changeAll() {
-        boolean isNotSelected = !isAllSelected();
-
-        if (progData.setDataList.getSetDataListSave().size() > 1) {
-            // nur dann wird er angezeigt
-            addDownloadDto.chkSetAll.setSelected(isNotSelected);
-        }
-        addDownloadDto.chkResolutionAll.setSelected(isNotSelected);
-        addDownloadDto.chkPathAll.setSelected(isNotSelected);
-        addDownloadDto.chkSubTitleAll.setSelected(isNotSelected);
-        addDownloadDto.chkInfoAll.setSelected(isNotSelected);
-        addDownloadDto.chkStartTimeAll.setSelected(isNotSelected);
-
-        addCheckAllCss();
-    }
-
-    private void addCheckAllCss() {
-        if (isAllSelected()) {
-            final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
-            addDownloadDto.btnAll.setStyle("-fx-text-fill: #" + c);
-
-        } else {
-            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-                addDownloadDto.btnAll.setStyle("-fx-text-fill: white");
-            } else {
-                addDownloadDto.btnAll.setStyle("-fx-text-fill: black");
-            }
-        }
-    }
-
-    private boolean isAllSelected() {
-        return addDownloadDto.chkSetAll.isSelected() ||
-                addDownloadDto.chkResolutionAll.isSelected() ||
-                addDownloadDto.chkPathAll.isSelected() ||
-                addDownloadDto.chkSubTitleAll.isSelected() ||
-                addDownloadDto.chkInfoAll.isSelected() ||
-                addDownloadDto.chkStartTimeAll.isSelected();
+        DownloadAddAllFactory.init(addDownloadDto);
     }
 }

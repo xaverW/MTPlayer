@@ -29,19 +29,8 @@ public class InitSubTitle {
     }
 
     private void init() {
-//        makeAct();
         addDownloadDto.chkInfo.setOnAction(a -> setInfoSubTitle());
-        addDownloadDto.chkInfoAll.setOnAction(a -> {
-            if (addDownloadDto.chkInfoAll.isSelected()) {
-                setInfoSubTitle();
-            }
-        });
         addDownloadDto.chkSubtitle.setOnAction(a -> setInfoSubTitle());
-        addDownloadDto.chkSubTitleAll.setOnAction(a -> {
-            if (addDownloadDto.chkSubTitleAll.isSelected()) {
-                setInfoSubTitle();
-            }
-        });
     }
 
     public void makeAct() {
@@ -53,7 +42,7 @@ public class InitSubTitle {
         addDownloadDto.chkSubtitle.setSelected(addDownloadDto.getAct().download.isSubtitle());
     }
 
-    private void setInfoSubTitle() {
+    public void setInfoSubTitle() {
         // Info
         if (addDownloadDto.chkInfoAll.isSelected()) {
             Arrays.stream(addDownloadDto.addDownloadData).forEach(downloadAddData ->
