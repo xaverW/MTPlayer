@@ -69,9 +69,9 @@ public class ProgConst {
     public static final String URL_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
 
     // die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig
-    public static final String PROGRAM_SET_URL_LINUX = "https://www.p2tools.de/extra/mtplayer/v-6/pset_linux.xml";
-    public static final String PROGRAM_SET_URL_WINDOWS = "https://www.p2tools.de/extra/mtplayer/v-6/pset_windows.xml";
-    public static final String PROGRAM_SET_URL_MAC = "https://www.p2tools.de/extra/mtplayer/v-6/pset_mac.xml";
+    public static final String PROGRAM_SET_URL_LINUX = "https://www.p2tools.de/extra/mtplayer/v-7/pset_linux.xml";
+    public static final String PROGRAM_SET_URL_WINDOWS = "https://www.p2tools.de/extra/mtplayer/v-7/pset_windows.xml";
+    public static final String PROGRAM_SET_URL_MAC = "https://www.p2tools.de/extra/mtplayer/v-7/pset_mac.xml";
 
     //todo: beim Umstellen auf MOD wieder prüfen
     public static final String PSET_FILE_LINUX = "de/p2tools/mtplayer/res/file/pset_linux.xml";

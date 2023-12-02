@@ -28,16 +28,6 @@
                     <restart>false</restart>
                     <downManager>false</downManager>
                 </Program>
-                <Program>
-                    <name>VLC</name>
-                    <destName>%t-%T-%Z.ts</destName>
-                    <progPath>PFAD_VLC</progPath>
-                    <progSwitch>%f :sout=#standard{access=file,mux=ts,dst=**} -I dummy --play-and-exit
-                        :http-user-agent="Mozilla/5.0"
-                    </progSwitch>
-                    <restart>false</restart>
-                    <downManager>false</downManager>
-                </Program>
             </ProgramList>
         </SetData>
 
