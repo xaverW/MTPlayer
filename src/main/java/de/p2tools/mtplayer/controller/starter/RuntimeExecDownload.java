@@ -41,6 +41,7 @@ public class RuntimeExecDownload {
     private static final Pattern patternFfmpegDuration = Pattern.compile("(?<=  Duration: )[^,]*"); // Duration: 00:00:30.28, start: 0.000000, bitrate: N/A
     private static final Pattern patternFfmpegTime = Pattern.compile("(?<=time=)[^ ]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
     private static final Pattern patternFfmpegSize = Pattern.compile("(?<=size=)[^k]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
+    private static final Pattern patternFfmpegBitrate = Pattern.compile("(?<=bitrate=)[^k]*");  // size=    1536kB time=00:00:06.24 bitrate=2016.6kbits/s speed=  12x
 
     private double totalSecs = 0;
     private long oldSize = 0;
@@ -172,6 +173,26 @@ public class RuntimeExecDownload {
                     totalSecs = Integer.parseInt(hms[0]) * 3600
                             + Integer.parseInt(hms[1]) * 60
                             + Double.parseDouble(hms[2]);
+                }
+
+                // Gesamtgröße ffmpeg
+                if (totalSecs > 0) {
+                    // macht nur dann Sinn
+                    matcher = patternFfmpegBitrate.matcher(input);
+                    if (matcher.find()) {
+                        final String bitrate = matcher.group().trim();
+                        if (!bitrate.isEmpty()) {
+                            try {
+                                //Byte/s
+                                final double rate = Double.parseDouble(bitrate) * 1000 / 8;
+                                if (rate > 0) {
+                                    final long sumSize = (long) (totalSecs * rate);
+                                    mVFilmSize.setTargetSize(sumSize);
+                                }
+                            } catch (final NumberFormatException ignored) {
+                            }
+                        }
+                    }
                 }
 
                 // Bandbreite ffmpeg
