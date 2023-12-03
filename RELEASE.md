@@ -1,5 +1,25 @@
 # MTPlayer
 
+**Release 14**
+* Markierung der gesehenen Filme korrigiert
+* In den Einstellungen kann eine Lock-Datei eingeschaltet werden: Es wird dann sichergestellt, dass nur eine Instanz vom Programm läuft
+* Es wurden neue ShortCuts und Programm-Schalter hinzugefügt -> Einstellungen
+* ShortCuts über Menü->Hilfe direkt erreichbar
+* Möglichkeit die Filmliste automatisch zu aktualisieren wenn es eine neue gibt -> Einstellungen
+* Blacklist-Dialog und die Filmfilter wurden ausgebaut, es ist jetzt möglich darin zu suchen, Filter vom Filmfilter in die Blacklist zu schieben und umgekehrt, es gibt neue Filter und Filter können ein- und ausgeschaltet werden
+* Blacklist: Hat jetzt ein Erstelldatum, so kann man sehen, wann der Eintrag erstellt wurde
+* Infobereich in Filme/Downloads/Abos wurde erweitert
+* Eine Erweiterung beim Filtern (in allen Filtern im Programm): Wörtlicher Suchtext kann in " angegeben werden. Dann wird alles gefunden, was im durchsuchten Bereich den Inhalt zwischen den " enthält. Hier sind dann auch "," und ":" erlaubt. Der gesamte Suchtext muss aber in " eingeschlossen werden.
+* Statusbar: Der Zustand der Downloads wird mit einem Farbpunkt angezeigt: Es laufen keine (schwarz), alles OK (grün), es sind fehlerhafte enthalten (rot) und der Punkt blinkt, wenn noch nicht gestartete Downloads dabei sind. Dies kann in den Einstellungen oder im Kontextmenü derselben ein- und ausgeblendet werden
+* Statusbar: Diese kann in den Einstellungen oder im Kontextmenü derselben ausgeblendet und angepasst werden
+* Tabelle Filme: Wird der selektierte Film entfernt (zur Blacklist hinzufügen, als gesehen markieren), dann wird jetzt der Film davor selektiert
+* Der Dialog beim Beenden während noch Downloads laufen wurde überarbeitet: Hier kann jetzt der BS-Befehl der nach dem Beenden ausgeführt wird, angepasst werden und das Handling des Dialogs wurde verbessert
+* Stopp oder Löschen eines Downloads: In einem Dialog wird jetzt abgefragt ob der Stopp abgebrochen werden soll und ob die angefangene Filmdatei auch gelöscht werden soll, die Entscheidung kann man "merken" damit der Dialog nicht mehr erscheint
+* Die Mediensammlung wurde erweitert: Es gibt einen neuen Infotab bei den Downloads, es werden die Medien und die erledigten Abos darin gelistet, das schnelle Suchen darin wird damit ermöglicht
+* Mediensammlung/erledigte Abos/History: Zur Suche darin können der Filmtitel (Suchbegriff) "aufbereitet" werden, es werden unnütze Infos daraus entfernt -> Einstellungen
+* Mediensammlung: Ein Doppelklick auf ein Wort im Suchtext stellt es frei
+* ...
+
 
 **Release 13**
 * Das GUI wurde überarbeitet
