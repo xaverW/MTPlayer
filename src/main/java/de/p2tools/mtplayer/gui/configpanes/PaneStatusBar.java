@@ -74,10 +74,10 @@ public class PaneStatusBar {
                         "Infos können ein-/ausgeschaltet werden." +
                         "\n\n" +
                         "Der Farbpunkt zeigt den Zustand der Downloads an:\n" +
-                        "Der Farbpunkt blinkt: Es sind noch nicht gestartete Downloads vorhanden\n" +
-                        "Der Farbpunkt ist grün: Es sind fertige Downloads vorhanden\n" +
-                        "Der Farbpunkt ist rot: Es sind Downloads mit Fehler vorhanden\n" +
-                        "Der Farbpunkt ist grau: Es sind keine fertige oder fehlerhafte Downloads vorhanden");
+                        "  Der Farbpunkt blinkt: Es sind noch nicht gestartete Downloads vorhanden\n" +
+                        "  Der Farbpunkt ist grün: Es sind fertige Downloads vorhanden\n" +
+                        "  Der Farbpunkt ist rot: Es sind Downloads mit Fehler vorhanden\n" +
+                        "  Der Farbpunkt ist grau: Es sind keine fertigen oder fehlerhaften Downloads vorhanden");
 
 
         int row = 0;

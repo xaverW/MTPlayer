@@ -18,13 +18,10 @@ package de.p2tools.mtplayer.gui.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -61,7 +58,6 @@ public class PaneAbo {
         result.add(tpConfig);
         vBoxAll.setSpacing(P2LibConst.DIST_VBOX);
         addGridPane();
-        addAboInfo();
     }
 
     private void addGridPane() {
@@ -132,48 +128,5 @@ public class PaneAbo {
                 rbOnlyStopAsk.setSelected(true);
                 break;
         }
-    }
-
-    private void addAboInfo() {
-        int aboActive = 0, aboInactive = 0, aboActiveHits = 0, aboCountNoHits = 0;
-        for (AboData aboData : ProgData.getInstance().aboList) {
-            if (aboData.isActive()) {
-                ++aboActive;
-                aboActiveHits += aboData.getHit();
-                if (aboData.getHit() == 0) {
-                    ++aboCountNoHits;
-                }
-
-            } else {
-                ++aboInactive;
-            }
-        }
-
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        gridPane.getStyleClass().add("extra-pane");
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSizeRight(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
-        vBoxAll.getChildren().addAll(P2GuiTools.getVBoxGrower(), gridPane);
-
-        int row = 0;
-        gridPane.add(new Label("Aktive Abos:"), 0, row);
-        gridPane.add(new Label(aboActive + ""), 1, row);
-        gridPane.add(new Label(" "), 2, row);
-        gridPane.add(new Label("( Treffer:"), 3, row);
-        gridPane.add(new Label(aboActiveHits + " )"), 4, row);
-
-        ++row;
-        gridPane.add(new Label("Aktive Abos ohne Treffer:"), 0, ++row);
-        gridPane.add(new Label(aboCountNoHits + ""), 1, row);
-
-        ++row;
-        gridPane.add(new Label("Inaktive Abos:"), 0, ++row);
-        gridPane.add(new Label(aboInactive + ""), 1, row);
     }
 }

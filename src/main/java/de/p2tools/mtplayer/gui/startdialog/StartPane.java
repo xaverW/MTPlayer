@@ -65,8 +65,7 @@ public class StartPane {
 
                 P2LibConst.LINE_SEPARATORx2 +
                 "6) Hier lassen sich einzelne Filme" + P2LibConst.LINE_SEPARATOR +
-                "vormerken, die Vormerkung für" + P2LibConst.LINE_SEPARATOR +
-                "einzelne oder alle Filme" + P2LibConst.LINE_SEPARATOR +
+                "vormerken, die Vormerkungen" + P2LibConst.LINE_SEPARATOR +
                 "wieder löschen und zuletzt werden" + P2LibConst.LINE_SEPARATOR +
                 "alle vorgemerkte Filme angezeigt.");
 
@@ -88,20 +87,29 @@ public class StartPane {
 
         hBox.getChildren().addAll(iv);
 
-        Label text = new Label("1) In dem Bereich sind die" + P2LibConst.LINE_SEPARATOR +
-                "Filter angeordnet." +
-                P2LibConst.LINE_SEPARATORx2 +
-                "2) Hier können die oben angezeigten" + P2LibConst.LINE_SEPARATOR +
-                "Filter ein- und ausgeblendet werden." +
-                P2LibConst.LINE_SEPARATORx2 +
-                "3) Damit werden die oben eingestellten" + P2LibConst.LINE_SEPARATOR +
-                "Filter in dem darunter ausgewählten" + P2LibConst.LINE_SEPARATOR +
-                "Filterprofil gespeichert oder wieder" + P2LibConst.LINE_SEPARATOR +
-                "hergestellt (auch ein neues Profil" + P2LibConst.LINE_SEPARATOR +
-                "kann damit angelegt werden)." +
-                P2LibConst.LINE_SEPARATORx2 +
-                "4) Hier können die gespeicherten" + P2LibConst.LINE_SEPARATOR +
-                "Filterprofile verwaltet werden.");
+        Label text = new Label(
+                "1) In dem Bereich sind die" + P2LibConst.LINE_SEPARATOR +
+                        "Filter angeordnet." +
+                        P2LibConst.LINE_SEPARATORx2 +
+
+                        "2) Hier können die oben angezeigten" + P2LibConst.LINE_SEPARATOR +
+                        "Filter ein- und ausgeblendet werden." +
+                        P2LibConst.LINE_SEPARATORx2 +
+
+                        "3) Damit werden die oben eingestellten" + P2LibConst.LINE_SEPARATOR +
+                        "Filter in dem darunter ausgewählten" + P2LibConst.LINE_SEPARATOR +
+                        "Filterprofil gespeichert oder wieder" + P2LibConst.LINE_SEPARATOR +
+                        "hergestellt (auch ein neues Profil" + P2LibConst.LINE_SEPARATOR +
+                        "kann damit angelegt werden)." +
+
+                        P2LibConst.LINE_SEPARATORx2 +
+                        "4) Hier können die gespeicherten" + P2LibConst.LINE_SEPARATOR +
+                        "Filterprofile verwaltet werden." +
+
+                        P2LibConst.LINE_SEPARATORx2 +
+                        "5) Damit kann eine vereinfachte" + P2LibConst.LINE_SEPARATOR +
+                        "Suche ausgewählt werden.");
+
         hBox.getChildren().add(text);
 
         TitledPane tpConfig = new TitledPane("Infos zum Filmfilter", hBox);

@@ -74,8 +74,9 @@ public class HelpText {
                     "Vor dem Download eines Films kann darin der Filmtitel gesucht werden, " +
                     "um doppelte Downloads zu vermeiden. Bei Filmen in den Ansichten \"Filme\" " +
                     "und \"Downloads\" geht dies mit dem Kontextmenü \"Titel in der Mediensammlung " +
-                    "suchen\". Ein Dialog listet dann gefundene Filmtitel aus der Mediensammlung auf.\n" +
-                    "Im Tab Download werden die Medien auch unter der Tabelle mit angezeigt." +
+                    "suchen\". Ein Dialog listet dann gefundene Filmtitel aus der Mediensammlung auf." +
+                    "\n" +
+                    "Im Tab Filme/Download werden die Medien auch unter der Tabelle mit angezeigt." +
                     "\n" +
                     "\n" +
                     "Hier im Konfigurations-Dialog werden die Ordner angegeben, deren Filmdateien " +
@@ -256,7 +257,7 @@ public class HelpText {
             "Hier können Standardprogramme zum Ansehen und Aufzeichnen der Filme eingetragen werden.\n" +
                     "\n" +
                     "Es müssen mindestens diese Programme installiert sein:\n" +
-                    "VLC -- zum Ansehen (und teilweise auch Aufzeichnen) der Filme\n" +
+                    "VLC -- zum Ansehen der Filme\n" +
                     "ffmpeg -- zum Aufzeichnen von Playlisten (URL endet mit 'm3u8')\n" +
                     "\n" +
                     "Wenn die Pfade nicht automatisch erkannt wurden kann man sie auch per Hand auswählen.\n" +
@@ -340,16 +341,9 @@ public class HelpText {
                     "[Sender], [Abo], [Status] sucht Downloads mit dem Sender, " +
                     "aus dem Abo, oder mit dem Status (nicht/gestartet, fertig).\n" +
                     "\n" +
-                    "Mit den Schiebereglern ([gleichzeitige Downloads] und [max. Bandbreite] " +
+                    "Mit den Schiebereglern [gleichzeitige Downloads] und [max. Bandbreite] " +
                     "kann die Anzahl der gleichzeitigen Downloads die geladen werden, festgelegt werden. Die vorgegebene " +
                     "maximale Bandbreite gilt pro Download.\n" +
-                    "\n" +
-                    "-- Besonderheiten --\n" +
-                    "Für die maximale Anzahl an Downloads gibt es noch eine Einschränkung: Es können maximal 2 Downloads " +
-                    "pro Server (ist meist dann auch pro Sender) geladen werden. Wenn z.B. alle Downloads vom ZDF sind, werden " +
-                    "maximal 2 Downloads gestartet auch wenn als Maximum mehr vorgegeben ist." +
-                    "\n" +
-                    "(Ausgenommen davon sind explizite Downloadfarmen wie z.B. Akamai die ARTE benutzt.)" +
                     "\n";
 
     public static final String BLACKLIST_WHITELIST =
@@ -571,16 +565,10 @@ public class HelpText {
                     "Die Überprüfung der Zertifikate kann mit dieser Funktion abgeschaltet werden." +
                     "\n";
     public static final String DOWNLOAD_BANDWIDTH =
-            "Mit den Schiebereglern ([gleichzeitige Downloads] und [max. Bandbreite] kann die Anzahl " +
+            "Mit den Schiebereglern [gleichzeitige Downloads] und [max. Bandbreite] kann die Anzahl " +
                     "der gleichzeitigen Downloads die geladen werden, festgelegt werden. " +
                     "Die vorgegebene maximale Bandbreite gilt pro Download.\n" +
-                    "\n" +
-                    "-- Besonderheiten --\n" +
-                    "Für die maximale Anzahl an Downloads gibt es noch eine Einschränkung: " +
-                    "Es können maximal 2 Downloads pro Server (ist meist dann auch pro Sender) " +
-                    "geladen werden. Wenn z.B. alle Downloads vom ZDF sind, werden maximal 2 " +
-                    "Downloads gestartet auch wenn als Maximum mehr vorgegeben ist.\n" +
-                    "(Ausgenommen davon sind explizite Downloadfarmen wie z.B. Akamai die ARTE benutzt.)\n";
+                    "\n";
 
     public static final String DOWNLOAD_FINISHED =
             "Wenn ein Download erfolgreich beendet ist, wird mit einem Fenster informiert." +
@@ -775,7 +763,7 @@ public class HelpText {
                     "\n";
 
     public static final String START_DOWNLOADS_FROM_ABOS_IMMEDIATELY =
-            "Downloads die aus Abos neu angelegt wurden starten sofort. " +
+            "Downloads die aus Abos neu angelegt wurden, starten sofort. " +
                     "Wenn dies ausgeschaltet ist muss man sie manuell starten." +
                     "\n";
 
