@@ -37,9 +37,12 @@ public class InitStartTimeDownload {
         addDownloadDto.rbStartNotYet.setToggleGroup(toggleGroupStart);
         addDownloadDto.rbStartAtTime.setToggleGroup(toggleGroupStart);
 
-        addDownloadDto.rbStartNow.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW);
-        addDownloadDto.rbStartNotYet.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT);
-        addDownloadDto.rbStartAtTime.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME);
+        if (addDownloadDto.addNewDownloads) {
+            // Vorgabe nur für neue Downloads
+            addDownloadDto.rbStartNow.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW);
+            addDownloadDto.rbStartNotYet.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT);
+            addDownloadDto.rbStartAtTime.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME);
+        }
 
         addDownloadDto.p2TimePicker.getSelectionModel().selectFirst();
         addDownloadDto.p2TimePicker.disableProperty().bind(addDownloadDto.rbStartAtTime.selectedProperty().not()

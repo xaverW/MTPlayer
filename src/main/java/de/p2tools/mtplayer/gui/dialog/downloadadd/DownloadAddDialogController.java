@@ -99,6 +99,12 @@ public class DownloadAddDialogController extends PDialogExtra {
             addDownloadDto.chkInfoAll.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_INFO_ALL);
             addDownloadDto.chkStartTimeAll.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ADD_START_TIME_ALL);
         }
+        if (addDownloadDto.addNewDownloads) {
+            // Vorgabe nur für neue Downloads
+            addDownloadDto.rbStartNow.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW);
+            addDownloadDto.rbStartNotYet.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOT);
+            addDownloadDto.rbStartAtTime.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME);
+        }
         super.close();
     }
 
