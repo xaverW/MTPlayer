@@ -80,10 +80,7 @@ public class PaneMedia extends VBox {
     }
 
     public void setSearchPredicate(FilmData filmDataMTP) {
-        if (!this.isVisible()) {
-            return;
-        }
-
+//        System.out.println("PaneMediaFilm " + LocalTime.now());
         mediaDataDtoMedia.searchTheme = filmDataMTP == null ? "" : filmDataMTP.getTheme().trim();
         mediaDataDtoMedia.searchTitle = filmDataMTP == null ? "" : filmDataMTP.getTitle().trim();
         mediaDataDtoAbo.searchTheme = filmDataMTP == null ? "" : filmDataMTP.getTheme().trim();
@@ -93,10 +90,7 @@ public class PaneMedia extends VBox {
     }
 
     public void setSearchPredicate(DownloadData downloadData) {
-        if (!this.isVisible()) {
-            return;
-        }
-
+//        System.out.println("PaneMediaDownload " + LocalTime.now());
         mediaDataDtoMedia.searchTheme = downloadData == null ? "" : downloadData.getTheme().trim();
         mediaDataDtoMedia.searchTitle = downloadData == null ? "" : downloadData.getTitle().trim();
         mediaDataDtoAbo.searchTheme = downloadData == null ? "" : downloadData.getTheme().trim();

@@ -48,6 +48,14 @@ public class PaneBandwidthChart extends AnchorPane {
         initCharts();
     }
 
+    public synchronized void searchInfos(boolean visible) {
+        BandwidthDataFactory.addBandwidthData();
+        if (visible) {
+//            System.out.println("DownloadChart " + LocalTime.now());
+            ChartDataFactory.runChart(lineChart);
+        }
+    }
+
     private synchronized void initList() {
         progData.chartData.setyScale(1);
     }
@@ -164,15 +172,5 @@ public class PaneBandwidthChart extends AnchorPane {
                 new SeparatorMenuItem(), rbAll, rbOnlyExisting, rbOnlyRunning,
                 new SeparatorMenuItem(), delData);
         return cm;
-    }
-
-    // ============================
-    // Daten generieren
-    // ============================
-    public synchronized void searchInfos(boolean visible) {
-        BandwidthDataFactory.addBandwidthData();
-        if (visible) {
-            ChartDataFactory.runChart(lineChart);
-        }
     }
 }

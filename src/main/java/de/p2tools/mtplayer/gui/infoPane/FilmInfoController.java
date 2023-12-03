@@ -16,16 +16,15 @@
 
 package de.p2tools.mtplayer.gui.infoPane;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
-import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -48,31 +47,15 @@ public class FilmInfoController extends P2ClosePaneH {
     }
 
     public void setFilmInfos(FilmDataMTP film) {
-        if (paneIsVisible(paneFilmInfo, ProgConfig.FILM_PANE_DIALOG_INFO_ON)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.FILM,
+                getVBoxAll(), tabPane, paneFilmInfo,
+                ProgConfig.FILM_GUI_DIVIDER_ON, ProgConfig.FILM_PANE_DIALOG_INFO_ON)) {
             paneFilmInfo.setFilm(film);
         }
-        if (paneIsVisible(paneMedia, ProgConfig.FILM_PANE_DIALOG_MEDIA_ON)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.FILM,
+                getVBoxAll(), tabPane, paneMedia,
+                ProgConfig.FILM_GUI_DIVIDER_ON, ProgConfig.FILM_PANE_DIALOG_MEDIA_ON)) {
             paneMedia.setSearchPredicate(film);
-        }
-    }
-
-    private boolean paneIsVisible(Pane pane, BooleanProperty extraDialog) {
-        if (extraDialog.getValue()) {
-            // dann im Extrafenster
-            return true;
-        } else if (!ProgConfig.FILM_GUI_DIVIDER_ON.getValue()) {
-            // dann wird gar nix angezeigt
-            return false;
-        } else if (!getVBoxAll().getChildren().isEmpty() &&
-                getVBoxAll().getChildren().get(0).equals(pane)) {
-            // dann wird nur das angezeigt
-            return true;
-        } else if (tabPane.getSelectionModel().getSelectedItem() != null &&
-                tabPane.getSelectionModel().getSelectedItem().getContent().equals(pane)) {
-            // dann ist der Tab ausgewählt
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -91,11 +74,11 @@ public class FilmInfoController extends P2ClosePaneH {
         tabMedia.setClosable(false);
 
         super.getRipProperty().addListener((u, o, n) -> {
-            if (tabFilmInfo.isSelected()) {
+            if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneFilmInfo)) {
                 setDialogInfo();
-            } else if (tabButton.isSelected()) {
+            } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneButton)) {
                 setDialogButton();
-            } else {
+            } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneMedia)) {
                 setDialogMedia();
             }
         });
@@ -136,22 +119,19 @@ public class FilmInfoController extends P2ClosePaneH {
     }
 
     private void setDialogInfo() {
-        tabFilmInfo.setContent(null);
-        new InfoPaneDialog(paneFilmInfo, "Filminfos",
+        InfoPaneFactory.setDialogInfo(tabFilmInfo, paneFilmInfo, "Filminfos",
                 ProgConfig.FILM_PANE_DIALOG_INFO_SIZE, ProgConfig.FILM_PANE_DIALOG_INFO_ON,
                 ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
     }
 
     private void setDialogButton() {
-        tabButton.setContent(null);
-        new InfoPaneDialog(paneButton, "Startbutton",
+        InfoPaneFactory.setDialogInfo(tabButton, paneButton, "Startbutton",
                 ProgConfig.FILM_PANE_DIALOG_BUTTON_SIZE, ProgConfig.FILM_PANE_DIALOG_BUTTON_ON,
                 ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
     }
 
     private void setDialogMedia() {
-        tabMedia.setContent(null);
-        new InfoPaneDialog(paneMedia, "Mediensammlung",
+        InfoPaneFactory.setDialogInfo(tabMedia, paneMedia, "Mediensammlung",
                 ProgConfig.FILM_PANE_DIALOG_MEDIA_SIZE, ProgConfig.FILM_PANE_DIALOG_MEDIA_ON,
                 ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
     }

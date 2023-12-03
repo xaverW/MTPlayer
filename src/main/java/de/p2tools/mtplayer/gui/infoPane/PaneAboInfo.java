@@ -29,7 +29,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class PaneAboInfo extends VBox {
-    private final SplitPane splitPane = new SplitPane();
 
     private final TextArea txtInfo = new TextArea();
     private final TextField txtName = new TextField("");
@@ -83,6 +82,7 @@ public class PaneAboInfo extends VBox {
         gridPaneRight.add(new Label("Irgendwo: "), 0, ++row);
         gridPaneRight.add(lblSomewhere, 1, row);
 
+        SplitPane splitPane = new SplitPane();
         splitPane.getItems().addAll(gridPaneLeft, gridPaneRight);
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_INFO_DIVIDER);
         SplitPane.setResizableWithParent(gridPaneRight, false);
@@ -94,6 +94,7 @@ public class PaneAboInfo extends VBox {
     }
 
     public void setAbo(AboData newAbo) {
+//        System.out.println("PaneAboInfo " + LocalDateTime.now());
         if (abo != null) {
             txtName.textProperty().unbindBidirectional(abo.nameProperty());
             txtInfo.textProperty().unbindBidirectional(abo.descriptionProperty());

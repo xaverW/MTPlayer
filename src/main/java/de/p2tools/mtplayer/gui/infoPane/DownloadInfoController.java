@@ -23,11 +23,9 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
-import javafx.beans.property.BooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -52,10 +50,30 @@ public class DownloadInfoController extends P2ClosePaneH {
         PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadInfoController.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                paneBandwidthChart.searchInfos(MTPlayerController.paneShown == MTPlayerController.PANE_SHOWN.DOWNLOAD &&
-                        paneIsVisible(paneBandwidthChart, ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON));
+                paneBandwidthChart.searchInfos(InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+                        getVBoxAll(), tabPane, paneBandwidthChart,
+                        ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON));
+
+                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+                        getVBoxAll(), tabPane, paneDownloadInfo,
+                        ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON)) {
+                    paneDownloadInfo.setInfoText();
+                }
             }
         });
+    }
+
+    public void setDownloadInfos(DownloadData download) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+                getVBoxAll(), tabPane, paneFilmInfo,
+                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_PANE_DIALOG_INFO_ON)) {
+            paneFilmInfo.setFilm(download);
+        }
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+                getVBoxAll(), tabPane, paneMedia,
+                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON)) {
+            paneMedia.setSearchPredicate(download);
+        }
     }
 
     private void initInfoPane() {
@@ -73,17 +91,17 @@ public class DownloadInfoController extends P2ClosePaneH {
         tabMedia.setClosable(false);
         tabDownloadChart = new Tab("Downloadchart");
         tabDownloadChart.setClosable(false);
-        tabDownloadInfo = new Tab("Downloadinfos");
+        tabDownloadInfo = new Tab("Infos");
         tabDownloadInfo.setClosable(false);
 
         super.getRipProperty().addListener((u, o, n) -> {
-            if (tabFilmInfo.isSelected()) {
+            if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneFilmInfo)) {
                 dialogInfo();
-            } else if (tabMedia.isSelected()) {
+            } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneMedia)) {
                 dialogMedia();
-            } else if (tabDownloadChart.isSelected()) {
+            } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneBandwidthChart)) {
                 dialogChart();
-            } else {
+            } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneDownloadInfo)) {
                 dialogDownloadInfo();
             }
         });
@@ -127,60 +145,27 @@ public class DownloadInfoController extends P2ClosePaneH {
         mediaDataDtoAbo.cleaningList = ProgConfig.INFO_DOWNLOAD_CLEAN_LIST_ABO;
     }
 
-    public void setDownloadInfos(DownloadData download) {
-        if (paneIsVisible(paneFilmInfo, ProgConfig.DOWNLOAD_PANE_DIALOG_INFO_ON)) {
-            paneFilmInfo.setFilm(download);
-        }
-        if (paneIsVisible(paneMedia, ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON)) {
-            paneMedia.setSearchPredicate(download);
-        }
-    }
-
-    private boolean paneIsVisible(Pane pane, BooleanProperty booleanProperty) {
-        if (booleanProperty.getValue()) {
-            // dann im Extrafenster
-            return true;
-        } else if (!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue()) {
-            // dann wird gar nix angezeigt
-            return false;
-        } else if (!getVBoxAll().getChildren().isEmpty() &&
-                getVBoxAll().getChildren().get(0).equals(pane)) {
-            // dann wird nur das angezeigt
-            return true;
-        } else if (tabPane.getSelectionModel().getSelectedItem() != null &&
-                tabPane.getSelectionModel().getSelectedItem().getContent().equals(pane)) {
-            // dann ist der Tab ausgewählt
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private void dialogInfo() {
-        tabFilmInfo.setContent(null);
-        new InfoPaneDialog(paneFilmInfo, "Filminfos",
+        InfoPaneFactory.setDialogInfo(tabFilmInfo, paneFilmInfo, "Filminfos",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_INFO_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_INFO_ON,
                 ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
 
     private void dialogMedia() {
-        tabMedia.setContent(null);
-        new InfoPaneDialog(paneMedia, "Mediensammlung",
+        InfoPaneFactory.setDialogInfo(tabMedia, paneMedia, "Mediensammlung",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON,
                 ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
     private void dialogChart() {
-        tabDownloadChart.setContent(null);
-        new InfoPaneDialog(paneBandwidthChart, "Downloadchart",
+        InfoPaneFactory.setDialogInfo(tabDownloadChart, paneBandwidthChart, "Downloadchart",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON,
                 ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
     private void dialogDownloadInfo() {
-        tabDownloadInfo.setContent(null);
-        new InfoPaneDialog(paneDownloadInfo, "Downloadinfos",
+        InfoPaneFactory.setDialogInfo(tabDownloadInfo, paneDownloadInfo, "Downloadinfos",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON,
                 ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
@@ -231,12 +216,14 @@ public class DownloadInfoController extends P2ClosePaneH {
         if (i == 0) {
             getVBoxAll().getChildren().clear();
             ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.set(false);
+
         } else if (i == 1) {
             // dann gibts einen Tab
             final Node node = tabPane.getTabs().get(0).getContent();
             tabPane.getTabs().remove(0);
             getVBoxAll().getChildren().setAll(node);
             VBox.setVgrow(node, Priority.ALWAYS);
+
         } else {
             // dann gibts mehre Tabs
             getVBoxAll().getChildren().setAll(tabPane);

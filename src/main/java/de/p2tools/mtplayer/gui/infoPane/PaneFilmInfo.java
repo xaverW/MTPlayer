@@ -117,11 +117,8 @@ public class PaneFilmInfo extends VBox {
         getChildren().add(splitPane);
     }
 
-//    int i = 0;
-
     public void setFilm(FilmDataMTP film) {
-//        System.out.println("=====> setFilm(FilmDataMTP film) " +
-//                ++i + "  " + (film != null ? film.getTitle() : "null"));
+//        System.out.println("setFilm Film " + LocalTime.now());
         hBoxUrl.getChildren().clear();
         textArea.textProperty().removeListener(changeListener);
         if (this.downloadData != null) {
@@ -168,8 +165,7 @@ public class PaneFilmInfo extends VBox {
     }
 
     public void setFilm(DownloadData downloadData) {
-//        System.out.println("=====> setFilm(DownloadData downloadData)" +
-//                ++i + "  " + (downloadData != null ? downloadData.getTitle() : "null"));
+//        System.out.println("setFilm Download " + LocalTime.now());
         hBoxUrl.getChildren().clear();
         textArea.textProperty().removeListener(changeListener);
         if (this.downloadData != null) {

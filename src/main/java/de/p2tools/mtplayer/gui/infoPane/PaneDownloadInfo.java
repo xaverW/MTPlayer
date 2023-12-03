@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.gui.infoPane;
 
-import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.tools.file.PFileSize;
 import javafx.geometry.Insets;
@@ -52,22 +51,18 @@ public class PaneDownloadInfo extends AnchorPane {
         AnchorPane.setRightAnchor(gridPane, 0.0);
         AnchorPane.setTopAnchor(gridPane, 0.0);
 
-        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, PaneDownloadInfo.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                setInfoText();
-            }
-        });
+        setInfoText();
     }
 
-    private void setInfoText() {
+    public void setInfoText() {
+//        System.out.println("DownloadInfo " + LocalTime.now());
         Text text1, text2;
         vBoxHeader.getChildren().clear();
         gridPane.getChildren().clear();
 
-        if (progData.downloadList.size() == 0) {
+        if (progData.downloadList.isEmpty()) {
             // dann gibts keine :)
-            text1 = new Text("keine Downloads");
+            text1 = new Text("Keine Downloads");
             text1.setFont(Font.font(null, FontWeight.BOLD, -1));
             text1.getStyleClass().add("downloadGuiMediaText");
             vBoxHeader.getChildren().add(text1);
