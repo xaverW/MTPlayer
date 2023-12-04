@@ -1,5 +1,45 @@
 # MTPlayer
 
+**Release 15**
+
+* Die Java-Version wurde auf mind. Java 17 angehoben
+* In den Tabellen (Filme, Downloads, Abos) gibt es einen Tooltip mit den Infos: Thema, Titel
+* Max. Download Bandbreite, max Anzahl Downloads kann jetzt auch in den Einstellungen eingestellt werden
+* Ist die max. Download Bandbreite nicht "MAX", wird das in der Statusbar angezeigt
+* Performance Optimierungen beim Download
+* Nach dem Anlegen eines Abos/Downloads wird die Programmkonfiguration gespeichert
+* Die Infopanes unter den Tabellen (Filme, Downloads, Abos) können abgerissen und als Extrafenster angezeigt werden (Button "kleines Dreieck)
+* Fürs Löschen gibts jetzt überall eine Undo-Funktion: Downloads, Abos, Blacklist, Replacelist, Mediadata, Sets
+* Button für den Dark Mode im Progamm-Menü, und durch Rechtsklick auf das Programmmenü
+* Filme zum Abspielen starten: Es können jetzt auch gleich mehrere Filme gestartet werden
+* Dialog Abo-Ändern: Anzeige der Anzahl von Treffern
+* Tab Filme: Infopane für die Mediensammlung hinzugekommen
+* Einstellungen: Beim Anlegen von Mediendaten können sie jetzt auch eingesehen werden durch einen neuen Tab für die Mediendaten
+* Fast Filmfilter: Es gibt jetzt einen "schnellen Filmfilter" in der Toolbar, er kann ein- und ausgeblendet werden
+* Downloadeinschränkungen (Max. Downloads) wurden entfernt
+* Gui-Elemente überarbeitet: RangeSlider, Notification
+* Suche in der Filmliste erweitert: Nach der Suche immer die erste Tabellenzeile auswählen (-> Einstellungen der Suche)
+* Neues Tastenkürzel: ctrl+w -> Programmfenster im Bildschirm zentrieren
+* Notifications überarbeitet: Film starten, Ordner öffnen
+* Add Download Dialog überarbeitet: Liste der Ordner kann gelöscht werden, ...
+* Fehlermeldungen im Log bei Downloadfehlern erweitert
+* Bookmark: Zusätzlicher Button in der Tabelle "Filme" zum Setzen/Löschen eines Bookmarks
+* Download-Infos (Fortschrittsanzeige, ...) für den yt-dlp downloader
+* Chart für die Download-Bandbreite erweitert: Summe aller Downloads und die Downloads können jetzt im selben Chart gezeichnet werden -> Kontext-Menü des Chart
+* Neuer Programmschalter: -s, ist zum Testen, es wird dann immer ein Programmupdate angezeigt
+* Film-Info Dialog überarbeitet
+* "In die Zwischenablage kopieren" wurde an einigen Stellen hinzugefügt (Download-Dialog, "Über dieses Programm" Dialog)
+* Beim Anlegen eines Abos aus dem Filmfilter: Der Vorschlag des Aboname überarbeitet
+* Tabelle Download, Kontextmenü: "Abo deaktivieren" kam hinzu
+* Dialog Download anlegen/ändern: Es können jetzt auch mehrere Downloads (im Tab Download) geändert werden
+* Dialog Download/Abo anlegen/ändern: Das Feld "Für alle ändern" ist jetzt ein Button, der alle ein/ausschaltet
+* Dialog Abo anlegen/ändern: Mehrere Abos können jetzt auch einzeln geändert werden
+* Dialog Download anlegen: Die CheckBoxen "alle" werden mit der letzten Einstellung wieder vorbelegt
+* Tab Abo: Aboinfos hinzugekommen
+* Dateigröße für m3u8-URLs: Wird jetzt beim Downloadstart ermittelt
+* ...
+
+
 **Release 14**
 * Markierung der gesehenen Filme korrigiert
 * In den Einstellungen kann eine Lock-Datei eingeschaltet werden: Es wird dann sichergestellt, dass nur eine Instanz vom Programm läuft

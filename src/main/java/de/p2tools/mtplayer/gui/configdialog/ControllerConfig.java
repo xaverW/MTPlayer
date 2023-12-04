@@ -29,6 +29,7 @@ import java.util.Collection;
 public class ControllerConfig extends PAccordionPane {
 
     private PaneConfig paneConfig;
+    private PaneAbo paneAbo;
     private PaneIcon paneIcon;
     private PaneColor paneColor;
     private PaneStatusBar paneStatusBar;
@@ -52,6 +53,7 @@ public class ControllerConfig extends PAccordionPane {
     @Override
     public void close() {
         paneConfig.close();
+        paneAbo.close();
         paneIcon.close();
         paneColor.close();
         paneStatusBar.close();
@@ -70,6 +72,9 @@ public class ControllerConfig extends PAccordionPane {
 
         paneConfig = new PaneConfig(stage);
         paneConfig.makeConfig(result);
+
+        paneAbo = new PaneAbo(stage);
+        paneAbo.makeAbo(result);
 
         paneIcon = new PaneIcon(stage);
         paneIcon.makeIcon(result);

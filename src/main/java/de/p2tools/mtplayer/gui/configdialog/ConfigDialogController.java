@@ -52,7 +52,6 @@ public class ConfigDialogController extends PDialogExtra {
     private ControllerLoadFilmList controllerLoadFilmList;
     private ControllerBlackList controllerBlackList;
     private ControllerDownload controllerDownload;
-    private ControllerAbo controllerAbo;
     private ControllerMedia controllerMedia;
     private ControllerSet controllerSet;
 
@@ -183,7 +182,6 @@ public class ConfigDialogController extends PDialogExtra {
         controllerLoadFilmList.close();
         controllerBlackList.close();
         controllerDownload.close();
-        controllerAbo.close();
         controllerMedia.close();
         controllerSet.close();
 
@@ -220,14 +218,6 @@ public class ConfigDialogController extends PDialogExtra {
             tab = new Tab("Download");
             tab.setClosable(false);
             tab.setContent(controllerDownload);
-            if (!blackListDialog) {
-                tabPane.getTabs().add(tab);
-            }
-
-            controllerAbo = new ControllerAbo(this.getStage());
-            tab = new Tab("Abo");
-            tab.setClosable(false);
-            tab.setContent(controllerAbo);
             if (!blackListDialog) {
                 tabPane.getTabs().add(tab);
             }
