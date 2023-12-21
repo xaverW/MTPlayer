@@ -52,7 +52,7 @@ public class PaneAboInfo extends VBox {
         final GridPane gridPaneLeft = new GridPane();
         gridPaneLeft.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPaneLeft.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPaneLeft.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPaneLeft.setPadding(new Insets(P2LibConst.PADDING));
         GridPane.setVgrow(txtInfo, Priority.ALWAYS);
 
         gridPaneLeft.add(txtName, 0, 0);
@@ -64,7 +64,7 @@ public class PaneAboInfo extends VBox {
         gridPaneRight.getStyleClass().add("extra-pane-info");
         gridPaneRight.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPaneRight.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPaneRight.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPaneRight.setPadding(new Insets(P2LibConst.PADDING));
         gridPaneRight.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         chkExact.setDisable(true);

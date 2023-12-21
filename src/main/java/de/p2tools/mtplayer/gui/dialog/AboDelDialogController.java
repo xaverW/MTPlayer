@@ -56,8 +56,8 @@ public class AboDelDialogController extends PDialogExtra {
     @Override
     public void make() {
         getHBoxTitle().getChildren().add(new Label("Abo löschen"));
-        vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
+        vBoxCont.setPadding(new Insets(P2LibConst.PADDING));
+        vBoxCont.setSpacing(P2LibConst.PADDING_VBOX);
 
 
         TableView<AboData> table = new TableView<>();

@@ -66,7 +66,7 @@ public class BlackPaneFilterGrid {
 
         VBox vb1 = new VBox(SPACE_VBOX);
         vb1.setAlignment(Pos.TOP_LEFT);
-        vb1.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vb1.setPadding(new Insets(P2LibConst.PADDING));
         vb1.getStyleClass().add("extra-pane");
 
         Label label = new Label("Diese Felder durchsuchen:");

@@ -78,7 +78,7 @@ public class PaneDownloadStop {
 
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         Text text = new Text("Downloads abbrechen oder löschen");
         text.setFont(Font.font(null, FontWeight.BOLD, -1));

@@ -57,7 +57,7 @@ public class PaneSetDownload {
 
     public void makePane(Collection<TitledPane> result) {
         VBox vBox = new VBox(25);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
 
         TitledPane tpConfig = new TitledPane("Download", vBox);
         result.add(tpConfig);

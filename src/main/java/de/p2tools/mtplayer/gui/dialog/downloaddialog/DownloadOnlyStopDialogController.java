@@ -69,8 +69,8 @@ public class DownloadOnlyStopDialogController extends PDialogExtra {
                 new Label("Download löschen") :
                 new Label("Download abbrechen"));
 
-        vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
+        vBoxCont.setPadding(new Insets(P2LibConst.PADDING));
+        vBoxCont.setSpacing(P2LibConst.PADDING_VBOX);
 
 
         TableView<DownloadData> table = new TableView<>();

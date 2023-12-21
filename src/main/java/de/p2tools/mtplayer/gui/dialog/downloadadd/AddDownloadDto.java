@@ -86,7 +86,7 @@ public class AddDownloadDto {
     public final Label lblProgramIsDownload = new Label("Direkter Download");
     public final P2MultiLineLabel textAreaProg = new P2MultiLineLabel();
     public final TextArea textAreaCallArray = new TextArea();
-    public final VBox vBoxProgramCall = new VBox(P2LibConst.DIST_VBOX);
+    public final VBox vBoxProgramCall = new VBox(P2LibConst.PADDING_VBOX);
     public final Button btnProgramCallHelp = P2Button.helpButton("Den Programmaufruf ändern", HelpText.EDIT_DOWNLOAD_WITH_PROG);
     public final Button btnProgramCallReset = new Button("");
 

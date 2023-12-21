@@ -60,7 +60,7 @@ public class PaneCleaningList {
 
     public AnchorPane makePane() {
         final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         makePane(vBox);
         AnchorPane anchorPane = new AnchorPane();
         AnchorPane.setTopAnchor(vBox, 0.0);
@@ -148,7 +148,7 @@ public class PaneCleaningList {
             cleaningDataList.initList();
         });
 
-        HBox hBox1 = new HBox(P2LibConst.DIST_EDGE);
+        HBox hBox1 = new HBox(P2LibConst.PADDING);
         hBox1.setPadding(new Insets(P2LibConst.DIST_BUTTON));
         hBox1.getChildren().addAll(btnNew, btnDel, btnClear, P2GuiTools.getHBoxGrower(), btnAddStandards);
         vBox.getChildren().add(hBox1);

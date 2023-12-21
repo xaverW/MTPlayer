@@ -98,8 +98,8 @@ public class PaneDialogScrollPane extends ScrollPane {
     }
 
     public void make(Collection<TitledPane> result) {
-        VBox vBox = new VBox(P2LibConst.DIST_VBOX);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        VBox vBox = new VBox(P2LibConst.PADDING_VBOX);
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         TitledPane tpConfig = new TitledPane("Medien", vBox);
         result.add(tpConfig);
         vBox.getChildren().add(this);
@@ -123,24 +123,24 @@ public class PaneDialogScrollPane extends ScrollPane {
         txtTitleMedia.setEditable(false);
         txtPathMedia.setEditable(false);
 
-        VBox vBoxMedia = new VBox(P2LibConst.DIST_EDGE);
+        VBox vBoxMedia = new VBox(P2LibConst.PADDING);
 
         if (mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_MEDIA) {
             tableMedia.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
             VBox.setVgrow(tableMedia, Priority.ALWAYS);
-            HBox hBox = new HBox(P2LibConst.DIST_HBOX);
+            HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
             hBox.getChildren().addAll(getHBoxProgress(), P2GuiTools.getHBoxGrower(), getHBoxSum());
             vBoxMedia.getChildren().addAll(getVBoxSearch(), tableMedia, hBox, getTextFieldGrid());
 
         } else {
             tableAboOrHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
             VBox.setVgrow(tableAboOrHistory, Priority.ALWAYS);
-            HBox hBox = new HBox(P2LibConst.DIST_HBOX);
+            HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
             hBox.getChildren().addAll(btnClearList, P2GuiTools.getHBoxGrower(), getHBoxSum());
             vBoxMedia.getChildren().addAll(getVBoxSearch(), tableAboOrHistory, hBox, getTextFieldGrid());
         }
 
-        this.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        this.setPadding(new Insets(P2LibConst.PADDING));
         this.setFitToHeight(true);
         this.setFitToWidth(true);
         this.setContent(vBoxMedia);
@@ -162,7 +162,7 @@ public class PaneDialogScrollPane extends ScrollPane {
         mediaDataDto.searchInWhat.addListener((u, o, n) -> filter());
 
         HBox.setHgrow(txtSearch, Priority.ALWAYS);
-        HBox hBoxSearch = new HBox(P2LibConst.DIST_HBOX);
+        HBox hBoxSearch = new HBox(P2LibConst.PADDING_HBOX);
         hBoxSearch.setPadding(new Insets(0));
         hBoxSearch.setAlignment(Pos.CENTER_RIGHT);
         if (mediaDataExist) {
@@ -213,7 +213,7 @@ public class PaneDialogScrollPane extends ScrollPane {
     }
 
     private HBox getHBoxProgress() {
-        HBox hBoxProgress = new HBox(P2LibConst.DIST_HBOX);
+        HBox hBoxProgress = new HBox(P2LibConst.PADDING_HBOX);
         hBoxProgress.setPadding(new Insets(0));
         hBoxProgress.setAlignment(Pos.CENTER_RIGHT);
 

@@ -32,7 +32,7 @@ public class PaneFilmButton extends TilePane {
     public PaneFilmButton() {
         setVgap(P2LibConst.DIST_BUTTON);
         setHgap(P2LibConst.DIST_BUTTON);
-        setPadding(new Insets(P2LibConst.DIST_EDGE));
+        setPadding(new Insets(P2LibConst.PADDING));
 
         addButton();
         ProgData.getInstance().setDataList.addListener((u, o, n) -> addButton());

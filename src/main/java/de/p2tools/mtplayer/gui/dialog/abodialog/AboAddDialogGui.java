@@ -80,7 +80,7 @@ public class AboAddDialogGui {
 
         int row = 0;
         // Titel
-        HBox hHit = new HBox(P2LibConst.DIST_HBOX);
+        HBox hHit = new HBox(P2LibConst.PADDING_HBOX);
         hHit.getChildren().addAll(new Label(AboFieldNames.ABO_NO + ":"),
                 addAboDto.lblAboNo,
                 P2GuiTools.getHDistance(20),
@@ -141,7 +141,7 @@ public class AboAddDialogGui {
         final Button btnHelpRes = P2Button.helpButton(addAboDto.stage,
                 "Auflösung", HelpText.ABO_RES);
 
-        HBox hResAll = new HBox(P2LibConst.DIST_HBOX);
+        HBox hResAll = new HBox(P2LibConst.PADDING_HBOX);
         hResAll.getChildren().addAll(hRes, btnHelpRes);
         HBox.setHgrow(hRes, Priority.ALWAYS);
 

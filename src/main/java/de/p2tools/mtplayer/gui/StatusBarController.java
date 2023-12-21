@@ -106,7 +106,7 @@ public class StatusBarController extends AnchorPane {
         hBoxCircle.setPadding(new Insets(0, 15, 0, 15));
 
         hBox.setPadding(new Insets(2, 5, 2, 5));
-        hBox.setSpacing(P2LibConst.DIST_HBOX);
+        hBox.setSpacing(P2LibConst.PADDING_HBOX);
         hBox.setAlignment(Pos.CENTER_RIGHT);
 
         lblSel.setPadding(new Insets(0, 5, 0, 5));

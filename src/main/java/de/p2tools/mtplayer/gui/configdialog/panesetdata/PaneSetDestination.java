@@ -65,7 +65,7 @@ public class PaneSetDestination {
     public void makePane(Collection<TitledPane> result) {
         VBox vBox = new VBox(25);
         vBox.setFillWidth(true);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
 
         TitledPane titledPane = new TitledPane("Speicherziel", vBox);
         result.add(titledPane);

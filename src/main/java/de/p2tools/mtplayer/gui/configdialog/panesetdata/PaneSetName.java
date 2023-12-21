@@ -60,7 +60,7 @@ public class PaneSetName {
     public void makePane(Collection<TitledPane> result) {
         changeListener = (observable, oldValue, newValue) -> ProgData.getInstance().setDataList.setListChanged();
 
-        VBox vBox = new VBox(P2LibConst.DIST_EDGE);
+        VBox vBox = new VBox(P2LibConst.PADDING);
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(10));
 

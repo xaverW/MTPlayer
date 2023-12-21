@@ -123,12 +123,12 @@ public class DownloadAddDialogGui {
         addDownloadDto.btnProgramCallReset.setTooltip(new Tooltip("Reset"));
         addDownloadDto.btnProgramCallReset.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
 
-        HBox hBoxArray1 = new HBox(P2LibConst.DIST_HBOX);
+        HBox hBoxArray1 = new HBox(P2LibConst.PADDING_HBOX);
         HBox.setHgrow(addDownloadDto.textAreaProg, Priority.ALWAYS);
         hBoxArray1.setAlignment(Pos.CENTER_LEFT);
         hBoxArray1.getChildren().addAll(addDownloadDto.btnProgramCallHelp, addDownloadDto.textAreaProg);
 
-        HBox hBoxArray2 = new HBox(P2LibConst.DIST_HBOX);
+        HBox hBoxArray2 = new HBox(P2LibConst.PADDING_HBOX);
         HBox.setHgrow(addDownloadDto.textAreaCallArray, Priority.ALWAYS);
         hBoxArray2.setAlignment(Pos.CENTER_LEFT);
         hBoxArray2.getChildren().addAll(addDownloadDto.btnProgramCallReset, addDownloadDto.textAreaCallArray);

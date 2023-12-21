@@ -74,7 +74,7 @@ public class ImportMVDialog extends PDialogExtra {
     private void initDialog() {
         VBox vBox = getVBoxCont();
         vBox.setSpacing(20);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
 
         Text text = new Text("1. Pfad zum Konfigfile");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));

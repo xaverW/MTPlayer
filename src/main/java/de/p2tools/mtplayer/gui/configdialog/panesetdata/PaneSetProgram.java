@@ -73,7 +73,7 @@ public class PaneSetProgram {
     public void makePane(Collection<TitledPane> result) {
         VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
 
         initTable(vBox);
         initButton(vBox);
@@ -204,7 +204,7 @@ public class PaneSetProgram {
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> PDirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtProgPath));

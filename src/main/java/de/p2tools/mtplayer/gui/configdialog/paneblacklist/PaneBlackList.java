@@ -101,8 +101,8 @@ public class PaneBlackList {
     }
 
     public void make(Collection<TitledPane> result) {
-        final VBox vBox = new VBox(P2LibConst.DIST_EDGE);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        final VBox vBox = new VBox(P2LibConst.PADDING);
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         vBox.setAlignment(Pos.TOP_RIGHT);
 
         makeConfigBlackList(vBox);
@@ -131,7 +131,7 @@ public class PaneBlackList {
             setRb();
         });
 
-        HBox hBox = new HBox(P2LibConst.DIST_EDGE);
+        HBox hBox = new HBox(P2LibConst.PADDING);
         hBox.getChildren().addAll(rbBlack, rbWhite, rbOff, P2GuiTools.getHBoxGrower(), btnHelp);
         vBox.getChildren().add(hBox);
     }
@@ -147,7 +147,7 @@ public class PaneBlackList {
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(2);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         int row = 0;
         gridPane.add(new Label("Sender:"), 0, row);

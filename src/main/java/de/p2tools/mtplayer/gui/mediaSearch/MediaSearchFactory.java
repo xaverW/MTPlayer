@@ -82,7 +82,7 @@ public class MediaSearchFactory {
 
     private static HBox getSearchHbox(MediaDataDto mediaDataDto, Label lblSum, boolean buildSearchFrom) {
         // Suchen, woraus der Suchtext gebaut wird
-        HBox hBox = new HBox(P2LibConst.DIST_EDGE);
+        HBox hBox = new HBox(P2LibConst.PADDING);
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.setPadding(new Insets(0));
 

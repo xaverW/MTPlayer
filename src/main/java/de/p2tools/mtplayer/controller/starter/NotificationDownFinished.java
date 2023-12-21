@@ -57,7 +57,7 @@ public class NotificationDownFinished {
         });
 
         HBox hBoxBottom = new HBox();
-        hBoxBottom.setSpacing(P2LibConst.DIST_HBOX);
+        hBoxBottom.setSpacing(P2LibConst.PADDING_HBOX);
         hBoxBottom.setAlignment(Pos.CENTER_RIGHT);
         if (download.isStateError()) {
             // dann ist er fehlerhaft, also kein Abspielen

@@ -70,7 +70,7 @@ public class PaneBlack {
 
     public void makeBlack(Collection<TitledPane> result) {
         final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         makeBlack(vBox);
 
         TitledPane tpBlack = new TitledPane("Blacklist allgemein", vBox);

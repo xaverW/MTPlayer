@@ -26,9 +26,9 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -66,8 +66,8 @@ public class PaneMediaDataPath {
     }
 
     public void make(Collection<TitledPane> result) {
-        VBox vBox = new VBox(P2LibConst.DIST_VBOX);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        VBox vBox = new VBox(P2LibConst.PADDING_VBOX);
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
 
         TitledPane tpConfig = new TitledPane(external ? "Externe Medien" : "Interne Medien", vBox);
         result.add(tpConfig);
@@ -208,7 +208,7 @@ public class PaneMediaDataPath {
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
         btnPath.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());

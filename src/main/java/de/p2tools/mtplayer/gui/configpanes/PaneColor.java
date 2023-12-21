@@ -75,7 +75,7 @@ public class PaneColor {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         gridPane.add(tglDarkTheme, 0, row);
         gridPane.add(btnHelpTheme, 1, row);

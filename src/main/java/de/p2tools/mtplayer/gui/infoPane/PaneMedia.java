@@ -115,7 +115,7 @@ public class PaneMedia extends VBox {
 
     private void init() {
         final Button btnHelpMedia = P2Button.helpButton("Mediensammlung", HelpText.DOWNLOAD_GUI_MEDIA);
-        HBox hBoxTop = new HBox(P2LibConst.DIST_EDGE);
+        HBox hBoxTop = new HBox(P2LibConst.PADDING);
         hBoxTop.setPadding(new Insets(0));
         hBoxTop.setAlignment(Pos.CENTER);
 
@@ -153,7 +153,7 @@ public class PaneMedia extends VBox {
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_MEDIA_DIVIDER);
 
         super.setSpacing(P2LibConst.DIST_BUTTON);
-        super.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        super.setPadding(new Insets(P2LibConst.PADDING));
         super.getChildren().addAll(hBoxTop, splitPane);
     }
 

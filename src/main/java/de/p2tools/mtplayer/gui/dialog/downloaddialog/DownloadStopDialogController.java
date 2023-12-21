@@ -93,8 +93,8 @@ public class DownloadStopDialogController extends PDialogExtra {
                 new Label("Es liegen keine Filmdateien vor") :
                 new Label("Filmdateien existieren bereits"));
 
-        vBoxCont.setPadding(new Insets(P2LibConst.DIST_EDGE));
-        vBoxCont.setSpacing(P2LibConst.DIST_VBOX);
+        vBoxCont.setPadding(new Insets(P2LibConst.PADDING));
+        vBoxCont.setSpacing(P2LibConst.PADDING_VBOX);
 
 
         TableView<DownloadData> tableDownload = new TableView<>();

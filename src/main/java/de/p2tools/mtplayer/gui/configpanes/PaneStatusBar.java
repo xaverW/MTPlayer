@@ -55,7 +55,7 @@ public class PaneStatusBar {
     public void makeStatusBar(Collection<TitledPane> result) {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         TitledPane tpConfig = new TitledPane("Statusleiste", gridPane);
         result.add(tpConfig);

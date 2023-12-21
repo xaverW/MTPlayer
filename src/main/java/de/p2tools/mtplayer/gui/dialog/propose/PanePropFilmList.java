@@ -55,7 +55,7 @@ public class PanePropFilmList {
 
     public AnchorPane makePane() {
         final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         initTableFilm(vBox);
         initUnderTable(vBox);
 

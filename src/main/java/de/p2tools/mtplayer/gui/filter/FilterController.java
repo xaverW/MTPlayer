@@ -43,7 +43,7 @@ public class FilterController extends P2ClosePaneV {
 
     public VBox getVBoxFilter(boolean vgrow) {
         VBox vbFilter = new VBox();
-        vbFilter.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vbFilter.setPadding(new Insets(P2LibConst.PADDING));
         vbFilter.setSpacing(FILTER_SPACING_TEXTFILTER);
         if (vgrow) {
             VBox.setVgrow(vbFilter, Priority.ALWAYS);
@@ -56,7 +56,7 @@ public class FilterController extends P2ClosePaneV {
     public VBox getVBoxBottom() {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("extra-pane-filter");
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         vBox.setSpacing(FILTER_SPACING_TEXTFILTER);
         vBox.setMaxWidth(Double.MAX_VALUE);
         vBoxAll.getChildren().addAll(vBox);

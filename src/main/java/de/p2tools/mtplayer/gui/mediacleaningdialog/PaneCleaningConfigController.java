@@ -58,7 +58,7 @@ public class PaneCleaningConfigController {
 
     public AnchorPane makePane() {
         final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         initPane();
         addGrid(vBox);
         AnchorPane anchorPane = new AnchorPane();

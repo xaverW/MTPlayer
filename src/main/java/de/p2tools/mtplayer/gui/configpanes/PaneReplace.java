@@ -72,7 +72,7 @@ public class PaneReplace {
     public void makeReplaceListTable(Collection<TitledPane> result) {
         final VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
 
         makeAscii(vBox);
         initTable(vBox);
@@ -249,7 +249,7 @@ public class PaneReplace {
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         gridPane.add(new Label("Von: "), 0, 0);
         gridPane.add(txtFrom, 1, 0);

@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
-import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.PShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -52,7 +52,7 @@ public class ChangeShutDownCallDialog extends PDialogExtra {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_GRIDPANE_PADDING));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING_GRIDPANE));
 
         final TextField txtCall = new TextField();
         txtCall.textProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL);
@@ -72,16 +72,16 @@ public class ChangeShutDownCallDialog extends PDialogExtra {
 
         Button btnHelp = P2Button.helpButton(getStageProp(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
 
-        VBox vBox = new VBox(P2LibConst.DIST_VBOX);
+        VBox vBox = new VBox(P2LibConst.PADDING_VBOX);
 
-        HBox hBox = new HBox(P2LibConst.DIST_HBOX);
+        HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
         hBox.getChildren().addAll(new Label("Standard Befehl:"), lblStandard, P2GuiTools.getHBoxGrower(), btnStandard);
         vBox.getChildren().addAll(hBox);
 
-        hBox = new HBox(P2LibConst.DIST_HBOX);
+        hBox = new HBox(P2LibConst.PADDING_HBOX);
         HBox.setHgrow(txtCall, Priority.ALWAYS);
         hBox.getChildren().addAll(new Label("Eigener Befehl:"), txtCall, btnTest, btnHelp);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(P2LibConst.DIST_VBOX), hBox);
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(P2LibConst.PADDING_VBOX), hBox);
 
         getVBoxCont().getChildren().addAll(vBox);
 

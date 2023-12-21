@@ -52,7 +52,7 @@ public class PaneProposeList {
 
     public AnchorPane makePane() {
         final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         initTableList(vBox);
         initUnderTable(vBox);
 
@@ -89,7 +89,7 @@ public class PaneProposeList {
         });
         sortedList.comparatorProperty().bind(tableList.comparatorProperty());
         tableList.setItems(sortedList);
-        
+
         vBox.getChildren().addAll(tableList);
         VBox.setVgrow(tableList, Priority.ALWAYS);
     }

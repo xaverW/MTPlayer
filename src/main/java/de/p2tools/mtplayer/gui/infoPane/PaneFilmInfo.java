@@ -84,14 +84,14 @@ public class PaneFilmInfo extends VBox {
         v.setSpacing(0);
         v.getChildren().addAll(lblTheme, lblTitle);
         vBoxLeft.setSpacing(2);
-        vBoxLeft.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBoxLeft.setPadding(new Insets(P2LibConst.PADDING));
         vBoxLeft.getChildren().addAll(v, stackPane, hBoxUrl);
 
         final GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("extra-pane-info");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         int row = 0;

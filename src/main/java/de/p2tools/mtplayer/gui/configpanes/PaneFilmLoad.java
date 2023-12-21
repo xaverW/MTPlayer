@@ -110,13 +110,13 @@ public class PaneFilmLoad {
 
         HBox hBox = new HBox();
         hBox.getStyleClass().add("extra-pane");
-        hBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.getChildren().add(new Label("Änderungen in diesem Tab\n" +
                 "wirken sich erst nach dem Neuladen einer Filmliste aus"));
 
-        final VBox vBox = new VBox(P2LibConst.DIST_EDGE);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        final VBox vBox = new VBox(P2LibConst.PADDING);
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
         vBox.getChildren().addAll(hBox, gridPane);
 
         TitledPane tpConfig = new TitledPane("Filmliste laden", vBox);

@@ -56,7 +56,7 @@ public class PaneAbo {
     public void makeAbo(Collection<TitledPane> result) {
         TitledPane tpConfig = new TitledPane("Abo", vBoxAll);
         result.add(tpConfig);
-        vBoxAll.setSpacing(P2LibConst.DIST_VBOX);
+        vBoxAll.setSpacing(P2LibConst.PADDING_VBOX);
         addGridPane();
     }
 
@@ -64,7 +64,7 @@ public class PaneAbo {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        gridPane.setPadding(new Insets(P2LibConst.PADDING));
         vBoxAll.getChildren().add(gridPane);
 
         tglSearchAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_SEARCH_NOW);

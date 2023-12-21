@@ -67,7 +67,7 @@ public class PaneSetFunction {
 
         VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
-        vBox.setPadding(new Insets(P2LibConst.DIST_EDGE));
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
 
         TitledPane tpConfig = new TitledPane("Funktionen", vBox);
         result.add(tpConfig);
