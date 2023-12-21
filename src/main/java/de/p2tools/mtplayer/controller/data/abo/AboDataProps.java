@@ -22,9 +22,9 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.date.DateFactory;
-import de.p2tools.p2lib.tools.date.PDate;
-import de.p2tools.p2lib.tools.date.PDateProperty;
+import de.p2tools.p2lib.tools.date.P2DateConst;
+import de.p2tools.p2lib.tools.date.P2Date;
+import de.p2tools.p2lib.tools.date.P2DateProperty;
 import javafx.beans.property.*;
 
 import java.util.ArrayList;
@@ -48,9 +48,9 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilterCheck.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty startTime = new SimpleStringProperty("");
     private final StringProperty aboSubDir = new SimpleStringProperty("");
-    private final PDateProperty date = new PDateProperty(new PDate(0)); //Datum des letzten gefundenen Downloads
+    private final P2DateProperty date = new P2DateProperty(new P2Date(0)); //Datum des letzten gefundenen Downloads
     private final StringProperty setDataId = new SimpleStringProperty(""); //nur zum Speichern/Laden
-    private final PDateProperty genDate = new PDateProperty(new PDate()); //Erstelldatum
+    private final P2DateProperty genDate = new P2DateProperty(new P2Date()); //Erstelldatum
 
     private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
     private int countHit = 0;
@@ -313,21 +313,21 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         this.aboSubDir.set(aboSubDir);
     }
 
-    public PDate getDate() {
+    public P2Date getDate() {
         return date.get();
     }
 
-    public PDateProperty dateProperty() {
+    public P2DateProperty dateProperty() {
         return date;
     }
 
-    public void setDate(PDate date) {
+    public void setDate(P2Date date) {
         this.date.set(date);
     }
 
     public void setDate(String date, String time) {
-        PDate d = new PDate();
-        d.setPDate(date, time, DateFactory.F_FORMAT_dd_MM_yyyy, DateFactory.F_FORMAT_dd_MM_yyyyHH_mm_ss);
+        P2Date d = new P2Date();
+        d.setPDate(date, time, P2DateConst.F_FORMAT_dd_MM_yyyy, P2DateConst.F_FORMAT_dd_MM_yyyyHH_mm_ss);
         this.date.setValue(d);
     }
 
@@ -343,15 +343,15 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         this.setDataId.set(setDataId);
     }
 
-    public PDate getGenDate() {
+    public P2Date getGenDate() {
         return genDate.get();
     }
 
-    public PDateProperty genDateProperty() {
+    public P2DateProperty genDateProperty() {
         return genDate;
     }
 
-    public void setGenDate(PDate genDate) {
+    public void setGenDate(P2Date genDate) {
         this.genDate.set(genDate);
     }
 

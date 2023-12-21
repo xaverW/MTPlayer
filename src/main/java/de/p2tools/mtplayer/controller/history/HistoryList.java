@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
@@ -134,7 +134,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
         PDuration.counterStart("addHistoryDataToHistory");
         final ArrayList<HistoryData> list = new ArrayList<>();
-        final String datum = DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
+        final String datum = P2DateConst.F_FORMAT_dd_MM_yyyy.format(new Date());
         HistoryData historyData = new HistoryData(datum, theme, title, url);
         addToThisList(historyData);
         list.add(historyData);
@@ -150,7 +150,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         final ArrayList<HistoryData> list = new ArrayList<>(filmList.size());
-        final String datum = DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
+        final String datum = P2DateConst.F_FORMAT_dd_MM_yyyy.format(new Date());
 
         PDuration.counterStart("addFilmDataToHistory");
         for (final FilmDataMTP film : filmList) {
@@ -186,7 +186,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         final ArrayList<HistoryData> list = new ArrayList<>(downloadList.size());
-        final String datum = DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
+        final String datum = P2DateConst.F_FORMAT_dd_MM_yyyy.format(new Date());
 
         PDuration.counterStart("addDownloadDataListToHistory");
         for (final DownloadData download : downloadList) {

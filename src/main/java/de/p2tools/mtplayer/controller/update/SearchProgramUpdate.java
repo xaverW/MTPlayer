@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.checkforactinfos.FoundAll;
 import de.p2tools.p2lib.checkforactinfos.FoundSearchData;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
-import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -66,7 +66,7 @@ public class SearchProgramUpdate {
 //            SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
 //        }
 
-        final PDate pd = new PDate(ProgramToolsFactory.getCompileDate());
+        final P2Date pd = new P2Date(ProgramToolsFactory.getCompileDate());
         final String buildDate = pd.get_yyyy_MM_dd();
 
         final FoundSearchData foundSearchData;

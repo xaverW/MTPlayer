@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.starter.RuntimeExecPlay;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.p2lib.tools.date.DateFactory;
-import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.date.P2DateConst;
+import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.ArrayList;
@@ -121,7 +121,7 @@ public class FilmPlayFactory {
         list.add(PLog.LILNE2);
         list.add("Film abspielen");
         list.add("URL: " + downloadData.getUrl());
-        list.add("Startzeit: " + DateFactory.F_FORMAT_HH__mm__ss.format(new PDate()));
+        list.add("Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(new P2Date()));
         list.add("Programmaufruf: " + downloadData.getProgramCall());
         list.add("Programmaufruf[]: " + downloadData.getProgramCallArray());
         list.add(PLog.LILNE3);

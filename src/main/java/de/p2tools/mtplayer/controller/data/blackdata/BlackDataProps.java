@@ -21,7 +21,7 @@ import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_lDate;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
-import de.p2tools.p2lib.tools.date.PLDateFactory;
+import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -56,7 +56,7 @@ public class BlackDataProps extends PDataSample<BlackDataProps> {
         list.add(new Config_stringProp("title", title));
         list.add(new Config_stringProp("themeTitle", themeTitle));
         list.add(new Config_boolProp("active", active));
-        list.add(new Config_lDate("genDate", PLDateFactory.toString(genDate)) {
+        list.add(new Config_lDate("genDate", P2LDateFactory.toString(genDate)) {
             @Override
             public void setUsedValue(LocalDate act) {
                 genDate = act;

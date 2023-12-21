@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.gui.dialog.downloadadd;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
-import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -90,8 +90,8 @@ public class DownloadAddDialogFactory {
         }
 
         try {
-            final String date = DateFactory.F_FORMAT_yyyyMMdd.format(new Date());
-            final boolean isDate = DownloadAddDialogFactory.getTime(ret, DateFactory.F_FORMAT_yyyyMMdd);
+            final String date = P2DateConst.F_FORMAT_yyyyMMdd.format(new Date());
+            final boolean isDate = DownloadAddDialogFactory.getTime(ret, P2DateConst.F_FORMAT_yyyyMMdd);
             final boolean isTheme = ret.endsWith(theme) && !theme.isEmpty();
             final boolean isStandard = actDownPath.equals(stdPath);
 

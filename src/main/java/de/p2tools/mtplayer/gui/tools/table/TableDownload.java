@@ -26,7 +26,7 @@ import de.p2tools.p2lib.guitools.ptable.P2CellIntMax;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
 import de.p2tools.p2lib.mtdownload.DownloadSizeData;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
-import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -126,7 +126,7 @@ public class TableDownload extends PTable<DownloadData> {
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("downloadSize"));
         sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
 
-        final TableColumn<DownloadData, PDate> datumColumn = new TableColumn<>("Datum");
+        final TableColumn<DownloadData, P2Date> datumColumn = new TableColumn<>("Datum");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("filmDate"));
         datumColumn.getStyleClass().add("alignCenter");
 

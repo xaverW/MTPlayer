@@ -23,7 +23,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.ptipofday.P2TipOfDay;
 import de.p2tools.p2lib.guitools.ptipofday.P2TipOfDayDialog;
 import de.p2tools.p2lib.guitools.ptipofday.P2TipOfDayFactory;
-import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.ArrayList;
@@ -46,11 +46,11 @@ public class ProgTipOfDayFactory {
         }
 
         if (ProgData.debug || showAlways ||
-                !ProgConfig.TIP_OF_DAY_DATE.get().equals(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date())) &&
+                !ProgConfig.TIP_OF_DAY_DATE.get().equals(P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date())) &&
                         P2TipOfDayFactory.containsToolTipNotShown(ProgConfig.TIP_OF_DAY_WAS_SHOWN.get(), listSize)) {
 
             //nur wenn "DEBUG" / "immer" / heute noch nicht und nicht angezeigte ToolTips enthalten sind
-            ProgConfig.TIP_OF_DAY_DATE.setValue(DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date()));
+            ProgConfig.TIP_OF_DAY_DATE.setValue(P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date()));
 
             final List<P2TipOfDay> p2TipOfDayArrayList = new ArrayList<>();
             addTips(p2TipOfDayArrayList);

@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboDataProps;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.file.PFileUtils;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -127,7 +127,7 @@ public class DownloadFactoryAbo {
 
             //dann haben wir einen Treffer :)
             //und dann auch in die Liste schreiben
-            aboData.setDate(new PDate());
+            aboData.setDate(new P2Date());
             final SetData setData = aboData.getSetData(ProgData.getInstance());
             DownloadData downloadData;
             if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {

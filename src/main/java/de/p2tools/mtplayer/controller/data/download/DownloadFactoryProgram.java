@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
-import de.p2tools.p2lib.tools.date.DateFactory;
+import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.file.PFileUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import de.p2tools.p2lib.tools.net.PUrlTools;
@@ -307,23 +307,23 @@ public class DownloadFactoryProgram {
     }
 
     private static String getNow_HHMMSS() {
-        return DateFactory.F_FORMAT_HHmmss.format(new Date());
+        return P2DateConst.F_FORMAT_HHmmss.format(new Date());
     }
 
     private static String getNow_HH_MM_SS() {
-        return DateFactory.F_FORMAT_HH__mm__ss.format(new Date());
+        return P2DateConst.F_FORMAT_HH__mm__ss.format(new Date());
     }
 
     private static String getToday_yyyyMMdd() {
-        return DateFactory.F_FORMAT_yyyyMMdd.format(new Date());
+        return P2DateConst.F_FORMAT_yyyyMMdd.format(new Date());
     }
 
     private static String getToday_yyyy_MM_dd() {
-        return DateFactory.F_FORMAT_yyyy_MM_dd.format(new Date());
+        return P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date());
     }
 
     private static String getToday__yyyy_o_MM_o_dd() {
-        return DateFactory.F_FORMAT_dd_MM_yyyy.format(new Date());
+        return P2DateConst.F_FORMAT_dd_MM_yyyy.format(new Date());
     }
 
     private static String getDMY(String s, String datum) {

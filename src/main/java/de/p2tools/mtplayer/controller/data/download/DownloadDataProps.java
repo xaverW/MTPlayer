@@ -22,9 +22,9 @@ import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.mtdownload.DownloadSize;
-import de.p2tools.p2lib.tools.date.DateFactory;
-import de.p2tools.p2lib.tools.date.PDate;
-import de.p2tools.p2lib.tools.date.PDateProperty;
+import de.p2tools.p2lib.tools.date.P2DateConst;
+import de.p2tools.p2lib.tools.date.P2Date;
+import de.p2tools.p2lib.tools.date.P2DateProperty;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -52,7 +52,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     private final LongProperty bandwidth = new SimpleLongProperty(); // bytes per second
 
     private final DownloadSize downloadSize = new DownloadSize();
-    private final PDateProperty filmDate = new PDateProperty(new PDate(0));
+    private final P2DateProperty filmDate = new P2DateProperty(new P2Date(0));
     private final StringProperty filmDateStr = new SimpleStringProperty("");
     private final StringProperty filmTime = new SimpleStringProperty("");
 
@@ -180,21 +180,21 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
     }
 
 
-    public PDate getFilmDate() {
+    public P2Date getFilmDate() {
         return filmDate.get();
     }
 
-    public ObjectProperty<PDate> filmDateProperty() {
+    public ObjectProperty<P2Date> filmDateProperty() {
         return filmDate;
     }
 
-    public void setFilmDate(PDate filmDate) {
+    public void setFilmDate(P2Date filmDate) {
         this.filmDate.set(filmDate);
     }
 
     public void setFilmDate(String date, String time) {
-        PDate d = new PDate();
-        d.setPDate(date, time, DateFactory.F_FORMAT_dd_MM_yyyy, DateFactory.F_FORMAT_dd_MM_yyyyHH_mm_ss);
+        P2Date d = new P2Date();
+        d.setPDate(date, time, P2DateConst.F_FORMAT_dd_MM_yyyy, P2DateConst.F_FORMAT_dd_MM_yyyyHH_mm_ss);
         this.filmDate.setValue(d);
     }
 

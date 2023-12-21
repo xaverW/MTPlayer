@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.mtdownload.MLInputStream;
-import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.date.P2Date;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class StartDownloadDto {
     private boolean deleteAfterStop = false;
 
     private Process process = null; // Prozess des Downloads
-    private PDate startTime = null; // Zeit, zu der der Download tatsächlich gestartet wurde
+    private P2Date startTime = null; // Zeit, zu der der Download tatsächlich gestartet wurde
     private MLInputStream inputStream = null;
     private File file = null;
     private final List<String> errMsgList = new ArrayList<>();
@@ -76,7 +76,7 @@ public class StartDownloadDto {
     }
 
     public void startDownload() {
-        setStartTime(new PDate());
+        setStartTime(new P2Date());
     }
 
     public boolean isStartViewing() {
@@ -87,11 +87,11 @@ public class StartDownloadDto {
         this.startViewing = startViewing;
     }
 
-    public PDate getStartTime() {
+    public P2Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(PDate startTime) {
+    public void setStartTime(P2Date startTime) {
         this.startTime = startTime;
     }
 

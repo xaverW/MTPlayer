@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.starter.StartDownloadDto;
-import de.p2tools.p2lib.tools.date.PLTimeFactory;
+import de.p2tools.p2lib.tools.date.P2LTimeFactory;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.net.URL;
@@ -137,7 +137,7 @@ public class DownloadFactoryStarts {
 
         try {
             LocalTime lNow = LocalTime.now();
-            LocalTime lDownload = PLTimeFactory.fromString(download.getStartTime());
+            LocalTime lDownload = P2LTimeFactory.fromString(download.getStartTime());
             if (lNow.compareTo(lDownload) >= 0) {
                 return true;
             } else {

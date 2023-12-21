@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
-import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -135,7 +135,7 @@ public class TableAbo extends PTable<AboData> {
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("aboSubDir"));
         destinationColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<AboData, PDate> datumColumn = new TableColumn<>("Letztes Abo");
+        final TableColumn<AboData, P2Date> datumColumn = new TableColumn<>("Letztes Abo");
         datumColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         datumColumn.getStyleClass().add("alignCenter");
 
@@ -143,7 +143,7 @@ public class TableAbo extends PTable<AboData> {
         psetColumn.setCellValueFactory(new PropertyValueFactory<>("setData"));//liefert den Namen: toString()
         psetColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<AboData, PDate> genDateColumn = new TableColumn<>("Angelegt");
+        final TableColumn<AboData, P2Date> genDateColumn = new TableColumn<>("Angelegt");
         genDateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
         genDateColumn.getStyleClass().add("alignCenter");
 

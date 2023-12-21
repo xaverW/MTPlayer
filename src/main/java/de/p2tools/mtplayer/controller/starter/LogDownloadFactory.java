@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
-import de.p2tools.p2lib.tools.date.DateFactory;
-import de.p2tools.p2lib.tools.date.PDate;
+import de.p2tools.p2lib.tools.date.P2DateConst;
+import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.awt.*;
@@ -47,7 +47,7 @@ public class LogDownloadFactory {
         }
 
         list.add("URL: " + download.getUrl());
-        list.add("Startzeit: " + DateFactory.F_FORMAT_HH__mm__ss.format(download.getDownloadStartDto().getStartTime()));
+        list.add("Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(download.getDownloadStartDto().getStartTime()));
         if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             list.add(DownloadConstants.TYPE_DOWNLOAD);
         } else {
@@ -108,8 +108,8 @@ public class LogDownloadFactory {
         }
 
         list.add("==== ==== ==== ==== ==== ==== ==== ==== ==== ");
-        list.add("Startzeit: " + DateFactory.F_FORMAT_HH__mm__ss.format(startDownloadDto.getStartTime()));
-        list.add("Endzeit: " + DateFactory.F_FORMAT_HH__mm__ss.format(new PDate().getTime()));
+        list.add("Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(startDownloadDto.getStartTime()));
+        list.add("Endzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(new P2Date().getTime()));
 
         if (startDownloadDto.getStartCounter() > 1) {
             list.add("Starts: " + startDownloadDto.getStartCounter());
