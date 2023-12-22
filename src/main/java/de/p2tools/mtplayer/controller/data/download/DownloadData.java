@@ -192,23 +192,30 @@ public final class DownloadData extends DownloadDataProps {
                     }
                     break;
             }
-        }
-        super.setResolution(resolution);
 
-        if (isHd()) {
-            setFilmUrlHd(film.getUrlForResolution(FilmData.RESOLUTION_HD));
+            super.setResolution(resolution);
+            if (isHd()) {
+                setFilmUrlHd(film.getUrlForResolution(FilmData.RESOLUTION_HD));
+            } else {
+                setFilmUrlHd("");
+            }
+
+            if (isSmall()) {
+                setFilmUrlSmall(film.getUrlForResolution(FilmData.RESOLUTION_SMALL));
+            } else {
+                setFilmUrlSmall("");
+            }
+
+            setFilmUrlNormal(film.getUrlForResolution(FilmData.RESOLUTION_NORMAL));
+            setFilmSizeNormal(film.getFilmSize().toString());
+
         } else {
-            setFilmUrlHd("");
+            // dann gibts keinen Film mehr dazu
+            resolution = FilmDataMTP.RESOLUTION_NORMAL;
+            super.setResolution(resolution);
+            setHd(false);
+            setSmall(false);
         }
-
-        if (isSmall()) {
-            setFilmUrlSmall(film.getUrlForResolution(FilmData.RESOLUTION_SMALL));
-        } else {
-            setFilmUrlSmall("");
-        }
-
-        setFilmUrlNormal(film.getUrlForResolution(FilmData.RESOLUTION_NORMAL));
-        setFilmSizeNormal(film.getFilmSize().toString());
 
         switch (resolution) {
             case FilmDataMTP.RESOLUTION_HD:
