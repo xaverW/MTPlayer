@@ -202,17 +202,17 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
         }
     }
 
-    public void startAllDownloads() {
+    public synchronized void startAllDownloads() {
         startDownloads(this, false);
     }
 
-    public void startDownloads(DownloadData download) {
+    public synchronized void startDownloads(DownloadData download) {
         DownloadFactoryStartDownload.startDownloads(this,
                 new PGetList<DownloadData>().getArrayList(download));
         setDownloadsChanged();
     }
 
-    public void startDownloads(Collection<DownloadData> list, boolean alsoFinished) {
+    public synchronized void startDownloads(Collection<DownloadData> list, boolean alsoFinished) {
         if (DownloadFactoryStartDownload.startDownloads(this, list, alsoFinished)) {
             setDownloadsChanged();
         }
