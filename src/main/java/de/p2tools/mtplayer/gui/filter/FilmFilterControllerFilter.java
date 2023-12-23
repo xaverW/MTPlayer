@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.guitools.P2LDatePicker;
 import de.p2tools.p2lib.guitools.pcheckcombobox.P2CheckComboBox;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
-import de.p2tools.p2lib.guitools.prange.P2TimePeriodBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
@@ -29,7 +28,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -45,11 +43,10 @@ public class FilmFilterControllerFilter extends VBox {
     private final Label lblTimeRangeValue = new Label();
 
     private final P2RangeBox slDur = new P2RangeBox("Filmlänge:", true, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
-    private final Label lblDur = new Label("Filmlänge:");
 
-    private final P2TimePeriodBox slFilmTime = new P2TimePeriodBox();
+    private final P2RangeBox slTime = new P2RangeBox("Sendezeit:", true, 0, (FilterCheck.FILTER_TIME_MAX_SEC));
+    //    private final P2TimePeriodBox slFilmTime = new P2TimePeriodBox();
     private final P2ToggleSwitch tglFilmTime = new P2ToggleSwitch("Zeitraum ausschließen");
-    private final Label lblFilmTime = new Label("Sendezeit:");
 
     private final Label lblShowDate = new Label("Sendedatum:");
     private final P2LDatePicker pDatePicker = new P2LDatePicker();
@@ -132,13 +129,11 @@ public class FilmFilterControllerFilter extends VBox {
         slDur.maxValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().maxDurProperty());
     }
 
-    private void initFilmTimeFilter() {
-        slFilmTime.minValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minTimeProperty());
-        slFilmTime.maxValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().maxTimeProperty());
-        slFilmTime.setVluePrefix("");
-
+    private void initFilmTimeAndDateFilter() {
+        slTime.set24h();
+        slTime.minValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minTimeProperty());
+        slTime.maxValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().maxTimeProperty());
         tglFilmTime.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minMaxTimeInvertProperty());
-        GridPane.setFillWidth(tglFilmTime, false);
 
         pDatePicker.valueProperty().addListener((u, o, n) -> {
             LocalDate newDate = pDatePicker.getDateLDate();
@@ -178,7 +173,7 @@ public class FilmFilterControllerFilter extends VBox {
     private void addSlider() {
         initDaysFilter();
         initDurFilter();
-        initFilmTimeFilter();
+        initFilmTimeAndDateFilter();
         VBox vBox;
 
         // Tage
@@ -194,15 +189,13 @@ public class FilmFilterControllerFilter extends VBox {
         getChildren().addAll(vBox);
 
         // MinMax Dauer
-//        vBox = new VBox(2);
-//        vBox.getChildren().addAll(lblDur, slDur);
         slDur.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
         slDur.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
         getChildren().addAll(slDur);
 
         // MinMax Uhrzeit
         vBox = new VBox(2);
-        vBox.getChildren().addAll(lblFilmTime, slFilmTime, tglFilmTime);
+        vBox.getChildren().addAll(slTime, tglFilmTime);
         vBox.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
         vBox.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
         getChildren().addAll(vBox);
