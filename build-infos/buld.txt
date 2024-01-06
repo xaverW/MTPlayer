@@ -1,0 +1,94 @@
+Das Bauen des Programms ist mit diesen Schritten (unter Linux!) möglich:
+
+
+Die Programme: git, gradle müssen installiert sein. In einem leeren Verzeichis muss zuerst der Quellcode geladen werden. Der liegt hier:
+
+https://github.com/xaverW/P2Lib.git
+https://github.com/xaverW/MTPlayer.github
+
+
+==================================
+* Quellcode laden
+==================================
+
+$ git clone https://github.com/xaverW/P2Lib.git
+$ git clone https://github.com/xaverW/MTPlayer.git
+
+
+==================================
+* Ordner umbennen
+==================================
+
+$ mv P2Lib p2lib
+$ mv MTPlayer mtplayer
+
+
+==================================
+* gradle anlegen
+==================================
+
+§ cd mtplayer
+$ gradle init
+
+
+==================================
+* beim gradle-init dann diese Parametern auswählen
+==================================
+
+Select type of project to generate:
+  1: basic
+  2: application
+  3: library
+  4: Gradle plugin
+Enter selection (default: basic) [1..4] --> default
+
+Select build script DSL:
+  1: Kotlin
+  2: Groovy
+Enter selection (default: Kotlin) [1..2] --> 2
+
+Project name (default: mtplayer): --> default
+
+Generate build using new APIs and behavior (some features may change in the next minor release)? (default: no) [yes, no] --> default
+
+
+==================================
+* gradle-scripte kopieren
+==================================
+
+$ cd ..
+$ cp ./mtplayer/build-infos/mtplayer__build.gradle ./mtplayer/build.gradle
+$ cp ./mtplayer/build-infos/mtplayer__settings.gradle ./mtplayer/settings.gradle
+$ cp ./mtplayer/build-infos/p2lib__build.gradle ./p2lib/build.gradle
+$ cp ./mtplayer/build-infos/p2lib__settings.gradle  ./p2lib/settings.gradle
+
+$ cp ./mtplayer/build-infos/gitignore ./mtplayer/.gitignore
+$ cp ./mtplayer/build-infos/gitignore ./p2lib/.gitignore
+
+
+
+==================================
+* ins mtplayer-Verzeichis wechseln und dann das Programm bauen
+==================================
+
+$ cd mtplayer
+$ ./gradlew build
+
+
+==================================
+* im build-Verzeichniss liegt dann das fertige jar-File, das dann gestartet werden kann
+==================================
+
+$ cd build/fatJar
+$ java -jar MTPlayer.jar
+
+
+
+
+==================================
+* von nun an, kann damit der Quelltext mit dem aktuellem in GitHub abgeglichen und aktualisiert werden (jeweils im Ordner: mtplayer oder p2lib)
+==================================
+
+$ git status
+$ git pull
+
