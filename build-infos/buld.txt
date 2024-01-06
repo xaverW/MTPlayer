@@ -1,7 +1,10 @@
-Das Bauen des Programms ist mit diesen Schritten (unter Linux!) möglich:
+Das Bauen des Programms ist mit diesen Schritten
+(unter Linux!) möglich:
 
 
-Die Programme: git, gradle müssen installiert sein. In einem leeren Verzeichis muss zuerst der Quellcode geladen werden. Der liegt hier:
+Die Programme: git, gradle müssen installiert sein.
+In einem leeren Verzeichis muss zuerst der
+Quellcode geladen werden. Der liegt hier:
 
 https://github.com/xaverW/P2Lib.git
 https://github.com/xaverW/MTPlayer.github
@@ -32,7 +35,8 @@ $ gradle init
 
 
 ==================================
-* beim gradle-init dann diese Parametern auswählen
+* beim gradle-init dann diese
+  Parametern auswählen
 ==================================
 
 Select type of project to generate:
@@ -49,7 +53,9 @@ Enter selection (default: Kotlin) [1..2] --> 2
 
 Project name (default: mtplayer): --> default
 
-Generate build using new APIs and behavior (some features may change in the next minor release)? (default: no) [yes, no] --> default
+Generate build using new APIs and behavior (some
+features may change in the next minor release)?
+(default: no) [yes, no] --> default
 
 
 ==================================
@@ -68,7 +74,8 @@ $ cp ./mtplayer/build-infos/gitignore ./p2lib/.gitignore
 
 
 ==================================
-* ins mtplayer-Verzeichis wechseln und dann das Programm bauen
+* ins mtplayer-Verzeichis wechseln
+  und dann das Programm bauen
 ==================================
 
 $ cd mtplayer
@@ -76,7 +83,9 @@ $ ./gradlew build
 
 
 ==================================
-* im build-Verzeichniss liegt dann das fertige jar-File, das dann gestartet werden kann
+* im build-Verzeichniss liegt dann
+  das fertige jar-File, das dann
+  gestartet werden kann
 ==================================
 
 $ cd build/fatJar
@@ -86,7 +95,10 @@ $ java -jar MTPlayer.jar
 
 
 ==================================
-* von nun an, kann damit der Quelltext mit dem aktuellem in GitHub abgeglichen und aktualisiert werden (jeweils im Ordner: mtplayer oder p2lib)
+* von nun an, kann damit der Quelltext
+  mit dem aktuellem in GitHub abgeglichen
+  und aktualisiert werden (jeweils
+  im Ordner: mtplayer oder p2lib)
 ==================================
 
 $ git status
