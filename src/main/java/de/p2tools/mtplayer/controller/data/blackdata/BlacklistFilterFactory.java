@@ -37,7 +37,7 @@ public class BlacklistFilterFactory {
     public static final int BLACKLILST_FILTER_INVERS = 2;
 
     private static long maxFilmDays = 0;
-    private static boolean doNotShowFutureFilms, doNotShowGeoBlockedFilms;
+    private static boolean doNotShowFutureFilms, doNotShowGeoBlockedFilms, doNotShowDoubleFilms;
     private static long minFilmDuration = 0;
 
     private BlacklistFilterFactory() {
@@ -158,6 +158,7 @@ public class BlacklistFilterFactory {
         minFilmDuration = ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION.getValue(); // Minuten
         doNotShowFutureFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE.getValue();
         doNotShowGeoBlockedFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO.getValue();
+        doNotShowDoubleFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_DOUBLE.getValue();
     }
 
     public static synchronized boolean checkFilmIsBlockedCompleteBlackData(FilmData filmData, boolean incCounter) {
@@ -168,6 +169,9 @@ public class BlacklistFilterFactory {
         //Counter werden vorher schon gelöscht
 
         if (doNotShowGeoBlockedFilms && filmData.isGeoBlocked()) {
+            return true;
+        }
+        if (doNotShowDoubleFilms && filmData.isDoubleUrl()) {
             return true;
         }
         if (doNotShowFutureFilms && filmData.isInFuture()) {

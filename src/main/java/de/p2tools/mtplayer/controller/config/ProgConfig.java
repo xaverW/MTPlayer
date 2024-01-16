@@ -183,6 +183,7 @@ public class ProgConfig extends PDataProgConfig {
     // Blacklist
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBoolProp("system-blacklist-show-no-future");
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_GEO = addBoolProp("system-blacklist-show-no-geo");
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_DOUBLE = addBoolProp("system-blacklist-show-no-double");
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_ABO = addBoolProp("system-blacklist-show-abo");
     public static IntegerProperty SYSTEM_BLACKLIST_MAX_FILM_DAYS = addIntProp("system-blacklist-max-film-days", 0);
     public static IntegerProperty SYSTEM_BLACKLIST_MIN_FILM_DURATION = addIntProp("system-blacklist-min-film-duration", 0); // Minuten

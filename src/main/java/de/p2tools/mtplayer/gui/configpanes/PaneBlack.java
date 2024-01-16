@@ -50,6 +50,7 @@ public class PaneBlack {
     private final P2ToggleSwitch tglAbo = new P2ToggleSwitch("Die Blacklist beim Suchen der Abos berücksichtigen");
     private final P2ToggleSwitch tglFuture = new P2ToggleSwitch("Filme mit Datum in der Zukunft nicht anzeigen");
     private final P2ToggleSwitch tglGeo = new P2ToggleSwitch("Filme, die per Geoblocking gesperrt sind, nicht anzeigen");
+    private final P2ToggleSwitch tglDouble = new P2ToggleSwitch("Doppelte Filme nicht anzeigen");
 
     private final BooleanProperty blackChanged;
     private Stage stage;
@@ -64,6 +65,7 @@ public class PaneBlack {
         tglAbo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO);
         tglFuture.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE);
         tglGeo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO);
+        tglDouble.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_DOUBLE);
         slDays.valueProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_MAX_FILM_DAYS);
         slSize.valueProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACKLIST_MIN_FILM_DURATION);
     }
@@ -85,23 +87,23 @@ public class PaneBlack {
 
         tglAbo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO);
         tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-
         final Button btnHelp = P2Button.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_ABO);
 
-
         tglFuture.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE);
         tglFuture.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-
         final Button btnHelpFuture = P2Button.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_FUTURE);
 
-
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO);
         tglGeo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-
         final Button btnHelpGeo = P2Button.helpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_GEO);
+
+        tglDouble.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_DOUBLE);
+        tglDouble.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
+        final Button btnHelpDouble = P2Button.helpButton(stage, "Blacklist",
+                HelpText.BLACKLIST_DOUBLE);
 
         initDays();
 
@@ -124,6 +126,8 @@ public class PaneBlack {
         gridPane.add(tglGeo, 0, ++row, 3, 1);
         gridPane.add(btnHelpGeo, 3, row);
 
+        gridPane.add(tglDouble, 0, ++row, 3, 1);
+        gridPane.add(btnHelpDouble, 3, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("Nur Filme der letzten Tage anzeigen:"), 0, ++row, 2, 1);

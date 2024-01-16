@@ -606,8 +606,12 @@ public class HelpText {
                     "\n";
 
     public static final String BLACKLIST_GEO =
-            "Einschalten um geogeblockte Filme von Anzeige und Abo-Download auszuschließen.\n" +
-                    "Es wird der unter \"Allgemein\" angegebene Standort verwendet." +
+            "Einschalten, um geogeblockte Filme von Anzeige und Abo-Download auszuschließen.\n" +
+                    "Es wird der in den Einstellungen unter \"Allgemein\" angegebene Standort verwendet." +
+                    "\n";
+
+    public static final String BLACKLIST_DOUBLE =
+            "Einschalten, um doppelte Filme von Anzeige und Abo-Download auszuschließen." +
                     "\n";
 
     public static final String BLACKLIST_SIZE =
