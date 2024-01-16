@@ -86,7 +86,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
         // läuft direkt nach dem Laden der Filmliste!
         // doppelte Filme (URL), Geo, InFuture markieren
         // viele Filme sind bei mehreren Sendern vorhanden
-        return FilmlistFactory.markFilms(this);
+        return FilmToolsFactory.markFilms(this);
     }
 
     @Override

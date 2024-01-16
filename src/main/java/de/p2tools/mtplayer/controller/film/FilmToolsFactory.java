@@ -21,14 +21,23 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.mtfilm.film.FilmData;
+import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
+import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
+import javafx.beans.property.ListProperty;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 
 public class FilmToolsFactory {
+    private static int countDouble = 0;
+
     private FilmToolsFactory() {
     }
 
@@ -115,5 +124,80 @@ public class FilmToolsFactory {
                             "Einstellungen -> Filmliste laden"));
         }
         return allSender;
+    }
+
+    public static int markFilms(ListProperty<? extends FilmData> filmList) {
+        // läuft direkt nach dem Laden der Filmliste!
+        // doppelte Filme (URL), Geo, InFuture markieren
+        // viele Filme sind bei mehreren Sendern vorhanden
+
+        String[] senderArr = ProgConfig.SYSTEM_MARK_DOUBLE_CHANNEL_LIST.getValueSafe().split(",");
+        final HashSet<String> urlHashSet = new HashSet<>(filmList.size(), 0.75F);
+        countDouble = 0;
+
+        PDuration.counterStart("markFilms");
+        if (senderArr.length == 0) {
+            // dann wie bisher
+            // todo exception parallel?? Unterschied ~10ms (bei Gesamt: 110ms)
+            try {
+                filmList.forEach((FilmData f) -> {
+                    f.setGeoBlocked();
+                    f.setInFuture();
+
+                    if (!urlHashSet.add(f.getUrl())) {
+                        ++countDouble;
+                        f.setDoubleUrl(true);
+                    }
+                });
+            } catch (Exception ex) {
+                PLog.errorLog(951024789, ex);
+            }
+
+        } else {
+            // dann nach Sender-Reihenfolge
+            filmList.forEach((FilmData f) -> {
+                f.setGeoBlocked();
+                f.setInFuture();
+            });
+            for (String sender : senderArr) {
+                addSender(filmList, urlHashSet, senderArr, sender);
+            }
+            // und dann  noch für den Rest
+            addSender(filmList, urlHashSet, senderArr, "");
+        }
+        urlHashSet.clear();
+
+        PDuration.counterStop("markFilms");
+        if (ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE.getValue()) {
+            // dann auch gleich noch entfernen
+            PDuration.counterStart("markFilms.removeMarkedFilms");
+            filmList.removeIf(FilmDataProps::isDoubleUrl);
+        }
+        PDuration.counterStop("markFilms.removeMarkedFilms");
+
+        return countDouble;
+    }
+
+    private static void addSender(ListProperty<? extends FilmData> filmList,
+                                  HashSet<String> urlHashSet,
+                                  String[] senderArr, String sender) {
+
+        filmList.forEach((FilmData f) -> {
+            if (sender.isEmpty()) {
+                // dann nur noch die Sender die nicht im senderArr sind
+                if (Arrays.stream(senderArr).noneMatch(s -> s.equals(f.arr[FilmDataXml.FILM_CHANNEL]))) {
+                    if (!urlHashSet.add(f.getUrl())) {
+                        ++countDouble;
+                        f.setDoubleUrl(true);
+                    }
+                }
+
+            } else if (f.arr[FilmDataXml.FILM_CHANNEL].equals(sender)) {
+                if (!urlHashSet.add(f.getUrl())) {
+                    ++countDouble;
+                    f.setDoubleUrl(true);
+                }
+            }
+        });
     }
 }

@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.configdialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.configdialog.paneblacklist.PaneBlackList;
+import de.p2tools.mtplayer.gui.configpanes.PaneDoubleFilms;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmLoad;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
@@ -33,6 +34,7 @@ import java.util.Collection;
 public class ControllerLoadFilmList extends PAccordionPane {
 
     private PaneFilmLoad paneFilmLoad;
+    private PaneDoubleFilms paneDoubleFilms;
     private PaneBlackList paneBlackList;
     private PaneFilmSender paneFilmSender;
     private final BooleanProperty diacriticChanged;
@@ -52,6 +54,7 @@ public class ControllerLoadFilmList extends PAccordionPane {
     @Override
     public void close() {
         paneFilmLoad.close();
+        paneDoubleFilms.close();
         paneBlackList.close();
         paneFilmSender.close();
         super.close();
@@ -62,6 +65,9 @@ public class ControllerLoadFilmList extends PAccordionPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         paneFilmLoad = new PaneFilmLoad(stage, progData, diacriticChanged);
         paneFilmLoad.make(result);
+
+        paneDoubleFilms = new PaneDoubleFilms(stage, progData);
+        paneDoubleFilms.make(result);
 
         paneBlackList = new PaneBlackList(stage, progData, false, new SimpleBooleanProperty());
         paneBlackList.make(result);
