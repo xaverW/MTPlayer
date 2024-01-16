@@ -123,7 +123,7 @@ public class DownloadAddAllFactory {
     private static void addCheckAllCss(AddDownloadDto addDownloadDto) {
         if (isAllSelected(addDownloadDto)) {
             final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
-            addDownloadDto.btnAll.setStyle("-fx-text-fill: #" + c);
+            addDownloadDto.btnAll.setStyle("-fx-text-fill: " + c);
 
         } else {
             if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {

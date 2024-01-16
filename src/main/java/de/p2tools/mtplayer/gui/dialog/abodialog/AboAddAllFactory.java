@@ -204,7 +204,7 @@ public class AboAddAllFactory {
     private static void addCheckAllCss(AddAboDto addAboDto) {
         if (isAllSelected(addAboDto)) {
             final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
-            addAboDto.btnAll.setStyle("-fx-text-fill: #" + c);
+            addAboDto.btnAll.setStyle("-fx-text-fill: " + c);
 
         } else {
             if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {

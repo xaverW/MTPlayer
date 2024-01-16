@@ -48,7 +48,7 @@ public class PaneFilmButton extends TilePane {
             btn.setMaxWidth(Double.MAX_VALUE);
             if (!setData.getColor().equals(SetData.RESET_COLOR)) {
                 final String c = P2Color.getCssColor(setData.getColor());
-                final String css = "-fx-border-color: #" + c + "; " /*+ " -fx-text-fill: #" + c + "; "*/;
+                final String css = "-fx-border-color: " + c + "; " /*+ " -fx-text-fill: #" + c + "; "*/;
                 btn.setStyle(css);
                 btn.getStyleClass().add("setButton");
             }
