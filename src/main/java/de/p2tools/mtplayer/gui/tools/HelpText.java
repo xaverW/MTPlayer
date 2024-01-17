@@ -685,14 +685,18 @@ public class HelpText {
 
     public static final String LOAD_FILMLIST_MARK_DOUBLE =
             "In der Filmliste sind gleiche Filme bei verschiedenen Sendern enthalten. Doppelte Filme " +
-                    "können markiert werden. Es gibt einen Filmfilter um sie nicht anzuzeigen. Es ist aber " +
-                    "auch möglich, sie bereits beim Laden der Filmliste nicht mit aufzunehmen." +
+                    "können markiert werden. Es gibt einen Filmfilter um sie nicht anzuzeigen. Sie können auch mit " +
+                    "der Blacklist ausgeschlossen werden. Auch ist es ist " +
+                    "möglich, sie bereits beim Laden der Filmliste nicht mit aufzunehmen." +
                     "\n\n" +
-                    "Hier kann dann vorgegeben werden, welche Sender bevorzugt werden sollen. D.h. Filme dieser " +
+                    "Hier kann vorgegeben werden, welche Sender bevorzugt werden sollen. D.h. Filme dieser " +
                     "Sender werden zuerst genommen. Taucht der gleiche Film bei einem " +
-                    "anderen Sendern nochmal auf, wird er dann dort" +
-                    "als \"dpppelt\" markiert." +
-                    "\n";
+                    "anderen Sendern nochmal auf, wird er dann dort " +
+                    "als \"Doppelt\" markiert." +
+                    "\n\n" +
+                    "Werden doppelte Filme beim Laden der Filmliste ausgeschlossen, ist " +
+                    "bei Abos evtl. zu beachten, dass der Film dann möglicherweise von einem " +
+                    "anderen Sender kommt.";
 
     public static final String LOAD_FILMLIST_IMMEDIATELY =
             "Wenn es eine neue Filmliste gibt, wird sie automatisch sofort geladen. " +

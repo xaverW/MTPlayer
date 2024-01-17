@@ -179,6 +179,7 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MIN_DURATION = addIntProp("system-load-filmlist-min-duration", 0); //es werden nur Filme mit mind. x Minuten geladen
     public static StringProperty SYSTEM_PATH_VLC = addStrProp("system-path-vlc", SetFactory.getTemplatePathVlc());
     public static StringProperty SYSTEM_PATH_FFMPEG = addStrProp("system-path-ffmpeg", SetFactory.getTemplatePathFFmpeg());
+    public static IntegerProperty SYSTEM_FILMLIST_COUNT_DOUBLE = addIntProp("system-filmlist-count-double", 0); // Anzahl der doppelten Filme
 
     // Blacklist
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBoolProp("system-blacklist-show-no-future");

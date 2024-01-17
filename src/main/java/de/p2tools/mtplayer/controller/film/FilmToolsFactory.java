@@ -174,7 +174,8 @@ public class FilmToolsFactory {
             filmList.removeIf(FilmDataProps::isDoubleUrl);
         }
         PDuration.counterStop("markFilms.removeMarkedFilms");
-
+        ProgConfig.SYSTEM_FILMLIST_COUNT_DOUBLE.setValue(countDouble);
+        
         return countDouble;
     }
 

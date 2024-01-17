@@ -28,6 +28,7 @@ import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -47,6 +48,8 @@ public class PaneDoubleFilms {
     private final VBox vBox = new VBox(P2LibConst.PADDING);
     private final ListView<String> lvSender = new ListView<>();
     private final HBox hBoxButton = new HBox();
+    private final Label lblDouble = new Label();
+
     private final ObservableList<String> selList = FXCollections.observableArrayList();
     private final ProgData progData;
     private final Stage stage;
@@ -77,7 +80,6 @@ public class PaneDoubleFilms {
         btnLoad.setOnAction(event -> {
             LoadFilmFactory.getInstance().loadNewListFromWeb(true);
         });
-
 
         Separator sp2 = new Separator();
         sp2.getStyleClass().add("pseperator2");
@@ -169,9 +171,19 @@ public class PaneDoubleFilms {
             addSelList();
         });
 
+        ProgConfig.SYSTEM_FILMLIST_COUNT_DOUBLE.addListener((u, o, n) -> {
+            Platform.runLater(this::setLblDouble);
+        });
+        setLblDouble();
+
         hBoxButton.setSpacing(P2LibConst.SPACING_HBOX);
         hBoxButton.getChildren().addAll(cboSender, btnAdd, btnDel,
-                P2GuiTools.getHDistance(20), btnUp, btnDown);
+                P2GuiTools.getHDistance(20), btnUp, btnDown, P2GuiTools.getHBoxGrower(),
+                new Label("Anzahl Doppelte: "), lblDouble);
+    }
+
+    private void setLblDouble() {
+        lblDouble.setText(ProgConfig.SYSTEM_FILMLIST_COUNT_DOUBLE.getValue() + "");
     }
 
     private void addSelList() {
@@ -179,14 +191,13 @@ public class PaneDoubleFilms {
         for (String ss : selList) {
             s.append(ss).append(",");
         }
-
         ProgConfig.SYSTEM_MARK_DOUBLE_CHANNEL_LIST.setValue(s.toString());
     }
 
     private int getSelectedLine() {
         final int sel = lvSender.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
-            PAlert.showInfoNoSelection();
+            PAlert.showInfoNoSelection(stage);
         }
         return sel;
     }
