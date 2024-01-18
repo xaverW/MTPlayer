@@ -171,8 +171,8 @@ public class ProgConfig extends PDataProgConfig {
     // Einstellungen Filmliste
     public static StringProperty SYSTEM_FILMLIST_DATE = addStrProp("system-filmlist-date", "");
     public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
-    public static StringProperty SYSTEM_MARK_DOUBLE_CHANNEL_LIST = addStrProp("system-mark-double-channel-list", "");
-    public static BooleanProperty SYSTEM_FILMLIST_REMOVE_DOUBLE = addBoolProp("system-filmlist-remove-double", Boolean.FALSE);
+    public static StringProperty SYSTEM_MARK_DOUBLE_CHANNEL_LIST = addStrProp("system-mark-double-channel-list", "ARD,ZDF");
+    public static BooleanProperty SYSTEM_FILMLIST_REMOVE_DOUBLE = addBoolProp("system-filmlist-remove-double", Boolean.TRUE);
     public static BooleanProperty SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY = addBoolProp("system-load-new-filmlist-immediately", Boolean.FALSE);
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addIntProp("system-load-filmlist-max-days", 0); //es werden nur die x letzten Tage geladen
@@ -183,8 +183,8 @@ public class ProgConfig extends PDataProgConfig {
 
     // Blacklist
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBoolProp("system-blacklist-show-no-future");
-    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_GEO = addBoolProp("system-blacklist-show-no-geo");
-    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_DOUBLE = addBoolProp("system-blacklist-show-no-double");
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_GEO = addBoolProp("system-blacklist-show-no-geo", Boolean.TRUE);
+    public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_DOUBLE = addBoolProp("system-blacklist-show-no-double", Boolean.TRUE);
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_ABO = addBoolProp("system-blacklist-show-abo");
     public static IntegerProperty SYSTEM_BLACKLIST_MAX_FILM_DAYS = addIntProp("system-blacklist-max-film-days", 0);
     public static IntegerProperty SYSTEM_BLACKLIST_MIN_FILM_DURATION = addIntProp("system-blacklist-min-film-duration", 0); // Minuten

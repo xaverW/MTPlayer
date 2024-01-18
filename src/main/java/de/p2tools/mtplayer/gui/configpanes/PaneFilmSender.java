@@ -25,6 +25,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -70,22 +71,35 @@ public class PaneFilmSender {
     }
 
     private void makeOnly(VBox vBox) {
+        final Button btnHelpDouble = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
+                HelpText.LOAD_FILMLIST_ONLY_MARK_DOUBLE);
         final Button btnHelpDays = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_ONLY_FILMS);
+
+        final P2ToggleSwitch tglRemove = new P2ToggleSwitch("Doppelte Filme beim Laden der Filmliste ausschließen");
+        tglRemove.setSelected(ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE.getValue());
+        tglRemove.selectedProperty().addListener((u, o, n) -> ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE.setValue(tglRemove.isSelected()));
+
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(0));
 
         int row = 0;
+        if (startDialog) {
+            gridPane.add(tglRemove, 0, row, 3, 1);
+            gridPane.add(btnHelpDouble, 3, row);
+            gridPane.add(new Label(), 0, ++row);
+            ++row;
+        }
+
         gridPane.add(new Label("Nur Filme der letzten Tage laden:"), 0, row, 2, 1);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDays, 1, row);
         gridPane.add(lblDays, 2, row);
         gridPane.add(btnHelpDays, 3, row, 1, 2);
 
-        ++row;
-        ++row;
+        gridPane.add(new Label(), 0, ++row);
         gridPane.add(new Label("Nur Filme mit Mindestlänge laden:"), 0, ++row, 2, 1);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDuration, 1, row);
