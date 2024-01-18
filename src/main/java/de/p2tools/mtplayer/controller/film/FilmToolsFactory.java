@@ -136,7 +136,7 @@ public class FilmToolsFactory {
         countDouble = 0;
 
         PDuration.counterStart("markFilms");
-        if (senderArr.length == 0) {
+        if (senderArr.length == 0 || senderArr.length == 1 && senderArr[0].isEmpty()) {
             // dann wie bisher
             // todo exception parallel?? Unterschied ~10ms (bei Gesamt: 110ms)
             try {
@@ -175,7 +175,7 @@ public class FilmToolsFactory {
         }
         PDuration.counterStop("markFilms.removeMarkedFilms");
         ProgConfig.SYSTEM_FILMLIST_COUNT_DOUBLE.setValue(countDouble);
-        
+
         return countDouble;
     }
 
@@ -194,6 +194,7 @@ public class FilmToolsFactory {
                 }
 
             } else if (f.arr[FilmDataXml.FILM_CHANNEL].equals(sender)) {
+                // jetzt erst mal die Sender aus dem Array
                 if (!urlHashSet.add(f.getUrl())) {
                     ++countDouble;
                     f.setDoubleUrl(true);

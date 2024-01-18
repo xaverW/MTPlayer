@@ -187,11 +187,14 @@ public class PaneDoubleFilms {
     }
 
     private void addSelList() {
-        StringBuilder s = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         for (String ss : selList) {
-            s.append(ss).append(",");
+            if (!stringBuilder.isEmpty()) {
+                stringBuilder.append(",");
+            }
+            stringBuilder.append(ss);
         }
-        ProgConfig.SYSTEM_MARK_DOUBLE_CHANNEL_LIST.setValue(s.toString());
+        ProgConfig.SYSTEM_MARK_DOUBLE_CHANNEL_LIST.setValue(stringBuilder.toString());
     }
 
     private int getSelectedLine() {
