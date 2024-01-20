@@ -111,13 +111,13 @@ public class PaneReplace {
 
     private void initTable(VBox vBox) {
         final TableColumn<ReplaceData, String> fromColumn = new TableColumn<>("Von");
-        fromColumn.setEditable(true);
+//        fromColumn.setEditable(true);
         fromColumn.setCellValueFactory(new PropertyValueFactory<>("from"));
 
         final TableColumn<ReplaceData, String> toColumn = new TableColumn<>("Nach");
         toColumn.setCellValueFactory(new PropertyValueFactory<>("to"));
 
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
