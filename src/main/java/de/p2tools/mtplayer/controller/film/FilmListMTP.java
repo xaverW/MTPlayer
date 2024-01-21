@@ -62,24 +62,24 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
         getFilteredList().setPredicate(predicate);
     }
 
-    @Override
-    public String getFilmlistId() {
-        return metaData[FilmlistXml.FILMLIST_ID_NR];
-    }
+//    @Override
+//    public String getFilmlistId() {
+//        return metaData[FilmlistXml.FILMLIST_ID_NR];
+//    }
 
-    @Override
-    public synchronized boolean importFilmOnlyWithNr(FilmDataMTP film) {
-        // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
-        // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
-        film.no = nr++;
-        return add(film);
-    }
+//    @Override
+//    public synchronized boolean importFilmOnlyWithNr(FilmDataMTP film) {
+//        // hier nur beim Laden aus einer fertigen Filmliste mit der GUI
+//        // die Filme sind schon sortiert, nur die Nummer muss noch ergänzt werden
+//        film.no = nr++;
+//        return add(film);
+//    }
 
-    @Override
-    public synchronized void markGeoBlocked() {
-        // geblockte Filme markieren
-        this.parallelStream().forEach((FilmData f) -> f.setGeoBlocked());
-    }
+//    @Override
+//    public synchronized void markGeoBlocked() {
+//        // geblockte Filme markieren
+//        this.parallelStream().forEach((FilmData f) -> f.setGeoBlocked());
+//    }
 
     @Override
     public synchronized int markFilms() {

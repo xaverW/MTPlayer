@@ -20,7 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.data.download.ReplaceData;
+import de.p2tools.mtplayer.controller.data.utdata.UtData;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -32,8 +34,10 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
@@ -45,84 +49,92 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class PaneReplace {
+public class PaneFilmUt {
 
-    private final TextField txtFrom = new TextField();
-    private final TextField txtTo = new TextField();
+    private final P2ToggleSwitch tglRemove = new P2ToggleSwitch("Filme mit Untertitel im \"Film\" als UT markieren");
+
+    private final ComboBox<String> cboSender = new ComboBox<>();
+    private final TextField txtTitle = new TextField();
     private final GridPane gridPane = new GridPane();
 
-    private TableView<ReplaceData> tableView = new TableView<>();
-    private ObjectProperty<ReplaceData> replaceDateProp = new SimpleObjectProperty<>(null);
-    private final P2ToggleSwitch tglAscii = new P2ToggleSwitch("Nur ASCII-Zeichen erlauben");
-    private final P2ToggleSwitch tglReplace = new P2ToggleSwitch("Ersetzungstabelle");
-
+    private final TableView<UtData> tableView = new TableView<>();
+    private final ObjectProperty<UtData> utDateProp = new SimpleObjectProperty<>(null);
+    private final ChangeListener<String> changeListener;
     private final Stage stage;
 
-    public PaneReplace(Stage stage) {
+    public PaneFilmUt(Stage stage) {
         this.stage = stage;
+        changeListener = (observableValue, s, t1) -> {
+            if (utDateProp.getValue() != null) {
+                utDateProp.getValue().setChannel(cboSender.getValue());
+            }
+        };
     }
 
     public void close() {
-        ProgData.getInstance().replaceList.getUndoList().clear();
+        cboSender.getSelectionModel().selectedItemProperty().removeListener(changeListener);
+        ProgData.getInstance().utDataList.getUndoList().clear();
         unbindText();
-        tglAscii.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
-        tglReplace.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
+        tglRemove.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILMLIST_MARK_UT);
+        cleanList();
     }
 
-    public void makeReplaceListTable(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         final VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(P2LibConst.PADDING));
 
-        makeAscii(vBox);
+        initTop(vBox);
         initTable(vBox);
-        addConfigs(vBox);
+        initButton(vBox);
+        initConfigs(vBox);
+        addLoadFilmList(vBox);
 
-        TitledPane tpReplace = new TitledPane("Ersetzungstabelle", vBox);
+        TitledPane tpReplace = new TitledPane("Filme mit Untertitel markieren", vBox);
         result.add(tpReplace);
         tpReplace.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(tpReplace, Priority.ALWAYS);
     }
 
-    private void makeAscii(VBox vBox) {
+    private void cleanList() {
+        ProgData.getInstance().utDataList.removeIf(utData -> utData.getTitle().isEmpty());
+    }
+
+    private void initTop(VBox vBox) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        vBox.getChildren().add(gridPane);
 
-        tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
-        final Button btnHelpAscii = P2Button.helpButton(stage, "Nur ASCII-Zeichen",
-                HelpText.DOWNLOAD_ONLY_ASCII);
+        tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_MARK_UT);
+        final Button btnHelpMark = P2Button.helpButton(stage, "Filme mit Untertitel markieren",
+                HelpText.LOAD_FILMLIST_MARK_UT);
 
-        tglReplace.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
-        final Button btnHelpReplace = P2Button.helpButton(stage, "Ersetzungstabelle",
-                HelpText.DOWNLOAD_REPLACELIST);
-
-        gridPane.add(tglAscii, 0, 0);
-        gridPane.add(btnHelpAscii, 1, 0);
-
-        gridPane.add(tglReplace, 0, 1);
-        gridPane.add(btnHelpReplace, 1, 1);
+        int row = 0;
+        gridPane.add(tglRemove, 0, row, 2, 1);
+        gridPane.add(btnHelpMark, 2, row);
 
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcPrefSize());
+
+        vBox.setPadding(new Insets(P2LibConst.PADDING));
+        vBox.getChildren().addAll(gridPane);
     }
 
-
     private void initTable(VBox vBox) {
-        final TableColumn<ReplaceData, String> fromColumn = new TableColumn<>("Von");
-//        fromColumn.setEditable(true);
-        fromColumn.setCellValueFactory(new PropertyValueFactory<>("from"));
+        ScrollPane scrollPane = new ScrollPane();
+        final TableColumn<UtData, String> channelColumn = new TableColumn<>("Sender");
+        channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
 
-        final TableColumn<ReplaceData, String> toColumn = new TableColumn<>("Nach");
-        toColumn.setCellValueFactory(new PropertyValueFactory<>("to"));
+        final TableColumn<UtData, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        tableView.getColumns().addAll(fromColumn, toColumn);
-        tableView.setItems(ProgData.getInstance().replaceList);
+        tableView.getColumns().addAll(channelColumn, titleColumn);
+        tableView.setItems(ProgData.getInstance().utDataList);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActReplaceData));
         tableView.setOnMousePressed(m -> {
@@ -132,25 +144,26 @@ public class PaneReplace {
             }
         });
 
-        ScrollPane scrollPane = new ScrollPane();
+        tableView.disableProperty().bind(ProgConfig.SYSTEM_FILMLIST_MARK_UT.not());
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_REPLACETABLE.not());
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
         vBox.getChildren().addAll(scrollPane);
+    }
 
+    private void initButton(VBox vBox) {
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Eintrag löschen"));
         btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
-            final ObservableList<ReplaceData> sels = tableView.getSelectionModel().getSelectedItems();
+            final ObservableList<UtData> sels = tableView.getSelectionModel().getSelectedItems();
             if (sels == null || sels.isEmpty()) {
                 PAlert.showInfoNoSelection();
             } else {
-                ProgData.getInstance().replaceList.addDataToUndoList(sels);
-                ProgData.getInstance().replaceList.removeAll(sels);
+                ProgData.getInstance().utDataList.addDataToUndoList(sels);
+                ProgData.getInstance().utDataList.removeAll(sels);
                 tableView.getSelectionModel().clearSelection();
             }
         });
@@ -159,12 +172,12 @@ public class PaneReplace {
         btnNew.setTooltip(new Tooltip("Einen neuen Eintrag erstellen"));
         btnNew.setGraphic(ProgIcons.ICON_BUTTON_ADD.getImageView());
         btnNew.setOnAction(event -> {
-            ReplaceData replaceData = new ReplaceData();
-            ProgData.getInstance().replaceList.add(replaceData);
+            UtData utData = new UtData();
+            ProgData.getInstance().utDataList.add(utData);
 
             tableView.getSelectionModel().clearSelection();
-            tableView.getSelectionModel().select(replaceData);
-            tableView.scrollTo(replaceData);
+            tableView.getSelectionModel().select(utData);
+            tableView.scrollTo(utData);
         });
 
         Button btnUp = new Button("");
@@ -175,7 +188,7 @@ public class PaneReplace {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = ProgData.getInstance().replaceList.up(sel, true);
+                int res = ProgData.getInstance().utDataList.up(sel, true);
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(res);
                 tableView.scrollTo(res);
@@ -190,106 +203,97 @@ public class PaneReplace {
             if (sel < 0) {
                 PAlert.showInfoNoSelection();
             } else {
-                int res = ProgData.getInstance().replaceList.up(sel, false);
+                int res = ProgData.getInstance().utDataList.up(sel, false);
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(res);
                 tableView.scrollTo(res);
             }
         });
 
-        Button btnTop = new Button();
-        btnTop.setTooltip(new Tooltip("Eintrag an den Anfang verschieben"));
-        btnTop.setGraphic(ProgIcons.ICON_BUTTON_MOVE_TOP.getImageView());
-        btnTop.setOnAction(event -> {
-            final int sel = tableView.getSelectionModel().getSelectedIndex();
-            if (sel < 0) {
-                PAlert.showInfoNoSelection();
-            } else {
-                int res = ProgData.getInstance().replaceList.top(sel, true);
-                tableView.getSelectionModel().clearSelection();
-                tableView.getSelectionModel().select(res);
-                tableView.scrollTo(res);
-            }
-        });
-
-        Button btnBottom = new Button();
-        btnBottom.setTooltip(new Tooltip("Eintrag an das Ende verschieben"));
-        btnBottom.setGraphic(ProgIcons.ICON_BUTTON_MOVE_BOTTOM.getImageView());
-        btnBottom.setOnAction(event -> {
-            final int sel = tableView.getSelectionModel().getSelectedIndex();
-            if (sel < 0) {
-                PAlert.showInfoNoSelection();
-            } else {
-                int res = ProgData.getInstance().replaceList.top(sel, false);
-                tableView.getSelectionModel().clearSelection();
-                tableView.getSelectionModel().select(res);
-                tableView.scrollTo(res);
-            }
-        });
+        Button btnClean = new Button("Tabelle _aufräumen");
+        btnClean.setTooltip(new Tooltip("Einträge mit leerem Titel werden gelöscht"));
+        btnClean.setOnAction(a -> cleanList());
 
         Button btnReset = new Button("_Tabelle zurücksetzen");
         btnReset.setTooltip(new Tooltip("Alle Einträge löschen und Standardeinträge wieder herstellen"));
         btnReset.setOnAction(event -> {
-            ProgData.getInstance().replaceList.init();
+            ProgData.getInstance().utDataList.init();
         });
 
         HBox hBox = new HBox();
         hBox.setSpacing(P2LibConst.DIST_BUTTON);
-        hBox.disableProperty().bind(ProgConfig.SYSTEM_USE_REPLACETABLE.not());
+        hBox.disableProperty().bind(ProgConfig.SYSTEM_FILMLIST_MARK_UT.not());
         hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
-                btnTop, btnUp, btnDown, btnBottom, P2GuiTools.getHBoxGrower(), btnReset);
+                btnUp, btnDown, P2GuiTools.getHBoxGrower(), btnClean, btnReset);
         vBox.getChildren().addAll(hBox);
     }
 
     private ContextMenu getContextMenu() {
         final ContextMenu contextMenu = new ContextMenu();
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
-        miUndo.setOnAction(a -> ProgData.getInstance().replaceList.undoData());
-        miUndo.setDisable(ProgData.getInstance().replaceList.getUndoList().isEmpty());
+        miUndo.setOnAction(a -> ProgData.getInstance().utDataList.undoData());
+        miUndo.setDisable(ProgData.getInstance().utDataList.getUndoList().isEmpty());
         contextMenu.getItems().addAll(miUndo);
         return contextMenu;
     }
 
-    private void addConfigs(VBox vBox) {
+    private void initConfigs(VBox vBox) {
+        cboSender.setItems(ThemeListFactory.allChannelList);
+        cboSender.getSelectionModel().select(0);
+        cboSender.setEditable(true);
+        cboSender.getSelectionModel().selectedItemProperty().addListener(changeListener);
+
         gridPane.getStyleClass().add("extra-pane");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
-        gridPane.add(new Label("Von: "), 0, 0);
-        gridPane.add(txtFrom, 1, 0);
-        gridPane.add(new Label("Nach: "), 0, 1);
-        gridPane.add(txtTo, 1, 1);
+        gridPane.add(new Label("Sender: "), 0, 0);
+        gridPane.add(cboSender, 1, 0);
+        gridPane.add(new Label("Titel: "), 0, 1);
+        gridPane.add(txtTitle, 1, 1);
 
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().add(gridPane);
         gridPane.setDisable(true);
-        gridPane.disableProperty().bind(
-                Bindings.createBooleanBinding(() -> replaceDateProp.getValue() == null, replaceDateProp)
-                        .or(ProgConfig.SYSTEM_USE_REPLACETABLE.not()));
+        gridPane.disableProperty().bind(Bindings.createBooleanBinding(() -> utDateProp.getValue() == null, utDateProp)
+                .or(ProgConfig.SYSTEM_FILMLIST_MARK_UT.not()));
+    }
+
+    private void addLoadFilmList(VBox vBox) {
+        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
+        btnLoad.setOnAction(event -> {
+            LoadFilmFactory.getInstance().loadNewListFromWeb(true);
+        });
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().add(btnLoad);
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(20), hBox);
     }
 
     private void setActReplaceData() {
-        ReplaceData replaceDataAct = tableView.getSelectionModel().getSelectedItem();
-        if (replaceDataAct == replaceDateProp.getValue()) {
+        UtData utData = tableView.getSelectionModel().getSelectedItem();
+        if (utData == utDateProp.getValue()) {
             return;
         }
 
         unbindText();
-        replaceDateProp.setValue(replaceDataAct);
+        utDateProp.setValue(utData);
 
-        if (replaceDateProp.getValue() != null) {
-            txtFrom.textProperty().bindBidirectional(replaceDateProp.getValue().fromProperty());
-            txtTo.textProperty().bindBidirectional(replaceDateProp.getValue().toProperty());
+        if (utDateProp.getValue() != null) {
+            cboSender.getEditor().textProperty().bindBidirectional(utDateProp.getValue().channelProperty());
+            txtTitle.textProperty().bindBidirectional(utDateProp.getValue().titleProperty());
         }
     }
 
     private void unbindText() {
-        if (replaceDateProp.getValue() != null) {
-            txtFrom.textProperty().unbindBidirectional(replaceDateProp.getValue().fromProperty());
-            txtTo.textProperty().unbindBidirectional(replaceDateProp.getValue().toProperty());
+        if (utDateProp.getValue() != null) {
+            txtTitle.textProperty().unbindBidirectional(utDateProp.getValue().titleProperty());
+            cboSender.getEditor().textProperty().unbindBidirectional(utDateProp.getValue().channelProperty());
         }
-        txtFrom.setText("");
-        txtTo.setText("");
+
+        txtTitle.setText("");
     }
 }

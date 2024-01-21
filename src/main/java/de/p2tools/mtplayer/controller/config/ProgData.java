@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.download.ReplaceList;
 import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
+import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
@@ -112,6 +113,7 @@ public class ProgData {
     public CleaningDataList cleaningDataListPropose;
     public SetDataList setDataList;
     public ReplaceList replaceList;
+    public UtDataList utDataList;
 
     public MediaDataList mediaDataList;
     public MediaCollectionDataList mediaCollectionDataList = null;
@@ -123,6 +125,7 @@ public class ProgData {
     private ProgData() {
         pShortcut = new PShortcut();
         replaceList = new ReplaceList();
+        utDataList = new UtDataList();
 
         filmFilterWorker = new FilmFilterWorker();
         filmList = new FilmListMTP();

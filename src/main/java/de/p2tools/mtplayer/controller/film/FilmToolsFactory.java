@@ -140,29 +140,30 @@ public class FilmToolsFactory {
             // dann wie bisher
             // todo exception parallel?? Unterschied ~10ms (bei Gesamt: 110ms)
             try {
+                PDuration.counterStart("mark(FilmData filmData)");
                 filmList.forEach((FilmData f) -> {
-                    f.setGeoBlocked();
-                    f.setInFuture();
-
+                    mark(f);
                     if (!urlHashSet.add(f.getUrl())) {
                         ++countDouble;
                         f.setDoubleUrl(true);
                     }
                 });
+                PDuration.counterStop("mark(FilmData filmData)");
             } catch (Exception ex) {
                 PLog.errorLog(951024789, ex);
             }
 
         } else {
             // dann nach Sender-Reihenfolge
+            PDuration.counterStart("mark(FilmData filmData)");
             filmList.forEach((FilmData f) -> {
-                f.setGeoBlocked();
-                f.setInFuture();
+                mark(f);
             });
+            PDuration.counterStop("mark(FilmData filmData)");
             for (String sender : senderArr) {
                 addSender(filmList, urlHashSet, senderArr, sender);
             }
-            // und dann  noch für den Rest
+            // und dann noch für den Rest
             addSender(filmList, urlHashSet, senderArr, "");
         }
         urlHashSet.clear();
@@ -177,6 +178,22 @@ public class FilmToolsFactory {
         ProgConfig.SYSTEM_FILMLIST_COUNT_DOUBLE.setValue(countDouble);
 
         return countDouble;
+    }
+
+    private static void mark(FilmData filmData) {
+        filmData.setGeoBlocked();
+        filmData.setInFuture();
+        filmData.setShown(ProgData.getInstance().historyList.checkIfUrlAlreadyIn(filmData.getUrlHistory()));
+
+        if (ProgConfig.SYSTEM_FILMLIST_MARK_UT.getValue()) {
+            // und dann auch nach erweiterten UT suchen
+            ProgData.getInstance().utDataList.forEach(utData -> {
+                if ((utData.getChannel().isEmpty() || filmData.getChannel().contains(utData.getChannel()))
+                        && filmData.getTitle().contains(utData.getTitle())) {
+                    filmData.setUt(true);
+                }
+            });
+        }
     }
 
     private static void addSender(ListProperty<? extends FilmData> filmList,

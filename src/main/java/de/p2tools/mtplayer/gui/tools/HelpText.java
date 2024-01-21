@@ -708,6 +708,19 @@ public class HelpText {
                     "bei Abos evtl. zu beachten, dass der Film dann möglicherweise von einem " +
                     "anderen Sender kommt.";
 
+    public static final String LOAD_FILMLIST_MARK_UT =
+            "In der Filmliste sind Filme die keine Untertitel-Datei haben. Bei denen ist der Untertitel " +
+                    "im Film selbst eingetragen. Diese Filme können auch als UT " +
+                    "markiert werden. Hier kann vorgegeben werden, welche Filmtitel " +
+                    "als UT markiert werden sollen. Mit dem Filmfilter \"UT\" werden dann auch diese " +
+                    "Filme gefunden." +
+                    "\n\n" +
+                    "Das Feld \"Sender\" darf leer sein, im \"Titel\" muss immer etwas " +
+                    "eingetragen sein. Der in den Feldern eingetragene Text muss dann im jeweiligen " +
+                    "Film (Sender, Titel) enthalten sein. \"ARTE\" sucht in allen ARTE-Sendern, " +
+                    "\"ARTE.DE\" nur in ARTE.DE. Groß- und Kleinschreibung wird mit ausgewertet, muss also " +
+                    "passen!";
+
     public static final String LOAD_FILMLIST_IMMEDIATELY =
             "Wenn es eine neue Filmliste gibt, wird sie automatisch sofort geladen. " +
                     "Die Filmliste wird also sofort aktualisiert wenn es ein Update gibt." +

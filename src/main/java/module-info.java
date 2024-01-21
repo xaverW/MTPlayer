@@ -5,6 +5,7 @@ module mtplayer {
     opens de.p2tools.mtplayer.controller.data.setdata;
     opens de.p2tools.mtplayer.controller.data.download;
     opens de.p2tools.mtplayer.controller.data.cleaningdata;
+    opens de.p2tools.mtplayer.controller.data.utdata;
     opens de.p2tools.mtplayer.controller.history;
     opens de.p2tools.mtplayer.controller.mediadb;
     opens de.p2tools.mtplayer.controller.data.abo;

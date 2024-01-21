@@ -41,7 +41,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class PaneDoubleFilms {
+public class PaneFilmDouble {
 
     private final P2ToggleSwitch tglRemove = new P2ToggleSwitch("Doppelte Filme beim Laden der Filmliste ausschließen");
 
@@ -54,7 +54,7 @@ public class PaneDoubleFilms {
     private final ProgData progData;
     private final Stage stage;
 
-    public PaneDoubleFilms(Stage stage, ProgData progData) {
+    public PaneFilmDouble(Stage stage, ProgData progData) {
         this.stage = stage;
         this.progData = progData;
     }
@@ -64,12 +64,7 @@ public class PaneDoubleFilms {
     }
 
     public TitledPane make(Collection<TitledPane> result) {
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-
         tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE);
-
         final Button btnHelpMark = P2Button.helpButton(stage, "Doppelte Filme markieren",
                 HelpText.LOAD_FILMLIST_MARK_DOUBLE);
 
@@ -85,15 +80,19 @@ public class PaneDoubleFilms {
         sp2.getStyleClass().add("pseperator2");
         sp2.setMinHeight(0);
 
+        final GridPane gridPane = new GridPane();
+        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+
         int row = 0;
-        gridPane.add(tglRemove, 0, row, 2, 1);
-        gridPane.add(btnHelpMark, 2, row);
+        gridPane.add(tglRemove, 0, row);
+        gridPane.add(btnHelpMark, 1, row);
 
-        gridPane.add(lvSender, 0, ++row);
-        gridPane.add(hBoxButton, 0, ++row);
+        gridPane.add(lvSender, 0, ++row, 2, 1);
+        gridPane.add(hBoxButton, 0, ++row, 2, 1);
 
-        gridPane.add(new Label(), 0, ++row, 3, 1);
-        gridPane.add(btnLoad, 0, ++row, 3, 1);
+        gridPane.add(new Label(), 0, ++row);
+        gridPane.add(btnLoad, 0, ++row, 2, 1);
         GridPane.setHalignment(btnLoad, HPos.RIGHT);
 
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
@@ -125,7 +124,7 @@ public class PaneDoubleFilms {
         cboSender.getSelectionModel().select(0);
 
         Button btnAdd = new Button("");
-        btnAdd.setTooltip(new Tooltip("Ein neues Set anlegen"));
+        btnAdd.setTooltip(new Tooltip("Einen neuen Sender hinzufügen"));
         btnAdd.setGraphic(ProgIcons.ICON_BUTTON_ADD.getImageView());
         btnAdd.setOnAction(event -> {
             String str = cboSender.getSelectionModel().getSelectedItem();
@@ -137,7 +136,7 @@ public class PaneDoubleFilms {
         });
 
         Button btnDel = new Button("");
-        btnDel.setTooltip(new Tooltip("Markiertes Set löschen"));
+        btnDel.setTooltip(new Tooltip("Markierten Sender löschen"));
         btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
             String str = lvSender.getSelectionModel().getSelectedItem();
@@ -148,7 +147,7 @@ public class PaneDoubleFilms {
         });
 
         Button btnUp = new Button("");
-        btnUp.setTooltip(new Tooltip("Markiertes Set nach oben schieben"));
+        btnUp.setTooltip(new Tooltip("Markierten Sender nach oben schieben"));
         btnUp.setGraphic(ProgIcons.ICON_BUTTON_MOVE_UP.getImageView());
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
@@ -160,7 +159,7 @@ public class PaneDoubleFilms {
         });
 
         Button btnDown = new Button("");
-        btnDown.setTooltip(new Tooltip("Markiertes Set nach unten schieben"));
+        btnDown.setTooltip(new Tooltip("Markierten Sender nach unten schieben"));
         btnDown.setGraphic(ProgIcons.ICON_BUTTON_MOVE_DOWN.getImageView());
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();

@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.film;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 
@@ -40,11 +39,11 @@ public class FilmDataMTP extends FilmData {
         return ret;
     }
 
-    @Override
-    public void init() {
-        super.init();
-        setShown(ProgData.getInstance().historyList.checkIfUrlAlreadyIn(getUrlHistory()));
-    }
+//    @Override
+//    public void init() {
+//        super.init();
+////        setShown(ProgData.getInstance().historyList.checkIfUrlAlreadyIn(getUrlHistory()));
+//    }
 
     public synchronized AboData getAbo() {
         return abo;
