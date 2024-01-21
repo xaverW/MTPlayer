@@ -223,7 +223,7 @@ public class DownloadFactoryDelDownloadFiles {
             delFileList.add(file);
         }
         // Infofile
-        if (downloadData.getInfoFile()) {
+        if (downloadData.isInfoFile()) {
             Path infoPath = MTInfoFile.getInfoFilePath(downloadData);
             if (infoPath != null) {
                 file = infoPath.toFile();

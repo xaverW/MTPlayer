@@ -22,10 +22,14 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFiles;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
@@ -34,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class StartDownloadFactory {
     static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = 3;
@@ -41,10 +46,30 @@ public class StartDownloadFactory {
     private StartDownloadFactory() {
     }
 
+    public static void downloadSubtitle(FilmDataMTP filmData) {
+        String path = PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, "");
+
+        if (!path.isEmpty()) {
+            ArrayList<FilmDataMTP> list = new ArrayList<>();
+            list.add(filmData);
+            SetData setData = ProgData.getInstance().setDataList.getSetDataPlay();
+            if (setData == null) {
+                // braucht's eigentlich nicht, aber DOWNLOAD klappt sonst nicht!!
+                new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.PLAY);
+                return;
+            }
+
+            DownloadData downloadData = new DownloadData(list, setData);
+            downloadData.setSubtitle(true);
+            downloadData.setPathName(path, filmData.getTitle());
+            makeDirAndLoadInfoSubtitle(downloadData);
+        }
+    }
+
     static void makeDirAndLoadInfoSubtitle(DownloadData download) {
         try {
             Files.createDirectories(Paths.get(download.getDestPath()));
-            if (download.getInfoFile()) {
+            if (download.isInfoFile()) {
                 MTInfoFile.writeInfoFile(download);
             }
             if (download.isSubtitle()) {

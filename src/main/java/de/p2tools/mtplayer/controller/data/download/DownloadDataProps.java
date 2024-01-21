@@ -22,8 +22,8 @@ import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.mtdownload.DownloadSize;
-import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2Date;
+import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2DateProperty;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -701,7 +701,7 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         this.placedBack.set(placedBack);
     }
 
-    public boolean getInfoFile() {
+    public boolean isInfoFile() {
         return infoFile.get();
     }
 

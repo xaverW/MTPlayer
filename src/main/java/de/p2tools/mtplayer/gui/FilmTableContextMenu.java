@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
+import de.p2tools.mtplayer.controller.starter.StartDownloadFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
@@ -77,6 +78,10 @@ public class FilmTableContextMenu {
         Menu mCopyUrl = copyUrl(film);
         contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl);
 
+        final MenuItem miLoadUt = new MenuItem("Film-Untertitel speichern");
+        miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
+        miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film));
+
         final MenuItem miFilmsSetShown;
         if (film != null && film.isShown()) {
             miFilmsSetShown = new MenuItem("Filme als ungesehen markieren");
@@ -85,26 +90,26 @@ public class FilmTableContextMenu {
             miFilmsSetShown = new MenuItem("Filme als gesehen markieren");
             miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(true));
         }
+        miFilmsSetShown.setDisable(film == null);
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
+        miFilmInfo.setDisable(film == null);
         miFilmInfo.setOnAction(a -> filmGuiController.showFilmInfo());
 
         MenuItem miMediaDb = new MenuItem("Film in der Mediensammlung suchen");
+        miMediaDb.setDisable(film == null);
         miMediaDb.setOnAction(a -> filmGuiController.searchFilmInMediaCollection());
 
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
+        miCopyTheme.setDisable(film == null);
         miCopyTheme.setOnAction(a -> PSystemUtils.copyToClipboard(film.getTheme()));
+
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
+        miCopyName.setDisable(film == null);
         miCopyName.setOnAction(a -> PSystemUtils.copyToClipboard(film.getTitle()));
 
-        miFilmsSetShown.setDisable(film == null);
-        miFilmInfo.setDisable(film == null);
-        miMediaDb.setDisable(film == null);
-        miCopyTheme.setDisable(film == null);
-        miCopyName.setDisable(film == null);
-
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miFilmsSetShown, miFilmInfo, miMediaDb, miCopyTheme, miCopyName);
+        contextMenu.getItems().addAll(miLoadUt, miFilmsSetShown, miFilmInfo, miMediaDb, miCopyTheme, miCopyName);
 
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> tableView.resetTable());

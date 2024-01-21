@@ -37,7 +37,7 @@ public class InitSubTitle {
         addDownloadDto.chkInfo.setDisable(addDownloadDto.getAct().downloadIsRunning());
         addDownloadDto.chkSubtitle.setDisable(addDownloadDto.getAct().downloadIsRunning());
 
-        addDownloadDto.chkInfo.setSelected(addDownloadDto.getAct().download.getInfoFile());
+        addDownloadDto.chkInfo.setSelected(addDownloadDto.getAct().download.isInfoFile());
         addDownloadDto.chkSubtitle.setDisable(addDownloadDto.getAct().download.getUrlSubtitle().isEmpty());
         addDownloadDto.chkSubtitle.setSelected(addDownloadDto.getAct().download.isSubtitle());
     }
