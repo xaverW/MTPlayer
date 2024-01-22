@@ -87,7 +87,7 @@ public class ProgStartBeforeGui {
     }
 
     private static boolean load() {
-        final Path xmlFilePath = new ProgInfos().getSettingsFile();
+        final Path xmlFilePath = ProgInfos.getSettingsFile();
         PDuration.onlyPing("ProgStartFactory.loadProgConfigData");
         try {
             if (!Files.exists(xmlFilePath)) {

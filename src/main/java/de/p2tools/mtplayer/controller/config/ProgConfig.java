@@ -32,6 +32,7 @@ import de.p2tools.p2lib.tools.PShutDown;
 import de.p2tools.p2lib.tools.PStringUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.*;
 import org.apache.commons.lang3.SystemUtils;
@@ -85,6 +86,8 @@ public class ProgConfig extends PDataProgConfig {
 
     // Configs zum Aktualisieren beim Programmupdate
     public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBoolProp("system-after-update-filter", Boolean.FALSE);
+    // configs zum Anzeigen der WhatsNew
+    public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.getNowStringR()); // Date der letzten Anzeige
 
     // Configs zur Programmupdatesuche
     public static StringProperty SYSTEM_UPDATE_DATE = addStrProp("system-update-date"); // Datum der letzten Prüfung

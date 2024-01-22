@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.film;
 
 
 import de.p2tools.mtplayer.controller.ProgSave;
-import de.p2tools.mtplayer.controller.UpdateCheckFactory;
+import de.p2tools.mtplayer.controller.UpdateFactory;
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -180,7 +180,7 @@ public class LoadFilmFactory {
             if (!doneAtProgramStart) {
                 doneAtProgramStart = true;
                 MediaDataWorker.createMediaDb();
-                UpdateCheckFactory.checkProgUpdate();
+                UpdateFactory.checkUpdate();
                 Platform.runLater(() -> ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false));
             }
 
