@@ -40,9 +40,11 @@ public class ProgStartBeforeGui {
             PDuration.onlyPing("Erster Start");
             ProgData.firstProgramStart = true;
 
-            ProgConfigUpdate.setUpdateDone(); //dann ists ja kein Programmupdate
-            ProgData.getInstance().replaceList.init(); //einmal ein Muster anlegen, für Linux ist es bereits aktiv!
-            ProgData.getInstance().utDataList.init(); //einmal ein Muster anlegen, für Linux ist es bereits aktiv!
+            ProgConfigUpdate.setUpdateDone(); // dann ist's ja kein Programmupdate
+            UpdateFactory.setWhatsNewDate(); // muss dann ja nicht angezeigt werden
+
+            ProgData.getInstance().replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
+            ProgData.getInstance().utDataList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
 
             StartDialogController startDialogController = new StartDialogController();
             if (!startDialogController.isOk()) {

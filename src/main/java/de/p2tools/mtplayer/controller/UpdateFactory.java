@@ -35,6 +35,8 @@ import java.util.Date;
 import java.util.List;
 
 public class UpdateFactory {
+    static final LocalDate whatsNewDate = LocalDate.of(2024, 1, 23); // erhöht sich, wenn whatsNew geändert wird
+
     private UpdateFactory() {
     }
 
@@ -45,9 +47,16 @@ public class UpdateFactory {
         }
     }
 
+    public static void setWhatsNewDate() {
+        ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.setValue(P2LDateFactory.toStringR(whatsNewDate));
+    }
+
+    public static void resetWhatsNewDate() {
+        ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.setValue(P2LDateFactory.toStringR(LocalDate.MIN));
+    }
+
     public static boolean showWhatsNew(boolean showAlways) {
         // zeigt die Info "whatsNew" an, wenn "showAlways" oder wenn die letzte Anzeige vor "whatsNewDate"
-        final LocalDate whatsNewDate = LocalDate.of(2024, 1, 22); // erhöht sich, wenn whatsNew geändert wird
 
         try {
             final LocalDate lastShown = P2LDateFactory.fromStringR(ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.getValueSafe());
@@ -81,7 +90,7 @@ public class UpdateFactory {
             return true;
         } catch (Exception ignore) {
         } finally {
-            ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.setValue(P2LDateFactory.toStringR(whatsNewDate));
+            setWhatsNewDate();
         }
 
         return false;
