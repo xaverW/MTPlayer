@@ -27,19 +27,19 @@ import javafx.scene.input.KeyCode;
 
 import java.util.Objects;
 
-public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
+public class PCboStringSearch extends ComboBox<PCboSearcher> {
     public static final int MAX_FILTER_HISTORY = 15;
     private final StringProperty strSearchProperty;
     private final ProgData progData;
 
-    public P2CboStringSearch(ProgData progData, StringProperty strSearchProperty) {
+    public PCboStringSearch(ProgData progData, StringProperty strSearchProperty) {
         this.progData = progData;
         this.strSearchProperty = strSearchProperty;
         setEditable(true);
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         setVisibleRowCount(MAX_FILTER_HISTORY);
         for (int i = 0; i < MAX_FILTER_HISTORY; ++i) {
-            getItems().add(new P2CboSearcher());
+            getItems().add(new PCboSearcher());
         }
         init();
     }
@@ -65,8 +65,8 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
                         // dann melden
                         if (this.isShowing() ||
                                 newValue != null
-                                        && newValue.getClass().equals(P2CboSearcher.class)
-                                        && !Objects.equals(strSearchProperty.getValueSafe(), ((P2CboSearcher) newValue).getValue())) {
+                                        && newValue.getClass().equals(PCboSearcher.class)
+                                        && !Objects.equals(strSearchProperty.getValueSafe(), ((PCboSearcher) newValue).getValue())) {
                             progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
                         }
                     }
@@ -87,7 +87,7 @@ public class P2CboStringSearch extends ComboBox<P2CboSearcher> {
             return;
         }
 
-        P2CboSearcher tmp = getItems().get(1);
+        PCboSearcher tmp = getItems().get(1);
         if (filterStr.contains(tmp.getValue())) {
             // dann wird der erste damit ersetzt
             tmp.setValue(filterStr);

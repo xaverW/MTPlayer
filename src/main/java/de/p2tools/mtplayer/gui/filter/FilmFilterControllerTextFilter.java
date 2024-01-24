@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearch;
-import de.p2tools.mtplayer.gui.filter.helper.P2CboStringSearchExact;
+import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
+import de.p2tools.mtplayer.gui.filter.helper.PCboThemeExact;
 import de.p2tools.p2lib.guitools.P2MenuButton;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -33,12 +33,12 @@ import javafx.scene.layout.VBox;
 public class FilmFilterControllerTextFilter extends VBox {
 
     private final P2MenuButton mbChannel;
-    private final P2CboStringSearch cboTheme;
-    private final P2CboStringSearchExact cboThemeExact;
-    private final P2CboStringSearch cboThemeTitle;
-    private final P2CboStringSearch cboTitle;
-    private final P2CboStringSearch cboSomewhere;
-    private final P2CboStringSearch cboUrl;
+    private final PCboStringSearch cboTheme;
+    private final PCboThemeExact cboThemeExact;
+    private final PCboStringSearch cboThemeTitle;
+    private final PCboStringSearch cboTitle;
+    private final PCboStringSearch cboSomewhere;
+    private final PCboStringSearch cboUrl;
 
     private final ProgData progData;
     private final StringProperty stringPropertyTheme = new SimpleStringProperty();
@@ -50,17 +50,17 @@ public class FilmFilterControllerTextFilter extends VBox {
         mbChannel = new P2MenuButton(progData.filmFilterWorker.getActFilterSettings().channelProperty(),
                 ThemeListFactory.allChannelList) {
             public void doAfterSelction(String text) {
-                ThemeListFactory.createThemeList(ProgData.getInstance(), text.toString());
+                ThemeListFactory.createThemeList(ProgData.getInstance(), text);
             }
         };
 
-        cboTheme = new P2CboStringSearch(progData, stringPropertyTheme);
-        cboThemeExact = new P2CboStringSearchExact(progData, stringPropertyThemeExact);
+        cboTheme = new PCboStringSearch(progData, stringPropertyTheme);
+        cboThemeExact = new PCboThemeExact(progData, stringPropertyThemeExact);
 
-        cboThemeTitle = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeTitleProperty());
-        cboTitle = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().titleProperty());
-        cboSomewhere = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().somewhereProperty());
-        cboUrl = new P2CboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().urlProperty());
+        cboThemeTitle = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeTitleProperty());
+        cboTitle = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().titleProperty());
+        cboSomewhere = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().somewhereProperty());
+        cboUrl = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().urlProperty());
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addFilter();

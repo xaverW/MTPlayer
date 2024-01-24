@@ -19,13 +19,13 @@ package de.p2tools.mtplayer.gui.filter.helper;
 
 import javafx.scene.control.Label;
 
-public class P2CboSearcher extends Label implements Comparable<P2CboSearcher> {
+public class PCboSearcher extends Label implements Comparable<PCboSearcher> {
     private String value = "";
 
-    public P2CboSearcher() {
+    public PCboSearcher() {
     }
 
-    public P2CboSearcher(String value) {
+    public PCboSearcher(String value) {
         setValue(value);
     }
 
@@ -44,7 +44,7 @@ public class P2CboSearcher extends Label implements Comparable<P2CboSearcher> {
     }
 
     @Override
-    public int compareTo(P2CboSearcher arg0) {
+    public int compareTo(PCboSearcher arg0) {
         return value.compareTo(arg0.value);
     }
 }

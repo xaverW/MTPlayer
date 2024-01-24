@@ -23,16 +23,16 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.ComboBox;
 
-public class P2CboStringSearchExact extends ComboBox<String> {
+public class PCboStringSearchExact extends ComboBox<String> {
     private final StringProperty strSearchProperty;
     private final ProgData progData;
 
-    public P2CboStringSearchExact(ProgData progData, StringProperty strSearchProperty) {
+    public PCboStringSearchExact(ProgData progData, StringProperty strSearchProperty) {
         this.progData = progData;
         this.strSearchProperty = strSearchProperty;
         setEditable(false);
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        setVisibleRowCount(P2CboStringSearch.MAX_FILTER_HISTORY);
+        setVisibleRowCount(PCboStringSearch.MAX_FILTER_HISTORY);
         init();
     }
 
