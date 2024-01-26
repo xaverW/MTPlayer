@@ -54,19 +54,19 @@ public class FilmFilterControllerFilter extends VBox {
 
     P2CheckComboBox checkOnly = new P2CheckComboBox();
     P2CheckComboBox checkNot = new P2CheckComboBox();
-    Label lblOnly = new Label("anzeigen:");
-    Label lblNot = new Label("ausschließen:");
+    Label lblOnly = new Label("Anzeigen:");
+    Label lblNot = new Label("Ausschließen:");
 
     private final String ONLY_BOOKMARK = "Bookmarks";
     private final String ONLY_HD = "HD";
     private final String ONLY_UT = "UT";
-    private final String ONLY_NEW = "neue";
+    private final String ONLY_NEW = "Neue";
     private final String ONLY_LIVE = "Livestreams";
-    private final String ONLY_AKT_HISTORY = "aktuelle History";
+    private final String ONLY_AKT_HISTORY = "Aktuelle History";
 
     private final String NOT_ABO = "Abos";
-    private final String NOT_HISTORY = "gesehene";
-    private final String NOT_DOUBLE = "doppelte";
+    private final String NOT_HISTORY = "Gesehene";
+    private final String NOT_DOUBLE = "Doppelte";
     private final String NOT_GEO = "Geo geblockt";
     private final String NOT_FUTURE = "Zukunft";
 
@@ -215,20 +215,20 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void addCheckFilter() {
-        checkOnly.setEmptyText("alles");
-        checkOnly.addItem(ONLY_BOOKMARK, "nur Filme der Bookmarks anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyBookmarkProperty());
-        checkOnly.addItem(ONLY_HD, "nur HD-Filme anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyHdProperty());
-        checkOnly.addItem(ONLY_UT, "nur Filme mit Untertitel anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyUtProperty());
-        checkOnly.addItem(ONLY_NEW, "nur neue Filme anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyNewProperty());
-        checkOnly.addItem(ONLY_LIVE, "nur Livestreams anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyLiveProperty());
-        checkOnly.addItem(ONLY_AKT_HISTORY, "nur die aktuelle History anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyActHistoryProperty());
+        checkOnly.setEmptyText("Alles");
+        checkOnly.addItem(ONLY_BOOKMARK, "Nur Filme der Bookmarks anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyBookmarkProperty());
+        checkOnly.addItem(ONLY_HD, "Nur HD-Filme anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyHdProperty());
+        checkOnly.addItem(ONLY_UT, "Nur Filme mit Untertitel anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyUtProperty());
+        checkOnly.addItem(ONLY_NEW, "Nur neue Filme anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyNewProperty());
+        checkOnly.addItem(ONLY_LIVE, "Nur Livestreams anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyLiveProperty());
+        checkOnly.addItem(ONLY_AKT_HISTORY, "Nur die aktuelle History anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyActHistoryProperty());
 
-        checkNot.setEmptyText("nichts");
-        checkNot.addItem(NOT_ABO, "keine Filme für die es ein Abo gibt, anzeigen", progData.filmFilterWorker.getActFilterSettings().notAboProperty());
-        checkNot.addItem(NOT_HISTORY, "bereits gesehene Filme nicht anzeigen", progData.filmFilterWorker.getActFilterSettings().notHistoryProperty());
-        checkNot.addItem(NOT_DOUBLE, "doppelte Filme nur einmal anzeigen", progData.filmFilterWorker.getActFilterSettings().notDoubleProperty());
-        checkNot.addItem(NOT_GEO, "geo-geblockte Filme nicht anzeigen", progData.filmFilterWorker.getActFilterSettings().notGeoProperty());
-        checkNot.addItem(NOT_FUTURE, "keine Filme mit Datum in der Zukunft anzeigen", progData.filmFilterWorker.getActFilterSettings().notFutureProperty());
+        checkNot.setEmptyText("Nichts");
+        checkNot.addItem(NOT_ABO, "Keine Filme für die es ein Abo gibt, anzeigen", progData.filmFilterWorker.getActFilterSettings().notAboProperty());
+        checkNot.addItem(NOT_HISTORY, "Bereits gesehene Filme nicht anzeigen", progData.filmFilterWorker.getActFilterSettings().notHistoryProperty());
+        checkNot.addItem(NOT_DOUBLE, "Doppelte Filme nur einmal anzeigen", progData.filmFilterWorker.getActFilterSettings().notDoubleProperty());
+        checkNot.addItem(NOT_GEO, "Geo-geblockte Filme nicht anzeigen", progData.filmFilterWorker.getActFilterSettings().notGeoProperty());
+        checkNot.addItem(NOT_FUTURE, "Keine Filme mit Datum in der Zukunft anzeigen", progData.filmFilterWorker.getActFilterSettings().notFutureProperty());
 
         VBox vBox = new VBox(2);
         vBox.getChildren().addAll(lblOnly, checkOnly);
@@ -244,7 +244,7 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void setLabelSlider() {
-        final String txtAll = "alles";
+        final String txtAll = "Alles";
 
         int i = (int) slTimeRange.getValue();
         String tNr = i + "";

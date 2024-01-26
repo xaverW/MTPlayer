@@ -70,12 +70,12 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglTheme.setMaxWidth(Double.MAX_VALUE);
         tglTheme.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().themeVisProperty());
 
-        P2ToggleSwitch tglThemeExact = new P2ToggleSwitch("  -> freie Suche mit Eingabefeld");
+        P2ToggleSwitch tglThemeExact = new P2ToggleSwitch("  -> Freie Suche mit Eingabefeld");
         tglThemeExact.disableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty().not());
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
-        tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().isThemeExact());
+        tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().isThemeIsExact());
         tglThemeExact.selectedProperty().addListener((observable, oldValue, newValue) ->
-                progData.filmFilterWorker.getActFilterSettings().themeExactProperty().setValue(!newValue));
+                progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty().setValue(!newValue));
 
         VBox v = new VBox(5);
         HBox h = new HBox(0);
@@ -125,12 +125,12 @@ public class FilmFilterEditDialog extends PDialogExtra {
         tglShowDate.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().showDateVisProperty());
         vBox.getChildren().add(tglShowDate);
 
-        P2ToggleSwitch tglOnly = new P2ToggleSwitch("\"anzeigen\"");
+        P2ToggleSwitch tglOnly = new P2ToggleSwitch("\"Anzeigen\"");
         tglOnly.setMaxWidth(Double.MAX_VALUE);
         tglOnly.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().onlyVisProperty());
         vBox.getChildren().add(tglOnly);
 
-        P2ToggleSwitch tglNot = new P2ToggleSwitch("\"ausschließen\"");
+        P2ToggleSwitch tglNot = new P2ToggleSwitch("\"Ausschließen\"");
         tglNot.setMaxWidth(Double.MAX_VALUE);
         tglNot.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().notVisProperty());
         vBox.getChildren().add(tglNot);

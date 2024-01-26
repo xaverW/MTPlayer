@@ -40,9 +40,9 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private final ComboBox<FilmFilter> cboFilterProfiles = new P2SeparatorComboBox<>();
     private final MenuButton mbFilterTools = new MenuButton("");
-    private final Button btnLoadFilter = new Button("laden");
-    private final Button btnSaveFilter = new Button("speichern");
-    private final Button btnNewFilter = new Button("neu anlegen");
+    private final Button btnLoadFilter = new Button("");
+    private final Button btnSaveFilter = new Button("");
+    private final Button btnNewFilter = new Button("");
 
     private final ProgData progData;
 
@@ -78,7 +78,6 @@ public class FilmFilterControllerProfiles extends VBox {
         btnLoadFilter.setOnAction(a -> loadFilter());
         btnLoadFilter.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
         btnLoadFilter.setGraphic(ProgIcons.ICON_FILTER_FILM_LOAD.getImageView());
-        btnLoadFilter.setText("");
         btnLoadFilter.setTooltip(new Tooltip("Filterprofil wieder laden"));
 
         btnSaveFilter.setOnAction(a -> {
@@ -89,12 +88,10 @@ public class FilmFilterControllerProfiles extends VBox {
             }
         });
         btnSaveFilter.setGraphic(ProgIcons.ICON_FILTER_FILM_SAVE.getImageView());
-        btnSaveFilter.setText("");
         btnSaveFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als Filterprofil speichern"));
 
         btnNewFilter.setOnAction(a -> newFilter());
         btnNewFilter.setGraphic(ProgIcons.ICON_FILTER_FILM_NEW.getImageView());
-        btnNewFilter.setText("");
         btnNewFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als neues Filterprofil anlegen"));
     }
 
@@ -118,19 +115,19 @@ public class FilmFilterControllerProfiles extends VBox {
         };
         cboFilterProfiles.setConverter(converter);
 
-        final MenuItem miLoad = new MenuItem("aktuelles Filterprofil wieder laden");
+        final MenuItem miLoad = new MenuItem("Aktuelles Filterprofil wieder laden");
         miLoad.setOnAction(e -> loadFilter());
         miLoad.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem miRename = new MenuItem("aktuelles Filterprofil umbenennen");
+        final MenuItem miRename = new MenuItem("Aktuelles Filterprofil umbenennen");
         miRename.setOnAction(e -> renameFilter());
         miRename.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem miDel = new MenuItem("aktuelles Filterprofil löschen");
+        final MenuItem miDel = new MenuItem("Aktuelles Filterprofil löschen");
         miDel.setOnAction(e -> delFilter());
         miDel.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
-        final MenuItem miDelAll = new MenuItem("alle Filterprofile löschen");
+        final MenuItem miDelAll = new MenuItem("Alle Filterprofile löschen");
         miDelAll.setOnAction(e -> delAllFilter());
         miDelAll.disableProperty().bind(Bindings.size(cboFilterProfiles.getItems()).isEqualTo(0));
 
@@ -141,7 +138,7 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miNew = new MenuItem("Filtereinstellungen in neuem Filterprofil speichern");
         miNew.setOnAction(e -> newFilter());
 
-        final MenuItem miAbo = new MenuItem("aus den Filtereinstellungen ein Abo erstellen");
+        final MenuItem miAbo = new MenuItem("Aus den Filtereinstellungen ein Abo erstellen");
         miAbo.setOnAction(a -> {
             AboListFactory.addNewAboFromFilterButton();
         });
@@ -152,7 +149,7 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miFilterDialog = new MenuItem("Filterprofile in eigenem Fenster anzeigen");
         miFilterDialog.setOnAction(e -> new FilmFilterDialog(progData).showDialog());
 
-        final MenuItem miReset = new MenuItem("alle Filterprofile wieder herstellen");
+        final MenuItem miReset = new MenuItem("Alle Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter());
 
         mbFilterTools.setGraphic(ProgIcons.ICON_BUTTON_MENU.getImageView());
@@ -317,7 +314,7 @@ public class FilmFilterControllerProfiles extends VBox {
     private void checkCboFilter() {
         FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
         FilmFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
-        if (sf.isSame(sfCbo, false)) {
+        if (sf.isSame(sfCbo)) {
             //if (SelectedFilmFilterFactory.compareFilterWithoutNameOfFilter(sf, sfCbo)) {
             markFilterOk(true);
         } else {
