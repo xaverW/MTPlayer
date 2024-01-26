@@ -61,8 +61,8 @@ public class AboAddDialogController extends PDialogExtra {
         this.addAboDto = new AddAboDto(progData, false, abo);
 
         final String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
-        final String theme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
-        final boolean themeExact = filmFilter.isThemeExact();
+        final String theme = filmFilter.isThemeVis() ? filmFilter.getResTheme() : "";
+        final boolean themeExact = filmFilter.isThemeIsExact();
         final String title = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
         final String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
         final String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere() : "";

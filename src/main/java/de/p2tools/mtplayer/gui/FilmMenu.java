@@ -115,7 +115,7 @@ public class FilmMenu {
             FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
             FilmFilter bookmarkFilter = FilmFilterSamples.getBookmarkFilter();
 
-            if (sf.isSame(bookmarkFilter, false)) {
+            if (sf.isSame(bookmarkFilter)) {
                 // dann ist der BlackFilter aktiv, dann zurückschalten
                 if (storedActFilterSettings != null) {
                     // dann haben wir einen gespeicherten Filter

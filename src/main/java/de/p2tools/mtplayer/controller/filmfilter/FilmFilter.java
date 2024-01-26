@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -40,80 +41,34 @@ public final class FilmFilter extends FilmFilterProps {
     }
 
     public void reportFilterReturn() {
-//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-//            System.out.println("----------------------");
-//            System.out.println("reportFilterReturn");
-//            System.out.println(filterIsOff ? "filter off" : "filter on");
-//            System.out.println("     -----------------");
-//        }
+        // sind die ComboBoxen wenn return gedrückt wird
         PLog.debugLog("reportFilterReturn");
         pause.stop();
-        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+        ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
     }
 
     private void reportFilterChange() {
-        // da wird die Änderung gemeldet
-//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-//            System.out.println("----------------------");
-//            System.out.println("reportFilterChange");
-//            System.out.println(filterIsOff ? "filter off" : "filter on");
-//            System.out.println("     -----------------");
-//        }
+        // sind die anderen Filter (ändern, ein-ausschalten), wenn Pause abgelaufen ist / gestoppt ist
         if (!filterIsOff) {
-            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+            ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
         }
     }
 
     private void reportBlacklistChange() {
-//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-//            System.out.println("----------------------");
-//            System.out.println("reportBlacklistChange");
-//            System.out.println(filterIsOff ? "filter off" : "filter on");
-//            System.out.println("     -----------------");
-//        }
         if (!filterIsOff) { // todo ??
             BlacklistFilterFactory.getBlackFilteredFilmlist();
-            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
-        }
-    }
-
-    private void setFilterChange(boolean startNow) {
-        //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
-//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-//            System.out.println("----------------------");
-//            System.out.println("setFilterChange");
-//            System.out.println(filterIsOff ? "filter off" : "filter on");
-//            System.out.println("     -----------------");
-//        }
-
-        if (!startNow && ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
-            //dann wird erst nach "RETURN" gestartet
-            pause.stop();
-
-        } else {
-            // dann wird sofort gestartet (nach Pause)
-            pause.playFromStart();
+            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
         }
     }
 
     public void switchFilterOff(boolean switchOff) {
         pause.stop();
         this.filterIsOff = switchOff;
-//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-//            System.out.println("----------------------");
-//            System.out.println("switchFilterOff");
-//            System.out.println(filterIsOff ? "filter off" : "filter on");
-//            System.out.println("     -----------------");
-//        }
     }
 
     public void turnOffFilter() {
-//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-//            System.out.println("----------------------");
-//            System.out.println("turnOffFilter");
-//            System.out.println(filterIsOff ? "filter off" : "filter on");
-//            System.out.println("     -----------------");
-//        }
         // alle Filter "abschalten" und löschen
         clearFilter();
 
@@ -135,44 +90,22 @@ public final class FilmFilter extends FilmFilterProps {
     }
 
     public void clearTxtFilter() {
-//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-//            System.out.println("----------------------");
-//            System.out.println("clearTxtFilter");
-//            System.out.println(filterIsOff ? "filter off" : "filter on");
-//            System.out.println("     -----------------");
-//        }
         pause.setDuration(Duration.millis(0));
-        if (!getChannel().isEmpty()) {
-            setChannel("");
-        }
-        if (!getTheme().isEmpty()) {
-            setTheme("");
-        }
-        if (!getThemeTitle().isEmpty()) {
-            setThemeTitle("");
-        }
-        if (!getTitle().isEmpty()) {
-            setTitle("");
-        }
-        if (!getSomewhere().isEmpty()) {
-            setSomewhere("");
-        }
-        if (!getUrl().isEmpty()) {
-            setUrl("");
-        }
+        setChannel("");
+        setTheme("");
+        setExactTheme("");
+        setThemeTitle("");
+        setTitle("");
+        setSomewhere("");
+        setUrl("");
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
     }
 
     public void clearFilter() {
-//        if (getName().equals(FilmFilterWorker.SELECTED_FILTER_NAME)) {
-//            System.out.println("----------------------");
-//            System.out.println("clearFilter");
-//            System.out.println(filterIsOff ? "filter off" : "filter on");
-//            System.out.println("     -----------------");
-//        }
         // alle Filter löschen, Button Black bleibt, wie er ist
         setChannel("");
         setTheme("");
+        setExactTheme("");
         setThemeTitle("");
         setTitle("");
         setSomewhere("");
@@ -204,7 +137,7 @@ public final class FilmFilter extends FilmFilterProps {
 
     public boolean isTextFilterEmpty() {
         return getChannel().isEmpty() &&
-                getTheme().isEmpty() &&
+                getResTheme().isEmpty() &&
                 getThemeTitle().isEmpty() &&
                 getTitle().isEmpty() &&
                 getSomewhere().isEmpty() &&
@@ -216,8 +149,13 @@ public final class FilmFilter extends FilmFilterProps {
         setChannelVis(true);
     }
 
-    public void setThemeAndVis(String set) {
-        setTheme(set);
+    public void setThemeAndVis(String set, boolean exact) {
+        if (exact) {
+            setExactTheme(set);
+        } else {
+            setTheme(set);
+        }
+        setThemeIsExact(exact);
         setThemeVis(true);
     }
 
@@ -244,7 +182,7 @@ public final class FilmFilter extends FilmFilterProps {
         setThemeTitleVis(true);
 
         setThemeVis(false);
-        setThemeExact(false);
+        setThemeIsExact(false);
         setTitleVis(false);
         setSomewhereVis(false);
         setUrlVis(false);
@@ -265,11 +203,9 @@ public final class FilmFilter extends FilmFilterProps {
         channelProperty().addListener(l -> setFilterChange(true));
 
         themeVisProperty().addListener(l -> setFilterChange(true));
-        themeExactProperty().addListener(l -> setFilterChange(true));
-        themeProperty().addListener(l -> {
-            // wenn EXACT dann "startNow" TRUE -> dann Combo nicht editAble
-            setFilterChange(themeExactProperty().getValue());
-        });
+        themeIsExactProperty().addListener(l -> setFilterChange(true));
+        exactThemeProperty().addListener(l -> setFilterChange(true));
+        themeProperty().addListener(l -> setFilterChange(false));
 
         themeTitleVisProperty().addListener(l -> setFilterChange(true));
         themeTitleProperty().addListener(l -> setFilterChange(false));
@@ -314,5 +250,17 @@ public final class FilmFilter extends FilmFilterProps {
         notFutureProperty().addListener(l -> setFilterChange(true));
 
         blacklistOnOffProperty().addListener(l -> reportBlacklistChange());
+    }
+
+    private void setFilterChange(boolean startNow) {
+        // wird ausgelöst, wenn ein Filter ein/ausgeschaltet wird oder was eingetragen wird
+        if (!startNow && ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+            //dann wird erst nach "RETURN" gestartet
+            pause.stop();
+
+        } else {
+            // dann wird sofort gestartet (nach Pause)
+            pause.playFromStart();
+        }
     }
 }

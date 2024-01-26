@@ -40,7 +40,6 @@ public class PredicateFactory {
         FastFilmFilter fastFilmFilter = progData.filmFilterWorker.getFastFilterSettings();
 
         Filter fChannel;
-
         Filter fSomewhere;
         Filter fUrl;
         Filter fShowDate;
@@ -52,7 +51,6 @@ public class PredicateFactory {
 
         // Sender
         fChannel = new Filter(filterChannel, true);
-
         // Irgendwo
         fSomewhere = new Filter(filterSomewhere, true);
         // URL
@@ -144,7 +142,7 @@ public class PredicateFactory {
                 predicate = predicate.and(f -> !f.isBlackBlocked());
             } else {
                 //dann invers, alles was geblockt wird
-                predicate = predicate.and(f -> f.isBlackBlocked());
+                predicate = predicate.and(FilmDataProps::isBlackBlocked);
             }
         }
 
@@ -194,9 +192,9 @@ public class PredicateFactory {
         Filter fastFilter = new Filter(fastFilmFilter.getFilterTerm(), true);
 
         // Thema
-        final boolean themeExact = filmFilter.isThemeExact();
-        String filterTheme = filmFilter.isThemeVis() ? filmFilter.getTheme() : "";
-        Filter fTheme = new Filter(filterTheme, themeExact, true);
+        final boolean themeIsExact = filmFilter.isThemeIsExact();
+        String filterTheme = filmFilter.isThemeVis() ? filmFilter.getResTheme() : "";
+        Filter fTheme = new Filter(filterTheme, themeIsExact, true);
 
         // ThemaTitel
         String filterThemeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";

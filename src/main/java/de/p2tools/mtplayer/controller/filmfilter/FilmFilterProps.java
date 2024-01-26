@@ -21,6 +21,7 @@ import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_intProp;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
+import de.p2tools.p2lib.configfile.pdata.PData;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.beans.property.*;
@@ -36,8 +37,9 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
     private final StringProperty channel = new SimpleStringProperty();
 
     private final BooleanProperty themeVis = new SimpleBooleanProperty(false);
-    private final BooleanProperty themeExact = new SimpleBooleanProperty(false);
+    private final BooleanProperty themeIsExact = new SimpleBooleanProperty(false);
     private final StringProperty theme = new SimpleStringProperty();
+    private final StringProperty exactTheme = new SimpleStringProperty();
 
     private final BooleanProperty themeTitleVis = new SimpleBooleanProperty(true);
     private final StringProperty themeTitle = new SimpleStringProperty();
@@ -80,13 +82,13 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
 
     private final IntegerProperty blacklistOnOff = new SimpleIntegerProperty(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
 
-    public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeExact, themeTitleVis,
+    public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeIsExact, themeTitleVis,
             titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis,
             minMaxTimeVis, minMaxTimeInvert, showDateVis,
             onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyLive, onlyActHistory, notVis,
             notAbo, notHistory, notDouble, notGeo, notFuture};
 
-    public StringProperty[] sfStringPropArr = {name, channel, theme, themeTitle, title, somewhere, url, showDate};
+    public StringProperty[] sfStringPropArr = {name, channel, theme, exactTheme, themeTitle, title, somewhere, url, showDate};
     public IntegerProperty[] sfIntegerPropArr = {timeRange, minDur, maxDur, minTime, maxTime, blacklistOnOff};
 
     @Override
@@ -95,9 +97,12 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
         list.add(new Config_stringProp("name", name));
         list.add(new Config_boolProp("channelVis", channelVis));
         list.add(new Config_stringProp("channel", channel));
+
         list.add(new Config_boolProp("themeVis", themeVis));
-        list.add(new Config_boolProp("themeExact", themeExact));
+        list.add(new Config_boolProp("themeIsExact" + PData.TAGGER + "themeExact", themeIsExact));
         list.add(new Config_stringProp("theme", theme));
+        list.add(new Config_stringProp("exactTheme", exactTheme));
+
         list.add(new Config_boolProp("themeTitleVis", themeTitleVis));
         list.add(new Config_stringProp("themeTitle", themeTitle));
         list.add(new Config_boolProp("titleVis", titleVis));
@@ -142,7 +147,7 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
         return list.toArray(new Config[]{});
     }
 
-    public boolean isSame(FilmFilter sf, boolean compareName) {
+    public boolean isSame(FilmFilter sf) {
         if (sf == null) {
             return false;
         }
@@ -152,13 +157,15 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
                 return false;
             }
         }
+
         //wenn der Name mit verglichen werden soll, dann Start bei 0, sonst 1
-        int ii = compareName ? 0 : 1;
+        int ii = 1;
         for (int i = ii; i < sfStringPropArr.length; ++i) {
             if (!this.sfStringPropArr[i].getValue().equals(sf.sfStringPropArr[i].getValue())) {
                 return false;
             }
         }
+
         for (int i = 0; i < sfIntegerPropArr.length; ++i) {
             if (!this.sfIntegerPropArr[i].getValue().equals(sf.sfIntegerPropArr[i].getValue())) {
                 return false;
@@ -174,7 +181,6 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
     }
 
     public void copyTo(FilmFilter sf) {
-
         for (int i = 0; i < sfBooleanPropArr.length; ++i) {
             sf.sfBooleanPropArr[i].setValue(this.sfBooleanPropArr[i].getValue());
         }
@@ -240,16 +246,24 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
         this.themeVis.set(themeVis);
     }
 
-    public boolean isThemeExact() {
-        return themeExact.get();
+    public boolean isThemeIsExact() {
+        return themeIsExact.get();
     }
 
-    public BooleanProperty themeExactProperty() {
-        return themeExact;
+    public BooleanProperty themeIsExactProperty() {
+        return themeIsExact;
     }
 
-    public void setThemeExact(boolean themeExact) {
-        this.themeExact.set(themeExact);
+    public void setThemeIsExact(boolean themeIsExact) {
+        this.themeIsExact.set(themeIsExact);
+    }
+
+    public String getResTheme() {
+        if (themeIsExact.getValue()) {
+            return exactTheme.getValueSafe();
+        } else {
+            return theme.getValueSafe();
+        }
     }
 
     public String getTheme() {
@@ -262,6 +276,18 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
 
     public void setTheme(String theme) {
         this.theme.set(theme);
+    }
+
+    public String getExactTheme() {
+        return exactTheme.getValueSafe();
+    }
+
+    public StringProperty exactThemeProperty() {
+        return exactTheme;
+    }
+
+    public void setExactTheme(String exactTheme) {
+        this.exactTheme.set(exactTheme);
     }
 
     public boolean isThemeTitleVis() {

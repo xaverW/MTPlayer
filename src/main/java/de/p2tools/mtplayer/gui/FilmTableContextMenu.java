@@ -125,16 +125,16 @@ public class FilmTableContextMenu {
         final MenuItem miFilterChannel = new MenuItem("nach Sender filtern");
         miFilterChannel.setOnAction(event -> progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel()));
         final MenuItem miFilterTheme = new MenuItem("nach Thema filtern");
-        miFilterTheme.setOnAction(event -> progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme()));
+        miFilterTheme.setOnAction(event -> progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false));
         final MenuItem miFilterChannelTheme = new MenuItem("nach Sender und Thema filtern");
         miFilterChannelTheme.setOnAction(event -> {
             progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme());
+            progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
         });
         final MenuItem miFilterChannelThemeTitle = new MenuItem("nach Sender, Thema und Titel filtern");
         miFilterChannelThemeTitle.setOnAction(event -> {
             progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme());
+            progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
             progData.filmFilterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
         });
 

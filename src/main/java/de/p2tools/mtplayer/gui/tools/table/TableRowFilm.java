@@ -25,7 +25,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 
 
-public class TableRowFilm<T> extends TableRow {
+public class TableRowFilm<T> extends TableRow<T> {
 
     private final BooleanProperty geoMelden;
 
@@ -34,7 +34,7 @@ public class TableRowFilm<T> extends TableRow {
     }
 
     @Override
-    public void updateItem(Object f, boolean empty) {
+    public void updateItem(T f, boolean empty) {
         super.updateItem(f, empty);
 
         FilmDataMTP film = (FilmDataMTP) f;
@@ -78,7 +78,6 @@ public class TableRowFilm<T> extends TableRow {
             } else {
                 setStyle("");
             }
-
         }
     }
 }

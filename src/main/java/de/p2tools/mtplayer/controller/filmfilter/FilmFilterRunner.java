@@ -28,6 +28,7 @@ public class FilmFilterRunner {
     private final ProgData progData;
     private static final AtomicBoolean search = new AtomicBoolean(false);
     private static final AtomicBoolean research = new AtomicBoolean(false);
+    private int count = 0;
 
     /**
      * hier wird das Filtern der Filmliste "angestoßen"
@@ -69,20 +70,18 @@ public class FilmFilterRunner {
         });
     }
 
-    private int count = 0;
-
     private void filterList() {
         // ist etwas "umständlich", scheint aber am flüssigsten zu laufen
         PDuration.counterStart("filterList");
         if (!search.getAndSet(true)) {
             research.set(false);
+
             try {
                 Platform.runLater(() -> {
-//                    System.out.println("=======================================");
-//                    System.out.println("   ===== FILTERN: " + ++count + " =====");
-//                    System.out.println("=======================================");
+                    System.out.println("=======================================");
+                    System.out.println("   ===== FILTERN: " + ++count + " =====");
+                    System.out.println("=======================================");
 
-//                    progData.filmListFiltered.filteredListSetPred(PredicateFactory.getPredicate(progData));
                     progData.filmGuiController.setFilterPred();
 
                     search.set(false);
