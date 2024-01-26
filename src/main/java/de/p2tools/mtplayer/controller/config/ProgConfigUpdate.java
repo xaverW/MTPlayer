@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller.config;
 
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 
 public class ProgConfigUpdate {
@@ -25,6 +26,7 @@ public class ProgConfigUpdate {
 
     public static void setUpdateDone() {
         ProgConfig.SYSTEM_AFTER_UPDATE_FILTER.setValue(true);
+        ProgConfig.SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER.setValue(true);
     }
 
     public static void update() {
@@ -39,9 +41,23 @@ public class ProgConfigUpdate {
             if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
                 ProgData.getInstance().filmFilterWorker.getActFilterSettings().setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
             }
-            ProgData.getInstance().filmFilterWorker.getStoredFilterList().stream().forEach(sf -> {
+            ProgData.getInstance().filmFilterWorker.getStoredFilterList().forEach(sf -> {
                 if (sf.getTimeRange() == FILTER_DAYS_MAX__OLD) {
                     sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
+                }
+            });
+        }
+
+        if (!ProgConfig.SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER.getValue()) {
+            // theme exact wurde erweitert, theme/exactTheme wird getrennt gespeichert
+            FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
+            if (filmFilter.isThemeIsExact()) {
+                filmFilter.setExactTheme(filmFilter.getTheme());
+            }
+            ProgData.getInstance().filmFilterWorker.getStoredFilterList().forEach(sf -> {
+                // exactTheme ist neu
+                if (sf.isThemeIsExact()) {
+                    sf.setExactTheme(sf.getTheme());
                 }
             });
         }

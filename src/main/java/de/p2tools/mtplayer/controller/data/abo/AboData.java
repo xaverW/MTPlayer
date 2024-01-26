@@ -42,6 +42,7 @@ public class AboData extends AboDataProps {
                    String name,
                    String channel,
                    String theme,
+                   boolean themeIsExact,
                    String themeTitle,
                    String title,
                    String somewhere,
@@ -59,6 +60,7 @@ public class AboData extends AboDataProps {
 
         setChannel(channel);
         setTheme(theme);
+        setThemeExact(themeIsExact);
         setThemeTitle(themeTitle);
         setTitle(title);
         setSomewhere(somewhere);

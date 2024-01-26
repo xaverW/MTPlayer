@@ -89,6 +89,7 @@ public class AboListFactory {
                 namePath /* name */,
                 filmChannel,
                 filmTheme,
+                false, /* themeIsExact */
                 "" /* filmThemaTitel */,
                 filmTitle,
                 "",
@@ -149,8 +150,10 @@ public class AboListFactory {
         //abo anlegen, oder false wenns schon existiert
         FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
         String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
-        String theme = filmFilter.isThemeVis() ? filmFilter.getTheme().trim() : "";
-        boolean themeExact = filmFilter.isThemeExact();
+
+        boolean themeIsExact = filmFilter.isThemeIsExact();
+        String theme = filmFilter.isThemeVis() ? filmFilter.getResTheme().trim() : "";
+
         String title = filmFilter.isTitleVis() ? filmFilter.getTitle().trim() : "";
         String themeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle().trim() : "";
         String somewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere().trim() : "";
@@ -190,6 +193,7 @@ public class AboListFactory {
                 searchTitle /* name */,
                 channel,
                 theme,
+                themeIsExact,
                 themeTitle,
                 title,
                 somewhere,
@@ -197,9 +201,7 @@ public class AboListFactory {
                 minDuration,
                 maxDuration,
                 searchTitle);
-        if (!theme.isEmpty()) {
-            abo.setThemeExact(themeExact);
-        }
+
         new AboAddDialogController(ProgData.getInstance(), abo);
     }
 
