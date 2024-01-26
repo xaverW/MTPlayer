@@ -2,7 +2,6 @@ package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.StringProperty;
 import org.controlsfx.control.SearchableComboBox;
 
@@ -20,12 +19,10 @@ public class PCboThemeExact extends SearchableComboBox<String> {
                         // dann betrifft es das nicht
                         return;
                     }
-
-                    stringPropertyThemeExact.setValue(newValue);
+                    stringPropertyThemeExact.setValue(newValue == null ? "" : newValue);
                 }
         );
         stringPropertyThemeExact.addListener((u, o, n) -> {
-            PLog.debugLogCount("PCboThemeExact: " + stringPropertyThemeExact.getValue());
             getSelectionModel().select(stringPropertyThemeExact.getValue());
         });
         getSelectionModel().select(stringPropertyThemeExact.getValue());

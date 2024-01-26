@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller.worker;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -64,21 +63,12 @@ public class ThemeListFactory {
         };
         newThemeList.sort(comparator);
 
-        PLog.debugLogCount("createThemeList");
-
 //        Platform.runLater(() -> {
         progData.worker.saveFilter();
         themeForChannelList = FXCollections.observableArrayList("");
         themeForChannelList.setAll(newThemeList);
         progData.worker.resetFilter();
         themeForChannelChanged.setValue(!themeForChannelChanged.getValue());
-
-//        Platform.runLater(() -> {
-//            String exactTheme = progData.filmFilterWorker.getActFilterSettings().getExactTheme();
-//            progData.filmFilterWorker.getActFilterSettings().exactThemeProperty().setValue("");
-//            progData.filmFilterWorker.getActFilterSettings().exactThemeProperty().setValue(exactTheme);
-//        });
-
 //        });
         PDuration.counterStop("createThemeList");
     }
