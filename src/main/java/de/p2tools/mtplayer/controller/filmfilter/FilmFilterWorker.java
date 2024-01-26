@@ -17,8 +17,10 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.alert.PAlert;
 
 import java.util.Optional;
@@ -37,6 +39,9 @@ public final class FilmFilterWorker {
     private final BackwardFilmFilter backwardFilmFilter = new BackwardFilmFilter();
 
     public FilmFilterWorker() {
+        getActFilterSettings().channelProperty().addListener(l -> {
+            ThemeListFactory.createThemeList(ProgData.getInstance(), getActFilterSettings().channelProperty().getValueSafe());
+        });
     }
 
     public FilmFilter getActFilterSettings() {

@@ -79,9 +79,10 @@ public class FilmFilterRunner {
 
             try {
                 Platform.runLater(() -> {
-                    PLog.debugLogCount("=======================================");
-                    PLog.debugLogCount("   ===== FILTERN: " + ++count + " =====");
-                    PLog.debugLogCount("=======================================");
+                    String text = "=======================================\n" +
+                            "   ===== FILTERN: " + ++count + " =====\n" +
+                            "=======================================";
+                    PLog.debugLog(text);
 
                     progData.filmGuiController.setFilterPred();
 

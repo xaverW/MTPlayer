@@ -43,12 +43,7 @@ public class FilmFilterControllerTextFilter extends VBox {
     public FilmFilterControllerTextFilter() {
         super();
         progData = ProgData.getInstance();
-        mbChannel = new P2MenuButton(progData.filmFilterWorker.getActFilterSettings().channelProperty(),
-                ThemeListFactory.allChannelList) {
-            public void doAfterSelction(String text) {
-                ThemeListFactory.createThemeList(ProgData.getInstance(), text);
-            }
-        };
+        mbChannel = new P2MenuButton(progData.filmFilterWorker.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelList);
 
         cboTheme = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeProperty());
         cboThemeExact = new PCboThemeExact(progData, progData.filmFilterWorker.getActFilterSettings().exactThemeProperty());
