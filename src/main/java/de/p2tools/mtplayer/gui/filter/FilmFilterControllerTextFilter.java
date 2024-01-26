@@ -41,8 +41,6 @@ public class FilmFilterControllerTextFilter extends VBox {
     private final PCboStringSearch cboUrl;
 
     private final ProgData progData;
-    private final StringProperty stringPropertyTheme = new SimpleStringProperty();
-    private final StringProperty stringPropertyThemeExact = new SimpleStringProperty();
 
     public FilmFilterControllerTextFilter() {
         super();
@@ -54,8 +52,8 @@ public class FilmFilterControllerTextFilter extends VBox {
             }
         };
 
-        cboTheme = new PCboStringSearch(progData, stringPropertyTheme);
-        cboThemeExact = new PCboThemeExact(progData, stringPropertyThemeExact);
+        cboTheme = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeProperty());
+        cboThemeExact = new PCboThemeExact(progData, progData.filmFilterWorker.getActFilterSettings().exactThemeProperty());
 
         cboThemeTitle = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeTitleProperty());
         cboTitle = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().titleProperty());
@@ -64,26 +62,6 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addFilter();
-
-        addExactProperty();
-        progData.filmFilterWorker.getActFilterSettings().themeExactProperty().addListener((u, o, n) -> {
-            // Umschalten von EXACT
-            addExactProperty();
-        });
-    }
-
-    private void addExactProperty() {
-        // Umschalten von EXACT
-        progData.filmFilterWorker.getActFilterSettings().themeProperty().unbindBidirectional(stringPropertyTheme);
-        progData.filmFilterWorker.getActFilterSettings().themeProperty().unbindBidirectional(stringPropertyThemeExact);
-        stringPropertyTheme.setValue("");
-        stringPropertyThemeExact.setValue("");
-
-        if (progData.filmFilterWorker.getActFilterSettings().isThemeExact()) {
-            progData.filmFilterWorker.getActFilterSettings().themeProperty().bindBidirectional(stringPropertyThemeExact);
-        } else {
-            progData.filmFilterWorker.getActFilterSettings().themeProperty().bindBidirectional(stringPropertyTheme);
-        }
     }
 
     private void addFilter() {
@@ -91,13 +69,13 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         BooleanProperty b = new SimpleBooleanProperty();
         b.bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty()
-                .and(progData.filmFilterWorker.getActFilterSettings().themeExactProperty().not())
+                .and(progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty().not())
         );
         addTxt("Thema", cboTheme, this, b);
 
         b = new SimpleBooleanProperty();
         b.bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty()
-                .and(progData.filmFilterWorker.getActFilterSettings().themeExactProperty())
+                .and(progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty())
         );
         addTxt("Thema exakt", cboThemeExact, this, b);
 
