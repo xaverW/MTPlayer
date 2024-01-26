@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.filmfilter;
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -78,9 +79,9 @@ public class FilmFilterRunner {
 
             try {
                 Platform.runLater(() -> {
-                    System.out.println("=======================================");
-                    System.out.println("   ===== FILTERN: " + ++count + " =====");
-                    System.out.println("=======================================");
+                    PLog.debugLogCount("=======================================");
+                    PLog.debugLogCount("   ===== FILTERN: " + ++count + " =====");
+                    PLog.debugLogCount("=======================================");
 
                     progData.filmGuiController.setFilterPred();
 
