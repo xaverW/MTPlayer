@@ -24,6 +24,7 @@ public class CleaningFactory {
             "/", ":", "&", "!", "?", "°", "=", "\"", "|"
     };
 
+    // ist die Liste zum Putzen der Mediendaten
     public static String[] CLEAN_LIST = {
             "am", "auf", "aus", "aber", "alles", "als",
             "beim", "bis", "besser",
@@ -45,11 +46,14 @@ public class CleaningFactory {
             "zur", "zum",
 
             /*Sender*/
-            "livestream", "3sat", "sat", "ard",
-            "arte.de", "arte.en", "arte.es", "arte.fr", "arte.it", "arte.pl",
-            "kika", "mdr", "ndr", "orf", "phoenix",
-            "rbb", "radio bremen tv",
-            "rbtv", "srf", "swr", "wdr", "zdf", "zdf-tivi",
+            "livestream",
+            "3Sat", "sat", "ARD",
+            "ARTE.DE", "ARTE.EN", "ARTE.ES", "ARTE.FR", "ARTE.IT", "ARTE.PL",
+            "BR", "DW", "Funk.net",
+            "HR", "KiKA",
+            "MDR", "NDR", "ORF", "PHOENIX",
+            "RBB", "RBTV", "Radio Bremen TV",
+            "SR", "SRF", "SWR", "WDR", "ZDF", "ZDF-tivi",
             /*Sender*/
     };
 

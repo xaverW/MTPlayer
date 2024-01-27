@@ -17,13 +17,13 @@
 package de.p2tools.mtplayer.controller.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
@@ -96,19 +96,14 @@ public class FilmToolsFactory {
         return new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue().split(",")));
     }
 
-    /**
-     * die Einstellung _alle Sender nicht laden_ ist sinnlos, ist ein Fehler des Nutzers
-     * und das ist nur ein Hinweis daruf!
-     *
-     * @param stage
-     * @return
-     */
-    public static boolean checkAllSenderSelectedNotToLoad(Stage stage) {
+    public static void checkAllSenderSelectedNotToLoad(Stage stage) {
+        // die Einstellung _alle Sender nicht laden_,  wird ja sonst nix geladen, ist ein Fehler des Nutzers
+        // und das ist nur ein Hinweis darauf!
         ArrayList<String> aListSenderNotToLoad = getSenderListNotToLoad();
         boolean allSender = true;
-        for (String sender : ProgConst.SENDER) {
+        for (String sender : LoadFactoryConst.SENDER) {
             Optional<String> optional = aListSenderNotToLoad.stream().filter(aktSender -> aktSender.equals(sender)).findAny();
-            if (!optional.isPresent()) {
+            if (optional.isEmpty()) {
                 // mindestens einer fehlt :)
                 allSender = false;
                 break;
@@ -123,7 +118,6 @@ public class FilmToolsFactory {
                             "\n\n" +
                             "Einstellungen -> Filmliste laden"));
         }
-        return allSender;
     }
 
     public static int markFilms(ListProperty<? extends FilmData> filmList) {

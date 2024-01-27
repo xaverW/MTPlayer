@@ -27,6 +27,7 @@ public class ProgConfigUpdate {
     public static void setUpdateDone() {
         ProgConfig.SYSTEM_AFTER_UPDATE_FILTER.setValue(true);
         ProgConfig.SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER.setValue(true);
+        ProgConfig.SYSTEM_AFTER_UPDATE_RBTV.setValue(true);
     }
 
     public static void update() {
@@ -54,6 +55,7 @@ public class ProgConfigUpdate {
             if (filmFilter.isThemeIsExact()) {
                 filmFilter.setExactTheme(filmFilter.getTheme());
             }
+
             ProgData.getInstance().filmFilterWorker.getStoredFilterList().forEach(sf -> {
                 // exactTheme ist neu
                 if (sf.isThemeIsExact()) {
@@ -61,6 +63,33 @@ public class ProgConfigUpdate {
                 }
             });
         }
+
+        if (!ProgConfig.SYSTEM_AFTER_UPDATE_RBTV.getValue()) {
+            // "rbtv" und "Radio Bremen TV" wird umbenannt in "RBTV"
+            FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
+            if (filmFilter.channelProperty().getValueSafe().contains("rbtv") ||
+                    filmFilter.channelProperty().getValueSafe().contains("Radio Bremen TV")) {
+                filmFilter.setChannel(filmFilter.channelProperty().getValueSafe().replaceAll("rbtv", "RBTV"));
+                filmFilter.setChannel(filmFilter.channelProperty().getValueSafe().replaceAll("Radio Bremen TV", "RBTV"));
+            }
+
+            ProgData.getInstance().filmFilterWorker.getStoredFilterList().forEach(sf -> {
+                if (sf.channelProperty().getValueSafe().contains("rbtv") ||
+                        sf.channelProperty().getValueSafe().contains("Radio Bremen TV")) {
+                    sf.setChannel(sf.channelProperty().getValueSafe().replaceAll("rbtv", "RBTV"));
+                    sf.setChannel(sf.channelProperty().getValueSafe().replaceAll("Radio Bremen TV", "RBTV"));
+                }
+            });
+            
+            ProgData.getInstance().aboList.forEach(aboData -> {
+                if (aboData.getChannel().contains("rbtv") ||
+                        aboData.getChannel().contains("Radio Bremen TV")) {
+                    aboData.setChannel(aboData.getChannel().replaceAll("rbtv", "RBTV"));
+                    aboData.setChannel(aboData.getChannel().replaceAll("Radio Bremen TV", "RBTV"));
+                }
+            });
+        }
+
         setUpdateDone();
     }
 }

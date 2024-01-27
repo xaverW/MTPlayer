@@ -25,7 +25,6 @@ public class ProgConst {
     // settings file
     public static final String CONFIG_FILE = "mtp.xml";
     public static final String STYLE_FILE = "style.css";
-    public static final String CONFIG_FILE_COPY = "mtp.xml_copy_";
     public static final String CONFIG_DIRECTORY = "p2Mtplayer"; // im Homeverzeichnis
 
     public static final String FILE_BOOKMARKS = "bookmarks.txt";
@@ -101,45 +100,10 @@ public class ProgConst {
 
     public static final int LAENGE_DATEINAME_MAX = 200; // Standardwert für die Länge des Zieldateinamens
     public static final int LAENGE_FELD_MAX = 100; // Standardwert für die Länge des Feldes des
-    public final static int MAX_COPY_OF_BACKUPFILE = 5; // Maximum number of backup files to be stored.
 
     public static final int MIN_TABLE_HEIGHT = 200;
     public static final int MIN_TABLE_HEIGHT_LOW = 100;
     public static final int MIN_TEXTAREA_HEIGHT_LOW = 50;
 
     public static final String THEME_LIVE = "Livestream";
-
-    public static final String DREISAT = "3Sat";
-    public static final String ARD = "ARD";
-
-    public static final String ARTE_DE = "ARTE.DE";
-    public static final String ARTE_EN = "ARTE.EN";
-    public static final String ARTE_ES = "ARTE.ES";
-    public static final String ARTE_FR = "ARTE.FR";
-    public static final String ARTE_IT = "ARTE.IT";
-    public static final String ARTE_PL = "ARTE.PL";
-
-    public static final String BR = "BR";
-    public static final String DW = "DW";
-    public static final String HR = "HR";
-    public static final String KIKA = "KiKA";
-    public static final String MDR = "MDR";
-    public static final String NDR = "NDR";
-    public static final String ORF = "ORF";
-    public static final String PHOENIX = "PHOENIX";
-    public static final String RBB = "RBB";
-    public static final String RBB_TV = "rbtv";
-    public static final String RADIO_BREMEN = "Radio Bremen TV";
-
-    public static final String SR = "SR";
-    public static final String SRF = "SRF";
-    public static final String SWR = "SWR";
-    public static final String WDR = "WDR";
-    public static final String ZDF = "ZDF";
-    public static final String ZDF_TIVI = "ZDF-tivi";
-
-    public static final String[] SENDER = {DREISAT, ARD,
-            ARTE_DE, ARTE_EN, ARTE_ES, ARTE_FR, ARTE_IT, ARTE_PL,
-            BR, DW, HR, KIKA, MDR, NDR, ORF, PHOENIX, RBB, RBB_TV, RADIO_BREMEN, SR,
-            SRF, SWR, WDR, ZDF, ZDF_TIVI};
 }

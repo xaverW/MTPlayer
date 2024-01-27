@@ -26,6 +26,7 @@ import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -147,14 +148,15 @@ public class PaneFilmSender {
         final TilePane tilePaneSender = new TilePane();
         tilePaneSender.setHgap(5);
         tilePaneSender.setVgap(5);
-        ArrayList aListChannel = FilmToolsFactory.getSenderListNotToLoad();
+        ArrayList<String> aListChannel = FilmToolsFactory.getSenderListNotToLoad();
         ArrayList<CheckBox> aListCb = new ArrayList<>();
-        for (String s : ProgConst.SENDER) {
+        for (String s : LoadFactoryConst.SENDER) {
             final CheckBox cb = new CheckBox(s);
             aListCb.add(cb);
             cb.setSelected(aListChannel.contains(s));
             cb.setOnAction(a -> {
                 makePropSender(aListCb);
+                // und noch prüfen, dass nicht alle ausgeschaltet sind
                 FilmToolsFactory.checkAllSenderSelectedNotToLoad(stage);
             });
 
