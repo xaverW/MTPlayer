@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UpdateFactory {
-    static final LocalDate whatsNewDate = LocalDate.of(2024, 1, 23); // erhöht sich, wenn whatsNew geändert wird
+    static final LocalDate whatsNewDate = LocalDate.of(2024, 1, 27); // erhöht sich, wenn whatsNew geändert wird
 
     private UpdateFactory() {
     }
@@ -71,7 +71,7 @@ public class UpdateFactory {
                     "In den Einstellungen kann zum Suchen von doppelten Filmen jetzt die Suchreihenfolge " +
                             "vorgegeben werden. Es ist jetzt auch möglich, dass doppelte Filme beim Laden der Filmliste " +
                             "gleich ausgeschlossen werden. Es ist jetzt auch möglich, doppelte Filme mit der Blacklist " +
-                            "auszuschließen."));
+                            "auszuschließen.", 100));
 
             list.add(new WhatsNewInfo("/de/p2tools/mtplayer/res/whatsnew/whatsNew_02.png",
                     "Filme mit Untertitel",
@@ -81,7 +81,20 @@ public class UpdateFactory {
                             "Für welche Filme das dann zutrifft, kann man hier vorgegeben." +
                             "\n\n" +
                             "Im Kontextmenü in der Tabelle mit den Filmen, gibt es jetzt einen weiteren Menüpunkt. " +
-                            "Damit können die Untertitel-Dateien direkt heruntergeladen werden."));
+                            "Damit können die Untertitel-Dateien direkt heruntergeladen werden.", 150));
+
+            list.add(new WhatsNewInfo("/de/p2tools/mtplayer/res/whatsnew/whatsNew_03.png",
+                    "Filmfilter \"Thema exact\"",
+                    "Es ist jetzt möglich, durch Texteingabe die angezeigte Liste der Themen " +
+                            "zu filtern\n" +
+                            "Mit ENTER wird das selektierte Theme gewählt. Um ein Thema auszuwählen, können die " +
+                            "Courser-Tasten und die Tab-Tasten benutzt werden.", 100));
+
+            list.add(new WhatsNewInfo("",
+                    "Was sich sonst noch geändert hat",
+                    "Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +
+                            "\"rbtv\" und \"RBTV\" gelistet. Die werden jetzt zusammengefasst zu dem " +
+                            "Sendernamen: \"RBTV\".", 80));
 
             Platform.runLater(() -> new WhatsNewDialog(ProgData.getInstance().primaryStage, ProgConst.PROGRAM_NAME,
                     ProgConst.URL_WEBSITE, ProgConfig.SYSTEM_PROG_OPEN_URL,
