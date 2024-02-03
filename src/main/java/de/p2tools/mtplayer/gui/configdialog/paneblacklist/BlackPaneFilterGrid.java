@@ -114,8 +114,9 @@ public class BlackPaneFilterGrid {
         tableView.setStyle("-fx-border-color: -text-color-blue;");
 
         splitPane.getItems().addAll(tableView, vAll);
-        splitPane.getItems().get(0).autosize();
+//        splitPane.getItems().get(0).autosize();
         SplitPane.setResizableWithParent(vAll, false);
+        SplitPane.setResizableWithParent(tableView, false);
 
         if (controlBlackListNotFilmFilter) {
             splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.CONFIG_DIALOG_BLACKLIST_SPLITPANE);
