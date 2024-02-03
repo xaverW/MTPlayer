@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
+import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
@@ -42,6 +43,8 @@ public class FilmFilterControllerBlacklist extends HBox {
         btnBlack.setGraphic(ProgIcons.ICON_BUTTON_EDIT.getImageView());
         btnBlack.setOnAction(a -> new ConfigDialogController(ProgData.getInstance(), true));
         btnBlack.disableProperty().bind(ConfigDialogController.dialogIsRunning);
+        btnBlack.setTooltip(new Tooltip("Blacklist-Einstellungen anzeigen - " +
+                PShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut()));
 
         Label lblRight = new Label();
         tglBlacklist.setAllowIndeterminate(true);
@@ -51,10 +54,7 @@ public class FilmFilterControllerBlacklist extends HBox {
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
 
         setTglBlacklist();
-        progData.filmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
-            setTglBlacklist();
-        });
-
+        progData.filmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> setTglBlacklist());
         tglBlacklist.getCheckBox().setOnAction((mouseEvent) -> {
             if (tglBlacklist.isIndeterminate()) {
                 progData.filmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);

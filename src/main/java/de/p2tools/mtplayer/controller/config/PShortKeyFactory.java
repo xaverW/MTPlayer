@@ -96,6 +96,12 @@ public class PShortKeyFactory {
         rn = MTPlayerFactory::addBlacklistTheme;
         scene.getAccelerators().put(kc, rn);
 
+        // Blacklist-Einstellungen anzeigen
+        pShortcut = PShortcut.SHORTCUT_SHOW_BLACKLIST;
+        kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
+        rn = MTPlayerFactory::showBlacklist;
+        scene.getAccelerators().put(kc, rn);
+
         // Undo, gelöschte (Downloads, Abos) wieder herstellen
         pShortcut = PShortcut.SHORTCUT_UNDO_DELETE;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());

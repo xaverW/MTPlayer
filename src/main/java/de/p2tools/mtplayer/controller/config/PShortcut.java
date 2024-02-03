@@ -68,6 +68,12 @@ public class PShortcut {
                     "Einen neuen Eintrag mit dem exakten Thema in der Blacklist erstellen, " +
                             "der markierte Film dient dabei Vorlage.");
 
+    public static final P2ShortcutKey SHORTCUT_SHOW_BLACKLIST =
+            new P2ShortcutKey(ProgConfig.SHORTCUT_SHOW_BLACKLIST, ProgConfig.SHORTCUT_SHOW_BLACKLIST_INIT,
+                    "Einstellungen zur Blacklist anzeigen",
+                    "Die Programmeinstellungen zum Anpassen und Ändern der Blacklist " +
+                            "werden angezeigt.");
+
     public static final P2ShortcutKey SHORTCUT_SHOW_FILTER =
             new P2ShortcutKey(ProgConfig.SHORTCUT_SHOW_FILTER, ProgConfig.SHORTCUT_SHOW_FILTER_INIT,
                     "Filter anzeigen",
@@ -160,6 +166,7 @@ public class PShortcut {
         shortcutList.add(SHORTCUT_FILM_NOT_SHOWN);
         shortcutList.add(SHORTCUT_ADD_BLACKLIST);
         shortcutList.add(SHORTCUT_ADD_BLACKLIST_THEME);
+        shortcutList.add(SHORTCUT_SHOW_BLACKLIST);
         shortcutList.add(SHORTCUT_SHOW_FILTER);
         shortcutList.add(SHORTCUT_SHOW_INFOS);
         shortcutList.add(SHORTCUT_INFO_FILM);

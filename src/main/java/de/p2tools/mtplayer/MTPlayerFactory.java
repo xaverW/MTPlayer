@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
+import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 
 public class MTPlayerFactory {
     private MTPlayerFactory() {
@@ -125,6 +126,10 @@ public class MTPlayerFactory {
             case ABO:
                 break;
         }
+    }
+
+    public static void showBlacklist() {
+        new ConfigDialogController(ProgData.getInstance(), true);
     }
 
     public static void setMediaCollection() {

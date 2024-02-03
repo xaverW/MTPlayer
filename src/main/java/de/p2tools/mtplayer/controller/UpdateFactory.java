@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UpdateFactory {
-    static final LocalDate whatsNewDate = LocalDate.of(2024, 1, 27); // erhöht sich, wenn whatsNew geändert wird
+    static final LocalDate whatsNewDate = LocalDate.of(2024, 2, 3); // erhöht sich, wenn whatsNew geändert wird
 
     private UpdateFactory() {
     }
@@ -92,9 +92,11 @@ public class UpdateFactory {
 
             list.add(new WhatsNewInfo("",
                     "Was sich sonst noch geändert hat",
-                    "Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +
+                    "* Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +
                             "\"rbtv\" und \"RBTV\" gelistet. Die werden jetzt zusammengefasst zu dem " +
-                            "Sendernamen: \"RBTV\".", 80));
+                            "Sendernamen: \"RBTV\"." +
+                            "\n\n" +
+                            "* Es gibt ein neues ShortCut zum Anzeigen der Blacklist-Einstellungen: ALT+B", 120));
 
             Platform.runLater(() -> new WhatsNewDialog(ProgData.getInstance().primaryStage, ProgConst.PROGRAM_NAME,
                     ProgConst.URL_WEBSITE, ProgConfig.SYSTEM_PROG_OPEN_URL,
