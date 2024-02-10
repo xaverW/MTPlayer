@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFiles;
+import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
@@ -95,7 +96,11 @@ public class StartDownloadFactory {
             } else {
                 errMsg = "Fehlerhafter Download";
             }
-            Platform.runLater(() -> new DownloadErrorDialogController(download, errMsg));
+
+            Platform.runLater(() -> {
+                ProgData.getInstance().downloadErrorList.add(new DownloadErrorData(download.getTitle(), errMsg));
+                new DownloadErrorDialogController(download, errMsg);
+            });
         }
 
         // und die Finished-Msg ausgeben

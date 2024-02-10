@@ -16,10 +16,7 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
-import de.p2tools.mtplayer.controller.config.PListener;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.P2LibConst;
@@ -53,7 +50,7 @@ public class DownloadDirectHttp extends Thread {
     private long fileSizeLoaded = 0;
     private double percentOld = DownloadConstants.PROGRESS_WAITING;
     private double startPercent = DownloadConstants.PROGRESS_NOT_STARTED;
-    private HttpURLConnection conn = null;
+    private HttpURLConnection httpURLConn = null;
     private boolean updateDownloadInfos = false;
 
     private final PListener listener = new PListener(PListener.EVENT_TIMER_HALF_SECOND, DownloadDirectHttp.class.getSimpleName()) {
@@ -143,8 +140,8 @@ public class DownloadDirectHttp extends Thread {
             if (fos != null) {
                 fos.close();
             }
-            if (conn != null) {
-                conn.disconnect();
+            if (httpURLConn != null) {
+                httpURLConn.disconnect();
             }
         } catch (final Exception ignored) {
         }
@@ -154,35 +151,36 @@ public class DownloadDirectHttp extends Thread {
         final URL url = new URL(download.getUrl());
         download.getDownloadSize().setTargetSize(getContentLength(url));
         download.getDownloadSize().setActuallySize(0);
-        conn = (HttpURLConnection) url.openConnection();
-        conn.setConnectTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
-        conn.setReadTimeout(1000 * ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue());
+
+        httpURLConn = ProxyFactory.getUrlConnection(url);
 
         if ((restartWithOutSSL.getValue() || ProgConfig.SYSTEM_SSL_ALWAYS_TRUE.getValue())
-                && conn instanceof HttpsURLConnection) {
+                && httpURLConn instanceof HttpsURLConnection) {
             // dann die Verbindung ohne https aufmachen
-            HttpsURLConnection httpsConn = (HttpsURLConnection) conn;
+            HttpsURLConnection httpsConn = (HttpsURLConnection) httpURLConn;
             httpsConn.setHostnameVerifier((hostname, session) -> true);
         }
 
-        setupHttpConnection(conn);
-        conn.connect();
-        final int httpResponseCode = conn.getResponseCode();
+        setupHttpConnection(httpURLConn);
+        httpURLConn.connect();
+        final int httpResponseCode = httpURLConn.getResponseCode();
         if (httpResponseCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
             // Range passt nicht, also neue Verbindung versuchen...
-            String responseCode = "Responsecode: " + httpResponseCode + P2LibConst.LINE_SEPARATOR + conn.getResponseMessage();
+            String responseCode = "ResponseCode: " + httpResponseCode + P2LibConst.LINE_SEPARATOR + httpURLConn.getResponseMessage();
             PLog.errorLog(915235789, responseCode);
 
             if (httpResponseCode == 416) {
                 // 416 = Range Not Satisfiable
-                conn.disconnect();
+                httpURLConn.disconnect();
                 // dann nochmal mit Start von Anfang an versuchen
-                conn = (HttpURLConnection) url.openConnection();
+//                httpURLConn = (HttpURLConnection) url.openConnection();
+                httpURLConn = ProxyFactory.getUrlConnection(url);
+
                 download.getDownloadStartDto().setDownloaded(0);
-                setupHttpConnection(conn);
-                conn.connect();
+                setupHttpConnection(httpURLConn);
+                httpURLConn.connect();
                 // hier wars es dann nun wirklich...
-                if (conn.getResponseCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
+                if (httpURLConn.getResponseCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
                     download.setStateError("DownloadFehler, httpResponseCode 416: Der angeforderte Teil einer " +
                             "Ressource war ungültig oder steht auf dem Server nicht zur Verfügung.");
                 }
@@ -205,7 +203,8 @@ public class DownloadDirectHttp extends Thread {
         long ret = -1;
         HttpURLConnection connection = null;
         try {
-            connection = (HttpURLConnection) url.openConnection();
+            // connection = (HttpURLConnection) url.openConnection();
+            connection = ProxyFactory.getUrlConnection(url);
             connection.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
             connection.setReadTimeout(TIMEOUT_LENGTH);
             connection.setConnectTimeout(TIMEOUT_LENGTH);
@@ -245,7 +244,7 @@ public class DownloadDirectHttp extends Thread {
      * @throws Exception
      */
     private void downloadContent() throws Exception {
-        download.getDownloadStartDto().setInputStream(new MLInputStream(conn.getInputStream(),
+        download.getDownloadStartDto().setInputStream(new MLInputStream(httpURLConn.getInputStream(),
                 bandwidthCalculationTimer,
                 ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE,
                 ProgData.FILMLIST_IS_DOWNLOADING));

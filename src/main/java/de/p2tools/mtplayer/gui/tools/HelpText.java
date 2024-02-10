@@ -399,6 +399,13 @@ public class HelpText {
                     "'Sport:Fussball' nicht erfasst." +
                     "\n";
 
+    public static final String CONFIG_PROXY =
+            "Hier kann ein Proxy-Server angegeben werden. Ist \"Proxy verwenden\" " +
+                    "eingeschaltet, wird der gesamte Datenverkehr (Laden der Filmliste, Speichern von Filmen, ..) " +
+                    "über den Proxy-Server geleitet. Beim Download von Filmen mit externen Programmen, muss " +
+                    "im externen Programm selbst die Einstellung für den Proxy vorgenommen werden!" +
+                    "\n";
+
     public static final String CONFIG_GEO =
             "Nicht alle Filme lassen sich aus allen Ländern abrufen (Geoblocking). Man kann hier " +
                     "seinen Standort angeben, wenn geblockte Filme in der Liste markiert werden sollen " +

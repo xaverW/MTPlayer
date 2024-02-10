@@ -35,6 +35,7 @@ public class ControllerConfig extends PAccordionPane {
     private PaneStatusBar paneStatusBar;
     private PaneShortcut paneShortcut;
     private PaneGeo paneGeo;
+    private PaneProxy paneProxy;
     private PaneKeySize paneKeySize;
     private PaneUpdate paneUpdate;
     private PaneProgs paneProgs;
@@ -59,6 +60,7 @@ public class ControllerConfig extends PAccordionPane {
         paneStatusBar.close();
         paneShortcut.close();
         paneGeo.close();
+        paneProxy.close();
         paneKeySize.close();
         paneProgs.close();
         paneLogfile.close();
@@ -68,7 +70,7 @@ public class ControllerConfig extends PAccordionPane {
 
     @Override
     public Collection<TitledPane> createPanes() {
-        Collection<TitledPane> result = new ArrayList<TitledPane>();
+        Collection<TitledPane> result = new ArrayList<>();
 
         paneConfig = new PaneConfig(stage);
         paneConfig.makeConfig(result);
@@ -93,6 +95,9 @@ public class ControllerConfig extends PAccordionPane {
 
         paneGeo = new PaneGeo(stage);
         paneGeo.makeGeo(result);
+
+        paneProxy = new PaneProxy(stage);
+        paneProxy.make(result);
 
         paneKeySize = new PaneKeySize(stage, progData);
         paneKeySize.makeStyle(result);

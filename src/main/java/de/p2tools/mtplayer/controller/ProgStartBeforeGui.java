@@ -145,7 +145,8 @@ public class ProgStartBeforeGui {
             FilmFilterSamples.addStandardFilter();
         }
 
-        ProgConfigUpdate.update(); //falls es ein Programmupdate gab, Configs anpassen
-        ProgColorList.setColorTheme(); //Farben einrichten
+        ProgConfigUpdate.update(); // falls es ein Programmupdate gab, Configs anpassen
+        ProgColorList.setColorTheme(); // Farben einrichten
+        ProxyFactory.initProxy(); // wenn gewollt, einen Proxy einrichten
     }
 }

@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.config.ProxyFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.mtdownload.TimedTextMarkupLanguageParser;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -27,7 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -99,7 +99,9 @@ public class MTSubtitle {
                     "schreiben nach: ", download.getDestPath()});
 
             Files.createDirectories(Paths.get(download.getDestPath()));
-            final HttpURLConnection conn = (HttpURLConnection) new URL(urlSubtitle).openConnection();
+
+            // final HttpURLConnection conn = (HttpURLConnection) new URL(urlSubtitle).openConnection();
+            final HttpURLConnection conn = ProxyFactory.getUrlConnection(urlSubtitle);
             setupConnection(conn);
 
             if ((conn.getResponseCode()) < HttpURLConnection.HTTP_BAD_REQUEST) {
