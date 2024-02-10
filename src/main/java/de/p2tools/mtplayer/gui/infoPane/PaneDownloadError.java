@@ -73,7 +73,7 @@ public class PaneDownloadError extends AnchorPane {
 
         } else {
             progData.downloadErrorList.forEach(d -> {
-                TextArea ta = new TextArea(d.getHead());
+                TextArea ta = new TextArea(d.getTitle());
                 ta.setEditable(false);
                 ta.setWrapText(true);
                 ta.setPrefRowCount(4);
