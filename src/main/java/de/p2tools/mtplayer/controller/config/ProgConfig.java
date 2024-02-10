@@ -143,12 +143,19 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_DOT = addBoolProp("system-status-bar-field-dot", false);
     public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_RIGHT = addBoolProp("system-status-bar-field-right", true);
 
+    // Proxy
+    public static BooleanProperty SYSTEM_USE_PROXY = addBoolProp("system-use-proxy", Boolean.FALSE);
+    public static StringProperty SYSTEM_PROXY_HOST = addStrProp("system-proxy-host", "");
+    public static StringProperty SYSTEM_PROXY_PORT = addStrProp("system-proxy-port", "");
+    public static StringProperty SYSTEM_PROXY_USER = addStrProp("system-proxy-user", "");
+    public static StringProperty SYSTEM_PROXY_PWD = addStrProp("system-proxy-pwd", "");
 
     public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBoolProp("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");
     public static StringProperty SYSTEM_PROG_OPEN_URL = addStrProp("system-prog-open-url");
     public static StringProperty SYSTEM_PROG_PLAY_FILME = addStrProp("system-prog-play-filme");
+
     public static BooleanProperty SYSTEM_MARK_GEO = addBoolProp("system-mark-geo", Boolean.TRUE);
     public static StringProperty SYSTEM_GEO_HOME_PLACE = addStrProp("system-geo-home-place", FilmDataMTP.GEO_DE);
     public static BooleanProperty SYSTEM_STYLE = addBoolProp("system-style", Boolean.FALSE);
@@ -345,7 +352,9 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_PANE_DIALOG_MEDIA_SIZE = addStrProp("download-pane-dialog-media-size");
     public static BooleanProperty DOWNLOAD_PANE_DIALOG_MEDIA_ON = addBoolProp("download-pane-dialog-media-on");
     public static StringProperty DOWNLOAD_PANE_DIALOG_CHART_SIZE = addStrProp("download-pane-dialog-chart-size");
+    public static StringProperty DOWNLOAD_PANE_DIALOG_ERROR_SIZE = addStrProp("download-pane-dialog-error-size");
     public static BooleanProperty DOWNLOAD_PANE_DIALOG_CHART_ON = addBoolProp("download-pane-dialog-chart-on");
+    public static BooleanProperty DOWNLOAD_PANE_DIALOG_ERROR_ON = addBoolProp("download-pane-dialog-error-on");
     public static StringProperty DOWNLOAD_PANE_DIALOG_DOWN_INFO_SIZE = addStrProp("download-pane-dialog-down-info-size");
     public static BooleanProperty DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON = addBoolProp("download-pane-dialog-down-info-on");
 

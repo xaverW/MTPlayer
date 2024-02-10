@@ -34,10 +34,12 @@ public class DownloadInfoController extends P2ClosePaneH {
     private PaneFilmInfo paneFilmInfo;
     private PaneMedia paneMedia;
     private PaneBandwidthChart paneBandwidthChart;
+    private PaneDownloadError paneDownloadError;
     private PaneDownloadInfo paneDownloadInfo;
     private Tab tabFilmInfo;
     private Tab tabMedia;
     private Tab tabDownloadChart;
+    private Tab tabDownloadError;
     private Tab tabDownloadInfo;
 
     private final ProgData progData;
@@ -83,6 +85,7 @@ public class DownloadInfoController extends P2ClosePaneH {
         initDto(mDtoMedia, mDtoAbo);
         paneMedia = new PaneMedia(mDtoMedia, mDtoAbo);
         paneBandwidthChart = new PaneBandwidthChart(progData);
+        paneDownloadError = new PaneDownloadError();
         paneDownloadInfo = new PaneDownloadInfo();
 
         tabFilmInfo = new Tab("Beschreibung");
@@ -91,6 +94,8 @@ public class DownloadInfoController extends P2ClosePaneH {
         tabMedia.setClosable(false);
         tabDownloadChart = new Tab("Downloadchart");
         tabDownloadChart.setClosable(false);
+        tabDownloadError = new Tab("Downloadfehler");
+        tabDownloadError.setClosable(false);
         tabDownloadInfo = new Tab("Infos");
         tabDownloadInfo.setClosable(false);
 
@@ -101,6 +106,8 @@ public class DownloadInfoController extends P2ClosePaneH {
                 dialogMedia();
             } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneBandwidthChart)) {
                 dialogChart();
+            } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneDownloadError)) {
+                dialogDownloadError();
             } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneDownloadInfo)) {
                 dialogDownloadInfo();
             }
@@ -115,6 +122,9 @@ public class DownloadInfoController extends P2ClosePaneH {
         if (ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON.getValue()) {
             dialogChart();
         }
+        if (ProgConfig.DOWNLOAD_PANE_DIALOG_ERROR_ON.getValue()) {
+            dialogDownloadError();
+        }
         if (ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON.getValue()) {
             dialogDownloadInfo();
         }
@@ -122,6 +132,7 @@ public class DownloadInfoController extends P2ClosePaneH {
         ProgConfig.DOWNLOAD_PANE_DIALOG_INFO_ON.addListener((u, o, n) -> setTabs());
         ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON.addListener((u, o, n) -> setTabs());
         ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON.addListener((u, o, n) -> setTabs());
+        ProgConfig.DOWNLOAD_PANE_DIALOG_ERROR_ON.addListener((u, o, n) -> setTabs());
         ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON.addListener((u, o, n) -> setTabs());
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> setTabs());
         setTabs();
@@ -151,7 +162,6 @@ public class DownloadInfoController extends P2ClosePaneH {
                 ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
-
     private void dialogMedia() {
         InfoPaneFactory.setDialogInfo(tabMedia, paneMedia, "Mediensammlung",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_MEDIA_ON,
@@ -161,6 +171,12 @@ public class DownloadInfoController extends P2ClosePaneH {
     private void dialogChart() {
         InfoPaneFactory.setDialogInfo(tabDownloadChart, paneBandwidthChart, "Downloadchart",
                 ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_CHART_ON,
+                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
+    }
+
+    private void dialogDownloadError() {
+        InfoPaneFactory.setDialogInfo(tabDownloadError, paneDownloadError, "Downloadfehler",
+                ProgConfig.DOWNLOAD_PANE_DIALOG_ERROR_SIZE, ProgConfig.DOWNLOAD_PANE_DIALOG_ERROR_ON,
                 ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgData.DOWNLOAD_TAB_ON);
     }
 
@@ -199,6 +215,16 @@ public class DownloadInfoController extends P2ClosePaneH {
             tabDownloadChart.setContent(paneBandwidthChart);
             if (!tabPane.getTabs().contains(tabDownloadChart)) {
                 tabPane.getTabs().add(i, tabDownloadChart);
+            }
+            ++i;
+        }
+
+        if (ProgConfig.DOWNLOAD_PANE_DIALOG_ERROR_ON.getValue()) {
+            tabPane.getTabs().remove(tabDownloadError);
+        } else {
+            tabDownloadError.setContent(paneDownloadError);
+            if (!tabPane.getTabs().contains(tabDownloadError)) {
+                tabPane.getTabs().add(i, tabDownloadError);
             }
             ++i;
         }

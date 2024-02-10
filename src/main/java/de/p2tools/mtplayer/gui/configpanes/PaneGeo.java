@@ -36,7 +36,7 @@ public class PaneGeo {
     private final RadioButton rbAt = new RadioButton("AT - Österreich");
     private final RadioButton rbEu = new RadioButton("EU (EBU - European Broadcasting Union)");
     private final RadioButton rbSonst = new RadioButton("sonst");
-    private final P2ToggleSwitch tglGeo = new P2ToggleSwitch("Geblockte Sendungen gelb markieren:");
+    private final P2ToggleSwitch tglGeo = new P2ToggleSwitch("Geblockte Sendungen gelb markieren");
 
     private final Stage stage;
 
