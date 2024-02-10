@@ -11,6 +11,7 @@ public class ProxyFactory {
     }
 
     public static void initProxy() {
+        printPoxySettings();
         if (ProgConfig.SYSTEM_USE_PROXY.getValue()) {
             try {
                 String host = getHost();
@@ -41,6 +42,39 @@ public class ProxyFactory {
                     getHost(), getPort(), getUser(), getPwd());
         }
 
+    }
+
+    private static void printPoxySettings() {
+        StringBuilder log = new StringBuilder("############################################################\n" +
+                "Proxy-Settings\n" +
+                "Use Proxy: " + ProgConfig.SYSTEM_USE_PROXY.getValue() + "\n");
+        if (ProgConfig.SYSTEM_USE_PROXY.getValue()) {
+            // sonst will der User keinen Proxy
+            log.append("==============\n" +
+                    "SystemProperty:\n");
+            if (System.getProperty("http.proxyHost") != null && !System.getProperty("http.proxyHost").isEmpty()) {
+                log.append("http.proxyHost: ").append(System.getProperty("http.proxyHost")).append("\n");
+            }
+            if (System.getProperty("http.proxyPort") != null && !System.getProperty("http.proxyPort").isEmpty()) {
+                log.append("http.proxyPort: ").append(System.getProperty("http.proxyPort")).append("\n");
+            }
+            if (System.getProperty("http.proxyUser") != null && !System.getProperty("http.proxyUser").isEmpty()) {
+                log.append("http.proxyUser: ").append(System.getProperty("http.proxyUser")).append("\n");
+            }
+            if (System.getProperty("http.proxyPassword") != null && !System.getProperty("http.proxyPassword").isEmpty()) {
+                log.append("http.proxyPassword: ").append("???????").append("\n");
+            }
+
+            log.append("==============\n" +
+                    "Programmeinstellungen:\n");
+            log.append("Host: ").append(ProgConfig.SYSTEM_PROXY_HOST.getValueSafe()).append("\n");
+            log.append("Port: ").append(ProgConfig.SYSTEM_PROXY_PORT.getValueSafe()).append("\n");
+            log.append("User: ").append(ProgConfig.SYSTEM_PROXY_USER.getValueSafe()).append("\n");
+            log.append("PWD: ").append(ProgConfig.SYSTEM_PROXY_PWD.getValueSafe().isEmpty() ? "" : "???????").append("\n");
+        }
+
+        log.append("############################################################\n");
+        PLog.sysLog(log.toString());
     }
 
     private static void setupAuthenticator() {

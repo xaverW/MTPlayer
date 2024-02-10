@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UpdateFactory {
-    static final LocalDate whatsNewDate = LocalDate.of(2024, 2, 3); // erhöht sich, wenn whatsNew geändert wird
+    static final LocalDate whatsNewDate = LocalDate.of(2024, 2, 10); // erhöht sich, wenn whatsNew geändert wird
 
     private UpdateFactory() {
     }
@@ -89,6 +89,17 @@ public class UpdateFactory {
                             "zu filtern\n" +
                             "Mit ENTER wird das selektierte Theme gewählt. Um ein Thema auszuwählen, können die " +
                             "Courser-Tasten und die Tab-Tasten benutzt werden.", 100));
+
+            list.add(new WhatsNewInfo("/de/p2tools/mtplayer/res/whatsnew/whatsNew_04.png",
+                    "Infotab Downloadfehler",
+                    "Im Tab Download gibts bei den Infos einen neuen Reiter: \"Downloadfehler\". Dort " +
+                            "werden die Fehlermeldungen von fehlerhaften Downloads angezeigt.", 80));
+
+            list.add(new WhatsNewInfo("/de/p2tools/mtplayer/res/whatsnew/whatsNew_05.png",
+                    "Proxy-Server",
+                    "Es ist jetzt möglich, einen Proxy-Server zu verwenden. In den \"Programmeinstellungen->Proxy\" " +
+                            "kann er angegeben und eingeschaltet werden. Die Downloads laufen dann über " +
+                            "den Proxy-Server.", 70));
 
             list.add(new WhatsNewInfo("",
                     "Was sich sonst noch geändert hat",
