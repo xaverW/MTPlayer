@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UpdateFactory {
-    static final LocalDate whatsNewDate = LocalDate.of(2024, 2, 10); // erhöht sich, wenn whatsNew geändert wird
+    static final LocalDate whatsNewDate = LocalDate.of(2024, 2, 11); // erhöht sich, wenn whatsNew geändert wird
 
     private UpdateFactory() {
     }
