@@ -28,7 +28,7 @@ import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
-import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.file.P2FileUtils;
 import javafx.application.Platform;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -173,7 +173,7 @@ public class PaneDialogMedia extends PaneDialogScrollPane {
         final String path = txtPathMedia.getText();
         final String name = txtTitleMedia.getText();
         if (!name.isEmpty() && !path.isEmpty()) {
-            P2Open.playStoredFilm(PFileUtils.addsPath(path, name),
+            P2Open.playStoredFilm(P2FileUtils.addsPath(path, name),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         }
     }

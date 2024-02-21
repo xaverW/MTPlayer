@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.file.P2FileUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
@@ -181,9 +181,9 @@ public class DownloadFactoryAbo {
     }
 
     private static String getNextFileName(String file, int i) {
-        String suffix = PFileUtils.getFileNameSuffix(file);
-        String name = PFileUtils.getFileNameWithOutExtension(file);
-        String path = PFileUtils.getPath(file);
+        String suffix = P2FileUtils.getFileNameSuffix(file);
+        String name = P2FileUtils.getFileNameWithOutExtension(file);
+        String path = P2FileUtils.getPath(file);
         return Paths.get(path, name + "_" + i + "." + suffix).toString();
     }
 

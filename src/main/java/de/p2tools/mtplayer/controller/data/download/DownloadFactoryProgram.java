@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.date.P2DateConst;
-import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.file.P2FileUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import de.p2tools.p2lib.tools.net.PUrlTools;
 
@@ -141,7 +141,7 @@ public class DownloadFactoryProgram {
             // Kürzen
             if (setData.getMaxSize() > 0) {
                 int length = setData.getMaxSize();
-                name = PFileUtils.cutName(name, length);
+                name = P2FileUtils.cutName(name, length);
             }
         }
 
@@ -195,7 +195,7 @@ public class DownloadFactoryProgram {
                     }
                     addPpath = addPpath.trim();
                     if (!addPpath.isEmpty()) {
-                        path = PFileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
+                        path = P2FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
                     }
                 }
 
@@ -204,7 +204,7 @@ public class DownloadFactoryProgram {
                 // und den Namen des Themas an den Zielpfad anhängen
                 // --> das wird aber nur beim ersten mal klappen, dann wird im
                 // Downloaddialog immer der letzte Pfad zuerst angeboten
-                path = PFileUtils.addsPath(path,
+                path = P2FileUtils.addsPath(path,
                         DownloadDataFactory.replaceEmptyFileName(download.getTheme(),
                                 true /* pfad */,
                                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
@@ -230,7 +230,7 @@ public class DownloadFactoryProgram {
         // in Win dürfen die Pfade nicht länger als 255 Zeichen haben (für die Infodatei kommen noch
         // ".txt" dazu)
         final String[] pathName = {path, name};
-        PFileUtils.checkLengthPath(pathName);
+        P2FileUtils.checkLengthPath(pathName);
         download.setFile(Paths.get(path, name).toFile());
     }
 
@@ -282,9 +282,9 @@ public class DownloadFactoryProgram {
         replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")
 
         replStr = replStr.replace("%S", PUrlTools.getSuffixFromUrl(download.getUrl()));
-        replStr = replStr.replace("%Z", PFileUtils.getHash(download.getUrl()));
+        replStr = replStr.replace("%Z", P2FileUtils.getHash(download.getUrl()));
         replStr = replStr.replace("%z",
-                PFileUtils.getHash(download.getUrl()) + "."
+                P2FileUtils.getHash(download.getUrl()) + "."
                         + PUrlTools.getSuffixFromUrl(download.getUrl()));
 
         return replStr;

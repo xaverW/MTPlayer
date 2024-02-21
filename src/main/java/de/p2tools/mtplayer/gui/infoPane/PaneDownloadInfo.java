@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.tools.file.PFileSize;
+import de.p2tools.p2lib.tools.file.P2FileSize;
 import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -187,12 +187,12 @@ public class PaneDownloadInfo extends AnchorPane {
                 progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded() > 0) {
 
             if (progData.downloadInfos.getByteLoadingDownloads() > 0) {
-                text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()) + " von "
-                        + PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloads()));
+                text2 = new Text(P2FileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()) + " von "
+                        + P2FileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloads()));
                 text2.getStyleClass().add("downloadGuiMediaText");
 
             } else {
-                text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()));
+                text2 = new Text(P2FileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()));
                 text2.getStyleClass().add("downloadGuiMediaText");
             }
             gridPane.add(text2, 1, row);
@@ -200,14 +200,14 @@ public class PaneDownloadInfo extends AnchorPane {
 
         // Größe wartende Downloads
         if (progData.downloadInfos.getByteWaitingDownloads() > 0) {
-            text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteWaitingDownloads()));
+            text2 = new Text(P2FileSize.convertToStr(progData.downloadInfos.getByteWaitingDownloads()));
             text2.getStyleClass().add("downloadGuiMediaText");
             gridPane.add(text2, 2, row);
         }
 
         // Größe nicht gestartete Downloads
         if (progData.downloadInfos.getByteNotStartedDownloads() > 0) {
-            text2 = new Text(PFileSize.convertToStr(progData.downloadInfos.getByteNotStartedDownloads()));
+            text2 = new Text(P2FileSize.convertToStr(progData.downloadInfos.getByteNotStartedDownloads()));
             text2.getStyleClass().add("downloadGuiMediaText");
             gridPane.add(text2, 3, row);
         }

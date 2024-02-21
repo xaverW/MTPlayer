@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.p2lib.guitools.P2Open;
-import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.file.P2FileUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
@@ -58,7 +58,7 @@ public class PaneMediaContextMenu {
             String path = mediaData.getPath();
             String name = mediaData.getName();
             if (!path.isEmpty() && !name.isEmpty()) {
-                P2Open.playStoredFilm(PFileUtils.addsPath(path, name),
+                P2Open.playStoredFilm(P2FileUtils.addsPath(path, name),
                         ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
             }
         });

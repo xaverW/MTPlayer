@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
-import de.p2tools.p2lib.tools.file.PFileSize;
+import de.p2tools.p2lib.tools.file.P2FileSize;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -223,10 +223,10 @@ public class DownloadInfosFactory {
         if (progData.downloadInfos.getByteLoadingDownloads() > 0 ||
                 progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded() > 0) {
             if (progData.downloadInfos.getByteLoadingDownloads() > 0) {
-                text1 += PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()) + " von "
-                        + PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloads());
+                text1 += P2FileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded()) + " von "
+                        + P2FileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloads());
             } else {
-                text1 += PFileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded());
+                text1 += P2FileSize.convertToStr(progData.downloadInfos.getByteLoadingDownloadsAlreadyLoaded());
             }
             text1 += ", " + progData.downloadInfos.getBandwidthStr();
         }
@@ -235,7 +235,7 @@ public class DownloadInfosFactory {
         //Größe wartende Downloads
         text1 += "wartende Downloads: ";
         if (progData.downloadInfos.getByteWaitingDownloads() > 0) {
-            text1 += PFileSize.convertToStr(progData.downloadInfos.getByteWaitingDownloads());
+            text1 += P2FileSize.convertToStr(progData.downloadInfos.getByteWaitingDownloads());
         }
 
         return text1;

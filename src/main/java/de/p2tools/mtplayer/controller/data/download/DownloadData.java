@@ -27,7 +27,7 @@ import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.date.P2DateConst;
-import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.file.P2FileUtils;
 import de.p2tools.p2lib.tools.net.PUrlTools;
 import javafx.application.Platform;
 
@@ -324,7 +324,7 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public String getFileNameSuffix() {
-        return PFileUtils.getFileNameSuffix(getDestPathFile());
+        return P2FileUtils.getFileNameSuffix(getDestPathFile());
     }
 
     public void setDownloadStartDto(StartDownloadDto startDownloadDto) {
@@ -417,7 +417,7 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public void setFile(String path, String name) {
-        setFile(PFileUtils.addsPath(path, name));
+        setFile(P2FileUtils.addsPath(path, name));
     }
 
     public void setFile(String file) {
@@ -446,7 +446,7 @@ public final class DownloadData extends DownloadDataProps {
             name = P2DateConst.F_FORMAT_yyyyMMdd.format(new Date()) + '_' + getTheme() + '-' + getTitle() + ".mp4";
         }
         final String[] pathName = {path, name};
-        PFileUtils.checkLengthPath(pathName);
+        P2FileUtils.checkLengthPath(pathName);
         if (!pathName[0].equals(path) || !pathName[1].equals(name)) {
             Platform.runLater(() ->
                     new PAlert().showInfoAlert("Pfad zu lang!", "Pfad zu lang!",
@@ -457,7 +457,7 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         //=====================================================
-        setFile(PFileUtils.addsPath(path, name));
+        setFile(P2FileUtils.addsPath(path, name));
     }
 
     public String getErrorMessage() {

@@ -26,7 +26,7 @@ import de.p2tools.p2lib.mtdownload.DownloadFactory;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.file.PFileUtils;
+import de.p2tools.p2lib.tools.file.P2FileUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -138,7 +138,7 @@ public class DownloadDataFactory {
         }
         try {
             String noSize = "";
-            long usableSpace = PFileUtils.getFreeDiskSpace(path);
+            long usableSpace = P2FileUtils.getFreeDiskSpace(path);
             String sizeFree = "";
             if (usableSpace == 0) {
                 lblSizeFree.setText("");
