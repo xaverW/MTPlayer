@@ -18,6 +18,8 @@ package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
+import de.p2tools.mtplayer.controller.update.ProgConfigUpdate;
+import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
 import de.p2tools.mtplayer.gui.startdialog.StartDialogController;
 import de.p2tools.p2lib.configfile.ConfigFile;
@@ -41,7 +43,7 @@ public class ProgStartBeforeGui {
             ProgData.firstProgramStart = true;
 
             ProgConfigUpdate.setUpdateDone(); // dann ist's ja kein Programmupdate
-            UpdateFactory.setWhatsNewDate(); // muss dann ja nicht angezeigt werden
+            WhatsNewFactory.setWhatsNewDate(); // muss dann ja nicht angezeigt werden
 
             ProgData.getInstance().replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             ProgData.getInstance().utDataList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!

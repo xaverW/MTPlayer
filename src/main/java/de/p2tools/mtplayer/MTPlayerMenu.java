@@ -19,9 +19,9 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.ProgSave;
-import de.p2tools.mtplayer.controller.UpdateFactory;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
+import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.dialog.ImportMVDialog;
@@ -97,7 +97,7 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miToolTip = new MenuItem("Tip des Tages");
         miToolTip.setOnAction(a -> ProgTipOfDayFactory.showDialog(progData, true));
         final MenuItem miWhatsNew = new MenuItem("Was ist neu?");
-        miWhatsNew.setOnAction(a -> UpdateFactory.showWhatsNew(true));
+        miWhatsNew.setOnAction(a -> WhatsNewFactory.showWhatsNew(true));
         final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
         miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData).searchNewProgramVersion(true));
         final MenuItem miAbout = new MenuItem("Über dieses Programm");

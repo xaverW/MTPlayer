@@ -12,6 +12,8 @@ module mtplayer {
     opens de.p2tools.mtplayer.controller.data.blackdata;
     exports de.p2tools.mtplayer.controller.config;
     opens de.p2tools.mtplayer.controller.config;
+    exports de.p2tools.mtplayer.controller.update;
+    opens de.p2tools.mtplayer.controller.update;
 
     requires de.p2tools.p2lib;
     requires javafx.controls;

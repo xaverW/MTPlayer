@@ -15,8 +15,10 @@
  */
 
 
-package de.p2tools.mtplayer.controller.config;
+package de.p2tools.mtplayer.controller.update;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 
@@ -80,7 +82,7 @@ public class ProgConfigUpdate {
                     sf.setChannel(sf.channelProperty().getValueSafe().replaceAll("Radio Bremen TV", "RBTV"));
                 }
             });
-            
+
             ProgData.getInstance().aboList.forEach(aboData -> {
                 if (aboData.getChannel().contains("rbtv") ||
                         aboData.getChannel().contains("Radio Bremen TV")) {
