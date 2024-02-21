@@ -44,7 +44,9 @@ public class TableRowDownload<T> extends TableRow {
             setTooltip(null);
 
         } else {
-            setTooltip(new Tooltip(download.getTheme() + "\n" + download.getTitle()));
+            if (ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
+                setTooltip(new Tooltip(download.getTheme() + "\n" + download.getTitle()));
+            }
 
             if (geoMelden.get() && download.getGeoBlocked()) {
                 // geogeblockt

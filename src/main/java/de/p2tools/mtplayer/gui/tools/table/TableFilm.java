@@ -56,15 +56,15 @@ public class TableFilm extends PTable<FilmDataMTP> {
         getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
-
         // bei Farbänderung der Schriftfarbe klappt es damit besser: Table.refresh_table(table)
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_LIVESTREAM.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_BOOKMARK.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
+        ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
 
         final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));

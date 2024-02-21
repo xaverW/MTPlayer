@@ -43,7 +43,9 @@ public class TableRowFilm<T> extends TableRow<T> {
             setTooltip(null);
 
         } else {
-            setTooltip(new Tooltip(film.getTheme() + "\n" + film.getTitle()));
+            if (ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
+                setTooltip(new Tooltip(film.getTheme() + "\n" + film.getTitle()));
+            }
 
             if (film.isLive()) {
                 // livestream

@@ -62,13 +62,14 @@ public class TableDownload extends PTable<DownloadData> {
         setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         final Comparator<String> sorter = GermanStringIntSorter.getInstance();
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> refresh());
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_GEOBLOCK.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_WAIT.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> refresh());
         ProgColorList.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> refresh());
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> refresh());
+        ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
 
         final TableColumn<DownloadData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));

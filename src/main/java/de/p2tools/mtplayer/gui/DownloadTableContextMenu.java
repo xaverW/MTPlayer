@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
@@ -116,14 +117,18 @@ public class DownloadTableContextMenu {
         miSelectAll.setOnAction(a -> tableView.getSelectionModel().selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> downloadGuiController.invertSelection());
-        final MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-        resetTable.setOnAction(a -> tableView.resetTable());
-
         miSelectAll.setDisable(download == null);
         miSelection.setDisable(download == null);
-
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);
+        contextMenu.getItems().addAll(miSelectAll, miSelection);
+
+        MenuItem toolTipTable = new MenuItem(ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.getValue() ?
+                "Keine Infos beim Überfahren einer Zeile anzeigen" : "Infos beim Überfahren einer Zeile anzeigen");
+        toolTipTable.setOnAction(a -> ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.setValue(!ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.getValue()));
+        final MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
+        resetTable.setOnAction(a -> tableView.resetTable());
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(toolTipTable, resetTable);
     }
 
     private Menu addBlacklist(DownloadData downloadData) {

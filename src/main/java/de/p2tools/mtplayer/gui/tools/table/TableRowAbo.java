@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
@@ -39,12 +40,13 @@ public class TableRowAbo<T> extends TableRow {
             setTooltip(null);
 
         } else {
-            setTooltip(new Tooltip(
-                    abo.getChannel().isEmpty() ? "" : "Titel: " + abo.getChannel() + "\n" +
-                            (abo.getTheme().isEmpty() ? "" : "Thema: " + abo.getTheme() + "\n") +
-                            (abo.getThemeTitle().isEmpty() ? "" : "Thema oder Titel: " + abo.getThemeTitle() + "\n") +
-                            (abo.getTitle().isEmpty() ? "" : "Titel: " + abo.getTitle())));
-
+            if (ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
+                setTooltip(new Tooltip(
+                        abo.getChannel().isEmpty() ? "" : "Titel: " + abo.getChannel() + "\n" +
+                                (abo.getTheme().isEmpty() ? "" : "Thema: " + abo.getTheme() + "\n") +
+                                (abo.getThemeTitle().isEmpty() ? "" : "Thema oder Titel: " + abo.getThemeTitle() + "\n") +
+                                (abo.getTitle().isEmpty() ? "" : "Titel: " + abo.getTitle())));
+            }
             if (!abo.isActive()) {
                 setStyle(ProgColorList.ABO_SWITCHED_OFF.getCssBackground());
             } else {

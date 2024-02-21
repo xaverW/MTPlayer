@@ -199,7 +199,7 @@ public class FilmGuiController extends AnchorPane {
                 }
             });
             row.hoverProperty().addListener((observable) -> {
-                final FilmDataMTP filmDataMTP = (FilmDataMTP) row.getItem();
+                final FilmDataMTP filmDataMTP = row.getItem();
                 if (row.isHover() && filmDataMTP != null) { // null bei den leeren Zeilen unterhalb
                     setFilmInfos(filmDataMTP);
                 } else if (filmDataMTP == null) {

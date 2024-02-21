@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
@@ -83,14 +84,18 @@ public class AboTableContextMenu {
         miSelectAll.setOnAction(a -> tableView.getSelectionModel().selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> aboGuiController.invertSelection());
-        MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
-        resetTable.setOnAction(e -> tableView.resetTable());
-
         miSelectAll.setDisable(abo == null);
         miSelection.setDisable(abo == null);
-
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miSelectAll, miSelection, resetTable);
+        contextMenu.getItems().addAll(miSelectAll, miSelection);
+
+        MenuItem toolTipTable = new MenuItem(ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.getValue() ?
+                "Keine Infos beim Überfahren einer Zeile anzeigen" : "Infos beim Überfahren einer Zeile anzeigen");
+        toolTipTable.setOnAction(a -> ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.setValue(!ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.getValue()));
+        MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
+        resetTable.setOnAction(e -> tableView.resetTable());
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(toolTipTable, resetTable);
     }
 
     private Menu getSubMenuFilter(AboData abo) {

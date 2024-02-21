@@ -215,6 +215,7 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_KBYTE = addIntProp("download-max-bandwidth-kilobyte", MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
 
     // Gui Film
+    public static BooleanProperty FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("film-gui-show-table-tool-tip", Boolean.TRUE);
     public static StringProperty FILM_GUI_FILTER_DIALOG = addStrProp("film-gui-filter-dialog", "400:500");
     public static BooleanProperty FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBoolProp("film-gui-filter-dialog-is-showing", Boolean.FALSE);
     public static DoubleProperty FILM_GUI_FILTER_DIVIDER = addDoubleProp("film-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
@@ -237,6 +238,7 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
 
     // Gui Download
+    public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);
     public static List<String> DOWNLOAD_DIALOG_DOWNLOAD_PATH = addListProp("download-dialog-download-path"); // gesammelten Downloadpfade im Downloaddialog
     public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStrProp("download-dialog-hd-height-low", FilmDataMTP.RESOLUTION_NORMAL);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addBoolProp("download-dialog-start-download-now", Boolean.TRUE);
@@ -321,6 +323,7 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN = addIntProp("download-chart-max-time-to-show-min", 30); //MAX Minuten im Chart
 
     // Gui Abo
+    public static BooleanProperty ABO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("abo-gui-show-table-tool-tip", Boolean.TRUE);
     public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);
     public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", FilterCheck.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
     public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", FilterCheck.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
