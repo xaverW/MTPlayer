@@ -42,11 +42,12 @@ public class PaneDownloadError extends AnchorPane {
         btnClear.setTooltip(new Tooltip("Die Liste der Downloadfehler löschen"));
         btnClear.setOnAction(a -> progData.downloadErrorList.clear());
 
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10));
+        gridPane.setHgap(5);
+        gridPane.setVgap(5);
+        gridPane.setPadding(new Insets(5));
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                P2ColumnConstraints.getCcPrefSize());
 
         scrollPane.setContent(gridPane);
         scrollPane.setFitToHeight(true);
@@ -73,24 +74,45 @@ public class PaneDownloadError extends AnchorPane {
 
         } else {
             progData.downloadErrorList.forEach(d -> {
-                TextArea ta = new TextArea(d.getTitle());
-                ta.setEditable(false);
-                ta.setWrapText(true);
-                ta.setPrefRowCount(4);
-                ta.setMaxWidth(250);
-                gridPane.add(ta, 0, row.get());
+                TextField txtTitle = new TextField(d.getTitle());
+                txtTitle.setText(d.getTitle());
+                txtTitle.setEditable(false);
 
-                TextArea taError = new TextArea(d.getError());
+                TextField txtUrl = new TextField();
+                txtUrl.setText(d.getUrl());
+                txtUrl.setEditable(false);
+
+                TextField txtFile = new TextField();
+                txtFile.setText(d.getFile());
+                txtFile.setEditable(false);
+
+                TextArea taError = new TextArea();
+                taError.setText(d.getError());
                 taError.setEditable(false);
                 taError.setWrapText(true);
                 taError.setPrefRowCount(4);
-                gridPane.add(taError, 1, row.get());
+
+                gridPane.add(new Label("Titel: "), 0, row.get());
+                gridPane.add(txtTitle, 1, row.get());
+
+                row.setValue(row.get() + 1);
+                gridPane.add(new Label("URL: "), 0, row.get());
+                gridPane.add(txtUrl, 1, row.get());
+
+                row.setValue(row.get() + 1);
+                gridPane.add(new Label("Datei:"), 0, row.get());
+                gridPane.add(txtFile, 1, row.get());
+
+                row.setValue(row.get() + 1);
+                gridPane.add(taError, 0, row.get(), 2, 1);
                 GridPane.setHgrow(taError, Priority.ALWAYS);
 
                 row.setValue(row.get() + 1);
+                gridPane.add(new Label(""), 0, row.get());
+                row.setValue(row.get() + 1);
             });
 
-            gridPane.add(btnClear, 2, row.get() - 1);
+            gridPane.add(btnClear, 2, row.get() - 2);
         }
     }
 }

@@ -98,7 +98,10 @@ public class StartDownloadFactory {
             }
 
             Platform.runLater(() -> {
-                ProgData.getInstance().downloadErrorList.add(new DownloadErrorData(download.getTitle(), errMsg));
+                ProgData.getInstance().downloadErrorList.add(new DownloadErrorData(download.getTitle(),
+                        download.getUrl(),
+                        download.getDestPathFile(),
+                        errMsg));
                 new DownloadErrorDialogController(download, errMsg);
             });
         }
