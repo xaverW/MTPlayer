@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.starter.StartDownloadDto;
 import de.p2tools.p2lib.tools.date.P2LTimeFactory;
 import de.p2tools.p2lib.tools.log.PLog;
 
-import java.net.URL;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -94,32 +93,11 @@ public class DownloadFactoryStarts {
 
     private static DownloadData nextStart(DownloadList downloadList) {
         // Download mit der kleinsten Nr finden, der zu Starten ist
-        // erster Versuch, Start mit einem anderen Sender
-
-        DownloadData tmpDownload = searchNextDownload(downloadList, 1);
-        if (tmpDownload != null) {
-            // einer wurde gefunden
-            return tmpDownload;
-        }
-
-        if (ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER.getValue()) {
-            // dann darf nur ein Download pro Server gestartet werden
-            return null;
-        }
-
-        // zweiter Versuch, Start mit einem passenden Sender
-        tmpDownload = searchNextDownload(downloadList, -1);
-        return tmpDownload;
-    }
-
-    private static DownloadData searchNextDownload(DownloadList downloadList, int maxProChannel) {
-        // max: max. Anzahl pro Domain ODER "-1" dann egal
         DownloadData tmpDownload = null;
         int nr = -1;
         for (DownloadData download : downloadList) {
             if (download.isStateStartedWaiting() &&
                     checkStartTime(download) &&
-                    (maxProChannel < 0 || !maxChannelPlay(downloadList, download, maxProChannel)) &&
                     (nr == -1 || download.getNo() < nr)) {
 
                 tmpDownload = download;
@@ -150,74 +128,74 @@ public class DownloadFactoryStarts {
         return true;
     }
 
-    private static boolean maxChannelPlay(DownloadList downloadList, DownloadData d, int max) {
-        // true, wenn bereits die maxAnzahl pro Sender läuft
-        try {
-            int counter = 0;
-            final String host = getHost(d);
-            if (host.equals("akamaihd.net")) {
-                // content delivery network
-                return false;
-            }
+//    private static boolean maxChannelPlay(DownloadList downloadList, DownloadData d, int max) {
+//        // true, wenn bereits die maxAnzahl pro Sender läuft
+//        try {
+//            int counter = 0;
+//            final String host = getHost(d);
+//            if (host.equals("akamaihd.net")) {
+//                // content delivery network
+//                return false;
+//            }
+//
+//            for (final DownloadData download : downloadList) {
+//                if (download.isStateStartedRun() && getHost(download).equalsIgnoreCase(host)) {
+//                    counter++;
+//                    if (counter >= max) {
+//                        return true;
+//                    }
+//                }
+//            }
+//            return false;
+//        } catch (final Exception ex) {
+//            return false;
+//        }
+//    }
 
-            for (final DownloadData download : downloadList) {
-                if (download.isStateStartedRun() && getHost(download).equalsIgnoreCase(host)) {
-                    counter++;
-                    if (counter >= max) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        } catch (final Exception ex) {
-            return false;
-        }
-    }
-
-    private static String getHost(DownloadData download) {
-        String host = "";
-        try {
-            try {
-                String uurl = download.getUrl();
-                // die funktion "getHost()" kann nur das Protokoll "http" ??!??
-                if (uurl.startsWith("rtmpt:")) {
-                    uurl = uurl.toLowerCase().replace("rtmpt:", "http:");
-                }
-                if (uurl.startsWith("rtmp:")) {
-                    uurl = uurl.toLowerCase().replace("rtmp:", "http:");
-                }
-                if (uurl.startsWith("mms:")) {
-                    uurl = uurl.toLowerCase().replace("mms:", "http:");
-                }
-                final URL url = new URL(uurl);
-                String tmp = url.getHost();
-                if (tmp.contains(".")) {
-                    host = tmp.substring(tmp.lastIndexOf('.'));
-                    tmp = tmp.substring(0, tmp.lastIndexOf('.'));
-                    if (tmp.contains(".")) {
-                        host = tmp.substring(tmp.lastIndexOf('.') + 1) + host;
-                    } else if (tmp.contains("/")) {
-                        host = tmp.substring(tmp.lastIndexOf('/') + 1) + host;
-                    } else {
-                        host = "host";
-                    }
-                }
-            } catch (final Exception ex) {
-                // für die Hosts bei denen das nicht klappt
-                // Log.systemMeldung("getHost 1: " + s.download.arr[DatenDownload.DOWNLOAD_URL_NR]);
-                host = "host";
-            } finally {
-                if (host.isEmpty()) {
-                    // Log.systemMeldung("getHost 3: " + s.download.arr[DatenDownload.DOWNLOAD_URL_NR]);
-                    host = "host";
-                }
-            }
-        } catch (final Exception ex) {
-            // Log.systemMeldung("getHost 4: " + s.download.arr[DatenDownload.DOWNLOAD_URL_NR]);
-            host = "exception";
-        }
-        return host;
-    }
+//    private static String getHost(DownloadData download) {
+//        String host = "";
+//        try {
+//            try {
+//                String uurl = download.getUrl();
+//                // die funktion "getHost()" kann nur das Protokoll "http" ??!??
+//                if (uurl.startsWith("rtmpt:")) {
+//                    uurl = uurl.toLowerCase().replace("rtmpt:", "http:");
+//                }
+//                if (uurl.startsWith("rtmp:")) {
+//                    uurl = uurl.toLowerCase().replace("rtmp:", "http:");
+//                }
+//                if (uurl.startsWith("mms:")) {
+//                    uurl = uurl.toLowerCase().replace("mms:", "http:");
+//                }
+//                final URL url = new URL(uurl);
+//                String tmp = url.getHost();
+//                if (tmp.contains(".")) {
+//                    host = tmp.substring(tmp.lastIndexOf('.'));
+//                    tmp = tmp.substring(0, tmp.lastIndexOf('.'));
+//                    if (tmp.contains(".")) {
+//                        host = tmp.substring(tmp.lastIndexOf('.') + 1) + host;
+//                    } else if (tmp.contains("/")) {
+//                        host = tmp.substring(tmp.lastIndexOf('/') + 1) + host;
+//                    } else {
+//                        host = "host";
+//                    }
+//                }
+//            } catch (final Exception ex) {
+//                // für die Hosts bei denen das nicht klappt
+//                // Log.systemMeldung("getHost 1: " + s.download.arr[DatenDownload.DOWNLOAD_URL_NR]);
+//                host = "host";
+//            } finally {
+//                if (host.isEmpty()) {
+//                    // Log.systemMeldung("getHost 3: " + s.download.arr[DatenDownload.DOWNLOAD_URL_NR]);
+//                    host = "host";
+//                }
+//            }
+//        } catch (final Exception ex) {
+//            // Log.systemMeldung("getHost 4: " + s.download.arr[DatenDownload.DOWNLOAD_URL_NR]);
+//            host = "exception";
+//        }
+//        return host;
+//    }
 
     private static boolean getDown(DownloadList downloadList, int max) {
         int count = 0;

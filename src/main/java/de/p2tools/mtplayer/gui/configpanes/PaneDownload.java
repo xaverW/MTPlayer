@@ -43,7 +43,6 @@ public class PaneDownload {
 
     private final P2ToggleSwitch tglFinished = new P2ToggleSwitch("Benachrichtigung wenn abgeschlossen");
     private final P2ToggleSwitch tglError = new P2ToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
-    private final P2ToggleSwitch tglOne = new P2ToggleSwitch("Nur ein Download pro Downloadserver");
     private final P2ToggleSwitch tglSSL = new P2ToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
     private final P2ToggleSwitch tglBeep = new P2ToggleSwitch("Nach jedem Download einen \"Beep\" ausgeben");
     private final Spinner<Integer> spinnerAnz = new Spinner<>(1, 9, 1);
@@ -59,7 +58,6 @@ public class PaneDownload {
     public void close() {
         tglFinished.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
         tglError.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW);
-        tglOne.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER);
         tglSSL.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
         tglBeep.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_BEEP);
         sliderBandwidth.valueProperty().unbindBidirectional(ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE);
@@ -84,10 +82,6 @@ public class PaneDownload {
         final Button btnHelpContinue = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_CONTINUE);
 
-        tglOne.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER);
-        final Button btnHelpOne = P2Button.helpButton(stage, "Download",
-                HelpText.DOWNLOAD_ONE_SERVER);
-
         tglSSL.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
         final Button btnHelpSSL = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_SSL_ALWAYS_TRUE);
@@ -104,7 +98,6 @@ public class PaneDownload {
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);
         GridPane.setHalignment(btnHelpStop, HPos.RIGHT);
         GridPane.setHalignment(btnHelpContinue, HPos.RIGHT);
-        GridPane.setHalignment(btnHelpOne, HPos.RIGHT);
         GridPane.setHalignment(btnHelpSSL, HPos.RIGHT);
 
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -118,9 +111,6 @@ public class PaneDownload {
 
         gridPane.add(tglError, 0, ++row, 2, 1);
         gridPane.add(btnHelpError, 2, row);
-
-        gridPane.add(tglOne, 0, ++row, 2, 1);
-        gridPane.add(btnHelpOne, 2, row);
 
         gridPane.add(tglSSL, 0, ++row, 2, 1);
         gridPane.add(btnHelpSSL, 2, row);
