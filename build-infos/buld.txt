@@ -17,17 +17,10 @@ $ git clone https://github.com/xaverW/MTPlayer.git
 
 
 ==================================
-* Ordner umbennen
+* im Ordner MTPlayer gradle anlegen
 ==================================
 
-$ mv MTPlayer mtplayer
-
-
-==================================
-* im Ordner mtplayer gradle anlegen
-==================================
-
-§ cd mtplayer
+§ cd MTPlayer
 $ gradle init
 
 
@@ -60,17 +53,17 @@ features may change in the next minor release)?
 ==================================
 
 $ cd ..
-$ cp ./mtplayer/build-infos/build.gradle ./mtplayer/build.gradle
-$ cp ./mtplayer/build-infos/settings.gradle ./mtplayer/settings.gradle
-$ cp ./mtplayer/build-infos/gitignore ./mtplayer/.gitignore
+$ cp ./MTPlayer/build-infos/build.gradle ./MTPlayer/build.gradle
+$ cp ./MTPlayer/build-infos/settings.gradle ./MTPlayer/settings.gradle
+$ cp ./MTPlayer/build-infos/gitignore ./MTPlayer/.gitignore
 
 
 ==================================
-* ins mtplayer-Verzeichis wechseln
+* ins MTPlayer-Verzeichis wechseln
   und dann das Programm bauen
 ==================================
 
-$ cd mtplayer
+$ cd MTPlayer
 $ ./gradlew fatJar
 
 
@@ -87,10 +80,12 @@ $ java -jar MTPlayer.jar
 ==================================
 * von nun an, kann damit der Quelltext
   mit dem aktuellem in GitHub abgeglichen
-  und aktualisiert werden
-  (im Ordner mtplayer)
+  und aktualisiert werden und das Programm
+  neu gebaut werden.
+  (im Ordner MTPlayer)
 ==================================
 
 $ git status
 $ git pull
+$ ./gradlew fatJar
 
