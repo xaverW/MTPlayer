@@ -58,7 +58,7 @@ public class PaneDownload {
 
     public void close() {
         tglFinished.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
-        tglError.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_ERROR_MSG);
+        tglError.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW);
         tglOne.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_MAX_ONE_PER_SERVER);
         tglSSL.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
         tglBeep.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_BEEP);
@@ -74,7 +74,7 @@ public class PaneDownload {
         final Button btnHelpFinished = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_FINISHED);
 
-        tglError.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_ERROR_MSG);
+        tglError.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW);
         final Button btnHelpError = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
 

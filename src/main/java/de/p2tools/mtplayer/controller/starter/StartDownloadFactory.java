@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
@@ -102,7 +103,9 @@ public class StartDownloadFactory {
                         download.getUrl(),
                         download.getDestPathFile(),
                         errMsg));
-                new DownloadErrorDialogController(download, errMsg);
+                if (ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW.getValue()) {
+                    new DownloadErrorDialogController(download, errMsg);
+                }
             });
         }
 

@@ -582,7 +582,9 @@ public class HelpText {
                     "\n";
 
     public static final String DOWNLOAD_ERROR =
-            "Wenn ein Download mit einem Fehler endet, wird mit einem Fenster informiert." +
+            "Wenn ein Download mit einem Fehler endet, wird mit einem Dialog darüber informiert. Die Fehlermeldung " +
+                    "wird aber auch zusätzlich im Tab \"Downloadfehler\" unter der Tabelle " +
+                    "Downloads angezeigt." +
                     "\n";
 
     public static final String DOWNLOAD_STOP =

@@ -23,12 +23,15 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -44,6 +47,8 @@ public class DownloadErrorDialogController extends PDialogExtra {
     private final VBox vBoxCont;
     private final Label lblHeader = new Label("Downloadfehler");
     private final Button btnOk = new Button("_Ok");
+    private final CheckBox chkShowNot = new CheckBox("Nicht mehr anzeigen");
+    private final CheckBox chkTime = new CheckBox("Automatisch ausblenden");
 
     private final Label lblFilmTitle = new Label("ARD: Tatort, ..");
     private final TextArea txtUrl = new TextArea();
@@ -52,7 +57,7 @@ public class DownloadErrorDialogController extends PDialogExtra {
     private final ImageView imageView = new ImageView();
     private final GridPane gridPane = new GridPane();
 
-    private Timeline timeline = null;
+    private final Timeline timeline = new Timeline();
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue();
 
     private final String message;
@@ -100,13 +105,21 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
         imageView.setImage(ProgIcons.IMAGE_ACHTUNG_64.getImage());
 
+        chkTime.setSelected(ProgConfig.DOWNLOAD_DIALOG_ERROR_TIME.get());
+        chkTime.setOnAction(a -> {
+            ProgConfig.DOWNLOAD_DIALOG_ERROR_TIME.setValue(chkTime.isSelected());
+            if (chkTime.isSelected()) {
+                startCounter();
+            } else {
+                stopCounter();
+            }
+        });
+        chkShowNot.setOnAction(a -> ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW.setValue(!chkShowNot.isSelected()));
+
         //start the countdown...
         lblTime.setText("");
-        timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),
-                new CountdownAction()));
-        timeline.playFromStart();
+        lblTime.visibleProperty().bind(ProgConfig.DOWNLOAD_DIALOG_ERROR_TIME);
+        initCounter();
     }
 
     private void initCont() {
@@ -135,7 +148,9 @@ public class DownloadErrorDialogController extends PDialogExtra {
         VBox.setVgrow(hBox, Priority.ALWAYS);
 
         addOkButton(btnOk);
-        getHboxLeft().getChildren().add(lblTime);
+        getHboxLeft().getChildren().addAll(chkTime, P2GuiTools.getHBoxGrower(), lblTime);
+        getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
+        getHBoxOverButtons().getChildren().addAll(chkShowNot);
     }
 
     private class CountdownAction implements EventHandler {
@@ -151,10 +166,21 @@ public class DownloadErrorDialogController extends PDialogExtra {
         }
     }
 
-    private void stopCounter() {
-        if (timeline != null) {
-            timeline.stop();
+    private void initCounter() {
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new CountdownAction()));
+        if (ProgConfig.DOWNLOAD_DIALOG_ERROR_TIME.get()) {
+            startCounter();
         }
+    }
+
+    private void startCounter() {
+        timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue();
+        timeline.playFromStart();
+    }
+
+    private void stopCounter() {
+        timeline.stop();
     }
 
     private void quit() {
