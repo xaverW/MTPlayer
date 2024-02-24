@@ -100,8 +100,15 @@ public class RuntimeExecDownload {
             Thread clearOut = new Thread(new ClearInOut(ERROR, process));
             clearOut.setName("exec-out");
             clearOut.start();
+        } catch (final IOException ex) {
+            PLog.errorLog(123658970, ex, "IOFehler beim Starten");
+            String error = "Das Programm: [" + download.getProgramName() + "] konnte nicht gestartet werden.";
+            download.getDownloadStartDto().addErrMsg(error);
+
         } catch (final Exception ex) {
             PLog.errorLog(450028932, ex, "Fehler beim Starten");
+            String error = ex.getLocalizedMessage();
+            download.getDownloadStartDto().addErrMsg(error);
         }
         return process;
     }
@@ -143,9 +150,9 @@ public class RuntimeExecDownload {
                 String inStr;
                 while ((inStr = buff.readLine()) != null) {
                     if (download.getProgramCall().contains("ffmpeg")) {
-                        getPercentageFromErrorStreamFfmpeg(inStr);
+                        getFromErrorStreamFfmpeg(inStr);
                     } else if (download.getProgramCall().contains("yt-dlp")) {
-                        getPercentageFromErrorStreamYtDlp(inStr);
+                        getFromErrorStreamYtDlp(inStr);
                     }
                     playerMessage.playerMessage(title + ": " + inStr);
                 }
@@ -158,12 +165,17 @@ public class RuntimeExecDownload {
             }
         }
 
-        private void getPercentageFromErrorStreamFfmpeg(String input) {
+        private void getFromErrorStreamFfmpeg(String input) {
             Matcher matcher;
             // für ffmpeg
             // ffmpeg muss dazu mit dem Parameter -i gestartet werden:
             // -i %f -acodec copy -vcodec copy -y **
             try {
+                // 404
+                if (input.contains("HTTP error 404 Not Found")) {
+                    download.getDownloadStartDto().addErrMsg("Die URL wurde nicht gefunden.");
+                }
+
                 // Gesamtzeit ffmpeg
                 matcher = patternFfmpegDuration.matcher(input);
                 if (matcher.find()) {
@@ -242,7 +254,7 @@ public class RuntimeExecDownload {
             }
         }
 
-        private void getPercentageFromErrorStreamYtDlp(String input) {
+        private void getFromErrorStreamYtDlp(String input) {
             Matcher matcher;
             try {
                 // Size yt-dlp

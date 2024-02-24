@@ -183,7 +183,7 @@ public class DownloadExternal extends Thread {
             retStatus = stat_start;
         } else {
             // dann wars das
-            errMsg.setValue("Programm: zum Download [" + download.getProgramName() + "] konnte nicht gestartet werden.");
+            errMsg.setValue("Der Download mit dem Programm: [" + download.getProgramName() + "] hat nicht geklappt.");
             retStatus = stat_finished_error;
         }
         return retStatus;

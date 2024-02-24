@@ -187,8 +187,12 @@ public class DownloadDirectHttp extends Thread {
 
             } else {
                 // dann wars das
-                download.setStateError("DownloadFehler, httpResponseCode " + httpResponseCode +
-                        ": Der angeforderte Teil einer Ressource konnte nicht geladen werden.");
+                if (httpResponseCode == 404) {
+                    download.setStateError("Die URL wurde nicht gefunden.");
+                } else {
+                    download.setStateError("DownloadFehler, httpResponseCode " + httpResponseCode +
+                            ": Der angeforderte Teil einer Ressource konnte nicht geladen werden.");
+                }
             }
         }
     }

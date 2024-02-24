@@ -144,10 +144,7 @@ public final class DownloadData extends DownloadDataProps {
 
     public void setStateError(String error) {
         if (!error.isEmpty()) {
-            if (!getDownloadStartDto().getErrMsgList().contains(error)) {
-                // gleiche nicht mehrfach eintragen
-                getDownloadStartDto().getErrMsgList().add(error);
-            }
+            getDownloadStartDto().addErrMsg(error);
         }
         setState(DownloadConstants.STATE_ERROR);
     }

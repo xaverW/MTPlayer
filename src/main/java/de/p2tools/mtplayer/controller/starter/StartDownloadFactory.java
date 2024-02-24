@@ -90,9 +90,12 @@ public class StartDownloadFactory {
         if (download.isStateError()) {
             final String errMsg;
             if (!download.getDownloadStartDto().getErrMsgList().isEmpty()) {
-                // wenn download fehlerhaft, dann letzte Meldung im Download eintragen
-                errMsg = download.getDownloadStartDto().getErrMsgList()
-                        .get(download.getDownloadStartDto().getErrMsgList().size() - 1);
+                // wenn download fehlerhaft
+                StringBuilder sb = new StringBuilder();
+                download.getDownloadStartDto().getErrMsgList().forEach(s -> sb.append(s).append("\n"));
+//                errMsg = download.getDownloadStartDto().getErrMsgList()
+//                        .get(download.getDownloadStartDto().getErrMsgList().size() - 1);
+                errMsg = sb.toString();
                 download.setErrorMessage(errMsg);
             } else {
                 errMsg = "Fehlerhafter Download";

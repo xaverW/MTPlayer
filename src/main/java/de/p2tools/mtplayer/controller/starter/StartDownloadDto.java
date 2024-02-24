@@ -77,6 +77,7 @@ public class StartDownloadDto {
 
     public void startDownload() {
         setStartTime(new P2Date());
+        errMsgList.clear(); // sonst bei mehrfach gestarteten noch die alten MSGs drin
     }
 
     public boolean isStartViewing() {
@@ -133,5 +134,12 @@ public class StartDownloadDto {
 
     public List<String> getErrMsgList() {
         return errMsgList;
+    }
+
+    public void addErrMsg(String error) {
+        if (!errMsgList.contains(error)) {
+            // gleiche nicht mehrfach eintragen
+            errMsgList.add(error);
+        }
     }
 }
