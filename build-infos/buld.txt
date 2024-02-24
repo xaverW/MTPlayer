@@ -41,7 +41,7 @@ Select build script DSL:
   2: Groovy
 Enter selection (default: Kotlin) [1..2] --> 2
 
-Project name (default: mtplayer): --> default
+Project name (default: MTPlayer): --> default
 
 Generate build using new APIs and behavior (some
 features may change in the next minor release)?
@@ -52,10 +52,9 @@ features may change in the next minor release)?
 * gradle-scripte kopieren
 ==================================
 
-$ cd ..
-$ cp ./MTPlayer/build-infos/build.gradle ./MTPlayer/build.gradle
-$ cp ./MTPlayer/build-infos/settings.gradle ./MTPlayer/settings.gradle
-$ cp ./MTPlayer/build-infos/gitignore ./MTPlayer/.gitignore
+$ cp ./build-infos/build.gradle ./build.gradle
+$ cp ./build-infos/settings.gradle ./settings.gradle
+$ cp ./build-infos/gitignore ./.gitignore
 
 
 ==================================
@@ -63,7 +62,6 @@ $ cp ./MTPlayer/build-infos/gitignore ./MTPlayer/.gitignore
   und dann das Programm bauen
 ==================================
 
-$ cd MTPlayer
 $ ./gradlew fatJar
 
 
