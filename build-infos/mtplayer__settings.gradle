@@ -1,6 +1,0 @@
-
-rootProject.name = 'mtplayer'
-
-include ":p2lib"
-project(":p2lib").projectDir = new File(settingsDir, "../p2lib")
-

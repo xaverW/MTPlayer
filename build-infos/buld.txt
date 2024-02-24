@@ -2,19 +2,17 @@ Das Bauen des Programms ist mit diesen Schritten
 (unter Linux!) möglich:
 
 
-Die Programme: git, gradle müssen installiert sein.
+Die Programme: git und gradle müssen installiert sein.
 In einem leeren Verzeichis muss zuerst der
 Quellcode geladen werden. Der liegt hier:
 
-https://github.com/xaverW/P2Lib.git
-https://github.com/xaverW/MTPlayer.github
+https://github.com/xaverW/MTPlayer
 
 
 ==================================
 * Quellcode laden
 ==================================
 
-$ git clone https://github.com/xaverW/P2Lib.git
 $ git clone https://github.com/xaverW/MTPlayer.git
 
 
@@ -22,12 +20,11 @@ $ git clone https://github.com/xaverW/MTPlayer.git
 * Ordner umbennen
 ==================================
 
-$ mv P2Lib p2lib
 $ mv MTPlayer mtplayer
 
 
 ==================================
-* gradle anlegen
+* im Ordner mtplayer gradle anlegen
 ==================================
 
 § cd mtplayer
@@ -63,14 +60,9 @@ features may change in the next minor release)?
 ==================================
 
 $ cd ..
-$ cp ./mtplayer/build-infos/mtplayer__build.gradle ./mtplayer/build.gradle
-$ cp ./mtplayer/build-infos/mtplayer__settings.gradle ./mtplayer/settings.gradle
-$ cp ./mtplayer/build-infos/p2lib__build.gradle ./p2lib/build.gradle
-$ cp ./mtplayer/build-infos/p2lib__settings.gradle  ./p2lib/settings.gradle
-
+$ cp ./mtplayer/build-infos/build.gradle ./mtplayer/build.gradle
+$ cp ./mtplayer/build-infos/settings.gradle ./mtplayer/settings.gradle
 $ cp ./mtplayer/build-infos/gitignore ./mtplayer/.gitignore
-$ cp ./mtplayer/build-infos/gitignore ./p2lib/.gitignore
-
 
 
 ==================================
@@ -79,7 +71,7 @@ $ cp ./mtplayer/build-infos/gitignore ./p2lib/.gitignore
 ==================================
 
 $ cd mtplayer
-$ ./gradlew build
+$ ./gradlew fatJar
 
 
 ==================================
@@ -92,13 +84,11 @@ $ cd build/fatJar
 $ java -jar MTPlayer.jar
 
 
-
-
 ==================================
 * von nun an, kann damit der Quelltext
   mit dem aktuellem in GitHub abgeglichen
-  und aktualisiert werden (jeweils
-  im Ordner: mtplayer oder p2lib)
+  und aktualisiert werden
+  (im Ordner mtplayer)
 ==================================
 
 $ git status
