@@ -132,6 +132,9 @@ public class RuntimeExecDownload {
 
         @Override
         public void run() {
+            // da wird nur hier aufgezeichnet, deswegen vor jedem Start löschen
+            download.getDownloadStartDto().getErrStreamList().clear();
+
             String title = "";
             try {
                 switch (art) {
@@ -148,16 +151,18 @@ public class RuntimeExecDownload {
                 }
                 buff = new BufferedReader(new InputStreamReader(in));
                 String inStr;
-                while ((inStr = buff.readLine()) != null) {
-                    download.getDownloadStartDto().addErrStream(inStr);
 
+                while ((inStr = buff.readLine()) != null) {
                     if (download.getProgramCall().contains("ffmpeg")) {
                         getFromErrorStreamFfmpeg(inStr);
                     } else if (download.getProgramCall().contains("yt-dlp")) {
                         getFromErrorStreamYtDlp(inStr);
                     }
-                    playerMessage.playerMessage(title + ": " + inStr);
+
+                    download.getDownloadStartDto().addErrStream(inStr); // für den Fehlerdialog
+                    playerMessage.playerMessage(title + ": " + inStr); // und fürs log
                 }
+
             } catch (final IOException ignored) {
             } finally {
                 try {
