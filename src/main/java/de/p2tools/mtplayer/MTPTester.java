@@ -90,7 +90,7 @@ public class MTPTester {
 
             Button btnError = new Button("Fehler");
             btnError.setOnAction(a -> {
-                Platform.runLater(() -> new DownloadErrorDialogController(new DownloadData(), "so ein Mist"));
+                Platform.runLater(() -> new DownloadErrorDialogController(new DownloadData()));
             });
             gridPane.add(btnError, 0, ++row);
 

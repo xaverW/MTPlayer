@@ -24,6 +24,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.tools.log.PLogger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -47,6 +48,8 @@ public class DownloadErrorDialogController extends PDialogExtra {
     private final VBox vBoxCont;
     private final Label lblHeader = new Label("Downloadfehler");
     private final Button btnOk = new Button("_Ok");
+    private final Button btnErrorStream = new Button("Programmausgabe");
+    private final Button btnLogFile = new Button("Log öffnen");
     private final CheckBox chkShowNot = new CheckBox("Nicht mehr anzeigen");
     private final CheckBox chkTime = new CheckBox("Automatisch ausblenden");
 
@@ -60,15 +63,13 @@ public class DownloadErrorDialogController extends PDialogExtra {
     private final Timeline timeline = new Timeline();
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue();
 
-    private final String message;
     private final DownloadData download;
 
-    public DownloadErrorDialogController(DownloadData download, String message) {
+    public DownloadErrorDialogController(DownloadData download) {
         super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_DIALOG_ERROR_SIZE,
                 "Fehler", false, false);
 
         this.download = download;
-        this.message = message;
 
         hBoxTitle = getHBoxTitle();
         vBoxCont = getVBoxCont();
@@ -96,15 +97,19 @@ public class DownloadErrorDialogController extends PDialogExtra {
 
         txtCont.setEditable(false);
         txtCont.setWrapText(true);
-        txtCont.setText("Fehler:" + "\n" + message);
+        txtCont.setText("Fehler:" + "\n" + download.getDownloadStartDto().getErrorMsg());
 
         btnOk.setOnAction(event -> {
             stopCounter();
             quit();
         });
+        btnErrorStream.setOnAction(a -> new DownloadErrorStreamDialogController(download.getDownloadStartDto().getErrorStream()));
+        btnLogFile.setOnAction(a -> PLogger.openLogFile());
+
+        btnErrorStream.setVisible(!download.getDownloadStartDto().getErrStreamList().isEmpty());
+        btnErrorStream.setManaged(btnErrorStream.isVisible());
 
         imageView.setImage(ProgIcons.IMAGE_ACHTUNG_64.getImage());
-
         chkTime.setSelected(ProgConfig.DOWNLOAD_DIALOG_ERROR_TIME.get());
         chkTime.setOnAction(a -> {
             ProgConfig.DOWNLOAD_DIALOG_ERROR_TIME.setValue(chkTime.isSelected());
@@ -148,9 +153,9 @@ public class DownloadErrorDialogController extends PDialogExtra {
         VBox.setVgrow(hBox, Priority.ALWAYS);
 
         addOkButton(btnOk);
-        getHboxLeft().getChildren().addAll(chkTime, P2GuiTools.getHBoxGrower(), lblTime);
+        getHboxLeft().getChildren().addAll(btnErrorStream, btnLogFile, P2GuiTools.getHBoxGrower(), lblTime);
         getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
-        getHBoxOverButtons().getChildren().addAll(chkShowNot);
+        getHBoxOverButtons().getChildren().addAll(chkTime, P2GuiTools.getHBoxGrower(), chkShowNot);
     }
 
     private class CountdownAction implements EventHandler {

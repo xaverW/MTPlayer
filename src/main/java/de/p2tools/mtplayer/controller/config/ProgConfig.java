@@ -252,6 +252,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty DOWNLOAD_DIALOG_ADD_MORE_SIZE = addStrProp("download-dialog-add-more-size", "800:700");
     public static StringProperty DOWNLOAD_DIALOG_CONTINUE_SIZE = addStrProp("download-dialog-continue-size");
     public static StringProperty DOWNLOAD_DIALOG_ERROR_SIZE = addStrProp("download-dialog-error-size", "600:500");
+    public static StringProperty DOWNLOAD_DIALOG_ERROR_STREAM_SIZE = addStrProp("download-dialog-error-steam-size", "600:500");
     public static DoubleProperty DOWNLOAD_GUI_FILTER_DIVIDER = addDoubleProp("download-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty DOWNLOAD_GUI_FILTER_DIVIDER_ON = addBoolProp("download-gui-filter-divider-on", Boolean.TRUE);
     public static DoubleProperty DOWNLOAD_GUI_DIVIDER = addDoubleProp("download-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);

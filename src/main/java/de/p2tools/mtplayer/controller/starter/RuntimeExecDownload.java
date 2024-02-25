@@ -149,6 +149,8 @@ public class RuntimeExecDownload {
                 buff = new BufferedReader(new InputStreamReader(in));
                 String inStr;
                 while ((inStr = buff.readLine()) != null) {
+                    download.getDownloadStartDto().addErrStream(inStr);
+
                     if (download.getProgramCall().contains("ffmpeg")) {
                         getFromErrorStreamFfmpeg(inStr);
                     } else if (download.getProgramCall().contains("yt-dlp")) {

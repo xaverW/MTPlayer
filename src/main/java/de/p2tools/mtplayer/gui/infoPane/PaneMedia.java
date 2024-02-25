@@ -142,10 +142,8 @@ public class PaneMedia extends VBox {
             filter(mediaDataDtoAbo);
         });
 
-        tableMedia.setStyle("-fx-border-width: 1px;");
-        tableMedia.setStyle("-fx-border-color: -text-color-blue;");
-        tableAbo.setStyle("-fx-border-width: 1px;");
-        tableAbo.setStyle("-fx-border-color: -text-color-blue;");
+        tableMedia.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
+        tableAbo.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
 
         SplitPane splitPane = new SplitPane();
         splitPane.setPadding(new Insets(0));

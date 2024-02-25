@@ -18,20 +18,20 @@ package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorStreamDialogController;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 
 public class PaneDownloadError extends AnchorPane {
 
+    private final VBox vBoxCont = new VBox();
     private final ScrollPane scrollPane = new ScrollPane();
-    private final GridPane gridPane = new GridPane();
     private final Button btnClear = new Button();
+
 
     private final ProgData progData;
 
@@ -42,14 +42,9 @@ public class PaneDownloadError extends AnchorPane {
         btnClear.setTooltip(new Tooltip("Die Liste der Downloadfehler löschen"));
         btnClear.setOnAction(a -> progData.downloadErrorList.clear());
 
-        gridPane.setHgap(5);
-        gridPane.setVgap(5);
-        gridPane.setPadding(new Insets(5));
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
-
-        scrollPane.setContent(gridPane);
+        vBoxCont.setPadding(new Insets(5));
+        vBoxCont.setSpacing(5);
+        scrollPane.setContent(vBoxCont);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         AnchorPane.setLeftAnchor(scrollPane, 0.0);
@@ -63,17 +58,24 @@ public class PaneDownloadError extends AnchorPane {
     }
 
     public void setInfoText() {
-        final IntegerProperty row = new SimpleIntegerProperty(0);
-        gridPane.getChildren().clear();
+        vBoxCont.getChildren().clear();
 
         if (progData.downloadErrorList.isEmpty()) {
             // dann gibts keine Fehler
             Label lblNoError = new Label("Keine Fehler");
-            gridPane.add(lblNoError, 1, row.get());
-            GridPane.setHgrow(lblNoError, Priority.ALWAYS);
+            vBoxCont.getChildren().add(lblNoError);
 
         } else {
             progData.downloadErrorList.forEach(d -> {
+                final GridPane gridPane = new GridPane();
+                gridPane.setHgap(5);
+                gridPane.setVgap(5);
+                gridPane.setPadding(new Insets(5));
+                gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                        P2ColumnConstraints.getCcComputedSizeAndHgrow(),
+                        P2ColumnConstraints.getCcPrefSize());
+                gridPane.setStyle("-fx-border-width: 2px; -fx-border-color: black;");
+
                 TextField txtTitle = new TextField(d.getTitle());
                 txtTitle.setText(d.getTitle());
                 txtTitle.setEditable(false);
@@ -92,27 +94,41 @@ public class PaneDownloadError extends AnchorPane {
                 taError.setWrapText(true);
                 taError.setPrefRowCount(4);
 
-                gridPane.add(new Label("Titel: "), 0, row.get());
-                gridPane.add(txtTitle, 1, row.get());
+                int row = 0;
+                gridPane.add(new Label("Titel: "), 0, row);
+                if (d.getErrorStream().isEmpty()) {
+                    gridPane.add(txtTitle, 1, row);
 
-                row.setValue(row.get() + 1);
-                gridPane.add(new Label("URL: "), 0, row.get());
-                gridPane.add(txtUrl, 1, row.get());
+                } else {
+                    final Button btnErrorStream = new Button("Programmausgabe");
+                    btnErrorStream.setOnAction(a -> new DownloadErrorStreamDialogController(d.getErrorStream()));
+                    btnErrorStream.setVisible(!d.getErrorStream().isEmpty());
 
-                row.setValue(row.get() + 1);
-                gridPane.add(new Label("Datei:"), 0, row.get());
-                gridPane.add(txtFile, 1, row.get());
+                    HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+                    HBox.setHgrow(txtTitle, Priority.ALWAYS);
+                    hBox.getChildren().addAll(txtTitle, btnErrorStream);
+                    gridPane.add(hBox, 1, row);
+                }
 
-                row.setValue(row.get() + 1);
-                gridPane.add(taError, 0, row.get(), 2, 1);
+                ++row;
+                gridPane.add(new Label("URL: "), 0, row);
+                gridPane.add(txtUrl, 1, row);
+
+                ++row;
+                gridPane.add(new Label("Datei:"), 0, row);
+                gridPane.add(txtFile, 1, row);
+
+                ++row;
+                gridPane.add(taError, 0, row, 2, 1);
                 GridPane.setHgrow(taError, Priority.ALWAYS);
 
-                row.setValue(row.get() + 1);
-                gridPane.add(new Label(""), 0, row.get());
-                row.setValue(row.get() + 1);
+                vBoxCont.getChildren().add(gridPane);
             });
 
-            gridPane.add(btnClear, 2, row.get() - 2);
+            HBox hBox = new HBox();
+            hBox.getChildren().add(btnClear);
+            hBox.setAlignment(Pos.CENTER_RIGHT);
+            vBoxCont.getChildren().add(hBox);
         }
     }
 }

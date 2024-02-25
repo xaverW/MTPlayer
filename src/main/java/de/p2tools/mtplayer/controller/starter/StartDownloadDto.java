@@ -39,6 +39,7 @@ public class StartDownloadDto {
     private MLInputStream inputStream = null;
     private File file = null;
     private final List<String> errMsgList = new ArrayList<>();
+    private final List<String> errStreamList = new ArrayList<>();
 
     private final DownloadData download; //Referenz auf den Download dazu
 
@@ -78,6 +79,7 @@ public class StartDownloadDto {
     public void startDownload() {
         setStartTime(new P2Date());
         errMsgList.clear(); // sonst bei mehrfach gestarteten noch die alten MSGs drin
+        errStreamList.clear(); // sonst bei mehrfach gestarteten noch die alten MSGs drin
     }
 
     public boolean isStartViewing() {
@@ -136,10 +138,45 @@ public class StartDownloadDto {
         return errMsgList;
     }
 
+    public String getErrorMsg() {
+        String errMsg;
+        if (!errMsgList.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            errMsgList.forEach(s -> sb.append(s).append("\n"));
+            errMsg = sb.toString();
+        } else {
+            errMsg = "Fehlerhafter Download";
+        }
+        return errMsg;
+    }
+
     public void addErrMsg(String error) {
         if (!errMsgList.contains(error)) {
             // gleiche nicht mehrfach eintragen
             errMsgList.add(error);
         }
+    }
+
+    public List<String> getErrStreamList() {
+        return errStreamList;
+    }
+
+    public void addErrStream(String error) {
+        errStreamList.add(error);
+        while (errStreamList.size() > 25) {
+            errStreamList.remove(0);
+        }
+    }
+
+    public String getErrorStream() {
+        String err;
+        if (!errStreamList.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            errStreamList.forEach(s -> sb.append(s).append("\n"));
+            err = sb.toString();
+        } else {
+            err = "";
+        }
+        return err;
     }
 }

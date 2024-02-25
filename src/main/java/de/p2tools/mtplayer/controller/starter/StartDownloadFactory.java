@@ -88,26 +88,15 @@ public class StartDownloadFactory {
         cleanUpDestFile(download);
 
         if (download.isStateError()) {
-            final String errMsg;
-            if (!download.getDownloadStartDto().getErrMsgList().isEmpty()) {
-                // wenn download fehlerhaft
-                StringBuilder sb = new StringBuilder();
-                download.getDownloadStartDto().getErrMsgList().forEach(s -> sb.append(s).append("\n"));
-//                errMsg = download.getDownloadStartDto().getErrMsgList()
-//                        .get(download.getDownloadStartDto().getErrMsgList().size() - 1);
-                errMsg = sb.toString();
-                download.setErrorMessage(errMsg);
-            } else {
-                errMsg = "Fehlerhafter Download";
-            }
-
             Platform.runLater(() -> {
                 ProgData.getInstance().downloadErrorList.add(new DownloadErrorData(download.getTitle(),
                         download.getUrl(),
                         download.getDestPathFile(),
-                        errMsg));
+                        download.getDownloadStartDto().getErrorMsg(),
+                        download.getDownloadStartDto().getErrorStream()));
+
                 if (ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW.getValue()) {
-                    new DownloadErrorDialogController(download, errMsg);
+                    new DownloadErrorDialogController(download);
                 }
             });
         }
