@@ -31,14 +31,18 @@ import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
+import javafx.scene.control.Cell;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.skin.TableViewSkin;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 
@@ -57,6 +61,7 @@ public class FilmGuiController extends AnchorPane {
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER;
     private boolean boundSplitPaneDivPos = false;
+    private double selPos = -1;
 
     public FilmGuiController() {
         progData = ProgData.getInstance();
@@ -107,7 +112,7 @@ public class FilmGuiController extends AnchorPane {
         if (ret.isEmpty()) {
             PAlert.showInfoNoSelection();
         } else if (markSel) {
-            setWasLastShown(ret.get(0));
+            setLastShown(ret.get(0));
         }
         return ret;
     }
@@ -124,7 +129,7 @@ public class FilmGuiController extends AnchorPane {
             mtp = Optional.empty();
         }
         if (markSel && mtp.isPresent()) {
-            setWasLastShown(mtp.get());
+            setLastShown(mtp.get());
         }
         return mtp;
     }
@@ -258,7 +263,7 @@ public class FilmGuiController extends AnchorPane {
         selectLastShown();
     }
 
-    private void setWasLastShown(FilmDataMTP mtp) {
+    private void setLastShown(FilmDataMTP mtp) {
         // die Filme vor dem letzten angezeigten Film markieren
         boolean set = true;
         for (FilmDataMTP filmDataMTP : sortedList) {
@@ -268,11 +273,24 @@ public class FilmGuiController extends AnchorPane {
             }
             filmDataMTP.setWasHere(set);
         }
+
+        selPos = -1;
+
+        int selected = tableView.getSelectionModel().getSelectedIndex();
+        if (selected == -1) return;
+        TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
+        skin.getChildren().stream()
+                .filter(VirtualFlow.class::isInstance)
+                .map(VirtualFlow.class::cast)
+                .findAny()
+                .ifPresent(vf -> {
+                    Cell<?> cell = vf.getCell(selected);
+                    selPos = cell.getLayoutY();
+                });
     }
 
     private void selectLastShown() {
         // bei der Blacklist kommt das außer der Reihe
-
         if (Platform.isFxApplicationThread()) {
             selectLastShown_();
             return;
@@ -281,6 +299,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void selectLastShown_() {
+        PDuration.counterStart("selectLastShown");
         // nach dem Filtern/ändern der Filmliste wird ... in der Tabelle selektiert
         if (tableView.getItems().isEmpty()) {
             return;
@@ -301,25 +320,75 @@ public class FilmGuiController extends AnchorPane {
             return;
         }
 
+
         // und JETZT wird gearbeitet
-        boolean found = false;
+//        boolean found = false;
+//        for (int i = sortedList.size() - 1; i >= 0; --i) {
+//            FilmDataMTP film = sortedList.get(i);
+//            if (film.isWasHere()) {
+        // dann haben wir den ersten
+        // todo: fx20 kann das nicht!!!!!!!!!!!
+//                tableView.getSelectionModel().select(film);
+//                tableView.scrollTo(film);
+//                found = true;
+//                break;
+//            }
+//        }
+//        if (!found) {
+        // dann wurde der erste Tabelleneintrag entfernt
+//            tableView.getSelectionModel().select(0);
+//            tableView.scrollTo(0);
+//        }
+
+
         for (int i = sortedList.size() - 1; i >= 0; --i) {
             FilmDataMTP film = sortedList.get(i);
             if (film.isWasHere()) {
                 //dann haben wir den ersten
-                // todo: fx20 kann das nicht!!!!!!!!!!!
                 tableView.getSelectionModel().select(film);
-                tableView.scrollTo(film);
-                found = true;
                 break;
             }
         }
 
-        if (!found) {
-            // dann wurde der erste Tabelleneintrag entfernt
-            tableView.getSelectionModel().select(0);
-            tableView.scrollTo(0);
-        }
+        int selected = tableView.getSelectionModel().getSelectedIndex();
+        if (selected == -1) return;
+        TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
+        skin.getChildren().stream()
+                .filter(VirtualFlow.class::isInstance)
+                .map(VirtualFlow.class::cast)
+                .findAny()
+                .ifPresent(vf -> {
+
+//                    vf.scrollTo(selected);
+//                    vf.layout();
+//                    if (selPos >= 0) {
+//                        Cell<?> cell = vf.getCell(selected);
+//                        System.out.println(selPos);
+//                        System.out.println(vf.getHeight());
+//                        double to = (-1 * selPos);
+//                        System.out.println(to);
+//                        vf.scrollPixels(to);
+//
+//                        double y = cell.getBoundsInParent().getCenterY();
+//                        System.out.println(y - vf.getHeight() / 2);
+//                    } else {
+//                    vf.scrollPixels(-vf.getHeight() / 2);
+//                    }
+
+//                    vf.scrollTo(selected);
+//                    vf.layout();
+//                    Cell<?> cell = vf.getCell(selected);
+//                    double y = cell.getBoundsInParent().getCenterY();
+//                    vf.scrollPixels(y - vf.getHeight() / 2);
+
+
+                    vf.scrollToTop(selected);
+                    vf.layout();
+                    vf.scrollPixels(-vf.getHeight() / 2);
+                    tableView.refresh();
+                });
+
+        PDuration.counterStart("selectLastShown");
     }
 
     private void setFilmInfos(FilmDataMTP film) {
