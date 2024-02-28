@@ -29,6 +29,7 @@ import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterList;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.history.HistoryList;
@@ -83,6 +84,8 @@ public class ProgData {
     public PShortcut pShortcut; // verwendete Shortcuts
     public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile
     public FilmFilterRunner filmFilterRunner;
+    public final FilmFilterList backwardFilterList;
+    public final FilmFilterList forwardFilterList;
 
     // Gui
     public Stage primaryStage = null;
@@ -144,6 +147,9 @@ public class ProgData {
 //        downloadListButton = new DownloadList(this);
 
         filmFilterRunner = new FilmFilterRunner(this);
+        backwardFilterList = new FilmFilterList("backwardFilterList");
+        forwardFilterList = new FilmFilterList("forwardFilterList");
+
 
         historyList = new HistoryList(ProgConst.FILE_HISTORY,
                 ProgInfos.getSettingsDirectory_String(), false);

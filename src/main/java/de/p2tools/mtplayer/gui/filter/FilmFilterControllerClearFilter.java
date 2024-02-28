@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -35,6 +36,7 @@ public class FilmFilterControllerClearFilter extends VBox {
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
+    private final PComboBox cboBack = new PComboBox();
 
     private final ProgData progData;
 
@@ -50,12 +52,31 @@ public class FilmFilterControllerClearFilter extends VBox {
     private void addButton() {
         btnGoBack.setGraphic(ProgIcons.ICON_BUTTON_BACKWARD.getImageView());
         btnGoBack.setOnAction(a -> progData.filmFilterWorker.getBackwardFilmFilter().goBackward());
-        btnGoBack.disableProperty().bind(progData.filmFilterWorker.getBackwardFilmFilter().backwardIsEmptyProperty().not());
+        btnGoBack.disableProperty().bind(ProgData.getInstance().backwardFilterList.emptyProperty()
+                .or(ProgData.getInstance().backwardFilterList.sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
+
         btnGoForward.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnGoForward.setOnAction(a -> progData.filmFilterWorker.getBackwardFilmFilter().goForward());
-        btnGoForward.disableProperty().bind(progData.filmFilterWorker.getBackwardFilmFilter().forwardIsEmptyProperty().not());
+        btnGoForward.disableProperty().bind(ProgData.getInstance().forwardFilterList.emptyProperty());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
+
+        cboBack.valueProperty().addListener((u, o, n) -> {
+            if (n != null) {
+                FilmFilter f = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
+                if (!f.isSame(n)) {
+                    ProgData.getInstance().filmFilterWorker.setActFilterSettings(n);
+
+                    System.out.println("valueProperty");
+                    // gleiche löschen
+                    System.out.println(ProgData.getInstance().backwardFilterList.size());
+//                    FilmFilter ff = ProgData.getInstance().backwardFilterList.getSameFilter(n);
+//                    if (ff != null) {
+////                        ProgData.getInstance().backwardFilterList.remove(ff);
+//                    }
+                }
+            }
+        });
 
         btnClearFilter.setOnAction(a -> clearFilter());
 
@@ -67,7 +88,8 @@ public class FilmFilterControllerClearFilter extends VBox {
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(5, 0, 0, 0));
-        hBox.getChildren().addAll(btnEditFilter, P2GuiTools.getHBoxGrower(), btnGoBack, btnGoForward, btnClearFilter);
+        hBox.getChildren().addAll(btnEditFilter, P2GuiTools.getHBoxGrower(),
+                cboBack, btnGoBack, btnGoForward, btnClearFilter);
         getChildren().addAll(hBox);
     }
 

@@ -75,6 +75,7 @@ public class ProgIcons {
     public static PIcon ICON_BUTTON_MOVE_UP = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-move-up.png", 16, 16);
     public static PIcon ICON_BUTTON_MOVE_TOP = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-move-top.png", 16, 16);
     public static PIcon ICON_BUTTON_MOVE_BOTTOM = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-move-bottom.png", 16, 16);
+    public static PIcon ICON_BUTTON_FILMFILTER_DEL = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-filmfilter-del.png", 16, 16);
 
     public static PIcon ICON_TOOLBAR_BUTTON_SEARCH = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-button-search.png", 24, 24);
     public static PIcon ICON_TOOLBAR_MENU = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-menu.png", 18, 15);

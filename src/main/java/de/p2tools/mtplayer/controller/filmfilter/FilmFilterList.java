@@ -16,15 +16,21 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 public final class FilmFilterList extends SimpleListProperty<FilmFilter> implements PDataList<FilmFilter> {
-    public static final String TAG = "SelectedFilterList";
+    public String TAG = "SelectedFilterList";
 
     public FilmFilterList() {
         super(FXCollections.observableArrayList());
+    }
+
+    public FilmFilterList(String tag) {
+        super(FXCollections.observableArrayList());
+        TAG = tag;
     }
 
     @Override
@@ -48,6 +54,29 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
             add((FilmFilter) obj);
         }
     }
+
+    public FilmFilter getSameFilter(FilmFilter filmFilter) {
+        for (FilmFilter f : this) {
+            if (f.isSame(filmFilter)) {
+                return f;
+            }
+        }
+        return null;
+    }
+
+    public void addBackForward(FilmFilter e) {
+//        while (this.size() > ProgConst.MAX_FILTER_GO_BACK) {
+//            remove(0);
+//        }
+        super.add(e);
+    }
+
+    public void cleanBackForward() {
+        while (this.size() > ProgConst.MAX_FILTER_GO_BACK) {
+            remove(0);
+        }
+    }
+
 
     public int top(int idx, boolean up) {
         FilmFilter filmFilter = remove(idx);

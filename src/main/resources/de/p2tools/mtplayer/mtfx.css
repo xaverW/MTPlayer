@@ -117,3 +117,10 @@
 .checkBoxAll:selected .mark {
     -fx-background-color: blue;
 }
+
+/* Label Filmfilter in der CBO */
+.lblFilmFilter {
+    -fx-border-color: #313131;
+    -fx-border-width: 1;
+    -fx-padding: 0 5;
+}

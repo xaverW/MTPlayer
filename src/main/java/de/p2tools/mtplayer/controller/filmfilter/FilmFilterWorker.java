@@ -164,7 +164,7 @@ public final class FilmFilterWorker {
         actFilterSettings.setTimeRangeVis(true);
         actFilterSettings.setTimeRange(abo.getTimeRange());
 
-        backwardFilmFilter.clearForward();
+        ProgData.getInstance().forwardFilterList.clear();
         actFilterSettings.switchFilterOff(false);
         postFilterChange();
     }
@@ -178,7 +178,7 @@ public final class FilmFilterWorker {
             actFilterSettings.clearTxtFilter();
         }
 
-        backwardFilmFilter.clearForward();
+        ProgData.getInstance().forwardFilterList.clear();
         actFilterSettings.switchFilterOff(false);
         postFilterChange();
     }
