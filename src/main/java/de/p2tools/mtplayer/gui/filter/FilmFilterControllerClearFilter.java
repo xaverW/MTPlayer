@@ -21,13 +21,13 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
-import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class FilmFilterControllerClearFilter extends VBox {
@@ -36,7 +36,7 @@ public class FilmFilterControllerClearFilter extends VBox {
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
-    private final PComboBox cboBack = new PComboBox();
+    private final FilmFilterComboBox cboBack = new FilmFilterComboBox();
 
     private final ProgData progData;
 
@@ -61,7 +61,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         btnGoForward.disableProperty().bind(ProgData.getInstance().filmFilterWorker.getForwardFilterList().emptyProperty());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
-        cboBack.valueProperty().addListener((u, o, n) -> {
+        cboBack.getCbo().valueProperty().addListener((u, o, n) -> {
             if (n != null) {
                 FilmFilter f = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
                 if (!f.isSame(n)) {
@@ -80,8 +80,9 @@ public class FilmFilterControllerClearFilter extends VBox {
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(5, 0, 0, 0));
-        hBox.getChildren().addAll(btnEditFilter, P2GuiTools.getHBoxGrower(),
+        hBox.getChildren().addAll(btnEditFilter,
                 cboBack, btnGoBack, btnGoForward, btnClearFilter);
+        HBox.setHgrow(cboBack, Priority.ALWAYS);
         getChildren().addAll(hBox);
     }
 

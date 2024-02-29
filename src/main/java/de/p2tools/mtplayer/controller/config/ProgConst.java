@@ -105,7 +105,7 @@ public class ProgConst {
     public static final int MIN_TABLE_HEIGHT_LOW = 100;
     public static final int MIN_TEXTAREA_HEIGHT_LOW = 50;
 
-    public static final int MAX_FILTER_GO_BACK = 5;
+    public static final int MAX_FILTER_GO_BACK = 20;
 
     public static final String THEME_LIVE = "Livestream";
 }

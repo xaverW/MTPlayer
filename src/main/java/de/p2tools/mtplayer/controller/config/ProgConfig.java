@@ -540,6 +540,9 @@ public class ProgConfig extends PDataProgConfig {
         configFile.addConfigs(akt_sf);
 
         configFile.addConfigs(progData.filmFilterWorker.getStoredFilterList()); //Filterprofile
+
+        progData.filmFilterWorker.getBackwardFilterList().cleanBackForward();
+        progData.filmFilterWorker.getForwardFilterList().cleanBackForward();
         configFile.addConfigs(progData.filmFilterWorker.getBackwardFilterList()); //Filterprofile
         configFile.addConfigs(progData.filmFilterWorker.getForwardFilterList()); //Filterprofile
 
