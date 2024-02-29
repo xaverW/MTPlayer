@@ -33,6 +33,11 @@ public final class FilmFilterWorker {
     private final FilmFilter actFilterSettings = new FilmFilter(SELECTED_FILTER_NAME);
     // ist die Liste der gespeicherten Filter
     private final FilmFilterList filmFilterList = new FilmFilterList();
+    // ist die Liste der BACK Filter
+    private final FilmFilterList backwardFilterList = new FilmFilterList();
+    // ist die Liste der FORWARD Filter
+    private final FilmFilterList forwardFilterList = new FilmFilterList();
+
     // ist der FastFilter
     private final FastFilmFilter fastFilter = new FastFilmFilter();
     // da werden die Forward/Backward Filter verwaltet
@@ -47,6 +52,19 @@ public final class FilmFilterWorker {
     public FilmFilter getActFilterSettings() {
         // liefert den aktuell angezeigten Filter
         return actFilterSettings;
+    }
+
+    public FilmFilterList getStoredFilterList() {
+        // sind die gesicherten Filterprofile
+        return filmFilterList;
+    }
+
+    public FilmFilterList getBackwardFilterList() {
+        return backwardFilterList;
+    }
+
+    public FilmFilterList getForwardFilterList() {
+        return forwardFilterList;
     }
 
     public FastFilmFilter getFastFilterSettings() {
@@ -74,11 +92,6 @@ public final class FilmFilterWorker {
         } else {
             postBlacklistChange();
         }
-    }
-
-    public FilmFilterList getStoredFilterList() {
-        // sind die gesicherten Filterprofile
-        return filmFilterList;
     }
 
     public void addNewStoredFilter(String name) {
@@ -164,7 +177,7 @@ public final class FilmFilterWorker {
         actFilterSettings.setTimeRangeVis(true);
         actFilterSettings.setTimeRange(abo.getTimeRange());
 
-        ProgData.getInstance().forwardFilterList.clear();
+        forwardFilterList.clear();
         actFilterSettings.switchFilterOff(false);
         postFilterChange();
     }
@@ -178,7 +191,7 @@ public final class FilmFilterWorker {
             actFilterSettings.clearTxtFilter();
         }
 
-        ProgData.getInstance().forwardFilterList.clear();
+        forwardFilterList.clear();
         actFilterSettings.switchFilterOff(false);
         postFilterChange();
     }

@@ -64,7 +64,7 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
         return null;
     }
 
-    public void addBackForward(FilmFilter e) {
+    public void addToList(FilmFilter e) {
 //        while (this.size() > ProgConst.MAX_FILTER_GO_BACK) {
 //            remove(0);
 //        }

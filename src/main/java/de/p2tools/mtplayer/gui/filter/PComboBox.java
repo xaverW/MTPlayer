@@ -12,8 +12,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
 
-import java.util.ArrayList;
-
 public class PComboBox extends ComboBox<FilmFilter> {
 
     FilmFilterList fList = new FilmFilterList();
@@ -22,9 +20,8 @@ public class PComboBox extends ComboBox<FilmFilter> {
         itemsProperty().bind(fList);
 
         addEventHandler(ComboBox.ON_SHOWING, event -> {
-            System.out.println("Click on ");
-            ProgData.getInstance().backwardFilterList.cleanBackForward();
-            ProgData.getInstance().forwardFilterList.cleanBackForward();
+            ProgData.getInstance().filmFilterWorker.getBackwardFilterList().cleanBackForward();
+            ProgData.getInstance().filmFilterWorker.getForwardFilterList().cleanBackForward();
             addToList();
         });
 
@@ -41,13 +38,13 @@ public class PComboBox extends ComboBox<FilmFilter> {
         });
 
         setCellFactory(cell -> new ListCell<>() {
-            Button btnDel = new Button("");
-            HBox hBox = new HBox();
-            Label lblChannel = new Label();
-            Label lblTheme = new Label();
-            Label lblThemeExact = new Label();
-            Label lblThemeTitle = new Label();
-            Label lblTitle = new Label();
+            final Button btnDel = new Button("");
+            final HBox hBox = new HBox();
+            final Label lblChannel = new Label();
+            final Label lblTheme = new Label();
+            final Label lblThemeExact = new Label();
+            final Label lblThemeTitle = new Label();
+            final Label lblTitle = new Label();
 
             {
                 btnDel.setGraphic(ProgIcons.ICON_BUTTON_FILMFILTER_DEL.getImageView());
@@ -66,15 +63,10 @@ public class PComboBox extends ComboBox<FilmFilter> {
             @Override
             protected void updateItem(FilmFilter filmFilter, boolean empty) {
                 super.updateItem(filmFilter, empty);
-//                System.out.println("??? updateItem");
-//                setVisibleRowCount(ProgData.getInstance().backwardFilterList.size());
                 setVisibleRowCount(10);
 
                 if (!empty && filmFilter != null) {
-                    btnDel.setOnMousePressed(m -> {
-                        System.out.println("DEL");
-                        ProgData.getInstance().backwardFilterList.remove(filmFilter);
-                    });
+                    btnDel.setOnMousePressed(m -> ProgData.getInstance().filmFilterWorker.getBackwardFilterList().remove(filmFilter));
 
                     lblChannel.setVisible(!filmFilter.getChannel().isEmpty());
                     lblChannel.setManaged(lblChannel.isVisible());
@@ -87,14 +79,10 @@ public class PComboBox extends ComboBox<FilmFilter> {
                     lblThemeExact.setVisible(!filmFilter.getExactTheme().isEmpty());
                     lblThemeExact.setManaged(lblThemeExact.isVisible());
                     lblThemeExact.setText(getSubString(filmFilter.getExactTheme()));
-                    System.out.println("theme-title " + lblThemeTitle.getText());
-                    System.out.println("theme-title " + filmFilter.getThemeTitle());
 
                     lblThemeTitle.setVisible(!filmFilter.getThemeTitle().isEmpty());
                     lblThemeTitle.setManaged(lblThemeTitle.isVisible());
                     lblThemeTitle.setText(getSubString(filmFilter.getThemeTitle()));
-                    System.out.println("title " + lblTitle.getText());
-                    System.out.println("title " + filmFilter.getTitle());
 
                     lblTitle.setVisible(!filmFilter.getTitle().isEmpty());
                     lblTitle.setManaged(lblTitle.isVisible());
@@ -121,35 +109,17 @@ public class PComboBox extends ComboBox<FilmFilter> {
     }
 
     private String getSubString(String s) {
-        if (s.length() > 25) {
-            return s.substring(0, 25) + " ...";
+        if (s.length() > 20) {
+            return s.substring(0, 20) + " ...";
         } else {
             return s;
         }
     }
 
-//    private void init() {
-////        ProgData.getInstance().backwardFilterList.addListener((u, o, n) -> {
-////            System.out.println("liste");
-////            addToList();
-////        });
-////        addToList();
-//        itemsProperty().bind(fList);
-//
-////        itemsProperty().bind(ProgData.getInstance().backwardFilterList);
-//    }
-
     private synchronized void addToList() {
-        try {
-            fList.clear();
-            ArrayList<FilmFilter> filters = new ArrayList<>();
-            ProgData.getInstance().backwardFilterList.forEach(f -> {
-                fList.add(0, f);
-            });
-//            fList.setAll(filters);
-        } catch (Exception ex) {
-            System.out.println("================================");
-            System.out.println(ex.getStackTrace());
-        }
+        fList.clear();
+        ProgData.getInstance().filmFilterWorker.getBackwardFilterList().forEach(f -> {
+            fList.add(0, f);
+        });
     }
 }

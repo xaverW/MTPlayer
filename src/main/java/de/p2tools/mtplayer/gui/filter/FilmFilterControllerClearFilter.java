@@ -52,13 +52,13 @@ public class FilmFilterControllerClearFilter extends VBox {
     private void addButton() {
         btnGoBack.setGraphic(ProgIcons.ICON_BUTTON_BACKWARD.getImageView());
         btnGoBack.setOnAction(a -> progData.filmFilterWorker.getBackwardFilmFilter().goBackward());
-        btnGoBack.disableProperty().bind(ProgData.getInstance().backwardFilterList.emptyProperty()
-                .or(ProgData.getInstance().backwardFilterList.sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
+        btnGoBack.disableProperty().bind(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().emptyProperty()
+                .or(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnGoForward.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnGoForward.setOnAction(a -> progData.filmFilterWorker.getBackwardFilmFilter().goForward());
-        btnGoForward.disableProperty().bind(ProgData.getInstance().forwardFilterList.emptyProperty());
+        btnGoForward.disableProperty().bind(ProgData.getInstance().filmFilterWorker.getForwardFilterList().emptyProperty());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         cboBack.valueProperty().addListener((u, o, n) -> {
@@ -66,14 +66,6 @@ public class FilmFilterControllerClearFilter extends VBox {
                 FilmFilter f = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
                 if (!f.isSame(n)) {
                     ProgData.getInstance().filmFilterWorker.setActFilterSettings(n);
-
-                    System.out.println("valueProperty");
-                    // gleiche löschen
-                    System.out.println(ProgData.getInstance().backwardFilterList.size());
-//                    FilmFilter ff = ProgData.getInstance().backwardFilterList.getSameFilter(n);
-//                    if (ff != null) {
-////                        ProgData.getInstance().backwardFilterList.remove(ff);
-//                    }
                 }
             }
         });

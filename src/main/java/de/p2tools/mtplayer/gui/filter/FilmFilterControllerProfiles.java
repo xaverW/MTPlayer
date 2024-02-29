@@ -101,7 +101,7 @@ public class FilmFilterControllerProfiles extends VBox {
         cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
-        final StringConverter<FilmFilter> converter = new StringConverter<FilmFilter>() {
+        final StringConverter<FilmFilter> converter = new StringConverter<>() {
             @Override
             public String toString(FilmFilter selFilter) {
                 return selFilter == null ? "" : selFilter.getName();
@@ -211,7 +211,6 @@ public class FilmFilterControllerProfiles extends VBox {
                 return cell;
             }
         });
-
     }
 
 
