@@ -112,7 +112,7 @@ public class PredicateFactory {
             predicate = predicate.and(FilmDataProps::isLive);
         }
         if (onlyAktHist) {
-            predicate = predicate.and(FilmDataProps::getActHist);
+            predicate = predicate.and(FilmDataProps::isActHist);
         }
         if (onlyNew) {
             predicate = predicate.and(FilmDataProps::isNewFilm);

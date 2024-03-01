@@ -42,6 +42,7 @@ public class FilmToolsFactory {
     }
 
     public static void setFilmShown(ArrayList<FilmDataMTP> filmArrayList, boolean setShown) {
+        // Menü: Film als .. setzen
         if (setShown) {
             ProgData.getInstance().historyList.addFilmDataListToHistory(filmArrayList);
         } else {
@@ -50,16 +51,19 @@ public class FilmToolsFactory {
     }
 
     public static void changeBookmarkFilm(FilmDataMTP film) {
+        // Button in der Tabelle
         bookmarkFilm(film, !film.isBookmark());
     }
 
     public static void bookmarkFilm(FilmDataMTP film, boolean bookmark) {
+        // Button in der Tabelle / Kontextmenü Tabelle
         ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>(1);
         filmArrayList.add(film);
         bookmarkFilmList(filmArrayList, bookmark);
     }
 
     public static void bookmarkFilmList(ArrayList<FilmDataMTP> filmArrayList, boolean bookmark) {
+        // Button Tabelle oder Menü
         if (bookmark) {
             ProgData.getInstance().historyListBookmarks.addFilmDataListToHistory(filmArrayList);
         } else {

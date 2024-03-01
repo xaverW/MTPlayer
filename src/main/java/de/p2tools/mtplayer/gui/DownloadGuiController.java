@@ -246,12 +246,12 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void setFilmShown() {
-        // Filme als gesehen markieren
+        // Menü: Filme als gesehen markieren
         setFilmShown(true);
     }
 
     public void setFilmNotShown() {
-        // Filme als ungesehen markieren
+        // Menü: Filme als ungesehen markieren
         setFilmShown(false);
     }
 
@@ -418,7 +418,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilmShown(boolean shown) {
-        // Filme als (un)gesehen markieren
+        // Menü: Filme als (un)gesehen markieren
         final ArrayList<DownloadData> arrayDownloadData = getSelList();
         final ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>();
 

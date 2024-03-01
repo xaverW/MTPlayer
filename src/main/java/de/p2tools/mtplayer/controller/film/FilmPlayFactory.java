@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.starter.RuntimeExecPlay;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2Date;
+import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.ArrayList;
@@ -93,6 +93,7 @@ public class FilmPlayFactory {
     }
 
     private static void play(List<FilmDataMTP> filmList) {
+        // Film abspielen, Menü,Button
         SetData setData = ProgData.getInstance().setDataList.getSetDataPlay();
         if (setData == null) {
             new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.PLAY);

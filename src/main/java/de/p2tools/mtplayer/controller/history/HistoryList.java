@@ -42,20 +42,24 @@ import java.util.function.Predicate;
 
 public class HistoryList extends SimpleListProperty<HistoryData> {
 
+    public enum HISTORY_LIST {
+        HISTORY, ABO, BOOKMARK
+    }
+
+    private final HISTORY_LIST historyEnum;
     private final HashSet<String> urlHash = new HashSet<>();
     private final String settingsDir;
     private final String fileName;
     private FilteredList<HistoryData> filteredList = null;
     private SortedList<HistoryData> sortedList = null;
     private final BooleanProperty isWorking = new SimpleBooleanProperty(false);
-    private final boolean bookmark;
     private boolean found = false;
 
-    public HistoryList(String fileName, String settingsDir, boolean bookmark) {
+    public HistoryList(String fileName, String settingsDir, HISTORY_LIST historyEnum) {
         super(FXCollections.observableArrayList());
         this.settingsDir = settingsDir;
         this.fileName = fileName;
-        this.bookmark = bookmark;
+        this.historyEnum = historyEnum;
     }
 
     public void loadList() {
@@ -95,9 +99,10 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     //===============
     public synchronized void clearAll(Stage stage) {
+        // aus dem Menü (Bookmark löschen), Dialog Mediensammlung: Alles löschen (Abo, History)
         final int size = this.size();
         final String title;
-        if (bookmark) {
+        if (historyEnum.equals(HISTORY_LIST.BOOKMARK)) {
             title = "Bookmarks";
         } else {
             title = "Filme";
@@ -109,8 +114,15 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                         " gelöscht werden?")) {
             clearList();
             HistoryFactory.deleteHistoryFile(settingsDir, fileName);
-            if (bookmark) {
+            if (historyEnum.equals(HISTORY_LIST.BOOKMARK)) {
                 FilmToolsFactory.clearAllBookmarks();
+
+            } else if (historyEnum.equals(HISTORY_LIST.HISTORY)) {
+                // dann auch History in den Filmen löschen
+                ProgData.getInstance().filmList.forEach(film -> {
+                    film.setShown(false);
+                    film.setActHist(false);
+                });
             }
             PListener.notify(PListener.EVENT_HISTORY_CHANGED, HistoryList.class.getSimpleName());
         }
@@ -127,7 +139,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     //ADD
     //===============
     public synchronized void addHistoryDataToHistory(String theme, String title, String url) {
-        // einen Film in die History schreiben
+        // wenn Abo: Fertigen Film in die Abo-History schreiben
         if (checkIfUrlAlreadyIn(url) || HistoryFactory.checkIfLiveStream(theme)) {
             return;
         }
@@ -144,6 +156,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     }
 
     public synchronized void addFilmDataListToHistory(List<FilmDataMTP> filmList) {
+        // Button oder Menü
         // eine Liste Filme in die History schreiben
         if (filmList == null || filmList.isEmpty()) {
             return;
@@ -158,9 +171,9 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                 continue;
             }
 
-            if (bookmark) {
+            if (historyEnum.equals(HISTORY_LIST.BOOKMARK)) {
                 film.setBookmark(true);
-            } else {
+            } else if (historyEnum.equals(HISTORY_LIST.HISTORY)) {
                 // auch wenn schon in der History, dann doch den Film als gesehen markieren
                 film.setShown(true);
                 film.setActHist(true);
@@ -180,6 +193,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     }
 
     public synchronized void addDownloadDataListToHistory(ArrayList<DownloadData> downloadList) {
+        // Menü/Automatisch
         // eine Liste Downloads in die History schreiben
         if (downloadList == null || downloadList.isEmpty()) {
             return;
@@ -199,10 +213,12 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             }
 
             // auch wenn schon in der History, dann doch den Film als gesehen markieren
-            if (bookmark && download.getFilm() != null) {
+            if (historyEnum.equals(HISTORY_LIST.BOOKMARK) && download.getFilm() != null) {
+                // Bookmark-Liste
                 download.getFilm().setBookmark(true);
 
-            } else if (download.getFilm() != null) {
+            } else if (historyEnum.equals(HISTORY_LIST.HISTORY) && download.getFilm() != null) {
+                // History-Liste (nicht Abos)
                 download.getFilm().setShown(true);
                 download.getFilm().setActHist(true);
             }
@@ -258,11 +274,11 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(filmList.size() + 1, 0.75F);
         filmList.forEach(film -> {
-            if (bookmark) {
+            if (historyEnum.equals(HISTORY_LIST.BOOKMARK)) {
                 film.setBookmark(false);
 
-            } else {
-                film.setShown(false); // todo mal vormerken ob evtl. die ganze Filmliste nach dieser URL durchsucht werden soll, wird sonst erst beim nächsten Start angezeigt
+            } else if (historyEnum.equals(HISTORY_LIST.HISTORY)) {
+                film.setShown(false);
                 film.setActHist(false);
             }
 
@@ -283,10 +299,10 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         PDuration.counterStart("History: removeDataFromHistory");
         final HashSet<String> hash = new HashSet<>(downloadList.size() + 1, 0.75F);
         downloadList.forEach(download -> {
-            if (bookmark && download.getFilm() != null) {
+            if (historyEnum.equals(HISTORY_LIST.BOOKMARK) && download.getFilm() != null) {
                 download.getFilm().setBookmark(false);
 
-            } else if (download.getFilm() != null) {
+            } else if (historyEnum.equals(HISTORY_LIST.HISTORY) && download.getFilm() != null) {
                 download.getFilm().setShown(false);
                 download.getFilm().setActHist(false);
             }

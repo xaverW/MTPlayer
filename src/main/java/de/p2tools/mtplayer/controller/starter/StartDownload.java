@@ -57,8 +57,8 @@ public class StartDownload {
     }
 
     public synchronized void startUrlWithProgram(FilmDataMTP film, SetData pSet, String resolution) {
-        // url mit dem Programm mit der Nr. starten (Button oder TabFilm, TabDownload "rechte Maustaste")
         // Quelle "Button" ist immer ein vom User gestarteter Film, also Quelle_Button!!!!!!!!!!!
+        // url mit dem Programm mit der Nr. starten (Button oder TabFilm, TabDownload "rechte Maustaste")
         final String url = film.arr[FilmDataXml.FILM_URL];
         if (!url.isEmpty()) {
             final DownloadData download = new DownloadData(DownloadConstants.SRC_BUTTON, pSet, film, null,

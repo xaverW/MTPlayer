@@ -135,6 +135,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void bookmarkFilm(boolean bookmark) {
+        // Filmmenü
         final ArrayList<FilmDataMTP> list = getSelList(true);
         if (!list.isEmpty()) {
             FilmToolsFactory.bookmarkFilmList(list, bookmark);

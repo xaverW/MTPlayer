@@ -185,12 +185,12 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     }
 
     public synchronized void delDownloads(DownloadData download) {
-        // aus dem Menü
+        // Button in der Tabelle-Downloads, Download noch nicht abgeschlossen
         DownloadFactoryStopDownload.delDownloads(this, new PGetList<DownloadData>().getArrayList(download));
     }
 
     public synchronized void delDownloads(ArrayList<DownloadData> list) {
-        // aus dem Menü
+        // aus dem Menü: Tabelle-Kontext-Menü, Menü-Button
         if (DownloadFactoryStopDownload.delDownloads(this, list)) {
             setDownloadsChanged();
         }
@@ -207,6 +207,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     }
 
     public synchronized void startDownloads(DownloadData download) {
+        // Menü/Button
         DownloadFactoryStartDownload.startDownloads(this,
                 new PGetList<DownloadData>().getArrayList(download));
         setDownloadsChanged();

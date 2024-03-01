@@ -48,7 +48,8 @@ public class PaneDialogScrollPane extends ScrollPane {
     Button btnPlay = new Button();
     Button btnOpen = new Button();
 
-    final Button btnClearList = new Button("_Liste löschen");
+    final Button btnClearList = new Button("_Gesamte Liste löschen");
+    final Button btnClearSelection = new Button("_Auswahl löschen");
     TextField txtSearch = new TextField();
 
     ProgressBar progress = new ProgressBar();
@@ -136,7 +137,7 @@ public class PaneDialogScrollPane extends ScrollPane {
             tableAboOrHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
             VBox.setVgrow(tableAboOrHistory, Priority.ALWAYS);
             HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
-            hBox.getChildren().addAll(btnClearList, P2GuiTools.getHBoxGrower(), getHBoxSum());
+            hBox.getChildren().addAll(btnClearList, btnClearSelection, P2GuiTools.getHBoxGrower(), getHBoxSum());
             vBoxMedia.getChildren().addAll(getVBoxSearch(), tableAboOrHistory, hBox, getTextFieldGrid());
         }
 

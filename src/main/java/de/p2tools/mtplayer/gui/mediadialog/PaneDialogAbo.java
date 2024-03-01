@@ -40,7 +40,7 @@ import java.util.Date;
 public class PaneDialogAbo extends PaneDialogScrollPane {
 
     //    private final boolean aboNotHistory;
-    private final HistoryList list;
+    private final HistoryList historyList;
     private final Stage stage;
     private final FilteredList<HistoryData> filteredList;
     private final SortedList<HistoryData> sortedList;
@@ -52,7 +52,7 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
         super(mediaDataDto);
         this.stage = stage;
         if (mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_ABO) {
-            list = progData.historyListAbos;
+            historyList = progData.historyListAbos;
             textSearch.setFont(Font.font(null, FontWeight.BOLD, -1));
             textSearch.getStyleClass().add("downloadGuiMediaText");
 
@@ -64,7 +64,7 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
                             "Titel des Abos" : "Thema oder Titel des Abos")));
 
         } else {
-            list = progData.historyList;
+            historyList = progData.historyList;
             textSearch.setFont(Font.font(null, FontWeight.BOLD, -1));
             textSearch.getStyleClass().add("downloadGuiMediaText");
 
@@ -75,19 +75,19 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
                     (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_TITEL_OR_NAME ?
                             "Titel des History-Films" : "Thema oder Titel des History-Films")));
         }
-        this.filteredList = new FilteredList<>(list, p -> true);
+        this.filteredList = new FilteredList<>(historyList, p -> true);
         this.sortedList = new SortedList<>(filteredList);
     }
 
     @Override
     public void close() {
-        list.removeListener(listener);
+        historyList.removeListener(listener);
     }
 
     @Override
     void initTable() {
         tableAboOrHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-        tableAboOrHistory.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tableAboOrHistory.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableAboOrHistory.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableAboOrHistory.setEditable(true);
 
@@ -118,11 +118,12 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
         tableAboOrHistory.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 ArrayList<HistoryData> historyDataArrayList = new ArrayList<>();
-                historyDataArrayList.addAll(tableAboOrHistory.getSelectionModel().getSelectedItems());
-                if (historyDataArrayList.isEmpty()) {
+                HistoryData historyData = tableAboOrHistory.getSelectionModel().getSelectedItem();
+                if (historyData == null) {
                     PAlert.showInfoNoSelection();
 
                 } else {
+                    historyDataArrayList.add(historyData);
                     ContextMenu contextMenu =
                             new PaneHistoryContextMenu(stage, historyDataArrayList,
                                     mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_HISTORY).getContextMenu();
@@ -161,15 +162,29 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
     void initAction() {
         super.initAction();
 
-        lblGesamtMedia.setText(list.size() + "");
+        lblGesamtMedia.setText(historyList.size() + "");
         listener = c -> Platform.runLater(() -> {
-            lblGesamtMedia.setText(list.size() + "");
+            lblGesamtMedia.setText(historyList.size() + "");
             filter();
         });
-        list.addListener(listener);
+        historyList.addListener(listener);
 
         btnClearList.setOnAction(a -> {
-            list.clearAll(stage);
+            historyList.clearAll(stage);
+        });
+        btnClearSelection.setOnAction(a -> {
+            ArrayList<HistoryData> historyDataArrayList =
+                    new ArrayList<>(tableAboOrHistory.getSelectionModel().getSelectedItems());
+            if (historyDataArrayList.isEmpty()) {
+                PAlert.showInfoNoSelection();
+
+            } else {
+                if (mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_HISTORY) {
+                    progData.historyList.removeHistoryDataFromHistory(historyDataArrayList);
+                } else {
+                    progData.historyListAbos.removeHistoryDataFromHistory(historyDataArrayList);
+                }
+            }
         });
     }
 

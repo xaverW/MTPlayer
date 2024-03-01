@@ -146,11 +146,11 @@ public class ProgData {
         filmFilterRunner = new FilmFilterRunner(this);
 
         historyList = new HistoryList(ProgConst.FILE_HISTORY,
-                ProgInfos.getSettingsDirectory_String(), false);
+                ProgInfos.getSettingsDirectory_String(), HistoryList.HISTORY_LIST.HISTORY);
         historyListAbos = new HistoryList(ProgConst.FILE_FINISHED_ABOS,
-                ProgInfos.getSettingsDirectory_String(), false);
+                ProgInfos.getSettingsDirectory_String(), HistoryList.HISTORY_LIST.ABO);
         historyListBookmarks = new HistoryList(ProgConst.FILE_BOOKMARKS,
-                ProgInfos.getSettingsDirectory_String(), true);
+                ProgInfos.getSettingsDirectory_String(), HistoryList.HISTORY_LIST.BOOKMARK);
 
         mediaDataList = new MediaDataList();
         mediaCollectionDataList = new MediaCollectionDataList();

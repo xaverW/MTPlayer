@@ -29,6 +29,7 @@ public class DownloadFactoryStartDownload {
     }
 
     public static void startDownloads(DownloadList downloadList, ArrayList<DownloadData> downloads) {
+        // Menü/Automatisch
         if (downloads.isEmpty()) {
             return;
         }
@@ -46,6 +47,7 @@ public class DownloadFactoryStartDownload {
 
     public static boolean startDownloads(DownloadList downloadList, Collection<DownloadData> list,
                                          boolean alsoFinished) {
+        // Button/Menü oder automatisch
         if (list == null || list.isEmpty()) {
             return false;
         }

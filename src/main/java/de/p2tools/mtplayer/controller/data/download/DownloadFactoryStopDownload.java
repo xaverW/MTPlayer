@@ -36,7 +36,7 @@ public class DownloadFactoryStopDownload {
      */
 
     public static synchronized boolean delDownloads(DownloadList downloadList, ArrayList<DownloadData> list) {
-        // aus dem Menü
+        // aus dem Menü oder Tabelle-Download-Button
         PDuration.counterStart("delDownloads");
         if (list == null || list.isEmpty()) {
             return false;
@@ -60,6 +60,7 @@ public class DownloadFactoryStopDownload {
             }
         }
         if (!aboHistoryList.isEmpty()) {
+            // kommt nur in die "erledigte Abos" nicht in die History, da Downloads abgebrochen
             ProgData.getInstance().historyListAbos.addDownloadDataListToHistory(aboHistoryList);
         }
         downloadList.removeAll(list);
@@ -85,7 +86,7 @@ public class DownloadFactoryStopDownload {
     }
 
     /**
-     * eine Liste Downloads aus der "Dwonloadliste"  zurückstellen
+     * eine Liste Downloads aus der "Dwonloadliste" zurückstellen
      *
      * @param list
      */
