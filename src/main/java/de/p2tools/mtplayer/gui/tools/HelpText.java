@@ -704,9 +704,15 @@ public class HelpText {
 
     public static final String LOAD_FILMLIST_MARK_DOUBLE =
             "In der Filmliste sind gleiche Filme bei verschiedenen Sendern enthalten. Doppelte Filme " +
-                    "können markiert werden. Es gibt einen Filmfilter um sie nicht anzuzeigen. Sie können auch mit " +
+                    "werden markiert. Es gibt einen Filmfilter um sie nicht anzuzeigen. Sie können auch mit " +
                     "der Blacklist ausgeschlossen werden. Es ist auch " +
                     "möglich, sie bereits beim Laden der Filmliste auszuschließen." +
+                    "\n\n" +
+                    "Hier kann auch eingestellt werden, wann ein Film als Doppelt gilt. Bei doppelten Filmen muss " +
+                    "immer die URL des Films gleich sein. Ist die Option " +
+                    "\"Thema und Titel\" eingeschaltet, muss der Film zusätzlich auch noch das " +
+                    "gleiche Thema und den gleichen Titel haben (das ist aber nur bei sehr wenigen Doppelten nicht " +
+                    "der Fall)." +
                     "\n\n" +
                     "Hier kann vorgegeben werden, welche Sender bevorzugt werden sollen. D.h. Filme dieser " +
                     "Sender werden zuerst genommen. Taucht der gleiche Film bei einem " +

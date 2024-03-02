@@ -141,7 +141,7 @@ public class FilmToolsFactory {
                 PDuration.counterStart("mark(FilmData filmData)");
                 filmList.forEach((FilmData f) -> {
                     mark(f);
-                    if (!urlHashSet.add(f.getUrl())) {
+                    if (!urlHashSet.add(getHashFromFilm(f))) {
                         ++countDouble;
                         f.setDoubleUrl(true);
                     }
@@ -178,6 +178,14 @@ public class FilmToolsFactory {
         return countDouble;
     }
 
+    private static String getHashFromFilm(FilmData filmData) {
+        if (ProgConfig.SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE.get()) {
+            return filmData.getTheme() + filmData.getTitle() + filmData.getUrl();
+        } else {
+            return filmData.getUrl();
+        }
+    }
+
     private static void mark(FilmData filmData) {
         filmData.setGeoBlocked();
         filmData.setInFuture();
@@ -202,7 +210,7 @@ public class FilmToolsFactory {
             if (sender.isEmpty()) {
                 // dann nur noch die Sender die nicht im senderArr sind
                 if (Arrays.stream(senderArr).noneMatch(s -> s.equals(f.arr[FilmDataXml.FILM_CHANNEL]))) {
-                    if (!urlHashSet.add(f.getUrl())) {
+                    if (!urlHashSet.add(getHashFromFilm(f))) {
                         ++countDouble;
                         f.setDoubleUrl(true);
                     }
@@ -210,7 +218,7 @@ public class FilmToolsFactory {
 
             } else if (f.arr[FilmDataXml.FILM_CHANNEL].equals(sender)) {
                 // jetzt erst mal die Sender aus dem Array
-                if (!urlHashSet.add(f.getUrl())) {
+                if (!urlHashSet.add(getHashFromFilm(f))) {
                     ++countDouble;
                     f.setDoubleUrl(true);
                 }

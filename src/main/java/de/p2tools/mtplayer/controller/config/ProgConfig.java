@@ -186,6 +186,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
     public static StringProperty SYSTEM_MARK_DOUBLE_CHANNEL_LIST = addStrProp("system-mark-double-channel-list", "ARD,ZDF");
     public static BooleanProperty SYSTEM_FILMLIST_REMOVE_DOUBLE = addBoolProp("system-filmlist-remove-double", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE = addBoolProp("system-filmlist-double-with-theme-title", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILMLIST_MARK_UT = addBoolProp("system-filmlist-mark-ut", Boolean.FALSE);
     public static BooleanProperty SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY = addBoolProp("system-load-new-filmlist-immediately", Boolean.FALSE);
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");

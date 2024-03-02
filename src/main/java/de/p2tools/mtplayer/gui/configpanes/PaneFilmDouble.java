@@ -33,6 +33,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -44,6 +45,7 @@ import java.util.Collection;
 public class PaneFilmDouble {
 
     private final P2ToggleSwitch tglRemove = new P2ToggleSwitch("Doppelte Filme beim Laden der Filmliste ausschließen");
+    private final P2ToggleSwitch tglTT = new P2ToggleSwitch("Filme sind nur gleich, wenn auch Thema und Titel gleich sind");
 
     private final VBox vBox = new VBox(P2LibConst.PADDING);
     private final ListView<String> lvSender = new ListView<>();
@@ -61,10 +63,12 @@ public class PaneFilmDouble {
 
     public void close() {
         tglRemove.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE);
+        tglTT.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE);
     }
 
     public TitledPane make(Collection<TitledPane> result) {
         tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE);
+        tglTT.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE);
         final Button btnHelpMark = P2Button.helpButton(stage, "Doppelte Filme markieren",
                 HelpText.LOAD_FILMLIST_MARK_DOUBLE);
 
@@ -86,7 +90,10 @@ public class PaneFilmDouble {
 
         int row = 0;
         gridPane.add(tglRemove, 0, row);
-        gridPane.add(btnHelpMark, 1, row);
+        gridPane.add(btnHelpMark, 1, row, 1, 2);
+        GridPane.setValignment(btnHelpMark, VPos.TOP);
+
+        gridPane.add(tglTT, 0, ++row);
 
         gridPane.add(lvSender, 0, ++row, 2, 1);
         gridPane.add(hBoxButton, 0, ++row, 2, 1);
