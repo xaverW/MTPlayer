@@ -187,7 +187,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_MARK_DOUBLE_CHANNEL_LIST = addStrProp("system-mark-double-channel-list", "ARD,ZDF");
     public static BooleanProperty SYSTEM_FILMLIST_REMOVE_DOUBLE = addBoolProp("system-filmlist-remove-double", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE = addBoolProp("system-filmlist-double-with-theme-title", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_FILMLIST_MARK_UT = addBoolProp("system-filmlist-mark-ut", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_FILMLIST_MARK_UT = addBoolProp("system-filmlist-mark-ut", Boolean.TRUE);
     public static BooleanProperty SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY = addBoolProp("system-load-new-filmlist-immediately", Boolean.FALSE);
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addIntProp("system-load-filmlist-max-days", 300); //es werden nur die x letzten Tage geladen
@@ -211,7 +211,7 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads ohne Dateien
     public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads mit bereits geladenen Dateien
     public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__ASK);
-    public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 1);
+    public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 2);
     public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBoolProp("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
     public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_KBYTE = addIntProp("download-max-bandwidth-kilobyte", MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_SHOW = addBoolProp("download-dialog-error-show", Boolean.TRUE);
