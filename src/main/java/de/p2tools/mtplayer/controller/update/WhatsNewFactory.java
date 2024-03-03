@@ -80,6 +80,7 @@ public class WhatsNewFactory {
 
         WhatsNewInfo whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11),
                 "/de/p2tools/mtplayer/res/whatsnew/whatsNew_01.png",
+
                 "Doppelte Filme",
                 "In den Einstellungen kann zum Suchen von doppelten Filmen jetzt die Suchreihenfolge " +
                         "vorgegeben werden. Es ist jetzt auch möglich, dass doppelte Filme beim Laden der Filmliste " +
@@ -89,7 +90,9 @@ public class WhatsNewFactory {
             list.add(whatsNewInfo);
         }
 
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11), "/de/p2tools/mtplayer/res/whatsnew/whatsNew_02.png",
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_02.png",
+
                 "Filme mit Untertitel",
                 "Es gibt Filme, die den Untertitel im \"Film\" anzeigen. " +
                         "In den Einstellungen kann angegeben werden " +
@@ -102,7 +105,9 @@ public class WhatsNewFactory {
             list.add(whatsNewInfo);
         }
 
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11), "/de/p2tools/mtplayer/res/whatsnew/whatsNew_03.png",
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_03.png",
+
                 "Filmfilter \"Thema exact\"",
                 "Es ist jetzt möglich, durch Texteingabe die angezeigte Liste der Themen " +
                         "zu filtern\n" +
@@ -120,7 +125,9 @@ public class WhatsNewFactory {
             list.add(whatsNewInfo);
         }
 
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11), "/de/p2tools/mtplayer/res/whatsnew/whatsNew_05.png",
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_05.png",
+
                 "Proxy-Server",
                 "Es ist jetzt möglich, einen Proxy-Server zu verwenden. In den \"Programmeinstellungen->Proxy\" " +
                         "kann er angegeben und eingeschaltet werden. Die Downloads laufen dann über " +
@@ -129,7 +136,9 @@ public class WhatsNewFactory {
             list.add(whatsNewInfo);
         }
 
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 21), "/de/p2tools/mtplayer/res/whatsnew/whatsNew_06.png",
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 21),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_06.png",
+
                 "Infos der markierten Tabellen-Zeile anzeigen",
                 "Die Anzeige der Infos einer markierten Zeile in den Tabellen Filme/Downloads/Abos " +
                         "kann ein- und ausgeschaltet werden. Das ist im Kontextmenü der Tabelle möglich.", 70);
@@ -137,13 +146,28 @@ public class WhatsNewFactory {
             list.add(whatsNewInfo);
         }
 
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11), "",
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 3, 3),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_07.png",
+
+                "Filmfilter",
+                "Die verwendeten Filmfilter werden jetzt gespeichert und sind bei " +
+                        "einem Programmneustart wieder vorhanden. " +
+                        "Eine Auswahl listet sie auf und können so auch ausgewählt werden.", 70);
+        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
+            list.add(whatsNewInfo);
+        }
+
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 3, 3), "",
                 "Was sich sonst noch geändert hat",
                 "* Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +
                         "\"rbtv\" und \"RBTV\" gelistet. Die werden jetzt zusammengefasst zu dem " +
                         "Sendernamen: \"RBTV\"." +
                         "\n\n" +
-                        "* Es gibt ein neues ShortCut zum Anzeigen der Blacklist-Einstellungen: ALT+B", 120);
+                        "* Es gibt ein neues ShortCut zum Anzeigen der Blacklist-Einstellungen: ALT+B" +
+                        "\n\n" +
+                        "* In der Ersetzungstabelle für Download-Namen (Einstellungen->Download) " +
+                        "können jetzt auch RegEx verwendet werden.",
+                180);
         if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
             list.add(whatsNewInfo);
         }
