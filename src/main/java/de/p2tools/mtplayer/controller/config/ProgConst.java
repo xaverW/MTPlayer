@@ -16,6 +16,8 @@
 
 package de.p2tools.mtplayer.controller.config;
 
+import de.p2tools.p2lib.mtfilter.Filter;
+
 public class ProgConst {
 
     public static final String PROGRAM_NAME = "MTPlayer";
@@ -40,6 +42,7 @@ public class ProgConst {
     public static final int SEARCH_FAST_TITLE = 2;
 
     public static final String M3U8_URL = "m3u8";
+    public static final String REG_EX = Filter.FILTER_REG_EX;
 
     public static final int SYSTEM_BLACKLIST_MAX_FILM_DAYS = 300; // Filter Blacklist: nur Filme der letzten xx Tage laden
     public static final int SYSTEM_BLACKLIST_MIN_FILM_DURATION = 100; // Filter Blacklist: nur Filme mit mind. xx Minuten länge laden

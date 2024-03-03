@@ -16,13 +16,16 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.util.List;
+import java.util.regex.PatternSyntaxException;
 
 public final class ReplaceList extends SimpleListProperty<ReplaceData> implements PDataList<ReplaceData> {
 
@@ -64,13 +67,25 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> implement
 
     public String replace(String strCheck, boolean path) {
         // hat der Nutzer als Suchbegriff "leer" eingegeben, dann weg damit
-        this.removeIf(replaceData -> replaceData.getFrom().isEmpty());
+        this.removeIf(replaceData -> replaceData.getFrom().isEmpty()); // Liste putzen
+
         for (ReplaceData replaceData : this) {
             if (path && replaceData.getFrom().equals(File.separator)) {
                 // bei Pfaden darf / oder \ natürlich nicht entfernt werden
                 continue;
             } else {
-                strCheck = strCheck.replace(replaceData.getFrom(), replaceData.getTo());
+                String replace = replaceData.getFrom();
+                if (replace.startsWith(ProgConst.REG_EX)) {
+                    try {
+                        replace = replace.substring(ProgConst.REG_EX.length());
+                        strCheck = strCheck.replaceAll(replace, replaceData.getTo());
+                    } catch (PatternSyntaxException ex) {
+                        PLog.errorLog(201360457, "RegEx fehlerhaft: " + replace);
+                    }
+
+                } else {
+                    strCheck = strCheck.replace(replace, replaceData.getTo());
+                }
             }
         }
 

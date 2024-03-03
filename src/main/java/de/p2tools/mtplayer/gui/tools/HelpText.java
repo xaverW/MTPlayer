@@ -541,27 +541,25 @@ public class HelpText {
                     "Schriftfarbe des Buttons festgelegt werden." +
                     "\n";
 
-    public static final String DOWNLOAD_REPLACELIST =
-            "Die Tabelle wird von oben nach unten abgearbeitet. Es ist also möglich, " +
-                    "dass eine Ersetzung durch eine weitere ganz oder teilweise " +
-                    "rückgängig gemacht wird!" +
-                    "\n";
-
-    public static final String FILMTITEL_NOT_LOAD =
-            "Beim Laden der Filmliste werden Filme die den Text im Titel enthalten, " +
-                    "nicht geladen." +
-                    "\n";
-
-    public static final String DOWNLOAD_ONLY_ASCII =
-            "Es werden alle Zeichen über ASCII 127 ersetzt. Umlaute werden aufgelöst (z.B. 'ö' -> 'oe').\n" +
-                    "\n" +
+    public static final String DOWNLOAD_REPLACE_TABLE =
+            "Datei- und Pfadnamen werden für Downloads nach den Vorgaben des Sets oder Abos " +
+                    "erstellt. Danach wird die Ersetzungstabelle abgearbeitet. " +
+                    "Hier können dann noch unerwünschte Zeichen entfernt werden." +
+                    "\n\n" +
+                    "## Nur ASCII-Zeichen ##\n" +
+                    "Es werden alle Zeichen über ASCII 127 ersetzt. Umlaute werden aufgelöst (z.B. 'ö' -> 'oe'). " +
                     "Wenn die Ersetzungstabelle aktiv ist wird sie vorher abgearbeitet." +
-                    "\n";
-
-    public static final String DOWNLOAD_ONE_SERVER =
-            "Es sind maximal 2 gleichzeitige Downloads pro Server möglich. Hier kann " +
-                    "auf nur 1 Download begrenzt werden, was manchmal bei " +
-                    "Downloadproblemen hilft." +
+                    "\n" +
+                    "\n" +
+                    "## Ersetzungstabelle ##\n" +
+                    "Die Tabelle wird von oben nach unten abgearbeitet. Es ist also möglich, " +
+                    "dass eine Ersetzung durch eine weitere ganz oder teilweise " +
+                    "rückgängig gemacht wird!\n\n" +
+                    "RegEx: " +
+                    "Im Feld \"Von\" sind auch RegEx erlaubt. Diese müssen mit \"#:\" eingeleitet werden. " +
+                    "Z.B.:\n" +
+                    "#:[+]\n" +
+                    "ersetzt alle \"+\" Zeichen mit dem angegebenen \"Nach\" Zeichen." +
                     "\n";
 
     public static final String DOWNLOAD_SSL_ALWAYS_TRUE =

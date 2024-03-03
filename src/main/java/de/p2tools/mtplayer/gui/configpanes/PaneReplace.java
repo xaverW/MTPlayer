@@ -28,12 +28,14 @@ import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
@@ -76,6 +78,7 @@ public class PaneReplace {
 
         makeAscii(vBox);
         initTable(vBox);
+        initBtn(vBox);
         addConfigs(vBox);
 
         TitledPane tpReplace = new TitledPane("Ersetzungstabelle", vBox);
@@ -91,27 +94,23 @@ public class PaneReplace {
         vBox.getChildren().add(gridPane);
 
         tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
-        final Button btnHelpAscii = P2Button.helpButton(stage, "Nur ASCII-Zeichen",
-                HelpText.DOWNLOAD_ONLY_ASCII);
+        final Button btnHelp = P2Button.helpButton(stage, "Ersetzungstabelle",
+                HelpText.DOWNLOAD_REPLACE_TABLE);
 
         tglReplace.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
-        final Button btnHelpReplace = P2Button.helpButton(stage, "Ersetzungstabelle",
-                HelpText.DOWNLOAD_REPLACELIST);
 
         gridPane.add(tglAscii, 0, 0);
-        gridPane.add(btnHelpAscii, 1, 0);
+        gridPane.add(btnHelp, 1, 0, 1, 2);
+        GridPane.setValignment(btnHelp, VPos.TOP);
 
         gridPane.add(tglReplace, 0, 1);
-        gridPane.add(btnHelpReplace, 1, 1);
 
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSize());
     }
 
-
     private void initTable(VBox vBox) {
         final TableColumn<ReplaceData, String> fromColumn = new TableColumn<>("Von");
-//        fromColumn.setEditable(true);
         fromColumn.setCellValueFactory(new PropertyValueFactory<>("from"));
 
         final TableColumn<ReplaceData, String> toColumn = new TableColumn<>("Nach");
@@ -140,6 +139,16 @@ public class PaneReplace {
         tableView.disableProperty().bind(ProgConfig.SYSTEM_USE_REPLACETABLE.not());
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
         vBox.getChildren().addAll(scrollPane);
+    }
+
+    private void initBtn(VBox vBox) {
+        FilterCheckRegEx regEx = new FilterCheckRegEx(txtFrom);
+        txtFrom.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                return;
+            }
+            regEx.checkPattern();
+        });
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Eintrag löschen"));
