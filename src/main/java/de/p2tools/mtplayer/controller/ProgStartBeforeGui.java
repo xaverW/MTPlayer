@@ -39,11 +39,12 @@ public class ProgStartBeforeGui {
 
     public static void workBeforeGui() {
         if (!loadAll()) {
+            // dann ist der erste Start
             PDuration.onlyPing("Erster Start");
             ProgData.firstProgramStart = true;
 
             ProgConfigUpdate.setUpdateDone(); // dann ist's ja kein Programmupdate
-            WhatsNewFactory.setWhatsNewDate(); // muss dann ja nicht angezeigt werden
+            WhatsNewFactory.setLastShown(); // muss dann ja nicht angezeigt werden
 
             ProgData.getInstance().replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             ProgData.getInstance().utDataList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!

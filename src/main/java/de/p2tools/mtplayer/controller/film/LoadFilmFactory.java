@@ -164,10 +164,6 @@ public class LoadFilmFactory {
             DownloadListFactory.addFilmInDownloads();
 
             PLog.sysLog(logList);
-
-            if (ProgData.firstProgramStart) {
-                ProgSave.saveAll(); // damit nichts verloren geht
-            }
             PDuration.onlyPing("Filme nachbearbeiten: Ende");
 
             ProgData.getInstance().maskerPane.setMaskerText("Abos suchen");
@@ -177,15 +173,20 @@ public class LoadFilmFactory {
             String filmDate = FilmlistFactory.getAgeAsStringDate(ProgData.getInstance().filmList.metaData);
             ProgConfig.SYSTEM_FILMLIST_DATE.setValue(ProgData.getInstance().filmList.isEmpty() ? "" : filmDate);
 
+            //damit auf jeden Fall, aus
+            ProgData.getInstance().maskerPane.switchOffMasker();
+
+
+            if (ProgData.firstProgramStart) {
+                ProgData.firstProgramStart = false;
+                ProgSave.saveAll(); // damit nichts verloren geht
+            }
             if (!doneAtProgramStart) {
                 doneAtProgramStart = true;
                 MediaDataWorker.createMediaDb();
                 WhatsNewFactory.checkUpdate();
                 Platform.runLater(() -> ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false));
             }
-
-            //damit auf jedem Fall, aus
-            ProgData.getInstance().maskerPane.switchOffMasker();
         }).start();
     }
 }

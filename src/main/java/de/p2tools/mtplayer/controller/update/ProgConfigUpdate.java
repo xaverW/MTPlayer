@@ -23,6 +23,8 @@ import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 
 public class ProgConfigUpdate {
+    // hier werden geänderte Programmeinstellungen/Funktionen angepasst,
+    // muss immer nur einmal laufen!!
     private ProgConfigUpdate() {
     }
 

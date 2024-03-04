@@ -22,41 +22,46 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.dialogs.WhatsNewDialog;
 import de.p2tools.p2lib.dialogs.WhatsNewInfo;
+import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class WhatsNewFactory {
 
-    static final LocalDate lastWhatsNewDate = LocalDate.of(2024, 3, 3); // erhöht sich, wenn whatsNew geändert wird
-
     private WhatsNewFactory() {
     }
 
     public static void checkUpdate() {
-        if (!showWhatsNew(false)) {
-            // sonst ist's ja schon eine neue Version
+        PLog.sysLog("Programmstart, alte Programm-Release-Nr: " + ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe());
+        PLog.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + ProgramToolsFactory.getBuild());
+
+        if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(ProgramToolsFactory.getBuild())) {
+            // dann hat sich die BUILD_NO geändert, neue Version: Dann checken
+            showWhatsNew(false);
+        } else {
+            // sonst ist ja eh eine neue Version
             checkProgUpdate();
         }
     }
 
-    public static void setWhatsNewDate() {
-        ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.setValue(P2LDateFactory.toStringR(lastWhatsNewDate));
+    public static void setLastShown() {
+        ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.setValue(P2LDateFactory.getNowStringR());
     }
 
     public static boolean showWhatsNew(boolean showAlways) {
         // zeigt die Infos "whatsNew" an, wenn "showAlways" oder wenn die letzte Anzeige vor "whatsNewDate"
+        WhatsNewList whatsNewList = new WhatsNewList();
+
         boolean ret = false;
         try {
-            ArrayList<WhatsNewInfo> list = new ArrayList<>();
-            addWhatsNew(list, showAlways);
+            ArrayList<WhatsNewInfo> list = showAlways ? whatsNewList : whatsNewList.getOnlyNews();
             if (list.isEmpty()) {
                 // dann gibts nix
                 ret = false;
@@ -71,106 +76,8 @@ public class WhatsNewFactory {
             ret = false;
         }
 
-        setWhatsNewDate();
+        whatsNewList.setLastShown();
         return ret;
-    }
-
-    private static void addWhatsNew(ArrayList<WhatsNewInfo> list, boolean showAlways) {
-        final LocalDate lastShown = P2LDateFactory.fromStringR(ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.getValueSafe());
-
-        WhatsNewInfo whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_01.png",
-
-                "Doppelte Filme",
-                "In den Einstellungen kann zum Suchen von doppelten Filmen jetzt die Suchreihenfolge " +
-                        "vorgegeben werden. Es ist jetzt auch möglich, dass doppelte Filme beim Laden der Filmliste " +
-                        "gleich ausgeschlossen werden. Es ist jetzt auch möglich, doppelte Filme mit der Blacklist " +
-                        "auszuschließen.", 100);
-        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
-            list.add(whatsNewInfo);
-        }
-
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_02.png",
-
-                "Filme mit Untertitel",
-                "Es gibt Filme, die den Untertitel im \"Film\" anzeigen. " +
-                        "In den Einstellungen kann angegeben werden " +
-                        "ob diese Filme auch als \"Film mit Untertitel\" geführt werden sollen. " +
-                        "Für welche Filme das dann zutrifft, kann man hier vorgegeben." +
-                        "\n\n" +
-                        "Im Kontextmenü in der Tabelle mit den Filmen, gibt es jetzt einen weiteren Menüpunkt. " +
-                        "Damit können die Untertitel-Dateien direkt heruntergeladen werden.", 150);
-        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
-            list.add(whatsNewInfo);
-        }
-
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_03.png",
-
-                "Filmfilter \"Thema exact\"",
-                "Es ist jetzt möglich, durch Texteingabe die angezeigte Liste der Themen " +
-                        "zu filtern\n" +
-                        "Mit ENTER wird das selektierte Theme gewählt. Um ein Thema auszuwählen, können die " +
-                        "Courser-Tasten und die Tab-Tasten benutzt werden.", 100);
-        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
-            list.add(whatsNewInfo);
-        }
-
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11), "/de/p2tools/mtplayer/res/whatsnew/whatsNew_04.png",
-                "Infotab Downloadfehler",
-                "Im Tab Download gibts bei den Infos einen neuen Reiter: \"Downloadfehler\". Dort " +
-                        "werden die Fehlermeldungen von fehlerhaften Downloads angezeigt.", 80);
-        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
-            list.add(whatsNewInfo);
-        }
-
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 11),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_05.png",
-
-                "Proxy-Server",
-                "Es ist jetzt möglich, einen Proxy-Server zu verwenden. In den \"Programmeinstellungen->Proxy\" " +
-                        "kann er angegeben und eingeschaltet werden. Die Downloads laufen dann über " +
-                        "den Proxy-Server.", 70);
-        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
-            list.add(whatsNewInfo);
-        }
-
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 2, 21),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_06.png",
-
-                "Infos der markierten Tabellen-Zeile anzeigen",
-                "Die Anzeige der Infos einer markierten Zeile in den Tabellen Filme/Downloads/Abos " +
-                        "kann ein- und ausgeschaltet werden. Das ist im Kontextmenü der Tabelle möglich.", 70);
-        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
-            list.add(whatsNewInfo);
-        }
-
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 3, 3),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_07.png",
-
-                "Filmfilter",
-                "Die verwendeten Filmfilter werden jetzt gespeichert und sind bei " +
-                        "einem Programmneustart wieder vorhanden. " +
-                        "Eine Auswahl listet sie auf und können so auch ausgewählt werden.", 70);
-        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
-            list.add(whatsNewInfo);
-        }
-
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 3, 3), "",
-                "Was sich sonst noch geändert hat",
-                "* Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +
-                        "\"rbtv\" und \"RBTV\" gelistet. Die werden jetzt zusammengefasst zu dem " +
-                        "Sendernamen: \"RBTV\"." +
-                        "\n\n" +
-                        "* Es gibt ein neues ShortCut zum Anzeigen der Blacklist-Einstellungen: ALT+B" +
-                        "\n\n" +
-                        "* In der Ersetzungstabelle für Download-Namen (Einstellungen->Download) " +
-                        "können jetzt auch RegEx verwendet werden.",
-                180);
-        if (showAlways || lastShown.isBefore(whatsNewInfo.getDate())) {
-            list.add(whatsNewInfo);
-        }
     }
 
     private static void checkProgUpdate() {
@@ -179,7 +86,7 @@ public class WhatsNewFactory {
         if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
                 !updateCheckTodayDone()) {
             // nach Updates suchen
-            runUpdateCheck(false);
+            runUpdateCheck();
 
         } else {
             // will der User nicht --oder-- wurde heute schon gemacht
@@ -199,8 +106,8 @@ public class WhatsNewFactory {
         return ProgConfig.SYSTEM_UPDATE_DATE.get().equals(P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date()));
     }
 
-    private static void runUpdateCheck(boolean showAlways) {
-        ProgConfig.SYSTEM_UPDATE_DATE.setValue(P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date()));
-        new SearchProgramUpdate(ProgData.getInstance()).searchNewProgramVersion(showAlways);
+    private static void runUpdateCheck() {
+        ProgConfig.SYSTEM_UPDATE_DATE.setValue(P2LDateFactory.getNowStringR());
+        new SearchProgramUpdate(ProgData.getInstance()).searchNewProgramVersion(false);
     }
 }
