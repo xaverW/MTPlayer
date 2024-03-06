@@ -134,13 +134,33 @@ public class FilmFilterComboBox extends HBox {
         }
     }
 
-    private synchronized void addToList() {
+    private synchronized void addToList__() {
         final FilmFilterList fList = new FilmFilterList();
         FilmFilterList list = ProgData.getInstance().filmFilterWorker.getBackwardFilterList();
         if (list.size() > 1) {
             // der letzte Filter ist der aktuelle
             for (int i = 0; i < list.size() - 1; ++i) {
                 fList.add(0, list.get(i));
+            }
+        }
+        cbo.getItems().setAll(fList);
+    }
+
+    private synchronized void addToList() {
+        final FilmFilterList fList = new FilmFilterList();
+        FilmFilterList list = ProgData.getInstance().filmFilterWorker.getBackwardFilterList();
+        if (list.size() > 1) {
+            // der letzte Filter ist der aktuelle
+            for (int i = 0; i < list.size() - 1; ++i) {
+                FilmFilter filmFilter = list.get(i);
+                if (!filmFilter.getChannel().isEmpty() ||
+                        !filmFilter.getTheme().isEmpty() ||
+                        !filmFilter.getThemeTitle().isEmpty() ||
+                        !filmFilter.getTitle().isEmpty() ||
+                        !filmFilter.getSomewhere().isEmpty()) {
+                    // nur Textfilter
+                    fList.add(0, list.get(i));
+                }
             }
         }
         cbo.getItems().setAll(fList);
