@@ -26,7 +26,7 @@ import javafx.scene.control.TableView;
 
 public class Table {
     public enum TABLE_ENUM {
-        FILM, DOWNLOAD, ABO
+        FILM, LIVE_FILM, DOWNLOAD, ABO
     }
 
     private static final String SORT_ASCENDING = "ASCENDING";
@@ -151,6 +151,14 @@ public class Table {
                 confUpDown = ProgConfig.FILM_GUI_TABLE_UP_DOWN;
                 confVis = ProgConfig.FILM_GUI_TABLE_VIS;
                 confOrder = ProgConfig.FILM_GUI_TABLE_ORDER;
+                break;
+
+            case LIVE_FILM:
+                confWidth = ProgConfig.LIVE_FILM_GUI_TABLE_WIDTH;
+                confSort = ProgConfig.LIVE_FILM_GUI_TABLE_SORT;
+                confUpDown = ProgConfig.LIVE_FILM_GUI_TABLE_UP_DOWN;
+                confVis = ProgConfig.LIVE_FILM_GUI_TABLE_VIS;
+                confOrder = ProgConfig.LIVE_FILM_GUI_TABLE_ORDER;
                 break;
 
             case DOWNLOAD:

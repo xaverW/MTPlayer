@@ -34,6 +34,7 @@ public class ProgIcons {
     public static PIcon ICON_DIALOG_ON = new PIcon(ICON_PATH_LONG, ICON_PATH, "dialog-ein.png", "dialog-ein-sw.png", 16, 16);
     public static PIcon IMAGE_ACHTUNG_64 = new PIcon(ICON_PATH_LONG, ICON_PATH, "achtung_64.png", 64, 64);
 
+    public static PIcon ICON_BUTTON_SEARCH_16 = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-search_16.png", 16, 16);
     public static PIcon ICON_BUTTON_CHANGE = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-change.png", 16, 16);
     public static PIcon ICON_BUTTON_CLEAN = new PIcon(ICON_PATH_LONG, ICON_PATH, "clean_16.png", 16, 16);
     public static PIcon ICON_BUTTON_RESET = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-reset.png", 16, 16);

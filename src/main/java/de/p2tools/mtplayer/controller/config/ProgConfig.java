@@ -181,6 +181,16 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
     public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "300:600");
 
+    // Livesuche
+    public static StringProperty SYSTEM_SIZE_DIALOG_LIVE_SEARCH = addStrProp("system-size-dialog-live-search", "600:800");
+    public static DoubleProperty LIVE_FILM_GUI_SPLITPANE = addDoubleProp("live-film-gui-splitpane", 0.7);
+    public static StringProperty LIVE_FILM_GUI_TABLE_WIDTH = addStrProp("live-film-gui-table-width");
+    public static StringProperty LIVE_FILM_GUI_TABLE_SORT = addStrProp("live-film-gui-table-sort");
+    public static StringProperty LIVE_FILM_GUI_TABLE_UP_DOWN = addStrProp("live-film-gui-table-up-down");
+    public static StringProperty LIVE_FILM_GUI_TABLE_VIS = addStrProp("live-film-gui-table-vis");
+    public static StringProperty LIVE_FILM_GUI_TABLE_ORDER = addStrProp("live-film-gui-table-order");
+    public static DoubleProperty LIVE_FILM_GUI_INFO_DIVIDER = addDoubleProp("live-film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+
     // Einstellungen Filmliste
     public static StringProperty SYSTEM_FILMLIST_DATE = addStrProp("system-filmlist-date", "");
     public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
@@ -230,6 +240,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty FILM_GUI_TABLE_UP_DOWN = addStrProp("film-gui-table-up-down");
     public static StringProperty FILM_GUI_TABLE_VIS = addStrProp("film-gui-table-vis");
     public static StringProperty FILM_GUI_TABLE_ORDER = addStrProp("film-gui-table-order");
+
     public static StringProperty ADD_BLACK_DIALOG_SIZE = addStrProp("add-black-dialog-size", "600:400");
     public static DoubleProperty FILM_GUI_INFO_DIVIDER = addDoubleProp("film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
