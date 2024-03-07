@@ -1,5 +1,6 @@
 package de.p2tools.mtplayer.gui.filter;
 
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
@@ -16,6 +17,7 @@ import javafx.util.StringConverter;
 public class FilmFilterComboBox extends HBox {
 
     private ComboBox<FilmFilter> cbo = new ComboBox<>();
+    private final FilmFilterList fList = new FilmFilterList();
 
     public FilmFilterComboBox() {
         cbo.setMaxWidth(Double.MAX_VALUE);
@@ -23,8 +25,14 @@ public class FilmFilterComboBox extends HBox {
         getChildren().add(cbo);
         HBox.setHgrow(cbo, Priority.ALWAYS);
 
-        ProgData.getInstance().filmFilterWorker.getBackwardFilterList().addListener((u, o, n) -> addToList());
-        addToList();
+        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterComboBox.class.getSimpleName()) {
+            @Override
+            public void ping() {
+                addToList();
+            }
+        });
+        ProgData.getInstance().filmFilterWorker.getBackwardFilterList().forEach(f -> fList.add(0, f));
+        cbo.itemsProperty().bind(fList);
 
         cbo.addEventHandler(ComboBox.ON_SHOWING, event -> {
             ProgData.getInstance().filmFilterWorker.getBackwardFilterList().cleanBackForward();
@@ -75,7 +83,7 @@ public class FilmFilterComboBox extends HBox {
                 cbo.setVisibleRowCount(10);
 
                 if (!empty && filmFilter != null) {
-                    btnDel.setOnMousePressed(m -> ProgData.getInstance().filmFilterWorker.getBackwardFilterList().remove(filmFilter));
+                    btnDel.setOnMousePressed(m -> fList.remove(filmFilter));
 
                     lblChannel.setVisible(!filmFilter.getChannel().isEmpty());
                     lblChannel.setManaged(lblChannel.isVisible());
@@ -134,35 +142,63 @@ public class FilmFilterComboBox extends HBox {
         }
     }
 
-    private synchronized void addToList__() {
-        final FilmFilterList fList = new FilmFilterList();
-        FilmFilterList list = ProgData.getInstance().filmFilterWorker.getBackwardFilterList();
-        if (list.size() > 1) {
-            // der letzte Filter ist der aktuelle
-            for (int i = 0; i < list.size() - 1; ++i) {
-                fList.add(0, list.get(i));
-            }
-        }
-        cbo.getItems().setAll(fList);
-    }
+//    private synchronized void addToList__() {
+//        final FilmFilterList fList = new FilmFilterList();
+//        FilmFilterList list = ProgData.getInstance().filmFilterWorker.getBackwardFilterList();
+//        if (list.size() > 1) {
+//            // der letzte Filter ist der aktuelle
+//            for (int i = 0; i < list.size() - 1; ++i) {
+//                fList.add(0, list.get(i));
+//            }
+//        }
+//        cbo.getItems().setAll(fList);
+//    }
 
     private synchronized void addToList() {
-        final FilmFilterList fList = new FilmFilterList();
-        FilmFilterList list = ProgData.getInstance().filmFilterWorker.getBackwardFilterList();
-        if (list.size() > 1) {
-            // der letzte Filter ist der aktuelle
-            for (int i = 0; i < list.size() - 1; ++i) {
-                FilmFilter filmFilter = list.get(i);
-                if (!filmFilter.getChannel().isEmpty() ||
-                        !filmFilter.getTheme().isEmpty() ||
-                        !filmFilter.getThemeTitle().isEmpty() ||
-                        !filmFilter.getTitle().isEmpty() ||
-                        !filmFilter.getSomewhere().isEmpty()) {
-                    // nur Textfilter
-                    fList.add(0, list.get(i));
-                }
+        final FilmFilter actFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
+        if (actFilter.getChannel().isEmpty() &&
+                actFilter.getTheme().isEmpty() &&
+                actFilter.getThemeTitle().isEmpty() &&
+                actFilter.getTitle().isEmpty() &&
+                actFilter.getSomewhere().isEmpty()) {
+            // dann sind die Textfilter leer, ist nix
+            return;
+        }
+
+        FilmFilter cboF = getCbo().getSelectionModel().getSelectedItem();
+        if (cboF != null) {
+            if (actFilter.getChannel().equals(cboF.getChannel()) &&
+                    actFilter.getTheme().equals(cboF.getTheme()) &&
+                    actFilter.getThemeTitle().equals(cboF.getThemeTitle()) &&
+                    actFilter.getTitle().equals(cboF.getTitle()) &&
+                    actFilter.getSomewhere().equals(cboF.getSomewhere())) {
+                // dann ist der gleiche schon vorne
+                return;
             }
         }
-        cbo.getItems().setAll(fList);
+
+        if (fList.stream().anyMatch(f ->
+                f.getChannel().equals(actFilter.getChannel()) &&
+                        f.getTheme().equals(actFilter.getTheme()) &&
+                        f.getThemeTitle().equals(actFilter.getThemeTitle()) &&
+                        f.getTitle().equals(actFilter.getTitle()) &&
+                        f.getSomewhere().equals(actFilter.getSomewhere()))) {
+            // dann ist schon drin
+            return;
+        }
+
+        if (fList.stream().filter(f ->
+                f.getChannel().equals(actFilter.getChannel()) &&
+                        f.getTheme().equals(actFilter.getTheme()) &&
+                        f.getThemeTitle().equals(actFilter.getThemeTitle()) &&
+                        f.getTitle().equals(actFilter.getTitle()) &&
+                        f.getSomewhere().equals(actFilter.getSomewhere())).findFirst().isEmpty()) {
+
+            while (fList.size() > 10) {
+                fList.remove(fList.size() - 1);
+            }
+            cbo.getSelectionModel().clearSelection();
+            fList.add(0, actFilter);
+        }
     }
 }

@@ -75,7 +75,6 @@ public class FilmFilterControllerClearFilter extends VBox {
                 filmFilter.setTitle(n.getTitle());
                 filmFilter.setSomewhere(n.getSomewhere());
                 ProgData.getInstance().filmFilterWorker.setActFilterSettings(filmFilter);
-
             }
         });
 
@@ -94,6 +93,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         HBox.setHgrow(cboBack, Priority.ALWAYS);
         getChildren().addAll(hBox);
     }
+
 
     private void clearFilter() {
         PDuration.onlyPing("Filter löschen");
