@@ -20,10 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.gui.AboGui;
-import de.p2tools.mtplayer.gui.DownloadGui;
-import de.p2tools.mtplayer.gui.FilmGui;
-import de.p2tools.mtplayer.gui.StatusBarController;
+import de.p2tools.mtplayer.gui.*;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
@@ -38,7 +35,7 @@ import javafx.scene.layout.*;
 
 public class MTPlayerController extends StackPane {
 
-    public enum PANE_SHOWN {FILM, DOWNLOAD, ABO}
+    public enum PANE_SHOWN {FILM, LIVE_FILM, DOWNLOAD, ABO}
 
     public static PANE_SHOWN paneShown = null;
 
@@ -55,11 +52,13 @@ public class MTPlayerController extends StackPane {
     private StatusBarController statusBarController;
 
     private SplitPane splitPaneFilm;
+    private SplitPane splitPaneLiveFilm;
     private SplitPane splitPaneDownload;
     private SplitPane splitPaneAbo;
 
     private final ProgData progData;
     private final FilmGui filmGui = new FilmGui();
+    private final LiveFilmGui liveFilmGui = new LiveFilmGui();
     private final DownloadGui downloadGui = new DownloadGui();
     private final AboGui aboGui = new AboGui();
 
@@ -88,9 +87,10 @@ public class MTPlayerController extends StackPane {
 
             // Center
             splitPaneFilm = filmGui.pack();
+            splitPaneLiveFilm = liveFilmGui.pack();
             splitPaneDownload = downloadGui.pack();
             splitPaneAbo = aboGui.pack();
-            stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneDownload, splitPaneAbo);
+            stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneLiveFilm, splitPaneDownload, splitPaneAbo);
 
             // Statusbar
             statusBarController = new StatusBarController(progData);
@@ -207,9 +207,33 @@ public class MTPlayerController extends StackPane {
         splitPaneFilm.toFront();
         progData.filmGuiController.isShown();
         statusBarController.setStatusbarIndex();
+        ProgData.FILM_TAB_ON.setValue(Boolean.TRUE);
+        ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.FALSE);
         ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
         ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
-        ProgData.FILM_TAB_ON.setValue(Boolean.TRUE);
+    }
+
+    public void selPanelLiveFilm() {
+        if (paneShown == PANE_SHOWN.LIVE_FILM) {
+            selPanelFilm();
+            return;
+        }
+
+//        if (paneShown == PANE_SHOWN.LIVE_FILM) {
+//            // dann ist der 2. Klick
+//            liveFilmGui.closeSplit();
+//            return;
+//        }
+
+        paneShown = PANE_SHOWN.LIVE_FILM;
+        setButtonStyle();
+        splitPaneLiveFilm.toFront();
+        progData.liveFilmGuiController.isShown();
+        statusBarController.setStatusbarIndex();
+        ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.TRUE);
+        ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
     }
 
     private void selPanelDownload() {
@@ -225,8 +249,9 @@ public class MTPlayerController extends StackPane {
         progData.downloadGuiController.isShown();
         statusBarController.setStatusbarIndex();
         ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
-        ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.FALSE);
         ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.TRUE);
+        ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
     }
 
     private void selPanelAbo() {
@@ -242,6 +267,7 @@ public class MTPlayerController extends StackPane {
         progData.aboGuiController.isShown();
         statusBarController.setStatusbarIndex();
         ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.FALSE);
         ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
         ProgData.ABO_TAB_ON.setValue(Boolean.TRUE);
     }
@@ -254,9 +280,17 @@ public class MTPlayerController extends StackPane {
         if (paneShown == PANE_SHOWN.FILM) {
             searchFast.setVisible(true);
             btnFilm.getStyleClass().add("btnTabTop-sel");
+            btnFilm.setText("Filme");
         } else {
             searchFast.setVisible(false);
             btnFilm.getStyleClass().add("btnTabTop");
+        }
+
+        if (paneShown == PANE_SHOWN.LIVE_FILM) {
+            btnFilm.getStyleClass().add("btnTabTop-sel");
+            btnFilm.setText("Live");
+        } else {
+            btnFilm.setText("Filme");
         }
 
         if (paneShown == PANE_SHOWN.DOWNLOAD) {
@@ -274,6 +308,9 @@ public class MTPlayerController extends StackPane {
 
     public void setFocus() {
         if (paneShown == PANE_SHOWN.FILM) {
+            progData.filmGuiController.isShown();
+        }
+        if (paneShown == PANE_SHOWN.LIVE_FILM) {
             progData.filmGuiController.isShown();
         }
         if (paneShown == PANE_SHOWN.DOWNLOAD) {

@@ -79,6 +79,40 @@ public class DownloadInfosFactory {
         return textLinks;
     }
 
+    public static synchronized String getStatusInfosLiveFilm() {
+        String textLinks;
+        final int sumFilmlist = progData.liveFilmList.size();
+        final int sumFilmShown = progData.liveFilmGuiController.getFilmCount();
+
+        String sumFilmlistStr = numberFormat.format(sumFilmShown);
+        String sumFilmShownStr = numberFormat.format(sumFilmlist);
+
+        // Anzahl der Filme
+        if (sumFilmShown == 1) {
+            textLinks = "1 Film";
+        } else {
+            textLinks = sumFilmlistStr + " Filme";
+        }
+        if (sumFilmlist != sumFilmShown) {
+            textLinks += " (Insgesamt: " + sumFilmShownStr + " )";
+        }
+        // auch die Downloads anzeigen
+        if (progData.downloadInfos.getAmount() > 0) {
+            textLinks += SEPARATOR;
+
+            // Anzahl der Downloads
+            if (progData.downloadInfos.getAmount() == 1) {
+                textLinks += "1 Download";
+            } else {
+                textLinks += progData.downloadInfos.getAmount() + " Downloads";
+            }
+            textLinks += ": ";
+            textLinks += getRunningDownloadsInfos();
+        }
+
+        return textLinks;
+    }
+
     public static String getStatusInfosDownload() {
         String textLinks;
         String sumDownloadListStr = numberFormat.format(progData.downloadList.size());

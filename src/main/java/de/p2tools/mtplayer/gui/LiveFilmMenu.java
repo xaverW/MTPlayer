@@ -22,20 +22,21 @@ import de.p2tools.mtplayer.controller.config.PShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
-import javafx.scene.control.*;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 
 import java.util.Optional;
 
 
-public class FilmMenu {
+public class LiveFilmMenu {
     final private VBox vBox;
     final private ProgData progData;
     private FilmFilter storedActFilterSettings = null;
@@ -43,7 +44,7 @@ public class FilmMenu {
             "der zweite Klick stellt den\n" +
             "eingestellten Filter wieder her";
 
-    public FilmMenu(VBox vBox) {
+    public LiveFilmMenu(VBox vBox) {
         this.vBox = vBox;
         progData = ProgData.getInstance();
     }
@@ -70,15 +71,16 @@ public class FilmMenu {
                 "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_FILM_REC.getImageView());
 
         btPlay.setOnAction(a -> {
-            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
+            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
             if (filmSelection.isPresent()) {
                 FilmPlayFactory.playFilm(filmSelection.get());
                 progData.filmGuiController.tableView.refresh();
                 progData.filmGuiController.tableView.requestFocus();
+
             }
         });
         btPlayAll.setOnAction(a -> {
-            FilmPlayFactory.playFilmList(ProgData.getInstance().filmGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(ProgData.getInstance().liveFilmGuiController.getSelList(true));
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
@@ -92,55 +94,6 @@ public class FilmMenu {
         vBoxSpace.setMaxHeight(10);
         vBoxSpace.setMinHeight(10);
         vBox.getChildren().add(vBoxSpace);
-
-        final ToolBarButton btBookmark = new ToolBarButton(vBox,
-                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIcons.ICON_TOOLBAR_FILM_BOOKMARK.getImageView());
-        final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
-                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIcons.ICON_TOOLBAR_FILM_DEL_BOOKMARK.getImageView());
-        final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
-                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
-        final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
-                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
-
-        btBookmark.setOnAction(a -> {
-            progData.filmGuiController.bookmarkFilm(true);
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
-            ;
-        });
-        btDelBookmark.setOnAction(a -> {
-            progData.filmGuiController.bookmarkFilm(false);
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
-        });
-        btDelAllBookmark.setOnAction(a -> {
-            progData.historyListBookmarks.clearAll(progData.primaryStage);
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
-        });
-
-        btFilterBookmark.setOnAction(a -> {
-            FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
-            FilmFilter bookmarkFilter = FilmFilterSamples.getBookmarkFilter();
-
-            if (sf.isSame(bookmarkFilter)) {
-                // dann ist der BlackFilter aktiv, dann zurückschalten
-                if (storedActFilterSettings != null) {
-                    // dann haben wir einen gespeicherten Filter
-                    progData.filmFilterWorker.setActFilterSettings(storedActFilterSettings);
-                    storedActFilterSettings = null;
-                } else {
-                    // dann gibts keinen gespeicherten, dann einfach löschen
-                    progData.filmFilterWorker.getActFilterSettings().clearFilter();
-                }
-            } else {
-                // dann ist es ein anderer Filter, Black einschalten und ActFilter merken
-                storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
-                progData.filmFilterWorker.setActFilterSettings(bookmarkFilter);
-            }
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
-        });
 
         if (ProgData.debug) {
             vBoxSpace = new VBox();
@@ -165,7 +118,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
+            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
             filmSelection.ifPresent(FilmPlayFactory::playFilm);
         });
         PShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
@@ -175,7 +128,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            FilmPlayFactory.playFilmList(ProgData.getInstance().filmGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(ProgData.getInstance().liveFilmGuiController.getSelList(true));
         });
         PShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
 
@@ -189,24 +142,6 @@ public class FilmMenu {
         PShortcutWorker.addShortCut(mbSave, PShortcut.SHORTCUT_SAVE_FILM);
 
         mb.getItems().addAll(mbPlay, mbPlayAll, mbSave);
-
-        final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
-        miFilmShown.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
-                return;
-            }
-            progData.filmGuiController.setFilmShown(true);
-        });
-        PShortcutWorker.addShortCut(miFilmShown, PShortcut.SHORTCUT_FILM_SHOWN);
-
-        final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
-        miFilmNotShown.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
-                return;
-            }
-            progData.filmGuiController.setFilmShown(false);
-        });
-        PShortcutWorker.addShortCut(miFilmNotShown, PShortcut.SHORTCUT_FILM_NOT_SHOWN);
 
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_INFO_FILM.getActShortcut());
@@ -228,34 +163,9 @@ public class FilmMenu {
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD.getActShortcut());
         miCopyTitle.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(false));
 
-        //Blacklist
-        Menu submenuBlacklist = new Menu("Blacklist");
-        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
-        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(true));
-
-        final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut());
-        miBlackTheme.setOnAction(event -> {
-            BlacklistFactory.addBlackThemeFilm();
-        });
-        submenuBlacklist.getItems().addAll(miBlack, miBlackTheme);
-
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo,
-                miFilmMediaCollection, miCopyTheme, miCopyTitle, submenuBlacklist);
-
-        // Bookmarks
-        Menu submenuBookmark = new Menu("Bookmarks");
-        final MenuItem miBookmarkAdd = new MenuItem("Neue Bookmarks anlegen");
-        miBookmarkAdd.setOnAction(a -> progData.filmGuiController.bookmarkFilm(true));
-        final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
-        miBookmarkDel.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
-        final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
-        miBookmarkDelAll.setOnAction(a -> progData.historyListBookmarks.clearAll(progData.primaryStage));
-
-        submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);
-        mb.getItems().add(submenuBookmark);
+        mb.getItems().addAll(miFilmInfo,
+                miFilmMediaCollection, miCopyTheme, miCopyTitle);
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());

@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.live;
+package de.p2tools.mtplayer.gui.guilive;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.livesearch.LiveSearch;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableLiveFilm;
-import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
+import de.p2tools.mtplayer.gui.tools.table.TableRowLiveFilm;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2TableFactory;
@@ -161,7 +161,7 @@ public class LiveDialogController extends PDialogExtra {
             }
         });
         tableView.setRowFactory(tableView -> {
-            TableRowFilm<FilmDataMTP> row = new TableRowFilm<>();
+            TableRowLiveFilm<FilmDataMTP> row = new TableRowLiveFilm<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                     FilmInfoDialogController.getInstanceAndShow().showFilmInfo();

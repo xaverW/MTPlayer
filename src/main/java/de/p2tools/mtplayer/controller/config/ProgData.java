@@ -40,6 +40,7 @@ import de.p2tools.mtplayer.controller.worker.Worker;
 import de.p2tools.mtplayer.gui.AboGuiController;
 import de.p2tools.mtplayer.gui.DownloadGuiController;
 import de.p2tools.mtplayer.gui.FilmGuiController;
+import de.p2tools.mtplayer.gui.LiveFilmGuiController;
 import de.p2tools.mtplayer.gui.chart.ChartData;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
@@ -70,13 +71,14 @@ public class ProgData {
     public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
 
     public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
+    public static BooleanProperty LIVE_FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty ABO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static long countRunningTimeSeconds = 0; // Gesamtzeit die das Programm läuft
 
     // Infos
     public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen
-    public static String filmListUrl = ""; //URL von der die Filmliste geladen werde soll
+    public static String filmListUrl = ""; //URL von der die Filmliste geladen werden soll
 
     // zentrale Klassen
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
@@ -89,6 +91,7 @@ public class ProgData {
     public P2MaskerPane maskerPane = null;
     public MTPlayerController mtPlayerController = null;
     public FilmGuiController filmGuiController = null; // Tab mit den Filmen
+    public LiveFilmGuiController liveFilmGuiController = null; // Tab mit den Filmen
     public DownloadGuiController downloadGuiController = null; // Tab mit den Downloads
     public DownloadFilterController downloadFilterController = null;
     public AboGuiController aboGuiController = null; // Tab mit den Abos
@@ -105,6 +108,7 @@ public class ProgData {
     // Programmdaten
     public FilmListMTP filmList; // ist die komplette Filmliste
     public FilmListMTP filmListFiltered; // Filmliste, wie im TabFilme angezeigt
+    public FilmListMTP liveFilmList; // Filmliste der Live-Filme
 
     public DownloadList downloadList; // Filme die als "Download" geladen werden sollen
     public AboList aboList;
@@ -133,6 +137,7 @@ public class ProgData {
         filmFilterWorker = new FilmFilterWorker();
         filmList = new FilmListMTP();
         filmListFiltered = new FilmListMTP();
+        liveFilmList = new FilmListMTP();
 
         filmListFilter = new BlackList(this, "FilmListFilter");
         blackList = new BlackList(this, "BlackList");

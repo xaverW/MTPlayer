@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
 public class MenuController extends ScrollPane {
 
     public enum StartupMode {
-        Film, DOWNLOAD, ABO
+        Film, LIVE_FILM, DOWNLOAD, ABO
     }
 
     public MenuController(StartupMode sm) {
@@ -45,6 +45,9 @@ public class MenuController extends ScrollPane {
         switch (sm) {
             case Film:
                 new FilmMenu(vb).init();
+                break;
+            case LIVE_FILM:
+                new LiveFilmMenu(vb).init();
                 break;
             case DOWNLOAD:
                 new DownloadMenu(vb).init();

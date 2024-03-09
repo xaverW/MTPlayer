@@ -29,7 +29,10 @@ import javafx.scene.layout.TilePane;
 
 public class PaneFilmButton extends TilePane {
 
-    public PaneFilmButton() {
+    private final boolean live;
+
+    public PaneFilmButton(boolean live) {
+        this.live = live;
         setVgap(P2LibConst.DIST_BUTTON);
         setHgap(P2LibConst.DIST_BUTTON);
         setPadding(new Insets(P2LibConst.PADDING));
@@ -53,7 +56,16 @@ public class PaneFilmButton extends TilePane {
                 btn.getStyleClass().add("setButton");
             }
 
-            btn.setOnAction(a -> FilmPlayFactory.playFilmListWithSet(setData));
+            btn.setOnAction(a -> {
+                        if (live) {
+                            FilmPlayFactory.playFilmListWithSet(setData,
+                                    ProgData.getInstance().liveFilmGuiController.getSelList(true));
+                        } else {
+                            FilmPlayFactory.playFilmListWithSet(setData,
+                                    ProgData.getInstance().filmGuiController.getSelList(true));
+                        }
+                    }
+            );
             getChildren().add(btn);
         });
     }

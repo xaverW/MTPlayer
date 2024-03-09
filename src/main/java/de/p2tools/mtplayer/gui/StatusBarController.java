@@ -50,6 +50,13 @@ public class StatusBarController extends AnchorPane {
     private final Circle circleFilm = new Circle(6);
     private final HBox hBoxCircleFilm = new HBox(0);
 
+    //LiveFilm
+    private final Label lblSelLiveFilm = new Label();
+    private final Label lblLeftLiveFilm = new Label();
+    private final Label lblRightLiveFilm = new Label();
+    private final Circle circleLiveFilm = new Circle(6);
+    private final HBox hBoxCircleLiveFilm = new HBox(0);
+
     //Download
     private final Label lblSelDownload = new Label();
     private final Label lblLeftDownload = new Label();
@@ -66,6 +73,7 @@ public class StatusBarController extends AnchorPane {
 
     private final StackPane stackPane = new StackPane();
     private final Pane filmPane;
+    private final Pane liveFilmPane;
     private final Pane downloadPane;
     private final Pane aboPane;
 
@@ -84,6 +92,7 @@ public class StatusBarController extends AnchorPane {
         AnchorPane.setTopAnchor(stackPane, 0.0);
 
         lblSelFilm.setTooltip(new Tooltip("Anzahl markierter Filme"));
+        lblSelLiveFilm.setTooltip(new Tooltip("Anzahl markierter Filme"));
         lblSelDownload.setTooltip(new Tooltip("Anzahl markierter Downloads"));
         lblSelAbo.setTooltip(new Tooltip("Anzahl markierter Abos"));
 
@@ -92,6 +101,7 @@ public class StatusBarController extends AnchorPane {
         hBoxCircleAbo.getChildren().add(circleAbo);
 
         filmPane = getHBox(lblSelFilm, lblLeftFilm, hBoxCircleFilm, lblRightFilm);
+        liveFilmPane = getHBox(lblSelLiveFilm, lblLeftLiveFilm, hBoxCircleLiveFilm, lblRightLiveFilm);
         downloadPane = getHBox(lblSelDownload, lblLeftDownload, hBoxCircleDownload, lblRightDownload);
         aboPane = getHBox(lblSelAbo, lblLeftAbo, hBoxCircleAbo, lblRightAbo);
 
@@ -128,6 +138,15 @@ public class StatusBarController extends AnchorPane {
         lblRightFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
         hBoxCircleFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
         hBoxCircleFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
+
+        lblSelLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
+        lblSelLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
+        lblLeftLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
+        lblLeftLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
+        lblRightLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
+        lblRightLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
+        hBoxCircleLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
+        hBoxCircleLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
 
         lblSelDownload.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
         lblSelDownload.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
@@ -214,6 +233,11 @@ public class StatusBarController extends AnchorPane {
                 setInfoFilm();
                 setTextForRightDisplay();
                 break;
+            case LIVE_FILM:
+                liveFilmPane.toFront();
+                setInfoLiveFilm();
+                setTextForRightDisplay();
+                break;
             case DOWNLOAD:
                 downloadPane.toFront();
                 setInfoDownload();
@@ -231,6 +255,13 @@ public class StatusBarController extends AnchorPane {
         setCircleStyle();
         lblLeftFilm.setText(DownloadInfosFactory.getStatusInfosFilm());
         final int selCount = progData.filmGuiController.getSelCount();
+        lblSelFilm.setText(selCount > 0 ? selCount + "" : " ");
+    }
+
+    private void setInfoLiveFilm() {
+        setCircleStyle();
+        lblLeftFilm.setText(DownloadInfosFactory.getStatusInfosLiveFilm());
+        final int selCount = progData.liveFilmGuiController.getSelCount();
         lblSelFilm.setText(selCount > 0 ? selCount + "" : " ");
     }
 

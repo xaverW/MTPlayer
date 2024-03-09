@@ -44,9 +44,8 @@ public class FilmPlayFactory {
         playFilm(film);
     }
 
-    public static void playFilmListWithSet(SetData psetData) {
+    public static void playFilmListWithSet(SetData psetData, List<FilmDataMTP> list) {
         // Button/Menü: Film mit Set starten
-        List<FilmDataMTP> list = ProgData.getInstance().filmGuiController.getSelList(true);
         if (list.isEmpty()) {
             return;
         }
@@ -68,19 +67,12 @@ public class FilmPlayFactory {
         filmDataMTP.ifPresent(dataMTP -> ProgData.getInstance().startDownload.startUrlWithProgram(dataMTP, psetData, ""));
     }
 
-    public static synchronized void playFilmList() {
+    public static synchronized void playFilmList(ArrayList<FilmDataMTP> list) {
         // aus Menü/Button Film abspielen
-        ArrayList<FilmDataMTP> list = ProgData.getInstance().filmGuiController.getSelList(true);
         if (list.isEmpty()) {
             return;
         }
         play(list);
-    }
-
-    public static synchronized void playFilm() {
-        // aus Menü
-        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
-        filmSelection.ifPresent(FilmPlayFactory::playFilm);
     }
 
     public static synchronized void playFilm(FilmDataMTP mtp) {

@@ -100,6 +100,7 @@ public class ProgQuit {
         // Tabelleneinstellungen merken
         final ProgData progData = ProgData.getInstance();
         progData.filmGuiController.saveTable();
+        progData.liveFilmGuiController.saveTable();
         progData.downloadGuiController.saveTable();
         progData.aboGuiController.saveTable();
     }

@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.gui.guilive.PaneLiveFilmInfo;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.scene.Node;
@@ -28,53 +29,53 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class FilmInfoController extends P2ClosePaneH {
+public class LiveFilmInfoController extends P2ClosePaneH {
 
-    private PaneFilmInfo paneFilmInfo;
+    private PaneLiveFilmInfo paneLiveFilmInfo;
     private PaneFilmButton paneButton;
     private PaneMedia paneMedia;
-    private Tab tabFilmInfo;
+    private Tab tabLiveFilmInfo;
     private Tab tabButton;
     private Tab tabMedia;
     private final TabPane tabPane = new TabPane();
 
     private final ProgData progData;
 
-    public FilmInfoController() {
-        super(ProgConfig.FILM_GUI_DIVIDER_ON, true, true);
+    public LiveFilmInfoController() {
+        super(ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, true, true);
         progData = ProgData.getInstance();
         initInfoPane();
     }
 
     public void setFilmInfos(FilmDataMTP film) {
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.FILM,
-                getVBoxAll(), tabPane, paneFilmInfo,
-                ProgConfig.FILM_GUI_DIVIDER_ON, ProgConfig.FILM_PANE_DIALOG_INFO_ON)) {
-            paneFilmInfo.setFilm(film);
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM,
+                getVBoxAll(), tabPane, paneLiveFilmInfo,
+                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON)) {
+            paneLiveFilmInfo.setFilm(film);
         }
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.FILM,
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM,
                 getVBoxAll(), tabPane, paneMedia,
-                ProgConfig.FILM_GUI_DIVIDER_ON, ProgConfig.FILM_PANE_DIALOG_MEDIA_ON)) {
+                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON)) {
             paneMedia.setSearchPredicate(film);
         }
     }
 
     private void initInfoPane() {
-        paneFilmInfo = new PaneFilmInfo(ProgConfig.FILM_GUI_INFO_DIVIDER);
-        paneButton = new PaneFilmButton(false);
+        paneLiveFilmInfo = new PaneLiveFilmInfo(ProgConfig.LIVE_FILM_GUI_INFO_DIVIDER);
+        paneButton = new PaneFilmButton(true);
         MediaDataDto mDtoMedia = new MediaDataDto();
         MediaDataDto mDtoAbo = new MediaDataDto();
         initDto(mDtoMedia, mDtoAbo);
         paneMedia = new PaneMedia(mDtoMedia, mDtoAbo);
-        tabFilmInfo = new Tab("Beschreibung");
-        tabFilmInfo.setClosable(false);
+        tabLiveFilmInfo = new Tab("Beschreibung");
+        tabLiveFilmInfo.setClosable(false);
         tabButton = new Tab("Startbutton");
         tabButton.setClosable(false);
         tabMedia = new Tab("Mediensammlung");
         tabMedia.setClosable(false);
 
         super.getRipProperty().addListener((u, o, n) -> {
-            if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneFilmInfo)) {
+            if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneLiveFilmInfo)) {
                 setDialogInfo();
             } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneButton)) {
                 setDialogButton();
@@ -83,18 +84,18 @@ public class FilmInfoController extends P2ClosePaneH {
             }
         });
 
-        if (ProgConfig.FILM_PANE_DIALOG_INFO_ON.getValue()) {
+        if (ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON.getValue()) {
             setDialogInfo();
         }
-        if (ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.getValue()) {
+        if (ProgConfig.LIVE_FILM_PANE_DIALOG_BUTTON_ON.getValue()) {
             setDialogButton();
         }
-        if (ProgConfig.FILM_PANE_DIALOG_MEDIA_ON.getValue()) {
+        if (ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON.getValue()) {
             setDialogMedia();
         }
-        ProgConfig.FILM_PANE_DIALOG_INFO_ON.addListener((u, o, n) -> setTabs()); // kommt beim Ein- und Ausschalten der Fenster
-        ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.addListener((u, o, n) -> setTabs());
-        ProgConfig.FILM_PANE_DIALOG_MEDIA_ON.addListener((u, o, n) -> setTabs());
+        ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON.addListener((u, o, n) -> setTabs()); // kommt beim Ein- und Ausschalten der Fenster
+        ProgConfig.LIVE_FILM_PANE_DIALOG_BUTTON_ON.addListener((u, o, n) -> setTabs());
+        ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON.addListener((u, o, n) -> setTabs());
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> setTabs());
 
         setTabs();
@@ -102,54 +103,54 @@ public class FilmInfoController extends P2ClosePaneH {
 
     private void initDto(MediaDataDto mediaDataDtoMedia, MediaDataDto mediaDataDtoAbo) {
         mediaDataDtoMedia.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_MEDIA;
-        mediaDataDtoMedia.buildSearchFrom = ProgConfig.INFO_FILM_BUILD_SEARCH_FROM_FOR_MEDIA;
-        mediaDataDtoMedia.searchInWhat = ProgConfig.INFO_FILM_SEARCH_IN_WHAT_FOR_MEDIA;
-        mediaDataDtoMedia.cleaning = ProgConfig.INFO_FILM_CLEAN_MEDIA;
-        mediaDataDtoMedia.cleaningExact = ProgConfig.INFO_FILM_CLEAN_EXACT_MEDIA;
-        mediaDataDtoMedia.cleaningAndOr = ProgConfig.INFO_FILM_CLEAN_AND_OR_MEDIA;
-        mediaDataDtoMedia.cleaningList = ProgConfig.INFO_FILM_CLEAN_LIST_MEDIA;
+        mediaDataDtoMedia.buildSearchFrom = ProgConfig.INFO_LIVE_FILM_BUILD_SEARCH_FROM_FOR_MEDIA;
+        mediaDataDtoMedia.searchInWhat = ProgConfig.INFO_LIVE_FILM_SEARCH_IN_WHAT_FOR_MEDIA;
+        mediaDataDtoMedia.cleaning = ProgConfig.INFO_LIVE_FILM_CLEAN_MEDIA;
+        mediaDataDtoMedia.cleaningExact = ProgConfig.INFO_LIVE_FILM_CLEAN_EXACT_MEDIA;
+        mediaDataDtoMedia.cleaningAndOr = ProgConfig.INFO_LIVE_FILM_CLEAN_AND_OR_MEDIA;
+        mediaDataDtoMedia.cleaningList = ProgConfig.INFO_LIVE_FILM_CLEAN_LIST_MEDIA;
 
         mediaDataDtoAbo.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_ABO;
-        mediaDataDtoAbo.buildSearchFrom = ProgConfig.INFO_FILM_BUILD_SEARCH_FROM_FOR_ABO;
-        mediaDataDtoAbo.searchInWhat = ProgConfig.INFO_FILM_SEARCH_IN_WHAT_FOR_ABO;
-        mediaDataDtoAbo.cleaning = ProgConfig.INFO_FILM_CLEAN_ABO;
-        mediaDataDtoAbo.cleaningExact = ProgConfig.INFO_FILM_CLEAN_EXACT_ABO;
-        mediaDataDtoAbo.cleaningAndOr = ProgConfig.INFO_FILM_CLEAN_AND_OR_ABO;
-        mediaDataDtoAbo.cleaningList = ProgConfig.INFO_FILM_CLEAN_LIST_ABO;
+        mediaDataDtoAbo.buildSearchFrom = ProgConfig.INFO_LIVE_FILM_BUILD_SEARCH_FROM_FOR_ABO;
+        mediaDataDtoAbo.searchInWhat = ProgConfig.INFO_LIVE_FILM_SEARCH_IN_WHAT_FOR_ABO;
+        mediaDataDtoAbo.cleaning = ProgConfig.INFO_LIVE_FILM_CLEAN_ABO;
+        mediaDataDtoAbo.cleaningExact = ProgConfig.INFO_LIVE_FILM_CLEAN_EXACT_ABO;
+        mediaDataDtoAbo.cleaningAndOr = ProgConfig.INFO_LIVE_FILM_CLEAN_AND_OR_ABO;
+        mediaDataDtoAbo.cleaningList = ProgConfig.INFO_LIVE_FILM_CLEAN_LIST_ABO;
     }
 
     private void setDialogInfo() {
-        InfoPaneFactory.setDialogInfo(tabFilmInfo, paneFilmInfo, "Filminfos",
-                ProgConfig.FILM_PANE_DIALOG_INFO_SIZE, ProgConfig.FILM_PANE_DIALOG_INFO_ON,
-                ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
+        InfoPaneFactory.setDialogInfo(tabLiveFilmInfo, paneLiveFilmInfo, "Filminfos",
+                ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_SIZE, ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON,
+                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgData.LIVE_FILM_TAB_ON);
     }
 
     private void setDialogButton() {
         InfoPaneFactory.setDialogInfo(tabButton, paneButton, "Startbutton",
-                ProgConfig.FILM_PANE_DIALOG_BUTTON_SIZE, ProgConfig.FILM_PANE_DIALOG_BUTTON_ON,
-                ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
+                ProgConfig.LIVE_FILM_PANE_DIALOG_BUTTON_SIZE, ProgConfig.LIVE_FILM_PANE_DIALOG_BUTTON_ON,
+                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgData.LIVE_FILM_TAB_ON);
     }
 
     private void setDialogMedia() {
         InfoPaneFactory.setDialogInfo(tabMedia, paneMedia, "Mediensammlung",
-                ProgConfig.FILM_PANE_DIALOG_MEDIA_SIZE, ProgConfig.FILM_PANE_DIALOG_MEDIA_ON,
-                ProgConfig.FILM_GUI_DIVIDER_ON, ProgData.FILM_TAB_ON);
+                ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_SIZE, ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON,
+                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgData.LIVE_FILM_TAB_ON);
     }
 
     private void setTabs() {
         int i = 0;
 
-        if (ProgConfig.FILM_PANE_DIALOG_INFO_ON.getValue()) {
-            tabPane.getTabs().remove(tabFilmInfo);
+        if (ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON.getValue()) {
+            tabPane.getTabs().remove(tabLiveFilmInfo);
         } else {
-            tabFilmInfo.setContent(paneFilmInfo);
-            if (!tabPane.getTabs().contains(tabFilmInfo)) {
-                tabPane.getTabs().add(i, tabFilmInfo);
+            tabLiveFilmInfo.setContent(paneLiveFilmInfo);
+            if (!tabPane.getTabs().contains(tabLiveFilmInfo)) {
+                tabPane.getTabs().add(i, tabLiveFilmInfo);
             }
             ++i;
         }
 
-        if (ProgConfig.FILM_PANE_DIALOG_BUTTON_ON.getValue()) {
+        if (ProgConfig.LIVE_FILM_PANE_DIALOG_BUTTON_ON.getValue()) {
             tabPane.getTabs().remove(tabButton);
         } else {
             if (progData.setDataList.getSetDataListButton().size() <= 0) {
@@ -164,7 +165,7 @@ public class FilmInfoController extends P2ClosePaneH {
             }
         }
 
-        if (ProgConfig.FILM_PANE_DIALOG_MEDIA_ON.getValue()) {
+        if (ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON.getValue()) {
             tabPane.getTabs().remove(tabMedia);
         } else {
             tabMedia.setContent(paneMedia);
@@ -176,7 +177,7 @@ public class FilmInfoController extends P2ClosePaneH {
 
         if (i == 0) {
             getVBoxAll().getChildren().clear();
-            ProgConfig.FILM_GUI_DIVIDER_ON.set(false);
+            ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.set(false);
         } else if (i == 1) {
             // dann gibts einen Tab
             final Node node = tabPane.getTabs().get(0).getContent();

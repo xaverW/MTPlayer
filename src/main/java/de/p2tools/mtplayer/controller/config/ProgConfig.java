@@ -181,7 +181,15 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
     public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "300:600");
 
-    // Livesuche
+    // LiveFilmGui
+    public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.TRUE);
+    public static StringProperty LIVE_FILM_GUI_FILTER_DIALOG = addStrProp("live-film-gui-filter-dialog", "400:500");
+    public static BooleanProperty LIVE_FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBoolProp("live-film-gui-filter-dialog-is-showing", Boolean.FALSE);
+    public static DoubleProperty LIVE_FILM_GUI_FILTER_DIVIDER = addDoubleProp("live-film-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
+    public static BooleanProperty LIVE_FILM_GUI_FILTER_DIVIDER_ON = addBoolProp("live-film-gui-filter-divider-on", Boolean.TRUE);
+    public static DoubleProperty LIVE_FILM_GUI_DIVIDER = addDoubleProp("live-film-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);
+    public static BooleanProperty LIVE_FILM_GUI_DIVIDER_ON = addBoolProp("live-film-gui-divider-on", Boolean.TRUE);
+
     public static StringProperty SYSTEM_SIZE_DIALOG_LIVE_SEARCH = addStrProp("system-size-dialog-live-search", "600:800");
     public static DoubleProperty LIVE_FILM_GUI_SPLITPANE = addDoubleProp("live-film-gui-splitpane", 0.7);
     public static StringProperty LIVE_FILM_GUI_TABLE_WIDTH = addStrProp("live-film-gui-table-width");
@@ -304,6 +312,21 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty INFO_FILM_CLEAN_AND_OR_ABO = addBoolProp("info-film-clean-and-or-abo", Boolean.FALSE);
     public static BooleanProperty INFO_FILM_CLEAN_LIST_ABO = addBoolProp("info-film-clean-list-abo", Boolean.TRUE);
 
+    // Gui Media Search -> Infobereich Live-Film
+    public static IntegerProperty INFO_LIVE_FILM_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("info-live-film-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty INFO_LIVE_FILM_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("info-live-film-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static BooleanProperty INFO_LIVE_FILM_CLEAN_MEDIA = addBoolProp("info-live-film-clean-media", Boolean.TRUE);
+    public static BooleanProperty INFO_LIVE_FILM_CLEAN_EXACT_MEDIA = addBoolProp("info-live-film-clean-exact-media", Boolean.FALSE);
+    public static BooleanProperty INFO_LIVE_FILM_CLEAN_AND_OR_MEDIA = addBoolProp("info-live-film-clean-and-or-media", Boolean.FALSE);
+    public static BooleanProperty INFO_LIVE_FILM_CLEAN_LIST_MEDIA = addBoolProp("info-live-film-clean-list-media", Boolean.TRUE);
+
+    public static IntegerProperty INFO_LIVE_FILM_BUILD_SEARCH_FROM_FOR_ABO = addIntProp("info-live-film-build-search-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty INFO_LIVE_FILM_SEARCH_IN_WHAT_FOR_ABO = addIntProp("info-live-film-search-in-what-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static BooleanProperty INFO_LIVE_FILM_CLEAN_ABO = addBoolProp("info-live-film-clean-abo", Boolean.TRUE);
+    public static BooleanProperty INFO_LIVE_FILM_CLEAN_EXACT_ABO = addBoolProp("info-live-film-clean-exact-abo", Boolean.FALSE);
+    public static BooleanProperty INFO_LIVE_FILM_CLEAN_AND_OR_ABO = addBoolProp("info-live-film-clean-and-or-abo", Boolean.FALSE);
+    public static BooleanProperty INFO_LIVE_FILM_CLEAN_LIST_ABO = addBoolProp("info-live-film-clean-list-abo", Boolean.TRUE);
+
     // Gui Media Search -> Infobereich Download
     public static IntegerProperty INFO_DOWNLOAD_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("info-download-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
     public static IntegerProperty INFO_DOWNLOAD_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("info-download-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
@@ -364,6 +387,13 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty FILM_PANE_DIALOG_BUTTON_ON = addBoolProp("film-pane-dialog-button-on");
     public static StringProperty FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("film-pane-dialog-media-size");
     public static BooleanProperty FILM_PANE_DIALOG_MEDIA_ON = addBoolProp("film-pane-dialog-media-on");
+
+    public static StringProperty LIVE_FILM_PANE_DIALOG_INFO_SIZE = addStrProp("live-film-pane-dialog-info-size");
+    public static BooleanProperty LIVE_FILM_PANE_DIALOG_INFO_ON = addBoolProp("live-film-pane-dialog-info-on");
+    public static StringProperty LIVE_FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("live-film-pane-dialog-button-size");
+    public static BooleanProperty LIVE_FILM_PANE_DIALOG_BUTTON_ON = addBoolProp("live-film-pane-dialog-button-on");
+    public static StringProperty LIVE_FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("live-film-pane-dialog-media-size");
+    public static BooleanProperty LIVE_FILM_PANE_DIALOG_MEDIA_ON = addBoolProp("live-film-pane-dialog-media-on");
 
     public static StringProperty DOWNLOAD_PANE_DIALOG_INFO_SIZE = addStrProp("download-pane-dialog-info-size");
     public static BooleanProperty DOWNLOAD_PANE_DIALOG_INFO_ON = addBoolProp("download-pane-dialog-info-on");

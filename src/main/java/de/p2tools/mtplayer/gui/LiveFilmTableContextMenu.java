@@ -28,7 +28,7 @@ import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.starter.StartDownloadFactory;
-import de.p2tools.mtplayer.gui.tools.table.TableFilm;
+import de.p2tools.mtplayer.gui.tools.table.TableLiveFilm;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
@@ -37,13 +37,13 @@ import javafx.scene.control.SeparatorMenuItem;
 
 import java.util.Optional;
 
-public class FilmTableContextMenu {
+public class LiveFilmTableContextMenu {
 
     private final ProgData progData;
-    private final FilmGuiController filmGuiController;
-    private final TableFilm tableView;
+    private final LiveFilmGuiController filmGuiController;
+    private final TableLiveFilm tableView;
 
-    public FilmTableContextMenu(ProgData progData, FilmGuiController filmGuiController, TableFilm tableView) {
+    public LiveFilmTableContextMenu(ProgData progData, LiveFilmGuiController filmGuiController, TableLiveFilm tableView) {
         this.progData = progData;
         this.filmGuiController = filmGuiController;
         this.tableView = tableView;
@@ -55,7 +55,7 @@ public class FilmTableContextMenu {
         // Start/Save
         MenuItem miStart = new MenuItem("Film abspielen");
         miStart.setOnAction(a -> {
-            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
+            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
             filmSelection.ifPresent(FilmPlayFactory::playFilm);
         });
 
@@ -67,37 +67,19 @@ public class FilmTableContextMenu {
 
         // Filter
         Menu mFilter = addFilter(film);
-        // Abo
-        Menu mAddAbo = addAbo(film);
-        contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(mFilter, mAddAbo);
 
         Menu mStartFilm = startFilmWithSet(film); // Film mit Set starten
         if (mStartFilm != null) {
             contextMenu.getItems().add(mStartFilm);
         }
 
-        // Blacklist
-        Menu mBlacklist = addBlacklist(film);
-        // Bookmark
-        Menu mBookmark = addBookmark(film);
         // URL kopieren
         Menu mCopyUrl = copyUrl(film);
-        contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl);
+        contextMenu.getItems().addAll(mCopyUrl);
 
         final MenuItem miLoadUt = new MenuItem("Film-Untertitel speichern");
         miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
         miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film));
-
-        final MenuItem miFilmsSetShown;
-        if (film != null && film.isShown()) {
-            miFilmsSetShown = new MenuItem("Filme als ungesehen markieren");
-            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(false));
-        } else {
-            miFilmsSetShown = new MenuItem("Filme als gesehen markieren");
-            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(true));
-        }
-        miFilmsSetShown.setDisable(film == null);
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setDisable(film == null);
@@ -116,11 +98,11 @@ public class FilmTableContextMenu {
         miCopyName.setOnAction(a -> PSystemUtils.copyToClipboard(film.getTitle()));
 
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miLoadUt, miFilmsSetShown, miFilmInfo, miMediaDb, miCopyTheme, miCopyName);
+        contextMenu.getItems().addAll(miLoadUt, miFilmInfo, miMediaDb, miCopyTheme, miCopyName);
 
-        MenuItem toolTipTable = new MenuItem(ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue() ?
+        MenuItem toolTipTable = new MenuItem(ProgConfig.LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue() ?
                 "Keine Infos beim Überfahren einer Zeile anzeigen" : "Infos beim Überfahren einer Zeile anzeigen");
-        toolTipTable.setOnAction(a -> ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.setValue(!ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue()));
+        toolTipTable.setOnAction(a -> ProgConfig.LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP.setValue(!ProgConfig.LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue()));
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> tableView.resetTable());
         contextMenu.getItems().add(new SeparatorMenuItem());
@@ -208,7 +190,7 @@ public class FilmTableContextMenu {
                 final MenuItem item = new MenuItem(setData.getVisibleName());
                 item.setDisable(film == null);
                 item.setOnAction(event -> FilmPlayFactory.playFilmListWithSet(setData,
-                        ProgData.getInstance().filmGuiController.getSelList(true)));
+                        ProgData.getInstance().liveFilmGuiController.getSelList(true)));
                 submenuSet.getItems().add(item);
             });
 

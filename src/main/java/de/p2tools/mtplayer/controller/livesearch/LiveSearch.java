@@ -30,9 +30,10 @@ public class LiveSearch {
 
     public static List<FilmDataMTP> loadAudioFromWeb(DoubleProperty doubleProperty, String searchString) {
         JsonInfoDto jsonInfoDto = new JsonInfoDto();
+        int sum = 25;
         jsonInfoDto.setStartUrl("https://api.ardmediathek.de/search-system/mediathek/ard/search/vods?query=" +
                 searchString +
-                "&pageNumber=1&pageSize=50&audioDes=false&signLang=false&subtitle=false&childCont=false&sortingCriteria=SCORE_DESC&platform=MEDIA_THEK");
+                "&pageNumber=1&pageSize=" + sum + "&audioDes=false&signLang=false&subtitle=false&childCont=false&sortingCriteria=SCORE_DESC&platform=MEDIA_THEK");
 
         int max = 0;
         try {
