@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.dialog.ImportMVDialog;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
-import de.p2tools.mtplayer.gui.guilive.LiveDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.guitools.P2Open;
@@ -114,15 +113,10 @@ public class MTPlayerMenu extends MenuButton {
                 MTPTester mtpTester = new MTPTester(progData);
                 mtpTester.showDialog();
             });
-            final MenuItem miLive = new MenuItem("Live-Suche");
-            miLive.setOnAction(event -> {
-                LiveDialogController live = new LiveDialogController(progData);
-                live.showDialog();
-            });
             final MenuItem miSave = new MenuItem("Alles Speichern");
             miSave.setOnAction(a -> ProgSave.saveAll());
 
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miLive, miSave);
+            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSave);
         }
         return mHelp;
     }

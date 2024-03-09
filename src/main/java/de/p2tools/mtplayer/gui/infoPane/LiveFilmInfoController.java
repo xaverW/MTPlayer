@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.gui.guilive.PaneLiveFilmInfo;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.scene.Node;
