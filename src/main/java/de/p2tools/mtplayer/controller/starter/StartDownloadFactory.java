@@ -102,7 +102,7 @@ public class StartDownloadFactory {
         }
 
         // und die Finished-Msg ausgeben
-        LogDownloadFactory.finishedMsg(download);
+        LogMsgFactory.finishedMsg(download);
 
         if (download.isStateError()) {
             download.setProgress(DownloadConstants.PROGRESS_NOT_STARTED);

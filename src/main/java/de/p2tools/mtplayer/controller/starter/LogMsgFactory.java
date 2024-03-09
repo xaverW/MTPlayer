@@ -21,15 +21,15 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
-import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2Date;
+import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class LogDownloadFactory {
-    private LogDownloadFactory() {
+public class LogMsgFactory {
+    private LogMsgFactory() {
     }
 
     public static void startMsg(DownloadData download) {

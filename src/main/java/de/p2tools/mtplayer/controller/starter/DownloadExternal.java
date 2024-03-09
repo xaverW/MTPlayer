@@ -56,7 +56,7 @@ public class DownloadExternal extends Thread {
 
     @Override
     public synchronized void run() {
-        LogDownloadFactory.startMsg(download);
+        LogMsgFactory.startMsg(download);
         StartDownloadFactory.makeDirAndLoadInfoSubtitle(download);
         runWhile();
         StartDownloadFactory.finalizeDownload(download);

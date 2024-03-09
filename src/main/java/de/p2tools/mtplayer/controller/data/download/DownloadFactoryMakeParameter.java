@@ -34,9 +34,9 @@ import java.nio.file.Paths;
 import java.util.Date;
 
 
-public class DownloadFactoryProgram {
+public class DownloadFactoryMakeParameter {
 
-    private DownloadFactoryProgram() {
+    private DownloadFactoryMakeParameter() {
     }
 
     public static boolean makeProgParameter(DownloadData download, AboData abo, String name, String path) {

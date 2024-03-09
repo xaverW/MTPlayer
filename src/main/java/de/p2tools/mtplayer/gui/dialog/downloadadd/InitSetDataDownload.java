@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactoryProgram;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -76,7 +76,7 @@ public class InitSetDataDownload {
 
         // müssen Pfad/Name/Aufruf neu gebaut werden
         DownloadData download = addDownloadData.download;
-        DownloadFactoryProgram.makeProgParameter(download, download.getAbo(), "", "");
+        DownloadFactoryMakeParameter.makeProgParameter(download, download.getAbo(), "", "");
         addDownloadDto.textAreaProg.setText(addDownloadDto.getAct().download.getProgramCall());
         addDownloadDto.textAreaCallArray.setText(addDownloadDto.getAct().download.getProgramCallArray());
     }

@@ -74,7 +74,7 @@ public final class DownloadData extends DownloadDataProps {
             }
         }
 
-        DownloadFactoryProgram.makeProgParameter(this, null, "", "");
+        DownloadFactoryMakeParameter.makeProgParameter(this, null, "", "");
     }
 
     public DownloadData(String source, SetData setData, FilmDataMTP film, AboData abo,
@@ -100,7 +100,7 @@ public final class DownloadData extends DownloadDataProps {
         initResolution(resolution);
 
         // und endlich Aufruf bauen :)
-        DownloadFactoryProgram.makeProgParameter(this, abo, name, path);
+        DownloadFactoryMakeParameter.makeProgParameter(this, abo, name, path);
     }
 
     //==============================================
@@ -306,7 +306,7 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public void makeProgParameter() {
-        DownloadFactoryProgram.makeProgParameter(this, abo, getDestFileName(), getDestPath());
+        DownloadFactoryMakeParameter.makeProgParameter(this, abo, getDestFileName(), getDestPath());
     }
 
     //==============================================
