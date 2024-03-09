@@ -39,6 +39,7 @@ import java.util.Collection;
 public class PaneConfig {
 
     private final P2ToggleSwitch tglOnlyOneInstance = new P2ToggleSwitch("Nur eine Instanz des Programms öffnen");
+    private final P2ToggleSwitch tglStartMaximised = new P2ToggleSwitch("Programm immer \"Maximiert\" starten");
     private final P2ToggleSwitch tglSmallFilm = new P2ToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
     private final P2ToggleSwitch tglSmallDownload = new P2ToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
     private final P2ToggleSwitch tglSmallAbo = new P2ToggleSwitch("In der Tabelle \"Abo\" nur kleine Button anzeigen:");
@@ -53,6 +54,7 @@ public class PaneConfig {
 
     public void close() {
         tglOnlyOneInstance.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ONE_INSTANCE);
+        tglStartMaximised.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED);
         tglSmallFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
         tglSmallDownload.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
         tglSmallAbo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO);
@@ -73,6 +75,11 @@ public class PaneConfig {
         final Button btnHelpOnlyOneInstance = P2Button.helpButton(stage, "Nur eine Instanz des Programms öffnen",
                 HelpText.ONLY_ONE_INSTANCE);
         GridPane.setHalignment(btnHelpOnlyOneInstance, HPos.RIGHT);
+
+        tglStartMaximised.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED);
+        final Button btnHelpStartMaximised = P2Button.helpButton(stage, "Programm immer \"Maximiert\" starten",
+                HelpText.START_MAXIMISED);
+        GridPane.setHalignment(btnHelpStartMaximised, HPos.RIGHT);
 
 
         tglSmallFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
@@ -120,6 +127,9 @@ public class PaneConfig {
         int row = 0;
         gridPane.add(tglOnlyOneInstance, 0, ++row, 2, 1);
         gridPane.add(btnHelpOnlyOneInstance, 2, row);
+
+        gridPane.add(tglStartMaximised, 0, ++row, 2, 1);
+        gridPane.add(btnHelpStartMaximised, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglSmallFilm, 0, ++row, 2, 1);

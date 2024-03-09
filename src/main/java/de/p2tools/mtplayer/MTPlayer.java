@@ -84,7 +84,7 @@ public class MTPlayer extends Application {
 
             scene = new Scene(progData.mtPlayerController,
                     P2GuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI),
-                    P2GuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI)); //Größe der scene!= Größe stage!!!
+                    P2GuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI)); //Größe der scene != Größe stage!!!
             addThemeCss(); // und jetzt noch für die neue Scene
             ProgColorList.setColorTheme(); // Farben einrichten
 
@@ -111,6 +111,10 @@ public class MTPlayer extends Application {
 
             //Pos setzen
             P2GuiSize.setOnlyPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
+            if (ProgConfig.SYSTEM_GUI_MAXIMISED.get() || ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED.get()) {
+                // dann wars maximiert oder soll immer so gestartet werden
+                primaryStage.setMaximized(true);
+            }
 
             scene.heightProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
             scene.widthProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));

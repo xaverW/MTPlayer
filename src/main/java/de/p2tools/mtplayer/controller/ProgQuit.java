@@ -99,6 +99,9 @@ public class ProgQuit {
     private static void writeTabSettings() {
         // Tabelleneinstellungen merken
         final ProgData progData = ProgData.getInstance();
+
+        ProgConfig.SYSTEM_GUI_MAXIMISED.set(progData.primaryStage.isMaximized());
+
         progData.filmGuiController.saveTable();
         progData.liveFilmGuiController.saveTable();
         progData.downloadGuiController.saveTable();

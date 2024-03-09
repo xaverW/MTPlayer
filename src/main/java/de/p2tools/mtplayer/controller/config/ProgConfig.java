@@ -178,6 +178,8 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStrProp("system-download-dir-new-version", "");
 
     // Fenstereinstellungen
+    public static BooleanProperty SYSTEM_GUI_MAXIMISED = addBoolProp("system-gui-maximised", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_GUI_START_ALWAYS_MAXIMISED = addBoolProp("system-gui-start-always-maximised", Boolean.FALSE);
     public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
     public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "300:600");
 

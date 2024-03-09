@@ -834,6 +834,10 @@ public class HelpText {
                     "(Es ist möglich, das Programm mit unterschiedlichen Konfig-Ordnern zu starten -> Anleitung. Dann kann man mehrere " +
                     "Instanzen parallel mit unterschiedlichen Einstellungen betreiben.)" +
                     "\n";
+    public static final String START_MAXIMISED =
+            "Das Programmfenster wird immer maximiert gestartet, egal wie die Größe beim Beenden war. Ansonsten wird es " +
+                    "in der Größe gestartet, die es beim Beenden hatte." +
+                    "\n";
 
     public static final String LOGFILE =
             "Im Logfile wird der Programmverlauf aufgezeichnet. Das kann hilfreich sein " +
