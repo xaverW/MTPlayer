@@ -92,7 +92,7 @@ public class ProgConfig extends PDataProgConfig {
     // configs zum Anzeigen der WhatsNew
     public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
 
-    // Configs zur Programmupdatesuche
+    // Configs zur ProgrammUpdateSuche
     public static StringProperty SYSTEM_UPDATE_DATE = addStrProp("system-update-date"); // Datum der letzten Prüfung
 
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_ACT = addBoolProp("system-update-search-act", Boolean.TRUE); //Infos und Programm
@@ -183,24 +183,6 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
     public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "300:600");
 
-    // LiveFilmGui
-    public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.TRUE);
-    public static StringProperty LIVE_FILM_GUI_FILTER_DIALOG = addStrProp("live-film-gui-filter-dialog", "400:500");
-    public static BooleanProperty LIVE_FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBoolProp("live-film-gui-filter-dialog-is-showing", Boolean.FALSE);
-    public static DoubleProperty LIVE_FILM_GUI_FILTER_DIVIDER = addDoubleProp("live-film-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
-    public static BooleanProperty LIVE_FILM_GUI_FILTER_DIVIDER_ON = addBoolProp("live-film-gui-filter-divider-on", Boolean.TRUE);
-    public static DoubleProperty LIVE_FILM_GUI_DIVIDER = addDoubleProp("live-film-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);
-    public static BooleanProperty LIVE_FILM_GUI_DIVIDER_ON = addBoolProp("live-film-gui-divider-on", Boolean.TRUE);
-
-    public static StringProperty SYSTEM_SIZE_DIALOG_LIVE_SEARCH = addStrProp("system-size-dialog-live-search", "600:800");
-    public static DoubleProperty LIVE_FILM_GUI_SPLITPANE = addDoubleProp("live-film-gui-splitpane", 0.7);
-    public static StringProperty LIVE_FILM_GUI_TABLE_WIDTH = addStrProp("live-film-gui-table-width");
-    public static StringProperty LIVE_FILM_GUI_TABLE_SORT = addStrProp("live-film-gui-table-sort");
-    public static StringProperty LIVE_FILM_GUI_TABLE_UP_DOWN = addStrProp("live-film-gui-table-up-down");
-    public static StringProperty LIVE_FILM_GUI_TABLE_VIS = addStrProp("live-film-gui-table-vis");
-    public static StringProperty LIVE_FILM_GUI_TABLE_ORDER = addStrProp("live-film-gui-table-order");
-    public static DoubleProperty LIVE_FILM_GUI_INFO_DIVIDER = addDoubleProp("live-film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
-
     // Einstellungen Filmliste
     public static StringProperty SYSTEM_FILMLIST_DATE = addStrProp("system-filmlist-date", "");
     public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
@@ -260,6 +242,21 @@ public class ProgConfig extends PDataProgConfig {
     // Gui Film -> fast search
     public static BooleanProperty FAST_SEARCH_ON = addBoolProp("fast-search-on", Boolean.FALSE);
     public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
+
+    // LiveFilmGui
+    public static BooleanProperty LIVE_FILM_GUI_ACTIVE = addBoolProp("live-film-gui-active", Boolean.FALSE);
+    public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.TRUE);
+    public static DoubleProperty LIVE_FILM_GUI_FILTER_DIVIDER = addDoubleProp("live-film-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
+    public static BooleanProperty LIVE_FILM_GUI_FILTER_DIVIDER_ON = addBoolProp("live-film-gui-filter-divider-on", Boolean.TRUE);
+    public static DoubleProperty LIVE_FILM_GUI_DIVIDER = addDoubleProp("live-film-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);
+    public static BooleanProperty LIVE_FILM_GUI_DIVIDER_ON = addBoolProp("live-film-gui-divider-on", Boolean.TRUE);
+
+    public static StringProperty LIVE_FILM_GUI_TABLE_WIDTH = addStrProp("live-film-gui-table-width");
+    public static StringProperty LIVE_FILM_GUI_TABLE_SORT = addStrProp("live-film-gui-table-sort");
+    public static StringProperty LIVE_FILM_GUI_TABLE_UP_DOWN = addStrProp("live-film-gui-table-up-down");
+    public static StringProperty LIVE_FILM_GUI_TABLE_VIS = addStrProp("live-film-gui-table-vis");
+    public static StringProperty LIVE_FILM_GUI_TABLE_ORDER = addStrProp("live-film-gui-table-order");
+    public static DoubleProperty LIVE_FILM_GUI_INFO_DIVIDER = addDoubleProp("live-film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
     // Gui Download
     public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);

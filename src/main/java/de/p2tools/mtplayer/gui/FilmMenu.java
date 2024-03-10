@@ -28,6 +28,7 @@ import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -143,14 +144,10 @@ public class FilmMenu {
         });
 
         if (ProgData.debug) {
-            vBoxSpace = new VBox();
-            vBoxSpace.setMaxHeight(10);
-            vBoxSpace.setMinHeight(10);
-            vBox.getChildren().add(vBoxSpace);
-
+            vBox.getChildren().add(P2GuiTools.getVBoxGrower());
             final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
                     "Live-Suche", "Live-Suche in der ARD-Mediathek", ProgIcons.ICON_TOOLBAR_PROPOSE.getImageView());
-            btLiveFilm.setOnAction(a -> progData.mtPlayerController.selPanelLiveFilm());
+            btLiveFilm.setOnAction(a -> progData.mtPlayerController.changeLiveFilm());
         }
     }
 

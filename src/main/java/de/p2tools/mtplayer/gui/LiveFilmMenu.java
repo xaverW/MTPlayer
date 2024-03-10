@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -90,21 +91,10 @@ public class LiveFilmMenu {
             progData.filmGuiController.tableView.requestFocus();
         });
 
-        vBoxSpace = new VBox();
-        vBoxSpace.setMaxHeight(10);
-        vBoxSpace.setMinHeight(10);
-        vBox.getChildren().add(vBoxSpace);
-
-        if (ProgData.debug) {
-            vBoxSpace = new VBox();
-            vBoxSpace.setMaxHeight(10);
-            vBoxSpace.setMinHeight(10);
-            vBox.getChildren().add(vBoxSpace);
-
-            final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
-                    "Live-Suche", "Live-Suche in der ARD-Mediathek", ProgIcons.ICON_TOOLBAR_PROPOSE.getImageView());
-            btLiveFilm.setOnAction(a -> progData.mtPlayerController.selPanelLiveFilm());
-        }
+        vBox.getChildren().add(P2GuiTools.getVBoxGrower());
+        final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
+                "Live-Suche", "Live-Suche in der ARD-Mediathek", ProgIcons.ICON_TOOLBAR_PROPOSE.getImageView());
+        btLiveFilm.setOnAction(a -> progData.mtPlayerController.changeLiveFilm());
     }
 
     private void initFilmMenu() {

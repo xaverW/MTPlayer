@@ -158,7 +158,7 @@ public class MTPlayerController extends StackPane {
         });
 
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
-        btnFilm.setOnAction(e -> selPanelFilm());
+        btnFilm.setOnAction(e -> selPanelFilmOrLiveFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);
 
         btnDownload.setTooltip(new Tooltip("Downloads anzeigen"));
@@ -195,7 +195,25 @@ public class MTPlayerController extends StackPane {
         });
     }
 
+    public void changeLiveFilm() {
+        if (ProgConfig.LIVE_FILM_GUI_ACTIVE.get()) {
+            selPanelFilm();
+        } else {
+            selPanelLiveFilm();
+        }
+    }
+
+    private void selPanelFilmOrLiveFilm() {
+        if (ProgConfig.LIVE_FILM_GUI_ACTIVE.get()) {
+            selPanelLiveFilm();
+        } else {
+            selPanelFilm();
+        }
+    }
+
     private void selPanelFilm() {
+        ProgConfig.LIVE_FILM_GUI_ACTIVE.set(false);
+
         if (paneShown == PANE_SHOWN.FILM) {
             // dann ist der 2. Klick
             filmGui.closeSplit();
@@ -213,17 +231,14 @@ public class MTPlayerController extends StackPane {
         ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
     }
 
-    public void selPanelLiveFilm() {
+    private void selPanelLiveFilm() {
+        ProgConfig.LIVE_FILM_GUI_ACTIVE.set(true);
+
         if (paneShown == PANE_SHOWN.LIVE_FILM) {
-            selPanelFilm();
+            // dann ist der 2. Klick
+            liveFilmGui.closeSplit();
             return;
         }
-
-//        if (paneShown == PANE_SHOWN.LIVE_FILM) {
-//            // dann ist der 2. Klick
-//            liveFilmGui.closeSplit();
-//            return;
-//        }
 
         paneShown = PANE_SHOWN.LIVE_FILM;
         setButtonStyle();
@@ -290,7 +305,7 @@ public class MTPlayerController extends StackPane {
             btnFilm.getStyleClass().add("btnTabTop-sel");
             btnFilm.setText("Live");
         } else {
-            btnFilm.setText("Filme");
+            btnFilm.getStyleClass().add("btnTabTop");
         }
 
         if (paneShown == PANE_SHOWN.DOWNLOAD) {
