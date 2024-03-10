@@ -63,18 +63,14 @@ public class FilmFilterControllerClearFilter extends VBox {
 
         cboBack.getCbo().valueProperty().addListener((u, o, n) -> {
             if (n != null) {
-//                FilmFilter f = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
-//                if (!f.isSame(n)) {
-//                    ProgData.getInstance().filmFilterWorker.setActFilterSettings(n);
-//                }
-
-                FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
-                filmFilter.setChannel(n.getChannel());
-                filmFilter.setTheme(n.getTheme());
-                filmFilter.setThemeTitle(n.getThemeTitle());
-                filmFilter.setTitle(n.getTitle());
-                filmFilter.setSomewhere(n.getSomewhere());
-                ProgData.getInstance().filmFilterWorker.setActFilterSettings(filmFilter);
+                FilmFilter actFilmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
+                actFilmFilter.setChannel(n.getChannel());
+                actFilmFilter.setExactTheme(n.getTheme());
+                actFilmFilter.setTheme(n.getTheme());
+                actFilmFilter.setThemeTitle(n.getThemeTitle());
+                actFilmFilter.setTitle(n.getTitle());
+                actFilmFilter.setSomewhere(n.getSomewhere());
+                ProgData.getInstance().filmFilterWorker.setActFilterSettings(actFilmFilter);
             }
         });
 

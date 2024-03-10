@@ -14,9 +14,12 @@ public class BackwardFilmFilter {
             return;
         }
 
-        FilmFilter sf = ProgData.getInstance().filmFilterWorker.getBackwardFilterList().remove(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().size() - 1); // ist die aktuelle Einstellung
+        FilmFilter sf = ProgData.getInstance().filmFilterWorker.getBackwardFilterList()
+                .remove(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().size() - 1); // ist die aktuelle Einstellung
+
         ProgData.getInstance().filmFilterWorker.getForwardFilterList().addToList(sf);
-        sf = ProgData.getInstance().filmFilterWorker.getBackwardFilterList().remove(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().size() - 1); // ist die davor
+        sf = ProgData.getInstance().filmFilterWorker.getBackwardFilterList()
+                .remove(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().size() - 1); // ist die davor
         ProgData.getInstance().filmFilterWorker.setActFilterSettings(sf);
     }
 
@@ -27,7 +30,8 @@ public class BackwardFilmFilter {
             return;
         }
 
-        final FilmFilter sf = ProgData.getInstance().filmFilterWorker.getForwardFilterList().remove(ProgData.getInstance().filmFilterWorker.getForwardFilterList().size() - 1);
+        final FilmFilter sf = ProgData.getInstance().filmFilterWorker.getForwardFilterList()
+                .remove(ProgData.getInstance().filmFilterWorker.getForwardFilterList().size() - 1);
         ProgData.getInstance().filmFilterWorker.setActFilterSettings(sf);
     }
 
