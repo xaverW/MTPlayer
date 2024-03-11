@@ -145,7 +145,8 @@ public class LiveFilmGuiController extends AnchorPane {
         tableView.setRowFactory(tableView -> {
             TableRowLiveFilm<FilmDataMTP> row = new TableRowLiveFilm<>();
             row.setOnMouseClicked(event -> {
-                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
+                        !row.isEmpty()) {
                     FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
                 }
             });

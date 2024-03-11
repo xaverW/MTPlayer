@@ -154,7 +154,8 @@ public class AboGuiController extends AnchorPane {
         tableView.setRowFactory(tv -> {
             TableRowAbo<AboData> row = new TableRowAbo<>();
             row.setOnMouseClicked(event -> {
-                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
+                        !row.isEmpty()) {
                     AboListFactory.editAbo();
                 }
             });

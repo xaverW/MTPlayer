@@ -318,7 +318,8 @@ public class DownloadGuiController extends AnchorPane {
         tableView.setRowFactory(tv -> {
             TableRowDownload<DownloadData> row = new TableRowDownload<>();
             row.setOnMouseClicked(event -> {
-                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
+                        !row.isEmpty()) {
                     changeDownload();
                 }
             });
