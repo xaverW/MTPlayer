@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.tools.duration.PDuration;
@@ -60,19 +59,6 @@ public class FilmFilterControllerClearFilter extends VBox {
         btnGoForward.setOnAction(a -> progData.filmFilterWorker.getBackwardFilmFilter().goForward());
         btnGoForward.disableProperty().bind(ProgData.getInstance().filmFilterWorker.getForwardFilterList().emptyProperty());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
-
-        cboBack.getCbo().valueProperty().addListener((u, o, n) -> {
-            if (n != null) {
-                FilmFilter actFilmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
-                actFilmFilter.setChannel(n.getChannel());
-                actFilmFilter.setExactTheme(n.getTheme());
-                actFilmFilter.setTheme(n.getTheme());
-                actFilmFilter.setThemeTitle(n.getThemeTitle());
-                actFilmFilter.setTitle(n.getTitle());
-                actFilmFilter.setSomewhere(n.getSomewhere());
-                ProgData.getInstance().filmFilterWorker.setActFilterSettings(actFilmFilter);
-            }
-        });
 
         btnClearFilter.setOnAction(a -> clearFilter());
 

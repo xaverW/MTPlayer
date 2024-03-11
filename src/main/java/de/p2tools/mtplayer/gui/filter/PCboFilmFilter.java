@@ -19,6 +19,7 @@ import javafx.util.StringConverter;
 public class PCboFilmFilter extends HBox {
 
     private ComboBox<TextFilter> cbo = new ComboBox<>();
+    private boolean itsMe = false;
     private final ObservableList<TextFilter> fList = FXCollections.observableArrayList();
 
     public PCboFilmFilter() {
@@ -30,13 +31,29 @@ public class PCboFilmFilter extends HBox {
         PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, PCboFilmFilter.class.getSimpleName()) {
             @Override
             public void ping() {
-                addToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
+                // dann sel löschen und evtl. neuen Filter hinzufügen
+                addNewToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
+            }
+        });
+
+        cbo.valueProperty().addListener((u, o, n) -> {
+            if (n != null) {
+                FilmFilter actFilmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
+                actFilmFilter.setChannel(n.getChannel());
+                actFilmFilter.setExactTheme(n.getTheme());
+                actFilmFilter.setTheme(n.getTheme());
+                actFilmFilter.setThemeTitle(n.getThemeTitle());
+                actFilmFilter.setTitle(n.getTitle());
+                actFilmFilter.setSomewhere(n.getSomewhere());
+                itsMe = true;
+                ProgData.getInstance().filmFilterWorker.setActFilterSettings(actFilmFilter);
+                itsMe = false;
             }
         });
 
         // die gespeicherten Filter eintragen
-        ProgData.getInstance().filmFilterWorker.getForwardFilterList().forEach(this::addToList);
-        ProgData.getInstance().filmFilterWorker.getBackwardFilterList().forEach(this::addToList);
+        ProgData.getInstance().filmFilterWorker.getForwardFilterList().forEach(this::addNewToList);
+        ProgData.getInstance().filmFilterWorker.getBackwardFilterList().forEach(this::addNewToList);
         cbo.setItems(fList);
 
         cbo.setConverter(new StringConverter<>() {
@@ -116,26 +133,24 @@ public class PCboFilmFilter extends HBox {
         }
     }
 
-    private synchronized void addToList(FilmFilter addF) {
+    private synchronized void addNewToList(FilmFilter addF) {
+        if (itsMe) {
+            // dann war es vom eigenen CBO und da sind die Filter ja schon alle drin
+            return;
+        }
+
         // einen neuen Filter einfügen
+        cbo.getSelectionModel().clearSelection();
+
         TextFilter addFilter = new TextFilter(addF);
         if (addFilter.filterIsEmpty()) {
             // dann sind die eingeschalteten Textfilter leer, ist nix
             return;
         }
 
-        TextFilter cboF = cbo.getSelectionModel().getSelectedItem();
-        if (cboF != null) {
-            if (addFilter.filterIsSame(cboF)) {
-                // dann ist der gleiche schon vorne
-                return;
-            }
-        }
-
         TextFilter tf = fList.stream().filter(addFilter::filterIsSame).findFirst().orElse(null);
         if (tf == null) {
             // dann ist er noch nicht / nicht mehr drin und kommt an Stelle 1
-            cbo.getSelectionModel().clearSelection();
             while (fList.size() > 15) {
                 fList.remove(fList.size() - 1);
             }
