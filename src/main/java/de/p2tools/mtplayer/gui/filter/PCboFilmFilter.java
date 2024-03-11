@@ -16,18 +16,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.StringConverter;
 
-public class FilmFilterComboBox extends HBox {
+public class PCboFilmFilter extends HBox {
 
     private ComboBox<TextFilter> cbo = new ComboBox<>();
     private final ObservableList<TextFilter> fList = FXCollections.observableArrayList();
 
-    public FilmFilterComboBox() {
+    public PCboFilmFilter() {
         cbo.setMaxWidth(Double.MAX_VALUE);
         cbo.setVisibleRowCount(10);
         getChildren().add(cbo);
         HBox.setHgrow(cbo, Priority.ALWAYS);
 
-        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterComboBox.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, PCboFilmFilter.class.getSimpleName()) {
             @Override
             public void ping() {
                 addToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());

@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class FilmFilterController extends FilterController {
@@ -38,15 +38,22 @@ public class FilmFilterController extends FilterController {
         filmFilterControllerProfiles = new FilmFilterControllerProfiles();
         filmFilterControllerBlacklist = new FilmFilterControllerBlacklist();
 
-        Separator sp = new Separator();
-        sp.getStyleClass().add("pseperator3");
-        sp.setMinHeight(0);
+        Separator sp1 = new Separator();
+        sp1.getStyleClass().add("pseperator1");
+        sp1.setMinHeight(0);
+
+        Separator sp2 = new Separator();
+        sp2.getStyleClass().add("pseperator3");
+        sp2.setMinHeight(0);
 
         final VBox vBoxFilter = getVBoxFilter(true);
-        vBoxFilter.setSpacing(15);
-        VBox.setVgrow(filmFilterControllerClearFilter, Priority.ALWAYS);
-        vBoxFilter.getChildren().addAll(filmFilterControllerTextFilter, filmFilterControllerFilter,
-                filmFilterControllerClearFilter, sp, filmFilterControllerProfiles);
+        vBoxFilter.setSpacing(10);
+//        VBox.setVgrow(filmFilterControllerClearFilter, Priority.ALWAYS);
+        vBoxFilter.getChildren().addAll(filmFilterControllerTextFilter,
+                filmFilterControllerFilter,
+                P2GuiTools.getVBoxGrower(), sp1,
+                filmFilterControllerClearFilter, sp2,
+                filmFilterControllerProfiles);
 
         getVBoxBottom().getChildren().add(filmFilterControllerBlacklist);
     }

@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
-import de.p2tools.mtplayer.controller.filmfilter.PredicateFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.infoPane.FilmInfoController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
@@ -163,6 +162,15 @@ public class FilmGuiController extends AnchorPane {
         Table.saveTable(tableView, Table.TABLE_ENUM.FILM);
     }
 
+    public void selectLastShown() {
+        // bei der Blacklist kommt das außer der Reihe
+        if (Platform.isFxApplicationThread()) {
+            selectLastShown_();
+            return;
+        }
+        Platform.runLater(this::selectLastShown_);
+    }
+
     private void initListener() {
         ProgConfig.FILM_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
 //        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
@@ -253,17 +261,6 @@ public class FilmGuiController extends AnchorPane {
         });
     }
 
-    public void setFilterPred() {
-//        FilmDataMTP filmDataMTP = tableView.getSelectionModel().getSelectedItem();
-//        tableView.setItems(emptyList);
-//        System.out.println("tableView: " + tableView.getItems().size());
-        progData.filmListFiltered.filteredListSetPred(PredicateFactory.getPredicate(progData));
-//        tableView.setItems(sortedList);
-//        tableView.getSelectionModel().select(filmDataMTP);
-//        System.out.println("tableView: " + tableView.getItems().size());
-        selectLastShown();
-    }
-
     private void setLastShown(FilmDataMTP mtp) {
         // die Filme vor dem letzten angezeigten Film markieren
         boolean set = true;
@@ -288,15 +285,6 @@ public class FilmGuiController extends AnchorPane {
                     Cell<?> cell = vf.getCell(selected);
                     selPos = cell.getLayoutY();
                 });
-    }
-
-    private void selectLastShown() {
-        // bei der Blacklist kommt das außer der Reihe
-        if (Platform.isFxApplicationThread()) {
-            selectLastShown_();
-            return;
-        }
-        Platform.runLater(this::selectLastShown_);
     }
 
     private void selectLastShown_() {

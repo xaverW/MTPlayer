@@ -96,7 +96,8 @@ public class FilmFilterRunner {
                         progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
                     }
 
-                    progData.filmGuiController.setFilterPred();
+                    progData.filmListFiltered.filteredListSetPred(PredicateFactory.getPredicate(progData));
+                    progData.filmGuiController.selectLastShown();
 
                     search.set(false);
                     if (research.get()) {

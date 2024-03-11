@@ -70,7 +70,6 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
     }
 
     private void cleanBackForward() {
-        System.out.println("cleanBackForward");
         while (this.size() > ProgConst.MAX_FILTER_GO_BACK) {
             remove(0);
         }

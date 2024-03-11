@@ -36,7 +36,7 @@ public class FilmFilterControllerClearFilter extends VBox {
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
-    private final FilmFilterComboBox cboBack = new FilmFilterComboBox();
+    private final PCboFilmFilter cboBack = new PCboFilmFilter();
 
     private final ProgData progData;
 
