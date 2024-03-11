@@ -148,6 +148,7 @@ public class FilmMenu {
             final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
                     "Live-Suche", "Live-Suche in der ARD-Mediathek", ProgIcons.ICON_TOOLBAR_PROPOSE.getImageView());
             btLiveFilm.setOnAction(a -> progData.mtPlayerController.changeLiveFilm());
+            vBox.getChildren().add(P2GuiTools.getVDistance(10));
         }
     }
 
