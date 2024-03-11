@@ -30,7 +30,7 @@ public class FilmFilterComboBox extends HBox {
         PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterComboBox.class.getSimpleName()) {
             @Override
             public void ping() {
-                addToList();
+                addToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
             }
         });
 
@@ -116,10 +116,6 @@ public class FilmFilterComboBox extends HBox {
         }
     }
 
-    private synchronized void addToList() {
-        addToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
-    }
-
     private synchronized void addToList(FilmFilter addF) {
         // einen neuen Filter einfügen
         TextFilter addFilter = new TextFilter(addF);
@@ -136,8 +132,9 @@ public class FilmFilterComboBox extends HBox {
             }
         }
 
-        if (fList.stream().filter(addFilter::filterIsSame).findFirst().isEmpty()) {
-            // dann ist er noch nicht drin
+        TextFilter tf = fList.stream().filter(addFilter::filterIsSame).findFirst().orElse(null);
+        if (tf == null) {
+            // dann ist er noch nicht / nicht mehr drin und kommt an Stelle 1
             cbo.getSelectionModel().clearSelection();
             while (fList.size() > 15) {
                 fList.remove(fList.size() - 1);

@@ -11,15 +11,7 @@ public class PCboThemeExact extends SearchableComboBox<String> {
 
         setItems(ThemeListFactory.themeForChannelList);
         ThemeListFactory.themeForChannelChanged.addListener((u, o, n) -> {
-            // kommt sonst zu Laufzeitfehlern!
-            System.out.println("======> setItem");
             setItems(ThemeListFactory.themeForChannelList);
-            if (progData.filmFilterWorker.getActFilterSettings().isThemeIsExact()) {
-                if (!getItems().contains(stringPropertyThemeExact.getValue())) {
-                    stringPropertyThemeExact.set("");
-                    System.out.println("======> 1");
-                }
-            }
         });
 
         getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -28,14 +20,8 @@ public class PCboThemeExact extends SearchableComboBox<String> {
                         return;
                     }
 
-                    String str = newValue == null ? "" : newValue;
-                    System.out.println("======> 2");
-                    if (!getItems().contains(str)) {
-                        System.out.println("======> 3");
-                        stringPropertyThemeExact.set("");
-                    } else {
-                        stringPropertyThemeExact.setValue(str);
-                    }
+                    final String str = newValue == null ? "" : newValue;
+                    stringPropertyThemeExact.setValue(str);
                 }
         );
 

@@ -79,7 +79,7 @@ public class FilmFilterEditDialog extends PDialogExtra {
 
         VBox v = new VBox(5);
         HBox h = new HBox(0);
-        h.setPadding(new Insets(0, 5, 0, 5));
+        h.setPadding(new Insets(0, 15, 0, 5));
         h.getChildren().add(tglThemeExact);
         HBox.setHgrow(tglThemeExact, Priority.ALWAYS);
         v.getChildren().addAll(tglTheme, h);

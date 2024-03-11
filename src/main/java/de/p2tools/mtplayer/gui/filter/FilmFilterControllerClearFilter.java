@@ -77,7 +77,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         btnClearFilter.setOnAction(a -> clearFilter());
 
         btnEditFilter.setGraphic(ProgIcons.ICON_BUTTON_EDIT_FILTER.getImageView());
-        btnEditFilter.setOnAction(a -> editFilter());
+        btnEditFilter.setOnAction(a -> new FilmFilterEditDialog(progData));
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
 
@@ -94,9 +94,5 @@ public class FilmFilterControllerClearFilter extends VBox {
     private void clearFilter() {
         PDuration.onlyPing("Filter löschen");
         progData.filmFilterWorker.clearFilter();
-    }
-
-    private void editFilter() {
-        final FilmFilterEditDialog editFilterDialog = new FilmFilterEditDialog(progData);
     }
 }
