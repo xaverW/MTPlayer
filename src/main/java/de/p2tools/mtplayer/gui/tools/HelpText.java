@@ -966,6 +966,17 @@ public class HelpText {
                     "in den Programmeinstellungen->Downloads auch wieder geändert werden." +
                     "\n";
 
+    public static final String CONFIG_DOWNOAD_ERROR =
+            "Hier werden die Fehler eines fehlgeschlagenen Downloads angezeigt.\n\n" +
+                    "\"Nicht mehr Anzeigen\" meint genau das, bei einem Downloadfehler wird dieser Dialog nicht " +
+                    "mehr angezeigt. Die Anzeige kann in den Einstellungen wieder eingeschaltet werden.\n\n" +
+                    "Ist \"Automatisch ausblenden\" eingeschaltet, wird der Dialog automatisch nach einer gewissen " +
+                    "Zeit wieder beendet.\n\n" +
+                    "\"Programmausgabe\" zeigt bei Downloads über ein Hilfsprogramm dessen Ausgabe an. Der " +
+                    "Button wird nur angezeigt, wenn es eine Programmausgabe gibt.\n\n" +
+                    "Mit \"Log öffnen\" wird das Logfile mit dem Standardeditor des Betriebssystem geöffnet." +
+                    "\n";
+
     public static final String ABO_DELETE_CONFIG =
             "Soll ein Abo gelöscht werden, kann hier ausgewählt werden, was gemacht werden soll:" +
                     "\n\n" +

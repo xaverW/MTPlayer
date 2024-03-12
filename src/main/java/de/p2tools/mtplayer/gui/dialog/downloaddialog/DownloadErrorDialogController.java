@@ -20,8 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.log.PLogger;
@@ -153,9 +155,12 @@ public class DownloadErrorDialogController extends PDialogExtra {
         VBox.setVgrow(hBox, Priority.ALWAYS);
 
         addOkButton(btnOk);
-        getHboxLeft().getChildren().addAll(btnErrorStream, btnLogFile, P2GuiTools.getHBoxGrower(), lblTime);
+        Button btnHelp = P2Button.helpButton(getStage(), "Download Fehler", HelpText.CONFIG_DOWNOAD_ERROR);
+        addHlpButton(btnHelp);
+
+        getHboxLeft().getChildren().addAll(btnErrorStream, btnLogFile, P2GuiTools.getHBoxGrower());
         getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
-        getHBoxOverButtons().getChildren().addAll(chkTime, P2GuiTools.getHBoxGrower(), chkShowNot);
+        getHBoxOverButtons().getChildren().addAll(chkTime, lblTime, P2GuiTools.getHBoxGrower(), chkShowNot);
     }
 
     private class CountdownAction implements EventHandler {
