@@ -5,8 +5,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.TextFilter;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import de.p2tools.mtplayer.controller.filmfilter.TextFilterList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -20,9 +19,10 @@ public class PCboFilmFilter extends HBox {
 
     private ComboBox<TextFilter> cbo = new ComboBox<>();
     private boolean itsMe = false;
-    private final ObservableList<TextFilter> fList = FXCollections.observableArrayList();
+    private TextFilterList textFilterList;
 
     public PCboFilmFilter() {
+        this.textFilterList = ProgData.getInstance().filmFilterWorker.getTextFilterList();
         cbo.setMaxWidth(Double.MAX_VALUE);
         cbo.setVisibleRowCount(10);
         getChildren().add(cbo);
@@ -52,9 +52,7 @@ public class PCboFilmFilter extends HBox {
         });
 
         // die gespeicherten Filter eintragen
-        ProgData.getInstance().filmFilterWorker.getForwardFilterList().forEach(this::addNewToList);
-        ProgData.getInstance().filmFilterWorker.getBackwardFilterList().forEach(this::addNewToList);
-        cbo.setItems(fList);
+        cbo.setItems(textFilterList);
 
         cbo.setConverter(new StringConverter<>() {
             @Override
@@ -98,7 +96,7 @@ public class PCboFilmFilter extends HBox {
                 cbo.setVisibleRowCount(10);
 
                 if (!empty && filmFilter != null) {
-                    btnDel.setOnMousePressed(m -> fList.remove(filmFilter));
+                    btnDel.setOnMousePressed(m -> textFilterList.remove(filmFilter));
 
                     if (!filmFilter.filterIsEmpty()) {
                         lblChannel.setText(getSubString(filmFilter.getChannel()));
@@ -148,13 +146,13 @@ public class PCboFilmFilter extends HBox {
             return;
         }
 
-        TextFilter tf = fList.stream().filter(addFilter::filterIsSame).findFirst().orElse(null);
+        TextFilter tf = textFilterList.stream().filter(addFilter::filterIsSame).findFirst().orElse(null);
         if (tf == null) {
             // dann ist er noch nicht / nicht mehr drin und kommt an Stelle 1
-            while (fList.size() > 15) {
-                fList.remove(fList.size() - 1);
+            while (textFilterList.size() > 15) {
+                textFilterList.remove(textFilterList.size() - 1);
             }
-            fList.add(0, addFilter);
+            textFilterList.add(0, addFilter);
         }
     }
 }

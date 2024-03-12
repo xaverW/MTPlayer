@@ -37,6 +37,8 @@ public final class FilmFilterWorker {
     private final FilmFilterList backwardFilterList = new FilmFilterList("BackwardFilterList");
     // ist die Liste der FORWARD Filter
     private final FilmFilterList forwardFilterList = new FilmFilterList("ForwardFilterList");
+    // sind die Filter in der CBO
+    private final TextFilterList textFilterList = new TextFilterList();
 
     // ist der FastFilter
     private final FastFilmFilter fastFilter = new FastFilmFilter();
@@ -65,6 +67,10 @@ public final class FilmFilterWorker {
 
     public FilmFilterList getForwardFilterList() {
         return forwardFilterList;
+    }
+
+    public TextFilterList getTextFilterList() {
+        return textFilterList;
     }
 
     public FastFilmFilter getFastFilterSettings() {

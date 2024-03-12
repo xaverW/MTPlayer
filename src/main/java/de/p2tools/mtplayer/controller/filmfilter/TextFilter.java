@@ -1,15 +1,40 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
+import de.p2tools.p2lib.configfile.config.Config;
+import de.p2tools.p2lib.configfile.config.Config_stringProp;
+import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TextFilter {
+import java.util.ArrayList;
+
+public class TextFilter extends PDataSample<TextFilter> implements Comparable<TextFilter> {
+    public static String TAG = "TextFilter";
+
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final StringProperty themeTitle = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
 
+    @Override
+    public Config[] getConfigsArr() {
+        ArrayList<Config> list = new ArrayList<>();
+        list.add(new Config_stringProp("channel", channel));
+        list.add(new Config_stringProp("theme", theme));
+        list.add(new Config_stringProp("themeTitle", themeTitle));
+        list.add(new Config_stringProp("title", title));
+        list.add(new Config_stringProp("somewhere", somewhere));
+        return list.toArray(new Config[]{});
+    }
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    public TextFilter() {
+    }
 
     public TextFilter(FilmFilter filmFilter) {
         if (filmFilter.isChannelVis()) {
