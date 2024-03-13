@@ -81,7 +81,7 @@ public class DownloadInfosFactory {
 
     public static synchronized String getStatusInfosLiveFilm() {
         String textLinks;
-        final int sumFilmlist = progData.liveFilmList.size();
+        final int sumFilmlist = progData.liveFilmFilterWorker.getLiveFilmList().size();
         final int sumFilmShown = progData.liveFilmGuiController.getFilmCount();
 
         String sumFilmlistStr = numberFormat.format(sumFilmShown);

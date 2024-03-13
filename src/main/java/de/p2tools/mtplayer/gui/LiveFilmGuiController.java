@@ -27,11 +27,10 @@ import de.p2tools.mtplayer.gui.tools.table.TableLiveFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowLiveFilm;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
@@ -115,6 +114,11 @@ public class LiveFilmGuiController extends AnchorPane {
         return mtp;
     }
 
+    public void copyFilmThemeTitle(boolean theme) {
+        final Optional<FilmDataMTP> filmSelection = getSel(false, false);
+        filmSelection.ifPresent(mtp -> PSystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
+    }
+
     public void searchFilmInMediaCollection() {
         // aus dem Menü
         final Optional<FilmDataMTP> film = getSel(false, true);
@@ -136,11 +140,8 @@ public class LiveFilmGuiController extends AnchorPane {
 
     private void initTable() {
         Table.setTable(tableView);
-
-        FilteredList<FilmDataMTP> filteredList = new FilteredList<FilmDataMTP>(progData.liveFilmList, p -> true);
-        SortedList<FilmDataMTP> sortedList = new SortedList<>(filteredList);
-        tableView.setItems(sortedList);
-        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(progData.liveFilmFilterWorker.getSortedList());
+        progData.liveFilmFilterWorker.getSortedList().comparatorProperty().bind(tableView.comparatorProperty());
 
         tableView.setRowFactory(tableView -> {
             TableRowLiveFilm<FilmDataMTP> row = new TableRowLiveFilm<>();
@@ -198,6 +199,7 @@ public class LiveFilmGuiController extends AnchorPane {
             }
         });
     }
+
 
     private void setFilmInfos(FilmDataMTP film) {
         // Film in FilmInfoDialog setzen

@@ -102,7 +102,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void copyFilmThemeTitle(boolean theme) {
-        final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(false, false);
+        final Optional<FilmDataMTP> filmSelection = getSel(false, false);
         filmSelection.ifPresent(mtp -> PSystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 

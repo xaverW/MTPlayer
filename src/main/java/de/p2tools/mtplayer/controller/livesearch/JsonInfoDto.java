@@ -18,18 +18,65 @@
 package de.p2tools.mtplayer.controller.livesearch;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleLongProperty;
 
 import java.util.ArrayList;
 
 public class JsonInfoDto {
+    public static int PROGRESS_NULL = -1;
+    public static int PAGE_SIZE = 20;
+
+    private String searchString;
+    private DoubleProperty progressProperty = new SimpleDoubleProperty(PROGRESS_NULL);
+    private int pageNo;
+
     private String startUrl = "";
     private String hitUrl = "";
     private int hitNo = 0;
+    private LongProperty sizeOverAll = new SimpleLongProperty(0);
 
     private FilmDataMTP filmDataMTP = null;
     private ArrayList<FilmDataMTP> list = new ArrayList<>();
 
+
     public JsonInfoDto() {
+    }
+
+    public void init() {
+        searchString = "";
+        progressProperty.setValue(PROGRESS_NULL);
+        pageNo = 0;
+
+        startUrl = "";
+        hitUrl = "";
+        hitNo = 0;
+        sizeOverAll.set(0);
+
+        FilmDataMTP filmDataMTP = null;
+        list.clear();
+    }
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
+
+    public DoubleProperty getProgressProperty() {
+        return progressProperty;
+    }
+
+    public int getPageNo() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
     }
 
     public String getStartUrl() {
@@ -54,6 +101,14 @@ public class JsonInfoDto {
 
     public void setHitNo(int hitNo) {
         this.hitNo = hitNo;
+    }
+
+    public LongProperty getSizeOverAll() {
+        return sizeOverAll;
+    }
+
+    public void setSizeOverAll(long sizeOverAll) {
+        this.sizeOverAll.set(sizeOverAll);
     }
 
     public FilmDataMTP getFilmDataMTP() {

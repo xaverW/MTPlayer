@@ -31,6 +31,7 @@ import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmfilter.LiveFilmFilterWorker;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
@@ -84,6 +85,7 @@ public class ProgData {
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public PShortcut pShortcut; // verwendete Shortcuts
     public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile
+    public LiveFilmFilterWorker liveFilmFilterWorker; // gespeicherte Filterprofile LIVE
     public FilmFilterRunner filmFilterRunner;
 
     // Gui
@@ -108,7 +110,6 @@ public class ProgData {
     // Programmdaten
     public FilmListMTP filmList; // ist die komplette Filmliste
     public FilmListMTP filmListFiltered; // Filmliste, wie im TabFilme angezeigt
-    public FilmListMTP liveFilmList; // Filmliste der Live-Filme
 
     public DownloadList downloadList; // Filme die als "Download" geladen werden sollen
     public AboList aboList;
@@ -135,9 +136,10 @@ public class ProgData {
         downloadErrorList = new DownloadErrorList();
 
         filmFilterWorker = new FilmFilterWorker();
+        liveFilmFilterWorker = new LiveFilmFilterWorker();
+
         filmList = new FilmListMTP();
         filmListFiltered = new FilmListMTP();
-        liveFilmList = new FilmListMTP();
 
         filmListFilter = new BlackList(this, "FilmListFilter");
         blackList = new BlackList(this, "BlackList");

@@ -54,6 +54,14 @@ public class TextFilter extends PDataSample<TextFilter> implements Comparable<Te
         }
     }
 
+    public void clearFilter() {
+        channel.set("");
+        theme.set("");
+        themeTitle.set("");
+        title.set("");
+        somewhere.set("");
+    }
+
     public boolean filterIsEmpty() {
         if (!getChannel().isEmpty()) {
             return false;
@@ -100,12 +108,20 @@ public class TextFilter extends PDataSample<TextFilter> implements Comparable<Te
         this.channel.set(channel);
     }
 
+    public StringProperty channelProperty() {
+        return channel;
+    }
+
     public String getTheme() {
         return theme.getValueSafe();
     }
 
     public void setTheme(String theme) {
         this.theme.set(theme);
+    }
+
+    public StringProperty themeProperty() {
+        return theme;
     }
 
     public String getThemeTitle() {
@@ -116,6 +132,10 @@ public class TextFilter extends PDataSample<TextFilter> implements Comparable<Te
         this.themeTitle.set(themeTitle);
     }
 
+    public StringProperty themeTitleProperty() {
+        return themeTitle;
+    }
+
     public String getTitle() {
         return title.getValueSafe();
     }
@@ -124,11 +144,19 @@ public class TextFilter extends PDataSample<TextFilter> implements Comparable<Te
         this.title.set(title);
     }
 
+    public StringProperty titleProperty() {
+        return title;
+    }
+
     public String getSomewhere() {
         return somewhere.getValueSafe();
     }
 
     public void setSomewhere(String somewhere) {
         this.somewhere.set(somewhere);
+    }
+
+    public StringProperty somewhereProperty() {
+        return somewhere;
     }
 }

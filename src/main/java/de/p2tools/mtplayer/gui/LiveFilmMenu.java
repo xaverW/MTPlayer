@@ -100,7 +100,7 @@ public class LiveFilmMenu {
 
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
-        mb.setTooltip(new Tooltip("Filmmenü anzeigen"));
+        mb.setTooltip(new Tooltip("Live-Filmmenü anzeigen"));
         mb.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-5");
 

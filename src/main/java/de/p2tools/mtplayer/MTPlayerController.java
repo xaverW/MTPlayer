@@ -170,11 +170,14 @@ public class MTPlayerController extends StackPane {
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
         btnFilm.setOnMouseClicked(mouseEvent -> {
-            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.FILM) {
-                return;
-            }
-            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getValue());
+            if (!maskerPane.isVisible() && paneShown == PANE_SHOWN.FILM) {
+                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                    ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getValue());
+                }
+            } else if (!maskerPane.isVisible() && paneShown == PANE_SHOWN.LIVE_FILM) {
+                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                    ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.getValue());
+                }
             }
         });
         btnDownload.setOnMouseClicked(mouseEvent -> {

@@ -12,7 +12,6 @@ import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2LDateTimeFactory;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -28,12 +27,12 @@ public class LiveSearch {
     public LiveSearch() {
     }
 
-    public static List<FilmDataMTP> loadAudioFromWeb(DoubleProperty doubleProperty, String searchString) {
-        JsonInfoDto jsonInfoDto = new JsonInfoDto();
-        int sum = 25;
+    public static List<FilmDataMTP> loadAudioFromWeb(JsonInfoDto jsonInfoDto) {
         jsonInfoDto.setStartUrl("https://api.ardmediathek.de/search-system/mediathek/ard/search/vods?query=" +
-                searchString +
-                "&pageNumber=1&pageSize=" + sum + "&audioDes=false&signLang=false&subtitle=false&childCont=false&sortingCriteria=SCORE_DESC&platform=MEDIA_THEK");
+                jsonInfoDto.getSearchString() +
+                "&pageNumber=" + jsonInfoDto.getPageNo() +
+                "&pageSize=" + JsonInfoDto.PAGE_SIZE +
+                "&audioDes=false&signLang=false&subtitle=false&childCont=false&sortingCriteria=SCORE_DESC&platform=MEDIA_THEK");
 
         int max = 0;
         try {
@@ -48,6 +47,14 @@ public class LiveSearch {
                 ObjectMapper objectMapper = new ObjectMapper();
 
                 JsonNode jsonNode = objectMapper.readTree(is);
+
+                if (jsonNode.get("pagination") != null) {
+                    if (jsonNode.get("pagination").get("totalElements") != null) {
+                        long soa = jsonNode.get("pagination").get("totalElements").asLong();
+                        jsonInfoDto.setSizeOverAll(soa);
+                    }
+                }
+
                 if (jsonNode.get("teasers") != null) {
 
                     max = jsonNode.get("teasers").size();
@@ -62,7 +69,7 @@ public class LiveSearch {
                         }
 
                         final double progress = 1.0 * (1 + no) / max;
-                        Platform.runLater(() -> doubleProperty.setValue(progress));
+                        Platform.runLater(() -> jsonInfoDto.getProgressProperty().setValue(progress));
                         System.out.println("Filme suchen: " + progress);
                     }
                 }
@@ -70,7 +77,7 @@ public class LiveSearch {
         } catch (final Exception ex) {
             PLog.errorLog(979858978, ex, "Url: " + jsonInfoDto.getStartUrl());
         }
-        Platform.runLater(() -> doubleProperty.setValue(-1));
+        Platform.runLater(() -> jsonInfoDto.getProgressProperty().setValue(JsonInfoDto.PROGRESS_NULL));
         System.out.println("Filme gefunden: " + max);
         return jsonInfoDto.getList();
     }
