@@ -92,7 +92,7 @@ public class LiveFilmGuiController extends AnchorPane {
         FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
     }
 
-    public ArrayList<FilmDataMTP> getSelList(boolean markSel/*markieren was vor dem SEL ist*/) {
+    public ArrayList<FilmDataMTP> getSelList(boolean markSel /*markieren was vor dem SEL ist*/) {
         final ArrayList<FilmDataMTP> ret = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
             PAlert.showInfoNoSelection();

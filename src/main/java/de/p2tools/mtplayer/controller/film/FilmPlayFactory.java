@@ -28,7 +28,6 @@ import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class FilmPlayFactory {
     private FilmPlayFactory() {
@@ -63,8 +62,11 @@ public class FilmPlayFactory {
         }
 
         // und starten, dann nur den selektierten
-        final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(false, false);
-        filmDataMTP.ifPresent(dataMTP -> ProgData.getInstance().startDownload.startUrlWithProgram(dataMTP, psetData, ""));
+//        final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(false, false);
+//        filmDataMTP.ifPresent(dataMTP -> ProgData.getInstance().startDownload.startUrlWithProgram(dataMTP, psetData, ""));
+
+        // todo aus filmGui oder liveFilmGui??
+        ProgData.getInstance().startDownload.startUrlWithProgram(list.get(0), psetData, "");
     }
 
     public static synchronized void playFilmList(ArrayList<FilmDataMTP> list) {
