@@ -22,12 +22,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 
-public class LiveSearch {
+public class LiveSearchArd {
 
-    public LiveSearch() {
+    public LiveSearchArd() {
     }
 
-    public static List<FilmDataMTP> loadAudioFromWeb(JsonInfoDto jsonInfoDto) {
+    public static List<FilmDataMTP> loadLive(JsonInfoDto jsonInfoDto) {
         jsonInfoDto.setStartUrl("https://api.ardmediathek.de/search-system/mediathek/ard/search/vods?query=" +
                 jsonInfoDto.getSearchString() +
                 "&pageNumber=" + jsonInfoDto.getPageNo() +
@@ -44,8 +44,8 @@ public class LiveSearch {
             if (body != null && response.isSuccessful()) {
                 InputStream input = body.byteStream();
                 InputStream is = AudioFactory.selectDecompressor(jsonInfoDto.getStartUrl(), input);
-                ObjectMapper objectMapper = new ObjectMapper();
 
+                ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(is);
 
                 if (jsonNode.get("pagination") != null) {

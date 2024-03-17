@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
-import de.p2tools.mtplayer.controller.livesearch.LiveSearch;
+import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -142,7 +142,7 @@ public class LiveFilmFilterController extends FilterController {
             jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH.getValue());
             jsonInfoDto.setPageNo(siteNo.get());
 
-            List<FilmDataMTP> list = LiveSearch.loadAudioFromWeb(jsonInfoDto);
+            List<FilmDataMTP> list = LiveSearchArd.loadLive(jsonInfoDto);
             Platform.runLater(() -> {
                 list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
             });

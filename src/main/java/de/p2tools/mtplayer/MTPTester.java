@@ -17,9 +17,12 @@
 
 package de.p2tools.mtplayer;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
+import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -36,6 +39,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public class MTPTester {
@@ -79,20 +83,15 @@ public class MTPTester {
             int row = 0;
             gridPane.add(new Label(), 0, ++row);
 
+            final Button btnTable = new Button("Table");
             final CheckBox chkFilter = new CheckBox("Filtern");
             final CheckBox chkSelect = new CheckBox("Select");
-            final Button btnTable = new Button("Table");
 
             gridPane.add(new Label(), 0, ++row);
             gridPane.add(btnTable, 0, ++row);
             gridPane.add(chkFilter, 1, row);
             gridPane.add(chkSelect, 2, row);
 
-            Button btnError = new Button("Fehler");
-            btnError.setOnAction(a -> {
-                Platform.runLater(() -> new DownloadErrorDialogController(new DownloadData()));
-            });
-            gridPane.add(btnError, 0, ++row);
 
             btnTable.setOnAction(a -> {
                 TableView<FilmDataMTP> tableView = ProgData.getInstance().filmGuiController.tableView;
@@ -113,6 +112,28 @@ public class MTPTester {
                     tableView.scrollTo(i);
                 }
             });
+
+            Button btnError = new Button("Fehler");
+            btnError.setOnAction(a -> {
+                Platform.runLater(() -> new DownloadErrorDialogController(new DownloadData()));
+            });
+            gridPane.add(btnError, 0, ++row);
+
+            Button btnZdf = new Button("Zdf");
+            btnZdf.setOnAction(a -> {
+                final JsonInfoDto jsonInfoDto = new JsonInfoDto();
+
+                jsonInfoDto.init();
+                jsonInfoDto.setPageNo(0);
+                jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH.getValue());
+
+                List<FilmDataMTP> list = LiveSearchZdf.loadLive(jsonInfoDto);
+                Platform.runLater(() -> {
+                    list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
+                });
+            });
+
+            gridPane.add(btnZdf, 0, ++row);
         }
     }
 
