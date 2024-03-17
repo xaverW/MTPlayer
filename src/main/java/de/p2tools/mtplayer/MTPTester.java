@@ -31,6 +31,7 @@ import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.mtfilter.Filter;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -132,8 +133,40 @@ public class MTPTester {
                     list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
                 });
             });
-
             gridPane.add(btnZdf, 0, ++row);
+
+            Button btnWait = new Button("Warten");
+            btnWait.setOnAction(a -> {
+                Thread th = new Thread(new WaitTask());
+                th.setName("startWaiting");
+                th.start();
+            });
+            gridPane.add(btnWait, 0, ++row);
+
+        }
+    }
+
+    static int i = 100;
+
+    private static class WaitTask extends Task<Void> {
+        @Override
+        protected Void call() throws Exception {
+            while (i > 0) {
+                --i;
+                System.out.println("WaitTask");
+
+                try {
+                    Thread.sleep(1_000);
+                } catch (Exception ignore) {
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        public boolean cancel(boolean mayInterruptIfRunning) {
+            return super.cancel(mayInterruptIfRunning);
         }
     }
 
