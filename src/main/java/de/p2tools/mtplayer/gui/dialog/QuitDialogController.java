@@ -27,7 +27,7 @@ import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
 import de.p2tools.p2lib.guitools.P2BigButton;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
+import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
 import de.p2tools.p2lib.tools.PShutDown;
 import javafx.concurrent.Task;
@@ -48,8 +48,8 @@ public class QuitDialogController extends PDialogExtra {
     private Label lblSystemCall = new Label("");
 
     private final StackPane stackPane = new StackPane();
-    private final P2MaskerPane maskerPane = new P2MaskerPane();
-    private final WaitTask waitTask = new WaitTask();
+    private final P2MaskerPaneIndeterminate maskerPane = new P2MaskerPaneIndeterminate();
+    private WaitTask waitTask = null;
     private final boolean startWithWaiting;
 
     public QuitDialogController(boolean startWithWaiting) {
@@ -92,13 +92,6 @@ public class QuitDialogController extends PDialogExtra {
         setSystemCallText();
         ProgConfig.SYSTEM_SHUT_DOWN_CALL.addListener((u, o, n) -> {
             setSystemCallText();
-        });
-        waitTask.setOnSucceeded(event -> {
-            if (chkShutDown.isSelected()) {
-                ProgQuit.quitShutDown();
-            } else {
-                ProgQuit.quit();
-            }
         });
 
         final Button btnHelp = P2Button.helpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
@@ -167,17 +160,15 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     public void startWaiting() {
-        maskerPane.setMaskerVisible(true,
-                chkShutDown.isSelected() ? true : false,
-                true);
+        maskerPane.setMaskerVisible(true, chkShutDown.isSelected(), true);
         maskerPane.setMaskerText(chkShutDown.isSelected() ? chkShutDown.getText() : "");
 
-        Thread th = new Thread(waitTask);
+        Thread th = new Thread(getWaitTask());
         th.setName("startWaiting");
         th.start();
     }
 
-    private class WaitTask extends Task<Void> {
+    private static class WaitTask extends Task<Void> {
         @Override
         protected Void call() throws Exception {
             while ((ProgData.getInstance().downloadList.countStartedAndRunningDownloads() > 0 ||
@@ -200,18 +191,32 @@ public class QuitDialogController extends PDialogExtra {
     }
 
     public void closeMaskerPane() {
-        if (waitTask.isRunning()) {
-            waitTask.cancel();
-        }
+        cancelWaitTask();
         maskerPane.switchOffMasker();
     }
 
     @Override
     public void close() {
-        if (waitTask.isRunning()) {
-            waitTask.cancel();
-        }
+        cancelWaitTask();
         maskerPane.switchOffMasker();
         super.close();
+    }
+
+    private WaitTask getWaitTask() {
+        waitTask = new WaitTask();
+        waitTask.setOnSucceeded(event -> {
+            if (chkShutDown.isSelected()) {
+                ProgQuit.quitShutDown();
+            } else {
+                ProgQuit.quit();
+            }
+        });
+        return waitTask;
+    }
+
+    private void cancelWaitTask() {
+        if (waitTask != null && waitTask.isRunning()) {
+            waitTask.cancel();
+        }
     }
 }

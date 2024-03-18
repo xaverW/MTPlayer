@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
+import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.mtfilter.Filter;
@@ -48,12 +48,20 @@ public class MTPTester {
     private final ProgData progData;
     private final TextArea textArea = new TextArea();
     private String text = "";
-    private final P2MaskerPane maskerPane = new P2MaskerPane();
     private boolean ard = false;
+    private final P2MaskerPaneIndeterminate maskerPane = new P2MaskerPaneIndeterminate();
+    private final WaitTask waitTask = new WaitTask();
 
     public MTPTester(final ProgData progData) {
         this.progData = progData;
         this.progInfoDialog = new ProgInfoDialog(false);
+
+        maskerPane.switchOffMasker();
+        maskerPane.setButtonText("Abbrechen");
+        maskerPane.setTxtBtnHorizontal(false);
+        maskerPane.getButton().setOnAction(a -> closeMaskerPane());
+
+
         addProgTest();
     }
 
@@ -70,13 +78,9 @@ public class MTPTester {
             gridPane.setPadding(new Insets(10));
             gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
-            maskerPane.switchOffMasker();
-            maskerPane.setButtonText("Abbrechen");
-            maskerPane.getButton().setOnAction(a -> close());
-
             final StackPane stackPane = new StackPane();
-            stackPane.getChildren().addAll(gridPane, maskerPane);
-            progInfoDialog.getVBoxCont().getChildren().addAll(stackPane);
+            stackPane.getChildren().addAll(gridPane);
+            progInfoDialog.getVBoxCont().getChildren().addAll(stackPane, maskerPane);
 
             final Text text = new Text("Debugtools");
             text.setFont(Font.font(null, FontWeight.BOLD, 15));
@@ -137,13 +141,25 @@ public class MTPTester {
 
             Button btnWait = new Button("Warten");
             btnWait.setOnAction(a -> {
-                Thread th = new Thread(new WaitTask());
+                maskerPane.setMaskerVisible(true,
+                        true,
+                        true);
+                maskerPane.setMaskerText("Test");
+
+                Thread th = new Thread(waitTask);
                 th.setName("startWaiting");
                 th.start();
             });
             gridPane.add(btnWait, 0, ++row);
 
         }
+    }
+
+    public void closeMaskerPane() {
+        if (waitTask.isRunning()) {
+            waitTask.cancel();
+        }
+        maskerPane.switchOffMasker();
     }
 
     static int i = 100;
@@ -153,10 +169,8 @@ public class MTPTester {
         protected Void call() throws Exception {
             while (i > 0) {
                 --i;
-                System.out.println("WaitTask");
-
                 try {
-                    Thread.sleep(1_000);
+                    Thread.sleep(500);
                 } catch (Exception ignore) {
                 }
             }
