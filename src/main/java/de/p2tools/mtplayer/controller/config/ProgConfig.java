@@ -214,8 +214,8 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads mit bereits geladenen Dateien
     public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__ASK);
     public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 2);
-    public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBoolProp("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
-    public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_KBYTE = addIntProp("download-max-bandwidth-kilobyte", MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
+    //    public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBoolProp("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
+    public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_BYTE = addIntProp("download-max-bandwidth-byte", MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_SHOW = addBoolProp("download-dialog-error-show", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_TIME = addBoolProp("download-dialog-error-time", Boolean.TRUE);
 

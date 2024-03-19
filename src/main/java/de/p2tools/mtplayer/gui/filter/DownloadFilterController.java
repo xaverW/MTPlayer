@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.gui.filter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
-import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
+import de.p2tools.p2lib.guitools.P2MenuButton;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -63,7 +63,7 @@ public class DownloadFilterController extends FilterController {
         initFilter();
 
         initNumberDownloads();
-        initBandwidth();
+        DownloadInfosFactory.initBandwidth(sliderBandwidth, lblBandwidth);
     }
 
     private void initLayout() {
@@ -90,9 +90,9 @@ public class DownloadFilterController extends FilterController {
 
         Label lblText = new Label("Max. Bandbreite: ");
         lblText.setMinWidth(0);
-        lblText.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
+        lblText.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Download beanspruchen darf \n" +
                 "oder unbegrenzt wenn \"aus\""));
-        sliderBandwidth.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Dowload beanspruchen darf \n" +
+        sliderBandwidth.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Download beanspruchen darf \n" +
                 "oder unbegrenzt wenn \"aus\""));
         HBox hh = new HBox();
         HBox.setHgrow(hh, Priority.ALWAYS);
@@ -204,52 +204,6 @@ public class DownloadFilterController extends FilterController {
             spinnerAnz.getValueFactory().setValue(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getValue());
         });
         spinnerAnz.getValueFactory().setValue(ProgConfig.DOWNLOAD_MAX_DOWNLOADS.getValue());
-    }
-
-    private void initBandwidth() {
-        sliderBandwidth.setMin(50);
-        sliderBandwidth.setMax(MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE);
-        sliderBandwidth.setShowTickLabels(true);
-        sliderBandwidth.setMinorTickCount(9);
-        sliderBandwidth.setMajorTickUnit(250);
-        sliderBandwidth.setBlockIncrement(25);
-        sliderBandwidth.setSnapToTicks(true);
-
-        sliderBandwidth.setLabelFormatter(new StringConverter<>() {
-            @Override
-            public String toString(Double x) {
-                if (x == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
-                    return "alles";
-                }
-
-                return x.intValue() + "";
-            }
-
-            @Override
-            public Double fromString(String string) {
-                return null;
-            }
-        });
-
-        sliderBandwidth.valueProperty().bindBidirectional(ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE);
-        setTextBandwidth();
-
-        sliderBandwidth.valueProperty().addListener((obs, oldValue, newValue) -> {
-            ProgData.FILMLIST_IS_DOWNLOADING.setValue(false); // vorsichtshalber
-            setTextBandwidth();
-        });
-    }
-
-    private void setTextBandwidth() {
-        int bandwidthKByte;
-        String ret;
-        bandwidthKByte = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue();
-        if (bandwidthKByte == MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
-            ret = "alles";
-        } else {
-            ret = bandwidthKByte + " kB/s";
-        }
-        lblBandwidth.setText(ret);
     }
 
     private void clearFilter() {

@@ -325,27 +325,6 @@ public class HelpText {
                     "Solange ein geladenes Profil nicht verändert wurde ist sein Name unterstrichen." +
                     "\n";
 
-    public static final String GUI_DOWNLOAD_FILTER =
-            "Die Menüs und Schieberegler erlauben ein detailliertes " +
-                    "Durchsuchen und Filtern der vorhandenen Downloads.\n" +
-                    "\n" +
-                    "-- Menüs \"Quelle\", \"Downloadart\", \"Sender\", \"Abo\" und \"Status\" --\n" +
-                    "Die Einträge der Filtermenüs werden automatisch aus der " +
-                    "Filmliste und Downloadliste erstellt.\n" +
-                    "\n" +
-                    "-- Suchen und Filtern --\n" +
-                    "[Quelle] filtert nach Herkunft, also Downloads von Hand oder durch ein Abo angelegt.\n" +
-                    "[Downloadart] sucht nach Downloads die direkt geladen werden können oder Downloads " +
-                    "die durch ein externes Programm geladen werden müssen.\n" +
-                    "\n" +
-                    "[Sender], [Abo], [Status] sucht Downloads mit dem Sender, " +
-                    "aus dem Abo, oder mit dem Status (nicht/gestartet, fertig).\n" +
-                    "\n" +
-                    "Mit den Schiebereglern [gleichzeitige Downloads] und [max. Bandbreite] " +
-                    "kann die Anzahl der gleichzeitigen Downloads die geladen werden, festgelegt werden. Die vorgegebene " +
-                    "maximale Bandbreite gilt pro Download.\n" +
-                    "\n";
-
     public static final String BLACKLIST_WHITELIST =
             "Die Funktion \"Blacklist\" blendet alle Filme aus, die den Angaben in mindestens einer Zeile " +
                     "in der Tabelle entsprechen." +
@@ -569,11 +548,33 @@ public class HelpText {
                     P2LibConst.LINE_SEPARATORx2 +
                     "Die Überprüfung der Zertifikate kann mit dieser Funktion abgeschaltet werden." +
                     "\n";
+
     public static final String DOWNLOAD_BANDWIDTH =
-            "Mit den Schiebereglern [gleichzeitige Downloads] und [max. Bandbreite] kann die Anzahl " +
-                    "der gleichzeitigen Downloads die geladen werden, festgelegt werden. " +
-                    "Die vorgegebene maximale Bandbreite gilt pro Download.\n" +
+            "Mit den Schiebereglern [gleichzeitige Downloads] und [max. Bandbreite] " +
+                    "kann die Anzahl der gleichzeitigen Downloads die geladen werden und die maximale " +
+                    "Bandbreite, festgelegt werden." +
+                    "\n\n" +
+                    "Die vorgegebene maximale Bandbreite gilt pro Download. Es sind kByte oder MByte pro Sekunde.\n" +
+                    "1 MByte\\s braucht eine Internetbandbreite von ~ 10 MBit.\n" +
+                    "10 MByte\\s braucht eine Internetbandbreite von ~ 100 MBit.\n" +
                     "\n";
+
+    public static final String GUI_DOWNLOAD_FILTER =
+            "Die Menüs und Schieberegler erlauben ein detailliertes " +
+                    "Durchsuchen und Filtern der vorhandenen Downloads.\n" +
+                    "\n" +
+                    "-- Menüs \"Quelle\", \"Downloadart\", \"Sender\", \"Abo\" und \"Status\" --\n" +
+                    "Die Einträge der Filtermenüs werden automatisch aus der " +
+                    "Filmliste und Downloadliste erstellt.\n" +
+                    "\n" +
+                    "-- Suchen und Filtern --\n" +
+                    "[Quelle] filtert nach Herkunft, also Downloads von Hand oder durch ein Abo angelegt.\n" +
+                    "[Downloadart] sucht nach Downloads die direkt geladen werden können oder Downloads " +
+                    "die durch ein externes Programm geladen werden müssen.\n" +
+                    "\n" +
+                    "[Sender], [Abo], [Status] sucht Downloads mit dem Sender, " +
+                    "aus dem Abo, oder mit dem Status (nicht/gestartet, fertig).\n" +
+                    "\n" + DOWNLOAD_BANDWIDTH;
 
     public static final String DOWNLOAD_FINISHED =
             "Wenn ein Download erfolgreich beendet ist, wird mit einem Fenster informiert." +

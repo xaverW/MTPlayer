@@ -23,7 +23,11 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.tools.file.P2FileSize;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.util.StringConverter;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -32,6 +36,8 @@ public class DownloadInfosFactory {
     private static final String SEPARATOR = "  ||  ";
     private static final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
     private static final ProgData progData = ProgData.getInstance();
+    private static final DecimalFormat f1 = new DecimalFormat("##");
+    private static final DecimalFormat f2 = new DecimalFormat("##.0");
 
     private DownloadInfosFactory() {
     }
@@ -166,9 +172,9 @@ public class DownloadInfosFactory {
             textLinks += getRunningDownloadsInfos();
         }
 
-        if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue() != MLBandwidthTokenBucket.BANDWIDTH_MAX_KBYTE) {
+        if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE.getValue() > MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
             textLinks += SEPARATOR;
-            textLinks += "Max. Bandbreite: " + ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE.getValue() + "kB/s";
+            textLinks += "Max. Bandbreite: " + getTextBandwidth();
         }
         return textLinks;
     }
@@ -318,5 +324,59 @@ public class DownloadInfosFactory {
         }
 
         return text1;
+    }
+
+    public static void initBandwidth(Slider slider, Label lbl) {
+        slider.setMin(MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
+        slider.setMax(MLBandwidthTokenBucket.BANDWIDTH_MAX_BYTE);
+        slider.setShowTickLabels(true);
+        slider.setMinorTickCount(19);
+        slider.setMajorTickUnit(2_000_000);
+        slider.setBlockIncrement(100_000);
+        slider.setSnapToTicks(true);
+
+        slider.setLabelFormatter(new StringConverter<>() {
+            @Override
+            public String toString(Double x) {
+                if (x == MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
+                    return "alles";
+                }
+                return f1.format(x / 1_000_000);
+            }
+
+            @Override
+            public Double fromString(String string) {
+                return null;
+            }
+        });
+
+        slider.valueProperty().bindBidirectional(ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE);
+        lbl.setText(getTextBandwidth());
+
+        slider.valueProperty().addListener((obs, oldValue, newValue) -> {
+            ProgData.FILMLIST_IS_DOWNLOADING.setValue(false); // vorsichtshalber
+            lbl.setText(getTextBandwidth());
+        });
+    }
+
+    private static String getTextBandwidth() {
+        double bandwidthByte;
+        String ret;
+        bandwidthByte = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE.getValue();
+        if (bandwidthByte == MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
+            ret = "alles";
+
+        } else {
+            if (bandwidthByte < 1_000_000) {
+                // kByte
+                ret = f1.format(bandwidthByte / 1_000) + " kB/s";
+            } else if (bandwidthByte == 10_000_000) {
+                // 10 MByte
+                ret = f1.format(bandwidthByte / 1_000_000.0) + " MB/s";
+            } else {
+                ret = f2.format(bandwidthByte / 1_000_000) + " MB/s";
+            }
+        }
+        return ret;
     }
 }

@@ -250,7 +250,7 @@ public class DownloadDirectHttp extends Thread {
     private void downloadContent() throws Exception {
         download.getDownloadStartDto().setInputStream(new MLInputStream(httpURLConn.getInputStream(),
                 bandwidthCalculationTimer,
-                ProgConfig.DOWNLOAD_MAX_BANDWIDTH_KBYTE,
+                ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE,
                 ProgData.FILMLIST_IS_DOWNLOADING));
 
         fos = new FileOutputStream(download.getDownloadStartDto().getFile(), (download.getDownloadStartDto().getDownloaded() != 0));
