@@ -2,12 +2,9 @@ package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.DownloadDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveFactory;
-import de.p2tools.mtplayer.controller.livesearch.ZdfVideoUrlOptimizer;
 import de.p2tools.p2lib.mtdownload.MLHttpClient;
-import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -51,16 +48,17 @@ public class ZDFFactory {
             = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"); // 2016-10-29T16:15:00.000+02:00
     private static final String GERMAN_TIME_ZONE = "Europe/Berlin";
 
+    private static final String DOWNLOAD_URL_DEFAULT = "default";
+    private static final String DOWNLOAD_URL_DGS = "dgs";
+    private static final String[] KNOWN_STREAMS = new String[]{DOWNLOAD_URL_DEFAULT, DOWNLOAD_URL_DGS};
+    private static final String PLACEHOLDER_PLAYER_ID = "{playerId}";
+    private static final String PLAYER_ID = "android_native_5";
+
+
     private ZDFFactory() {
     }
 
     public static List<String> getFilms(JsonInfoDtoZdf jsonInfoDtoZdf) {
-//        https://www.zdf.de/suche?q=Amberg&synth=true&usePartnerContent=true&syntheticProfile=large&sender=Gesamtes+Angebot&from=&to=&attrs=&abName=ab-2024-03-25&abGroup=gruppe-b
-//         <div class="box m-tags">
-//                        <h3 id="München7-6" class="teaser-title js-rb-live"
-//        data-module="reload-guided-tour">
-//                <a href="/br/muenchen-7/collection-index-page-ard-collection-ard-dxjuomfyzdpzag93ojq5y2zhmtbjmgjjmzllowi-100.html" title="München 7"
-
         String searchUrl = "https://www.zdf.de/suche?q=" + jsonInfoDtoZdf.getSearchString() +
                 "&abName=ab-2024-03-25&abGroup=gruppe-b";
 
@@ -79,10 +77,6 @@ public class ZDFFactory {
     }
 
     public static void workFilm(JsonInfoDtoZdf jsonInfoDtoZdf, String url) {
-//       <div class="b-playerbox b-ratiobox js-rb-live"
-//        data-zdfplayer-id="ard-zdf-3sat-lesebuehne-leipzig-2024-03-23-live-100"
-//        https://api.zdf.de/content/documents/ard-zdf-3sat-lesebuehne-leipzig-2024-03-23-live-100.json
-
         final Optional<Document> document = LiveFactory.loadPage(url);
         if (document.isEmpty()) {
             System.out.println("document.isEmpty(): error");
@@ -95,8 +89,8 @@ public class ZDFFactory {
 
                 Element element = elements.first();
                 String urlElement = element.attr("data-zdfplayer-id");
-                if (url.isEmpty()) {
-                    System.out.println("url.isEmpty(): error");
+                if (urlElement.isEmpty()) {
+                    System.out.println("urlElement.isEmpty(): error");
                 } else {
                     String filmUrl = ZDFFactory.addApiUrlBase("content/documents/" + urlElement + ".json");
                     getVideoUrl(jsonInfoDtoZdf, filmUrl);
@@ -105,9 +99,7 @@ public class ZDFFactory {
         }
     }
 
-
     public static void getVideoUrl(JsonInfoDtoZdf jsonInfoDtoZdf, String getUrl) {
-
         try {
             final Request.Builder builder = new Request.Builder().url(getUrl);
             String api = "Bearer " + jsonInfoDtoZdf.getApi();
@@ -141,31 +133,6 @@ public class ZDFFactory {
                     JsonNode mainVideoElement = rootNode.get(JSON_ELEMENT_MAIN_VIDEO);
                     if (mainVideoElement.get(JSON_ELEMENT_TARGET) != null) {
                         mainVideoTarget = mainVideoElement.get(JSON_ELEMENT_TARGET);
-//                        Map<String, String> map = parseDownloadUrls(mainVideoElement);
-//
-////                        if (title.isPresent() && map.containsKey(DOWNLOAD_URL_DEFAULT)) {
-////                            return Optional.of(new ZdfFilmDto(downloadUrl.get(DOWNLOAD_URL_DEFAULT), topic, title.get(), description, website, time, duration, downloadUrl.get(DOWNLOAD_URL_DGS)));
-////                        } else {
-////                            System.out.println("ZdfFilmDetailDeserializer: no title or url found");
-////                        }
-//
-//                        if (map.containsKey(DOWNLOAD_URL_DEFAULT)) {
-//                            ZdfVideoUrlFactory.parseUrl(jsonInfoDtoZdf, map.get(DOWNLOAD_URL_DEFAULT));
-//
-//                        }
-////                        // Video URLs
-////                        String videoUrl = jnVideo.textValue();
-////                        // "/tmd/2/{playerId}/vod/ptmd/mediathek/240219_white_angel_unter_beschuss_fro/3"
-////                        // https://api.zdf.de/tmd/2/android_native_5/vod/ptmd/mediathek/240219_white_angel_unter_beschuss_fro/3
-////
-////                        if (videoUrl.isEmpty()) {
-////                            System.out.println("getVideoUrl: error");
-////                            return;
-////                        }
-////
-////                        videoUrl = videoUrl.replace("{playerId}", "android_native_5");
-////                        videoUrl = ZDFFactory.addApiUrlBase(videoUrl);
-////                        getVideo(jsonInfoDtoZdf, videoUrl);
                     }
                 }
 
@@ -300,22 +267,6 @@ public class ZDFFactory {
         return Optional.empty();
     }
 
-    private final transient ZdfVideoUrlOptimizer optimizer = new ZdfVideoUrlOptimizer();
-
-//    private void addFilm(final DownloadDto downloadDto, final JsonInfoDtoZdf result) {
-//        for (final String language : downloadDto.getLanguages()) {
-//
-//            if (downloadDto.getUrl(language, Qualities.NORMAL).isPresent()) {
-//                DownloadDtoFilmConverter.getOptimizedUrls(
-//                        downloadDto.getDownloadUrls(language), Optional.of(optimizer));
-//
-//                final FilmData filmWithLanguage = createFilm(result, downloadDto, language);
-//                taskResults.add(filmWithLanguage);
-//            }
-//        }
-//    }
-
-
     private static Optional<String> parseTitleValue(JsonNode aRootNode, JsonNode aTarget) {
         // use property "title" if found
         JsonNode titleElement = aRootNode.get(JSON_ELEMENT_TITLE);
@@ -342,69 +293,6 @@ public class ZDFFactory {
 
         return Optional.empty();
     }
-
-//    private DatenFilm createFilm(final ZdfFilmDto zdfFilmDto, final DownloadDto downloadDto, final String aLanguage) {
-//
-//        final String title = updateTitle(aLanguage, zdfFilmDto.getTitle());
-//
-//        LocalDateTime time = zdfFilmDto.getTime().orElse(LocalDateTime.now());
-//
-//        String dateValue = time.format(DATE_FORMAT);
-//        String timeValue = time.format(TIME_FORMAT);
-//
-//        Map<Qualities, String> downloadUrls = downloadDto.getDownloadUrls(aLanguage);
-//
-//        Duration duration = zdfFilmDto.getDuration().orElse(downloadDto.getDuration().orElse(Duration.ZERO));
-//
-//        DatenFilm film = new ZdfDatenFilm(crawler.getSendername(),
-//                zdfFilmDto.getTopic().orElse(title),
-//                zdfFilmDto.getWebsite().orElse(""),
-//                title, downloadUrls.get(Qualities.NORMAL), "", dateValue, timeValue, duration.getSeconds(), zdfFilmDto.getDescription().orElse(""));
-//        if (downloadUrls.containsKey(Qualities.SMALL)) {
-//            CrawlerTool.addUrlKlein(film, downloadUrls.get(Qualities.SMALL));
-//        }
-//        if (downloadUrls.containsKey(Qualities.HD)) {
-//            CrawlerTool.addUrlHd(film, downloadUrls.get(Qualities.HD));
-//        }
-//        final Optional<String> subTitleUrl = downloadDto.getSubTitleUrl(aLanguage);
-//        if (subTitleUrl.isPresent()) {
-//            CrawlerTool.addUrlSubtitle(film, subTitleUrl.get());
-//        }
-//
-//        final Optional<GeoLocations> geoLocation = downloadDto.getGeoLocation();
-//        geoLocation.ifPresent(geoLocations -> film.arr[DatenFilm.FILM_GEO] = geoLocations.getDescription());
-//        return film;
-//    }
-
-    private static String updateTitle(final String aLanguage, final String aTitle) {
-        String title = aTitle;
-        switch (aLanguage) {
-            case ZdfConstants.LANGUAGE_GERMAN:
-                return title;
-            case ZdfConstants.LANGUAGE_GERMAN_AD:
-                title += " (Audiodeskription)";
-                break;
-            case ZdfConstants.LANGUAGE_GERMAN_DGS:
-                title += " (Gebärdensprache)";
-                break;
-            case ZdfConstants.LANGUAGE_ENGLISH:
-                title += " (Englisch)";
-                break;
-            case ZdfConstants.LANGUAGE_FRENCH:
-                title += " (Französisch)";
-                break;
-            default:
-                title += "(" + aLanguage + ")";
-        }
-
-        return title;
-    }
-
-    private static final String DOWNLOAD_URL_DEFAULT = "default";
-    private static final String DOWNLOAD_URL_DGS = "dgs";
-    private static final String[] KNOWN_STREAMS = new String[]{DOWNLOAD_URL_DEFAULT, DOWNLOAD_URL_DGS};
-    private static final String PLACEHOLDER_PLAYER_ID = "{playerId}";
-    private static final String PLAYER_ID = "android_native_5";
 
     private static Map<String, String> parseDownloadUrls(final JsonNode mainVideoContent) {
         // key: type of download url, value: the download url
@@ -447,85 +335,6 @@ public class ZDFFactory {
         }
 
         return aUrl;
-    }
-
-
-    public static void getVideo(JsonInfoDtoZdf jsonInfoDtoZdf, String getUrl) {
-        try {
-            final Request.Builder builder = new Request.Builder().url(getUrl);
-
-            String api = "Bearer " + jsonInfoDtoZdf.getApi();
-            builder.addHeader("Api-Auth", api);
-
-            Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
-            ResponseBody body = response.body();
-
-            if (body != null && response.isSuccessful()) {
-                InputStream input = body.byteStream();
-
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode jsonNode = objectMapper.readTree(input);
-
-                if (jsonNode.get("priorityList") != null) {
-                    Iterator<JsonNode> children = jsonNode.get("priorityList").elements();
-                    int count = -1;
-                    while (children.hasNext()) {
-                        JsonNode jn = children.next();
-                        ++count;
-                        if (count == 2) {
-
-                            if (jn.get("formitaeten") != null) {
-                                children = jn.get("formitaeten").elements();
-                                if (children.hasNext()) {
-                                    jn = children.next();
-
-
-                                    if (jn.get("qualities") != null) {
-                                        children = jn.get("qualities").elements();
-                                        if (children.hasNext()) {
-                                            jn = children.next();
-
-                                            if (jn.get("audio") != null) {
-                                                if (jn.get("audio").get("tracks") != null) {
-                                                    children = jn.get("audio").get("tracks").elements();
-                                                    if (children.hasNext()) {
-                                                        jn = children.next();
-                                                        if (jn.get("uri") != null) {
-
-                                                            String videoUrl = jn.get("uri").textValue();
-                                                            System.out.println(videoUrl);
-                                                            addFilm(jsonInfoDtoZdf, videoUrl);
-
-                                                        }
-                                                    }
-                                                }
-                                            }
-
-                                        }
-
-                                    }
-
-
-                                }
-
-                            }
-
-
-                        }
-                    }
-                }
-            }
-        } catch (final Exception ex) {
-            PLog.errorLog(959598745, ex, "Url: " + getUrl);
-        }
-    }
-
-    private static void addFilm(JsonInfoDtoZdf jsonInfoDtoZdf, String url) {
-        jsonInfoDtoZdf.setFilmDataMTP(new FilmDataMTP());
-        jsonInfoDtoZdf.getFilmDataMTP().arr[FilmDataXml.FILM_THEME] = "ZDF-Thema";
-        jsonInfoDtoZdf.getFilmDataMTP().arr[FilmDataXml.FILM_TITLE] = "ZDF-Titel";
-        jsonInfoDtoZdf.getFilmDataMTP().arr[FilmDataXml.FILM_URL] = url;
-        jsonInfoDtoZdf.getList().add(jsonInfoDtoZdf.getFilmDataMTP());
     }
 
     public static String addUrlBase(String url) {

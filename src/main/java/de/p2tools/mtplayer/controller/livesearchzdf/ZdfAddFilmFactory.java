@@ -2,6 +2,7 @@ package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.*;
+import de.p2tools.mtplayer.controller.livesearchard.LiveSearchFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.log.PLog;
 
@@ -50,17 +51,16 @@ public class ZdfAddFilmFactory {
                         downloadDto.getDownloadUrls(language), Optional.of(optimizer));
 
                 final FilmDataMTP filmWithLanguage = createFilm(downloadDto, zdfFilmDto, jsonInfoDtoZdf, language);
+                LiveSearchFactory.setFilmSize(filmWithLanguage);
+                filmWithLanguage.init();
                 jsonInfoDtoZdf.getList().add(filmWithLanguage);
             }
         }
     }
 
     private static FilmDataMTP createFilm(DownloadDto downloadDto, final ZdfFilmDto zdfFilmDto, final JsonInfoDtoZdf jsonInfoDtoZdf, final String aLanguage) {
-
         final String title = updateTitle(aLanguage, zdfFilmDto.getTitle());
-
         LocalDateTime time = zdfFilmDto.getTime().orElse(LocalDateTime.now());
-
         String dateValue = time.format(DATE_FORMAT);
         String timeValue = time.format(TIME_FORMAT);
 
@@ -89,7 +89,6 @@ public class ZdfAddFilmFactory {
         final Optional<GeoLocations> geoLocation = downloadDto.getGeoLocation();
         geoLocation.ifPresent(geoLocations -> film.arr[FilmDataXml.FILM_GEO] = geoLocations.getDescription());
 
-        film.init();
         return film;
     }
 

@@ -18,24 +18,41 @@ import java.util.concurrent.TimeUnit;
 
 public class LiveFactory {
     public static int PROGRESS_NULL = -1;
-    public static DoubleProperty progressProperty = new SimpleDoubleProperty(PROGRESS_NULL);
+    public static DoubleProperty progressPropertyARD = new SimpleDoubleProperty(PROGRESS_NULL);
+    public static DoubleProperty progressPropertyZDF = new SimpleDoubleProperty(PROGRESS_NULL);
+
+    public enum CHANNEL {ARD, ZDF}
 
     private LiveFactory() {
     }
 
-    public static void setProgress(int count, int max) {
-        final double progress = 1.0 * (1 + count) / max;
-        Platform.runLater(() -> LiveFactory.progressProperty.setValue(progress));
-        System.out.println("Filme suchen: " + progress);
+    public static void setProgress(CHANNEL channel, double count, int max) {
+        final double progress = count / max;
+        switch (channel) {
+            case ARD -> Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(progress));
 
+            case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(progress));
+
+        }
+        System.out.println("Filme suchen: " + progress);
     }
 
     public static void setSearchString(String searchString) {
         searchString = searchString;
     }
 
-    public DoubleProperty getProgressProperty() {
-        return progressProperty;
+    public DoubleProperty getProgressProperty(CHANNEL channel) {
+        switch (channel) {
+            case ARD -> {
+                return progressPropertyARD;
+            }
+            case ZDF -> {
+                return progressPropertyZDF;
+            }
+            default -> {
+                return progressPropertyZDF;
+            }
+        }
     }
 
     public static Optional<Document> loadPage(final String url) {

@@ -48,7 +48,7 @@ public class JsonInfoDtoZdf {
 
     public void init() {
         searchString = "";
-        LiveFactory.progressProperty.setValue(LiveFactory.PROGRESS_NULL);
+        LiveFactory.progressPropertyZDF.setValue(LiveFactory.PROGRESS_NULL);
         pageNo = 0;
         api = "";
 

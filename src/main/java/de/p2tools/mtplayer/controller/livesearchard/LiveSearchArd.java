@@ -69,14 +69,14 @@ public class LiveSearchArd {
                             LiveSearchFactory.addFilm(jsonInfoDtoArd);
                         }
 
-                        LiveFactory.setProgress(no, max);
+                        LiveFactory.setProgress(LiveFactory.CHANNEL.ARD, no, max);
                     }
                 }
             }
         } catch (final Exception ex) {
             PLog.errorLog(979858978, ex, "Url: " + jsonInfoDtoArd.getStartUrl());
         }
-        Platform.runLater(() -> LiveFactory.progressProperty.setValue(LiveFactory.PROGRESS_NULL));
+        Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(LiveFactory.PROGRESS_NULL));
         PLog.sysLog("Filme gefunden: " + jsonInfoDtoArd.getList().size());
         return jsonInfoDtoArd.getList();
     }

@@ -258,7 +258,10 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty LIVE_FILM_GUI_TABLE_ORDER = addStrProp("live-film-gui-table-order");
     public static DoubleProperty LIVE_FILM_GUI_INFO_DIVIDER = addDoubleProp("live-film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
-    public static StringProperty LIVE_FILM_GUI_SEARCH = addStrProp("live-film-gui-search");
+    public static StringProperty LIVE_FILM_GUI_SEARCH_ARD = addStrProp("live-film-gui-search-ard");
+    public static StringProperty LIVE_FILM_GUI_SEARCH_ZDF = addStrProp("live-film-gui-search-zdf");
+    public static StringProperty LIVE_FILM_GUI_SEARCH_URL_ARD = addStrProp("live-film-gui-search-url-ard");
+    public static StringProperty LIVE_FILM_GUI_SEARCH_URL_ZDF = addStrProp("live-film-gui-search-url-zdf");
 
     // Gui Download
     public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);

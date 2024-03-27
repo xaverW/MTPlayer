@@ -44,7 +44,7 @@ public class JsonInfoDtoArd {
 
     public void init() {
         searchString = "";
-        LiveFactory.progressProperty.setValue(LiveFactory.PROGRESS_NULL);
+        LiveFactory.progressPropertyARD.setValue(LiveFactory.PROGRESS_NULL);
         pageNo = 0;
 
         startUrl = "";

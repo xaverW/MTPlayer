@@ -15,7 +15,7 @@ public class LiveSearchZdf {
     }
 
     public List<FilmDataMTP> loadLive(JsonInfoDtoZdf jsonInfoDtoZdf) {
-        int max = 0;
+        int max;
         try {
             final Optional<Document> document = LiveFactory.loadPage(ZDFFactory.URL_BASE);
             if (document.isPresent()) {
@@ -27,9 +27,10 @@ public class LiveSearchZdf {
                 max = urls.size();
                 PLog.sysLog("Filme suchen: " + max);
                 if (!urls.isEmpty()) {
+                    LiveFactory.setProgress(LiveFactory.CHANNEL.ZDF, 0, max);
                     for (String url : urls) {
                         ZDFFactory.workFilm(jsonInfoDtoZdf, url);
-                        LiveFactory.setProgress(++count, max);
+                        LiveFactory.setProgress(LiveFactory.CHANNEL.ZDF, ++count, max);
                     }
                 }
             }
@@ -37,7 +38,28 @@ public class LiveSearchZdf {
             PLog.errorLog(898945124, ex, "Url: " + ZDFFactory.URL_BASE);
         }
 
-        Platform.runLater(() -> LiveFactory.progressProperty.setValue(LiveFactory.PROGRESS_NULL));
+        Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(LiveFactory.PROGRESS_NULL));
+        PLog.sysLog("Filme gefunden: " + jsonInfoDtoZdf.getList().size());
+        return jsonInfoDtoZdf.getList();
+    }
+
+    public List<FilmDataMTP> loadUrl(JsonInfoDtoZdf jsonInfoDtoZdf) {
+        try {
+            final Optional<Document> document = LiveFactory.loadPage(ZDFFactory.URL_BASE);
+            if (document.isPresent()) {
+                final Optional<String> searchBearer = ZdfBearerFactory.parseIndexPage(document.get());
+                searchBearer.ifPresent(jsonInfoDtoZdf::setApi);
+
+                String url = jsonInfoDtoZdf.getSearchString();
+                PLog.sysLog("Filme suchen: " + url);
+                LiveFactory.setProgress(LiveFactory.CHANNEL.ZDF, -0.5, 1);
+                ZDFFactory.workFilm(jsonInfoDtoZdf, url);
+            }
+        } catch (final Exception ex) {
+            PLog.errorLog(898945124, ex, "Url: " + ZDFFactory.URL_BASE);
+        }
+
+        Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(LiveFactory.PROGRESS_NULL));
         PLog.sysLog("Filme gefunden: " + jsonInfoDtoZdf.getList().size());
         return jsonInfoDtoZdf.getList();
     }
