@@ -1,9 +1,10 @@
-package de.p2tools.mtplayer.controller.livesearch;
+package de.p2tools.mtplayer.controller.livesearchard;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.livesearch.LiveFactory;
 import de.p2tools.p2lib.atdata.AudioFactory;
 import de.p2tools.p2lib.mtdownload.MLHttpClient;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
@@ -27,23 +28,23 @@ public class LiveSearchArd {
     public LiveSearchArd() {
     }
 
-    public static List<FilmDataMTP> loadLive(JsonInfoDto jsonInfoDto) {
-        jsonInfoDto.setStartUrl("https://api.ardmediathek.de/search-system/mediathek/ard/search/vods?query=" +
-                jsonInfoDto.getSearchString() +
-                "&pageNumber=" + jsonInfoDto.getPageNo() +
-                "&pageSize=" + JsonInfoDto.PAGE_SIZE +
+    public static List<FilmDataMTP> loadLive(JsonInfoDtoArd jsonInfoDtoArd) {
+        jsonInfoDtoArd.setStartUrl("https://api.ardmediathek.de/search-system/mediathek/ard/search/vods?query=" +
+                jsonInfoDtoArd.getSearchString() +
+                "&pageNumber=" + jsonInfoDtoArd.getPageNo() +
+                "&pageSize=" + JsonInfoDtoArd.PAGE_SIZE +
                 "&audioDes=false&signLang=false&subtitle=false&childCont=false&sortingCriteria=SCORE_DESC&platform=MEDIA_THEK");
 
         int max = 0;
         try {
-            final Request.Builder builder = new Request.Builder().url(jsonInfoDto.getStartUrl());
+            final Request.Builder builder = new Request.Builder().url(jsonInfoDtoArd.getStartUrl());
             builder.addHeader("User-Agent", ProgInfos.getUserAgent());
             Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
             ResponseBody body = response.body();
 
             if (body != null && response.isSuccessful()) {
                 InputStream input = body.byteStream();
-                InputStream is = AudioFactory.selectDecompressor(jsonInfoDto.getStartUrl(), input);
+                InputStream is = AudioFactory.selectDecompressor(jsonInfoDtoArd.getStartUrl(), input);
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(is);
@@ -51,7 +52,7 @@ public class LiveSearchArd {
                 if (jsonNode.get("pagination") != null) {
                     if (jsonNode.get("pagination").get("totalElements") != null) {
                         long soa = jsonNode.get("pagination").get("totalElements").asLong();
-                        jsonInfoDto.setSizeOverAll(soa);
+                        jsonInfoDtoArd.setSizeOverAll(soa);
                     }
                 }
 
@@ -62,27 +63,25 @@ public class LiveSearchArd {
 
                     Iterator<JsonNode> children = jsonNode.get("teasers").elements();
                     while (children.hasNext()) {
-                        jsonInfoDto.setHitNo(++no);
-                        jsonInfoDto.setFilmDataMTP(new FilmDataMTP());
-                        if (getHit(jsonInfoDto, children.next())) {
-                            LiveSearchFactory.addFilm(jsonInfoDto);
+                        jsonInfoDtoArd.setHitNo(++no);
+                        jsonInfoDtoArd.setFilmDataMTP(new FilmDataMTP());
+                        if (getHit(jsonInfoDtoArd, children.next())) {
+                            LiveSearchFactory.addFilm(jsonInfoDtoArd);
                         }
 
-                        final double progress = 1.0 * (1 + no) / max;
-                        Platform.runLater(() -> jsonInfoDto.getProgressProperty().setValue(progress));
-                        System.out.println("Filme suchen: " + progress);
+                        LiveFactory.setProgress(no, max);
                     }
                 }
             }
         } catch (final Exception ex) {
-            PLog.errorLog(979858978, ex, "Url: " + jsonInfoDto.getStartUrl());
+            PLog.errorLog(979858978, ex, "Url: " + jsonInfoDtoArd.getStartUrl());
         }
-        Platform.runLater(() -> jsonInfoDto.getProgressProperty().setValue(JsonInfoDto.PROGRESS_NULL));
-        System.out.println("Filme gefunden: " + max);
-        return jsonInfoDto.getList();
+        Platform.runLater(() -> LiveFactory.progressProperty.setValue(LiveFactory.PROGRESS_NULL));
+        PLog.sysLog("Filme gefunden: " + jsonInfoDtoArd.getList().size());
+        return jsonInfoDtoArd.getList();
     }
 
-    private static boolean getHit(JsonInfoDto jsonInfoDto, JsonNode jsonNode) {
+    private static boolean getHit(JsonInfoDtoArd jsonInfoDtoArd, JsonNode jsonNode) {
         // hier werden die Suchtreffer abgelaufen
         if (jsonNode.get("publicationService") != null &&
                 jsonNode.get("publicationService").get("partner") != null) {
@@ -96,10 +95,10 @@ public class LiveSearchArd {
                 channel = "Funk.net";
             }
 
-            jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_CHANNEL] = channel;
+            jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_CHANNEL] = channel;
         }
-        if (jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_CHANNEL].isEmpty()) {
-            jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_CHANNEL] = "ARD";
+        if (jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_CHANNEL].isEmpty()) {
+            jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_CHANNEL] = "ARD";
         }
 
         if (jsonNode.get("links") != null &&
@@ -107,60 +106,60 @@ public class LiveSearchArd {
                 jsonNode.get("links").get("target").get("href") != null) {
 
             String url = jsonNode.get("links").get("target").get("href").asText();
-            jsonInfoDto.setHitUrl(url);
-            readHit(jsonInfoDto);
+            jsonInfoDtoArd.setHitUrl(url);
+            readHit(jsonInfoDtoArd);
             return true;
         } else {
             return false;
         }
     }
 
-    public static void readHit(JsonInfoDto jsonInfoDto) {
+    public static void readHit(JsonInfoDtoArd jsonInfoDtoArd) {
         try {
-            final Request.Builder builder = new Request.Builder().url(jsonInfoDto.getHitUrl());
+            final Request.Builder builder = new Request.Builder().url(jsonInfoDtoArd.getHitUrl());
             builder.addHeader("User-Agent", ProgInfos.getUserAgent());
             Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
             ResponseBody body = response.body();
 
             if (body != null && response.isSuccessful()) {
                 InputStream input = body.byteStream();
-                InputStream is = AudioFactory.selectDecompressor(jsonInfoDto.getHitUrl(), input);
+                InputStream is = AudioFactory.selectDecompressor(jsonInfoDtoArd.getHitUrl(), input);
                 ObjectMapper objectMapper = new ObjectMapper();
 
                 JsonNode jsonNode = objectMapper.readTree(is);
-                jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_THEME] = "Live-Suche";
+                jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_THEME] = "Live-Suche";
                 if (jsonNode.get("title") != null) {
-                    jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_TITLE] = jsonNode.get("title").asText();
+                    jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_TITLE] = jsonNode.get("title").asText();
                 }
 
                 if (jsonNode.get("widgets") != null) {
                     Iterator<JsonNode> children = jsonNode.get("widgets").elements();
                     if (children.hasNext()) {
-                        getMedia(jsonInfoDto, children.next());
+                        getMedia(jsonInfoDtoArd, children.next());
                     }
                 }
             }
         } catch (final Exception ex) {
-            PLog.errorLog(201245789, ex, "Url: " + jsonInfoDto.getHitUrl());
+            PLog.errorLog(201245789, ex, "Url: " + jsonInfoDtoArd.getHitUrl());
         }
     }
 
-    private static void getMedia(JsonInfoDto jsonInfoDto, JsonNode jsonNode) {
+    private static void getMedia(JsonInfoDtoArd jsonInfoDtoArd, JsonNode jsonNode) {
         if (jsonNode.get("broadcastedOn") != null) {
             String dateTime = jsonNode.get("broadcastedOn").asText();
-            getDate(dateTime, jsonInfoDto.getFilmDataMTP());
+            getDate(dateTime, jsonInfoDtoArd.getFilmDataMTP());
         }
 
         if (jsonNode.get("synopsis") != null) {
             String desc = jsonNode.get("synopsis").asText();
-            jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_DESCRIPTION] = desc;
+            jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_DESCRIPTION] = desc;
         }
 
         if (jsonNode.get("mediaCollection") != null &&
                 jsonNode.get("mediaCollection").get("href") != null) {
 
             String url = jsonNode.get("mediaCollection").get("href").asText();
-            readMediaUrl(jsonInfoDto, url);
+            readMediaUrl(jsonInfoDtoArd, url);
         }
     }
 
@@ -181,7 +180,7 @@ public class LiveSearchArd {
         filmData.arr[FilmDataXml.FILM_TIME] = time;
     }
 
-    public static void readMediaUrl(JsonInfoDto jsonInfoDto, String url) {
+    public static void readMediaUrl(JsonInfoDtoArd jsonInfoDtoArd, String url) {
         try {
             final Request.Builder builder = new Request.Builder().url(url);
             builder.addHeader("User-Agent", ProgInfos.getUserAgent());
@@ -204,12 +203,12 @@ public class LiveSearchArd {
                             durSecond = durSecond - (min * 60);
                             final long seconds = durSecond;
 
-                            jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_DURATION] =
+                            jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_DURATION] =
                                     fillString(String.valueOf(hours)) + ':'
                                             + fillString(String.valueOf(min)) + ':'
                                             + fillString(String.valueOf(seconds));
                         } else {
-                            jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_DURATION] = "";
+                            jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_DURATION] = "";
                         }
                     } catch (final Exception ex) {
                         PLog.errorLog(359784510, ex, "url: " + url);
@@ -218,13 +217,13 @@ public class LiveSearchArd {
 
                 if (jsonNode.get("_geoblocked") != null) {
                     boolean geo = jsonNode.get("_geoblocked").asBoolean();
-                    jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_GEO] = Boolean.toString(geo);
+                    jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_GEO] = Boolean.toString(geo);
                 }
 
                 if (jsonNode.get("_mediaArray") != null) {
                     Iterator<JsonNode> children = jsonNode.get("_mediaArray").elements();
                     if (children.hasNext()) {
-                        getMediaUrl1(jsonInfoDto, children.next());
+                        getMediaUrl1(jsonInfoDtoArd, children.next());
                     }
                 }
             }
@@ -240,7 +239,7 @@ public class LiveSearchArd {
         return s;
     }
 
-    private static void getMediaUrl1(JsonInfoDto jsonInfoDto, JsonNode jsonNode) {
+    private static void getMediaUrl1(JsonInfoDtoArd jsonInfoDtoArd, JsonNode jsonNode) {
         if (jsonNode.get("_mediaStreamArray") != null) {
             Iterator<JsonNode> children = jsonNode.get("_mediaStreamArray").elements();
             while (children.hasNext()) {
@@ -258,18 +257,18 @@ public class LiveSearchArd {
                     int qual = jn.get("_quality").asInt();
                     switch (qual) {
                         case 2:
-                            jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_URL_SMALL] = url;
-                            if (jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_URL].isEmpty()) {
-                                jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_URL] = url;
+                            jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_URL_SMALL] = url;
+                            if (jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_URL].isEmpty()) {
+                                jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_URL] = url;
                             }
                             break;
                         case 3:
-                            jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_URL] = url;
+                            jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_URL] = url;
                             break;
                         case 4:
-                            jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_URL_HD] = url;
-                            if (jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_URL].isEmpty()) {
-                                jsonInfoDto.getFilmDataMTP().arr[FilmDataXml.FILM_URL] = url;
+                            jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_URL_HD] = url;
+                            if (jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_URL].isEmpty()) {
+                                jsonInfoDtoArd.getFilmDataMTP().arr[FilmDataXml.FILM_URL] = url;
                             }
                             break;
                     }

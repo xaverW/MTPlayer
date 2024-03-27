@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.livesearch;
+package de.p2tools.mtplayer.controller.livesearchard;
 
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.config.ProxyFactory;
@@ -15,18 +15,21 @@ public class LiveSearchFactory {
     LiveSearchFactory() {
     }
 
-    public static void addFilm(JsonInfoDto jsonInfoDto) {
-        FilmDataMTP film = jsonInfoDto.getFilmDataMTP();
+    public static void addFilm(JsonInfoDtoArd jsonInfoDtoArd) {
+        FilmDataMTP film = jsonInfoDtoArd.getFilmDataMTP();
+        setFilmSize(film);
+        film.init();
+        jsonInfoDtoArd.getList().add(film);
+    }
+
+    public static void setFilmSize(FilmDataMTP film) {
         try {
             final URL url = new URL(film.getUrl());
             final long size = LiveSearchFactory.getContentLength(url); // Byte
             film.arr[FilmDataXml.FILM_SIZE] = size / 1000 / 1000 + "";
         } catch (Exception ex) {
-            PLog.errorLog(623014789, ex, "Add LiveSearch");
+            PLog.errorLog(959874501, ex, "setFilmSize");
         }
-//        film.arr[FilmDataXml.FILM_NR] = jsonInfoDto.getList().size() + "";
-        film.init();
-        jsonInfoDto.getList().add(film);
     }
 
     public static long getContentLength(final URL url) {

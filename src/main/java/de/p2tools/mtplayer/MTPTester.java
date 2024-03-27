@@ -17,12 +17,9 @@
 
 package de.p2tools.mtplayer;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
-import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -40,7 +37,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 public class MTPTester {
@@ -124,20 +120,20 @@ public class MTPTester {
             });
             gridPane.add(btnError, 0, ++row);
 
-            Button btnZdf = new Button("Zdf");
-            btnZdf.setOnAction(a -> {
-                final JsonInfoDto jsonInfoDto = new JsonInfoDto();
-
-                jsonInfoDto.init();
-                jsonInfoDto.setPageNo(0);
-                jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH.getValue());
-
-                List<FilmDataMTP> list = LiveSearchZdf.loadLive(jsonInfoDto);
-                Platform.runLater(() -> {
-                    list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
-                });
-            });
-            gridPane.add(btnZdf, 0, ++row);
+//            Button btnZdf = new Button("Zdf");
+//            btnZdf.setOnAction(a -> {
+//                final JsonInfoDtoZdf jsonInfoDtoArd = new JsonInfoDtoZdf();
+//
+//                jsonInfoDtoArd.init();
+//                jsonInfoDtoArd.setPageNo(0);
+//                jsonInfoDtoArd.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH.getValue());
+//
+//                List<FilmDataMTP> list = LiveSearchZdf.loadLive(jsonInfoDtoArd);
+//                Platform.runLater(() -> {
+//                    list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
+//                });
+//            });
+//            gridPane.add(btnZdf, 0, ++row);
 
             Button btnWait = new Button("Warten");
             btnWait.setOnAction(a -> {

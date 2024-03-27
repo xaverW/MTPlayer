@@ -15,22 +15,19 @@
  */
 
 
-package de.p2tools.mtplayer.controller.livesearch;
+package de.p2tools.mtplayer.controller.livesearchard;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import javafx.beans.property.DoubleProperty;
+import de.p2tools.mtplayer.controller.livesearch.LiveFactory;
 import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 
 import java.util.ArrayList;
 
-public class JsonInfoDto {
-    public static int PROGRESS_NULL = -1;
+public class JsonInfoDtoArd {
     public static int PAGE_SIZE = 20;
 
     private String searchString;
-    private DoubleProperty progressProperty = new SimpleDoubleProperty(PROGRESS_NULL);
     private int pageNo;
 
     private String startUrl = "";
@@ -42,12 +39,12 @@ public class JsonInfoDto {
     private ArrayList<FilmDataMTP> list = new ArrayList<>();
 
 
-    public JsonInfoDto() {
+    public JsonInfoDtoArd() {
     }
 
     public void init() {
         searchString = "";
-        progressProperty.setValue(PROGRESS_NULL);
+        LiveFactory.progressProperty.setValue(LiveFactory.PROGRESS_NULL);
         pageNo = 0;
 
         startUrl = "";
@@ -65,10 +62,6 @@ public class JsonInfoDto {
 
     public void setSearchString(String searchString) {
         this.searchString = searchString;
-    }
-
-    public DoubleProperty getProgressProperty() {
-        return progressProperty;
     }
 
     public int getPageNo() {
