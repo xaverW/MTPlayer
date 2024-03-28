@@ -67,13 +67,12 @@ public class ZdfAddFilmFactory {
         Map<Qualities, String> downloadUrls = downloadDto.getDownloadUrls(aLanguage);
         String urlNormal = downloadUrls.get(Qualities.NORMAL);
         Duration duration = zdfFilmDto.getDuration().orElse(downloadDto.getDuration().orElse(Duration.ZERO));
-        String fileSize = "";
 
         FilmDataMTP film = new ZdfDatenFilm(LiveConst.ZDF,
                 zdfFilmDto.getTopic().orElse(title),
                 zdfFilmDto.getWebsite().orElse(""),
                 title, urlNormal,
-                dateValue, timeValue, duration.getSeconds(), zdfFilmDto.getDescription().orElse(""), fileSize);
+                dateValue, timeValue, duration.getSeconds(), zdfFilmDto.getDescription().orElse(""));
 
         if (downloadUrls.containsKey(Qualities.SMALL)) {
             LiveFactory.addUrlKlein(film, downloadUrls.get(Qualities.SMALL));

@@ -13,7 +13,7 @@ public class ZdfDatenFilm extends FilmDataMTP {
     private static final DateTimeFormatter DATUM_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     public ZdfDatenFilm(String ssender, String tthema, String filmWebsite, String ttitel, String uurl,
-                        String datum, String zeit, long dauerSekunden, String description, String fileSize) {
+                        String datum, String zeit, long dauerSekunden, String description) {
         arr[FilmDataXml.FILM_CHANNEL] = ssender;
         arr[FilmDataXml.FILM_THEME] = tthema.isEmpty() ? ssender : normalize(cleanWhitespaces(tthema.trim()));
         arr[FilmDataXml.FILM_WEBSITE] = filmWebsite;
@@ -28,7 +28,6 @@ public class ZdfDatenFilm extends FilmDataMTP {
                         this.arr[FilmDataXml.FILM_THEME] + ' ' +
                         this.arr[FilmDataXml.FILM_TITLE]);
         this.arr[FilmDataXml.FILM_DESCRIPTION] = normalize(cleanDescription(description));
-        this.arr[FilmDataXml.FILM_SIZE] = fileSize;
         this.checkFilmDauer(dauerSekunden);
     }
 
