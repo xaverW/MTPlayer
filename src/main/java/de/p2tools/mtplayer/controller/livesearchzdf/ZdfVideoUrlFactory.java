@@ -2,9 +2,7 @@ package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.p2tools.mtplayer.controller.livesearch.DownloadDto;
-import de.p2tools.mtplayer.controller.livesearch.GeoLocations;
-import de.p2tools.mtplayer.controller.livesearch.Qualities;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.p2lib.mtdownload.MLHttpClient;
 import de.p2tools.p2lib.tools.log.PLog;
 import okhttp3.Request;
@@ -127,7 +125,7 @@ public class ZdfVideoUrlFactory {
                 while (qualityList.hasNext()) {
                     JsonNode quality = qualityList.next();
 
-                    final Qualities qualityValue = parseVideoQuality(quality);
+                    final LiveConst.Qualities qualityValue = parseVideoQuality(quality);
                     JsonNode jnQ = quality.get(JSON_ELEMENT_HIGHEST_VERTIVAL_RESOLUTION);
                     int verticalResolution = 0;
                     if (jnQ != null) {
@@ -225,30 +223,30 @@ public class ZdfVideoUrlFactory {
         }
     }
 
-    private static Qualities parseVideoQuality(final JsonNode quality) {
-        Qualities qualityValue;
+    private static LiveConst.Qualities parseVideoQuality(final JsonNode quality) {
+        LiveConst.Qualities qualityValue;
         final String zdfQuality = quality.get(JSON_ELEMENT_QUALITY).asText();
         switch (zdfQuality) {
             case ZDF_QUALITY_LOW:
             case ZDF_QUALITY_MED:
             case ZDF_QUALITY_MEDIUM:
             case ZDF_QUALITY_HIGH:
-                qualityValue = Qualities.SMALL;
+                qualityValue = LiveConst.Qualities.SMALL;
                 break;
             case ZDF_QUALITY_VERYHIGH:
-                qualityValue = Qualities.NORMAL;
+                qualityValue = LiveConst.Qualities.NORMAL;
                 break;
             case ZDF_QUALITY_HD:
             case ZDF_QUALITY_FHD:
-                qualityValue = Qualities.HD;
+                qualityValue = LiveConst.Qualities.HD;
                 break;
             case ZDF_QUALITY_UHD:
-                qualityValue = Qualities.UHD;
+                qualityValue = LiveConst.Qualities.UHD;
                 break;
             default:
                 PLog.errorLog(959562541, "unknown quality: {} " + zdfQuality);
                 PLog.errorLog(852141452, "ZDF: unknown quality: " + zdfQuality);
-                qualityValue = Qualities.SMALL;
+                qualityValue = LiveConst.Qualities.SMALL;
         }
         return qualityValue;
     }
@@ -257,10 +255,10 @@ public class ZdfVideoUrlFactory {
         private String language;
         private String uri;
         private int verticalResolution;
-        private Qualities quality;
+        private LiveConst.Qualities quality;
         private String fileSize;
 
-        DownloadInfo(String language, String uri, int verticalResolution, Qualities quality, String fileSize) {
+        DownloadInfo(String language, String uri, int verticalResolution, LiveConst.Qualities quality, String fileSize) {
             this.language = language;
             this.uri = uri;
             this.verticalResolution = verticalResolution;
@@ -280,7 +278,7 @@ public class ZdfVideoUrlFactory {
             return verticalResolution;
         }
 
-        public Qualities getQuality() {
+        public LiveConst.Qualities getQuality() {
             return quality;
         }
 

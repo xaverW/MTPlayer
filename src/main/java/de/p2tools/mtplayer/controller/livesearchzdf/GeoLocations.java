@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.livesearch;
+package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import org.apache.commons.lang3.StringUtils;
 

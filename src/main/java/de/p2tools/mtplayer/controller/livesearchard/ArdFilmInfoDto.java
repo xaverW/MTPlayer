@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.livesearchardapi;
+package de.p2tools.mtplayer.controller.livesearchard;
 
 import java.util.Objects;
 

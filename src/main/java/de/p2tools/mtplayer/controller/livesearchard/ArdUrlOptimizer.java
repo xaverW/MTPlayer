@@ -1,7 +1,7 @@
-package de.p2tools.mtplayer.controller.livesearchardapi;
+package de.p2tools.mtplayer.controller.livesearchard;
 
 
-import de.p2tools.mtplayer.controller.livesearch.UrlUtils;
+import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
 
 import java.util.HashMap;
 import java.util.Map;

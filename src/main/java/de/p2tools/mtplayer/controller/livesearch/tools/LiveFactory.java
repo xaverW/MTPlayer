@@ -1,5 +1,8 @@
-package de.p2tools.mtplayer.controller.livesearch;
+package de.p2tools.mtplayer.controller.livesearch.tools;
 
+import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.config.ProxyFactory;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -9,7 +12,9 @@ import javafx.beans.property.SimpleDoubleProperty;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -17,6 +22,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class LiveFactory {
+    private static final int TIMEOUT_LENGTH = 2000;
     public static int PROGRESS_NULL = -1;
     public static DoubleProperty progressPropertyARD = new SimpleDoubleProperty(PROGRESS_NULL);
     public static DoubleProperty progressPropertyZDF = new SimpleDoubleProperty(PROGRESS_NULL);
@@ -24,6 +30,42 @@ public class LiveFactory {
     public enum CHANNEL {ARD, ZDF}
 
     private LiveFactory() {
+    }
+
+    public static void setFilmSize(FilmDataMTP film) {
+        try {
+            final URL url = new URL(film.getUrl());
+            final long size = getContentLength(url); // Byte
+            film.arr[FilmDataXml.FILM_SIZE] = size / 1000 / 1000 + "";
+        } catch (Exception ex) {
+            PLog.errorLog(959874501, ex, "setFilmSize");
+        }
+    }
+
+    public static long getContentLength(final URL url) {
+        long ret = -1;
+        HttpURLConnection connection = null;
+        try {
+            connection = ProxyFactory.getUrlConnection(url);
+            connection.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
+            connection.setReadTimeout(TIMEOUT_LENGTH);
+            connection.setConnectTimeout(TIMEOUT_LENGTH);
+            if (connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
+                ret = connection.getContentLengthLong();
+            }
+            // alles unter 300k sind Playlisten, ...
+            if (ret < 300 * 1000) {
+                ret = -1;
+            }
+        } catch (final Exception ex) {
+            ret = -1;
+            PLog.errorLog(915254789, ex);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return ret;
     }
 
     public static void setProgress(CHANNEL channel, double count, int max) {

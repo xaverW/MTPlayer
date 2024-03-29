@@ -1,6 +1,6 @@
-package de.p2tools.mtplayer.controller.livesearchardapi;
+package de.p2tools.mtplayer.controller.livesearchard;
 
-import de.p2tools.mtplayer.controller.livesearch.Qualities;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.EnumMap;
@@ -13,16 +13,16 @@ import java.util.Optional;
  */
 public class ArdVideoInfoDto {
 
-    private final Map<Qualities, String> videoUrls;
+    private final Map<LiveConst.Qualities, String> videoUrls;
     private String subtitleUrl;
 
     public ArdVideoInfoDto() {
-        videoUrls = new EnumMap<>(Qualities.class);
+        videoUrls = new EnumMap<>(LiveConst.Qualities.class);
     }
 
-    public Qualities getDefaultQuality() {
-        if (videoUrls.containsKey(Qualities.NORMAL)) {
-            return Qualities.NORMAL;
+    public LiveConst.Qualities getDefaultQuality() {
+        if (videoUrls.containsKey(LiveConst.Qualities.NORMAL)) {
+            return LiveConst.Qualities.NORMAL;
         }
         return videoUrls.keySet().iterator().next();
     }
@@ -43,15 +43,15 @@ public class ArdVideoInfoDto {
         return Optional.empty();
     }
 
-    public Map<Qualities, String> getVideoUrls() {
+    public Map<LiveConst.Qualities, String> getVideoUrls() {
         return videoUrls;
     }
 
-    public boolean containsQualities(final Qualities key) {
+    public boolean containsQualities(final LiveConst.Qualities key) {
         return videoUrls.containsKey(key);
     }
 
-    public String put(final Qualities key, final String value) {
+    public String put(final LiveConst.Qualities key, final String value) {
         return videoUrls.put(key, value);
     }
 

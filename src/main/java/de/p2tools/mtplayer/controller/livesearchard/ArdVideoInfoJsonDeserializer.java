@@ -1,10 +1,10 @@
-package de.p2tools.mtplayer.controller.livesearchardapi;
+package de.p2tools.mtplayer.controller.livesearchard;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import de.p2tools.mtplayer.controller.livesearch.MVHttpClient;
-import de.p2tools.mtplayer.controller.livesearch.Qualities;
-import de.p2tools.mtplayer.controller.livesearch.UrlUtils;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
+import de.p2tools.mtplayer.controller.livesearch.tools.MVHttpClient;
+import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -19,7 +19,7 @@ import java.util.Optional;
 /**
  * Converts json with basic video from
  * {@literal http://www.ardmediathek.de/play/media/[documentId]?devicetype=pc&features=flash}
- * to a map of {@link Qualities} with corresponding urls.
+ * to a map of {@link LiveConst.Qualities} with corresponding urls.
  */
 public class ArdVideoInfoJsonDeserializer {
 
@@ -27,20 +27,19 @@ public class ArdVideoInfoJsonDeserializer {
 
     private static final Request.Builder REQUEST_BUILDER = new Request.Builder();
 
-    public ArdVideoInfoDto deserialize(final JsonNode aJsonElement/*, final Type aType,
-                                       final JsonDeserializationContext aJsonDeserializationContext*/) {
+    public ArdVideoInfoDto deserialize(final JsonNode aJsonElement) {
         final ArdVideoInfoDto videoInfo = new ArdVideoInfoDto();
         final JsonNode subtitleElement = aJsonElement.get(ELEMENT_SUBTITLE_URL);
         if (subtitleElement != null && !subtitleElement.isEmpty()) {
             videoInfo.setSubtitleUrl(subtitleElement.asText());
         }
 
-        final Map<Qualities, URL> resolutionUrlMap = new ArdMediaArrayToDownloadUrlsConverter().toDownloadUrls(aJsonElement);
+        final Map<LiveConst.Qualities, URL> resolutionUrlMap = new ArdMediaArrayToDownloadUrlsConverter().toDownloadUrls(aJsonElement);
 
         // if map contains only a m3u8 url, load the m3u8 file and use the containing
         // urls
-        if (resolutionUrlMap.size() == 1 && resolutionUrlMap.containsKey(Qualities.NORMAL)
-                && UrlUtils.getFileType(resolutionUrlMap.get(Qualities.NORMAL).getFile())
+        if (resolutionUrlMap.size() == 1 && resolutionUrlMap.containsKey(LiveConst.Qualities.NORMAL)
+                && UrlUtils.getFileType(resolutionUrlMap.get(LiveConst.Qualities.NORMAL).getFile())
                 .get()
                 .equals("m3u8")) {
 
@@ -51,8 +50,8 @@ public class ArdVideoInfoJsonDeserializer {
         return videoInfo;
     }
 
-    private void loadM3U8(Map<Qualities, URL> resolutionUrlMap) {
-        final URL m3u8File = resolutionUrlMap.get(Qualities.NORMAL);
+    private void loadM3U8(Map<LiveConst.Qualities, URL> resolutionUrlMap) {
+        final URL m3u8File = resolutionUrlMap.get(LiveConst.Qualities.NORMAL);
         final Optional<String> m3u8Content = readContent(m3u8File);
         resolutionUrlMap.clear();
         if (m3u8Content.isPresent()) {
@@ -63,7 +62,7 @@ public class ArdVideoInfoJsonDeserializer {
             List<M3U8Dto> m3u8Data = parser.parse(m3u8Content.get());
 
             m3u8Data.forEach(entry -> {
-                Optional<Qualities> resolution = entry.getResolution();
+                Optional<LiveConst.Qualities> resolution = entry.getResolution();
                 if (resolution.isPresent()) {
                     try {
                         String videoUrl = entry.getUrl();

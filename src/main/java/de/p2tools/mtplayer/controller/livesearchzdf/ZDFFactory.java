@@ -2,8 +2,7 @@ package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.p2tools.mtplayer.controller.livesearch.DownloadDto;
-import de.p2tools.mtplayer.controller.livesearch.LiveFactory;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.p2lib.mtdownload.MLHttpClient;
 import de.p2tools.p2lib.tools.log.PLog;
 import okhttp3.Request;

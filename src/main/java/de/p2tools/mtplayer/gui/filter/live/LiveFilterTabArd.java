@@ -3,12 +3,12 @@ package de.p2tools.mtplayer.gui.filter.live;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearch.LiveFactory;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearchard.JsonInfoDtoArd;
 import de.p2tools.mtplayer.controller.livesearchard.LiveSearchArd;
 import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -19,8 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
-import java.util.List;
 
 public class LiveFilterTabArd extends Tab {
 
@@ -141,9 +139,9 @@ public class LiveFilterTabArd extends Tab {
             jsonInfoDtoArd.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.getValue());
             jsonInfoDtoArd.setPageNo(siteNo.get());
 
-            List<FilmDataMTP> list = LiveSearchArd.loadLive(jsonInfoDtoArd);
+            new LiveSearchArd().loadLive(jsonInfoDtoArd);
             Platform.runLater(() -> {
-                list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
+                jsonInfoDtoArd.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
             });
 
         }).start();
@@ -156,7 +154,17 @@ public class LiveFilterTabArd extends Tab {
             jsonInfoDtoArd.setPageNo(0);
             jsonInfoDtoArd.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.getValue());
 
+            new LiveSearchArd().loadUrl(jsonInfoDtoArd);
+            Platform.runLater(() -> {
+                if (jsonInfoDtoArd.getList().isEmpty()) {
+                    // dann hats nicht geklappt
+                    PAlert.showErrorAlert("Film suchen", "Der gesuchte Film konnte nicht gefunden werden.");
+                } else {
+                    jsonInfoDtoArd.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
+                }
+            });
         }).start();
+
     }
 
 

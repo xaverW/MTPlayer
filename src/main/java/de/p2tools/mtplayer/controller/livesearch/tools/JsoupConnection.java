@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.livesearch;
+package de.p2tools.mtplayer.controller.livesearch.tools;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

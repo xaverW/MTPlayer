@@ -1,12 +1,12 @@
-package de.p2tools.mtplayer.controller.livesearchardapi;
+package de.p2tools.mtplayer.controller.livesearchard;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearch.JsonFactory;
-import de.p2tools.mtplayer.controller.livesearch.LiveFactory;
-import de.p2tools.mtplayer.controller.livesearch.Qualities;
-import de.p2tools.mtplayer.controller.livesearch.UrlUtils;
+import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
+import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
 import de.p2tools.mtplayer.controller.livesearchzdf.ZdfDatenFilm;
 import de.p2tools.p2lib.tools.log.PLog;
 
@@ -16,7 +16,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Optional;
 
 public class ArdFilmDeserializer {
 
@@ -60,6 +63,89 @@ public class ArdFilmDeserializer {
 
     public ArdFilmDeserializer() {
         videoDeserializer = new ArdVideoInfoJsonDeserializer();
+    }
+
+    public void addFilmId(JsonInfoDtoArd jsonInfoDtoArd, String id) {
+        String url = "https://api.ardmediathek.de/page-gateway/pages/ard/item/" + id;
+        final Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
+        rootNode.ifPresent(jsonElement -> deserialize(jsonInfoDtoArd, jsonElement));
+    }
+
+    public void addFilmUrl(JsonInfoDtoArd jsonInfoDtoArd) {
+        String url = jsonInfoDtoArd.getSearchString().trim();
+        String id = url.substring(url.lastIndexOf("/") + 1);
+        url = "https://api.ardmediathek.de/page-gateway/pages/ard/item/" + id;
+        final Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
+        rootNode.ifPresent(jsonElement -> deserialize(jsonInfoDtoArd, jsonElement));
+    }
+
+    public void deserialize(JsonInfoDtoArd jsonInfoDtoArd, JsonNode jsonElement) {
+        if (!jsonElement.has(ELEMENT_WIDGETS)
+                || !jsonElement.get(ELEMENT_WIDGETS).isArray()) {
+            return;
+        }
+
+        Iterator<JsonNode> widgets = jsonElement.get(ELEMENT_WIDGETS).elements();
+        if (!widgets.hasNext()) {
+            return;
+        }
+
+        final JsonNode itemObject = widgets.next();
+
+        final Optional<String> topic = parseTopic(itemObject);
+        final Optional<String> title = parseTitle(itemObject);
+        final Optional<String> description;
+        if (itemObject.has(ATTRIBUTE_SYNOPSIS)) {
+            description = Optional.of(itemObject.get(ATTRIBUTE_SYNOPSIS).asText());
+        } else {
+            description = Optional.empty();
+        }
+        final Optional<LocalDateTime> date = parseDate(itemObject);
+        final Optional<Duration> duration = parseDuration(itemObject);
+        final Optional<ArdVideoInfoDto> videoInfo = parseVideoUrls(itemObject);
+        final Optional<String> partner = parsePartner(itemObject);
+
+        if (topic.isPresent()
+                && title.isPresent()
+                && videoInfo.isPresent()
+                && videoInfo.get().getVideoUrls().size() > 0) {
+            // add film to ARD
+            final ArdFilmDto filmDto
+                    = new ArdFilmDto(
+                    createFilm(
+                            Const.ARD,
+                            topic.get(),
+                            title.get(),
+                            description,
+                            date,
+                            duration,
+                            videoInfo.get()));
+
+            if (widgets.hasNext()) {
+                parseRelatedFilms(filmDto, widgets.next());
+            }
+            addFilmToList(jsonInfoDtoArd, filmDto);
+
+            if (partner.isPresent() && ADDITIONAL_SENDER.containsKey(partner.get())) {
+                // add film to other sender (like RBB)
+                FilmDataMTP additionalFilm
+                        = createFilm(
+                        ADDITIONAL_SENDER.get(partner.get()),
+                        topic.get(),
+                        title.get(),
+                        description,
+                        date,
+                        duration,
+                        videoInfo.get());
+                addFilmToList(jsonInfoDtoArd, new ArdFilmDto(additionalFilm));
+            }
+        }
+    }
+
+    private void addFilmToList(JsonInfoDtoArd jsonInfoDtoArd, ArdFilmDto filmDataMTP) {
+        LiveFactory.setFilmSize(filmDataMTP.getFilm());
+        filmDataMTP.getFilm().init();
+        jsonInfoDtoArd.getList().add(filmDataMTP.getFilm());
     }
 
     private static Optional<JsonNode> getMediaCollectionObject(final JsonNode itemObject) {
@@ -146,75 +232,6 @@ public class ArdFilmDeserializer {
         return Optional.empty();
     }
 
-    public List<ArdFilmDto> deserialize(
-            final JsonNode jsonElement /*, final Type type, final JsonDeserializationContext context*/) {
-
-        List<ArdFilmDto> films = new ArrayList<>();
-
-        if (!jsonElement.has(ELEMENT_WIDGETS)
-                || !jsonElement.get(ELEMENT_WIDGETS).isArray()) {
-            return films;
-        }
-
-        Iterator<JsonNode> widgets = jsonElement.get(ELEMENT_WIDGETS).elements();
-        if (!widgets.hasNext()) {
-            return films;
-        }
-
-        final JsonNode itemObject = widgets.next();
-
-        final Optional<String> topic = parseTopic(itemObject);
-        final Optional<String> title = parseTitle(itemObject);
-        final Optional<String> description;
-        if (itemObject.has(ATTRIBUTE_SYNOPSIS)) {
-            description = Optional.of(itemObject.get(ATTRIBUTE_SYNOPSIS).asText());
-        } else {
-            description = Optional.empty();
-        }
-        final Optional<LocalDateTime> date = parseDate(itemObject);
-        final Optional<Duration> duration = parseDuration(itemObject);
-        final Optional<ArdVideoInfoDto> videoInfo = parseVideoUrls(itemObject);
-        final Optional<String> partner = parsePartner(itemObject);
-
-        if (topic.isPresent()
-                && title.isPresent()
-                && videoInfo.isPresent()
-                && videoInfo.get().getVideoUrls().size() > 0) {
-            // add film to ARD
-            final ArdFilmDto filmDto
-                    = new ArdFilmDto(
-                    createFilm(
-                            Const.ARD,
-                            topic.get(),
-                            title.get(),
-                            description,
-                            date,
-                            duration,
-                            videoInfo.get()));
-
-            if (widgets.hasNext()) {
-                parseRelatedFilms(filmDto, widgets.next());
-            }
-            films.add(filmDto);
-
-            if (partner.isPresent() && ADDITIONAL_SENDER.containsKey(partner.get())) {
-                // add film to other sender (like RBB)
-                FilmDataMTP additionalFilm
-                        = createFilm(
-                        ADDITIONAL_SENDER.get(partner.get()),
-                        topic.get(),
-                        title.get(),
-                        description,
-                        date,
-                        duration,
-                        videoInfo.get());
-                films.add(new ArdFilmDto(additionalFilm));
-            }
-        }
-
-        return films;
-    }
-
     private Optional<String> parsePartner(JsonNode playerPageObject) {
         if (playerPageObject.has(ELEMENT_PUBLICATION_SERVICE)) {
             JsonNode publicationServiceObject
@@ -268,17 +285,17 @@ public class ArdFilmDeserializer {
         String dateValue = time.format(DATE_FORMAT);
         String timeValue = time.format(TIME_FORMAT);
 
-        Map<Qualities, String> videoUrls = videoInfo.getVideoUrls();
+        Map<LiveConst.Qualities, String> videoUrls = videoInfo.getVideoUrls();
 
         FilmDataMTP film = new ZdfDatenFilm(sender, topic, "", title, videoInfo.getDefaultVideoUrl(),
                 dateValue, timeValue, duration.orElse(Duration.ZERO).getSeconds(), description.orElse(""));
 
 
-        if (videoUrls.containsKey(Qualities.SMALL)) {
-            LiveFactory.addUrlKlein(film, videoUrls.get(Qualities.SMALL));
+        if (videoUrls.containsKey(LiveConst.Qualities.SMALL)) {
+            LiveFactory.addUrlKlein(film, videoUrls.get(LiveConst.Qualities.SMALL));
         }
-        if (videoUrls.containsKey(Qualities.HD)) {
-            LiveFactory.addUrlHd(film, videoUrls.get(Qualities.HD));
+        if (videoUrls.containsKey(LiveConst.Qualities.HD)) {
+            LiveFactory.addUrlHd(film, videoUrls.get(LiveConst.Qualities.HD));
         }
         if (videoInfo.getSubtitleUrlOptional().isPresent()) {
             LiveFactory.addUrlSubtitle(film, videoInfo.getSubtitleUrl());

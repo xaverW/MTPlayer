@@ -1,9 +1,10 @@
-package de.p2tools.mtplayer.controller.livesearchardapi;
+package de.p2tools.mtplayer.controller.livesearchard;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import de.p2tools.mtplayer.controller.livesearch.Qualities;
-import de.p2tools.mtplayer.controller.livesearch.UrlUtils;
+import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
+import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.net.MalformedURLException;
@@ -11,7 +12,6 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class ArdMediaArrayToDownloadUrlsConverter {
 
@@ -31,12 +31,12 @@ public class ArdMediaArrayToDownloadUrlsConverter {
     private static final String FILE_TYPE_F4M = "f4m";
 
     private final ArdUrlOptimizer ardOptimizer;
-    private final Map<Qualities, Set<ArdFilmUrlInfoDto>> urls;
+    private final Map<LiveConst.Qualities, Set<ArdFilmUrlInfoDto>> urls;
 //    private MediathekReader crawler;
 
     public ArdMediaArrayToDownloadUrlsConverter() {
         ardOptimizer = new ArdUrlOptimizer();
-        urls = new EnumMap<>(Qualities.class);
+        urls = new EnumMap<>(LiveConst.Qualities.class);
     }
 
     private static List<ArdFilmUrlInfoDto> filterUrls(
@@ -49,13 +49,13 @@ public class ArdMediaArrayToDownloadUrlsConverter {
                 .collect(Collectors.toList());
     }
 
-    private static Optional<Qualities> getQuality(final String qualityAsText) {
+    private static Optional<LiveConst.Qualities> getQuality(final String qualityAsText) {
         int qualityNumber;
         try {
             if (qualityAsText.equals("auto")) {
                 // Some films only contains "auto" quality with a m3u8-url
                 // treat quality "auto" as NORMAL though the m3u8-url is returned
-                return Optional.of(Qualities.NORMAL);
+                return Optional.of(LiveConst.Qualities.NORMAL);
             } else {
                 qualityNumber = Integer.parseInt(qualityAsText);
             }
@@ -79,7 +79,7 @@ public class ArdMediaArrayToDownloadUrlsConverter {
      * @return the download url
      */
     private static String determineUrl(
-            final Qualities resolution, final Set<ArdFilmUrlInfoDto> aUrls) {
+            final LiveConst.Qualities resolution, final Set<ArdFilmUrlInfoDto> aUrls) {
 
         if (aUrls.isEmpty()) {
             return "";
@@ -119,17 +119,19 @@ public class ArdMediaArrayToDownloadUrlsConverter {
         return 1;
     }
 
-    public Map<Qualities, URL> toDownloadUrls(final JsonNode jsonElement) {
+    public Map<LiveConst.Qualities, URL> toDownloadUrls(final JsonNode jsonElement) {
         final int pluginValue = extractPluginValue(jsonElement);
-        final JsonArray mediaArray = jsonElement.getAsJsonObject().getAsJsonArray(ELEMENT_MEDIA_ARRAY);
-        parseMediaArray(pluginValue, mediaArray);
+        if (jsonElement.has(ELEMENT_MEDIA_ARRAY)) {
+            Iterator<JsonNode> it = jsonElement.get(ELEMENT_MEDIA_ARRAY).elements();
+            parseMediaArray(pluginValue, it);
+        }
         return extractRelevantUrls();
     }
 
     private void addUrl(
             final String url,
             final String qualityText,
-            final Qualities quality,
+            final LiveConst.Qualities quality,
             final Optional<String> height,
             final Optional<String> width) {
 
@@ -151,8 +153,8 @@ public class ArdMediaArrayToDownloadUrlsConverter {
         }
     }
 
-    private Map<Qualities, URL> extractRelevantUrls() {
-        final Map<Qualities, URL> downloadUrls = new EnumMap<>(Qualities.class);
+    private Map<LiveConst.Qualities, URL> extractRelevantUrls() {
+        final Map<LiveConst.Qualities, URL> downloadUrls = new EnumMap<>(LiveConst.Qualities.class);
 
         removeAutoM3u8IfMp4Exists();
 
@@ -165,9 +167,9 @@ public class ArdMediaArrayToDownloadUrlsConverter {
                         });
 
         // add lowest HD-Url as NORMAL if normal is not present
-        if (!downloadUrls.containsKey(Qualities.NORMAL) && urls.containsKey(Qualities.HD)) {
-            Optional<URL> normalUrl = determineNormalUrlFromHd(urls.get(Qualities.HD));
-            normalUrl.ifPresent(url -> downloadUrls.put(Qualities.NORMAL, url));
+        if (!downloadUrls.containsKey(LiveConst.Qualities.NORMAL) && urls.containsKey(LiveConst.Qualities.HD)) {
+            Optional<URL> normalUrl = determineNormalUrlFromHd(urls.get(LiveConst.Qualities.HD));
+            normalUrl.ifPresent(url -> downloadUrls.put(LiveConst.Qualities.NORMAL, url));
         }
 
         return downloadUrls;
@@ -186,8 +188,8 @@ public class ArdMediaArrayToDownloadUrlsConverter {
                     }
                 }));
 
-        if (existsMp4.get() && urls.containsKey(Qualities.NORMAL)) {
-            urls.get(Qualities.NORMAL).removeIf(urlInfo -> urlInfo.getQuality().equalsIgnoreCase("auto"));
+        if (existsMp4.get() && urls.containsKey(LiveConst.Qualities.NORMAL)) {
+            urls.get(LiveConst.Qualities.NORMAL).removeIf(urlInfo -> urlInfo.getQuality().equalsIgnoreCase("auto"));
         }
     }
 
@@ -208,58 +210,58 @@ public class ArdMediaArrayToDownloadUrlsConverter {
             try {
                 return Optional.of(new URL(relevantInfo.getUrl()));
             } catch (final MalformedURLException malformedUrlException) {
-                LOG.error("A download URL is defect.", malformedUrlException);
+                PLog.errorLog(987541258, malformedUrlException, "A download URL is defect.");
             }
         }
 
         return Optional.empty();
     }
 
-    private static boolean isFileTypeRelevant(final Map.Entry<Qualities, Set<ArdFilmUrlInfoDto>> entry) {
+    private static boolean isFileTypeRelevant(final Map.Entry<LiveConst.Qualities, Set<ArdFilmUrlInfoDto>> entry) {
         return entry.getValue().stream()
                 .anyMatch(video -> video.getFileType().isPresent()
                         && !FILE_TYPE_F4M.equalsIgnoreCase(video.getFileType().get()));
     }
 
-    private Optional<URL> finalizeUrl(final Map.Entry<Qualities, Set<ArdFilmUrlInfoDto>> entry) {
+    private Optional<URL> finalizeUrl(final Map.Entry<LiveConst.Qualities, Set<ArdFilmUrlInfoDto>> entry) {
         final String url = determineUrl(entry.getKey(), entry.getValue());
         if (!url.isEmpty()) {
             try {
                 return Optional.of(new URL(optimizeUrl(entry.getKey(), url)));
             } catch (final MalformedURLException malformedUrlException) {
-                LOG.error("A download URL is defect.", malformedUrlException);
+                PLog.errorLog(987201204, malformedUrlException, "A download URL is defect.");
             }
         }
         return Optional.empty();
     }
 
-    private String optimizeUrl(final Qualities key, final String url) {
-        if (key == Qualities.HD) {
+    private String optimizeUrl(final LiveConst.Qualities key, final String url) {
+        if (key == LiveConst.Qualities.HD) {
             return ardOptimizer.optimizeHdUrl(url);
         }
 
         return url;
     }
 
-    private static Qualities getQualityForNumber(final int i) {
+    private static LiveConst.Qualities getQualityForNumber(final int i) {
         switch (i) {
             case 0:
             case 1:
-                return Qualities.SMALL;
+                return LiveConst.Qualities.SMALL;
 
             case 3:
             case 4:
-                return Qualities.HD;
+                return LiveConst.Qualities.HD;
             case 5:
-                return Qualities.UHD;
+                return LiveConst.Qualities.UHD;
             case 2:
             default:
-                return Qualities.NORMAL;
+                return LiveConst.Qualities.NORMAL;
         }
     }
 
     private static ArdFilmUrlInfoDto getRelevantUrlMp4(
-            final Qualities aQualities, final List<ArdFilmUrlInfoDto> aUrls) {
+            final LiveConst.Qualities aQualities, final List<ArdFilmUrlInfoDto> aUrls) {
         switch (aQualities) {
             case SMALL:
                 // the first url is the best
@@ -304,26 +306,23 @@ public class ArdMediaArrayToDownloadUrlsConverter {
 
                 if (jsonNode.has(ELEMENT_MEDIA_STREAM_ARRAY)) {
                     Iterator<JsonNode> it = jsonNode.get(ELEMENT_MEDIA_STREAM_ARRAY).elements();
-                    while (it.hasNext()) {
-                        JsonNode jn = it.next();
-                        parseMediaStreamArray(jn);
-                    }
-
+                    parseMediaStreamArray(it);
                 }
             }
         }
-        StreamSupport.stream(mediaArray, false)
-                .map(JsonElement::getAsJsonObject)
-                .filter(mediaObj -> mediaObj.get(ELEMENT_PLUGIN).getAsInt() == pluginValue)
-                .map(mediaObj -> mediaObj.getAsJsonArray(ELEMENT_MEDIA_STREAM_ARRAY))
-                .forEach(this::parseMediaStreamArray);
+//        StreamSupport.stream(mediaArray, false)
+//                .map(JsonElement::getAsJsonObject)
+//                .filter(mediaObj -> mediaObj.get(ELEMENT_PLUGIN).getAsInt() == pluginValue)
+
+//                .map(mediaObj -> mediaObj.getAsJsonArray(ELEMENT_MEDIA_STREAM_ARRAY))
+//                .forEach(this::parseMediaStreamArray);
     }
 
-    private void parseMediaStreamArray(final final Iterator<JsonNode> mediaStreamArray) {
-        for (final JsonElement videoElement : mediaStreamArray) {
-            final String qualityAsText
-                    = videoElement.getAsJsonObject().get(ELEMENT_QUALITY).getAsString();
-            final Optional<Qualities> quality = getQuality(qualityAsText);
+    private void parseMediaStreamArray(final Iterator<JsonNode> it) {
+        while (it.hasNext()) {
+            JsonNode videoElement = it.next();
+            final String qualityAsText = JsonFactory.getString(videoElement, ELEMENT_QUALITY);
+            final Optional<LiveConst.Qualities> quality = getQuality(qualityAsText);
             if (quality.isPresent()) {
                 parseMediaStreamServer(videoElement, qualityAsText, quality.get());
                 parseMediaStreamStream(videoElement, qualityAsText, quality.get());
@@ -332,42 +331,47 @@ public class ArdMediaArrayToDownloadUrlsConverter {
     }
 
     private void parseMediaStreamServer(
-            final JsonElement videoElement, final String qualityText, final Qualities quality) {
-        if (videoElement.getAsJsonObject().has(ELEMENT_SERVER)) {
-            final String baseUrl = videoElement.getAsJsonObject().get(ELEMENT_SERVER).getAsString();
+            final JsonNode videoElement, final String qualityText, final LiveConst.Qualities quality) {
+        if (videoElement.has(ELEMENT_SERVER)) {
+            final String baseUrl = videoElement.get(ELEMENT_SERVER).asText();
             final String downloadUrl = videoElementToUrl(videoElement, baseUrl);
             addUrl(downloadUrl, qualityText, quality, Optional.empty(), Optional.empty());
         }
     }
 
     private void parseMediaStreamStream(
-            final JsonElement videoElement, final String qualityText, final Qualities quality) {
-        if (videoElement.getAsJsonObject().has(ELEMENT_STREAM)) {
+            final JsonNode videoElement, final String qualityText, final LiveConst.Qualities quality) {
+        if (videoElement.has(ELEMENT_STREAM)) {
 
-            final JsonObject videoObject = videoElement.getAsJsonObject();
-            final JsonElement streamObject = videoObject.get(ELEMENT_STREAM);
+            final JsonNode videoObject = videoElement;
+            final JsonNode streamObject = videoObject.get(ELEMENT_STREAM);
 
-            final Optional<String> height = JsonUtils.getAttributeAsString(videoObject, ELEMENT_HEIGHT);
-            final Optional<String> width = JsonUtils.getAttributeAsString(videoObject, ELEMENT_WIDTH);
+            final Optional<String> height = JsonFactory.getOptStringElement(videoObject, ELEMENT_HEIGHT);
+            final Optional<String> width = JsonFactory.getOptStringElement(videoObject, ELEMENT_WIDTH);
 
-            if (streamObject.isJsonPrimitive()) {
-                final String baseUrl = streamObject.getAsString();
+            if (streamObject.isValueNode()) {
+                final String baseUrl = streamObject.asText();
                 final String downloadUrl = videoElementToUrl(videoElement, baseUrl);
                 addUrl(downloadUrl, qualityText, quality, height, width);
-            } else if (streamObject.isJsonArray()) {
-                StreamSupport.stream(streamObject.getAsJsonArray().spliterator(), false)
-                        .map(JsonElement::getAsString)
-                        .forEach(baseUrl -> addUrl(baseUrl, qualityText, quality, height, width));
+            } else if (streamObject.isArray()) {
+                Iterator<JsonNode> it = streamObject.elements();
+                while (it.hasNext()) {
+                    JsonNode jn = it.next();
+                    addUrl(jn.asText(), qualityText, quality, height, width);
+                }
+//                StreamSupport.stream(streamObject.getAsJsonArray().spliterator(), false)
+//                        .map(JsonElement::getAsString)
+//                        .forEach(baseUrl -> addUrl(baseUrl, qualityText, quality, height, width));
             }
         }
     }
 
-    private String videoElementToUrl(final JsonElement videoElement, final String baseUrl) {
+    private String videoElementToUrl(final JsonNode videoElement, final String baseUrl) {
         if (baseUrl.isEmpty()) {
             return baseUrl;
         }
 
-        String url = videoElement.getAsJsonObject().get(ELEMENT_STREAM).getAsString();
+        String url = videoElement.get(ELEMENT_STREAM).asText();
         if (url.equals(baseUrl)) {
             return url;
         }

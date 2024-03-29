@@ -1,8 +1,8 @@
 package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearch.*;
-import de.p2tools.mtplayer.controller.livesearchard.LiveSearchFactory;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.log.PLog;
 
@@ -46,12 +46,12 @@ public class ZdfAddFilmFactory {
     private static void addFilm(final JsonInfoDtoZdf jsonInfoDtoZdf, DownloadDto downloadDto, final ZdfFilmDto zdfFilmDto) {
         for (final String language : downloadDto.getLanguages()) {
 
-            if (downloadDto.getUrl(language, Qualities.NORMAL).isPresent()) {
+            if (downloadDto.getUrl(language, LiveConst.Qualities.NORMAL).isPresent()) {
                 DownloadDtoFilmConverter.getOptimizedUrls(
                         downloadDto.getDownloadUrls(language), Optional.of(optimizer));
 
                 final FilmDataMTP filmWithLanguage = createFilm(downloadDto, zdfFilmDto, jsonInfoDtoZdf, language);
-                LiveSearchFactory.setFilmSize(filmWithLanguage);
+                LiveFactory.setFilmSize(filmWithLanguage);
                 filmWithLanguage.init();
                 jsonInfoDtoZdf.getList().add(filmWithLanguage);
             }
@@ -64,8 +64,8 @@ public class ZdfAddFilmFactory {
         String dateValue = time.format(DATE_FORMAT);
         String timeValue = time.format(TIME_FORMAT);
 
-        Map<Qualities, String> downloadUrls = downloadDto.getDownloadUrls(aLanguage);
-        String urlNormal = downloadUrls.get(Qualities.NORMAL);
+        Map<LiveConst.Qualities, String> downloadUrls = downloadDto.getDownloadUrls(aLanguage);
+        String urlNormal = downloadUrls.get(LiveConst.Qualities.NORMAL);
         Duration duration = zdfFilmDto.getDuration().orElse(downloadDto.getDuration().orElse(Duration.ZERO));
 
         FilmDataMTP film = new ZdfDatenFilm(LiveConst.ZDF,
@@ -74,11 +74,11 @@ public class ZdfAddFilmFactory {
                 title, urlNormal,
                 dateValue, timeValue, duration.getSeconds(), zdfFilmDto.getDescription().orElse(""));
 
-        if (downloadUrls.containsKey(Qualities.SMALL)) {
-            LiveFactory.addUrlKlein(film, downloadUrls.get(Qualities.SMALL));
+        if (downloadUrls.containsKey(LiveConst.Qualities.SMALL)) {
+            LiveFactory.addUrlKlein(film, downloadUrls.get(LiveConst.Qualities.SMALL));
         }
-        if (downloadUrls.containsKey(Qualities.HD)) {
-            LiveFactory.addUrlHd(film, downloadUrls.get(Qualities.HD));
+        if (downloadUrls.containsKey(LiveConst.Qualities.HD)) {
+            LiveFactory.addUrlHd(film, downloadUrls.get(LiveConst.Qualities.HD));
         }
         final Optional<String> subTitleUrl = downloadDto.getSubTitleUrl(aLanguage);
         if (subTitleUrl.isPresent()) {

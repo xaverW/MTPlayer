@@ -1,6 +1,6 @@
-package de.p2tools.mtplayer.controller.livesearchardapi;
+package de.p2tools.mtplayer.controller.livesearchard;
 
-import de.p2tools.mtplayer.controller.livesearch.Qualities;
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class M3U8Dto {
         return Optional.of(meta.get(key));
     }
 
-    public Optional<Qualities> getResolution() {
+    public Optional<LiveConst.Qualities> getResolution() {
         Optional<String> codecMeta = getMeta(M3U8Constants.M3U8_CODECS);
         Optional<String> resolution = getMeta(M3U8Constants.M3U8_RESOLUTION);
 
@@ -66,7 +66,7 @@ public class M3U8Dto {
                 case "480x320":
                 case "480x360":
                 case "512x288":
-                    return Optional.of(Qualities.SMALL);
+                    return Optional.of(LiveConst.Qualities.SMALL);
                 case "636x360":
                 case "640x360":
                 case "640x480":
@@ -81,14 +81,14 @@ public class M3U8Dto {
                 case "1024x576":
                 case "1064x576":
                 case "1152x576":
-                    return Optional.of(Qualities.NORMAL);
+                    return Optional.of(LiveConst.Qualities.NORMAL);
                 case "1280x720":
                 case "1330x720":
                 case "1440x720":
                 case "1920x1080":
                 case "2560x1440":
                 case "3840x2160":
-                    return Optional.of(Qualities.HD);
+                    return Optional.of(LiveConst.Qualities.HD);
                 default:
                     PLog.debugLog("Unknown resolution: {}" + resolution.get());
             }

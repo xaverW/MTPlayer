@@ -1,4 +1,6 @@
-package de.p2tools.mtplayer.controller.livesearch;
+package de.p2tools.mtplayer.controller.livesearchzdf;
+
+import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 
 import java.time.Duration;
 import java.util.*;
@@ -10,7 +12,7 @@ public class DownloadDto {
 
     private Optional<GeoLocations> geoLocation;
     private final Map<String, String> subTitleUrls;
-    private final Map<String, Map<Qualities, String>> downloadUrls;
+    private final Map<String, Map<LiveConst.Qualities, String>> downloadUrls;
     private Optional<Duration> duration;
 
     public DownloadDto() {
@@ -19,21 +21,21 @@ public class DownloadDto {
         subTitleUrls = new HashMap<>();
     }
 
-    public void addUrl(final String language, final Qualities quality, final String url) {
+    public void addUrl(final String language, final LiveConst.Qualities quality, final String url) {
         if (!downloadUrls.containsKey(language)) {
-            downloadUrls.put(language, new EnumMap<>(Qualities.class));
+            downloadUrls.put(language, new EnumMap<>(LiveConst.Qualities.class));
         }
 
-        Map<Qualities, String> urlMap = downloadUrls.get(language);
+        Map<LiveConst.Qualities, String> urlMap = downloadUrls.get(language);
         urlMap.put(quality, url);
     }
 
-    public Map<Qualities, String> getDownloadUrls(final String language) {
+    public Map<LiveConst.Qualities, String> getDownloadUrls(final String language) {
         if (downloadUrls.containsKey(language)) {
             return downloadUrls.get(language);
         }
 
-        return new EnumMap<>(Qualities.class);
+        return new EnumMap<>(LiveConst.Qualities.class);
     }
 
     public Optional<Duration> getDuration() {
@@ -55,9 +57,9 @@ public class DownloadDto {
         return Optional.empty();
     }
 
-    public Optional<String> getUrl(final String language, final Qualities resolution) {
+    public Optional<String> getUrl(final String language, final LiveConst.Qualities resolution) {
         if (downloadUrls.containsKey(language)) {
-            Map<Qualities, String> urlMap = downloadUrls.get(language);
+            Map<LiveConst.Qualities, String> urlMap = downloadUrls.get(language);
             if (urlMap.containsKey(resolution)) {
                 return Optional.of(urlMap.get(resolution));
             }
