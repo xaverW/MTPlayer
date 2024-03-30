@@ -8,11 +8,7 @@ import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -24,7 +20,6 @@ public class LiveFilterTabArd extends Tab {
 
     private final ProgData progData;
     private final JsonInfoDto jsonInfoDto = new JsonInfoDto();
-    private IntegerProperty siteNo = new SimpleIntegerProperty(0);
     private final ProgressBar progress = new ProgressBar();
     private final VBox vBoxTab = new VBox();
 
@@ -52,8 +47,7 @@ public class LiveFilterTabArd extends Tab {
         btnSearchArd.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
         btnSearchArd.setTooltip(new Tooltip("Suche starten"));
         btnSearchArd.setOnAction(a -> {
-            siteNo.set(0);
-            searchArd(0);
+            searchArd(false);
         });
         btnSearchArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.length().lessThan(5))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
@@ -62,13 +56,9 @@ public class LiveFilterTabArd extends Tab {
         btnKeepOnArd.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnKeepOnArd.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnArd.setOnAction(a -> {
-            long res = jsonInfoDto.getSizeOverAll().get() - (long) siteNo.get() * JsonInfoDto.PAGE_SIZE - JsonInfoDto.PAGE_SIZE;
-            if (res > 0) {
-                siteNo.setValue(siteNo.get() + 1);
-                searchArd(siteNo.get());
-            }
+            searchArd(true);
         });
-        btnKeepOnArd.disableProperty().bind((jsonInfoDto.getSizeOverAll().lessThanOrEqualTo(siteNo.get() * JsonInfoDto.PAGE_SIZE))
+        btnKeepOnArd.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearch;
@@ -132,39 +122,15 @@ public class LiveFilterTabArd extends Tab {
         this.setContent(vBoxTab);
     }
 
-    private void searchArd(int page) {
+    private void searchArd(boolean next) {
         new Thread(() -> {
-            LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).setValue(LiveFactory.PROGRESS_NULL);
-            jsonInfoDto.init();
-            jsonInfoDto.setPageNo(page);
-            jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.getValue());
-            jsonInfoDto.setPageNo(siteNo.get());
-
-            new LiveSearchArd().loadLive(jsonInfoDto);
-            Platform.runLater(() -> {
-                jsonInfoDto.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
-            });
-
+            new LiveSearchArd().loadLive(jsonInfoDto, next);
         }).start();
     }
 
     private void searchUrl() {
         new Thread(() -> {
-            LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).setValue(LiveFactory.PROGRESS_NULL);
-            final JsonInfoDto jsonInfoDto = new JsonInfoDto();
-            jsonInfoDto.init();
-            jsonInfoDto.setPageNo(0);
-            jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.getValue());
-
             new LiveSearchArd().loadUrl(jsonInfoDto);
-            Platform.runLater(() -> {
-                if (jsonInfoDto.getList().isEmpty()) {
-                    // dann hats nicht geklappt
-                    PAlert.showErrorAlert("Film suchen", "Der gesuchte Film konnte nicht gefunden werden.");
-                } else {
-                    jsonInfoDto.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
-                }
-            });
         }).start();
 
     }

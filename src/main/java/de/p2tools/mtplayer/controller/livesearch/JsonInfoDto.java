@@ -18,8 +18,7 @@
 package de.p2tools.mtplayer.controller.livesearch;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
@@ -28,9 +27,9 @@ public class JsonInfoDto {
 
     private String searchString;
     private String startUrl = "";
-
-    private int pageNo;
-    private LongProperty sizeOverAll = new SimpleLongProperty(0);
+    private final StringProperty nextUrl = new SimpleStringProperty("");
+    private final LongProperty sizeOverAll = new SimpleLongProperty(0);
+    private final IntegerProperty pageNo = new SimpleIntegerProperty(0);
     private ArrayList<FilmDataMTP> list = new ArrayList<>();
 
     private String api = "";
@@ -40,11 +39,12 @@ public class JsonInfoDto {
 
     public void init() {
         searchString = "";
-        pageNo = 0;
         api = "";
 
         startUrl = "";
+        nextUrl.set("");
         sizeOverAll.set(0);
+        pageNo.set(0);
         list.clear();
     }
 
@@ -64,20 +64,40 @@ public class JsonInfoDto {
         this.startUrl = startUrl;
     }
 
-    public int getPageNo() {
-        return pageNo;
+    public String getNextUrl() {
+        return nextUrl.get();
     }
 
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
+    public StringProperty nextUrlProperty() {
+        return nextUrl;
     }
 
-    public LongProperty getSizeOverAll() {
+    public void setNextUrl(String nextUrl) {
+        this.nextUrl.set(nextUrl);
+    }
+
+    public long getSizeOverAll() {
+        return sizeOverAll.get();
+    }
+
+    public LongProperty sizeOverAllProperty() {
         return sizeOverAll;
     }
 
     public void setSizeOverAll(long sizeOverAll) {
         this.sizeOverAll.set(sizeOverAll);
+    }
+
+    public int getPageNo() {
+        return pageNo.get();
+    }
+
+    public IntegerProperty pageNoProperty() {
+        return pageNo;
+    }
+
+    public void setPageNo(int pageNo) {
+        this.pageNo.set(pageNo);
     }
 
     public ArrayList<FilmDataMTP> getList() {

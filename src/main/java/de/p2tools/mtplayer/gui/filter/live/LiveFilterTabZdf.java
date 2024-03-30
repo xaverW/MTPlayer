@@ -11,8 +11,6 @@ import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -25,8 +23,7 @@ import java.util.List;
 public class LiveFilterTabZdf extends Tab {
 
     private final ProgData progData;
-    private IntegerProperty siteNo = new SimpleIntegerProperty(0);
-    private final JsonInfoDto jsonInfoDtoZdf = new JsonInfoDto();
+    private final JsonInfoDto jsonInfoDto = new JsonInfoDto();
     private final ProgressBar progress = new ProgressBar();
     private final VBox vBoxTab = new VBox();
 
@@ -58,8 +55,7 @@ public class LiveFilterTabZdf extends Tab {
         btnSearchZdf.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
         btnSearchZdf.setTooltip(new Tooltip("Suche starten"));
         btnSearchZdf.setOnAction(a -> {
-            siteNo.set(0);
-            searchZdf(0);
+            searchZdf(false);
         });
         btnSearchZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(5))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
@@ -68,8 +64,9 @@ public class LiveFilterTabZdf extends Tab {
         btnKeepOnZdf.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnKeepOnZdf.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnZdf.setOnAction(a -> {
+            searchZdf(true);
         });
-        btnKeepOnZdf.disableProperty().bind((jsonInfoDtoZdf.getSizeOverAll().lessThanOrEqualTo(siteNo.get() * JsonInfoDto.PAGE_SIZE))
+        btnKeepOnZdf.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         VBox vBox = new VBox();
@@ -89,7 +86,6 @@ public class LiveFilterTabZdf extends Tab {
         vBox.getChildren().add(hBox);
 
         vBoxTab.getChildren().add(vBox);
-
 
         // Search URL
         Button btnClearUrl = new Button();
@@ -131,14 +127,9 @@ public class LiveFilterTabZdf extends Tab {
         this.setContent(vBoxTab);
     }
 
-    private void searchZdf(int page) {
+    private void searchZdf(boolean next) {
         new Thread(() -> {
-            LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).setValue(LiveFactory.PROGRESS_NULL);
-            jsonInfoDtoZdf.init();
-            jsonInfoDtoZdf.setPageNo(0);
-            jsonInfoDtoZdf.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.getValue());
-
-            List<FilmDataMTP> list = new LiveSearchZdf().loadLive(jsonInfoDtoZdf);
+            List<FilmDataMTP> list = new LiveSearchZdf().loadLive(jsonInfoDto, next);
             Platform.runLater(() -> {
                 list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
             });
@@ -147,12 +138,7 @@ public class LiveFilterTabZdf extends Tab {
 
     private void searchUrl() {
         new Thread(() -> {
-            LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).setValue(LiveFactory.PROGRESS_NULL);
-            jsonInfoDtoZdf.init();
-            jsonInfoDtoZdf.setPageNo(0);
-            jsonInfoDtoZdf.setStartUrl(ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.getValue());
-
-            List<FilmDataMTP> list = new LiveSearchZdf().loadUrl(jsonInfoDtoZdf);
+            List<FilmDataMTP> list = new LiveSearchZdf().loadUrl(jsonInfoDto);
             Platform.runLater(() -> {
                 if (list.isEmpty()) {
                     // dann hats nicht geklappt
