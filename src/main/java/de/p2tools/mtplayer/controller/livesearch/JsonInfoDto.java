@@ -18,13 +18,12 @@
 package de.p2tools.mtplayer.controller.livesearch;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearchzdf.ZdfFilmDto;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 
 import java.util.ArrayList;
 
-public class JsonInfoDtoArd {
+public class JsonInfoDto {
     public static int PAGE_SIZE = 20;
 
     private String searchString;
@@ -35,9 +34,8 @@ public class JsonInfoDtoArd {
     private ArrayList<FilmDataMTP> list = new ArrayList<>();
 
     private String api = "";
-    private ZdfFilmDto zdfFilmDto = null;
 
-    public JsonInfoDtoArd() {
+    public JsonInfoDto() {
     }
 
     public void init() {
@@ -96,13 +94,5 @@ public class JsonInfoDtoArd {
 
     public void setApi(String api) {
         this.api = api;
-    }
-
-    public ZdfFilmDto getZdfFilmDto() {
-        return zdfFilmDto;
-    }
-
-    public void setZdfFilmDto(ZdfFilmDto zdfFilmDto) {
-        this.zdfFilmDto = zdfFilmDto;
     }
 }

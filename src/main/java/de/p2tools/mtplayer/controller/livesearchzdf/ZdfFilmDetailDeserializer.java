@@ -1,7 +1,7 @@
 package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.p2lib.tools.log.PLog;
 
@@ -50,9 +50,9 @@ public class ZdfFilmDetailDeserializer {
     public ZdfFilmDetailDeserializer() {
     }
 
-    public void deserialize(JsonInfoDtoArd jsonInfoDtoArd, String getUrl) {
+    public void deserialize(JsonInfoDto jsonInfoDto, String getUrl) {
         try {
-            String api = "Bearer " + jsonInfoDtoArd.getApi();
+            String api = "Bearer " + jsonInfoDto.getApi();
             Optional<JsonNode> optRootNode = JsonFactory.getRootNode(getUrl, api);
 
             if (optRootNode.isPresent()) {
@@ -93,11 +93,11 @@ public class ZdfFilmDetailDeserializer {
                 Map<String, String> downloadUrl = parseDownloadUrls(mainVideoTarget);
 
                 if (downloadUrl.containsKey(DOWNLOAD_URL_DEFAULT)) {
-                    jsonInfoDtoArd.setZdfFilmDto(new ZdfFilmDto(downloadUrl.get(DOWNLOAD_URL_DEFAULT),
-                            topic, title, description, website, time, duration, downloadUrl.get(DOWNLOAD_URL_DGS)));
+                    ZdfFilmDto zdfFilmDto = new ZdfFilmDto(downloadUrl.get(DOWNLOAD_URL_DEFAULT),
+                            topic, title, description, website, time, duration, downloadUrl.get(DOWNLOAD_URL_DGS));
 
-                    Optional<DownloadDto> downloadDtoOptional = new ZdfDownloadDtoDeserializer().deserialize(jsonInfoDtoArd, downloadUrl.get(DOWNLOAD_URL_DEFAULT));
-                    downloadDtoOptional.ifPresent(downloadDto -> new ZdfFilmDetailTask().processRestTarget(jsonInfoDtoArd, downloadDto));
+                    Optional<DownloadDto> downloadDtoOptional = new ZdfDownloadDtoDeserializer().deserialize(jsonInfoDto, downloadUrl.get(DOWNLOAD_URL_DEFAULT));
+                    downloadDtoOptional.ifPresent(downloadDto -> new ZdfFilmDetailTask().processRestTarget(jsonInfoDto, zdfFilmDto, downloadDto));
                 }
             }
         } catch (final Exception ex) {

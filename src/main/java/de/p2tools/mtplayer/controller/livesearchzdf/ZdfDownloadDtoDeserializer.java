@@ -2,7 +2,7 @@ package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.p2lib.mtdownload.MLHttpClient;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -50,10 +50,10 @@ public class ZdfDownloadDtoDeserializer {
     public ZdfDownloadDtoDeserializer() {
     }
 
-    public Optional<DownloadDto> deserialize(final JsonInfoDtoArd jsonInfoDtoArd, String videoUrl) {
+    public Optional<DownloadDto> deserialize(final JsonInfoDto jsonInfoDto, String videoUrl) {
         try {
             final Request.Builder builder = new Request.Builder().url(videoUrl);
-            String api = "Bearer " + jsonInfoDtoArd.getApi();
+            String api = "Bearer " + jsonInfoDto.getApi();
             builder.addHeader("Api-Auth", api);
             Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
             ResponseBody body = response.body();

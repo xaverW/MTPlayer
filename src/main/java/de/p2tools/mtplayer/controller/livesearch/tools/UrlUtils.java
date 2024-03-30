@@ -21,7 +21,7 @@ public final class UrlUtils {
      * @return the url including the domain
      */
     public static String addDomainIfMissing(final String aUrl, final String aDomain) {
-        if (aUrl != null && !aUrl.isEmpty() && aUrl.startsWith("/")) {
+        if (aUrl != null && aUrl.startsWith("/")) {
             return aDomain + aUrl;
         }
 

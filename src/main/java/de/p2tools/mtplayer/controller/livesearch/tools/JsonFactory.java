@@ -48,6 +48,53 @@ public class JsonFactory {
         return Optional.empty();
     }
 
+    public static Optional<String> getOptStringElement(JsonNode jsonNode, String element1, String element2) {
+        if (jsonNode.has(element1)) {
+            if (jsonNode.get(element1).has(element2)) {
+                return Optional.of(jsonNode.get(element1).get(element2).asText());
+            }
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<String> getOptStringElement(JsonNode jsonNode, String element1, String element2, String element3) {
+        if (jsonNode.has(element1)) {
+            if (jsonNode.get(element1).has(element2)) {
+                if (jsonNode.get(element1).get(element2).has(element3)) {
+                    return Optional.of(jsonNode.get(element1).get(element2).get(element3).asText());
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<JsonNode> getOptElement(JsonNode jsonNode, String element) {
+        if (jsonNode.has(element)) {
+            return Optional.of(jsonNode.get(element));
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<JsonNode> getOptElement(JsonNode jsonNode, String element1, String element2) {
+        if (jsonNode.has(element1)) {
+            if (jsonNode.get(element1).has(element2)) {
+                return Optional.of(jsonNode.get(element1).get(element2));
+            }
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<JsonNode> getOptElement(JsonNode jsonNode, String element1, String element2, String element3) {
+        if (jsonNode.has(element1)) {
+            if (jsonNode.get(element1).has(element2)) {
+                if (jsonNode.get(element1).get(element2).has(element3)) {
+                    return Optional.of(jsonNode.get(element1).get(element2).get(element3));
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
     public static String getString(JsonNode jsonNode, String element) {
         if (jsonNode.has(element)) {
             return jsonNode.get(element).asText();

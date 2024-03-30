@@ -3,7 +3,7 @@ package de.p2tools.mtplayer.controller.livesearchard;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
@@ -66,7 +66,7 @@ public class ArdFilmDeserializer {
         videoDeserializer = new ArdVideoInfoJsonDeserializer();
     }
 
-    public void deserialize(JsonInfoDtoArd jsonInfoDtoArd, JsonNode jsonElement) {
+    public void deserialize(JsonInfoDto jsonInfoDto, JsonNode jsonElement) {
         if (!jsonElement.has(ELEMENT_WIDGETS)
                 || !jsonElement.get(ELEMENT_WIDGETS).isArray()) {
             return;
@@ -111,7 +111,7 @@ public class ArdFilmDeserializer {
             if (widgets.hasNext()) {
                 parseRelatedFilms(filmDto, widgets.next());
             }
-            addFilmToList(jsonInfoDtoArd, filmDto);
+            addFilmToList(jsonInfoDto, filmDto);
 
             if (partner.isPresent() && ADDITIONAL_SENDER.containsKey(partner.get())) {
                 // add film to other sender (like RBB)
@@ -124,15 +124,15 @@ public class ArdFilmDeserializer {
                         date,
                         duration,
                         videoInfo.get());
-                addFilmToList(jsonInfoDtoArd, new ArdFilmDto(additionalFilm));
+                addFilmToList(jsonInfoDto, new ArdFilmDto(additionalFilm));
             }
         }
     }
 
-    private void addFilmToList(JsonInfoDtoArd jsonInfoDtoArd, ArdFilmDto filmDataMTP) {
+    private void addFilmToList(JsonInfoDto jsonInfoDto, ArdFilmDto filmDataMTP) {
         LiveFactory.setFilmSize(filmDataMTP.getFilm());
         filmDataMTP.getFilm().init();
-        jsonInfoDtoArd.getList().add(filmDataMTP.getFilm());
+        jsonInfoDto.getList().add(filmDataMTP.getFilm());
     }
 
     private static Optional<JsonNode> getMediaCollectionObject(final JsonNode itemObject) {

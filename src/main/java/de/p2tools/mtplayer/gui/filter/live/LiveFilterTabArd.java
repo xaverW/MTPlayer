@@ -3,7 +3,7 @@ package de.p2tools.mtplayer.gui.filter.live;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
 public class LiveFilterTabArd extends Tab {
 
     private final ProgData progData;
-    private final JsonInfoDtoArd jsonInfoDtoArd = new JsonInfoDtoArd();
+    private final JsonInfoDto jsonInfoDto = new JsonInfoDto();
     private IntegerProperty siteNo = new SimpleIntegerProperty(0);
     private final ProgressBar progress = new ProgressBar();
     private final VBox vBoxTab = new VBox();
@@ -56,20 +56,20 @@ public class LiveFilterTabArd extends Tab {
             searchArd(0);
         });
         btnSearchArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.length().lessThan(5))
-                .or(LiveFactory.progressPropertyARD.isNotEqualTo(LiveFactory.PROGRESS_NULL)));
+                .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnArd = new Button();
         btnKeepOnArd.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnKeepOnArd.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnArd.setOnAction(a -> {
-            long res = jsonInfoDtoArd.getSizeOverAll().get() - (long) siteNo.get() * JsonInfoDtoArd.PAGE_SIZE - JsonInfoDtoArd.PAGE_SIZE;
+            long res = jsonInfoDto.getSizeOverAll().get() - (long) siteNo.get() * JsonInfoDto.PAGE_SIZE - JsonInfoDto.PAGE_SIZE;
             if (res > 0) {
                 siteNo.setValue(siteNo.get() + 1);
                 searchArd(siteNo.get());
             }
         });
-        btnKeepOnArd.disableProperty().bind((jsonInfoDtoArd.getSizeOverAll().lessThanOrEqualTo(siteNo.get() * JsonInfoDtoArd.PAGE_SIZE))
-                .or(LiveFactory.progressPropertyARD.isNotEqualTo(LiveFactory.PROGRESS_NULL)));
+        btnKeepOnArd.disableProperty().bind((jsonInfoDto.getSizeOverAll().lessThanOrEqualTo(siteNo.get() * JsonInfoDto.PAGE_SIZE))
+                .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearch;
         cboSearch = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_ARD);
@@ -107,7 +107,7 @@ public class LiveFilterTabArd extends Tab {
             searchUrl();
         });
         btnSearchUrlArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.length().lessThan(5))
-                .or(LiveFactory.progressPropertyARD.isNotEqualTo(LiveFactory.PROGRESS_NULL)));
+                .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearchUrl;
         cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD);
@@ -134,15 +134,15 @@ public class LiveFilterTabArd extends Tab {
 
     private void searchArd(int page) {
         new Thread(() -> {
-            LiveFactory.progressPropertyARD.setValue(LiveFactory.PROGRESS_NULL);
-            jsonInfoDtoArd.init();
-            jsonInfoDtoArd.setPageNo(page);
-            jsonInfoDtoArd.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.getValue());
-            jsonInfoDtoArd.setPageNo(siteNo.get());
+            LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).setValue(LiveFactory.PROGRESS_NULL);
+            jsonInfoDto.init();
+            jsonInfoDto.setPageNo(page);
+            jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.getValue());
+            jsonInfoDto.setPageNo(siteNo.get());
 
-            new LiveSearchArd().loadLive(jsonInfoDtoArd);
+            new LiveSearchArd().loadLive(jsonInfoDto);
             Platform.runLater(() -> {
-                jsonInfoDtoArd.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
+                jsonInfoDto.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
             });
 
         }).start();
@@ -150,19 +150,19 @@ public class LiveFilterTabArd extends Tab {
 
     private void searchUrl() {
         new Thread(() -> {
-            LiveFactory.progressPropertyARD.setValue(LiveFactory.PROGRESS_NULL);
-            final JsonInfoDtoArd jsonInfoDtoArd = new JsonInfoDtoArd();
-            jsonInfoDtoArd.init();
-            jsonInfoDtoArd.setPageNo(0);
-            jsonInfoDtoArd.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.getValue());
+            LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).setValue(LiveFactory.PROGRESS_NULL);
+            final JsonInfoDto jsonInfoDto = new JsonInfoDto();
+            jsonInfoDto.init();
+            jsonInfoDto.setPageNo(0);
+            jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.getValue());
 
-            new LiveSearchArd().loadUrl(jsonInfoDtoArd);
+            new LiveSearchArd().loadUrl(jsonInfoDto);
             Platform.runLater(() -> {
-                if (jsonInfoDtoArd.getList().isEmpty()) {
+                if (jsonInfoDto.getList().isEmpty()) {
                     // dann hats nicht geklappt
                     PAlert.showErrorAlert("Film suchen", "Der gesuchte Film konnte nicht gefunden werden.");
                 } else {
-                    jsonInfoDtoArd.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
+                    jsonInfoDto.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
                 }
             });
         }).start();
@@ -171,8 +171,8 @@ public class LiveFilterTabArd extends Tab {
 
 
     private void addProgress() {
-        progress.progressProperty().bind(LiveFactory.progressPropertyARD);
-        progress.visibleProperty().bind(LiveFactory.progressPropertyARD.greaterThan(-1));
+        progress.progressProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD));
+        progress.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).greaterThan(-1));
         progress.setMaxWidth(Double.MAX_VALUE);
         vBoxTab.getChildren().addAll(P2GuiTools.getVBoxGrower(), progress);
         VBox.setVgrow(progress, Priority.ALWAYS);

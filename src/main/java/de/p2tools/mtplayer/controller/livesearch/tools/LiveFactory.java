@@ -24,8 +24,9 @@ import java.util.concurrent.TimeUnit;
 public class LiveFactory {
     private static final int TIMEOUT_LENGTH = 2000;
     public static int PROGRESS_NULL = -1;
-    public static DoubleProperty progressPropertyARD = new SimpleDoubleProperty(PROGRESS_NULL);
-    public static DoubleProperty progressPropertyZDF = new SimpleDoubleProperty(PROGRESS_NULL);
+    public static double PROGRESS_WAIT = -0.5;
+    private static final DoubleProperty progressPropertyARD = new SimpleDoubleProperty(PROGRESS_NULL);
+    private static final DoubleProperty progressPropertyZDF = new SimpleDoubleProperty(PROGRESS_NULL);
 
     public enum CHANNEL {ARD, ZDF}
 
@@ -68,6 +69,7 @@ public class LiveFactory {
         return ret;
     }
 
+
     public static void setProgress(CHANNEL channel, double count, int max) {
         final double progress = count / max;
         switch (channel) {
@@ -79,11 +81,25 @@ public class LiveFactory {
         System.out.println("Filme suchen: " + progress);
     }
 
-    public static void setSearchString(String searchString) {
-        searchString = searchString;
+    public static void setProgressWait(CHANNEL channel) {
+        switch (channel) {
+            case ARD -> Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(PROGRESS_WAIT));
+
+            case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(PROGRESS_WAIT));
+
+        }
     }
 
-    public DoubleProperty getProgressProperty(CHANNEL channel) {
+    public static void setProgressNull(CHANNEL channel) {
+        switch (channel) {
+            case ARD -> Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(PROGRESS_NULL));
+
+            case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(PROGRESS_NULL));
+
+        }
+    }
+
+    public static DoubleProperty getProgressProperty(CHANNEL channel) {
         switch (channel) {
             case ARD -> {
                 return progressPropertyARD;
@@ -113,8 +129,7 @@ public class LiveFactory {
     public static String getUrl(String url) throws IOException, InterruptedException {
         URI uri = URI.create(url);
         HttpRequest request = HttpRequest.newBuilder(uri).build();
-        String content = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString()).body();
-        return content;
+        return HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString()).body();
     }
 
     public static void addUrlSubtitle(FilmData film, String url) {
@@ -149,5 +164,4 @@ public class LiveFactory {
         }
         return ret;
     }
-
 }

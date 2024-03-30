@@ -4,7 +4,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
@@ -26,7 +26,7 @@ public class LiveFilterTabZdf extends Tab {
 
     private final ProgData progData;
     private IntegerProperty siteNo = new SimpleIntegerProperty(0);
-    private final JsonInfoDtoArd jsonInfoDtoZdf = new JsonInfoDtoArd();
+    private final JsonInfoDto jsonInfoDtoZdf = new JsonInfoDto();
     private final ProgressBar progress = new ProgressBar();
     private final VBox vBoxTab = new VBox();
 
@@ -62,15 +62,15 @@ public class LiveFilterTabZdf extends Tab {
             searchZdf(0);
         });
         btnSearchZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(5))
-                .or(LiveFactory.progressPropertyZDF.isNotEqualTo(LiveFactory.PROGRESS_NULL)));
+                .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnZdf = new Button();
         btnKeepOnZdf.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnKeepOnZdf.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnZdf.setOnAction(a -> {
         });
-        btnKeepOnZdf.disableProperty().bind((jsonInfoDtoZdf.getSizeOverAll().lessThanOrEqualTo(siteNo.get() * JsonInfoDtoArd.PAGE_SIZE))
-                .or(LiveFactory.progressPropertyZDF.isNotEqualTo(LiveFactory.PROGRESS_NULL)));
+        btnKeepOnZdf.disableProperty().bind((jsonInfoDtoZdf.getSizeOverAll().lessThanOrEqualTo(siteNo.get() * JsonInfoDto.PAGE_SIZE))
+                .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         VBox vBox = new VBox();
         vBox.setSpacing(2);
@@ -106,7 +106,7 @@ public class LiveFilterTabZdf extends Tab {
             searchUrl();
         });
         btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(5))
-                .or(LiveFactory.progressPropertyZDF.isNotEqualTo(LiveFactory.PROGRESS_NULL)));
+                .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearchUrl;
         cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF);
@@ -133,7 +133,7 @@ public class LiveFilterTabZdf extends Tab {
 
     private void searchZdf(int page) {
         new Thread(() -> {
-            LiveFactory.progressPropertyZDF.setValue(LiveFactory.PROGRESS_NULL);
+            LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).setValue(LiveFactory.PROGRESS_NULL);
             jsonInfoDtoZdf.init();
             jsonInfoDtoZdf.setPageNo(0);
             jsonInfoDtoZdf.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.getValue());
@@ -147,7 +147,7 @@ public class LiveFilterTabZdf extends Tab {
 
     private void searchUrl() {
         new Thread(() -> {
-            LiveFactory.progressPropertyZDF.setValue(LiveFactory.PROGRESS_NULL);
+            LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).setValue(LiveFactory.PROGRESS_NULL);
             jsonInfoDtoZdf.init();
             jsonInfoDtoZdf.setPageNo(0);
             jsonInfoDtoZdf.setStartUrl(ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.getValue());
@@ -165,8 +165,8 @@ public class LiveFilterTabZdf extends Tab {
     }
 
     private void addProgress() {
-        progress.progressProperty().bind(LiveFactory.progressPropertyZDF);
-        progress.visibleProperty().bind(LiveFactory.progressPropertyZDF.greaterThan(-1));
+        progress.progressProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF));
+        progress.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).greaterThan(-1));
         progress.setMaxWidth(Double.MAX_VALUE);
         vBoxTab.getChildren().addAll(/*P2GuiTools.getVBoxGrower(),*/ progress);
         VBox.setVgrow(progress, Priority.ALWAYS);
