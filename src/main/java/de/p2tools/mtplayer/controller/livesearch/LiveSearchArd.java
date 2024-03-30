@@ -2,13 +2,10 @@ package de.p2tools.mtplayer.controller.livesearch;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearchard.ArdFilmDeserializer;
-import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.tools.log.PLog;
-import javafx.application.Platform;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -34,10 +31,7 @@ public class LiveSearchArd {
 
         load(jsonInfoDto, next);
 
-        Platform.runLater(() -> {
-            jsonInfoDto.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
-        });
-
+        LiveFactory.addToList(jsonInfoDto);
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ARD);
         PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
@@ -55,15 +49,7 @@ public class LiveSearchArd {
             PLog.errorLog(898945124, ex, "Url: " + jsonInfoDto.getSearchString());
         }
 
-        Platform.runLater(() -> {
-            if (jsonInfoDto.getList().isEmpty()) {
-                // dann hats nicht geklappt
-                PAlert.showErrorAlert("Film suchen", "Der gesuchte Film konnte nicht gefunden werden.");
-            } else {
-                jsonInfoDto.getList().forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
-            }
-        });
-
+        LiveFactory.addToList(jsonInfoDto);
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ARD);
         PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
@@ -81,7 +67,6 @@ public class LiveSearchArd {
             url = jsonInfoDto.getStartUrl();
         }
 
-        int max;
         try {
             Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
             if (rootNode.isEmpty()) {
@@ -97,7 +82,7 @@ public class LiveSearchArd {
             hasMore(jsonInfoDto);
 
             if (jsonNode.get("teasers") != null) {
-                max = jsonNode.get("teasers").size();
+                int max = jsonNode.get("teasers").size();
                 int no = 0;
 
                 Iterator<JsonNode> children = jsonNode.get("teasers").elements();

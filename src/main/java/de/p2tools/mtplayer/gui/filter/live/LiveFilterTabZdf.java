@@ -3,22 +3,17 @@ package de.p2tools.mtplayer.gui.filter.live;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
-import java.util.List;
 
 public class LiveFilterTabZdf extends Tab {
 
@@ -54,18 +49,14 @@ public class LiveFilterTabZdf extends Tab {
         Button btnSearchZdf = new Button();
         btnSearchZdf.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
         btnSearchZdf.setTooltip(new Tooltip("Suche starten"));
-        btnSearchZdf.setOnAction(a -> {
-            searchZdf(false);
-        });
+        btnSearchZdf.setOnAction(a -> searchZdf(false));
         btnSearchZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(5))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnZdf = new Button();
         btnKeepOnZdf.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnKeepOnZdf.setTooltip(new Tooltip("Weitersuchen"));
-        btnKeepOnZdf.setOnAction(a -> {
-            searchZdf(true);
-        });
+        btnKeepOnZdf.setOnAction(a -> searchZdf(true));
         btnKeepOnZdf.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
@@ -98,9 +89,7 @@ public class LiveFilterTabZdf extends Tab {
         Button btnSearchUrlZdf = new Button();
         btnSearchUrlZdf.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
         btnSearchUrlZdf.setTooltip(new Tooltip("Suche starten"));
-        btnSearchUrlZdf.setOnAction(a -> {
-            searchUrl();
-        });
+        btnSearchUrlZdf.setOnAction(a -> searchUrl());
         btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(5))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
@@ -128,26 +117,11 @@ public class LiveFilterTabZdf extends Tab {
     }
 
     private void searchZdf(boolean next) {
-        new Thread(() -> {
-            List<FilmDataMTP> list = new LiveSearchZdf().loadLive(jsonInfoDto, next);
-            Platform.runLater(() -> {
-                list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
-            });
-        }).start();
+        new Thread(() -> new LiveSearchZdf().loadLive(jsonInfoDto, next)).start();
     }
 
     private void searchUrl() {
-        new Thread(() -> {
-            List<FilmDataMTP> list = new LiveSearchZdf().loadUrl(jsonInfoDto);
-            Platform.runLater(() -> {
-                if (list.isEmpty()) {
-                    // dann hats nicht geklappt
-                    PAlert.showErrorAlert("Film suchen", "Der gesuchte Film konnte nicht gefunden werden.");
-                } else {
-                    list.forEach(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList()::importFilmOnlyWithNr);
-                }
-            });
-        }).start();
+        new Thread(() -> new LiveSearchZdf().loadUrl(jsonInfoDto)).start();
     }
 
     private void addProgress() {

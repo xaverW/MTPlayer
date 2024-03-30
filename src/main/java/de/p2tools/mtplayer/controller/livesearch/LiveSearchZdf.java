@@ -1,7 +1,6 @@
 package de.p2tools.mtplayer.controller.livesearch;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearchzdf.ZdfFilmDetailDeserializer;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -21,7 +20,7 @@ public class LiveSearchZdf {
     public LiveSearchZdf() {
     }
 
-    public List<FilmDataMTP> loadLive(JsonInfoDto jsonInfoDto, boolean next) {
+    public void loadLive(JsonInfoDto jsonInfoDto, boolean next) {
         LiveFactory.setProgressWait(LiveFactory.CHANNEL.ZDF);
 
         if (!next) {
@@ -46,16 +45,17 @@ public class LiveSearchZdf {
             PLog.errorLog(898945124, ex, "Url: " + URL_BASE);
         }
 
+        LiveFactory.addToList(jsonInfoDto);
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ZDF);
         PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
-        return jsonInfoDto.getList();
     }
 
-    public List<FilmDataMTP> loadUrl(JsonInfoDto jsonInfoDto) {
+    public void loadUrl(JsonInfoDto jsonInfoDto) {
+        LiveFactory.setProgressWait(LiveFactory.CHANNEL.ZDF);
+
         jsonInfoDto.init();
         jsonInfoDto.setStartUrl(ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.getValue());
 
-        LiveFactory.setProgressWait(LiveFactory.CHANNEL.ZDF);
         try {
             final Optional<Document> document = LiveFactory.loadPage(URL_BASE);
             if (document.isPresent()) {
@@ -70,9 +70,9 @@ public class LiveSearchZdf {
             PLog.errorLog(898945124, ex, "Url: " + URL_BASE);
         }
 
+        LiveFactory.addToList(jsonInfoDto);
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ZDF);
         PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
-        return jsonInfoDto.getList();
     }
 
     private void loadUrls(JsonInfoDto jsonInfoDto, boolean next) {

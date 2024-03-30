@@ -46,18 +46,14 @@ public class LiveFilterTabArd extends Tab {
         Button btnSearchArd = new Button();
         btnSearchArd.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
         btnSearchArd.setTooltip(new Tooltip("Suche starten"));
-        btnSearchArd.setOnAction(a -> {
-            searchArd(false);
-        });
+        btnSearchArd.setOnAction(a -> searchArd(false));
         btnSearchArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.length().lessThan(5))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnArd = new Button();
         btnKeepOnArd.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnKeepOnArd.setTooltip(new Tooltip("Weitersuchen"));
-        btnKeepOnArd.setOnAction(a -> {
-            searchArd(true);
-        });
+        btnKeepOnArd.setOnAction(a -> searchArd(true));
         btnKeepOnArd.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
@@ -93,9 +89,7 @@ public class LiveFilterTabArd extends Tab {
         Button btnSearchUrlArd = new Button();
         btnSearchUrlArd.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
         btnSearchUrlArd.setTooltip(new Tooltip("Suche starten"));
-        btnSearchUrlArd.setOnAction(a -> {
-            searchUrl();
-        });
+        btnSearchUrlArd.setOnAction(a -> searchUrl());
         btnSearchUrlArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.length().lessThan(5))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
@@ -123,18 +117,12 @@ public class LiveFilterTabArd extends Tab {
     }
 
     private void searchArd(boolean next) {
-        new Thread(() -> {
-            new LiveSearchArd().loadLive(jsonInfoDto, next);
-        }).start();
+        new Thread(() -> new LiveSearchArd().loadLive(jsonInfoDto, next)).start();
     }
 
     private void searchUrl() {
-        new Thread(() -> {
-            new LiveSearchArd().loadUrl(jsonInfoDto);
-        }).start();
-
+        new Thread(() -> new LiveSearchArd().loadUrl(jsonInfoDto)).start();
     }
-
 
     private void addProgress() {
         progress.progressProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD));
