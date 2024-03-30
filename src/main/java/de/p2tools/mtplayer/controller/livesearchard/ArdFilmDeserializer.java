@@ -3,6 +3,7 @@ package de.p2tools.mtplayer.controller.livesearchard;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
@@ -63,20 +64,6 @@ public class ArdFilmDeserializer {
 
     public ArdFilmDeserializer() {
         videoDeserializer = new ArdVideoInfoJsonDeserializer();
-    }
-
-    public void addFilmId(JsonInfoDtoArd jsonInfoDtoArd, String id) {
-        String url = "https://api.ardmediathek.de/page-gateway/pages/ard/item/" + id;
-        final Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
-        rootNode.ifPresent(jsonElement -> deserialize(jsonInfoDtoArd, jsonElement));
-    }
-
-    public void addFilmUrl(JsonInfoDtoArd jsonInfoDtoArd) {
-        String url = jsonInfoDtoArd.getSearchString().trim();
-        String id = url.substring(url.lastIndexOf("/") + 1);
-        url = "https://api.ardmediathek.de/page-gateway/pages/ard/item/" + id;
-        final Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
-        rootNode.ifPresent(jsonElement -> deserialize(jsonInfoDtoArd, jsonElement));
     }
 
     public void deserialize(JsonInfoDtoArd jsonInfoDtoArd, JsonNode jsonElement) {

@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.livesearchzdf;
+package de.p2tools.mtplayer.controller.livesearch;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,6 +12,20 @@ public class ZdfBearerFactory {
 
     private static final String JSON_API_TOKEN = "apiToken";
     private static final String QUERY_SEARCH_BEARER = "head > script";
+
+    public static Optional<String> parseIndexPage(final Document document) {
+        final Elements scriptElements = document.select(QUERY_SEARCH_BEARER);
+
+        for (final Element scriptElement : scriptElements) {
+            final String script = scriptElement.html();
+            final String value = parseBearer(script);
+            if (!value.isEmpty()) {
+                return Optional.of(value);
+            }
+        }
+
+        return Optional.empty();
+    }
 
     private static String parseBearer(final String json) {
         String bearer = "";
@@ -27,19 +41,5 @@ public class ZdfBearerFactory {
         }
 
         return bearer;
-    }
-
-    public static Optional<String> parseIndexPage(final Document document) {
-        final Elements scriptElements = document.select(QUERY_SEARCH_BEARER);
-
-        for (final Element scriptElement : scriptElements) {
-            final String script = scriptElement.html();
-            final String value = parseBearer(script);
-            if (!value.isEmpty()) {
-                return Optional.of(value);
-            }
-        }
-
-        return Optional.empty();
     }
 }

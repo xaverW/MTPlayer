@@ -2,6 +2,7 @@ package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.p2lib.mtdownload.MLHttpClient;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -13,7 +14,7 @@ import java.io.InputStream;
 import java.time.Duration;
 import java.util.*;
 
-public class ZdfVideoUrlFactory {
+public class ZdfDownloadDtoDeserializer {
 
     private static final String ZDF_QUALITY_UHD = "uhd";
     private static final String ZDF_QUALITY_FHD = "fhd";
@@ -46,13 +47,13 @@ public class ZdfVideoUrlFactory {
     private static final String RELEVANT_SUBTITLE_TYPE = ".xml";
     private static final String JSON_ELEMENT_QUALITIES = "qualities";
 
-    private ZdfVideoUrlFactory() {
+    public ZdfDownloadDtoDeserializer() {
     }
 
-    public static Optional<DownloadDto> parseUrl(final JsonInfoDtoZdf jsonInfoDtoZdf, String videoUrl) {
+    public Optional<DownloadDto> deserialize(final JsonInfoDtoArd jsonInfoDtoArd, String videoUrl) {
         try {
             final Request.Builder builder = new Request.Builder().url(videoUrl);
-            String api = "Bearer " + jsonInfoDtoZdf.getApi();
+            String api = "Bearer " + jsonInfoDtoArd.getApi();
             builder.addHeader("Api-Auth", api);
             Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
             ResponseBody body = response.body();
@@ -74,7 +75,7 @@ public class ZdfVideoUrlFactory {
         return Optional.empty();
     }
 
-    private static void parseDuration(final DownloadDto dto, final JsonNode rootNode) {
+    private void parseDuration(final DownloadDto dto, final JsonNode rootNode) {
         final JsonNode attributes = rootNode.get(JSON_ELEMENT_ATTRIBUTES);
         if (attributes != null) {
             final JsonNode durationElement = attributes.get(JSON_ELEMENT_DURATION);
@@ -87,7 +88,7 @@ public class ZdfVideoUrlFactory {
         }
     }
 
-    private static void parseVideoUrls(final DownloadDto dto, final JsonNode rootNode) {
+    private void parseVideoUrls(final DownloadDto dto, final JsonNode rootNode) {
         // array priorityList
         JsonNode jn = rootNode.get(JSON_ELEMENT_PRIORITYLIST);
         if (jn != null) {
@@ -99,7 +100,7 @@ public class ZdfVideoUrlFactory {
         }
     }
 
-    private static void parsePriority(final DownloadDto dto, final JsonNode priority) {
+    private void parsePriority(final DownloadDto dto, final JsonNode priority) {
         if (priority != null) {
             JsonNode jn = priority.get(JSON_ELEMENT_FORMITAET);
             if (jn != null) {
@@ -112,7 +113,7 @@ public class ZdfVideoUrlFactory {
         }
     }
 
-    private static void parseFormitaet(final DownloadDto dto, final JsonNode formitaet) {
+    private void parseFormitaet(final DownloadDto dto, final JsonNode formitaet) {
         // only mp4-videos are relevant
         final JsonNode mimeType = formitaet.get(JSON_ELEMENT_MIMETYPE);
         if (mimeType != null && mimeType.asText().equalsIgnoreCase(RELEVANT_MIME_TYPE)) {
@@ -162,7 +163,7 @@ public class ZdfVideoUrlFactory {
         }
     }
 
-    private static AbstractMap.SimpleEntry<String, String> extractTrack(JsonNode trackObject) {
+    private AbstractMap.SimpleEntry<String, String> extractTrack(JsonNode trackObject) {
         String classValue = trackObject.get(JSON_ELEMENT_CLASS).asText();
         String language = trackObject.get(JSON_ELEMENT_LANGUAGE).asText();
         String uri = trackObject.get(JSON_ELEMENT_URI).asText();
@@ -178,7 +179,7 @@ public class ZdfVideoUrlFactory {
         }
     }
 
-    private static void parseSubtitle(final DownloadDto dto, final JsonNode rootNode) {
+    private void parseSubtitle(final DownloadDto dto, final JsonNode rootNode) {
         JsonNode jn = rootNode.get(JSON_ELEMENT_CAPTIONS);
         if (jn != null) {
             Iterator<JsonNode> captionList = rootNode.get(JSON_ELEMENT_CAPTIONS).elements();
@@ -205,7 +206,7 @@ public class ZdfVideoUrlFactory {
         }
     }
 
-    private static void parseGeoLocation(final DownloadDto dto, final JsonNode rootNode) {
+    private void parseGeoLocation(final DownloadDto dto, final JsonNode rootNode) {
         final JsonNode attributes = rootNode.get(JSON_ELEMENT_ATTRIBUTES);
         if (attributes != null) {
             final JsonNode geoLocation = attributes.get(JSON_ELEMENT_GEOLOCATION);
@@ -223,7 +224,7 @@ public class ZdfVideoUrlFactory {
         }
     }
 
-    private static LiveConst.Qualities parseVideoQuality(final JsonNode quality) {
+    private LiveConst.Qualities parseVideoQuality(final JsonNode quality) {
         LiveConst.Qualities qualityValue;
         final String zdfQuality = quality.get(JSON_ELEMENT_QUALITY).asText();
         switch (zdfQuality) {
@@ -251,7 +252,7 @@ public class ZdfVideoUrlFactory {
         return qualityValue;
     }
 
-    private static class DownloadInfo {
+    private class DownloadInfo {
         private String language;
         private String uri;
         private int verticalResolution;

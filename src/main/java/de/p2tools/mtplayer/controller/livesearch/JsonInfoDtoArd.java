@@ -15,58 +15,39 @@
  */
 
 
-package de.p2tools.mtplayer.controller.livesearchzdf;
+package de.p2tools.mtplayer.controller.livesearch;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
+import de.p2tools.mtplayer.controller.livesearchzdf.ZdfFilmDto;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleLongProperty;
 
 import java.util.ArrayList;
 
-public class JsonInfoDtoZdf {
+public class JsonInfoDtoArd {
     public static int PAGE_SIZE = 20;
 
-    private String title = "";
-
     private String searchString;
-    private int pageNo;
-    private String api = "";
-
-    private ZdfFilmDto zdfFilmDto = null;
     private String startUrl = "";
-    private String hitUrl = "";
-    private int hitNo = 0;
-    private LongProperty sizeOverAll = new SimpleLongProperty(0);
 
-    private FilmDataMTP filmDataMTP = null;
+    private int pageNo;
+    private LongProperty sizeOverAll = new SimpleLongProperty(0);
     private ArrayList<FilmDataMTP> list = new ArrayList<>();
 
+    private String api = "";
+    private ZdfFilmDto zdfFilmDto = null;
 
-    public JsonInfoDtoZdf() {
+    public JsonInfoDtoArd() {
     }
 
     public void init() {
         searchString = "";
-        LiveFactory.progressPropertyZDF.setValue(LiveFactory.PROGRESS_NULL);
         pageNo = 0;
         api = "";
 
         startUrl = "";
-        hitUrl = "";
-        hitNo = 0;
         sizeOverAll.set(0);
-
-        FilmDataMTP filmDataMTP = null;
         list.clear();
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getSearchString() {
@@ -77,12 +58,36 @@ public class JsonInfoDtoZdf {
         this.searchString = searchString;
     }
 
+    public String getStartUrl() {
+        return startUrl;
+    }
+
+    public void setStartUrl(String startUrl) {
+        this.startUrl = startUrl;
+    }
+
     public int getPageNo() {
         return pageNo;
     }
 
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
+    }
+
+    public LongProperty getSizeOverAll() {
+        return sizeOverAll;
+    }
+
+    public void setSizeOverAll(long sizeOverAll) {
+        this.sizeOverAll.set(sizeOverAll);
+    }
+
+    public ArrayList<FilmDataMTP> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<FilmDataMTP> list) {
+        this.list = list;
     }
 
     public String getApi() {
@@ -99,53 +104,5 @@ public class JsonInfoDtoZdf {
 
     public void setZdfFilmDto(ZdfFilmDto zdfFilmDto) {
         this.zdfFilmDto = zdfFilmDto;
-    }
-
-    public String getStartUrl() {
-        return startUrl;
-    }
-
-    public void setStartUrl(String startUrl) {
-        this.startUrl = startUrl;
-    }
-
-    public String getHitUrl() {
-        return hitUrl;
-    }
-
-    public void setHitUrl(String hitUrl) {
-        this.hitUrl = hitUrl;
-    }
-
-    public int getHitNo() {
-        return hitNo;
-    }
-
-    public void setHitNo(int hitNo) {
-        this.hitNo = hitNo;
-    }
-
-    public LongProperty getSizeOverAll() {
-        return sizeOverAll;
-    }
-
-    public void setSizeOverAll(long sizeOverAll) {
-        this.sizeOverAll.set(sizeOverAll);
-    }
-
-    public FilmDataMTP getFilmDataMTP() {
-        return filmDataMTP;
-    }
-
-    public void setFilmDataMTP(FilmDataMTP filmDataMTP) {
-        this.filmDataMTP = filmDataMTP;
-    }
-
-    public ArrayList<FilmDataMTP> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<FilmDataMTP> list) {
-        this.list = list;
     }
 }

@@ -3,9 +3,9 @@ package de.p2tools.mtplayer.gui.filter.live;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
+import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
-import de.p2tools.mtplayer.controller.livesearchard.JsonInfoDtoArd;
-import de.p2tools.mtplayer.controller.livesearchard.LiveSearchArd;
 import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
@@ -134,6 +134,7 @@ public class LiveFilterTabArd extends Tab {
 
     private void searchArd(int page) {
         new Thread(() -> {
+            LiveFactory.progressPropertyARD.setValue(LiveFactory.PROGRESS_NULL);
             jsonInfoDtoArd.init();
             jsonInfoDtoArd.setPageNo(page);
             jsonInfoDtoArd.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.getValue());
@@ -149,6 +150,7 @@ public class LiveFilterTabArd extends Tab {
 
     private void searchUrl() {
         new Thread(() -> {
+            LiveFactory.progressPropertyARD.setValue(LiveFactory.PROGRESS_NULL);
             final JsonInfoDtoArd jsonInfoDtoArd = new JsonInfoDtoArd();
             jsonInfoDtoArd.init();
             jsonInfoDtoArd.setPageNo(0);

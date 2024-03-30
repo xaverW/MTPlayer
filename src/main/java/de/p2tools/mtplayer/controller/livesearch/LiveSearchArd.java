@@ -1,19 +1,41 @@
-package de.p2tools.mtplayer.controller.livesearchard;
+package de.p2tools.mtplayer.controller.livesearch;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
+import de.p2tools.mtplayer.controller.livesearchard.ArdFilmDeserializer;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 
 import java.util.Iterator;
 import java.util.Optional;
 
-public class ArdSearchWorker {
-    public ArdSearchWorker() {
+public class LiveSearchArd {
+
+    public LiveSearchArd() {
     }
 
     public void loadLive(JsonInfoDtoArd jsonInfoDtoArd) {
+        load(jsonInfoDtoArd);
+        Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(LiveFactory.PROGRESS_NULL));
+        PLog.sysLog("Filme gefunden: " + jsonInfoDtoArd.getList().size());
+    }
+
+    public void loadUrl(JsonInfoDtoArd jsonInfoDtoArd) {
+        try {
+            String url = jsonInfoDtoArd.getSearchString();
+            PLog.sysLog("Filme suchen: " + url);
+            LiveFactory.setProgress(LiveFactory.CHANNEL.ARD, -0.5, 1);
+            addFilmUrl(jsonInfoDtoArd);
+        } catch (final Exception ex) {
+            PLog.errorLog(898945124, ex, "Url: " + jsonInfoDtoArd.getSearchString());
+        }
+
+        Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(LiveFactory.PROGRESS_NULL));
+        PLog.sysLog("Filme gefunden: " + jsonInfoDtoArd.getList().size());
+    }
+
+    private void load(JsonInfoDtoArd jsonInfoDtoArd) {
         jsonInfoDtoArd.setStartUrl("https://api.ardmediathek.de/search-system/mediathek/ard/search/vods?query=" +
                 jsonInfoDtoArd.getSearchString() +
                 "&pageNumber=" + jsonInfoDtoArd.getPageNo() +
@@ -41,9 +63,9 @@ public class ArdSearchWorker {
 
                 Iterator<JsonNode> children = jsonNode.get("teasers").elements();
                 while (children.hasNext()) {
-                    jsonInfoDtoArd.setHitNo(++no);
+                    ++no;
                     String id = JsonFactory.getString(children.next(), "id");
-                    new ArdFilmDeserializer().addFilmId(jsonInfoDtoArd, id);
+                    addFilmId(jsonInfoDtoArd, id);
                     LiveFactory.setProgress(LiveFactory.CHANNEL.ARD, no, max);
                 }
             }
@@ -53,4 +75,19 @@ public class ArdSearchWorker {
         Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(LiveFactory.PROGRESS_NULL));
         PLog.sysLog("Filme gefunden: " + jsonInfoDtoArd.getList().size());
     }
+
+    private void addFilmId(JsonInfoDtoArd jsonInfoDtoArd, String id) {
+        String url = "https://api.ardmediathek.de/page-gateway/pages/ard/item/" + id;
+        final Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
+        rootNode.ifPresent(jsonElement -> new ArdFilmDeserializer().deserialize(jsonInfoDtoArd, jsonElement));
+    }
+
+    public void addFilmUrl(JsonInfoDtoArd jsonInfoDtoArd) {
+        String url = jsonInfoDtoArd.getSearchString().trim();
+        String id = url.substring(url.lastIndexOf("/") + 1);
+        url = "https://api.ardmediathek.de/page-gateway/pages/ard/item/" + id;
+        final Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
+        rootNode.ifPresent(jsonElement -> new ArdFilmDeserializer().deserialize(jsonInfoDtoArd, jsonElement));
+    }
+
 }

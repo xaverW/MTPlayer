@@ -1,6 +1,7 @@
 package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
@@ -12,29 +13,28 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Optional;
 
-public class ZdfAddFilmFactory {
+public class ZdfFilmDetailTask {
     private static final transient ZdfVideoUrlOptimizer optimizer = new ZdfVideoUrlOptimizer();
     private static final DateTimeFormatter DATE_FORMAT
             = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     private static final DateTimeFormatter TIME_FORMAT
             = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    private ZdfAddFilmFactory() {
+    public ZdfFilmDetailTask() {
     }
 
-
-    public static void processRestTarget(final JsonInfoDtoZdf aDto, DownloadDto downloadDto) {
+    public void processRestTarget(final JsonInfoDtoArd jsonInfoDtoArd, DownloadDto downloadDto) {
         try {
-            appendSignLanguage(downloadDto, aDto.getZdfFilmDto().getUrlSignLanguage());
+            appendSignLanguage(downloadDto, jsonInfoDtoArd.getZdfFilmDto().getUrlSignLanguage());
 
-            final ZdfFilmDto result = aDto.getZdfFilmDto();
-            addFilm(aDto, downloadDto, result);
+            final ZdfFilmDto result = jsonInfoDtoArd.getZdfFilmDto();
+            addFilm(jsonInfoDtoArd, downloadDto, result);
         } catch (Exception e) {
-            PLog.errorLog(959562654, e, aDto.getSearchString());
+            PLog.errorLog(959562654, e, jsonInfoDtoArd.getSearchString());
         }
     }
 
-    private static void appendSignLanguage(DownloadDto downloadDto, Optional<String> urlSignLanguage) {
+    private void appendSignLanguage(DownloadDto downloadDto, Optional<String> urlSignLanguage) {
         if (urlSignLanguage.isPresent()) {
             downloadDto
                     .getDownloadUrls(ZdfConstants.LANGUAGE_GERMAN)
@@ -43,22 +43,22 @@ public class ZdfAddFilmFactory {
         }
     }
 
-    private static void addFilm(final JsonInfoDtoZdf jsonInfoDtoZdf, DownloadDto downloadDto, final ZdfFilmDto zdfFilmDto) {
+    private void addFilm(final JsonInfoDtoArd jsonInfoDtoArd, DownloadDto downloadDto, final ZdfFilmDto zdfFilmDto) {
         for (final String language : downloadDto.getLanguages()) {
 
             if (downloadDto.getUrl(language, LiveConst.Qualities.NORMAL).isPresent()) {
                 DownloadDtoFilmConverter.getOptimizedUrls(
                         downloadDto.getDownloadUrls(language), Optional.of(optimizer));
 
-                final FilmDataMTP filmWithLanguage = createFilm(downloadDto, zdfFilmDto, jsonInfoDtoZdf, language);
+                final FilmDataMTP filmWithLanguage = createFilm(downloadDto, zdfFilmDto, language);
                 LiveFactory.setFilmSize(filmWithLanguage);
                 filmWithLanguage.init();
-                jsonInfoDtoZdf.getList().add(filmWithLanguage);
+                jsonInfoDtoArd.getList().add(filmWithLanguage);
             }
         }
     }
 
-    private static FilmDataMTP createFilm(DownloadDto downloadDto, final ZdfFilmDto zdfFilmDto, final JsonInfoDtoZdf jsonInfoDtoZdf, final String aLanguage) {
+    private FilmDataMTP createFilm(DownloadDto downloadDto, final ZdfFilmDto zdfFilmDto, final String aLanguage) {
         final String title = updateTitle(aLanguage, zdfFilmDto.getTitle());
         LocalDateTime time = zdfFilmDto.getTime().orElse(LocalDateTime.now());
         String dateValue = time.format(DATE_FORMAT);
@@ -91,7 +91,7 @@ public class ZdfAddFilmFactory {
         return film;
     }
 
-    private static String updateTitle(final String aLanguage, final String aTitle) {
+    private String updateTitle(final String aLanguage, final String aTitle) {
         String title = aTitle;
         switch (aLanguage) {
             case ZdfConstants.LANGUAGE_GERMAN:
@@ -114,6 +114,4 @@ public class ZdfAddFilmFactory {
 
         return title;
     }
-
-
 }

@@ -1,30 +1,23 @@
 package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
-import de.p2tools.p2lib.mtdownload.MLHttpClient;
+import de.p2tools.mtplayer.controller.livesearch.JsonInfoDtoArd;
+import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.p2lib.tools.log.PLog;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.io.InputStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Optional;
 
-public class ZDFFactory {
+public class ZdfFilmDetailDeserializer {
 
-    public static final String URL_BASE = "https://www.zdf.de";
     public static final String URL_API_BASE = "https://api.zdf.de";
-    private static final String ATTRIBUTE_HREF = "href";
     private static final String JSON_ELEMENT_BEGIN = "airtimeBegin";
     private static final String JSON_ELEMENT_BRAND = "http://zdf.de/rels/brand";
     private static final String JSON_ELEMENT_CATEGORY = "http://zdf.de/rels/category";
@@ -54,62 +47,16 @@ public class ZDFFactory {
     private static final String PLAYER_ID = "android_native_5";
 
 
-    private ZDFFactory() {
+    public ZdfFilmDetailDeserializer() {
     }
 
-    public static List<String> getFilms(JsonInfoDtoZdf jsonInfoDtoZdf) {
-        String searchUrl = "https://www.zdf.de/suche?q=" + jsonInfoDtoZdf.getSearchString() +
-                "&abName=ab-2024-03-25&abGroup=gruppe-b";
-
-        List<String> urlList = new ArrayList<>();
-        final Optional<Document> document = LiveFactory.loadPage(searchUrl);
-        if (document.isPresent()) {
-            final Elements elements = document.get().select("div.box, div.m-tags");
-            for (final Element element : elements) {
-                Elements urlElement = element.select("a");
-                String url = ZDFFactory.addUrlBase(urlElement.attr(ATTRIBUTE_HREF));
-                urlList.add(url);
-            }
-        }
-
-        return urlList;
-    }
-
-    public static void workFilm(JsonInfoDtoZdf jsonInfoDtoZdf, String url) {
-        final Optional<Document> document = LiveFactory.loadPage(url);
-        if (document.isEmpty()) {
-            System.out.println("document.isEmpty(): error");
-        } else {
-
-            final Elements elements = document.get().select("div.b-playerbox.b-ratiobox.js-rb-live");
-            if (elements.isEmpty()) {
-                System.out.println("elements.isEmpty(): error");
-            } else {
-
-                Element element = elements.first();
-                String urlElement = element.attr("data-zdfplayer-id");
-                if (urlElement.isEmpty()) {
-                    System.out.println("urlElement.isEmpty(): error");
-                } else {
-                    String filmUrl = ZDFFactory.addApiUrlBase("content/documents/" + urlElement + ".json");
-                    getVideoUrl(jsonInfoDtoZdf, filmUrl);
-                }
-            }
-        }
-    }
-
-    public static void getVideoUrl(JsonInfoDtoZdf jsonInfoDtoZdf, String getUrl) {
+    public void deserialize(JsonInfoDtoArd jsonInfoDtoArd, String getUrl) {
         try {
-            final Request.Builder builder = new Request.Builder().url(getUrl);
-            String api = "Bearer " + jsonInfoDtoZdf.getApi();
-            builder.addHeader("Api-Auth", api);
-            Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
-            ResponseBody body = response.body();
+            String api = "Bearer " + jsonInfoDtoArd.getApi();
+            Optional<JsonNode> optRootNode = JsonFactory.getRootNode(getUrl, api);
 
-            if (body != null && response.isSuccessful()) {
-                InputStream input = body.byteStream();
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode rootNode = objectMapper.readTree(input);
+            if (optRootNode.isPresent()) {
+                JsonNode rootNode = optRootNode.get();
 
                 JsonNode programItemTarget = null;
                 JsonNode mainVideoTarget = null;
@@ -135,7 +82,6 @@ public class ZDFFactory {
                     }
                 }
 
-
                 String title = parseTitle(rootNode, programItemTarget).orElse("");
                 Optional<String> topic = parseTopic(rootNode);
                 Optional<String> description = parseDescription(rootNode);
@@ -147,11 +93,11 @@ public class ZDFFactory {
                 Map<String, String> downloadUrl = parseDownloadUrls(mainVideoTarget);
 
                 if (downloadUrl.containsKey(DOWNLOAD_URL_DEFAULT)) {
-                    jsonInfoDtoZdf.setZdfFilmDto(new ZdfFilmDto(downloadUrl.get(DOWNLOAD_URL_DEFAULT),
+                    jsonInfoDtoArd.setZdfFilmDto(new ZdfFilmDto(downloadUrl.get(DOWNLOAD_URL_DEFAULT),
                             topic, title, description, website, time, duration, downloadUrl.get(DOWNLOAD_URL_DGS)));
 
-                    Optional<DownloadDto> downloadDtoOptional = ZdfVideoUrlFactory.parseUrl(jsonInfoDtoZdf, downloadUrl.get(DOWNLOAD_URL_DEFAULT));
-                    downloadDtoOptional.ifPresent(downloadDto -> ZdfAddFilmFactory.processRestTarget(jsonInfoDtoZdf, downloadDto));
+                    Optional<DownloadDto> downloadDtoOptional = new ZdfDownloadDtoDeserializer().deserialize(jsonInfoDtoArd, downloadUrl.get(DOWNLOAD_URL_DEFAULT));
+                    downloadDtoOptional.ifPresent(downloadDto -> new ZdfFilmDetailTask().processRestTarget(jsonInfoDtoArd, downloadDto));
                 }
             }
         } catch (final Exception ex) {
@@ -159,7 +105,7 @@ public class ZDFFactory {
         }
     }
 
-    private static Optional<String> parseTopic(JsonNode aRootNode) {
+    private Optional<String> parseTopic(JsonNode aRootNode) {
         JsonNode brand = aRootNode.get(JSON_ELEMENT_BRAND);
         JsonNode category = aRootNode.get(JSON_ELEMENT_CATEGORY);
 
@@ -182,12 +128,12 @@ public class ZDFFactory {
         return Optional.empty();
     }
 
-    private static Optional<String> parseTitle(JsonNode aRootNode, JsonNode aTarget) {
+    private Optional<String> parseTitle(JsonNode aRootNode, JsonNode aTarget) {
         Optional<String> title = parseTitleValue(aRootNode, aTarget);
         return title.map(s -> s.replaceAll("\\(CC.*\\) - .* Creative Commons.*", ""));
     }
 
-    private static Optional<String> parseDescription(JsonNode aRootNode) {
+    private Optional<String> parseDescription(JsonNode aRootNode) {
         JsonNode leadParagraph = aRootNode.get(JSON_ELEMENT_LEAD_PARAGRAPH);
         if (leadParagraph != null) {
             return Optional.of(leadParagraph.asText());
@@ -201,7 +147,7 @@ public class ZDFFactory {
         return Optional.empty();
     }
 
-    private static Optional<String> parseWebsiteUrl(JsonNode aRootNode) {
+    private Optional<String> parseWebsiteUrl(JsonNode aRootNode) {
         if (aRootNode.has(JSON_ELEMENT_SHARING_URL)) {
             return Optional.of(aRootNode.get(JSON_ELEMENT_SHARING_URL).asText());
         }
@@ -209,7 +155,7 @@ public class ZDFFactory {
         return Optional.empty();
     }
 
-    private static Optional<LocalDateTime> parseAirtime(JsonNode aRootNode, JsonNode aProgramItemTarget) {
+    private Optional<LocalDateTime> parseAirtime(JsonNode aRootNode, JsonNode aProgramItemTarget) {
         Optional<String> date = Optional.of("");
         DateTimeFormatter formatter;
 
@@ -247,7 +193,7 @@ public class ZDFFactory {
         return Optional.empty();
     }
 
-    private static Optional<Duration> parseDuration(JsonNode mainVideoTarget) {
+    private Optional<Duration> parseDuration(JsonNode mainVideoTarget) {
         if (mainVideoTarget != null) {
             JsonNode duration = mainVideoTarget.get(JSON_ELEMENT_DURATION);
             if (duration != null) {
@@ -258,7 +204,7 @@ public class ZDFFactory {
         return Optional.empty();
     }
 
-    private static Optional<String> getEditorialDate(JsonNode aRootNode) {
+    private Optional<String> getEditorialDate(JsonNode aRootNode) {
         if (aRootNode.get(JSON_ELEMENT_EDITORIAL_DATE) != null) {
             return Optional.of(aRootNode.get(JSON_ELEMENT_EDITORIAL_DATE).asText());
         }
@@ -266,7 +212,7 @@ public class ZDFFactory {
         return Optional.empty();
     }
 
-    private static Optional<String> parseTitleValue(JsonNode aRootNode, JsonNode aTarget) {
+    private Optional<String> parseTitleValue(JsonNode aRootNode, JsonNode aTarget) {
         // use property "title" if found
         JsonNode titleElement = aRootNode.get(JSON_ELEMENT_TITLE);
         if (titleElement != null) {
@@ -293,7 +239,7 @@ public class ZDFFactory {
         return Optional.empty();
     }
 
-    private static Map<String, String> parseDownloadUrls(final JsonNode mainVideoContent) {
+    private Map<String, String> parseDownloadUrls(final JsonNode mainVideoContent) {
         // key: type of download url, value: the download url
         final Map<String, String> result = new HashMap<>();
 
@@ -324,31 +270,15 @@ public class ZDFFactory {
         return result;
     }
 
-    private static String finalizeDownloadUrl(final String url) {
-        return addDomainIfMissing(url, ZDFFactory.URL_API_BASE).replace(PLACEHOLDER_PLAYER_ID, PLAYER_ID);
+    private String finalizeDownloadUrl(final String url) {
+        return addDomainIfMissing(url, ZdfFilmDetailDeserializer.URL_API_BASE).replace(PLACEHOLDER_PLAYER_ID, PLAYER_ID);
     }
 
-    public static String addDomainIfMissing(final String aUrl, final String aDomain) {
+    public String addDomainIfMissing(final String aUrl, final String aDomain) {
         if (aUrl != null && !aUrl.isEmpty() && aUrl.startsWith("/")) {
             return aDomain + aUrl;
         }
 
         return aUrl;
-    }
-
-    public static String addUrlBase(String url) {
-        if (!url.startsWith("/")) {
-            return URL_BASE + "/" + url;
-        } else {
-            return URL_BASE + url;
-        }
-    }
-
-    public static String addApiUrlBase(String url) {
-        if (!url.startsWith("/")) {
-            return URL_API_BASE + "/" + url;
-        } else {
-            return URL_API_BASE + url;
-        }
     }
 }
