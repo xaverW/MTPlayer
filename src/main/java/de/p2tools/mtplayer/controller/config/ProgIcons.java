@@ -99,6 +99,7 @@ public class ProgIcons {
     public static PIcon ICON_TOOLBAR_FILM_DEL_BOOKMARK = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-del-bookmark.png", 28, 28);
     public static PIcon ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-del-all-bookmark.png", 28, 28);
     public static PIcon ICON_TOOLBAR_PROPOSE = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-propose.png", 28, 28);
+    public static PIcon ICON_TOOLBAR_LIVE = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-live.png", 28, 28);
 
     public static PIcon ICON_TOOLBAR_ABO_NEW = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-new.png", 28, 28);
     public static PIcon ICON_TOOLBAR_ABO_ON = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-on.png", 28, 28);

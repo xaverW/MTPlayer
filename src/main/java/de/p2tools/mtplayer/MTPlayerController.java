@@ -41,6 +41,7 @@ public class MTPlayerController extends StackPane {
 
     private final Button btnFilmlist = new Button("Filmliste");
     private final Button btnFilm = new Button("Filme");
+    private final Button btnLive = new Button("Live");
     private final Button btnDownload = new Button("Downloads");
     private final Button btnAbo = new Button("Abos");
     private final SearchFast searchFast = new SearchFast();
@@ -71,11 +72,11 @@ public class MTPlayerController extends StackPane {
         try {
             // Toolbar
             TilePane tilePane = new TilePane();
-            tilePane.setPrefColumns(3);
-            tilePane.setHgap(20);
+            tilePane.setPrefColumns(4);
+            tilePane.setHgap(15);
             tilePane.setPadding(new Insets(0));
             tilePane.setAlignment(Pos.CENTER);
-            tilePane.getChildren().addAll(btnFilm, btnDownload, btnAbo);
+            tilePane.getChildren().addAll(btnFilm, btnLive, btnDownload, btnAbo);
 
             HBox hBoxTop = new HBox();
             hBoxTop.setPadding(new Insets(2, 10, 2, 10));
@@ -158,8 +159,22 @@ public class MTPlayerController extends StackPane {
         });
 
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
-        btnFilm.setOnAction(e -> selPanelFilmOrLiveFilm());
+        btnFilm.setOnAction(e -> selPanelFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);
+
+        btnLive.setTooltip(new Tooltip("Live-Filme suchen"));
+        btnLive.setOnAction(e -> selPanelLiveFilm());
+        btnLive.setMaxWidth(Double.MAX_VALUE);
+        btnLive.visibleProperty().bind(ProgConfig.LIVE_FILM_IS_VISIBLE);
+        btnLive.managedProperty().bind(btnLive.visibleProperty());
+        ProgConfig.LIVE_FILM_IS_VISIBLE.addListener((u, o, n) -> {
+            if (n) {
+                selPanelLiveFilm();
+            } else {
+                selPanelFilm();
+            }
+        });
+
 
         btnDownload.setTooltip(new Tooltip("Downloads anzeigen"));
         btnDownload.setOnAction(e -> selPanelDownload());
@@ -170,14 +185,19 @@ public class MTPlayerController extends StackPane {
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
         btnFilm.setOnMouseClicked(mouseEvent -> {
-            if (!maskerPane.isVisible() && paneShown == PANE_SHOWN.FILM) {
-                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                    ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getValue());
-                }
-            } else if (!maskerPane.isVisible() && paneShown == PANE_SHOWN.LIVE_FILM) {
-                if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                    ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.getValue());
-                }
+            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.FILM) {
+                return;
+            }
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getValue());
+            }
+        });
+        btnLive.setOnMouseClicked(mouseEvent -> {
+            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.LIVE_FILM) {
+                return;
+            }
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.getValue());
             }
         });
         btnDownload.setOnMouseClicked(mouseEvent -> {
@@ -198,25 +218,7 @@ public class MTPlayerController extends StackPane {
         });
     }
 
-    public void changeLiveFilm() {
-        if (ProgConfig.LIVE_FILM_GUI_ACTIVE.get()) {
-            selPanelFilm();
-        } else {
-            selPanelLiveFilm();
-        }
-    }
-
-    private void selPanelFilmOrLiveFilm() {
-        if (ProgConfig.LIVE_FILM_GUI_ACTIVE.get()) {
-            selPanelLiveFilm();
-        } else {
-            selPanelFilm();
-        }
-    }
-
     private void selPanelFilm() {
-        ProgConfig.LIVE_FILM_GUI_ACTIVE.set(false);
-
         if (paneShown == PANE_SHOWN.FILM) {
             // dann ist der 2. Klick
             filmGui.closeSplit();
@@ -235,8 +237,6 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelLiveFilm() {
-        ProgConfig.LIVE_FILM_GUI_ACTIVE.set(true);
-
         if (paneShown == PANE_SHOWN.LIVE_FILM) {
             // dann ist der 2. Klick
             liveFilmGui.closeSplit();
@@ -291,24 +291,31 @@ public class MTPlayerController extends StackPane {
     }
 
     private void setButtonStyle() {
+        if (ProgConfig.LIVE_FILM_IS_VISIBLE.get()) {
+            setButtonStyleSmall();
+        } else {
+            setButtonStyleBig();
+        }
+    }
+
+    private void setButtonStyleBig() {
         btnFilm.getStyleClass().clear();
+        btnLive.getStyleClass().clear();
         btnDownload.getStyleClass().clear();
         btnAbo.getStyleClass().clear();
 
         if (paneShown == PANE_SHOWN.FILM) {
             searchFast.setVisible(true);
             btnFilm.getStyleClass().add("btnTabTop-sel");
-            btnFilm.setText("Filme");
         } else {
             searchFast.setVisible(false);
             btnFilm.getStyleClass().add("btnTabTop");
         }
 
         if (paneShown == PANE_SHOWN.LIVE_FILM) {
-            btnFilm.getStyleClass().add("btnTabTop-sel");
-            btnFilm.setText("Live");
+            btnLive.getStyleClass().add("btnTabTop-sel");
         } else {
-            btnFilm.getStyleClass().add("btnTabTop");
+            btnLive.getStyleClass().add("btnTabTop");
         }
 
         if (paneShown == PANE_SHOWN.DOWNLOAD) {
@@ -321,6 +328,39 @@ public class MTPlayerController extends StackPane {
             btnAbo.getStyleClass().add("btnTabTop-sel");
         } else {
             btnAbo.getStyleClass().add("btnTabTop");
+        }
+    }
+
+    private void setButtonStyleSmall() {
+        btnFilm.getStyleClass().clear();
+        btnLive.getStyleClass().clear();
+        btnDownload.getStyleClass().clear();
+        btnAbo.getStyleClass().clear();
+
+        if (paneShown == PANE_SHOWN.FILM) {
+            searchFast.setVisible(true);
+            btnFilm.getStyleClass().add("btnTabTopSmall-sel");
+        } else {
+            searchFast.setVisible(false);
+            btnFilm.getStyleClass().add("btnTabTopSmall");
+        }
+
+        if (paneShown == PANE_SHOWN.LIVE_FILM) {
+            btnLive.getStyleClass().add("btnTabTopSmall-sel");
+        } else {
+            btnLive.getStyleClass().add("btnTabTopSmall");
+        }
+
+        if (paneShown == PANE_SHOWN.DOWNLOAD) {
+            btnDownload.getStyleClass().add("btnTabTopSmall-sel");
+        } else {
+            btnDownload.getStyleClass().add("btnTabTopSmall");
+        }
+
+        if (paneShown == PANE_SHOWN.ABO) {
+            btnAbo.getStyleClass().add("btnTabTopSmall-sel");
+        } else {
+            btnAbo.getStyleClass().add("btnTabTopSmall");
         }
     }
 

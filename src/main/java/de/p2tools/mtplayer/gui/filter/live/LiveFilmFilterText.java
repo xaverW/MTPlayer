@@ -33,6 +33,7 @@ import javafx.scene.layout.VBox;
 public class LiveFilmFilterText extends VBox {
 
     private final P2MenuButton mbChannel;
+    private final PCboStringSearch cboThema;
     private final PCboStringSearch cboTitle;
 
     private final ProgData progData;
@@ -42,6 +43,7 @@ public class LiveFilmFilterText extends VBox {
         progData = ProgData.getInstance();
 
         mbChannel = new P2MenuButton(progData.liveFilmFilterWorker.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelList);
+        cboThema = new PCboStringSearch(progData, progData.liveFilmFilterWorker.getActFilterSettings().themeProperty());
         cboTitle = new PCboStringSearch(progData, progData.liveFilmFilterWorker.getActFilterSettings().titleProperty());
 
         addFilter();
@@ -51,6 +53,7 @@ public class LiveFilmFilterText extends VBox {
         this.setSpacing(5);
 
         addTxt("Sender", mbChannel, this);
+        addTxt("Thema", cboThema, this);
         addTxt("Titel", cboTitle, this);
 
         Button btnClear = new Button();

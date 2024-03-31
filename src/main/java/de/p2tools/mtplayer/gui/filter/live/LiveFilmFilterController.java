@@ -19,17 +19,20 @@ package de.p2tools.mtplayer.gui.filter.live;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.FilterController;
+import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class LiveFilmFilterController extends FilterController {
 
     //    private final ProgressBar progress = new ProgressBar();
     private final VBox vBoxFilter;
-    private final VBox vBoxBottom;
     private final ProgData progData;
 
 
@@ -50,8 +53,7 @@ public class LiveFilmFilterController extends FilterController {
 
         vBoxFilter = getVBoxFilter(true);
         vBoxFilter.setSpacing(15);
-        vBoxFilter.setAlignment(Pos.TOP_CENTER);
-        vBoxBottom = getVBoxBottom();
+        vBoxFilter.setAlignment(Pos.TOP_LEFT);
 
         init();
     }
@@ -64,20 +66,18 @@ public class LiveFilmFilterController extends FilterController {
         tabPane.getTabs().addAll(liveFilterTabArd, liveFilterTabZdf);
         vBoxFilter.getChildren().add(tabPane);
 
+        vBoxFilter.getChildren().addAll(liveFilmFilterText);
+
+        final Button btnHelp = P2Button.helpButton(progData.primaryStage, "Live-Suche",
+                HelpText.LIVE_SEARCH);
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().add(btnHelp);
+
+        vBoxFilter.getChildren().add(P2GuiTools.getVBoxGrower());
         Separator sp1 = new Separator();
         sp1.getStyleClass().add("pseperator3");
         sp1.setMinHeight(0);
-
-        vBoxFilter.getChildren().addAll(liveFilmFilterText);
-        vBoxFilter.getChildren().add(P2GuiTools.getVBoxGrower());
-        vBoxFilter.getChildren().addAll(sp1, liveFilmFilterClearList);
-
-//        progress.progressProperty().bind(LiveFactory.progressProperty);
-//        progress.visibleProperty().bind(LiveFactory.progressProperty.greaterThan(-1));
-//        progress.setMaxWidth(Double.MAX_VALUE);
-//        vBoxBottom.getChildren().add(progress);
-//        VBox.setVgrow(progress, Priority.ALWAYS);
+        vBoxFilter.getChildren().addAll(liveFilmFilterClearList, sp1, hBox);
     }
-
-
 }

@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmfilter.FastFilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmfilter.LiveFilter;
 import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.data.PDataProgConfig;
@@ -244,7 +245,7 @@ public class ProgConfig extends PDataProgConfig {
     public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
 
     // LiveFilmGui
-    public static BooleanProperty LIVE_FILM_GUI_ACTIVE = addBoolProp("live-film-gui-active", Boolean.FALSE);
+    public static BooleanProperty LIVE_FILM_IS_VISIBLE = addBoolProp("live-film-is-visible", Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.TRUE);
     public static DoubleProperty LIVE_FILM_GUI_FILTER_DIVIDER = addDoubleProp("live-film-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty LIVE_FILM_GUI_FILTER_DIVIDER_ON = addBoolProp("live-film-gui-filter-divider-on", Boolean.TRUE);
@@ -572,23 +573,28 @@ public class ProgConfig extends PDataProgConfig {
         ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramToolsFactory.getBuild());
         ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramToolsFactory.getCompileDate());
 
-        configFile.addConfigs(ProgConfig.getInstance()); //Progconfig
-        configFile.addConfigs(ProgColorList.getInstance()); //Color
+        configFile.addConfigs(ProgConfig.getInstance()); // ProgConfig
+        configFile.addConfigs(ProgColorList.getInstance()); // Color
 
         configFile.addConfigs(progData.setDataList);
 
         // Filter
-        final FastFilmFilter fastFilmFilter = progData.filmFilterWorker.getFastFilterSettings(); //fast-Filter
+        final FastFilmFilter fastFilmFilter = progData.filmFilterWorker.getFastFilterSettings(); // Fast-Filter
         configFile.addConfigs(fastFilmFilter);
 
-        final FilmFilter akt_sf = progData.filmFilterWorker.getActFilterSettings(); //akt-Filter
+        final FilmFilter akt_sf = progData.filmFilterWorker.getActFilterSettings(); // akt-Filter
         akt_sf.setName(FilmFilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
 
-        configFile.addConfigs(progData.filmFilterWorker.getStoredFilterList()); //Filterprofile
-        configFile.addConfigs(progData.filmFilterWorker.getBackwardFilterList()); //Filterprofile
-        configFile.addConfigs(progData.filmFilterWorker.getForwardFilterList()); //Filterprofile
-        configFile.addConfigs(progData.filmFilterWorker.getTextFilterList()); //Filterprofile
+
+        configFile.addConfigs(progData.filmFilterWorker.getStoredFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filmFilterWorker.getBackwardFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filmFilterWorker.getForwardFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filmFilterWorker.getTextFilterList()); // Filterprofile
+
+        // Live-Filter
+        final LiveFilter akt_live = progData.liveFilmFilterWorker.getActFilterSettings(); // Live-Filter
+        configFile.addConfigs(akt_live);
 
         // Rest
         configFile.addConfigs(progData.aboList);

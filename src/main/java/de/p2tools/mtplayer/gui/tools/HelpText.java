@@ -991,4 +991,14 @@ public class HelpText {
                     "immer gelöscht. Der Dialog erscheint dann nicht mehr. Diese Einstellung kann aber " +
                     "in den Programmeinstellungen->Abo auch wieder geändert werden." +
                     "\n";
+    public static final String LIVE_SEARCH =
+            "Hier kann eine Live-Suche in den Mediatheken von ARD und ZDF gestartet werden. " +
+                    "Es wird dann in der Mediathek gesucht und die " +
+                    "gefundenen Filme werden aufgelistet. Mit dem " +
+                    "Button \">\" kann mit dem Suchbegriff weiter gesucht werden." +
+                    "\n\n" +
+                    "Mit der Suche: \"URL Filmseite\" kann ein Film für die spezielle Filmseite angelegt " +
+                    "werden." +
+                    "\n";
+
 }

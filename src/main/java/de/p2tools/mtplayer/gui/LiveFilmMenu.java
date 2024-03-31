@@ -18,10 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
-import de.p2tools.mtplayer.controller.config.PShortKeyFactory;
-import de.p2tools.mtplayer.controller.config.PShortcut;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
@@ -93,8 +90,8 @@ public class LiveFilmMenu {
 
         vBox.getChildren().add(P2GuiTools.getVBoxGrower());
         final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
-                "Live-Suche", "Live-Suche in der ARD-Mediathek", ProgIcons.ICON_TOOLBAR_PROPOSE.getImageView());
-        btLiveFilm.setOnAction(a -> progData.mtPlayerController.changeLiveFilm());
+                "Live-Suche", "Live-Suche in der ARD/ZDF-Mediathek", ProgIcons.ICON_TOOLBAR_LIVE.getImageView());
+        btLiveFilm.setOnAction(a -> ProgConfig.LIVE_FILM_IS_VISIBLE.set(!ProgConfig.LIVE_FILM_IS_VISIBLE.get()));
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
     }
 

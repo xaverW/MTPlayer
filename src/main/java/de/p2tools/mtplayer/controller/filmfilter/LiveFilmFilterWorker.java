@@ -28,7 +28,7 @@ import java.util.function.Predicate;
 
 public final class LiveFilmFilterWorker {
 
-    private final TextFilter actFilterSettings = new TextFilter();
+    private final LiveFilter actFilterSettings = new LiveFilter();
     private final FilmListMTP liveFilmList; // Filmliste der Live-Filme
 
 
@@ -54,7 +54,7 @@ public final class LiveFilmFilterWorker {
         return liveFilmList;
     }
 
-    public TextFilter getActFilterSettings() {
+    public LiveFilter getActFilterSettings() {
         return actFilterSettings;
     }
 
