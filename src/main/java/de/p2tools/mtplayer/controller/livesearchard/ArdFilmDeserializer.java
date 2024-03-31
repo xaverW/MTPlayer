@@ -9,6 +9,7 @@ import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
 import de.p2tools.mtplayer.controller.livesearchzdf.ZdfDatenFilm;
+import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.log.PLog;
 
 import java.time.Duration;
@@ -111,7 +112,9 @@ public class ArdFilmDeserializer {
             if (widgets.hasNext()) {
                 parseRelatedFilms(filmDto, widgets.next());
             }
+
             addFilmToList(jsonInfoDto, filmDto);
+
 
             if (partner.isPresent() && ADDITIONAL_SENDER.containsKey(partner.get())) {
                 // add film to other sender (like RBB)
@@ -130,6 +133,7 @@ public class ArdFilmDeserializer {
     }
 
     private void addFilmToList(JsonInfoDto jsonInfoDto, ArdFilmDto filmDataMTP) {
+        filmDataMTP.getFilm().arr[FilmDataXml.FILM_WEBSITE] = String.format(ArdConstants.WEBSITE_URL, jsonInfoDto.getArdFilmId());
         LiveFactory.setFilmSize(filmDataMTP.getFilm());
         filmDataMTP.getFilm().init();
         jsonInfoDto.getList().add(filmDataMTP.getFilm());

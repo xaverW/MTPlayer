@@ -117,6 +117,7 @@ public class LiveSearchArd {
 
     private void addFilmWithId(JsonInfoDto jsonInfoDto, String id) {
         final Optional<JsonNode> rootNode = JsonFactory.getRootNode(START_URL + id);
+        jsonInfoDto.setArdFilmId(id);
         rootNode.ifPresent(jsonElement -> new ArdFilmDeserializer().deserialize(jsonInfoDto, jsonElement));
     }
 

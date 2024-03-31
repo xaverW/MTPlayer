@@ -28,6 +28,8 @@ public class JsonInfoDto {
     private String searchString;
     private String startUrl = "";
     private final StringProperty nextUrl = new SimpleStringProperty("");
+
+    private String ardFilmId = "";
     private final LongProperty sizeOverAll = new SimpleLongProperty(0);
     private final IntegerProperty pageNo = new SimpleIntegerProperty(0);
     private ArrayList<FilmDataMTP> list = new ArrayList<>();
@@ -43,6 +45,7 @@ public class JsonInfoDto {
 
         startUrl = "";
         nextUrl.set("");
+        ardFilmId = "";
         sizeOverAll.set(0);
         pageNo.set(0);
         list.clear();
@@ -74,6 +77,14 @@ public class JsonInfoDto {
 
     public void setNextUrl(String nextUrl) {
         this.nextUrl.set(nextUrl);
+    }
+
+    public String getArdFilmId() {
+        return ardFilmId;
+    }
+
+    public void setArdFilmId(String ardFilmId) {
+        this.ardFilmId = ardFilmId;
     }
 
     public long getSizeOverAll() {
