@@ -104,6 +104,16 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "Eine Auswahl listet sie auf und können so auch ausgewählt werden.", 70);
         add(whatsNewInfo);
 
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 4, 1),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_08.png",
+
+                "Live-Suche",
+                "MTPlayer hat jetzt auch eine Live-Suche in den Mediatheken von ARD und ZDF. " +
+                        "Damit können Filme mit einem Suchbegriff live gesucht werden. Es ist auch möglich " +
+                        "einen Film mit der URL einer Filmseite aus der Mediathek anzulegen. Die Live-Suche kann " +
+                        "mit dem Menübutton (oder über das Programmmenü) ein- und ausgeblendet werden.", 110);
+        add(whatsNewInfo);
+
         whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 3, 3), "",
                 "Was sich sonst noch geändert hat",
                 "* Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +

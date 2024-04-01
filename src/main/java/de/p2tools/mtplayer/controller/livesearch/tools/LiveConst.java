@@ -5,6 +5,7 @@ public class LiveConst {
     }
 
     public static final String ZDF = "ZDF";
+    public static final int MIN_SEARCH_LENGTH = 4;
 
     public enum Qualities {
         HD("HD"), NORMAL("Normal"), SMALL("Klein"), UHD("UHD");
