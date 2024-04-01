@@ -317,6 +317,10 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public String getFileNameWithoutSuffix() {
+        return PUrlTools.getFileNameWithoutSuffix(getDestFileName());
+    }
+
+    public String getPathFileNameWithoutSuffix() {
         return PUrlTools.getFileNameWithoutSuffix(getDestPathFile());
     }
 

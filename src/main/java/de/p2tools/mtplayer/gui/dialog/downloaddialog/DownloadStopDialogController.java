@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -36,7 +36,7 @@ import javafx.scene.text.Text;
 
 import java.io.File;
 
-public class DownloadStopDialogController extends PDialogExtra {
+public class DownloadStopDialogController extends P2DialogExtra {
 
     public static final int DOWN_STOP_DEL = 0;
     public static final int DOWN_ONLY_DEL = 1;

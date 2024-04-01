@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -68,7 +68,7 @@ public class DownloadFactoryDelDownloadFiles {
             DownloadStopDialogController downloadStopDialogController =
                     new DownloadStopDialogController(downloadList, fileList,
                             DownloadStopDialogController.DOWN_ONLY_DEL);
-            if (downloadStopDialogController.getState() == PDialogExtra.STATE.STATE_DOWN_AND_FILE) {
+            if (downloadStopDialogController.getState() == P2DialogExtra.STATE.STATE_DOWN_AND_FILE) {
                 // dann muss er hier auch gleich gelöscht werden
                 deleteDownloadFiles(download, true);
             }
@@ -120,7 +120,7 @@ public class DownloadFactoryDelDownloadFiles {
             DownloadOnlyStopDialogController downloadStopDialogController =
                     new DownloadOnlyStopDialogController(foundDownloadList, delete);
 
-            if (downloadStopDialogController.getState() == PDialogExtra.STATE.STATE_OK) {
+            if (downloadStopDialogController.getState() == P2DialogExtra.STATE.STATE_OK) {
                 // dann soll DL gelöscht werden
                 PLog.sysLog("Stop Download: DL löschen");
                 foundDownloadList.forEach(downloadData -> downloadData.stopDownload(false));
@@ -171,7 +171,7 @@ public class DownloadFactoryDelDownloadFiles {
                             new DownloadStopDialogController(foundDownloadList, fileList,
                                     deleteDownload ? DownloadStopDialogController.DOWN_STOP_DEL : DownloadStopDialogController.DOWN_ONLY_STOP);
 
-                    if (downloadStopDialogController.getState() == PDialogExtra.STATE.STATE_DOWN_AND_FILE) {
+                    if (downloadStopDialogController.getState() == P2DialogExtra.STATE.STATE_DOWN_AND_FILE) {
                         // dann soll DL und Datei gelöscht werden
                         PLog.sysLog("Stop Download: DL und Dateien löschen");
 
@@ -187,7 +187,7 @@ public class DownloadFactoryDelDownloadFiles {
                         });
                         delDownload = true;
 
-                    } else if (downloadStopDialogController.getState() == PDialogExtra.STATE.STATE_ONLY_DOWNLOAD) {
+                    } else if (downloadStopDialogController.getState() == P2DialogExtra.STATE.STATE_ONLY_DOWNLOAD) {
                         // dann soll nur der DL gelöscht werden
                         PLog.sysLog("Stop Download: Nur DL löschen");
                         foundDownloadList.forEach(downloadData -> downloadData.stopDownload(false));

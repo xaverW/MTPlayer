@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.mtplayer.gui.configpanes.PaneGeo;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,7 +34,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 
-public class StartDialogController extends PDialogExtra {
+public class StartDialogController extends P2DialogExtra {
 
     private boolean ok = false;
 

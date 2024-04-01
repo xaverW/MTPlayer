@@ -26,14 +26,14 @@ import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownloadAddDialogController extends PDialogExtra {
+public class DownloadAddDialogController extends P2DialogExtra {
 
     private final ProgData progData;
     private final Button btnOk = new Button("_Ok");

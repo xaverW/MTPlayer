@@ -77,7 +77,7 @@ public class LiveFilmTableContextMenu {
         Menu mCopyUrl = copyUrl(film);
         contextMenu.getItems().addAll(mCopyUrl);
 
-        final MenuItem miLoadUt = new MenuItem("Film-Untertitel speichern");
+        final MenuItem miLoadUt = new MenuItem("Untertitel speichern");
         miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
         miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film));
 

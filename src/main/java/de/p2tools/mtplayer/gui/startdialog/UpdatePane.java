@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.dialog.PDialog;
+import de.p2tools.p2lib.dialogs.dialog.P2Dialog;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -30,11 +30,11 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 
 public class UpdatePane {
-    private final PDialog pDialog;
+    private final P2Dialog pDialog;
     private final P2ToggleSwitch tglSearch = new P2ToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
     BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH_ACT;
 
-    public UpdatePane(PDialog pDialog) {
+    public UpdatePane(P2Dialog pDialog) {
         this.pDialog = pDialog;
     }
 

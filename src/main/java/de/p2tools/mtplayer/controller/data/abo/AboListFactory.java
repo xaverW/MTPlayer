@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
 import de.p2tools.mtplayer.gui.dialog.abodialog.AboAddDialogController;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.log.PLog;
@@ -120,7 +120,7 @@ public class AboListFactory {
             // dann erst mal fragen
             AboDelDialogController aboDelDialog =
                     new AboDelDialogController(lAbo);
-            if (aboDelDialog.getState() != PDialogExtra.STATE.STATE_OK) {
+            if (aboDelDialog.getState() != P2DialogExtra.STATE.STATE_OK) {
                 //dann soll nix gemacht werden
                 PLog.sysLog("Abo löschen: Abbruch");
                 return;

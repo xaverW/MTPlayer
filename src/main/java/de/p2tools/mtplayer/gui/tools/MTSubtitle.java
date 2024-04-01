@@ -137,7 +137,7 @@ public class MTSubtitle {
             suffix = SUFFIX_TTML;
         }
 
-        return download.getFileNameWithoutSuffix() + '.' + suffix;
+        return download.getPathFileNameWithoutSuffix() + '.' + suffix;
     }
 
     public static Path getSubtitlePath(DownloadData download) {
@@ -152,6 +152,6 @@ public class MTSubtitle {
     }
 
     public static Path getSrtPath(DownloadData download) {
-        return Paths.get(download.getFileNameWithoutSuffix() + SRT_FILETYPE);
+        return Paths.get(download.getPathFileNameWithoutSuffix() + SRT_FILETYPE);
     }
 }

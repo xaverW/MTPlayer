@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,7 +31,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-public class AutomodeContinueDialogController extends PDialogExtra {
+public class AutomodeContinueDialogController extends P2DialogExtra {
 
     private final VBox vBoxCont;
 //    private final HBox hBoxOk;

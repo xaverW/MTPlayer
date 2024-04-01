@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.dialog.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.beans.property.StringProperty;
@@ -29,7 +29,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class ProposeDialogController extends PDialogExtra {
+public class ProposeDialogController extends P2DialogExtra {
 
     private final TabPane tabPane = new TabPane();
     private final Label lblHeader = new Label("Filme vorschlagen");

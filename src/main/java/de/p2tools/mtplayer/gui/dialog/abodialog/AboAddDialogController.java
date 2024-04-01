@@ -24,14 +24,14 @@ import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.scene.control.Button;
 
 import java.util.List;
 
-public class AboAddDialogController extends PDialogExtra {
+public class AboAddDialogController extends P2DialogExtra {
 
     final Button btnOk = new Button("_Ok");
     final Button btnApply = new Button("_Anwenden");

@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.controller.mv.MVFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -48,7 +48,7 @@ import javafx.scene.text.Text;
 
 import java.nio.file.Path;
 
-public class ImportMVDialog extends PDialogExtra {
+public class ImportMVDialog extends P2DialogExtra {
 
     private final ProgData progData;
     private final Button btnOk = new Button("_Ok");

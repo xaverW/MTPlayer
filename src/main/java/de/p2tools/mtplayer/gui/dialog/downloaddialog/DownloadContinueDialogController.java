@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.p2lib.dialogs.PDirFileChooser;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
@@ -39,7 +39,7 @@ import javafx.util.Duration;
 
 import java.nio.file.Paths;
 
-public class DownloadContinueDialogController extends PDialogExtra {
+public class DownloadContinueDialogController extends P2DialogExtra {
 
     private final Label lblHeader = new Label("Die Filmdatei existiert bereits,\n" +
             "wie soll der Download weitergeführt werden?");

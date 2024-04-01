@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.propose.PaneCleaningList;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.geometry.Insets;
@@ -32,7 +32,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 
-public class MediaCleaningDialogController extends PDialogExtra {
+public class MediaCleaningDialogController extends P2DialogExtra {
 
     private final TabPane tabPane = new TabPane();
     private final Button btnOk = new Button("_Ok");

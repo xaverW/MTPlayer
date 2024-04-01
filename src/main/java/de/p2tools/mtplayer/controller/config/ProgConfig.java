@@ -417,6 +417,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty ABO_PANE_DIALOG_LIST_INFO_ON = addBoolProp("abo-pane-dialog-list-info-on");
 
     // ConfigDialog
+    public static StringProperty DOWNLOAD_SUBTITLE_DIALOG_SIZE = addStrProp("download-subtitle-dialog-size", "");
     public static StringProperty IMPORT_MV_DIALOG_SIZE = addStrProp("import-mv-dialog-size", "600:800");
     public static StringProperty BLACK_DIALOG_SIZE = addStrProp("black-dialog-size", "700:800");
     public static StringProperty CONFIG_DIALOG_SIZE = addStrProp("config-dialog-size");

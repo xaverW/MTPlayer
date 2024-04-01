@@ -26,14 +26,17 @@ import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFi
 import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.gui.dialog.DownloadSubtitleDialog;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogController;
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
 import de.p2tools.p2lib.tools.log.PLog;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.File;
@@ -49,21 +52,30 @@ public class StartDownloadFactory {
     }
 
     public static void downloadSubtitle(FilmDataMTP filmData) {
-        String path = PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, "");
+        SetData setData = ProgData.getInstance().setDataList.getSetDataForDownloads("");
+        if (setData == null) {
+            // braucht's eigentlich nicht, aber DOWNLOAD klappt sonst nicht!!
+            new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.SAVE);
+            return;
+        }
 
-        if (!path.isEmpty()) {
-            ArrayList<FilmDataMTP> list = new ArrayList<>();
-            list.add(filmData);
-            SetData setData = ProgData.getInstance().setDataList.getSetDataPlay();
-            if (setData == null) {
-                // braucht's eigentlich nicht, aber DOWNLOAD klappt sonst nicht!!
-                new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.PLAY);
-                return;
-            }
+        ArrayList<FilmDataMTP> list = new ArrayList<>();
+        list.add(filmData);
+        DownloadData downloadData = new DownloadData(list, setData);
+        downloadData.setSubtitle(true);
 
-            DownloadData downloadData = new DownloadData(list, setData);
-            downloadData.setSubtitle(true);
-            downloadData.setPathName(path, filmData.getTitle());
+        final StringProperty pathProp = new SimpleStringProperty(downloadData.getDestPath());
+        final StringProperty nameProp = new SimpleStringProperty(downloadData.getFileNameWithoutSuffix());
+        final BooleanProperty okProp = new SimpleBooleanProperty(false);
+        DownloadSubtitleDialog downloadSubtitleDialog = new DownloadSubtitleDialog(ProgData.getInstance(),
+                pathProp, nameProp, okProp);
+        downloadSubtitleDialog.showDialog();
+        if (!okProp.get()) {
+            return;
+        }
+
+        if (!pathProp.getValueSafe().isEmpty()) {
+            downloadData.setPathName(pathProp.getValueSafe(), nameProp.getValueSafe());
             makeDirAndLoadInfoSubtitle(downloadData);
         }
     }

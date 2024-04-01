@@ -17,8 +17,8 @@
 
 package de.p2tools.mtplayer.gui.tools;
 
-import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
@@ -217,13 +217,13 @@ public class ProgTray {
         Platform.runLater(() -> {
             progData.primaryStage.close();
         });
-        PDialogExtra.closeAllDialog();
+        P2DialogExtra.closeAllDialog();
     }
 
     private void showDialog() {
         Platform.runLater(() -> {
             progData.primaryStage.show();
         });
-        PDialogExtra.showAllDialog();
+        P2DialogExtra.showAllDialog();
     }
 }

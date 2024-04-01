@@ -90,7 +90,7 @@ public class MTInfoFile {
     }
 
     private static String getInfoFileStr(DownloadData download) {
-        return download.getFileNameWithoutSuffix() + ".txt";
+        return download.getPathFileNameWithoutSuffix() + ".txt";
     }
 
     public static Path getInfoFilePath(DownloadData download) {

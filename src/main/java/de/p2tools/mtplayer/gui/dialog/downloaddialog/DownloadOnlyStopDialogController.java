@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.dialog.PDialogExtra;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -31,7 +31,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
-public class DownloadOnlyStopDialogController extends PDialogExtra {
+public class DownloadOnlyStopDialogController extends P2DialogExtra {
 
     private final VBox vBoxCont;
     private final Button btnDelDl = new Button("DL löschen, Datei behalten");

@@ -85,7 +85,7 @@ public class FilmTableContextMenu {
         Menu mCopyUrl = copyUrl(film);
         contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl);
 
-        final MenuItem miLoadUt = new MenuItem("Film-Untertitel speichern");
+        final MenuItem miLoadUt = new MenuItem("Untertitel speichern");
         miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
         miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film));
 
