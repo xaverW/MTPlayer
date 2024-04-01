@@ -23,8 +23,8 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigWriteFile;
-import de.p2tools.p2lib.tools.log.PLog;
-import de.p2tools.p2lib.tools.log.PLogger;
+import de.p2tools.p2lib.tools.log.P2Log;
+import de.p2tools.p2lib.tools.log.P2Logger;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.File;
@@ -42,7 +42,7 @@ public class ProgSave {
 
     public static void saveAll() {
         //sind die Programmeinstellungen
-        PLog.sysLog("Alle Programmeinstellungen sichern");
+        P2Log.sysLog("Alle Programmeinstellungen sichern");
         final Path xmlFilePath = ProgInfos.getSettingsFile();
         ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true);
         ProgConfig.addConfigData(configFile);
@@ -57,8 +57,8 @@ public class ProgSave {
         // das Programm soll beim nächsten Start mit den Standardeinstellungen gestartet werden
         // dazu wird den Ordner mit den Einstellungen umbenannt
         try {
-            PLog.sysLog("Programm reset: Start Pfad umbenennen");
-            PLogger.removeFileHandler(); // sonst mault Windows
+            P2Log.sysLog("Programm reset: Start Pfad umbenennen");
+            P2Logger.removeFileHandler(); // sonst mault Windows
 
             String dir1 = ProgInfos.getSettingsDirectory_String();
             if (dir1.endsWith(File.separator)) {
@@ -67,15 +67,15 @@ public class ProgSave {
 
             final Path path1 = Paths.get(dir1);
             final String dir2 = dir1 + "--" + FastDateFormat.getInstance("yyyy.MM.dd__HH.mm.ss").format(new Date());
-            PLog.sysLog("Pfad verschieben: " + dir1);
-            PLog.sysLog("  nach: " + dir2);
+            P2Log.sysLog("Pfad verschieben: " + dir1);
+            P2Log.sysLog("  nach: " + dir2);
 
             Files.move(path1, Paths.get(dir2), StandardCopyOption.REPLACE_EXISTING);
             Files.deleteIfExists(path1);
-            PLog.sysLog("  moved :)");
+            P2Log.sysLog("  moved :)");
 
         } catch (final Exception ex) {
-            PLog.errorLog(912012014, ex, "Die Einstellungen konnten nicht zurückgesetzt werden.");
+            P2Log.errorLog(912012014, ex, "Die Einstellungen konnten nicht zurückgesetzt werden.");
             try {
                 PAlert.showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
                         "Die Einstellungen konnten nicht zurückgesetzt werden." + P2LibConst.LINE_SEPARATORx2

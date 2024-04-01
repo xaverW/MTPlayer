@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.collections.ObservableList;
 
 import javax.xml.stream.XMLInputFactory;
@@ -64,7 +64,7 @@ public class LoadMV implements AutoCloseable {
 
         } catch (final Exception ex) {
             ret = false;
-            PLog.errorLog(951254698, ex);
+            P2Log.errorLog(951254698, ex);
         }
         PDuration.counterStop("readConfiguration");
         return ret;
@@ -103,7 +103,7 @@ public class LoadMV implements AutoCloseable {
 
         } catch (final Exception ex) {
             ret = false;
-            PLog.errorLog(915263478, ex);
+            P2Log.errorLog(915263478, ex);
         } finally {
             try {
                 if (parser != null) {
@@ -193,7 +193,7 @@ public class LoadMV implements AutoCloseable {
             ret = true;
 
         } catch (final Exception ex) {
-            PLog.errorLog(102365494, ex);
+            P2Log.errorLog(102365494, ex);
         }
         return ret;
     }
@@ -241,7 +241,7 @@ public class LoadMV implements AutoCloseable {
             ret = true;
 
         } catch (final Exception ex) {
-            PLog.errorLog(102365494, ex);
+            P2Log.errorLog(102365494, ex);
         }
         return ret;
     }

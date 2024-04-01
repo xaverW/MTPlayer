@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -60,7 +60,7 @@ public class ArdMediaArrayToDownloadUrlsConverter {
                 qualityNumber = Integer.parseInt(qualityAsText);
             }
         } catch (final NumberFormatException numberFormatException) {
-            PLog.debugLog("Can't convert quality %s to an integer. " + qualityAsText);
+            P2Log.debugLog("Can't convert quality %s to an integer. " + qualityAsText);
             qualityNumber = -1;
         }
 
@@ -137,7 +137,7 @@ public class ArdMediaArrayToDownloadUrlsConverter {
 
         if (!url.isEmpty()) {
             if (url.startsWith(PROTOCOL_RTMP)) {
-                PLog.debugLog("Found an Sendung with the old RTMP format: " + url);
+                P2Log.debugLog("Found an Sendung with the old RTMP format: " + url);
             } else {
                 final ArdFilmUrlInfoDto info
                         = new ArdFilmUrlInfoDto(UrlUtils.removeParameters(UrlUtils.addProtocolIfMissing(url, "https:")), qualityText);
@@ -210,7 +210,7 @@ public class ArdMediaArrayToDownloadUrlsConverter {
             try {
                 return Optional.of(new URL(relevantInfo.getUrl()));
             } catch (final MalformedURLException malformedUrlException) {
-                PLog.errorLog(987541258, malformedUrlException, "A download URL is defect.");
+                P2Log.errorLog(987541258, malformedUrlException, "A download URL is defect.");
             }
         }
 
@@ -229,7 +229,7 @@ public class ArdMediaArrayToDownloadUrlsConverter {
             try {
                 return Optional.of(new URL(optimizeUrl(entry.getKey(), url)));
             } catch (final MalformedURLException malformedUrlException) {
-                PLog.errorLog(987201204, malformedUrlException, "A download URL is defect.");
+                P2Log.errorLog(987201204, malformedUrlException, "A download URL is defect.");
             }
         }
         return Optional.empty();

@@ -2,7 +2,7 @@ package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -56,7 +56,7 @@ public class ZdfDatenFilm extends FilmDataMTP {
             if (zeit.contains(":") && zeit.length() == 8) {
                 this.arr[FilmDataXml.FILM_TIME] = zeit;
             } else {
-                PLog.errorLog(159623647, '[' + zeit + "] " + fehlermeldung);
+                P2Log.errorLog(159623647, '[' + zeit + "] " + fehlermeldung);
             }
         }
 
@@ -68,13 +68,13 @@ public class ZdfDatenFilm extends FilmDataMTP {
             try {
                 LocalDate filmDate = LocalDate.parse(datum, DATUM_FORMATTER);
                 if (filmDate.getYear() < 1900) {
-                    PLog.errorLog(923012125, "Unsinniger Wert: [" + datum + "] " + fehlermeldung);
+                    P2Log.errorLog(923012125, "Unsinniger Wert: [" + datum + "] " + fehlermeldung);
                 } else {
                     this.arr[FilmDataXml.FILM_DATE] = datum;
                 }
             } catch (Exception var4) {
-                PLog.errorLog(794630593, var4);
-                PLog.errorLog(946301596, '[' + datum + "] " + fehlermeldung);
+                P2Log.errorLog(794630593, var4);
+                P2Log.errorLog(946301596, '[' + datum + "] " + fehlermeldung);
             }
         }
 

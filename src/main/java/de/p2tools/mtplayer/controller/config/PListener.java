@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.config;
 
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class PListener implements EventListener {
     }
 
     public static synchronized void addListener(PListener listener) {
-        PLog.debugLog("Anz. Listener: " + listeners.size());
+        P2Log.debugLog("Anz. Listener: " + listeners.size());
         listeners.add(listener);
     }
 
@@ -85,7 +85,7 @@ public class PListener implements EventListener {
             ping();
             Platform.runLater(this::pingFx);
         } catch (final Exception ex) {
-            PLog.errorLog(698989743, ex);
+            P2Log.errorLog(698989743, ex);
         }
     }
 }

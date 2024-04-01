@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class Worker {
             }
 
             //dann soll sofort eine neue Liste geladen werden
-            PLog.sysLog("Es gibt eine neue Filmliste und die soll sofort geladen werden");
+            P2Log.sysLog("Es gibt eine neue Filmliste und die soll sofort geladen werden");
             LoadFilmFactory.getInstance().loadNewListFromWeb(false);
         });
     }

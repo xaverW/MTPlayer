@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.mv.LoadMV;
 import de.p2tools.mtplayer.controller.mv.MVFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -113,7 +113,7 @@ public class ImportMVDialog extends P2DialogExtra {
         final Button btnFile = new Button();
         btnFile.setTooltip(new Tooltip("Den Konfig-Ordner für MediathekView auswählen"));
         btnFile.setOnAction(event -> {
-            PDirFileChooser.DirChooser(getStage(), txtMVPath);
+            P2DirFileChooser.DirChooser(getStage(), txtMVPath);
         });
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
 

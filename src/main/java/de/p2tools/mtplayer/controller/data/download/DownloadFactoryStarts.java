@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.starter.StartDownloadDto;
 import de.p2tools.p2lib.tools.date.P2LTimeFactory;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -122,7 +122,7 @@ public class DownloadFactoryStarts {
                 return false;
             }
         } catch (Exception ex) {
-            PLog.errorLog(945123690, "Download-Starttime: " + download.getStartTime());
+            P2Log.errorLog(945123690, "Download-Starttime: " + download.getStartTime());
         }
 
         return true;
@@ -210,7 +210,7 @@ public class DownloadFactoryStarts {
             }
             return true;
         } catch (Exception ex) {
-            PLog.errorLog(794519083, ex);
+            P2Log.errorLog(794519083, ex);
         }
         return false;
     }

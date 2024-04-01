@@ -10,7 +10,7 @@ import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
 import de.p2tools.mtplayer.controller.livesearchzdf.ZdfDatenFilm;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -206,7 +206,7 @@ public class ArdFilmDeserializer {
                         = inputDateTime.withZoneSameInstant(ZoneId.of(GERMAN_TIME_ZONE)).toLocalDateTime();
                 return Optional.of(localDateTime);
             } catch (final DateTimeParseException ex) {
-                PLog.errorLog(201214587, ex, "Error parsing date time value " + dateValue.get());
+                P2Log.errorLog(201214587, ex, "Error parsing date time value " + dateValue.get());
             }
         }
 

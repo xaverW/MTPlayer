@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetReplacePatternFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -50,7 +50,7 @@ public class ImportStandardSet extends LinkedList<String[]> {
             }
 
             if (setDataList.size() == 0) {
-                PLog.sysLog("Sets laden hat nicht geklappt, dann aus dem jar");
+                P2Log.sysLog("Sets laden hat nicht geklappt, dann aus dem jar");
                 //dann nehmen wir halt die im jar-File
                 switch (ProgramToolsFactory.getOs()) {
                     case LINUX:
@@ -68,10 +68,10 @@ public class ImportStandardSet extends LinkedList<String[]> {
                 // damit die Variablen ersetzt werden
                 SetReplacePatternFactory.progReplacePattern(setDataList);
             } else {
-                PLog.sysLog("Sets laden hat nicht geklappt");
+                P2Log.sysLog("Sets laden hat nicht geklappt");
             }
         } catch (Exception ex) {
-            PLog.errorLog(202014578, ex);
+            P2Log.errorLog(202014578, ex);
         }
 
         ProgData.getInstance().setDataList.addSetData(setDataList);
@@ -79,14 +79,14 @@ public class ImportStandardSet extends LinkedList<String[]> {
     }
 
     private static boolean loadSetDataUrl(SetDataList setDataList, String url) {
-        PLog.sysLog("Sets laden von: " + url);
+        P2Log.sysLog("Sets laden von: " + url);
         ConfigFile configFile = new ConfigFile(url, false);
         configFile.addConfigs(setDataList);
         return ConfigReadFile.readConfig(configFile);
     }
 
     private static boolean loadSetDataLocalFile(SetDataList setDataList, String file) throws IOException {
-        PLog.sysLog("Sets laden von: " + file);
+        P2Log.sysLog("Sets laden von: " + file);
         InputStreamReader is = new InputStreamReader(ClassLoader.getSystemResource(file).openStream(), StandardCharsets.UTF_8);
         ConfigFile configFile = new ConfigFile(is, false);
         configFile.addConfigs(setDataList);

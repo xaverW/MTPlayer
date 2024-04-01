@@ -23,7 +23,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtdownload.MLInputStream;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -101,7 +101,7 @@ public class DownloadDirectHttp extends Thread {
                 }
             } catch (final Exception ex) {
                 //Probleme über Probleme
-                PLog.errorLog(316598941, ex, "Fehler");
+                P2Log.errorLog(316598941, ex, "Fehler");
                 if (ex instanceof javax.net.ssl.SSLHandshakeException) {
                     //dann gabs Probleme bei https
                     if (download.getDownloadStartDto().getStartCounter() == 1 && !restartWithOutSSL.getValue()) {
@@ -167,7 +167,7 @@ public class DownloadDirectHttp extends Thread {
         if (httpResponseCode >= HttpURLConnection.HTTP_BAD_REQUEST) {
             // Range passt nicht, also neue Verbindung versuchen...
             String responseCode = "ResponseCode: " + httpResponseCode + P2LibConst.LINE_SEPARATOR + httpURLConn.getResponseMessage();
-            PLog.errorLog(915235789, responseCode);
+            P2Log.errorLog(915235789, responseCode);
 
             if (httpResponseCode == 416) {
                 // 416 = Range Not Satisfiable
@@ -221,7 +221,7 @@ public class DownloadDirectHttp extends Thread {
             }
         } catch (final Exception ex) {
             ret = -1;
-            PLog.errorLog(643298301, ex);
+            P2Log.errorLog(643298301, ex);
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -357,7 +357,7 @@ public class DownloadDirectHttp extends Thread {
         final ArrayList<String> text = new ArrayList<>();
         text.add("Ziel: " + download.getDestPathFile());
         text.add("URL: " + download.getUrl());
-        PLog.sysLog(text.toArray(new String[0]));
+        P2Log.sysLog(text.toArray(new String[0]));
 
         AtomicBoolean dialog = new AtomicBoolean(true);
         AtomicBoolean ret = new AtomicBoolean(false);

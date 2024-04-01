@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -207,7 +207,7 @@ public class PaneSetProgram {
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         final Button btnFile = new Button();
-        btnFile.setOnAction(event -> PDirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtProgPath));
+        btnFile.setOnAction(event -> P2DirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtProgPath));
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 

@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.io.File;
@@ -110,7 +110,7 @@ public class CreateMediaDb {
             mediaDataList.checkDuplicateMediaData();
             mediaDataList.countMediaData(progData);
         } catch (final Exception ex) {
-            PLog.errorLog(945120375, ex);
+            P2Log.errorLog(945120375, ex);
         }
         stop();
     }
@@ -150,7 +150,7 @@ public class CreateMediaDb {
                 new WriteMediaDb(progData).writeExternalMediaData(logs);
             }
         } catch (final Exception ex) {
-            PLog.errorLog(120321254, ex);
+            P2Log.errorLog(120321254, ex);
         }
         stop();
     }
@@ -164,7 +164,7 @@ public class CreateMediaDb {
 
     private void stop() {
         mediaDataList.setSearching(false);
-        PLog.sysLog(logs);
+        P2Log.sysLog(logs);
         PListener.notify(PListener.EVENT_MEDIA_DB_STOP, CreateMediaDb.class.getSimpleName());
         PDuration.counterStop("createDB");
     }

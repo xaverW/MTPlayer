@@ -24,7 +24,7 @@ import de.p2tools.p2lib.guitools.ptipofday.P2TipOfDay;
 import de.p2tools.p2lib.guitools.ptipofday.P2TipOfDayDialog;
 import de.p2tools.p2lib.guitools.ptipofday.P2TipOfDayFactory;
 import de.p2tools.p2lib.tools.date.P2DateConst;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +41,7 @@ public class ProgTipOfDayFactory {
     public static void showDialog(ProgData progData, boolean showAlways) {
         if (!showAlways && !ProgConfig.TIP_OF_DAY_SHOW.getValue()) {
             //dann wills der User nicht :(
-            PLog.sysLog("TipOfDay: Will der User nicht");
+            P2Log.sysLog("TipOfDay: Will der User nicht");
             return;
         }
 
@@ -57,7 +57,7 @@ public class ProgTipOfDayFactory {
             new P2TipOfDayDialog(progData.primaryStage, p2TipOfDayArrayList,
                     ProgConfig.TIP_OF_DAY_WAS_SHOWN, ProgConfig.TIP_OF_DAY_SHOW);
         } else {
-            PLog.sysLog("TipOfDay: Heute schon gemacht oder keine neuen Tips");
+            P2Log.sysLog("TipOfDay: Heute schon gemacht oder keine neuen Tips");
         }
     }
 

@@ -22,11 +22,11 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
-import de.p2tools.p2lib.tools.log.PLogger;
+import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
@@ -81,9 +81,9 @@ public class PaneLogfile {
                 return;
             }
             if (newValue) {
-                PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
+                P2Logger.setFileHandler(ProgInfos.getLogDirectory_String());
             } else {
-                PLogger.removeFileHandler();
+                P2Logger.removeFileHandler();
             }
         }));
 
@@ -98,7 +98,7 @@ public class PaneLogfile {
         final Button btnFile = new Button();
         btnFile.setTooltip(new Tooltip("Einen Ordner für das Logfile auswählen"));
         btnFile.setOnAction(event -> {
-            PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtLogFile);
+            P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtLogFile);
         });
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
 
@@ -115,7 +115,7 @@ public class PaneLogfile {
                 "ansonsten wird er erst beim nächsten\n" +
                 "Programmstart verwendet"));
         btnChange.setOnAction(event -> {
-            PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
+            P2Logger.setFileHandler(ProgInfos.getLogDirectory_String());
             logfileChanged.setValue(false);
         });
 

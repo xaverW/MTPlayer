@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -74,7 +74,7 @@ public class DownloadExternal extends Thread {
                 stat = downloadLoop(stat);
             }
         } catch (final Exception ex) {
-            PLog.errorLog(395623710, ex);
+            P2Log.errorLog(395623710, ex);
             download.setStateError(ex.getLocalizedMessage());
         }
     }
@@ -173,7 +173,7 @@ public class DownloadExternal extends Thread {
             Files.deleteIfExists(download.getFile().toPath());
         } catch (final Exception ex) {
             // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
-            PLog.errorLog(989895674, ex,
+            P2Log.errorLog(989895674, ex,
                     "file exists: " + download.getDestPathFile());
         }
 

@@ -25,8 +25,8 @@ import de.p2tools.mtplayer.gui.startdialog.StartDialogController;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
-import de.p2tools.p2lib.tools.log.PLogger;
+import de.p2tools.p2lib.tools.log.P2Log;
+import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.application.Platform;
 
 import java.nio.file.Files;
@@ -65,7 +65,7 @@ public class ProgStartBeforeGui {
             ProgData.getInstance().cleaningDataListPropose.initList();
         }
 
-        PLog.sysLog("History-Listen laden");
+        P2Log.sysLog("History-Listen laden");
         ProgData.getInstance().historyList.loadList();
         ProgData.getInstance().historyListAbos.loadList();
         ProgData.getInstance().historyListBookmarks.loadList();
@@ -78,11 +78,11 @@ public class ProgStartBeforeGui {
      */
     private static boolean loadAll() {
         if (ProgConfig.SYSTEM_LOG_ON.getValue()) {
-            PLogger.setFileHandler(ProgInfos.getLogDirectory_String());
+            P2Logger.setFileHandler(ProgInfos.getLogDirectory_String());
         }
 
         if (!load()) {
-            PLog.sysLog("Weder Konfig noch Backup konnte geladen werden!");
+            P2Log.sysLog("Weder Konfig noch Backup konnte geladen werden!");
             // teils geladene Reste entfernen
             clearTheConfigs();
             return false;
@@ -97,11 +97,11 @@ public class ProgStartBeforeGui {
         try {
             if (!Files.exists(xmlFilePath)) {
                 //dann gibts das Konfig-File gar nicht
-                PLog.sysLog("Konfig existiert nicht!");
+                P2Log.sysLog("Konfig existiert nicht!");
                 return false;
             }
 
-            PLog.sysLog("Programmstart und ProgConfig laden von: " + xmlFilePath);
+            P2Log.sysLog("Programmstart und ProgConfig laden von: " + xmlFilePath);
             ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true) {
                 @Override
                 public void clearConfigFile() {
@@ -111,16 +111,16 @@ public class ProgStartBeforeGui {
             ProgConfig.addConfigData(configFile);
             if (ConfigReadFile.readConfig(configFile)) {
                 initAfterLoad();
-                PLog.sysLog("Konfig wurde geladen!");
+                P2Log.sysLog("Konfig wurde geladen!");
                 return true;
 
             } else {
                 // dann hat das Laden nicht geklappt
-                PLog.sysLog("Konfig konnte nicht geladen werden!");
+                P2Log.sysLog("Konfig konnte nicht geladen werden!");
                 return false;
             }
         } catch (final Exception ex) {
-            PLog.errorLog(915470101, ex);
+            P2Log.errorLog(915470101, ex);
         }
         return false;
     }

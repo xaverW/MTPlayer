@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2ComboBoxObject;
@@ -73,7 +73,7 @@ public class PaneSetDestination {
         final Button btnFile = new Button();
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen"));
-        btnFile.setOnAction(event -> PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
+        btnFile.setOnAction(event -> P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
 
         final Button btnHelSubDir = P2Button.helpButton(stage, "Unterordner anlegen",
                 HelpText.SETDATA_ABO_SUBDIR);

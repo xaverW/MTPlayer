@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -37,7 +37,7 @@ public class MTInfoFile {
             return;
         }
 
-        PLog.sysLog(new String[]{"Infofile schreiben nach: ", download.getDestPath()});
+        P2Log.sysLog(new String[]{"Infofile schreiben nach: ", download.getDestPath()});
 
         new File(download.getDestPath()).mkdirs();
         final Path path = getInfoFilePath(download);
@@ -83,9 +83,9 @@ public class MTInfoFile {
 
             br.write(P2LibConst.LINE_SEPARATORx2);
             br.flush();
-            PLog.sysLog(new String[]{"Infofile", "  geschrieben"});
+            P2Log.sysLog(new String[]{"Infofile", "  geschrieben"});
         } catch (final IOException ex) {
-            PLog.errorLog(975410369, download.getDestPathFile());
+            P2Log.errorLog(975410369, download.getDestPathFile());
         }
     }
 
@@ -99,7 +99,7 @@ public class MTInfoFile {
             path = Paths.get(getInfoFileStr(download));
         } catch (Exception ex) {
             path = null;
-            PLog.errorLog(987451202, "InfofilePath");
+            P2Log.errorLog(987451202, "InfofilePath");
         }
         return path;
     }

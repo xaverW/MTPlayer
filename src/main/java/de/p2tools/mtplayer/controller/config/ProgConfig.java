@@ -34,7 +34,7 @@ import de.p2tools.p2lib.tools.PStringUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.*;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -182,7 +182,7 @@ public class ProgConfig extends PDataProgConfig {
     public static BooleanProperty SYSTEM_GUI_MAXIMISED = addBoolProp("system-gui-maximised", Boolean.FALSE);
     public static BooleanProperty SYSTEM_GUI_START_ALWAYS_MAXIMISED = addBoolProp("system-gui-start-always-maximised", Boolean.FALSE);
     public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
-    public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "300:600");
+    public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "500:600");
 
     // Einstellungen Filmliste
     public static StringProperty SYSTEM_FILMLIST_DATE = addStrProp("system-filmlist-date", "");
@@ -531,7 +531,7 @@ public class ProgConfig extends PDataProgConfig {
             "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden",
             "\t" + "und sind auch nicht für ständige Änderungen gedacht.",
             "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt.",
-            PLog.LILNE3,
+            P2Log.LILNE3,
             "  *" + "\t" + "Timeout für direkte Downloads, Standardwert: "
                     + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue(),
             "  *" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads",
@@ -612,12 +612,12 @@ public class ProgConfig extends PDataProgConfig {
 
     public static void logAllConfigs() {
         final ArrayList<String> list = new ArrayList<>();
-        list.add(PLog.LILNE1);
+        list.add(P2Log.LILNE1);
 
         Collections.addAll(list, PARAMETER_INFO);
-        list.add(PLog.LILNE2);
+        list.add(P2Log.LILNE2);
         list.add("Programmeinstellungen");
-        list.add(PLog.LILNE3);
+        list.add(P2Log.LILNE3);
         Arrays.stream(ProgConfig.getInstance().getConfigsArr()).forEach(c -> {
             String s = c.getKey();
             if (s.startsWith("_")) {
@@ -634,8 +634,8 @@ public class ProgConfig extends PDataProgConfig {
         });
         PStringUtils.appendString(list, "#  ", "#");
 
-        list.add(PLog.LILNE1);
-        PLog.debugLog(list);
+        list.add(P2Log.LILNE1);
+        P2Log.debugLog(list);
     }
 
     private static synchronized void check(IntegerProperty mlConfigs, int init, int min, int max) {

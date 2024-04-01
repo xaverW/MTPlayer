@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.gui.*;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -109,7 +109,7 @@ public class MTPlayerController extends StackPane {
             initButton();
             selPanelFilm();
         } catch (Exception ex) {
-            PLog.errorLog(597841023, ex);
+            P2Log.errorLog(597841023, ex);
         }
     }
 

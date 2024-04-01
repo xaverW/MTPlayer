@@ -25,7 +25,7 @@ import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -319,7 +319,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         final ArrayList<HistoryData> newHistoryList = new ArrayList<>();
         found = false;
         PDuration.counterStart("History: removeFromHistory");
-        PLog.sysLog("Aus Historyliste löschen: " + removeUrlHash.size() + ", löschen aus: " + fileName);
+        P2Log.sysLog("Aus Historyliste löschen: " + removeUrlHash.size() + ", löschen aus: " + fileName);
 
         waitWhileWorking(); // wird diese Liste abgesucht
 
@@ -352,7 +352,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             th.start();
             // th.run();
         } catch (Exception ex) {
-            PLog.errorLog(912030254, ex, "writeToFile");
+            P2Log.errorLog(912030254, ex, "writeToFile");
             isWorking.setValue(false);
         }
     }
@@ -360,12 +360,12 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     private void waitWhileWorking() {
         while (isWorking.get()) {
             // sollte nicht passieren, aber wenn ..
-            PLog.errorLog(741025896, "waitWhileWorking: write to history file");
+            P2Log.errorLog(741025896, "waitWhileWorking: write to history file");
 
             try {
                 wait(100);
             } catch (final Exception ex) {
-                PLog.errorLog(915236547, ex, "waitWhileWorking");
+                P2Log.errorLog(915236547, ex, "waitWhileWorking");
                 isWorking.setValue(false);
             }
         }

@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.date.P2DateConst;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,10 +33,10 @@ public class LogMsgFactory {
     }
 
     public static void startMsg(DownloadData download) {
-        PLog.sysLog("");
+        P2Log.sysLog("");
         final ArrayList<String> list = new ArrayList<>();
         final boolean play = download.getSource().equals(DownloadConstants.SRC_BUTTON);
-        list.add(PLog.LILNE3);
+        list.add(P2Log.LILNE3);
 
         if (play) {
             list.add("Film abspielen");
@@ -55,17 +55,17 @@ public class LogMsgFactory {
             list.add("Programmaufruf[]: " + download.getProgramCallArray());
         }
 
-        list.add(PLog.LILNE_EMPTY);
-        PLog.sysLog(list.toArray(new String[0]));
+        list.add(P2Log.LILNE_EMPTY);
+        P2Log.sysLog(list.toArray(new String[0]));
     }
 
     public static void restartMsg(DownloadData download) {
-        PLog.sysLog("");
+        P2Log.sysLog("");
         final ArrayList<String> text = new ArrayList<>();
         text.add("Fehlerhaften Download neu starten - Restart (Summe Starts: " + download.getDownloadStartDto().getStartCounter() + ')');
         text.add("Ziel: " + download.getDestPathFile());
         text.add("URL: " + download.getUrl());
-        PLog.sysLog(text.toArray(new String[text.size()]));
+        P2Log.sysLog(text.toArray(new String[text.size()]));
     }
 
     public static void finishedMsg(final DownloadData download) {
@@ -77,9 +77,9 @@ public class LogMsgFactory {
             }
         }
 
-        PLog.sysLog("");
+        P2Log.sysLog("");
         final ArrayList<String> list = new ArrayList<>();
-        list.add(PLog.LILNE3);
+        list.add(P2Log.LILNE3);
         if (download.isStateStopped()) {
             list.add("Download wurde abgebrochen");
         } else if (download.getSource().equals(DownloadConstants.SRC_BUTTON)) {
@@ -151,8 +151,8 @@ public class LogMsgFactory {
             list.add("Programmaufruf: " + download.getProgramCall());
             list.add("Programmaufruf[]: " + download.getProgramCallArray());
         }
-        list.add(PLog.LILNE_EMPTY);
-        PLog.sysLog(list);
+        list.add(P2Log.LILNE_EMPTY);
+        P2Log.sysLog(list);
 
         if (!download.getSource().equals(DownloadConstants.SRC_BUTTON) && !download.isStateStopped()) {
             //war ein Abo und wurde nicht abgebrochen

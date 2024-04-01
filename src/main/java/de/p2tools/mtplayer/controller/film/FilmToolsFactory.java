@@ -25,7 +25,7 @@ import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.stage.Stage;
@@ -148,7 +148,7 @@ public class FilmToolsFactory {
                 });
                 PDuration.counterStop("mark(FilmData filmData)");
             } catch (Exception ex) {
-                PLog.errorLog(951024789, ex);
+                P2Log.errorLog(951024789, ex);
             }
 
         } else {

@@ -36,7 +36,7 @@ import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -163,7 +163,7 @@ public class LoadFilmFactory {
             ProgData.getInstance().maskerPane.setMaskerText("Downloads eingetragen");
             DownloadListFactory.addFilmInDownloads();
 
-            PLog.sysLog(logList);
+            P2Log.sysLog(logList);
             PDuration.onlyPing("Filme nachbearbeiten: Ende");
 
             ProgData.getInstance().maskerPane.setMaskerText("Abos suchen");

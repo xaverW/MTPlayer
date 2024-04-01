@@ -32,7 +32,7 @@ import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogControll
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -91,7 +91,7 @@ public class StartDownloadFactory {
             }
         } catch (final IOException ignored) {
         } catch (final Exception ex) {
-            PLog.errorLog(945120690, ex);
+            P2Log.errorLog(945120690, ex);
         }
     }
 
@@ -147,7 +147,7 @@ public class StartDownloadFactory {
 
         // die Dateien der gestoppten/gelöschten Downloads evtl. noch löschen
         if (download.isStateStopped() && download.getDownloadStartDto().isDeleteAfterStop()) {
-            PLog.sysLog(new String[]{"Gestoppter Download, auch die Datei löschen: ", destFile.getAbsolutePath()});
+            P2Log.sysLog(new String[]{"Gestoppter Download, auch die Datei löschen: ", destFile.getAbsolutePath()});
             DownloadFactoryDelDownloadFiles.deleteDownloadFiles(download, true);
             return;
         }
@@ -157,11 +157,11 @@ public class StartDownloadFactory {
         final long length = download.getFile().length();
         if (length == 0) {
             // zum Wiederstarten/Aufräumen die leer/zu kleine Datei löschen, alles auf Anfang
-            PLog.sysLog(new String[]{"Restart/Aufräumen: leere Datei löschen", destFile.getAbsolutePath()});
+            P2Log.sysLog(new String[]{"Restart/Aufräumen: leere Datei löschen", destFile.getAbsolutePath()});
             DownloadFactoryDelDownloadFiles.deleteDownloadFiles(download, false);
 
         } else if (length < ProgConst.MIN_DATEI_GROESSE_FILM) {
-            PLog.sysLog(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", destFile.getAbsolutePath()});
+            P2Log.sysLog(new String[]{"Restart/Aufräumen: Zu kleine Datei löschen", destFile.getAbsolutePath()});
             DownloadFactoryDelDownloadFiles.deleteDownloadFiles(download, false);
         }
     }
@@ -184,7 +184,7 @@ public class StartDownloadFactory {
                         "Soll aus der URL: " + download.getDownloadSize().getTargetSize() + " Byte\n" +
                         "Ist aus der Datei: " + download.getDownloadSize().getActuallySize() + " Byte\n";
                 errorMsg.setValue(str);
-                PLog.errorLog(696510258, str);
+                P2Log.errorLog(696510258, str);
                 return false;
             }
         }
@@ -193,13 +193,13 @@ public class StartDownloadFactory {
         if (!file.exists()) {
             String str = "Download fehlgeschlagen: Datei existiert nicht: " + download.getDestPathFile();
             errorMsg.setValue(str);
-            PLog.errorLog(550236231, str);
+            P2Log.errorLog(550236231, str);
             return false;
 
         } else if (file.length() < ProgConst.MIN_DATEI_GROESSE_FILM) {
             String str = "Download fehlgeschlagen: Datei zu klein: " + download.getDestPathFile();
             errorMsg.setValue(str);
-            PLog.errorLog(795632500, str);
+            P2Log.errorLog(795632500, str);
             return false;
 
         } else {

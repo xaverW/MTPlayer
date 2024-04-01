@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.history;
 
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
 
 import java.io.BufferedWriter;
@@ -61,9 +61,9 @@ public class HistoryWriteToFile implements Runnable {
 
         PDuration.counterStart("doWork");
         if (append) {
-            PLog.sysLog("An Historyliste anfügen: " + list.size() + ", Datei: " + fileName);
+            P2Log.sysLog("An Historyliste anfügen: " + list.size() + ", Datei: " + fileName);
         } else {
-            PLog.sysLog("Ganze Historyliste schreiben: " + list.size() + ", Datei: " + fileName);
+            P2Log.sysLog("Ganze Historyliste schreiben: " + list.size() + ", Datei: " + fileName);
         }
 
         // und jetzt schreiben
@@ -86,7 +86,7 @@ public class HistoryWriteToFile implements Runnable {
             }
             ret = true;
         } catch (final Exception ex) {
-            PLog.errorLog(420312459, ex);
+            P2Log.errorLog(420312459, ex);
         }
 
         return ret;

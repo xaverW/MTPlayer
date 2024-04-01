@@ -8,7 +8,7 @@ import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -69,7 +69,7 @@ public class LiveFactory {
             final long size = getContentLength(url); // Byte
             film.arr[FilmDataXml.FILM_SIZE] = size / 1000 / 1000 + "";
         } catch (Exception ex) {
-            PLog.errorLog(959874501, ex, "setFilmSize");
+            P2Log.errorLog(959874501, ex, "setFilmSize");
         }
     }
 
@@ -90,7 +90,7 @@ public class LiveFactory {
             }
         } catch (final Exception ex) {
             ret = -1;
-            PLog.errorLog(915254789, ex);
+            P2Log.errorLog(915254789, ex);
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -150,7 +150,7 @@ public class LiveFactory {
                     (int) TimeUnit.SECONDS.toMillis(60));
             return Optional.of(document);
         } catch (final IOException ex) {
-            PLog.errorLog(965654120, ex, "loadPage: " + url);
+            P2Log.errorLog(965654120, ex, "loadPage: " + url);
         }
 
         return Optional.empty();

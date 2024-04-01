@@ -1,7 +1,7 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.p2lib.P2LibInit;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.io.IOException;
 import java.net.*;
@@ -36,7 +36,7 @@ public class ProxyFactory {
                     System.setProperty("jdk.http.auth.proxying.disabledSchemes", "false");
                 }
             } catch (Exception ex) {
-                PLog.errorLog(205468971, "Fehler beim einrichten des Proxy");
+                P2Log.errorLog(205468971, "Fehler beim einrichten des Proxy");
             }
             P2LibInit.initProxy(ProgConfig.SYSTEM_USE_PROXY.getValue(),
                     getHost(), getPort(), getUser(), getPwd());
@@ -74,7 +74,7 @@ public class ProxyFactory {
         }
 
         log.append("############################################################\n");
-        PLog.sysLog(log.toString());
+        P2Log.sysLog(log.toString());
     }
 
     private static void setupAuthenticator() {
@@ -161,7 +161,7 @@ public class ProxyFactory {
                 httpURLConn = (HttpURLConnection) url.openConnection(proxy);
             } catch (Exception ex) {
                 // dann eben ohne proxy
-                PLog.errorLog(701208613, "Kann die Proxy-Verbindung nicht aufbauen:\n" + host + " - " + port);
+                P2Log.errorLog(701208613, "Kann die Proxy-Verbindung nicht aufbauen:\n" + host + " - " + port);
                 httpURLConn = (HttpURLConnection) url.openConnection();
             }
         }

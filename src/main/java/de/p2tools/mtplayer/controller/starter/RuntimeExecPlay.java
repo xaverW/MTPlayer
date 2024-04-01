@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.starter;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 public class RuntimeExecPlay {
 
@@ -43,25 +43,25 @@ public class RuntimeExecPlay {
         try {
             if (arrProgCallArray != null) {
                 if (log) {
-                    PLog.sysLog("=====================");
-                    PLog.sysLog("Starte Array: ");
-                    PLog.sysLog(" -> " + strProgCallArray);
-                    PLog.sysLog("=====================");
+                    P2Log.sysLog("=====================");
+                    P2Log.sysLog("Starte Array: ");
+                    P2Log.sysLog(" -> " + strProgCallArray);
+                    P2Log.sysLog("=====================");
                 }
                 // process = Runtime.getRuntime().exec(arrProgCallArray);
                 process = new ProcessBuilder(arrProgCallArray).inheritIO().start();
             } else {
                 if (log) {
-                    PLog.sysLog("=====================");
-                    PLog.sysLog("Starte nicht als Array:");
-                    PLog.sysLog(" -> " + strProgCall);
-                    PLog.sysLog("=====================");
+                    P2Log.sysLog("=====================");
+                    P2Log.sysLog("Starte nicht als Array:");
+                    P2Log.sysLog(" -> " + strProgCall);
+                    P2Log.sysLog("=====================");
                 }
                 // process = Runtime.getRuntime().exec(strProgCall);
                 process = new ProcessBuilder(strProgCall).inheritIO().start();
             }
         } catch (final Exception ex) {
-            PLog.errorLog(874587458, ex, "Fehler beim Starten");
+            P2Log.errorLog(874587458, ex, "Fehler beim Starten");
         }
         return process;
     }

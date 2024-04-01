@@ -5,7 +5,7 @@ import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -30,7 +30,7 @@ public class ZdfFilmDetailTask {
             final ZdfFilmDto result = zdfFilmDto;
             addFilm(jsonInfoDto, downloadDto, result);
         } catch (Exception e) {
-            PLog.errorLog(959562654, e, jsonInfoDto.getSearchString());
+            P2Log.errorLog(959562654, e, jsonInfoDto.getSearchString());
         }
     }
 

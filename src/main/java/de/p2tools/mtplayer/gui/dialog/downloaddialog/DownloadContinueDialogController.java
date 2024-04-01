@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
@@ -267,6 +267,6 @@ public class DownloadContinueDialogController extends P2DialogExtra {
     }
 
     private void getDestination() {
-        PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
+        P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, cbPath);
     }
 }

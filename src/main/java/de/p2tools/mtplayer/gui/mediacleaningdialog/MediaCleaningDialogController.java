@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -99,7 +99,7 @@ public class MediaCleaningDialogController extends P2DialogExtra {
             tabCleaningList.setContent(paneCleaningList.makePane());
             tabPane.getTabs().add(tabCleaningList);
         } catch (final Exception ex) {
-            PLog.errorLog(962104652, ex);
+            P2Log.errorLog(962104652, ex);
         }
     }
 }

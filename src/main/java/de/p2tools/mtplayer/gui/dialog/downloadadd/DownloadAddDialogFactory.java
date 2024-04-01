@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.tools.SizeTools;
 import de.p2tools.p2lib.tools.date.P2DateConst;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -113,7 +113,7 @@ public class DownloadAddDialogFactory {
 
             }
         } catch (Exception ex) {
-            PLog.errorLog(978451203, ex);
+            P2Log.errorLog(978451203, ex);
             ret = stdPath;
         }
         return ret;

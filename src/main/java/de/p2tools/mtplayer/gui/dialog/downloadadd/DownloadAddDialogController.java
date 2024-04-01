@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -145,7 +145,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
         addDownloadDto.btnDest.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         addDownloadDto.btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         addDownloadDto.btnDest.setOnAction(event -> {
-            PDirFileChooser.DirChooser(ProgData.getInstance().primaryStage, addDownloadDto.cboPath);
+            P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, addDownloadDto.cboPath);
             addDownloadDto.initPathName.pathChanged();
         });
 

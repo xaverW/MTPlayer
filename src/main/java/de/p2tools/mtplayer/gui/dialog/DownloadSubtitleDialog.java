@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.beans.property.BooleanProperty;
@@ -93,7 +93,7 @@ public class DownloadSubtitleDialog extends P2DialogExtra {
         final Button btnFile = new Button();
         btnFile.setTooltip(new Tooltip("Ordner zum Speichern auswählen"));
         btnFile.setOnAction(event -> {
-            PDirFileChooser.DirChooser(getStage(), txtPath);
+            P2DirFileChooser.DirChooser(getStage(), txtPath);
         });
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
 

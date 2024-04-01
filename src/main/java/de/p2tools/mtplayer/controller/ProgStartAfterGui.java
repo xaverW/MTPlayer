@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
 import de.p2tools.p2lib.dialogs.dialog.P2Dialog;
 import de.p2tools.p2lib.guitools.P2WindowIcon;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
-import de.p2tools.p2lib.tools.log.LogMessage;
+import de.p2tools.p2lib.tools.log.P2LogMessage;
 
 import java.util.ArrayList;
 
@@ -69,7 +69,7 @@ public class ProgStartAfterGui {
         list.add("Verzeichnisse:");
         list.add("Programmpfad: " + ProgInfos.getPathJar());
         list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
-        LogMessage.startMsg(ProgConst.PROGRAM_NAME, list);
+        P2LogMessage.startMsg(ProgConst.PROGRAM_NAME, list);
         if (showAll) {
             ProgConfig.logAllConfigs();
         }

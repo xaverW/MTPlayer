@@ -27,7 +27,7 @@ import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import org.apache.commons.lang3.SystemUtils;
@@ -55,13 +55,13 @@ public class DownloadDataFactory {
         }
 
         PDuration.counterStart("searchForAbosAndMaybeStart");
-        PLog.sysLog("Downloads aus Abos suchen");
+        P2Log.sysLog("Downloads aus Abos suchen");
         //erledigte entfernen, nicht gestartete Abos entfernen und nach neuen Abos suchen
         ProgData.getInstance().downloadList.searchForDownloadsFromAbos();
 
         if (ProgConfig.DOWNLOAD_START_NOW.getValue() || ProgData.autoMode) {
             // und wenn gewollt auch gleich starten, kann kein Dialog aufgehen: false!
-            PLog.sysLog("Downloads aus Abos starten");
+            P2Log.sysLog("Downloads aus Abos starten");
             ProgData.getInstance().downloadList.startAllDownloads();
         }
         PDuration.counterStop("searchForAbosAndMaybeStart");

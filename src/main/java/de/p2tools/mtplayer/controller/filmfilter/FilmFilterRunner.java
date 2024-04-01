@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -83,13 +83,13 @@ public class FilmFilterRunner {
                     String text = "=======================================\n" +
                             "   ===== FILTERN: " + ++count + " =====\n" +
                             "=======================================";
-                    PLog.debugLog(text);
+                    P2Log.debugLog(text);
 
                     if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().isThemeVis() &&
                             ProgData.getInstance().filmFilterWorker.getActFilterSettings().isThemeIsExact() &&
                             !ThemeListFactory.themeForChannelList
                                     .contains(ProgData.getInstance().filmFilterWorker.getActFilterSettings().getExactTheme())) {
-                        PLog.debugLog("Clear filter");
+                        P2Log.debugLog("Clear filter");
 
                         progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
                         ProgData.getInstance().filmFilterWorker.getActFilterSettings().setExactTheme("");

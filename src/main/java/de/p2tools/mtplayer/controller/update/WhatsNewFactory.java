@@ -26,7 +26,7 @@ import de.p2tools.p2lib.tools.ProgramToolsFactory;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -39,8 +39,8 @@ public class WhatsNewFactory {
     }
 
     public static void checkUpdate() {
-        PLog.sysLog("Programmstart, alte Programm-Release-Nr: " + ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe());
-        PLog.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + ProgramToolsFactory.getBuild());
+        P2Log.sysLog("Programmstart, alte Programm-Release-Nr: " + ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe());
+        P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + ProgramToolsFactory.getBuild());
 
         if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(ProgramToolsFactory.getBuild())) {
             // dann hat sich die BUILD_NO geändert, neue Version: Dann checken
@@ -98,7 +98,7 @@ public class WhatsNewFactory {
             if (updateCheckTodayDone()) {
                 list.add("  heute schon gemacht");
             }
-            PLog.sysLog(list);
+            P2Log.sysLog(list);
         }
     }
 

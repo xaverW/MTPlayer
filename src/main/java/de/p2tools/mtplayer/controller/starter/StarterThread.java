@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.dialog.AutomodeContinueDialogController;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -84,7 +84,7 @@ public class StarterThread extends Thread {
 
                 sleep(3_000);
             } catch (final Exception ex) {
-                PLog.errorLog(613822015, ex);
+                P2Log.errorLog(613822015, ex);
             }
         }
     }

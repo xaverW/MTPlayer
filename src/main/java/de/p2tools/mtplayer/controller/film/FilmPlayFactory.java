@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.starter.RuntimeExecPlay;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.date.P2DateConst;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,17 +108,17 @@ public class FilmPlayFactory {
             // nicht gestartet
             list.add("Film konnte nicht gestartet werden");
         }
-        list.add(PLog.LILNE3);
-        PLog.sysLog(list.toArray(new String[0]));
+        list.add(P2Log.LILNE3);
+        P2Log.sysLog(list.toArray(new String[0]));
     }
 
     static void startMsg(DownloadData downloadData, ArrayList<String> list) {
-        list.add(PLog.LILNE2);
+        list.add(P2Log.LILNE2);
         list.add("Film abspielen");
         list.add("URL: " + downloadData.getUrl());
         list.add("Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(new P2Date()));
         list.add("Programmaufruf: " + downloadData.getProgramCall());
         list.add("Programmaufruf[]: " + downloadData.getProgramCallArray());
-        list.add(PLog.LILNE3);
+        list.add(P2Log.LILNE3);
     }
 }

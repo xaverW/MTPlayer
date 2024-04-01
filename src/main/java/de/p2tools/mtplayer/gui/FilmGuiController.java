@@ -31,7 +31,7 @@ import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.tools.PSystemUtils;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.transformation.SortedList;
@@ -256,7 +256,7 @@ public class FilmGuiController extends AnchorPane {
 
             if (STRG_A.match(event) && tableView.getItems().size() > 3_000) {
                 //macht eigentlich keinen Sinn???
-                PLog.sysLog("STRG-A: lange Liste -> verhindern");
+                P2Log.sysLog("STRG-A: lange Liste -> verhindern");
                 event.consume();
             }
         });

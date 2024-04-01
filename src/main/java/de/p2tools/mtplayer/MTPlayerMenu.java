@@ -29,7 +29,7 @@ import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.guitools.P2Open;
-import de.p2tools.p2lib.tools.log.PLogger;
+import de.p2tools.p2lib.tools.log.P2Logger;
 import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
@@ -84,7 +84,7 @@ public class MTPlayerMenu extends MenuButton {
         });
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {
-            PLogger.openLogFile();
+            P2Logger.openLogFile();
         });
         final MenuItem miShortCut = new MenuItem("Tastaturbefehle festlegen");
         miShortCut.setOnAction(event -> {

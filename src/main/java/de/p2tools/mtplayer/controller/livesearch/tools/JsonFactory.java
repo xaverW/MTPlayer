@@ -3,7 +3,7 @@ package de.p2tools.mtplayer.controller.livesearch.tools;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.p2tools.p2lib.mtdownload.MLHttpClient;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -36,7 +36,7 @@ public class JsonFactory {
                 return Optional.of(rootNode);
             }
         } catch (Exception ex) {
-            PLog.errorLog(102589874, ex, "URL: " + url);
+            P2Log.errorLog(102589874, ex, "URL: " + url);
         }
         return Optional.empty();
     }

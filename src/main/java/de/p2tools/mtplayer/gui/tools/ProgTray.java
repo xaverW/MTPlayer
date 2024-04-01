@@ -30,8 +30,8 @@ import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.tools.ProgramToolsFactory;
-import de.p2tools.p2lib.tools.log.PLog;
-import de.p2tools.p2lib.tools.log.PLogger;
+import de.p2tools.p2lib.tools.log.P2Log;
+import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.application.Platform;
 
 import java.awt.*;
@@ -70,7 +70,7 @@ public class ProgTray {
                         }
                     }
                 } catch (final Exception ex) {
-                    PLog.errorLog(936251087, ex);
+                    P2Log.errorLog(936251087, ex);
                 }
             }
         });
@@ -149,7 +149,7 @@ public class ProgTray {
         try {
             systemTray.add(trayicon);
         } catch (AWTException exception) {
-            PLog.errorLog(912547030, exception.getMessage());
+            P2Log.errorLog(912547030, exception.getMessage());
         }
     }
 
@@ -171,7 +171,7 @@ public class ProgTray {
         ConfigDialogController.dialogIsRunning.addListener((o, u, n) ->
                 miConfig.setEnabled(!ConfigDialogController.dialogIsRunning.getValue()));
 
-        miLogfile.addActionListener(e -> Platform.runLater(() -> PLogger.openLogFile()));
+        miLogfile.addActionListener(e -> Platform.runLater(() -> P2Logger.openLogFile()));
         miTray.addActionListener(e -> Platform.runLater(() -> {
             // vor dem Ausschalten des Tray GUI anzeigen!!
             closeTray();

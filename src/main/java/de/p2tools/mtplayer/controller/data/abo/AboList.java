@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
 import de.p2tools.p2lib.tools.GermanStringSorter;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -105,7 +105,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
 
     public synchronized void deleteAbo(ObservableList<AboData> lAbo) {
         // dann soll das Abo gelöscht werden
-        PLog.sysLog("Abo löschen");
+        P2Log.sysLog("Abo löschen");
         addAbosToUndoList(lAbo); // erst eintragen, dann löschen - selList ändert sich dann
         this.removeAll(lAbo);
         notifyChanges();

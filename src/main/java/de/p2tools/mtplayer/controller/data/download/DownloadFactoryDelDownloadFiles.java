@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -110,25 +110,25 @@ public class DownloadFactoryDelDownloadFiles {
         boolean delDownload;
         if (ProgConfig.DOWNLOAD_ONLY_STOP.getValue() == ProgConfigAskBeforeDelete.DOWNLOAD_ONLY_STOP__DELETE) {
             // DL löschen, Dateien nicht
-            PLog.sysLog("Stop Download: DL löschen");
+            P2Log.sysLog("Stop Download: DL löschen");
             foundDownloadList.forEach(downloadData -> downloadData.stopDownload(false));
             delDownload = true;
 
         } else {
             // dann erstmal fragen
-            PLog.sysLog("Stop Download: Erst mal fragen");
+            P2Log.sysLog("Stop Download: Erst mal fragen");
             DownloadOnlyStopDialogController downloadStopDialogController =
                     new DownloadOnlyStopDialogController(foundDownloadList, delete);
 
             if (downloadStopDialogController.getState() == P2DialogExtra.STATE.STATE_OK) {
                 // dann soll DL gelöscht werden
-                PLog.sysLog("Stop Download: DL löschen");
+                P2Log.sysLog("Stop Download: DL löschen");
                 foundDownloadList.forEach(downloadData -> downloadData.stopDownload(false));
                 delDownload = true;
 
             } else {
                 //dann soll nix gemacht werden
-                PLog.sysLog("Stop Download: Abbruch");
+                P2Log.sysLog("Stop Download: Abbruch");
                 delDownload = false;
             }
         }
@@ -143,14 +143,14 @@ public class DownloadFactoryDelDownloadFiles {
             switch (ProgConfig.DOWNLOAD_STOP.getValue()) {
                 case ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DO_NOT_DELETE:
                     // DL löschen, Dateien nicht
-                    PLog.sysLog("Stop Download: DL löschen, Dateien nicht");
+                    P2Log.sysLog("Stop Download: DL löschen, Dateien nicht");
                     foundDownloadList.forEach(downloadData -> downloadData.stopDownload(false));
                     delDownload = true;
                     break;
 
                 case ProgConfigAskBeforeDelete.DOWNLOAD_STOP__DELETE_FILE:
                     // DL und Dateien löschen
-                    PLog.sysLog("Stop Download: DL und Dateien löschen");
+                    P2Log.sysLog("Stop Download: DL und Dateien löschen");
                     foundDownloadList.forEach(downloadData -> {
                         if (downloadData.isStateStartedRun() || downloadData.isStateStartedWaiting()) {
                             // dann wird er gestoppt und danach gelöscht, klappt aber nur bei Downloads die schon gestartet sind
@@ -166,14 +166,14 @@ public class DownloadFactoryDelDownloadFiles {
 
                 default:
                     // dann erstmal fragen
-                    PLog.sysLog("Stop Download: Erst mal fragen");
+                    P2Log.sysLog("Stop Download: Erst mal fragen");
                     DownloadStopDialogController downloadStopDialogController =
                             new DownloadStopDialogController(foundDownloadList, fileList,
                                     deleteDownload ? DownloadStopDialogController.DOWN_STOP_DEL : DownloadStopDialogController.DOWN_ONLY_STOP);
 
                     if (downloadStopDialogController.getState() == P2DialogExtra.STATE.STATE_DOWN_AND_FILE) {
                         // dann soll DL und Datei gelöscht werden
-                        PLog.sysLog("Stop Download: DL und Dateien löschen");
+                        P2Log.sysLog("Stop Download: DL und Dateien löschen");
 
                         foundDownloadList.forEach(downloadData -> {
                             if (downloadData.isStateStartedRun() || downloadData.isStateStartedWaiting()) {
@@ -189,19 +189,19 @@ public class DownloadFactoryDelDownloadFiles {
 
                     } else if (downloadStopDialogController.getState() == P2DialogExtra.STATE.STATE_ONLY_DOWNLOAD) {
                         // dann soll nur der DL gelöscht werden
-                        PLog.sysLog("Stop Download: Nur DL löschen");
+                        P2Log.sysLog("Stop Download: Nur DL löschen");
                         foundDownloadList.forEach(downloadData -> downloadData.stopDownload(false));
                         delDownload = true;
 
                     } else {
                         //dann soll nix gemacht werden
-                        PLog.sysLog("Stop Download: Abbruch");
+                        P2Log.sysLog("Stop Download: Abbruch");
                         delDownload = false;
                     }
             }
         } catch (Exception ex) {
             PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen");
-            PLog.errorLog(503231450, "Fehler beim löschen");
+            P2Log.errorLog(503231450, "Fehler beim löschen");
             delDownload = false;
         }
         return delDownload;
@@ -265,7 +265,7 @@ public class DownloadFactoryDelDownloadFiles {
         try {
             for (File f : fileList) {
                 delFile = f.getAbsolutePath();
-                PLog.sysLog(new String[]{"Datei löschen: ", f.getAbsolutePath()});
+                P2Log.sysLog(new String[]{"Datei löschen: ", f.getAbsolutePath()});
                 if (!f.delete()) {
                     throw new Exception();
                 }
@@ -277,7 +277,7 @@ public class DownloadFactoryDelDownloadFiles {
                     PAlert.showErrorAlert("Datei löschen",
                             "Konnte die Datei nicht löschen!",
                             "Fehler beim Löschen von:" + P2LibConst.LINE_SEPARATORx2 + df);
-                    PLog.errorLog(989754125, "Fehler beim löschen: " + df);
+                    P2Log.errorLog(989754125, "Fehler beim löschen: " + df);
                 });
             }
         }

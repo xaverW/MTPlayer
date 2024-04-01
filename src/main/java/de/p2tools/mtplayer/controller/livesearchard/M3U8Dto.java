@@ -1,7 +1,7 @@
 package de.p2tools.mtplayer.controller.livesearchard;
 
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,7 +90,7 @@ public class M3U8Dto {
                 case "3840x2160":
                     return Optional.of(LiveConst.Qualities.HD);
                 default:
-                    PLog.debugLog("Unknown resolution: {}" + resolution.get());
+                    P2Log.debugLog("Unknown resolution: {}" + resolution.get());
             }
         }
 

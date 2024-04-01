@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutKey;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -151,12 +151,12 @@ public class PaneShortcut {
             btnChange.addEventFilter(KeyEvent.KEY_RELEASED, ke -> {
                 released = true;
                 if (newShortcutValue.isEmpty()) {
-                    PLog.sysLog("Shortcut: nicht ändern");
+                    P2Log.sysLog("Shortcut: nicht ändern");
                     return;
                 }
 
                 //neu setzen
-                PLog.sysLog("Shortcut: " + p2ShortcutKey.getDescription() + " ändern von: " + p2ShortcutKey.getActShortcut() + " nach: " + newShortcutValue);
+                P2Log.sysLog("Shortcut: " + p2ShortcutKey.getDescription() + " ändern von: " + p2ShortcutKey.getActShortcut() + " nach: " + newShortcutValue);
                 p2ShortcutKey.setActShortcut(newShortcutValue);
 
                 //Prüfen auf Doppelte

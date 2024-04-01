@@ -26,7 +26,7 @@ import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.tools.log.PLogger;
+import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -106,7 +106,7 @@ public class DownloadErrorDialogController extends P2DialogExtra {
             quit();
         });
         btnErrorStream.setOnAction(a -> new DownloadErrorStreamDialogController(download.getDownloadStartDto().getErrorStream()));
-        btnLogFile.setOnAction(a -> PLogger.openLogFile());
+        btnLogFile.setOnAction(a -> P2Logger.openLogFile());
 
         btnErrorStream.setVisible(!download.getDownloadStartDto().getErrStreamList().isEmpty());
         btnErrorStream.setManaged(btnErrorStream.isVisible());

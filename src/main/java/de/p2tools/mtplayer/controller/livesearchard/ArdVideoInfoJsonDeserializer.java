@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.MVHttpClient;
 import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
 
@@ -71,7 +71,7 @@ public class ArdVideoInfoJsonDeserializer {
                         }
                         resolutionUrlMap.put(resolution.get(), new URL(videoUrl));
                     } catch (MalformedURLException e) {
-                        PLog.errorLog(959654789, e, "ArdVideoInfoJsonDeserializer: invalid url " + entry.getUrl());
+                        P2Log.errorLog(959654789, e, "ArdVideoInfoJsonDeserializer: invalid url " + entry.getUrl());
                     }
                 }
             });
@@ -90,11 +90,11 @@ public class ArdVideoInfoJsonDeserializer {
             if (response.isSuccessful() && body != null) {
                 return Optional.of(body.string());
             } else {
-                PLog.errorLog(202014589,
+                P2Log.errorLog(202014589,
                         String.format("ArdVideoInfoJsonDeserializer: Request '%s' failed: %s", aUrl, response.code()));
             }
         } catch (IOException ex) {
-            PLog.errorLog(501478963, ex, "ArdVideoInfoJsonDeserializer: ");
+            P2Log.errorLog(501478963, ex, "ArdVideoInfoJsonDeserializer: ");
         }
 
         return Optional.empty();

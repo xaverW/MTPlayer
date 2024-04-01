@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
@@ -42,7 +42,7 @@ public final class FilmFilter extends FilmFilterProps {
 
     public void reportFilterReturn() {
         // sind die ComboBoxen wenn return gedrückt wird
-        PLog.debugLog("reportFilterReturn");
+        P2Log.debugLog("reportFilterReturn");
         pause.stop();
         ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
         PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
@@ -173,7 +173,7 @@ public final class FilmFilter extends FilmFilterProps {
         pause.setOnFinished(event -> reportFilterChange());
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         ProgConfig.SYSTEM_FILTER_WAIT_TIME.addListener((observable, oldValue, newValue) -> {
-            PLog.debugLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
+            P2Log.debugLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());
             pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         });
 

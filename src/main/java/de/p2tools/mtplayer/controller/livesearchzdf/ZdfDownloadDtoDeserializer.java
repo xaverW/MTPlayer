@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.p2lib.mtdownload.MLHttpClient;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -70,7 +70,7 @@ public class ZdfDownloadDtoDeserializer {
             }
             return Optional.of(downloadDto);
         } catch (final Exception ex) {
-            PLog.errorLog(959562301, ex, "Url: " + videoUrl);
+            P2Log.errorLog(959562301, ex, "Url: " + videoUrl);
         }
         return Optional.empty();
     }
@@ -217,7 +217,7 @@ public class ZdfDownloadDtoDeserializer {
                     if (foundGeoLocation.isPresent()) {
                         dto.setGeoLocation(foundGeoLocation.get());
                     } else {
-                        PLog.errorLog(951542145, "Can't find a GeoLocation for \"{}\" " + geoValue.asText());
+                        P2Log.errorLog(951542145, "Can't find a GeoLocation for \"{}\" " + geoValue.asText());
                     }
                 }
             }
@@ -245,8 +245,8 @@ public class ZdfDownloadDtoDeserializer {
                 qualityValue = LiveConst.Qualities.UHD;
                 break;
             default:
-                PLog.errorLog(959562541, "unknown quality: {} " + zdfQuality);
-                PLog.errorLog(852141452, "ZDF: unknown quality: " + zdfQuality);
+                P2Log.errorLog(959562541, "unknown quality: {} " + zdfQuality);
+                P2Log.errorLog(852141452, "ZDF: unknown quality: " + zdfQuality);
                 qualityValue = LiveConst.Qualities.SMALL;
         }
         return qualityValue;

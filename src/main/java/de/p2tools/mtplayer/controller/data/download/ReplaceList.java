@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.configfile.pdata.PDataList;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -80,7 +80,7 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> implement
                         replace = replace.substring(ProgConst.REG_EX.length());
                         strCheck = strCheck.replaceAll(replace, replaceData.getTo());
                     } catch (PatternSyntaxException ex) {
-                        PLog.errorLog(201360457, "RegEx fehlerhaft: " + replace);
+                        P2Log.errorLog(201360457, "RegEx fehlerhaft: " + replace);
                     }
 
                 } else {

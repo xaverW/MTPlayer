@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.beans.property.StringProperty;
@@ -56,7 +56,7 @@ public class DownPathPane {
         txtPath.textProperty().bindBidirectional(pathProp);
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
-            PDirFileChooser.DirChooser(stage, txtPath);
+            P2DirFileChooser.DirChooser(stage, txtPath);
         });
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));

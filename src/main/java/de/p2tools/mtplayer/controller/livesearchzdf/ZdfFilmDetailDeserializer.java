@@ -3,7 +3,7 @@ package de.p2tools.mtplayer.controller.livesearchzdf;
 import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -101,7 +101,7 @@ public class ZdfFilmDetailDeserializer {
                 }
             }
         } catch (final Exception ex) {
-            PLog.errorLog(959454120, ex, "Url: " + getUrl);
+            P2Log.errorLog(959454120, ex, "Url: " + getUrl);
         }
     }
 

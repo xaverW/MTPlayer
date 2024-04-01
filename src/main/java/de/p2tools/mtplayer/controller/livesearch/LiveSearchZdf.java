@@ -3,7 +3,7 @@ package de.p2tools.mtplayer.controller.livesearch;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearchzdf.ZdfFilmDetailDeserializer;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -42,12 +42,12 @@ public class LiveSearchZdf {
                 loadUrls(jsonInfoDto, true);
             }
         } catch (final Exception ex) {
-            PLog.errorLog(898945124, ex, "Url: " + URL_BASE);
+            P2Log.errorLog(898945124, ex, "Url: " + URL_BASE);
         }
 
         LiveFactory.addToList(jsonInfoDto);
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ZDF);
-        PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
+        P2Log.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
 
     public void loadUrl(JsonInfoDto jsonInfoDto) {
@@ -63,16 +63,16 @@ public class LiveSearchZdf {
                 searchBearer.ifPresent(jsonInfoDto::setApi);
 
                 String url = jsonInfoDto.getStartUrl();
-                PLog.sysLog("Filme suchen: " + url);
+                P2Log.sysLog("Filme suchen: " + url);
                 workFilm(jsonInfoDto, url);
             }
         } catch (final Exception ex) {
-            PLog.errorLog(898945124, ex, "Url: " + URL_BASE);
+            P2Log.errorLog(898945124, ex, "Url: " + URL_BASE);
         }
 
         LiveFactory.addToList(jsonInfoDto);
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ZDF);
-        PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
+        P2Log.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
 
     private void loadUrls(JsonInfoDto jsonInfoDto, boolean next) {
@@ -80,7 +80,7 @@ public class LiveSearchZdf {
         List<String> urls = getFilms(jsonInfoDto, next);
         int count = 0;
         max = urls.size();
-        PLog.sysLog("Filme suchen: " + max);
+        P2Log.sysLog("Filme suchen: " + max);
         if (!urls.isEmpty()) {
             LiveFactory.setProgress(LiveFactory.CHANNEL.ZDF, count, max);
             for (String url : urls) {

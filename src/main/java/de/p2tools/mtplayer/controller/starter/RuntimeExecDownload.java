@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.mtdownload.DownloadSize;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -77,18 +77,18 @@ public class RuntimeExecDownload {
         try {
             if (arrProgCallArray != null) {
                 if (log) {
-                    PLog.sysLog("=====================");
-                    PLog.sysLog("Starte Array: ");
-                    PLog.sysLog(" -> " + strProgCallArray);
-                    PLog.sysLog("=====================");
+                    P2Log.sysLog("=====================");
+                    P2Log.sysLog("Starte Array: ");
+                    P2Log.sysLog(" -> " + strProgCallArray);
+                    P2Log.sysLog("=====================");
                 }
                 process = Runtime.getRuntime().exec(arrProgCallArray);
             } else {
                 if (log) {
-                    PLog.sysLog("=====================");
-                    PLog.sysLog("Starte nicht als Array:");
-                    PLog.sysLog(" -> " + strProgCall);
-                    PLog.sysLog("=====================");
+                    P2Log.sysLog("=====================");
+                    P2Log.sysLog("Starte nicht als Array:");
+                    P2Log.sysLog(" -> " + strProgCall);
+                    P2Log.sysLog("=====================");
                 }
                 process = Runtime.getRuntime().exec(strProgCall);
             }
@@ -101,12 +101,12 @@ public class RuntimeExecDownload {
             clearOut.setName("exec-out");
             clearOut.start();
         } catch (final IOException ex) {
-            PLog.errorLog(123658970, ex, "IOFehler beim Starten");
+            P2Log.errorLog(123658970, ex, "IOFehler beim Starten");
             String error = "Das Programm: [" + download.getProgramName() + "] konnte nicht gestartet werden.";
             download.getDownloadStartDto().addErrMsg(error);
 
         } catch (final Exception ex) {
-            PLog.errorLog(450028932, ex, "Fehler beim Starten");
+            P2Log.errorLog(450028932, ex, "Fehler beim Starten");
             String error = ex.getLocalizedMessage();
             download.getDownloadStartDto().addErrMsg(error);
         }
@@ -256,7 +256,7 @@ public class RuntimeExecDownload {
 
             } catch (final Exception ex) {
                 if (ProgData.debug) {
-                    PLog.errorLog(320154795, input);
+                    P2Log.errorLog(320154795, input);
                 }
             }
         }
@@ -313,7 +313,7 @@ public class RuntimeExecDownload {
 
             } catch (final Exception ex) {
                 if (ProgData.debug) {
-                    PLog.errorLog(951254697, input);
+                    P2Log.errorLog(951254697, input);
                 }
             }
         }

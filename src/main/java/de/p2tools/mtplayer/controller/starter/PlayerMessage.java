@@ -16,11 +16,11 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 /**
  * das sind die Meldungen die externe Programme liefern (z.B.: VLC)
- * und werden auch im PLog eingetragen
+ * und werden auch im P2Log eingetragen
  */
 public class PlayerMessage {
 
@@ -40,7 +40,7 @@ public class PlayerMessage {
 
         for (int i = 0; i < texte.length; ++i) {
             final String z = "[" + noStr + "] >> " + texte[0];
-            PLog.extToolLog(z);
+            P2Log.extToolLog(z);
         }
     }
 

@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.controller.mediadb;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -62,7 +62,7 @@ public class ReadMediaDb implements AutoCloseable {
                 urlPath = Files.createFile(urlPath);
             }
         } catch (final IOException ex) {
-            PLog.errorLog(951201201, ex);
+            P2Log.errorLog(951201201, ex);
         }
         return urlPath;
     }
@@ -97,7 +97,7 @@ public class ReadMediaDb implements AutoCloseable {
             }
         } catch (final Exception ex) {
             list.clear();
-            PLog.errorLog(936251078, ex);
+            P2Log.errorLog(936251078, ex);
         } finally {
             try {
                 if (parser != null) {
@@ -139,7 +139,7 @@ public class ReadMediaDb implements AutoCloseable {
             }
         } catch (final Exception ex) {
             ret = false;
-            PLog.errorLog(912036578, ex);
+            P2Log.errorLog(912036578, ex);
         }
         return ret;
     }

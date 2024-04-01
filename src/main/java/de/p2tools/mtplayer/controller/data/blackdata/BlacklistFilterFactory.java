@@ -26,7 +26,7 @@ import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.PDuration;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -72,7 +72,7 @@ public class BlacklistFilterFactory {
 
         boolean maskerSet = false;
         PDuration.counterStart("markFilmBlack");
-        PLog.sysLog("markFilmBlack -> start");
+        P2Log.sysLog("markFilmBlack -> start");
 
         if (!ProgData.getInstance().maskerPane.isVisible()) {
             maskerSet = true;
@@ -89,7 +89,7 @@ public class BlacklistFilterFactory {
         //und jetzt die filteredList erstellen
         getBlackFilteredFilmlist();
 
-        PLog.sysLog("markFilmBlack -> stop");
+        P2Log.sysLog("markFilmBlack -> stop");
         PDuration.counterStop("markFilmBlack");
 
         if (maskerSet) {
@@ -121,17 +121,17 @@ public class BlacklistFilterFactory {
 
             if (progData.filmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
                 //blacklist ONLY
-                PLog.sysLog("FilmlistBlackFilter - isBlacklistOnly");
+                P2Log.sysLog("FilmlistBlackFilter - isBlacklistOnly");
                 initialStream = initialStream.filter(FilmDataProps::isBlackBlocked);
 
             } else if (progData.filmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
                 //blacklist ON
-                PLog.sysLog("FilmlistBlackFilter - isBlacklistOn");
+                P2Log.sysLog("FilmlistBlackFilter - isBlacklistOn");
                 initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());
 
             } else {
                 //blacklist OFF
-                PLog.sysLog("FilmlistBlackFilter - isBlacklistOff");
+                P2Log.sysLog("FilmlistBlackFilter - isBlacklistOff");
             }
 
             filmListFiltered.addAll(initialStream.toList());

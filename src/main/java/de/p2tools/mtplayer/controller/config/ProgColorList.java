@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.p2lib.data.PColorData;
 import de.p2tools.p2lib.data.PColorList;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
@@ -120,7 +120,7 @@ public class ProgColorList extends PColorList {
                 }
             });
         } catch (Exception ex) {
-            PLog.errorLog(956410210, "setColorData");
+            P2Log.errorLog(956410210, "setColorData");
         }
     }
 }

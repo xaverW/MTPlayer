@@ -5,7 +5,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearchard.ArdFilmDeserializer;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.util.Iterator;
 import java.util.Optional;
@@ -33,7 +33,7 @@ public class LiveSearchArd {
 
         LiveFactory.addToList(jsonInfoDto);
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ARD);
-        PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
+        P2Log.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
 
     public void loadUrl(JsonInfoDto jsonInfoDto) {
@@ -43,15 +43,15 @@ public class LiveSearchArd {
         jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.getValue());
         try {
             String url = jsonInfoDto.getSearchString();
-            PLog.sysLog("Filme suchen: " + url);
+            P2Log.sysLog("Filme suchen: " + url);
             addFilmWithUrl(jsonInfoDto);
         } catch (final Exception ex) {
-            PLog.errorLog(898945124, ex, "Url: " + jsonInfoDto.getSearchString());
+            P2Log.errorLog(898945124, ex, "Url: " + jsonInfoDto.getSearchString());
         }
 
         LiveFactory.addToList(jsonInfoDto);
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ARD);
-        PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
+        P2Log.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
 
     private void load(JsonInfoDto jsonInfoDto, boolean next) {
@@ -95,9 +95,9 @@ public class LiveSearchArd {
                 }
             }
         } catch (final Exception ex) {
-            PLog.errorLog(979858978, ex, "Url: " + url);
+            P2Log.errorLog(979858978, ex, "Url: " + url);
         }
-        PLog.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
+        P2Log.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
 
     private void hasMore(JsonInfoDto jsonInfoDto) {

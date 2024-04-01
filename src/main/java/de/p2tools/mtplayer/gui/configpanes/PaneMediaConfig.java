@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -185,7 +185,7 @@ public class PaneMediaConfig {
 
     private void initAction() {
         btnExportFile.setOnAction(event -> {
-            PDirFileChooser.FileChooserSaveFile(ProgData.getInstance().primaryStage, txtExport);
+            P2DirFileChooser.FileChooserSaveFile(ProgData.getInstance().primaryStage, txtExport);
         });
 
         btnExport.setOnAction(a -> {

@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadContinueDialogController;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -133,7 +133,7 @@ public class CheckDownloadFileExists {
                         Files.deleteIfExists(download.getFile().toPath());
                     } catch (final Exception ex) {
                         // kann nicht gelöscht werden, evtl. klappt ja das Überschreiben
-                        PLog.errorLog(945757586, ex,
+                        P2Log.errorLog(945757586, ex,
                                 "file exists: " + download.getDestPathFile());
                     }
                 }

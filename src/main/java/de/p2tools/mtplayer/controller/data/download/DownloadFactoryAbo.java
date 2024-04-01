@@ -28,7 +28,7 @@ import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.duration.PDuration;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.nio.file.Paths;
@@ -176,7 +176,7 @@ public class DownloadFactoryAbo {
                 alreadyDone.add(download);
             });
         } catch (final Exception ex) {
-            PLog.errorLog(303021458, ex);
+            P2Log.errorLog(303021458, ex);
         }
     }
 

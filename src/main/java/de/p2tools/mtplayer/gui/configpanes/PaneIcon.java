@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.dialogs.PDirFileChooser;
+import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2WindowIcon;
@@ -84,7 +84,7 @@ public class PaneIcon {
         final Button btnProgIconFile = new Button();
         btnProgIconFile.setTooltip(new Tooltip("Eine Programmicon auswählen"));
         btnProgIconFile.setOnAction(event -> {
-            String s = PDirFileChooser.FileChooserSelect(ProgData.getInstance().primaryStage, "", "");
+            String s = P2DirFileChooser.FileChooserSelect(ProgData.getInstance().primaryStage, "", "");
             if (!s.isEmpty()) {
                 //evtl. Abbruch des FileChooser
                 txtProgIconPath.setText(s);
@@ -134,7 +134,7 @@ public class PaneIcon {
         final Button btnTrayFile = new Button();
         btnTrayFile.setTooltip(new Tooltip("Eine Datei für das Icon auswählen"));
         btnTrayFile.setOnAction(event -> {
-            String s = PDirFileChooser.FileChooserSelect(ProgData.getInstance().primaryStage, "", "");
+            String s = P2DirFileChooser.FileChooserSelect(ProgData.getInstance().primaryStage, "", "");
             if (!s.isEmpty()) {
                 //evtl. Abbruch des FileChooser
                 txtTrayIconPath.setText(s);

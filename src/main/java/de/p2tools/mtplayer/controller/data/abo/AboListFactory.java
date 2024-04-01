@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.gui.dialog.abodialog.AboAddDialogController;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -122,7 +122,7 @@ public class AboListFactory {
                     new AboDelDialogController(lAbo);
             if (aboDelDialog.getState() != P2DialogExtra.STATE.STATE_OK) {
                 //dann soll nix gemacht werden
-                PLog.sysLog("Abo löschen: Abbruch");
+                P2Log.sysLog("Abo löschen: Abbruch");
                 return;
             }
         }

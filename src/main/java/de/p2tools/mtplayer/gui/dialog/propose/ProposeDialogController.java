@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog.propose;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.tools.log.PLog;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -95,7 +95,7 @@ public class ProposeDialogController extends P2DialogExtra {
             tabCleaningList.setContent(paneCleaningList.makePane());
             tabPane.getTabs().add(tabCleaningList);
         } catch (final Exception ex) {
-            PLog.errorLog(894210365, ex);
+            P2Log.errorLog(894210365, ex);
         }
     }
 
