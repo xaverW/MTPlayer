@@ -469,7 +469,7 @@ public class HelpText {
                     "Der Download wird dann immer in einem Unterordner mit dem im Zielpfad " +
                     "angegebenen Namen gespeichert." + "\n" +
                     "\n" +
-                    "Mit der CheckBos links kann zwischen der Vorgabe des Programmsets " +
+                    "Mit der CheckBox links kann zwischen der Vorgabe des Programmsets " +
                     "und dem hier eingetragenen Pfad umgeschaltet werden.\n" +
                     "\n" +
                     "Beim Namen sind diese Parameter möglich:\n" +

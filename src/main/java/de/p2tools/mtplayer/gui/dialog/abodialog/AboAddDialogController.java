@@ -21,13 +21,27 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
+import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.PAlert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.util.List;
 
@@ -45,7 +59,7 @@ public class AboAddDialogController extends P2DialogExtra {
     public AboAddDialogController(ProgData progData, AboData abo) {
         // hier wird ein neues Abo angelegt!
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false, DECO.BORDER_SMALL, true);
+                "Abo anlegen", false, false, DECO.NO_BORDER, true);
 
         this.progData = progData;
         this.addAboDto = new AddAboDto(progData, true, abo);
@@ -55,7 +69,7 @@ public class AboAddDialogController extends P2DialogExtra {
     public AboAddDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
         // hier wird ein bestehendes Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false, DECO.BORDER_SMALL, true);
+                "Abo anlegen", false, false, DECO.NO_BORDER, true);
 
         this.progData = progData;
         this.addAboDto = new AddAboDto(progData, false, abo);
@@ -109,12 +123,77 @@ public class AboAddDialogController extends P2DialogExtra {
             return;
         }
 
-        AboAddDialogGui aboAddDialogGui = new AboAddDialogGui(progData, addAboDto, getVBoxCont());
+        boolean size = addAboDto.addAboData.length > 1;
+        // Top
+        if (size) {
+            // wenns nur einen Download gibt, macht dann keinen Sinn
+            final HBox hBoxTop = new HBox();
+            hBoxTop.getStyleClass().add("downloadDialog");
+            hBoxTop.setSpacing(20);
+            hBoxTop.setAlignment(Pos.CENTER);
+            hBoxTop.setPadding(new Insets(5));
+            hBoxTop.getChildren().addAll(addAboDto.btnPrev, addAboDto.lblSum, addAboDto.btnNext);
+            getVBoxCont().getChildren().add(hBoxTop);
+        }
+
+        Font font = Font.font(null, FontWeight.BOLD, -1);
+        addAboDto.btnAll.setFont(font);
+        addAboDto.btnAll.setWrapText(true);
+        addAboDto.btnAll.setMinHeight(Region.USE_PREF_SIZE);
+
+        HBox hBoxBtn = new HBox(P2LibConst.SPACING_HBOX);
+        hBoxBtn.setAlignment(Pos.CENTER_RIGHT);
+        hBoxBtn.getChildren().addAll(DownloadAddDialogFactory.getText(AboFieldNames.ABO_NO + ":"), addAboDto.lblAboNo,
+                P2GuiTools.getHDistance(20),
+                DownloadAddDialogFactory.getText(AboFieldNames.ABO_HIT + ":"), addAboDto.lblHit,
+                P2GuiTools.getHBoxGrower(),
+                addAboDto.btnAll);
+        getVBoxCont().getChildren().add(hBoxBtn);
+
+        Tab tabAbo = new Tab("Abo");
+        tabAbo.setClosable(false);
+        VBox vBoxAbo = new VBox();
+        tabAbo.setContent(vBoxAbo);
+
+        Tab tabSearch = new Tab("Suche");
+        tabSearch.setClosable(false);
+        VBox vBoxSearch = new VBox();
+        tabSearch.setContent(vBoxSearch);
+
+        Tab tabPath = new Tab("Pfad");
+        tabPath.setClosable(false);
+        VBox vBoxPath = new VBox();
+        tabPath.setContent(vBoxPath);
+
+        TabPane tabPane = new TabPane();
+        tabPane.getTabs().addAll(tabAbo, tabSearch, tabPath);
+        getVBoxCont().getChildren().add(tabPane);
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
+        tabPane.tabMinWidthProperty().bind(tabPane.widthProperty().divide(4));
+//        tabPane.tabMaxWidthProperty().bind(tabPane.widthProperty().divide(4));
+
+        AboAddDialogGui aboAddDialogGui = new AboAddDialogGui(progData, getStage(), addAboDto, vBoxAbo);
         aboAddDialogGui.addCont();
         aboAddDialogGui.init();
 
+        AboAddDialogGuiSearch aboAddDialogGuiSearch = new AboAddDialogGuiSearch(progData, getStage(), addAboDto, vBoxSearch);
+        aboAddDialogGuiSearch.addCont();
+        aboAddDialogGuiSearch.init();
+
+        AboAddDialogGuiPath aboAddDialogGuiPath = new AboAddDialogGuiPath(progData, getStage(), addAboDto, vBoxPath);
+        aboAddDialogGuiPath.addCont();
+        aboAddDialogGuiPath.init();
+
+        // Letztes Abo, Angelegt
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+        hBox.getChildren().addAll(DownloadAddDialogFactory.getText(AboFieldNames.ABO_DATE_LAST_ABO + ":"), addAboDto.lblLastAbo,
+                P2GuiTools.getHBoxGrower(),
+                DownloadAddDialogFactory.getText(AboFieldNames.ABO_GEN_DATE + ":"), addAboDto.lblGenDate);
+        getVBoxCont().getChildren().add(hBox);
+
+
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
-        addHlpButton(P2Button.helpButton(getStageProp(), "Download", HelpText.ABO_SEARCH));
+        addHlpButton(P2Button.helpButton(getStage(), "Download", HelpText.ABO_SEARCH));
     }
 
     private void initButton() {

@@ -34,9 +34,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -56,30 +56,29 @@ public class AddAboDto {
     public IntegerProperty actAboIsShown = new SimpleIntegerProperty(0);
     public final Label lblHit = new Label();
 
-    public Stage stage;
-
     public final Button btnPrev = new Button("<");
     public final Button btnNext = new Button(">");
     public final Label lblAboNo = new Label("");
     public final Label lblLastAbo = new Label("2023, ...");
     public final Label lblGenDate = new Label("2023, ...");
     public final Label lblSum = new Label("");
-    public final Button btnAll = new Button("Für alle\nändern");
+    //    public final Button btnAll = new Button("Für alle\nändern");
+    public final Button btnAll = new Button("Für alle ändern");
 
-    public final CheckBox chkActiveAll = new CheckBox();
-    public final CheckBox chkDescriptionAll = new CheckBox();
-    public final CheckBox chkResolutionAll = new CheckBox();
-    public final CheckBox chkChannelAll = new CheckBox();
-    public final CheckBox chkThemeAll = new CheckBox();
-    public final CheckBox chkThemeExactAll = new CheckBox();
-    public final CheckBox chkThemeTitleAll = new CheckBox();
-    public final CheckBox chkTitleAll = new CheckBox();
-    public final CheckBox chkSomewhereAll = new CheckBox();
-    public final CheckBox chkTimeRangeAll = new CheckBox();
-    public final CheckBox chkDurationAll = new CheckBox();
-    public final CheckBox chkStartTimeAll = new CheckBox();
-    public final CheckBox chkDestinationAll = new CheckBox();
-    public final CheckBox chkSetAll = new CheckBox();
+    public final CheckAll chkActiveAll = new CheckAll();
+    public final CheckAll chkDescriptionAll = new CheckAll();
+    public final CheckAll chkResolutionAll = new CheckAll();
+    public final CheckAll chkChannelAll = new CheckAll();
+    public final CheckAll chkThemeAll = new CheckAll();
+    public final CheckAll chkThemeExactAll = new CheckAll();
+    public final CheckAll chkThemeTitleAll = new CheckAll();
+    public final CheckAll chkTitleAll = new CheckAll();
+    public final CheckAll chkSomewhereAll = new CheckAll();
+    public final CheckAll chkTimeRangeAll = new CheckAll();
+    public final CheckAll chkDurationAll = new CheckAll();
+    public final CheckAll chkStartTimeAll = new CheckAll();
+    public final CheckAll chkDestinationAll = new CheckAll();
+    public final CheckAll chkSetAll = new CheckAll();
 
     public final CheckBox chkActive = new CheckBox();
     public final CheckBox chkThemeExact = new CheckBox();
@@ -178,5 +177,12 @@ public class AddAboDto {
         initStartTimeAbo.makeAct();
         initDestination.makeAct();
         initSetDataAbo.makeAct();
+    }
+
+    public static class CheckAll extends CheckBox {
+        public CheckAll() {
+            super();
+            setPadding(new Insets(0, 5, 0, 15));
+        }
     }
 }
