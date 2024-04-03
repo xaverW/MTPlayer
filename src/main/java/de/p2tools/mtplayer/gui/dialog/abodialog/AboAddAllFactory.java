@@ -66,8 +66,12 @@ public class AboAddAllFactory {
             addAboDto.chkDurationAll.setManaged(false);
             addAboDto.chkStartTimeAll.setVisible(false);
             addAboDto.chkStartTimeAll.setManaged(false);
-            addAboDto.chkDestinationAll.setVisible(false);
-            addAboDto.chkDestinationAll.setManaged(false);
+            addAboDto.chkDestSetSubDirAll.setVisible(false);
+            addAboDto.chkDestSetSubDirAll.setManaged(false);
+            addAboDto.chkDestAboDirAll.setVisible(false);
+            addAboDto.chkDestAboDirAll.setManaged(false);
+            addAboDto.chkDestAboFileNameAll.setVisible(false);
+            addAboDto.chkDestAboFileNameAll.setManaged(false);
             addAboDto.chkSetAll.setVisible(false);
             addAboDto.chkSetAll.setManaged(false);
 
@@ -84,7 +88,9 @@ public class AboAddAllFactory {
             addAboDto.chkTimeRangeAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkDurationAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkStartTimeAll.getStyleClass().add("checkBoxAll");
-            addAboDto.chkDestinationAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkDestSetSubDirAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkDestAboDirAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkDestAboFileNameAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkSetAll.getStyleClass().add("checkBoxAll");
 
             addAboDto.chkActiveAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -160,9 +166,21 @@ public class AboAddAllFactory {
                     addAboDto.initStartTimeAbo.setStartTimePick();
                 }
             });
-            addAboDto.chkDestinationAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            addAboDto.chkDestSetSubDirAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 addCheckAllCss(addAboDto);
-                if (addAboDto.chkDestinationAll.isSelected()) {
+                if (addAboDto.chkDestSetSubDirAll.isSelected()) {
+                    addAboDto.initDestination.setPath();
+                }
+            });
+            addAboDto.chkDestAboDirAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                addCheckAllCss(addAboDto);
+                if (addAboDto.chkDestAboDirAll.isSelected()) {
+                    addAboDto.initDestination.setPath();
+                }
+            });
+            addAboDto.chkDestAboFileNameAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                addCheckAllCss(addAboDto);
+                if (addAboDto.chkDestAboFileNameAll.isSelected()) {
                     addAboDto.initDestination.setPath();
                 }
             });
@@ -197,7 +215,9 @@ public class AboAddAllFactory {
         addAboDto.chkTimeRangeAll.setSelected(isNotSelected);
         addAboDto.chkDurationAll.setSelected(isNotSelected);
         addAboDto.chkStartTimeAll.setSelected(isNotSelected);
-        addAboDto.chkDestinationAll.setSelected(isNotSelected);
+        addAboDto.chkDestSetSubDirAll.setSelected(isNotSelected);
+        addAboDto.chkDestAboDirAll.setSelected(isNotSelected);
+        addAboDto.chkDestAboFileNameAll.setSelected(isNotSelected);
         addCheckAllCss(addAboDto);
     }
 
@@ -228,7 +248,9 @@ public class AboAddAllFactory {
                 addAboDto.chkTimeRangeAll.isSelected() ||
                 addAboDto.chkDurationAll.isSelected() ||
                 addAboDto.chkStartTimeAll.isSelected() ||
-                addAboDto.chkDestinationAll.isSelected() ||
+                addAboDto.chkDestSetSubDirAll.isSelected() ||
+                addAboDto.chkDestAboDirAll.isSelected() ||
+                addAboDto.chkDestAboFileNameAll.isSelected() ||
                 addAboDto.chkSetAll.isSelected();
     }
 }

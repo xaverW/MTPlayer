@@ -17,10 +17,17 @@
 
 package de.p2tools.mtplayer.gui.dialog.abodialog;
 
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import javafx.collections.FXCollections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class InitDestination {
     private final AddAboDto addAboDto;
@@ -31,12 +38,12 @@ public class InitDestination {
     }
 
     private void init() {
-        addAboDto.chkDestination.setOnAction(event -> {
-            if (addAboDto.chkDestination.isFocused()) {
+        addAboDto.chkDestAboSubDir.setOnAction(event -> {
+            if (addAboDto.chkDestAboSubDir.isFocused()) {
                 // dann durch den User
-                if (addAboDto.chkDestination.isSelected()) {
+                if (addAboDto.chkDestAboSubDir.isSelected()) {
                     // dann gespeicherten SubDir wieder setzen
-                    if (addAboDto.chkDestinationAll.isSelected()) {
+                    if (addAboDto.chkDestSetSubDirAll.isSelected()) {
                         Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                             addAboData.abo.setAboSubDir(addAboDto.getAct().aboSubDir); // da wird immer der "erste alte" gesetzt
                         });
@@ -46,7 +53,7 @@ public class InitDestination {
 
                 } else {
                     // dann SubDir speichern
-                    if (addAboDto.chkDestinationAll.isSelected()) {
+                    if (addAboDto.chkDestSetSubDirAll.isSelected()) {
                         Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                             addAboData.aboSubDir = addAboData.abo.getAboSubDir();
                             addAboData.abo.setAboSubDir("");
@@ -57,31 +64,32 @@ public class InitDestination {
                     }
                 }
             }
-            if (addAboDto.chkDestination.isSelected()) {
+            if (addAboDto.chkDestAboSubDir.isSelected()) {
                 // dann einen eigenen Pfad eingeben
-                addAboDto.lblDestination.setVisible(false);
-                addAboDto.cboDestination.setVisible(true);
-                addAboDto.cboDestination.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
+                addAboDto.lblSetSubDir.setVisible(false);
+                addAboDto.cboDestSetSubDir.setVisible(true);
+                addAboDto.cboDestSetSubDir.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
 
             } else {
                 // Standard des Sets verwenden
-                addAboDto.lblDestination.setVisible(true);
-                addAboDto.cboDestination.setVisible(false);
-                addAboDto.cboDestination.getEditor().setText("");
+                addAboDto.lblSetSubDir.setVisible(true);
+                addAboDto.cboDestSetSubDir.setVisible(false);
+                addAboDto.cboDestSetSubDir.getEditor().setText("");
             }
+            setResPath();
         });
 
         ArrayList<String> path = addAboDto.progData.aboList.getAboDestinationPathList();
-        addAboDto.cboDestination.setItems(FXCollections.observableArrayList(path));
+        addAboDto.cboDestSetSubDir.setItems(FXCollections.observableArrayList(path));
 
-        addAboDto.cboDestination.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!addAboDto.cboDestination.isFocused()) {
+        addAboDto.cboDestSetSubDir.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!addAboDto.cboDestSetSubDir.isFocused()) {
                 return;
             }
             setPath();
         });
-        addAboDto.cboDestination.selectionModelProperty().addListener((u, o, n) -> {
-            if (!addAboDto.cboDestination.isFocused()) {
+        addAboDto.cboDestSetSubDir.selectionModelProperty().addListener((u, o, n) -> {
+            if (!addAboDto.cboDestSetSubDir.isFocused()) {
                 return;
             }
             setPath();
@@ -90,41 +98,77 @@ public class InitDestination {
 
     public void setPath() {
         addMissingPath();
-        if (addAboDto.chkDestinationAll.isSelected()) {
+        if (addAboDto.chkDestSetSubDirAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
-                addAboData.abo.setAboSubDir(addAboDto.cboDestination.getEditor().getText());
-                if (addAboDto.chkDestination.isSelected()) {
+                addAboData.abo.setAboSubDir(addAboDto.cboDestSetSubDir.getEditor().getText());
+                if (addAboDto.chkDestAboSubDir.isSelected()) {
                     addAboData.aboSubDir = addAboData.abo.getAboSubDir();
                 }
             });
         } else {
-            addAboDto.getAct().abo.setAboSubDir(addAboDto.cboDestination.getEditor().getText());
-            if (addAboDto.chkDestination.isSelected()) {
+            addAboDto.getAct().abo.setAboSubDir(addAboDto.cboDestSetSubDir.getEditor().getText());
+            if (addAboDto.chkDestAboSubDir.isSelected()) {
                 addAboDto.getAct().aboSubDir = addAboDto.getAct().abo.getAboSubDir();
             }
         }
+        setResPath();
     }
 
     private void addMissingPath() {
-        final String s = addAboDto.cboDestination.getEditor().getText();
-        if (!addAboDto.cboDestination.getItems().contains(s)) {
-            addAboDto.cboDestination.getItems().add(s);
+        final String s = addAboDto.cboDestSetSubDir.getEditor().getText();
+        if (!addAboDto.cboDestSetSubDir.getItems().contains(s)) {
+            addAboDto.cboDestSetSubDir.getItems().add(s);
         }
     }
 
     public void makeAct() {
-        addAboDto.cboDestination.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
-        addAboDto.chkDestination.setSelected(!addAboDto.getAct().abo.getAboSubDir().isEmpty());
-        if (addAboDto.chkDestination.isSelected()) {
+        addAboDto.cboDestSetSubDir.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
+        addAboDto.chkDestAboSubDir.setSelected(!addAboDto.getAct().abo.getAboSubDir().isEmpty());
+        if (addAboDto.chkDestAboSubDir.isSelected()) {
             // dann einen eigenen Pfad eingeben
-            addAboDto.lblDestination.setVisible(false);
-            addAboDto.cboDestination.setVisible(true);
+            addAboDto.lblSetSubDir.setVisible(false);
+            addAboDto.cboDestSetSubDir.setVisible(true);
         } else {
             // Standard des Sets verwenden
-            addAboDto.lblDestination.setVisible(true);
-            addAboDto.cboDestination.setVisible(false);
+            addAboDto.lblSetSubDir.setVisible(true);
+            addAboDto.cboDestSetSubDir.setVisible(false);
         }
 
         addMissingPath();
+        setResPath();
+    }
+
+    public void setResPath() {
+        FilmDataMTP filmData = new FilmDataMTP();
+        filmData.arr[FilmDataXml.FILM_CHANNEL] = "SENDER";
+        filmData.arr[FilmDataXml.FILM_THEME] = "THEMA";
+        filmData.arr[FilmDataXml.FILM_TITLE] = "TITEL";
+        filmData.arr[FilmDataXml.FILM_DURATION] = "100";
+        filmData.arr[FilmDataXml.FILM_DATE] = "24.12.2023";
+        filmData.arr[FilmDataXml.FILM_TIME] = "12:30:00";
+        filmData.arr[FilmDataXml.FILM_URL] = "https://URL.MP4";
+        filmData.arr[FilmDataXml.FILM_WEBSITE] = "WEBSITE";
+        filmData.arr[FilmDataXml.FILM_DESCRIPTION] = "BESCHREIBUNG";
+        filmData.init();
+
+        if (addAboDto.cboSetData.getSelectionModel().getSelectedItem() != null) {
+            SetData setData = addAboDto.cboSetData.getSelectionModel().getSelectedItem();
+
+            DownloadData downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, filmData, addAboDto.getAct().abo,
+                    "", "", "", false);
+            addAboDto.lblResPath.setText(downloadData.getDestPath());
+            addAboDto.lblResFileName.setText(downloadData.getDestFileName());
+
+        } else {
+            List<SetData> setData = ProgData.getInstance().setDataList.getSetDataListAbo();
+            if (!setData.isEmpty()) {
+                ArrayList<FilmDataMTP> list = new ArrayList<>();
+                list.add(filmData);
+                DownloadData downloadData = new DownloadData(list, setData.get(0));
+
+                addAboDto.lblResPath.setText(downloadData.getDestPath());
+                addAboDto.lblResFileName.setText(downloadData.getDestFileName());
+            }
+        }
     }
 }

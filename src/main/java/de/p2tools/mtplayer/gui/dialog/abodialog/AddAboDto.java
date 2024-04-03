@@ -77,7 +77,9 @@ public class AddAboDto {
     public final CheckAll chkTimeRangeAll = new CheckAll();
     public final CheckAll chkDurationAll = new CheckAll();
     public final CheckAll chkStartTimeAll = new CheckAll();
-    public final CheckAll chkDestinationAll = new CheckAll();
+    public final CheckAll chkDestSetSubDirAll = new CheckAll();
+    public final CheckAll chkDestAboDirAll = new CheckAll();
+    public final CheckAll chkDestAboFileNameAll = new CheckAll();
     public final CheckAll chkSetAll = new CheckAll();
 
     public final CheckBox chkActive = new CheckBox();
@@ -86,9 +88,15 @@ public class AddAboDto {
 
     public final Text textSet = DownloadAddDialogFactory.getText("Set:");
     public final ComboBox<SetData> cboSetData = new ComboBox<>();
-    public final ComboBox<String> cboDestination = new ComboBox<>();
-    public final Label lblDestination = new Label();
-    public final CheckBox chkDestination = new CheckBox();
+
+    public final ComboBox<String> cboDestSetSubDir = new ComboBox<>();
+    public final ComboBox<String> cboDestAboDir = new ComboBox<>();
+    public final ComboBox<String> cboDestAboFileName = new ComboBox<>();
+    public final Label lblSetSubDir = new Label();
+    public final Label lblResPath = new Label("resPath");
+    public final Label lblResFileName = new Label("resFileName");
+
+    public final CheckBox chkDestAboSubDir = new CheckBox();
     public final Slider slTimeRange = new Slider();
     public final Label lblTimeRange = new Label();
     public final P2RangeBox p2RangeBoxDuration = new P2RangeBox("", true, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);

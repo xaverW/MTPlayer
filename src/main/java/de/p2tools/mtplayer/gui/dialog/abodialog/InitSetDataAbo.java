@@ -52,9 +52,9 @@ public class InitSetDataAbo {
 
         // und jetzt den StandardPfad setzen
         if (addAboDto.getAct().abo.getSetData().isGenAboSubDir()) {
-            addAboDto.lblDestination.setText(addAboDto.getAct().abo.getSetData().getAboSubDir_ENSubDir_Name());
+            addAboDto.lblSetSubDir.setText(addAboDto.getAct().abo.getSetData().getAboSubDir_ENSubDir_Name());
         } else {
-            addAboDto.lblDestination.setText("");
+            addAboDto.lblSetSubDir.setText("");
         }
     }
 

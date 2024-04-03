@@ -61,6 +61,12 @@ public class DownloadAddDialogFactory {
         return t;
     }
 
+    public static Text getResText(String text) {
+        Text t = new Text(text);
+        t.setFont(Font.font(null, FontWeight.BOLD, -1));
+        return t;
+    }
+
     public static boolean getTime(String name, FastDateFormat format) {
         String ret = "";
         Date d;

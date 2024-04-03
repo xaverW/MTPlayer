@@ -27,24 +27,21 @@ import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AboAddDialogGui {
+public class AboAddDialogGuiAbo {
 
     private final AddAboDto addAboDto;
     private final ProgData progData;
     private final VBox vBoxCont;
     private final Stage stage;
 
-    public AboAddDialogGui(ProgData progData, Stage stage, AddAboDto addAboDto, VBox vBoxCont) {
+    public AboAddDialogGuiAbo(ProgData progData, Stage stage, AddAboDto addAboDto, VBox vBoxCont) {
         //hier wird ein neues Abo angelegt -> Button, abo ist immer neu
         this.progData = progData;
         this.stage = stage;
@@ -99,6 +96,8 @@ public class AboAddDialogGui {
         gridPane.add(addAboDto.textAreaDescription, 1, row);
         gridPane.add(addAboDto.chkDescriptionAll, 2, row);
 
+        gridPane.add(new Label(), 0, ++row);
+        
         // Auflösung
         HBox hRes = new HBox(10);
         hRes.setPadding(new Insets(2));

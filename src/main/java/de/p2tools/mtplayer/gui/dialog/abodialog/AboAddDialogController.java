@@ -170,11 +170,10 @@ public class AboAddDialogController extends P2DialogExtra {
         getVBoxCont().getChildren().add(tabPane);
         VBox.setVgrow(tabPane, Priority.ALWAYS);
         tabPane.tabMinWidthProperty().bind(tabPane.widthProperty().divide(4));
-//        tabPane.tabMaxWidthProperty().bind(tabPane.widthProperty().divide(4));
 
-        AboAddDialogGui aboAddDialogGui = new AboAddDialogGui(progData, getStage(), addAboDto, vBoxAbo);
-        aboAddDialogGui.addCont();
-        aboAddDialogGui.init();
+        AboAddDialogGuiAbo aboAddDialogGuiAbo = new AboAddDialogGuiAbo(progData, getStage(), addAboDto, vBoxAbo);
+        aboAddDialogGuiAbo.addCont();
+        aboAddDialogGuiAbo.init();
 
         AboAddDialogGuiSearch aboAddDialogGuiSearch = new AboAddDialogGuiSearch(progData, getStage(), addAboDto, vBoxSearch);
         aboAddDialogGuiSearch.addCont();
