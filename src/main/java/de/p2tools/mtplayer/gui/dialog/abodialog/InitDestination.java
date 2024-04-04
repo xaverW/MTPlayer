@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.gui.dialog.abodialog;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
@@ -27,102 +27,161 @@ import javafx.collections.FXCollections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class InitDestination {
     private final AddAboDto addAboDto;
 
     public InitDestination(AddAboDto addAboDto) {
         this.addAboDto = addAboDto;
-        init();
+        initSetPath();
+        initOwnPath();
+        initFileName();
     }
 
-    private void init() {
+    private void initSetPath() {
+        addAboDto.rbSetPath.setOnAction(a -> setPathToAbo());
+        addAboDto.rbOwnPath.setOnAction(a -> setPathToAbo());
+        addAboDto.rbSetFileName.setOnAction(a -> setFileNameToAbo());
+        addAboDto.rbOwnFileName.setOnAction(a -> setFileNameToAbo());
+
         addAboDto.chkDestAboSubDir.setOnAction(event -> {
             if (addAboDto.chkDestAboSubDir.isFocused()) {
                 // dann durch den User
-                if (addAboDto.chkDestAboSubDir.isSelected()) {
-                    // dann gespeicherten SubDir wieder setzen
-                    if (addAboDto.chkDestSetSubDirAll.isSelected()) {
-                        Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
-                            addAboData.abo.setAboSubDir(addAboDto.getAct().aboSubDir); // da wird immer der "erste alte" gesetzt
-                        });
-                    } else {
-                        addAboDto.getAct().abo.setAboSubDir(addAboDto.getAct().aboSubDir);
-                    }
-
-                } else {
-                    // dann SubDir speichern
-                    if (addAboDto.chkDestSetSubDirAll.isSelected()) {
-                        Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
-                            addAboData.aboSubDir = addAboData.abo.getAboSubDir();
-                            addAboData.abo.setAboSubDir("");
-                        });
-                    } else {
-                        addAboDto.getAct().aboSubDir = addAboDto.getAct().abo.getAboSubDir();
-                        addAboDto.getAct().abo.setAboSubDir("");
-                    }
-                }
+                setPathToAbo();
             }
             if (addAboDto.chkDestAboSubDir.isSelected()) {
                 // dann einen eigenen Pfad eingeben
                 addAboDto.lblSetSubDir.setVisible(false);
                 addAboDto.cboDestSetSubDir.setVisible(true);
-                addAboDto.cboDestSetSubDir.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
 
             } else {
                 // Standard des Sets verwenden
                 addAboDto.lblSetSubDir.setVisible(true);
                 addAboDto.cboDestSetSubDir.setVisible(false);
-                addAboDto.cboDestSetSubDir.getEditor().setText("");
             }
-            setResPath();
         });
 
-        ArrayList<String> path = addAboDto.progData.aboList.getAboDestinationPathList();
+        ArrayList<String> path = addAboDto.progData.aboList.getAboSubDirList();
         addAboDto.cboDestSetSubDir.setItems(FXCollections.observableArrayList(path));
 
         addAboDto.cboDestSetSubDir.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (!addAboDto.cboDestSetSubDir.isFocused()) {
                 return;
             }
-            setPath();
+            setPathToAbo();
         });
         addAboDto.cboDestSetSubDir.selectionModelProperty().addListener((u, o, n) -> {
             if (!addAboDto.cboDestSetSubDir.isFocused()) {
                 return;
             }
-            setPath();
+            setPathToAbo();
         });
     }
 
-    public void setPath() {
-        addMissingPath();
-        if (addAboDto.chkDestSetSubDirAll.isSelected()) {
-            Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
-                addAboData.abo.setAboSubDir(addAboDto.cboDestSetSubDir.getEditor().getText());
-                if (addAboDto.chkDestAboSubDir.isSelected()) {
-                    addAboData.aboSubDir = addAboData.abo.getAboSubDir();
-                }
-            });
-        } else {
-            addAboDto.getAct().abo.setAboSubDir(addAboDto.cboDestSetSubDir.getEditor().getText());
-            if (addAboDto.chkDestAboSubDir.isSelected()) {
-                addAboDto.getAct().aboSubDir = addAboDto.getAct().abo.getAboSubDir();
+    private void initOwnPath() {
+        ArrayList<String> path = addAboDto.progData.aboList.getAboDirList();
+        addAboDto.cboDestAboDir.setItems(FXCollections.observableArrayList(path));
+
+        addAboDto.cboDestAboDir.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!addAboDto.cboDestAboDir.isFocused()) {
+                return;
             }
+            setPathToAbo();
+        });
+        addAboDto.cboDestAboDir.selectionModelProperty().addListener((u, o, n) -> {
+            if (!addAboDto.cboDestAboDir.isFocused()) {
+                return;
+            }
+            setPathToAbo();
+        });
+    }
+
+    private void initFileName() {
+        ArrayList<String> fileName = addAboDto.progData.aboList.getAboFileNameList();
+        addAboDto.cboDestAboFileName.setItems(FXCollections.observableArrayList(fileName));
+
+        addAboDto.cboDestAboFileName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!addAboDto.cboDestAboFileName.isFocused()) {
+                return;
+            }
+            setFileNameToAbo();
+        });
+        addAboDto.cboDestAboFileName.selectionModelProperty().addListener((u, o, n) -> {
+            if (!addAboDto.cboDestAboFileName.isFocused()) {
+                return;
+            }
+            setFileNameToAbo();
+        });
+    }
+
+    public void setPathToAbo() {
+        addMissingPath();
+        if (addAboDto.chkDestAboDirAll.isSelected()) {
+            Arrays.stream(addAboDto.addAboData).forEach(this::setAboPath);
+        } else {
+            setAboPath(addAboDto.getAct());
         }
         setResPath();
     }
 
+    private void setAboPath(AddAboData addAboData) {
+        if (addAboDto.rbSetPath.isSelected()) {
+            // Pfad aus dem Set
+            if (addAboDto.chkDestAboSubDir.isSelected()) {
+                addAboData.abo.setAboSubDir(addAboDto.cboDestSetSubDir.getEditor().getText());
+            } else {
+                addAboData.abo.setAboSubDir("");
+            }
+            addAboData.abo.setAboDir("");
+        } else {
+            addAboData.abo.setAboDir(addAboDto.cboDestAboDir.getEditor().getText());
+        }
+    }
+
+    public void setFileNameToAbo() {
+        addMissingPath();
+        if (addAboDto.chkDestAboFileNameAll.isSelected()) {
+            Arrays.stream(addAboDto.addAboData).forEach(this::setAboFileName);
+        } else {
+            setAboFileName(addAboDto.getAct());
+        }
+        setResPath();
+    }
+
+    private void setAboFileName(AddAboData addAboData) {
+        if (addAboDto.rbSetFileName.isSelected()) {
+            addAboData.abo.setAboFileName("");
+        } else {
+            addAboData.abo.setAboFileName(addAboDto.cboDestAboFileName.getEditor().getText());
+        }
+    }
+
     private void addMissingPath() {
-        final String s = addAboDto.cboDestSetSubDir.getEditor().getText();
-        if (!addAboDto.cboDestSetSubDir.getItems().contains(s)) {
-            addAboDto.cboDestSetSubDir.getItems().add(s);
+        final String sSet = addAboDto.cboDestSetSubDir.getEditor().getText();
+        if (!addAboDto.cboDestSetSubDir.getItems().contains(sSet)) {
+            addAboDto.cboDestSetSubDir.getItems().add(sSet);
+        }
+        final String sOwnPath = addAboDto.cboDestAboDir.getEditor().getText();
+        if (!addAboDto.cboDestAboDir.getItems().contains(sOwnPath)) {
+            addAboDto.cboDestAboDir.getItems().add(sOwnPath);
+        }
+        final String sOwnFileName = addAboDto.cboDestAboFileName.getEditor().getText();
+        if (!addAboDto.cboDestAboFileName.getItems().contains(sOwnFileName)) {
+            addAboDto.cboDestAboFileName.getItems().add(sOwnFileName);
         }
     }
 
     public void makeAct() {
         addAboDto.cboDestSetSubDir.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
+        addAboDto.cboDestAboDir.getEditor().setText(addAboDto.getAct().abo.getAboDir());
+        addAboDto.cboDestAboFileName.getEditor().setText(addAboDto.getAct().abo.getAboFileName());
+
+        addAboDto.rbSetPath.setSelected(addAboDto.getAct().abo.getAboDir().isEmpty());
+        addAboDto.rbOwnPath.setSelected(!addAboDto.rbSetPath.isSelected());
+
+        addAboDto.rbSetFileName.setSelected(addAboDto.getAct().abo.getAboFileName().isEmpty());
+        addAboDto.rbOwnFileName.setSelected(!addAboDto.rbSetFileName.isSelected());
+
         addAboDto.chkDestAboSubDir.setSelected(!addAboDto.getAct().abo.getAboSubDir().isEmpty());
         if (addAboDto.chkDestAboSubDir.isSelected()) {
             // dann einen eigenen Pfad eingeben
@@ -138,7 +197,7 @@ public class InitDestination {
         setResPath();
     }
 
-    public void setResPath() {
+    private void setResPath() {
         FilmDataMTP filmData = new FilmDataMTP();
         filmData.arr[FilmDataXml.FILM_CHANNEL] = "SENDER";
         filmData.arr[FilmDataXml.FILM_THEME] = "THEMA";
@@ -151,24 +210,11 @@ public class InitDestination {
         filmData.arr[FilmDataXml.FILM_DESCRIPTION] = "BESCHREIBUNG";
         filmData.init();
 
-        if (addAboDto.cboSetData.getSelectionModel().getSelectedItem() != null) {
-            SetData setData = addAboDto.cboSetData.getSelectionModel().getSelectedItem();
-
-            DownloadData downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, filmData, addAboDto.getAct().abo,
-                    "", "", "", false);
-            addAboDto.lblResPath.setText(downloadData.getDestPath());
-            addAboDto.lblResFileName.setText(downloadData.getDestFileName());
-
-        } else {
-            List<SetData> setData = ProgData.getInstance().setDataList.getSetDataListAbo();
-            if (!setData.isEmpty()) {
-                ArrayList<FilmDataMTP> list = new ArrayList<>();
-                list.add(filmData);
-                DownloadData downloadData = new DownloadData(list, setData.get(0));
-
-                addAboDto.lblResPath.setText(downloadData.getDestPath());
-                addAboDto.lblResFileName.setText(downloadData.getDestFileName());
-            }
-        }
+        final SetData setData = addAboDto.getAct().abo.getSetData();
+        final AboData abo = addAboDto.getAct().abo;
+        DownloadData downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, filmData, abo,
+                "", "", "", false);
+        addAboDto.lblResPath.setText(downloadData.getDestPath());
+        addAboDto.lblResFileName.setText(downloadData.getDestFileName());
     }
 }
