@@ -171,6 +171,7 @@ public class MTPlayerController extends StackPane {
             if (n) {
                 selPanelLiveFilm();
             } else {
+                paneShown = PANE_SHOWN.LIVE_FILM; // sonst wird Filter ausgeblendet
                 selPanelFilm();
             }
         });
