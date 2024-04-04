@@ -97,7 +97,8 @@ public class AboAddDialogGuiAbo {
         gridPane.add(addAboDto.chkDescriptionAll, 2, row);
 
         gridPane.add(new Label(), 0, ++row);
-        
+        gridPane.add(new Label(), 0, ++row);
+
         // Auflösung
         HBox hRes = new HBox(10);
         hRes.setPadding(new Insets(2));

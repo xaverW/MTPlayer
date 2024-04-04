@@ -32,7 +32,9 @@ public class InitAddAboArray {
         addAboData[0] = new AddAboData();
         addAboData[0].abo = abo.getCopy();
         addAboData[0].aboOrg = abo;
-        addAboData[0].aboSubDir = abo.getAboSubDir();
+//        addAboData[0].aboSubDir = abo.getAboSubDir();
+//        addAboData[0].aboDir = abo.getAboDir();
+//        addAboData[0].aboFileName = abo.getAboFileName();
 
         return addAboData;
     }
@@ -44,7 +46,9 @@ public class InitAddAboArray {
             addAboData[i] = new AddAboData();
             addAboData[i].abo = abos.get(i).getCopy();
             addAboData[i].aboOrg = abos.get(i);
-            addAboData[i].aboSubDir = abos.get(i).getAboSubDir();
+//            addAboData[i].aboSubDir = abos.get(i).getAboSubDir();
+//            addAboData[i].aboDir = abos.get(i).getAboDir();
+//            addAboData[i].aboFileName = abos.get(i).getAboFileName();
         }
         return addAboData;
     }

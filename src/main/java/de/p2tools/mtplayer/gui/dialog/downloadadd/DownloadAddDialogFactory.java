@@ -54,10 +54,33 @@ public class DownloadAddDialogFactory {
         }
     }
 
+    public static Color getBlack() {
+        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+            return Color.WHITE;
+        } else {
+            return Color.BLACK;
+        }
+    }
+
     public static Text getText(String text) {
         Text t = new Text(text);
         t.setFont(Font.font(null, FontWeight.BOLD, -1));
         t.setFill(getBlue());
+        return t;
+    }
+
+    public static Text getTextBlack(String text) {
+        Text t = new Text(text);
+        t.setFont(Font.font(null, FontWeight.BOLD, -1));
+        t.setFill(getBlack());
+        return t;
+    }
+
+    public static Text getTextBig(String text) {
+        Text t = new Text(text);
+        t.setFont(Font.font(null, FontWeight.BOLD, -1));
+        t.setFill(getBlue());
+        t.setStyle("-fx-font-size: 1.2em;");
         return t;
     }
 

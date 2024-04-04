@@ -61,8 +61,8 @@ public class StartDownload {
         // url mit dem Programm mit der Nr. starten (Button oder TabFilm, TabDownload "rechte Maustaste")
         final String url = film.arr[FilmDataXml.FILM_URL];
         if (!url.isEmpty()) {
-            final DownloadData download = new DownloadData(DownloadConstants.SRC_BUTTON, pSet, film, null,
-                    "", "", resolution, false);
+            final DownloadData download = new DownloadData(DownloadConstants.SRC_BUTTON, pSet, film,
+                    null, "", "", resolution, false);
             progData.downloadList.startDownloads(download);
             starterThread.startDownload(download); // da nicht in der ListeDownloads
         }

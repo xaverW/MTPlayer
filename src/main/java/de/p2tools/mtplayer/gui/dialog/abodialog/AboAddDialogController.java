@@ -115,7 +115,7 @@ public class AboAddDialogController extends P2DialogExtra {
     }
 
     private void initGui() {
-        if (progData.setDataList.getSetDataListSave().isEmpty() ||
+        if (progData.setDataList.getSetDataListAbo().isEmpty() ||
                 addAboDto.aboList.isEmpty()) {
             // Satz mit x, war wohl nix
             ok = false;

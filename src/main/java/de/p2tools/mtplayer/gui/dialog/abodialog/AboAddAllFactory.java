@@ -27,7 +27,7 @@ public class AboAddAllFactory {
     }
 
     public static void init(AddAboDto addAboDto) {
-        if (ProgData.getInstance().setDataList.getSetDataListSave().size() == 1) {
+        if (ProgData.getInstance().setDataList.getSetDataListAbo().size() == 1) {
             // wenns nur ein Set gibt, macht dann keinen Sinn
             addAboDto.textSet.setVisible(false);
             addAboDto.textSet.setManaged(false);
@@ -66,8 +66,6 @@ public class AboAddAllFactory {
             addAboDto.chkDurationAll.setManaged(false);
             addAboDto.chkStartTimeAll.setVisible(false);
             addAboDto.chkStartTimeAll.setManaged(false);
-            addAboDto.chkDestSetSubDirAll.setVisible(false);
-            addAboDto.chkDestSetSubDirAll.setManaged(false);
             addAboDto.chkDestAboDirAll.setVisible(false);
             addAboDto.chkDestAboDirAll.setManaged(false);
             addAboDto.chkDestAboFileNameAll.setVisible(false);
@@ -88,7 +86,6 @@ public class AboAddAllFactory {
             addAboDto.chkTimeRangeAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkDurationAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkStartTimeAll.getStyleClass().add("checkBoxAll");
-            addAboDto.chkDestSetSubDirAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkDestAboDirAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkDestAboFileNameAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkSetAll.getStyleClass().add("checkBoxAll");
@@ -166,22 +163,16 @@ public class AboAddAllFactory {
                     addAboDto.initStartTimeAbo.setStartTimePick();
                 }
             });
-            addAboDto.chkDestSetSubDirAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                addCheckAllCss(addAboDto);
-                if (addAboDto.chkDestSetSubDirAll.isSelected()) {
-                    addAboDto.initDestination.setPath();
-                }
-            });
             addAboDto.chkDestAboDirAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 addCheckAllCss(addAboDto);
                 if (addAboDto.chkDestAboDirAll.isSelected()) {
-                    addAboDto.initDestination.setPath();
+                    addAboDto.initDestination.setPathToAbo();
                 }
             });
             addAboDto.chkDestAboFileNameAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 addCheckAllCss(addAboDto);
                 if (addAboDto.chkDestAboFileNameAll.isSelected()) {
-                    addAboDto.initDestination.setPath();
+                    addAboDto.initDestination.setFileNameToAbo();
                 }
             });
             addAboDto.chkSetAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -199,7 +190,7 @@ public class AboAddAllFactory {
     private static void changeAll(AddAboDto addAboDto) {
         boolean isNotSelected = !isAllSelected(addAboDto);
 
-        if (ProgData.getInstance().setDataList.getSetDataListSave().size() > 1) {
+        if (ProgData.getInstance().setDataList.getSetDataListAbo().size() > 1) {
             // nur dann wird er angezeigt
             addAboDto.chkSetAll.setSelected(isNotSelected);
         }
@@ -215,7 +206,6 @@ public class AboAddAllFactory {
         addAboDto.chkTimeRangeAll.setSelected(isNotSelected);
         addAboDto.chkDurationAll.setSelected(isNotSelected);
         addAboDto.chkStartTimeAll.setSelected(isNotSelected);
-        addAboDto.chkDestSetSubDirAll.setSelected(isNotSelected);
         addAboDto.chkDestAboDirAll.setSelected(isNotSelected);
         addAboDto.chkDestAboFileNameAll.setSelected(isNotSelected);
         addCheckAllCss(addAboDto);
@@ -248,7 +238,6 @@ public class AboAddAllFactory {
                 addAboDto.chkTimeRangeAll.isSelected() ||
                 addAboDto.chkDurationAll.isSelected() ||
                 addAboDto.chkStartTimeAll.isSelected() ||
-                addAboDto.chkDestSetSubDirAll.isSelected() ||
                 addAboDto.chkDestAboDirAll.isSelected() ||
                 addAboDto.chkDestAboFileNameAll.isSelected() ||
                 addAboDto.chkSetAll.isSelected();

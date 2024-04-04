@@ -119,7 +119,7 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         listChanged.setValue(!listChanged.get());
     }
 
-    public synchronized ArrayList<String> getAboDestinationPathList() {
+    public synchronized ArrayList<String> getAboSubDirList() {
         // liefert ein Array mit allen Pfaden
         final ArrayList<String> path = new ArrayList<>();
         for (final AboData abo : this) {
@@ -131,6 +131,34 @@ public class AboList extends SimpleListProperty<AboData> implements PDataList<Ab
         final GermanStringSorter sorter = GermanStringSorter.getInstance();
         path.sort(sorter);
         return path;
+    }
+
+    public synchronized ArrayList<String> getAboDirList() {
+        // liefert ein Array mit allen Pfaden
+        final ArrayList<String> path = new ArrayList<>();
+        for (final AboData abo : this) {
+            final String s = abo.getAboDir();
+            if (!path.contains(s)) {
+                path.add(abo.getAboDir());
+            }
+        }
+        final GermanStringSorter sorter = GermanStringSorter.getInstance();
+        path.sort(sorter);
+        return path;
+    }
+
+    public synchronized ArrayList<String> getAboFileNameList() {
+        // liefert ein Array mit allen Pfaden
+        final ArrayList<String> fileName = new ArrayList<>();
+        for (final AboData abo : this) {
+            final String s = abo.getAboFileName();
+            if (!fileName.contains(s)) {
+                fileName.add(abo.getAboFileName());
+            }
+        }
+        final GermanStringSorter sorter = GermanStringSorter.getInstance();
+        fileName.sort(sorter);
+        return fileName;
     }
 
     public synchronized ArrayList<String> getAboChannelList() {

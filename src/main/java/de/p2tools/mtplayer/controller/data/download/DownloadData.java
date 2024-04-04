@@ -78,11 +78,8 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public DownloadData(String source, SetData setData, FilmDataMTP film, AboData abo,
-                        String name,
-                        String path,
-                        String resolution,
-                        boolean setSize) {
-        // da sind "normale" Downloads, die auch in der DownloadListe/Tabelle erscheinen
+                        String name, String path, String resolution, boolean setSize) {
+        // da sind "normale" Downloads (Abos, manuell), die auch in der DownloadListe/Tabelle erscheinen
         if (resolution.isEmpty()) {
             resolution = abo != null ? abo.getResolution() : setData.getResolution();
         }

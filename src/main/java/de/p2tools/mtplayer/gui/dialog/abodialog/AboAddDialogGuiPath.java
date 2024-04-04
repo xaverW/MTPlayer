@@ -28,7 +28,10 @@ import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -87,6 +90,7 @@ public class AboAddDialogGuiPath {
 
     private void addContPath() {
         Text txtPath = DownloadAddDialogFactory.getText("Pfad:");
+        txtPath.setUnderline(true);
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(20, 10, 10, 10));
         hBox.getChildren().add(txtPath);
@@ -107,46 +111,36 @@ public class AboAddDialogGuiPath {
         vBoxCont.getChildren().add(grid);
 
 
-        ToggleGroup tgl = new ToggleGroup();
-        RadioButton rbUseSet = new RadioButton("Einstellungen aus dem Set verwenden");
-        rbUseSet.setToggleGroup(tgl);
-        rbUseSet.setSelected(true);
-
-        RadioButton rbUseOwn = new RadioButton("Eigene Einstellungen verwenden");
-        rbUseOwn.setToggleGroup(tgl);
-
-
         int row = 0;
         // Set
-        addAboDto.cboDestSetSubDir.setMaxWidth(Double.MAX_VALUE);
-        addAboDto.cboDestSetSubDir.setEditable(true);
+        addAboDto.cboAboSubDir.setMaxWidth(Double.MAX_VALUE);
+        addAboDto.cboAboSubDir.setEditable(true);
 
         final StackPane sp = new StackPane();
         sp.setAlignment(Pos.CENTER_LEFT);
-        sp.getChildren().addAll(addAboDto.lblSetSubDir, addAboDto.cboDestSetSubDir);
+        sp.getChildren().addAll(addAboDto.lblSetSubDir, addAboDto.cboAboSubDir);
         sp.setPrefWidth(20);
-        sp.disableProperty().bind(rbUseSet.selectedProperty().not());
+        sp.disableProperty().bind(addAboDto.rbSetPath.selectedProperty().not());
 
         HBox hBoxChk = new HBox(10);
-        hBoxChk.disableProperty().bind(rbUseSet.selectedProperty().not());
+        hBoxChk.disableProperty().bind(addAboDto.rbSetPath.selectedProperty().not());
         hBoxChk.setAlignment(Pos.CENTER_LEFT);
-        hBoxChk.getChildren().addAll(addAboDto.chkDestAboSubDir, DownloadAddDialogFactory.getText(AboFieldNames.ABO_DEST_SET_SUB_DIR + ":"));
+        hBoxChk.getChildren().addAll(addAboDto.chkAboSubDir, DownloadAddDialogFactory.getTextBlack(AboFieldNames.ABO_DEST_SET_SUB_DIR + ":"));
         HBox.setHgrow(sp, Priority.ALWAYS);
 
         HBox hBoxSet = new HBox(10);
-        hBoxSet.disableProperty().bind(rbUseSet.selectedProperty().not());
+        hBoxSet.disableProperty().bind(addAboDto.rbSetPath.selectedProperty().not());
         hBoxSet.setAlignment(Pos.CENTER_LEFT);
         hBoxSet.getChildren().addAll(sp);
         HBox.setHgrow(sp, Priority.ALWAYS);
 
-        grid.add(rbUseSet, 0, row, 3, 1);
-//        grid.add(new Label("  "), 0, ++row);
+        grid.add(addAboDto.rbSetPath, 0, row, 3, 1);
+        grid.add(addAboDto.chkDestAboDirAll, 4, row);
         RadioButton rb = new RadioButton();
         rb.setVisible(false);
         grid.add(rb, 0, ++row);
         grid.add(hBoxChk, 1, row);
         grid.add(sp, 2, row, 2, 1);
-        grid.add(addAboDto.chkDestSetSubDirAll, 4, row);
 
 
         // eigenen Einstellungen
@@ -154,26 +148,26 @@ public class AboAddDialogGuiPath {
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         btnPath.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnPath.setOnAction(event -> {
-            P2DirFileChooser.DirChooser(stage, addAboDto.cboDestAboDir);
+            P2DirFileChooser.DirChooser(stage, addAboDto.cboAboDir);
         });
-        btnPath.disableProperty().bind(rbUseOwn.selectedProperty().not());
+        btnPath.disableProperty().bind(addAboDto.rbOwnPath.selectedProperty().not());
 
-        grid.add(rbUseOwn, 0, ++row, 3, 1);
-        grid.add(DownloadAddDialogFactory.getText(AboFieldNames.ABO_DEST_ABO_DIR + ":"), 1, ++row);
-        grid.add(addAboDto.cboDestAboDir, 2, row);
+        grid.add(addAboDto.rbOwnPath, 0, ++row, 3, 1);
+        grid.add(DownloadAddDialogFactory.getTextBlack(AboFieldNames.ABO_DEST_ABO_DIR + ":"), 1, ++row);
+        grid.add(addAboDto.cboAboDir, 2, row);
         grid.add(btnPath, 3, row);
-        grid.add(addAboDto.chkDestAboDirAll, 4, row);
-        addAboDto.cboDestAboDir.setMaxWidth(Double.MAX_VALUE);
-        addAboDto.cboDestAboDir.setEditable(true);
-        addAboDto.cboDestAboDir.disableProperty().bind(rbUseOwn.selectedProperty().not());
-        GridPane.setHgrow(addAboDto.cboDestAboDir, Priority.ALWAYS);
+        addAboDto.cboAboDir.setMaxWidth(Double.MAX_VALUE);
+        addAboDto.cboAboDir.setEditable(true);
+        addAboDto.cboAboDir.disableProperty().bind(addAboDto.rbOwnPath.selectedProperty().not());
+        GridPane.setHgrow(addAboDto.cboAboDir, Priority.ALWAYS);
     }
 
     private void addContFileName() {
-        Text txtPath = DownloadAddDialogFactory.getText("Dateiname:");
+        Text txtFileName = DownloadAddDialogFactory.getText("Dateiname:");
+        txtFileName.setUnderline(true);
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(30, 10, 10, 10));
-        hBox.getChildren().add(txtPath);
+        hBox.getChildren().add(txtFileName);
         vBoxCont.getChildren().add(hBox);
 
         // Grid
@@ -189,68 +183,67 @@ public class AboAddDialogGuiPath {
                 P2ColumnConstraints.getCcPrefSizeCenter());
         vBoxCont.getChildren().add(grid);
 
+        addAboDto.cboAboFileName.disableProperty().bind(addAboDto.rbOwnFileName.selectedProperty().not());
 
         int row = 0;
-
-        ToggleGroup tgl = new ToggleGroup();
-        RadioButton rbUseSet = new RadioButton("Einstellungen aus dem Set verwenden");
-        rbUseSet.setToggleGroup(tgl);
-        rbUseSet.setSelected(true);
-
-        RadioButton rbUseOwn = new RadioButton("Eigene Einstellungen verwenden");
-        rbUseOwn.setToggleGroup(tgl);
-        addAboDto.cboDestAboFileName.disableProperty().bind(rbUseOwn.selectedProperty().not());
-
         // set
-        grid.add(rbUseSet, 0, row, 3, 1);
+        grid.add(addAboDto.rbSetFileName, 0, row, 3, 1);
+        grid.add(addAboDto.chkDestAboFileNameAll, 3, row);
         ++row;
         // eigenen Einstellungen
-        grid.add(rbUseOwn, 0, ++row, 3, 1);
-//        grid.add(new Label("  "), 0, ++row);
+        grid.add(addAboDto.rbOwnFileName, 0, ++row, 3, 1);
         RadioButton rb = new RadioButton();
         rb.setVisible(false);
         grid.add(rb, 0, ++row);
 
 
-        grid.add(DownloadAddDialogFactory.getText(AboFieldNames.ABO_DEST_ABO_FILE_NAME + ":"), 1, row);
-        grid.add(addAboDto.cboDestAboFileName, 2, row);
-        grid.add(addAboDto.chkDestAboFileNameAll, 3, row);
-        addAboDto.cboDestAboFileName.setMaxWidth(Double.MAX_VALUE);
-        addAboDto.cboDestAboFileName.setEditable(true);
-        GridPane.setHgrow(addAboDto.cboDestAboFileName, Priority.ALWAYS);
+        grid.add(DownloadAddDialogFactory.getTextBlack(AboFieldNames.ABO_DEST_ABO_FILE_NAME + ":"), 1, row);
+        grid.add(addAboDto.cboAboFileName, 2, row);
+        addAboDto.cboAboFileName.setMaxWidth(Double.MAX_VALUE);
+        addAboDto.cboAboFileName.setEditable(true);
+        GridPane.setHgrow(addAboDto.cboAboFileName, Priority.ALWAYS);
     }
 
     private void addResFileName() {
-        // Grid
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setMinWidth(Control.USE_PREF_SIZE);
-        gridPane.setMaxWidth(Double.MAX_VALUE);
-        gridPane.setPadding(new Insets(5));
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSizeCenter());
-        gridPane.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
-
+        Text txtFileName = DownloadAddDialogFactory.getTextBig("Ergebnis:");
+        txtFileName.setUnderline(true);
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(30, 10, 10, 10));
-        hBox.getChildren().add(gridPane);
-        HBox.setHgrow(gridPane, Priority.ALWAYS);
+        hBox.getChildren().add(txtFileName);
         vBoxCont.getChildren().add(hBox);
 
-        Text txtPath = DownloadAddDialogFactory.getText("Pfad:");
-        Text txtName = DownloadAddDialogFactory.getText("Dateiname:");
+        // Grid
+        final GridPane grid = new GridPane();
+        grid.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        grid.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
+        grid.setMinWidth(Control.USE_PREF_SIZE);
+        grid.setMaxWidth(Double.MAX_VALUE);
+        grid.setPadding(new Insets(0, 10, 10, 10));
+        grid.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        vBoxCont.getChildren().add(grid);
+
+//        grid.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
+
+//        HBox hBox = new HBox();
+//        hBox.setPadding(new Insets(30, 10, 10, 10));
+//        hBox.getChildren().add(grid);
+//        HBox.setHgrow(grid, Priority.ALWAYS);
+//        vBoxCont.getChildren().add(hBox);
+
+        Text txtPath = DownloadAddDialogFactory.getTextBlack("Pfad:");
+        Text txtName = DownloadAddDialogFactory.getTextBlack("Dateiname:");
 
         int row = 0;
-        gridPane.add(new Label("Das ergibt sich dann"), 0, row, 2, 1);
-        ++row;
-        gridPane.add(txtPath, 0, ++row);
-        gridPane.add(addAboDto.lblResPath, 1, row);
-        gridPane.add(txtName, 0, ++row);
-        gridPane.add(addAboDto.lblResFileName, 1, row);
+        RadioButton rb = new RadioButton();
+        rb.setVisible(false);
+        grid.add(rb, 0, row);
 
+        grid.add(txtPath, 1, row);
+        grid.add(addAboDto.lblResPath, 2, row);
+        grid.add(txtName, 1, ++row);
+        grid.add(addAboDto.lblResFileName, 2, row);
     }
 
     public void init() {

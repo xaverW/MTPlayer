@@ -44,34 +44,27 @@ public class InitDestination {
         addAboDto.rbSetFileName.setOnAction(a -> setFileNameToAbo());
         addAboDto.rbOwnFileName.setOnAction(a -> setFileNameToAbo());
 
-        addAboDto.chkDestAboSubDir.setOnAction(event -> {
-            if (addAboDto.chkDestAboSubDir.isFocused()) {
+        addAboDto.chkAboSubDir.setOnAction(event -> {
+            if (addAboDto.chkAboSubDir.isFocused()) {
                 // dann durch den User
                 setPathToAbo();
             }
-            if (addAboDto.chkDestAboSubDir.isSelected()) {
-                // dann einen eigenen Pfad eingeben
-                addAboDto.lblSetSubDir.setVisible(false);
-                addAboDto.cboDestSetSubDir.setVisible(true);
 
-            } else {
-                // Standard des Sets verwenden
-                addAboDto.lblSetSubDir.setVisible(true);
-                addAboDto.cboDestSetSubDir.setVisible(false);
-            }
+            addAboDto.lblSetSubDir.setVisible(!addAboDto.chkAboSubDir.isSelected()); // aus dem Set anzeigen
+            addAboDto.cboAboSubDir.setVisible(addAboDto.chkAboSubDir.isSelected()); // eignen Sub anzeigen
         });
 
         ArrayList<String> path = addAboDto.progData.aboList.getAboSubDirList();
-        addAboDto.cboDestSetSubDir.setItems(FXCollections.observableArrayList(path));
+        addAboDto.cboAboSubDir.setItems(FXCollections.observableArrayList(path));
 
-        addAboDto.cboDestSetSubDir.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!addAboDto.cboDestSetSubDir.isFocused()) {
+        addAboDto.cboAboSubDir.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!addAboDto.cboAboSubDir.isFocused()) {
                 return;
             }
             setPathToAbo();
         });
-        addAboDto.cboDestSetSubDir.selectionModelProperty().addListener((u, o, n) -> {
-            if (!addAboDto.cboDestSetSubDir.isFocused()) {
+        addAboDto.cboAboSubDir.selectionModelProperty().addListener((u, o, n) -> {
+            if (!addAboDto.cboAboSubDir.isFocused()) {
                 return;
             }
             setPathToAbo();
@@ -80,16 +73,16 @@ public class InitDestination {
 
     private void initOwnPath() {
         ArrayList<String> path = addAboDto.progData.aboList.getAboDirList();
-        addAboDto.cboDestAboDir.setItems(FXCollections.observableArrayList(path));
+        addAboDto.cboAboDir.setItems(FXCollections.observableArrayList(path));
 
-        addAboDto.cboDestAboDir.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!addAboDto.cboDestAboDir.isFocused()) {
+        addAboDto.cboAboDir.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!addAboDto.cboAboDir.isFocused()) {
                 return;
             }
             setPathToAbo();
         });
-        addAboDto.cboDestAboDir.selectionModelProperty().addListener((u, o, n) -> {
-            if (!addAboDto.cboDestAboDir.isFocused()) {
+        addAboDto.cboAboDir.selectionModelProperty().addListener((u, o, n) -> {
+            if (!addAboDto.cboAboDir.isFocused()) {
                 return;
             }
             setPathToAbo();
@@ -98,16 +91,16 @@ public class InitDestination {
 
     private void initFileName() {
         ArrayList<String> fileName = addAboDto.progData.aboList.getAboFileNameList();
-        addAboDto.cboDestAboFileName.setItems(FXCollections.observableArrayList(fileName));
+        addAboDto.cboAboFileName.setItems(FXCollections.observableArrayList(fileName));
 
-        addAboDto.cboDestAboFileName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!addAboDto.cboDestAboFileName.isFocused()) {
+        addAboDto.cboAboFileName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!addAboDto.cboAboFileName.isFocused()) {
                 return;
             }
             setFileNameToAbo();
         });
-        addAboDto.cboDestAboFileName.selectionModelProperty().addListener((u, o, n) -> {
-            if (!addAboDto.cboDestAboFileName.isFocused()) {
+        addAboDto.cboAboFileName.selectionModelProperty().addListener((u, o, n) -> {
+            if (!addAboDto.cboAboFileName.isFocused()) {
                 return;
             }
             setFileNameToAbo();
@@ -115,6 +108,7 @@ public class InitDestination {
     }
 
     public void setPathToAbo() {
+        System.out.println("setPathToAbo");
         addMissingPath();
         if (addAboDto.chkDestAboDirAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(this::setAboPath);
@@ -127,18 +121,19 @@ public class InitDestination {
     private void setAboPath(AddAboData addAboData) {
         if (addAboDto.rbSetPath.isSelected()) {
             // Pfad aus dem Set
-            if (addAboDto.chkDestAboSubDir.isSelected()) {
-                addAboData.abo.setAboSubDir(addAboDto.cboDestSetSubDir.getEditor().getText());
+            if (addAboDto.chkAboSubDir.isSelected()) {
+                addAboData.abo.setAboSubDir(addAboDto.cboAboSubDir.getEditor().getText());
             } else {
                 addAboData.abo.setAboSubDir("");
             }
             addAboData.abo.setAboDir("");
         } else {
-            addAboData.abo.setAboDir(addAboDto.cboDestAboDir.getEditor().getText());
+            addAboData.abo.setAboDir(addAboDto.cboAboDir.getEditor().getText());
         }
     }
 
     public void setFileNameToAbo() {
+        System.out.println("setFileNameToAbo");
         addMissingPath();
         if (addAboDto.chkDestAboFileNameAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(this::setAboFileName);
@@ -152,29 +147,29 @@ public class InitDestination {
         if (addAboDto.rbSetFileName.isSelected()) {
             addAboData.abo.setAboFileName("");
         } else {
-            addAboData.abo.setAboFileName(addAboDto.cboDestAboFileName.getEditor().getText());
+            addAboData.abo.setAboFileName(addAboDto.cboAboFileName.getEditor().getText());
         }
     }
 
     private void addMissingPath() {
-        final String sSet = addAboDto.cboDestSetSubDir.getEditor().getText();
-        if (!addAboDto.cboDestSetSubDir.getItems().contains(sSet)) {
-            addAboDto.cboDestSetSubDir.getItems().add(sSet);
+        final String sSet = addAboDto.cboAboSubDir.getEditor().getText();
+        if (!addAboDto.cboAboSubDir.getItems().contains(sSet)) {
+            addAboDto.cboAboSubDir.getItems().add(sSet);
         }
-        final String sOwnPath = addAboDto.cboDestAboDir.getEditor().getText();
-        if (!addAboDto.cboDestAboDir.getItems().contains(sOwnPath)) {
-            addAboDto.cboDestAboDir.getItems().add(sOwnPath);
+        final String sOwnPath = addAboDto.cboAboDir.getEditor().getText();
+        if (!addAboDto.cboAboDir.getItems().contains(sOwnPath)) {
+            addAboDto.cboAboDir.getItems().add(sOwnPath);
         }
-        final String sOwnFileName = addAboDto.cboDestAboFileName.getEditor().getText();
-        if (!addAboDto.cboDestAboFileName.getItems().contains(sOwnFileName)) {
-            addAboDto.cboDestAboFileName.getItems().add(sOwnFileName);
+        final String sOwnFileName = addAboDto.cboAboFileName.getEditor().getText();
+        if (!addAboDto.cboAboFileName.getItems().contains(sOwnFileName)) {
+            addAboDto.cboAboFileName.getItems().add(sOwnFileName);
         }
     }
 
     public void makeAct() {
-        addAboDto.cboDestSetSubDir.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
-        addAboDto.cboDestAboDir.getEditor().setText(addAboDto.getAct().abo.getAboDir());
-        addAboDto.cboDestAboFileName.getEditor().setText(addAboDto.getAct().abo.getAboFileName());
+        addAboDto.cboAboSubDir.getEditor().setText(addAboDto.getAct().abo.getAboSubDir());
+        addAboDto.cboAboDir.getEditor().setText(addAboDto.getAct().abo.getAboDir());
+        addAboDto.cboAboFileName.getEditor().setText(addAboDto.getAct().abo.getAboFileName());
 
         addAboDto.rbSetPath.setSelected(addAboDto.getAct().abo.getAboDir().isEmpty());
         addAboDto.rbOwnPath.setSelected(!addAboDto.rbSetPath.isSelected());
@@ -182,15 +177,15 @@ public class InitDestination {
         addAboDto.rbSetFileName.setSelected(addAboDto.getAct().abo.getAboFileName().isEmpty());
         addAboDto.rbOwnFileName.setSelected(!addAboDto.rbSetFileName.isSelected());
 
-        addAboDto.chkDestAboSubDir.setSelected(!addAboDto.getAct().abo.getAboSubDir().isEmpty());
-        if (addAboDto.chkDestAboSubDir.isSelected()) {
+        addAboDto.chkAboSubDir.setSelected(!addAboDto.getAct().abo.getAboSubDir().isEmpty());
+        if (addAboDto.chkAboSubDir.isSelected()) {
             // dann einen eigenen Pfad eingeben
             addAboDto.lblSetSubDir.setVisible(false);
-            addAboDto.cboDestSetSubDir.setVisible(true);
+            addAboDto.cboAboSubDir.setVisible(true);
         } else {
             // Standard des Sets verwenden
             addAboDto.lblSetSubDir.setVisible(true);
-            addAboDto.cboDestSetSubDir.setVisible(false);
+            addAboDto.cboAboSubDir.setVisible(false);
         }
 
         addMissingPath();

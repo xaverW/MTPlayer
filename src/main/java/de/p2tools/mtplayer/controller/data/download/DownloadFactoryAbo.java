@@ -41,8 +41,9 @@ public class DownloadFactoryAbo {
     }
 
     static synchronized void searchDownloadsFromAbos(DownloadList downloadList) {
+        // Downloads für Abos suchen
         refreshDownloads(downloadList);
-        searchForNewDownloads(downloadList);
+        searchForNewDownloadsForAbos(downloadList);
     }
 
     private static void refreshDownloads(DownloadList downloadList) {
@@ -77,8 +78,8 @@ public class DownloadFactoryAbo {
         PDuration.counterStop("refreshDownloads");
     }
 
-    private static void searchForNewDownloads(DownloadList downloadList) {
-        // in der Filmliste nach passenden Filmen suchen und Downloads anlegen
+    private static void searchForNewDownloadsForAbos(DownloadList downloadList) {
+        // in der Filmliste nach passenden Filmen (für Abos) suchen und Downloads anlegen
         PDuration.counterStart("searchForNewDownloads");
         List<DownloadData> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
 
@@ -130,6 +131,7 @@ public class DownloadFactoryAbo {
             aboData.setDate(new P2Date());
             final SetData setData = aboData.getSetData(ProgData.getInstance());
             DownloadData downloadData;
+
             if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
                 downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData,
                         "", "", "", true);
@@ -137,6 +139,7 @@ public class DownloadFactoryAbo {
                 downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData,
                         "", "", "", false);
             }
+
             syncDownloadArrayList.add(downloadData);
             found = true;
         });

@@ -20,9 +20,6 @@ package de.p2tools.mtplayer.gui.dialog.abodialog;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 
 public class AddAboData {
-
     AboData abo; // ist der neu angelegte / Kopie vom OrgAbo
     AboData aboOrg = null; // ist das OrgAbo, das geändert werden soll
-    String aboSubDir = "";
-
 }

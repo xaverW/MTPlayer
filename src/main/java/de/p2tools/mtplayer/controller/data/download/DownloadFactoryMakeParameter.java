@@ -98,8 +98,16 @@ public class DownloadFactoryMakeParameter {
         if (!nname.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
             name = nname;
+
         } else {
-            name = setData.getDestFileName(download.getUrl());
+            if (abo != null && !abo.getAboFileName().isEmpty()) {
+                // dann den aus dem Abo nehmen
+                name = abo.getAboFileName();
+            } else {
+                // sonst den aus dem Set
+                name = setData.getDestFileName(download.getUrl());
+            }
+
             // ##############################
             // Name sinnvoll belegen
             if (name.isEmpty()) {
@@ -151,59 +159,66 @@ public class DownloadFactoryMakeParameter {
         if (!ppath.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
             path = ppath;
+
+
         } else {
-            // Pfad sinnvoll belegen
-            if (setData.getDestPath().isEmpty()) {
-                path = PSystemUtils.getStandardDownloadPath();
+            if (abo != null && !abo.getAboDir().isEmpty()) {
+                // eigener Pfad aus dem Abo
+                path = abo.getAboDir();
+
             } else {
-                path = setData.getDestPath();
+                // Pfad aus dem Set
+                if (setData.getDestPath().isEmpty()) {
+                    path = PSystemUtils.getStandardDownloadPath();
+                } else {
+                    path = setData.getDestPath();
+                }
             }
 
             if (abo != null) {
                 // bei Abos: den Namen des Abos eintragen und evtl. den Pfad erweitern
                 download.setAboName(abo.getName());
-                if (setData.isGenAboSubDir() || !abo.getAboSubDir().trim().isEmpty()) {
-                    // und Abopfad an den Pfad anhängen
-                    // wenn im Set angegeben oder im Abo ein Pfad angegeben
-                    String addPpath;
-                    if (!abo.getAboSubDir().trim().isEmpty()) {
-                        addPpath = abo.getAboSubDir();
+                String addPpath = "";
 
-                    } else {
-                        AboSubDir.ENSubDir ENSubDir = AboSubDir.getENSubDir(setData.getAboSubDir_ENSubDirNo());
-                        switch (ENSubDir) {
-                            case TITLE:
-                                addPpath = download.getTitle();
-                                break;
-                            case SENDER:
-                                addPpath = download.getChannel();
-                                break;
-                            case ABONAME:
-                                addPpath = abo.getName();
-                                break;
-                            case SENDEDATUM:
-                                addPpath = download.getFilmDate().get_yyyy_MM_dd();
-                                break;
-                            case DOWNLOADDATUM:
-                                addPpath = getToday_yyyy_MM_dd();
-                                break;
-                            case THEME:
-                            default:
-                                addPpath = download.getTheme();
-                                break;
-                        }
+                if (setData.isGenAboSubDir() && abo.getAboSubDir().trim().isEmpty()) {
+                    // SubDir anhängen, AboSubDir ist leer
+                    AboSubDir.ENSubDir ENSubDir = AboSubDir.getENSubDir(setData.getAboSubDir_ENSubDirNo());
+                    switch (ENSubDir) {
+                        case TITLE:
+                            addPpath = download.getTitle();
+                            break;
+                        case SENDER:
+                            addPpath = download.getChannel();
+                            break;
+                        case ABONAME:
+                            addPpath = abo.getName();
+                            break;
+                        case SENDEDATUM:
+                            addPpath = download.getFilmDate().get_yyyy_MM_dd();
+                            break;
+                        case DOWNLOADDATUM:
+                            addPpath = getToday_yyyy_MM_dd();
+                            break;
+                        case THEME:
+                        default:
+                            addPpath = download.getTheme();
+                            break;
                     }
-                    addPpath = addPpath.trim();
-                    if (!addPpath.isEmpty()) {
-                        path = P2FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
-                    }
+
+                } else if (!abo.getAboSubDir().trim().isEmpty()) {
+                    // SubDir aus dem Abo anhängen
+                    addPpath = abo.getAboSubDir();
+                }
+
+                addPpath = addPpath.trim();
+                if (!addPpath.isEmpty()) {
+                    path = P2FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
                 }
 
             } else if (setData.isGenAboSubDir()) {
-                // direkte Downloads
-                // und den Namen des Themas an den Zielpfad anhängen
+                // das sind direkte Downloads und wenn "genAboSubDir" an ist, wird ein Unterordner mit Thema angelegt??
                 // --> das wird aber nur beim ersten mal klappen, dann wird im
-                // Downloaddialog immer der letzte Pfad zuerst angeboten
+                // DownloadDialog immer der letzte Pfad zuerst angeboten
                 path = P2FileUtils.addsPath(path,
                         DownloadDataFactory.replaceEmptyFileName(download.getTheme(),
                                 true /* pfad */,

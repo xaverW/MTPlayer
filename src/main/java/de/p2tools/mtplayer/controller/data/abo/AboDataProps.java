@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2Date;
+import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2DateProperty;
 import javafx.beans.property.*;
 
@@ -48,6 +48,8 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
     private final IntegerProperty maxDurationMinute = new SimpleIntegerProperty(FilterCheck.FILTER_DURATION_MAX_MINUTE); //Minuten
     private final StringProperty startTime = new SimpleStringProperty("");
     private final StringProperty aboSubDir = new SimpleStringProperty("");
+    private final StringProperty aboDir = new SimpleStringProperty("");
+    private final StringProperty aboFileName = new SimpleStringProperty("");
     private final P2DateProperty date = new P2DateProperty(new P2Date(0)); //Datum des letzten gefundenen Downloads
     private final StringProperty setDataId = new SimpleStringProperty(""); //nur zum Speichern/Laden
     private final P2DateProperty genDate = new P2DateProperty(new P2Date()); //Erstelldatum
@@ -57,7 +59,7 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
 
     public final Property[] properties = {no, active, hit, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
-            timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, date, setDataId, genDate};
+            timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, aboDir, aboFileName, date, setDataId, genDate};
 
     public static final String TAG = "AboData"; //ab jetzt wird "Abo" verwendet, alt war: "Abonnement"
 
@@ -84,6 +86,8 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
         list.add(new Config_intProp("maxDurationMinute", maxDurationMinute));
         list.add(new Config_stringProp("startTime", startTime));
         list.add(new Config_stringProp("aboSubDir", aboSubDir));
+        list.add(new Config_stringProp("aboDir", aboDir));
+        list.add(new Config_stringProp("aboFileName", aboFileName));
         list.add(new Config_pDateProp("date", date));
         list.add(new Config_stringProp("setDataId", setDataId));
         list.add(new Config_pDateProp("genDate", genDate));
@@ -311,6 +315,30 @@ public class AboDataProps extends PDataSample<AboData> implements Comparable<Abo
 
     public void setAboSubDir(String aboSubDir) {
         this.aboSubDir.set(aboSubDir);
+    }
+
+    public String getAboDir() {
+        return aboDir.get();
+    }
+
+    public StringProperty aboDirProperty() {
+        return aboDir;
+    }
+
+    public void setAboDir(String aboDir) {
+        this.aboDir.set(aboDir);
+    }
+
+    public String getAboFileName() {
+        return aboFileName.get();
+    }
+
+    public StringProperty aboFileNameProperty() {
+        return aboFileName;
+    }
+
+    public void setAboFileName(String aboFileName) {
+        this.aboFileName.set(aboFileName);
     }
 
     public P2Date getDate() {

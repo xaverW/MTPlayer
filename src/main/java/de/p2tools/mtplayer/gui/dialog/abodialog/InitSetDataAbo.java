@@ -38,9 +38,9 @@ public class InitSetDataAbo {
         };
         addAboDto.cboSetData.setOnAction(onAction);
 
-        if (addAboDto.progData.setDataList.getSetDataListSave().size() > 1) {
+        if (addAboDto.progData.setDataList.getSetDataListAbo().size() > 1) {
             // nur dann machts Sinn
-            addAboDto.cboSetData.getItems().addAll(addAboDto.progData.setDataList.getSetDataListSave());
+            addAboDto.cboSetData.getItems().addAll(addAboDto.progData.setDataList.getSetDataListAbo());
             addAboDto.cboSetData.getSelectionModel().select(addAboDto.getAct().abo.getSetData());
         }
     }

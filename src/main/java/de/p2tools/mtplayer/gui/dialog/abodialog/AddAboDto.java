@@ -62,7 +62,6 @@ public class AddAboDto {
     public final Label lblLastAbo = new Label("2023, ...");
     public final Label lblGenDate = new Label("2023, ...");
     public final Label lblSum = new Label("");
-    //    public final Button btnAll = new Button("Für alle\nändern");
     public final Button btnAll = new Button("Für alle ändern");
 
     public final CheckAll chkActiveAll = new CheckAll();
@@ -77,7 +76,6 @@ public class AddAboDto {
     public final CheckAll chkTimeRangeAll = new CheckAll();
     public final CheckAll chkDurationAll = new CheckAll();
     public final CheckAll chkStartTimeAll = new CheckAll();
-    public final CheckAll chkDestSetSubDirAll = new CheckAll();
     public final CheckAll chkDestAboDirAll = new CheckAll();
     public final CheckAll chkDestAboFileNameAll = new CheckAll();
     public final CheckAll chkSetAll = new CheckAll();
@@ -89,14 +87,20 @@ public class AddAboDto {
     public final Text textSet = DownloadAddDialogFactory.getText("Set:");
     public final ComboBox<SetData> cboSetData = new ComboBox<>();
 
-    public final ComboBox<String> cboDestSetSubDir = new ComboBox<>();
-    public final ComboBox<String> cboDestAboDir = new ComboBox<>();
-    public final ComboBox<String> cboDestAboFileName = new ComboBox<>();
+    // Path
+    public final ComboBox<String> cboAboSubDir = new ComboBox<>();
+    public final ComboBox<String> cboAboDir = new ComboBox<>();
+    public final ComboBox<String> cboAboFileName = new ComboBox<>();
     public final Label lblSetSubDir = new Label();
     public final Label lblResPath = new Label("resPath");
     public final Label lblResFileName = new Label("resFileName");
 
-    public final CheckBox chkDestAboSubDir = new CheckBox();
+    public final CheckBox chkAboSubDir = new CheckBox();
+    public final RadioButton rbSetPath = new RadioButton("Einstellungen aus dem Set verwenden");
+    public final RadioButton rbOwnPath = new RadioButton("Eigene Einstellungen verwenden");
+    public final RadioButton rbSetFileName = new RadioButton("Einstellungen aus dem Set verwenden");
+    public final RadioButton rbOwnFileName = new RadioButton("Eigene Einstellungen verwenden");
+
     public final Slider slTimeRange = new Slider();
     public final Label lblTimeRange = new Label();
     public final P2RangeBox p2RangeBoxDuration = new P2RangeBox("", true, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
@@ -124,6 +128,13 @@ public class AddAboDto {
         this.isNewAbo = isNewAbo;
         this.aboList.setAll(abo);
 
+        ToggleGroup tgl1 = new ToggleGroup();
+        rbSetPath.setToggleGroup(tgl1);
+        rbOwnPath.setToggleGroup(tgl1);
+        ToggleGroup tgl2 = new ToggleGroup();
+        rbSetFileName.setToggleGroup(tgl2);
+        rbOwnFileName.setToggleGroup(tgl2);
+
         addAboData = InitAddAboArray.initAboArray(abo);
 
         this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelList, true);
@@ -143,6 +154,14 @@ public class AddAboDto {
         this.progData = progData;
         this.isNewAbo = isNewAbo;
         this.aboList.setAll(aboList);
+
+        ToggleGroup tgl1 = new ToggleGroup();
+        rbSetPath.setToggleGroup(tgl1);
+        rbOwnPath.setToggleGroup(tgl1);
+        ToggleGroup tgl2 = new ToggleGroup();
+        rbSetFileName.setToggleGroup(tgl2);
+        rbOwnFileName.setToggleGroup(tgl2);
+
         addAboData = InitAddAboArray.initAboArray(aboList);
 
         this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelList, true);
