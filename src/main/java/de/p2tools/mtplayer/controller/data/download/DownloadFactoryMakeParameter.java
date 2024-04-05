@@ -86,7 +86,7 @@ public class DownloadFactoryMakeParameter {
     }
 
     private static void buildFileNamePath(DownloadData download, SetData setData,
-                                          AboData abo, String nname, String ppath) {
+                                          AboData abo, String pNname, String pPath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
         String name;
@@ -95,9 +95,9 @@ public class DownloadFactoryMakeParameter {
         // ##############################################
         // Name
         // ##############################################
-        if (!nname.isEmpty()) {
+        if (!pNname.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
-            name = nname;
+            name = pNname;
 
         } else {
             if (abo != null && !abo.getAboFileName().isEmpty()) {
@@ -156,10 +156,9 @@ public class DownloadFactoryMakeParameter {
         // ##############################################
         // Pfad
         // ##############################################
-        if (!ppath.isEmpty()) {
+        if (!pPath.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
-            path = ppath;
-
+            path = pPath;
 
         } else {
             if (abo != null && !abo.getAboDir().isEmpty()) {
@@ -175,55 +174,61 @@ public class DownloadFactoryMakeParameter {
                 }
             }
 
+            if (abo == null) {
+                if (setData.isGenAboSubDir()) {
+                    // das sind direkte Downloads und wenn "genAboSubDir" an ist, wird ein Unterordner mit Thema angelegt??
+                    // --> das wird aber nur beim ersten mal klappen, dann wird im
+                    // DownloadDialog immer der letzte Pfad zuerst angeboten
+                    path = P2FileUtils.addsPath(path,
+                            DownloadDataFactory.replaceEmptyFileName(download.getTheme(),
+                                    true /* pfad */,
+                                    ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
+                                    ProgConfig.SYSTEM_ONLY_ASCII.getValue()));
+                }
+            }
+
             if (abo != null) {
                 // bei Abos: den Namen des Abos eintragen und evtl. den Pfad erweitern
                 download.setAboName(abo.getName());
-                String addPpath = "";
 
-                if (setData.isGenAboSubDir() && abo.getAboSubDir().trim().isEmpty()) {
-                    // SubDir anhängen, AboSubDir ist leer
-                    AboSubDir.ENSubDir ENSubDir = AboSubDir.getENSubDir(setData.getAboSubDir_ENSubDirNo());
-                    switch (ENSubDir) {
-                        case TITLE:
-                            addPpath = download.getTitle();
-                            break;
-                        case SENDER:
-                            addPpath = download.getChannel();
-                            break;
-                        case ABONAME:
-                            addPpath = abo.getName();
-                            break;
-                        case SENDEDATUM:
-                            addPpath = download.getFilmDate().get_yyyy_MM_dd();
-                            break;
-                        case DOWNLOADDATUM:
-                            addPpath = getToday_yyyy_MM_dd();
-                            break;
-                        case THEME:
-                        default:
-                            addPpath = download.getTheme();
-                            break;
+                if (abo.getAboDir().isEmpty()) {
+                    // wenn das Abo keinen Pfad hat, dann evtl. einen SubDir anhängen
+                    String addPpath = "";
+
+                    if (!abo.getAboSubDir().trim().isEmpty()) {
+                        // SubDir aus dem Abo anhängen
+                        addPpath = abo.getAboSubDir();
+
+                    } else if (setData.isGenAboSubDir()) {
+                        // SubDir aus dem Set anhängen
+                        AboSubDir.ENSubDir ENSubDir = AboSubDir.getENSubDir(setData.getAboSubDir_ENSubDirNo());
+                        switch (ENSubDir) {
+                            case TITLE:
+                                addPpath = download.getTitle();
+                                break;
+                            case SENDER:
+                                addPpath = download.getChannel();
+                                break;
+                            case ABONAME:
+                                addPpath = abo.getName();
+                                break;
+                            case SENDEDATUM:
+                                addPpath = download.getFilmDate().get_yyyy_MM_dd();
+                                break;
+                            case DOWNLOADDATUM:
+                                addPpath = getToday_yyyy_MM_dd();
+                                break;
+                            case THEME:
+                            default:
+                                addPpath = download.getTheme();
+                                break;
+                        }
                     }
-
-                } else if (!abo.getAboSubDir().trim().isEmpty()) {
-                    // SubDir aus dem Abo anhängen
-                    addPpath = abo.getAboSubDir();
+                    addPpath = addPpath.trim();
+                    if (!addPpath.isEmpty()) {
+                        path = P2FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
+                    }
                 }
-
-                addPpath = addPpath.trim();
-                if (!addPpath.isEmpty()) {
-                    path = P2FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
-                }
-
-            } else if (setData.isGenAboSubDir()) {
-                // das sind direkte Downloads und wenn "genAboSubDir" an ist, wird ein Unterordner mit Thema angelegt??
-                // --> das wird aber nur beim ersten mal klappen, dann wird im
-                // DownloadDialog immer der letzte Pfad zuerst angeboten
-                path = P2FileUtils.addsPath(path,
-                        DownloadDataFactory.replaceEmptyFileName(download.getTheme(),
-                                true /* pfad */,
-                                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
-                                ProgConfig.SYSTEM_ONLY_ASCII.getValue()));
             }
 
             path = replaceString(download, path); // %D ... ersetzen

@@ -56,6 +56,7 @@ public class InitSetDataAbo {
         } else {
             addAboDto.lblSetSubDir.setText("");
         }
+        addAboDto.lblSetFileName.setText(addAboDto.getAct().abo.getSetData().getDestName());
     }
 
 

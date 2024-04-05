@@ -92,6 +92,7 @@ public class AddAboDto {
     public final ComboBox<String> cboAboDir = new ComboBox<>();
     public final ComboBox<String> cboAboFileName = new ComboBox<>();
     public final Label lblSetSubDir = new Label();
+    public final Label lblSetFileName = new Label();
     public final Label lblResPath = new Label("resPath");
     public final Label lblResFileName = new Label("resFileName");
 

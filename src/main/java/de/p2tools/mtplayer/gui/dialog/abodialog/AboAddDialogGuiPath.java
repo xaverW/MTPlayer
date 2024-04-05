@@ -149,6 +149,7 @@ public class AboAddDialogGuiPath {
         btnPath.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnPath.setOnAction(event -> {
             P2DirFileChooser.DirChooser(stage, addAboDto.cboAboDir);
+            addAboDto.initDestination.setPathToAbo();
         });
         btnPath.disableProperty().bind(addAboDto.rbOwnPath.selectedProperty().not());
 
@@ -188,15 +189,22 @@ public class AboAddDialogGuiPath {
         int row = 0;
         // set
         grid.add(addAboDto.rbSetFileName, 0, row, 3, 1);
-        grid.add(addAboDto.chkDestAboFileNameAll, 3, row);
-        ++row;
-        // eigenen Einstellungen
-        grid.add(addAboDto.rbOwnFileName, 0, ++row, 3, 1);
+
         RadioButton rb = new RadioButton();
         rb.setVisible(false);
         grid.add(rb, 0, ++row);
+        grid.add(DownloadAddDialogFactory.getTextBlack(AboFieldNames.ABO_DEST_ABO_FILE_NAME + ":"), 1, row);
+        grid.add(addAboDto.lblSetFileName, 2, row);
 
+        grid.add(addAboDto.chkDestAboFileNameAll, 3, row);
+        ++row;
 
+        // eigenen Einstellungen
+        grid.add(addAboDto.rbOwnFileName, 0, ++row, 3, 1);
+
+        rb = new RadioButton();
+        rb.setVisible(false);
+        grid.add(rb, 0, ++row);
         grid.add(DownloadAddDialogFactory.getTextBlack(AboFieldNames.ABO_DEST_ABO_FILE_NAME + ":"), 1, row);
         grid.add(addAboDto.cboAboFileName, 2, row);
         addAboDto.cboAboFileName.setMaxWidth(Double.MAX_VALUE);

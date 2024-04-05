@@ -71,6 +71,7 @@ public class DownloadAddDialogGui {
         addDownloadDto.actFilmIsShown.addListener((u, o, n) -> gridPane.setDisable(addDownloadDto.getAct().downloadIsRunning()));
 
         int row = 0;
+
         // Titel
         Font font = Font.font(null, FontWeight.BOLD, -1);
         addDownloadDto.btnAll.setFont(font);
@@ -161,16 +162,18 @@ public class DownloadAddDialogGui {
 
         TitledPane tpUrl = new TitledPane("", new HBox());
         tpUrl.setExpanded(false);
-        GridPane g = new GridPane();
-        g.add(new Label("Film-URL: "), 0, row);
-        g.add(addDownloadDto.p2HyperlinkUrlFilm, 1, row++, 3, 1);
-        g.add(new Label("URL: "), 0, row);
-        g.add(addDownloadDto.p2HyperlinkUrlDownload, 1, row++, 3, 1);
-        tpUrl.setContent(g);
+        GridPane gUrl = new GridPane();
+        gUrl.add(new Label("Film-URL: "), 0, 0);
+        gUrl.add(addDownloadDto.p2HyperlinkUrlFilm, 1, 0, 3, 1);
+        gUrl.add(new Label("URL: "), 0, 1);
+        gUrl.add(addDownloadDto.p2HyperlinkUrlDownload, 1, 1, 3, 1);
+        tpUrl.setContent(gUrl);
 
         gridPane.add(new Label("URL:"), 0, ++row);
         gridPane.add(tpUrl, 1, row, 2, 1);
 
+        ++row;
+        ++row;
         // Dateiname
         gridPane.add(DownloadAddDialogFactory.getText("Dateiname:"), 0, ++row);
         gridPane.add(addDownloadDto.txtName, 1, row, 2, 1);
