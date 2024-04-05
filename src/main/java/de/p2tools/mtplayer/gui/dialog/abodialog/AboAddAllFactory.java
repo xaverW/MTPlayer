@@ -160,7 +160,7 @@ public class AboAddAllFactory {
             addAboDto.chkStartTimeAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 addCheckAllCss(addAboDto);
                 if (addAboDto.chkStartTimeAll.isSelected()) {
-                    addAboDto.initStartTimeAbo.setStartTimePick();
+                    addAboDto.initStartTime.setStartTimePick();
                 }
             });
             addAboDto.chkDestAboDirAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -178,7 +178,7 @@ public class AboAddAllFactory {
             addAboDto.chkSetAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 addCheckAllCss(addAboDto);
                 if (addAboDto.chkSetAll.isSelected()) {
-                    addAboDto.initSetDataAbo.makeSetDataChange();
+                    addAboDto.initSetData.makeSetDataChange();
                 }
             });
 

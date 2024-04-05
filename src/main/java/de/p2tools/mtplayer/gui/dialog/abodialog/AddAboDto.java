@@ -47,9 +47,9 @@ public class AddAboDto {
     public final InitName initName;
     public final InitResolution initResolution;
     public final InitTimeRangeAndDuration initTimeRangeAndDuration;
-    public final InitStartTimeAbo initStartTimeAbo;
+    public final InitStartTime initStartTime;
     public final InitDestination initDestination;
-    public final InitSetDataAbo initSetDataAbo;
+    public final InitSetData initSetData;
 
     public final ProgData progData;
     public AddAboData[] addAboData;
@@ -145,9 +145,9 @@ public class AddAboDto {
         initName = new InitName(this);
         initResolution = new InitResolution(this);
         initTimeRangeAndDuration = new InitTimeRangeAndDuration(this);
-        initStartTimeAbo = new InitStartTimeAbo(this);
+        initStartTime = new InitStartTime(this);
         initDestination = new InitDestination(this);
-        initSetDataAbo = new InitSetDataAbo(this);
+        initSetData = new InitSetData(this);
     }
 
     public AddAboDto(ProgData progData, boolean isNewAbo, List<AboData> aboList) {
@@ -172,9 +172,9 @@ public class AddAboDto {
         initName = new InitName(this);
         initResolution = new InitResolution(this);
         initTimeRangeAndDuration = new InitTimeRangeAndDuration(this);
-        initStartTimeAbo = new InitStartTimeAbo(this);
+        initStartTime = new InitStartTime(this);
         initDestination = new InitDestination(this);
-        initSetDataAbo = new InitSetDataAbo(this);
+        initSetData = new InitSetData(this);
     }
 
     public AddAboData getAct() {
@@ -202,9 +202,9 @@ public class AddAboDto {
         initName.makeAct();
         initResolution.makeAct();
         initTimeRangeAndDuration.makeAct();
-        initStartTimeAbo.makeAct();
+        initStartTime.makeAct();
         initDestination.makeAct();
-        initSetDataAbo.makeAct();
+        initSetData.makeAct();
     }
 
     public static class CheckAll extends CheckBox {

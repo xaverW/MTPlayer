@@ -108,7 +108,6 @@ public class InitDestination {
     }
 
     public void setPathToAbo() {
-        System.out.println("setPathToAbo");
         addMissingPath();
         if (addAboDto.chkDestAboDirAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(this::setAboPath);
@@ -133,7 +132,6 @@ public class InitDestination {
     }
 
     public void setFileNameToAbo() {
-        System.out.println("setFileNameToAbo");
         addMissingPath();
         if (addAboDto.chkDestAboFileNameAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(this::setAboFileName);

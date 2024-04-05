@@ -19,11 +19,11 @@ package de.p2tools.mtplayer.gui.dialog.abodialog;
 
 import java.util.Arrays;
 
-public class InitStartTimeAbo {
+public class InitStartTime {
 
     private final AddAboDto addAboDto;
 
-    public InitStartTimeAbo(AddAboDto addAboDto) {
+    public InitStartTime(AddAboDto addAboDto) {
         this.addAboDto = addAboDto;
         init();
     }

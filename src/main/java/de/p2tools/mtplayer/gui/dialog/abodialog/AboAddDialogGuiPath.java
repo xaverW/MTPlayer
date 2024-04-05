@@ -232,14 +232,6 @@ public class AboAddDialogGuiPath {
                 P2ColumnConstraints.getCcComputedSizeAndHgrow());
         vBoxCont.getChildren().add(grid);
 
-//        grid.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
-
-//        HBox hBox = new HBox();
-//        hBox.setPadding(new Insets(30, 10, 10, 10));
-//        hBox.getChildren().add(grid);
-//        HBox.setHgrow(grid, Priority.ALWAYS);
-//        vBoxCont.getChildren().add(hBox);
-
         Text txtPath = DownloadAddDialogFactory.getTextBlack("Pfad:");
         Text txtName = DownloadAddDialogFactory.getTextBlack("Dateiname:");
 

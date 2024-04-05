@@ -23,11 +23,11 @@ import javafx.event.EventHandler;
 
 import java.util.Arrays;
 
-public class InitSetDataAbo {
+public class InitSetData {
     private final AddAboDto addAboDto;
     private EventHandler<ActionEvent> onAction;
 
-    public InitSetDataAbo(AddAboDto addAboDto) {
+    public InitSetData(AddAboDto addAboDto) {
         this.addAboDto = addAboDto;
         init();
     }
