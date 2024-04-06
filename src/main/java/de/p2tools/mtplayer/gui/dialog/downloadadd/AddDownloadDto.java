@@ -107,7 +107,7 @@ public class AddDownloadDto {
     public final RadioButton rbSmall = new RadioButton("Klein");
 
     // Startzeit
-    public final P2TimePicker p2TimePicker = new P2TimePicker(true);
+    public final P2TimePicker p2TimePicker = new P2TimePicker();
     public final RadioButton rbStartNotYet = new RadioButton("noch nicht");
     public final RadioButton rbStartNow = new RadioButton("sofort");
     public final RadioButton rbStartAtTime = new RadioButton("um: ");

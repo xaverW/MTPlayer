@@ -53,7 +53,7 @@ public class DownloadFactoryAbo {
 
         downloadList.stream()
                 .filter(d -> !d.isStateStopped())
-                .filter(d -> d.isAbo())
+                .filter(DownloadData::isAbo)
                 .forEach(download -> {
                     if (download.isStateInit()) {
                         // noch nicht gestartet

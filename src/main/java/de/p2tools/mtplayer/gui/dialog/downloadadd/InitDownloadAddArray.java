@@ -62,7 +62,7 @@ public class InitDownloadAddArray {
                 addDownloadData[i].startNow = false;
             } else if (ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_TIME.getValue()) {
                 // dann mit Startzeit starten
-                addDownloadData[i].download.setStartTime(addDownloadDto.p2TimePicker.getTime());
+                addDownloadData[i].download.setStartTimeAlsoTomorrow(addDownloadDto.p2TimePicker.getTime());
             }
 
             // Dateigröße

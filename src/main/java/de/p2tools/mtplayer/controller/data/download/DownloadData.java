@@ -89,7 +89,8 @@ public final class DownloadData extends DownloadDataProps {
         setAbo(abo);
         setSource(source);
         if (abo != null && !abo.getStartTime().isEmpty()) {
-            setStartTime(abo.getStartTime());
+            // bei Abos wird immer heute gestartet
+            setStartTimeToday(abo.getStartTime());
         }
         if (setSize) {
             DownloadDataFactory.setDownloadSize(this);

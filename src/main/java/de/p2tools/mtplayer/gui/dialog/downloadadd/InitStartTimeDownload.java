@@ -54,7 +54,7 @@ public class InitStartTimeDownload {
             // wenn schon eine Startzeit, dann jetzt setzen
             if (!addDownloadDto.getAct().download.getStartTime().isEmpty()) {
                 addDownloadDto.rbStartAtTime.setSelected(true);
-                addDownloadDto.p2TimePicker.setTime(addDownloadDto.getAct().download.getStartTime());
+                addDownloadDto.p2TimePicker.setTime(addDownloadDto.getAct().download.getStartTimeOnly());
             } else {
                 addDownloadDto.rbStartNotYet.setSelected(true);
             }
@@ -82,7 +82,7 @@ public class InitStartTimeDownload {
 
         if (!addDownloadDto.getAct().download.getStartTime().isEmpty()) {
             // dann Startzeit
-            addDownloadDto.p2TimePicker.setTime(addDownloadDto.getAct().download.getStartTime());
+            addDownloadDto.p2TimePicker.setTime(addDownloadDto.getAct().download.getStartTimeOnly());
             addDownloadDto.rbStartAtTime.setSelected(true);
 
         } else if (addDownloadDto.getAct().startNow) {
@@ -105,7 +105,7 @@ public class InitStartTimeDownload {
 
     private void setTime(AddDownloadData addDownloadData) {
         if (addDownloadDto.rbStartAtTime.isSelected()) {
-            addDownloadData.download.setStartTime(addDownloadDto.p2TimePicker.getTime());
+            addDownloadData.download.setStartTimeAlsoTomorrow(addDownloadDto.p2TimePicker.getTime());
             addDownloadData.startNow = false;
         } else if (addDownloadDto.rbStartNow.isSelected()) {
             addDownloadData.download.setStartTime("");

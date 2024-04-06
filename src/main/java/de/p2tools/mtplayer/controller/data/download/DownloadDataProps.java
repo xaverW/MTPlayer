@@ -22,14 +22,15 @@ import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
 import de.p2tools.p2lib.configfile.pdata.PDataSample;
 import de.p2tools.p2lib.mtdownload.DownloadSize;
-import de.p2tools.p2lib.tools.date.P2Date;
-import de.p2tools.p2lib.tools.date.P2DateConst;
-import de.p2tools.p2lib.tools.date.P2DateProperty;
+import de.p2tools.p2lib.tools.date.*;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class DownloadDataProps extends PDataSample<DownloadData> {
@@ -629,12 +630,62 @@ public class DownloadDataProps extends PDataSample<DownloadData> {
         return startTime.get();
     }
 
+    public LocalDateTime getStartTimeLdt() {
+        LocalDateTime ldt = P2LDateTimeFactory.fromString(startTime.getValueSafe());
+        if (ldt.equals(LocalDateTime.MIN)) {
+            startTime.set("");
+        }
+        return ldt;
+    }
+
+    public String getStartTimeOnly() {
+        LocalDateTime ldt = getStartTimeLdt();
+        if (ldt.equals(LocalDateTime.MIN)) {
+            return "";
+        }
+        LocalTime lt = ldt.toLocalTime();
+        return P2LTimeFactory.toString_HM(lt);
+    }
+
+
     public StringProperty startTimeProperty() {
         return startTime;
     }
 
     public void setStartTime(String startTime) {
         this.startTime.set(startTime);
+    }
+
+    public void setStartTimeToday(String startTime) {
+        if (startTime.isEmpty()) {
+            this.startTime.set("");
+            return;
+        }
+
+        final LocalTime localTime = P2LTimeFactory.fromString_HM(startTime);
+        final LocalDateTime ldt = LocalDateTime.of(LocalDate.now(), localTime);
+        final String localDateTime = P2LDateTimeFactory.toString(ldt);
+        this.startTime.set(localDateTime);
+    }
+
+    public void setStartTimeAlsoTomorrow(String startTime) {
+        if (startTime.isEmpty()) {
+            this.startTime.set("");
+            return;
+        }
+
+        final LocalTime localTime = P2LTimeFactory.fromString_HM(startTime);
+        final LocalDateTime ldt;
+        if (LocalTime.now().isBefore(localTime)) {
+            // dann passts, kommt noch heute
+            ldt = LocalDateTime.of(LocalDate.now(), localTime);
+        } else {
+            // dann kommt es erst morgen
+            ldt = LocalDateTime.of(LocalDate.now().plusDays(1), localTime);
+        }
+
+        final String localDateTime = P2LDateTimeFactory.toString(ldt);
+        this.startTime.set(localDateTime);
     }
 
 

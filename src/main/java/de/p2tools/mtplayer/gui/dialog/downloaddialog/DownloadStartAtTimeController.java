@@ -226,7 +226,7 @@ public class DownloadStartAtTimeController extends P2DialogExtra {
             //noch nicht gestartete nach Zeitangabe starten
             //Downloads dessen Start schon auf Fehler steht, werden nicht gestartet
             final String time = p2TimePicker.getTime();
-            downloadList.forEach(download -> download.setStartTime(time));
+            downloadList.forEach(download -> download.setStartTimeAlsoTomorrow(time));
         }
         downloadList.forEach(DownloadData::resetDownload);
         progData.downloadList.startDownloads(downloadList, false);

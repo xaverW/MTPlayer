@@ -121,6 +121,7 @@ public class TableDownload extends PTable<DownloadData> {
 
         final TableColumn<DownloadData, String> startTimeColumn = new TableColumn<>("Startzeit");
         startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        startTimeColumn.setCellFactory(new CellDownloadStartTime<>().cellFactory);
         startTimeColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, DownloadSizeData> sizeColumn = new TableColumn<>("Größe [MB]");

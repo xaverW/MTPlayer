@@ -103,9 +103,7 @@ public class ProgConfigUpdate {
                 }
             });
             ProgData.getInstance().downloadList.forEach(downloadData -> {
-                if (downloadData.getStartTime().length() > 5) {
-                    downloadData.setStartTime(downloadData.getStartTime().substring(0, 5));
-                }
+                downloadData.setStartTime("");
             });
         }
 
