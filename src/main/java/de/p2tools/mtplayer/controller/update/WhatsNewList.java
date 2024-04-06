@@ -114,6 +114,16 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "mit dem Menübutton (oder über das Programmmenü) ein- und ausgeblendet werden.", 110);
         add(whatsNewInfo);
 
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 4, 6),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_09.png",
+
+                "Abo mit eigenem Pfad/Dateinamen",
+                "In Abos können jetzt ein eigener Pfad/Dateiname zum Speichern vorgegeben " +
+                        "werden. Wird das gesetzt, werden die Vorgaben aus dem Set überschrieben. " +
+                        "Filme landen im Abo vorgegebenem Pfad mit dem im Abo vorgegebenem " +
+                        "Dateinamen.", 100);
+        add(whatsNewInfo);
+
         whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 3, 3), "",
                 "Was sich sonst noch geändert hat",
                 "* Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +
