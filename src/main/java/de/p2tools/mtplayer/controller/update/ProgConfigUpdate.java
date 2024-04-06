@@ -32,6 +32,7 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_AFTER_UPDATE_FILTER.setValue(true);
         ProgConfig.SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER.setValue(true);
         ProgConfig.SYSTEM_AFTER_UPDATE_RBTV.setValue(true);
+        ProgConfig.SYSTEM_ABO_START_TIME.setValue(true); // für Version 17
     }
 
     public static void update() {
@@ -90,6 +91,20 @@ public class ProgConfigUpdate {
                         aboData.getChannel().contains("Radio Bremen TV")) {
                     aboData.setChannel(aboData.getChannel().replaceAll("rbtv", "RBTV"));
                     aboData.setChannel(aboData.getChannel().replaceAll("Radio Bremen TV", "RBTV"));
+                }
+            });
+        }
+
+        if (!ProgConfig.SYSTEM_ABO_START_TIME.getValue()) {
+            // die Abo-Startzeit ist jetzt nur noch 12:20 anstatt 12:30.00
+            ProgData.getInstance().aboList.forEach(aboData -> {
+                if (aboData.getStartTime().length() > 5) {
+                    aboData.setStartTime(aboData.getStartTime().substring(0, 5));
+                }
+            });
+            ProgData.getInstance().downloadList.forEach(downloadData -> {
+                if (downloadData.getStartTime().length() > 5) {
+                    downloadData.setStartTime(downloadData.getStartTime().substring(0, 5));
                 }
             });
         }
