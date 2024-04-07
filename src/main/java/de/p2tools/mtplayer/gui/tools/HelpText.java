@@ -160,9 +160,13 @@ public class HelpText {
                     "Stelle im durchsuchten Bereich enthalten ist." +
                     "\n" +
                     "\n" +
-                    "Wörtlicher Suchtext kann in \" angegeben werden. Dann wird alles gefunden, was im durchsuchten " +
+                    "Wörtlicher Suchtext muss in \" angegeben werden. Dann wird alles gefunden, was im durchsuchten " +
                     "Bereich den Inhalt zwischen den \" enthält. Hier sind auch \",\" und \":\" erlaubt. Der gesamte Suchtext " +
-                    "muss aber in \" eingeschlossen werden, z.B. \"das, das und das wird gesucht\". Dann muss der durchsuchte " +
+                    "muss aber in \" eingeschlossen werden, z.B." +
+                    "\n" +
+                    "\"das, das und das wird gesucht\"" +
+                    "\n" +
+                    "Dann muss der durchsuchte " +
                     "Bereich genau das \"das, das und das wird gesucht\" enthalten (ohne die \")." +
                     "\n" +
                     "Eine Suche mit RegEx, z.B. \"#:.*pass,+.*\" kann damit verkürzt werden: \"pass,\". " +
@@ -182,8 +186,8 @@ public class HelpText {
                     "\n" +
                     "Um mehrere Begriffe auszuschließen, müssen diese durch Komma oder Doppelpunkt " +
                     "getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe " +
-                    "muss enthalten sein). Der Doppelpunkt verknüpft die Begriffe mit UND " +
-                    "(=> alle Begriffe müssen enthalten sein, damit der Beitrag ein Treffer ist).\n" +
+                    "muss enthalten sein) und der Doppelpunkt verknüpft die Begriffe mit UND " +
+                    "(=> alle Begriffe müssen enthalten sein, damit der Beitrag ausgeschlossen wird).\n" +
                     "\n" +
                     "\n" +
 
@@ -191,7 +195,8 @@ public class HelpText {
                     "(wenn der gesamte Suchtext nicht in \" eingeschlossen ist.)" +
                     "\n" +
                     "\n" +
-                    "Beispiele:\n" +
+                    "Beispiele:" +
+                    "\n" +
                     "'Tagesschau' findet u.a. 'Tagesschau, 12:00 Uhr', 'ARD Tagesschau Livestream', 'Bei Logo und der Tagesschau'.\n" +
                     "'Sport,Fussball' (Komma-getrennt) findet Filme bei denen 'Sport' oder 'Fussball' " +
                     "oder beides vorkommt, u.a. 'Wintersport im Mumintal' und 'Wie wird man Fussballprofi?'.\n" +
@@ -324,20 +329,9 @@ public class HelpText {
                     "gespeicherten Zustand wieder laden. " +
                     "Solange ein geladenes Profil nicht verändert wurde ist sein Name unterstrichen." +
                     "\n";
-
-    public static final String BLACKLIST_WHITELIST =
-            "Die Funktion \"Blacklist\" blendet alle Filme aus, die den Angaben in mindestens einer Zeile " +
-                    "in der Tabelle entsprechen." +
-                    "\n\n" +
-                    "Bei der \"Whitelist\" ist es umgekehrt, es werden nur Filme angezeigt, die den " +
-                    "Angaben in mindestens einer Zeile entsprechen." +
-                    "\n\n" +
-                    "Beim Umschalten zwischen Blacklist und Whitelist wird also die Auswahl der angezeigten Filme invertiert.\n" +
+    public static final String SEARCH_SPECIAL =
+            "-- Besonderheiten --" +
                     "\n" +
-                    FILTER_FIELD + "\n" +
-                    "\n" +
-
-                    "-- Besonderheiten --\n" +
                     "Wenn bei \"Thema\" der Schalter \"Exakt\" eingeschaltet ist, darf der Suchtext " +
                     "nicht \"an beliebiger Stelle darin enthalten\" sein, sondern muss das gesamte " +
                     "Feld darstellen.\n" +
@@ -353,29 +347,28 @@ public class HelpText {
                     "'Sport:Fussball' nicht erfasst." +
                     "\n";
 
+    public static final String BLACKLIST_WHITELIST =
+            "Die Funktion \"Blacklist\" blendet alle Filme aus, die den Angaben in mindestens einer Zeile " +
+                    "in der Tabelle entsprechen. " +
+                    "Bei der \"Whitelist\" ist es umgekehrt, es werden nur Filme angezeigt, die den " +
+                    "Angaben in mindestens einer Zeile entsprechen. " +
+                    "Beim Umschalten zwischen Blacklist und Whitelist wird also die Auswahl der angezeigten Filme invertiert.\n" +
+                    "\n" +
+                    FILTER_FIELD + "\n" +
+                    "\n" +
+                    SEARCH_SPECIAL +
+                    "\n";
+
     public static final String ABO_SEARCH =
             "Ein Abo findet einen Download, wenn die Filtereinstellungen zum Film passen. Im \"Zielpfad\" " +
-                    "wird der Download dann gespeichert. Ist eine \"Startzeit\" vorgegeben, startet der " +
-                    "Download zu der vorgegebenen Zeit. Sind mehre Downloadsets (Download-Einstellungen) " +
+                    "wird der Download dann gespeichert. Ist eine \"Startzeit\" vorgegeben muss der Download trotzdem " +
+                    "gestartet werden, das Laden beginnt dann aber erst zur vorgegebenen Zeit. " +
+                    "Sind mehre Downloadsets (Download-Einstellungen) " +
                     "im Programm angelegt, kann man auch auswählen, mit welcher die Downloads laufen sollen.\n" +
                     "\n" +
                     FILTER_FIELD + "\n" +
                     "\n" +
-
-                    "-- Besonderheiten --\n" +
-                    "Wenn bei \"Thema\" der Schalter \"Exakt\" eingeschaltet ist, darf der Suchtext " +
-                    "nicht \"an beliebiger Stelle darin enthalten\" sein, sondern muss das gesamte " +
-                    "Feld darstellen.\n" +
-                    "Beispiele:\n" +
-                    "\"Exakt\" eingeschaltet: 'Dokumentation' erfasst nur 'Dokumentation' oder " +
-                    "'dokumentation', nichts sonst.\n" +
-                    "\"Exakt\" ausgeschaltet: 'Dokumentation' erfasst u.a. 'Dokumentationen und Reportagen', " +
-                    "'Reportage & Dokumentation', 'Geschichtsdokumentationen'.\n" +
-                    "\n" +
-                    "[Thema-Titel] durchsucht in der Filmliste THEMA und TITEL.\n" +
-                    "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben Bereich " +
-                    "vorkommen. Ein Film mit 'Sport' in THEMA und 'Fussball' in TITEL wird von " +
-                    "'Sport:Fussball' nicht erfasst." +
+                    SEARCH_SPECIAL +
                     "\n";
 
     public static final String CONFIG_PROXY =
@@ -462,39 +455,49 @@ public class HelpText {
                     "automatisch die hohe Auflösung heruntergeladen." +
                     "\n";
 
-    public static final String ABO_SUBDIR =
-            "Downloads aus Abos werden in einem Abo-eigenen Unterordner gespeichert, " +
-                    "wenn \"bei Abos Unterordner anlegen\" im ausgewählten Programmset eingeschaltet ist. " +
-                    "Diese Einstellung wird überschrieben, wenn hier ein eigener Zielpfad angegeben ist. " +
-                    "Der Download wird dann immer in einem Unterordner mit dem im Zielpfad " +
-                    "angegebenen Namen gespeichert." + "\n" +
+    public static final String ABO_PATH =
+            "Downloads aus Abos können im Pfad der im Set vorgegeben ist, in einem Unterordner davon oder " +
+                    "in einem eigenen Pfad der im Abo vorgegeben wird, gespeichert werden. " +
+                    "Der Dateiname kann der vorgegebene des Sets sein oder " +
+                    "auch ein eigener für das Abo." +
+                    "\n\n" +
+
+                    "** Pfad - Einstellungen aus dem Set verwenden **" +
                     "\n" +
-                    "Mit der CheckBox links kann zwischen der Vorgabe des Programmsets " +
-                    "und dem hier eingetragenen Pfad umgeschaltet werden.\n" +
+                    "Ist im Set \"Bei Abos Unterordner anlegen\" eingeschaltet, wird der Film auf jeden Fall in einem Unterordner " +
+                    "des Speicherordners des Sets gespeichert. Im Set kann auch ausgewählt werden, wie der Unterordner " +
+                    "heißen soll. Wird im Abo \"Unterordner\" angeklickt, kann man einen Abo-eignen Namen dafür angeben. " +
+                    "Es wird dann auf jeden " +
+                    "Fall ein Unterordner verwendet, auch wenn er im Set nicht eingeschaltet ist." +
                     "\n" +
-                    "Beim Namen sind diese Parameter möglich:\n" +
                     "\n" +
-                    "%D Sendedatum des Films, wenn leer von 'heute'\n" +
-                    "%d Sendezeit des Films, wenn leer von 'jetzt'\n" +
-                    "%H 'heute', aktuelles Datum im Format JJJJMMTT, z.B. '20090815' am 15.08.2009\n" +
-                    "%h 'jetzt', aktuelle Uhrzeit im Format HHMMss, z.B. '152059' um 15:20:59 Uhr\n" +
+
+                    "** Pfad - Eigene Einstellungen verwenden **" +
                     "\n" +
-                    "%1 Tag, vom Sendedatum des Films, wenn leer von 'heute'\n" +
-                    "%2 Monat, ebenso\n" +
-                    "%3 Jahr, ebenso\n" +
+                    "Hier kann man für die Downloads einen eigenen Pfad vorgeben. Downloads dieses Abo landen dann in dem Ordner." +
                     "\n" +
-                    "%4 Stunde, von der Sendezeit des Films, wenn leer von 'jetzt'\n" +
-                    "%5 Minute, ebenso\n" +
-                    "%6 Sekunde, ebenso\n" +
                     "\n" +
-                    "%s Sender des Films\n" +
-                    "%T Titel des Films\n" +
-                    "%t Thema des Films\n" +
+
+                    "** Dateiname - Einstellungen aus dem Set verwenden **" +
                     "\n" +
-                    "%q Qualität des Films ('HD', 'H', 'L')\n" +
+                    "Das macht genau das, was es sagt, der Dateiname wird nach den Set-Vorgaben erstellt." +
                     "\n" +
-                    "Beispiel:\n" +
-                    "Am 10.05.2021 liefert '%H__%t__%T' z.B. '20210510__Natur__Wildes Shetland'." +
+                    "\n" +
+
+                    "** Dateiname - Eigene Einstellungen verwenden **" +
+                    "\n" +
+                    "Hier kann ein eigener Dateiname für Downloads dieses Abos vorgegeben werden." +
+                    "\n" +
+                    "\n" +
+
+                    "** Ergebnis **" +
+                    "\n" +
+                    "Hier wird exemplarisch angezeigt, wie Pfad und Dateiname aussehen können." +
+                    "\n" +
+                    "\n" +
+                    "==========================" +
+                    "\n" +
+                    HelpTextPset.PSET_PARAMETER_FILE_NAME +
                     "\n";
 
     public static final String SETDATA_ABO_SUBDIR =

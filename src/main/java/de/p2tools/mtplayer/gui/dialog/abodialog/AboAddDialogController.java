@@ -192,7 +192,7 @@ public class AboAddDialogController extends P2DialogExtra {
 
 
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
-        addHlpButton(P2Button.helpButton(getStage(), "Download", HelpText.ABO_SEARCH));
+        addHlpButton(P2Button.helpButton(getStage(), "Abo", HelpText.ABO_SEARCH));
     }
 
     private void initButton() {

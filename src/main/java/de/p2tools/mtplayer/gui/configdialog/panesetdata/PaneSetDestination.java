@@ -78,7 +78,7 @@ public class PaneSetDestination {
         final Button btnHelSubDir = P2Button.helpButton(stage, "Unterordner anlegen",
                 HelpText.SETDATA_ABO_SUBDIR);
         final Button btnHelpDestName = P2Button.helpButton(stage, "Zieldateiname",
-                HelpTextPset.PSET_FILE_NAME);
+                HelpTextPset.PSET_PARAMETER_FILE_NAME);
 
         cboDest.init(FXCollections.observableArrayList(AboSubDir.ENSubDir.values()));
         cboDest.getSelValueProperty().addListener((m, o, n) -> {

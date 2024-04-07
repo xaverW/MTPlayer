@@ -110,8 +110,8 @@ public class HelpTextPset {
                     "Downloaddatei resultiert:\n" +
                     "'C:\\Pfad\\Thema-Titel.mp4'.";
 
-    public static final String PSET_FILE_NAME =
-            "Beim Dateinamen sind diese Parameter möglich:\n" +
+    public static final String PSET_PARAMETER_FILE_NAME =
+            "Diese Parameter sind möglich:\n" +
                     "\n" +
                     "%D Sendedatum des Films, wenn leer von 'heute'\n" +
                     "%d Sendezeit des Films, wenn leer von 'jetzt'\n" +
@@ -138,10 +138,13 @@ public class HelpTextPset {
                     "\n" +
                     "%Z Hashwert der URL, z.B.: '1433245578'\n" +
                     "%z Hashwert der URL, angehängtes Suffix (entspricht '%Z.%S'), z.B.: '1433245578.mp4'\n" +
-                    "\n" +
+                    "\n\n" +
+                    "Im Set kann eine maximale Länge eines \"Elements\". z.B. %T und die maximale Länge des gesamten " +
+                    "Namens vorgegeben werden. Ist ein \"Element\" oder der gesamte Name länger, wird gekürzt." +
+                    "\n\n" +
                     "Beispiele:\n" +
                     "Am 10.05.2021 liefert '%H__%t__%T' z.B. '20210510__Natur__Wildes Shetland' (kein Suffix)\n" +
-                    "und '%H__%t__%T.S' liefert z.B. '20210510__Natur__Wildes Shetland.xxx' (mit dem Originalsuffix)";
+                    "und '%H__%t__%T.%S' liefert z.B. '20210510__Natur__Wildes Shetland.xxx' (mit dem Originalsuffix)";
 
 
     public static final String HELP_PSET_PLAY =

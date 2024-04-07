@@ -57,8 +57,8 @@ public class AboAddDialogGuiPath {
         addContFileName();
         addResFileName();
 
-        final Button btnHelp = P2Button.helpButton(stage, "Unterordner anlegen",
-                HelpText.ABO_SUBDIR);
+        final Button btnHelp = P2Button.helpButton(stage, "Abo-Pfad anlegen",
+                HelpText.ABO_PATH);
         HBox hBoxHelp = new HBox();
         hBoxHelp.setPadding(new Insets(10));
         hBoxHelp.setAlignment(Pos.CENTER_RIGHT);

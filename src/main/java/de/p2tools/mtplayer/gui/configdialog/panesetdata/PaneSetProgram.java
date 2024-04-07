@@ -212,7 +212,7 @@ public class PaneSetProgram {
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 
         final Button btnHelpDest = P2Button.helpButton(stage, "Zieldateiname",
-                HelpTextPset.PSET_FILE_NAME);
+                HelpTextPset.PSET_PARAMETER_FILE_NAME);
         final Button btnHelpSwitch = P2Button.helpButton(stage, "Programmschalter",
                 HelpTextPset.PSET_SWITCH);
 
