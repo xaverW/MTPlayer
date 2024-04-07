@@ -136,5 +136,14 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "können jetzt auch RegEx verwendet werden.",
                 180);
         add(whatsNewInfo);
+
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 4, 6), "",
+                "Was sich sonst noch geändert hat",
+                "* Bei der Startzeit von Downloads kann jetzt die Zeit von 00:00 bis 23:45 Uhr " +
+                        "angegeben werden. Liegt die Zeit in der Vergangenheit wird der Download morgen um " +
+                        "diese Zeit gestartet. Z.B. es ist 20:00 Uhr und der Download wird mit Startzeit: 05:00 Uhr " +
+                        "gestartet, dann startet der Download morgen um 05:00 Uhr.",
+                100);
+        add(whatsNewInfo);
     }
 }
