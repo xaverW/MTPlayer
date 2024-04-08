@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import de.p2tools.p2lib.tools.GermanStringSorter;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AboList extends SimpleListProperty<AboData> implements PDataList<AboData> {
+public class AboList extends SimpleListProperty<AboData> implements P2DataList<AboData> {
     private final ProgData progData;
     public static final String TAG = "AboList";
     private int nr;

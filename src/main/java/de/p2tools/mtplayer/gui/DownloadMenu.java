@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
+import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -135,7 +135,7 @@ public class DownloadMenu {
             }
             progData.downloadGuiController.startDownload(false);
         });
-        PShortcutWorker.addShortCut(miDownloadStart, PShortcut.SHORTCUT_DOWNLOAD_START);
+        P2ShortcutWorker.addShortCut(miDownloadStart, PShortcut.SHORTCUT_DOWNLOAD_START);
 
         final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
         miDownloadStop.setOnAction(a -> {
@@ -144,7 +144,7 @@ public class DownloadMenu {
             }
             progData.downloadGuiController.stopDownload(false);
         });
-        PShortcutWorker.addShortCut(miDownloadStop, PShortcut.SHORTCUT_DOWNLOAD_STOP);
+        P2ShortcutWorker.addShortCut(miDownloadStop, PShortcut.SHORTCUT_DOWNLOAD_STOP);
 
         final MenuItem miChange = new MenuItem("Download ändern");
         miChange.setOnAction(a -> {
@@ -153,7 +153,7 @@ public class DownloadMenu {
             }
             progData.downloadGuiController.changeDownload();
         });
-        PShortcutWorker.addShortCut(miChange, PShortcut.SHORTCUT_DOWNLOAD_CHANGE);
+        P2ShortcutWorker.addShortCut(miChange, PShortcut.SHORTCUT_DOWNLOAD_CHANGE);
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
@@ -197,7 +197,7 @@ public class DownloadMenu {
             }
             DownloadDataFactory.searchForAbosAndMaybeStart();
         });
-        PShortcutWorker.addShortCut(mbUpdateList, PShortcut.SHORTCUT_DOWNLOADS_UPDATE);
+        P2ShortcutWorker.addShortCut(mbUpdateList, PShortcut.SHORTCUT_DOWNLOADS_UPDATE);
 
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
         mbClean.setOnAction(e -> {
@@ -206,7 +206,7 @@ public class DownloadMenu {
             }
             DownloadDataFactory.cleanUpList(progData.downloadList);
         });
-        PShortcutWorker.addShortCut(mbClean, PShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
+        P2ShortcutWorker.addShortCut(mbClean, PShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
 
         Menu submenuAllDownloads = new Menu("Alle Downloads");
         submenuAllDownloads.getItems().addAll(mbStartAll, mbStartTimeAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);

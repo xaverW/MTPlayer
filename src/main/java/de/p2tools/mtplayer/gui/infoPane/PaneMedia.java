@@ -32,7 +32,7 @@ import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.PaneMediaContextMenu;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
@@ -253,7 +253,7 @@ public class PaneMedia extends VBox {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 MediaData mediaData = tableMedia.getSelectionModel().getSelectedItem();
                 if (mediaData == null) {
-                    PAlert.showInfoNoSelection();
+                    P2Alert.showInfoNoSelection();
 
                 } else {
                     ContextMenu contextMenu = new PaneMediaContextMenu(progData.primaryStage, mediaData).getContextMenu();

@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.gui.infoPane.AboInfoController;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableAbo;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
@@ -88,7 +88,7 @@ public class AboGuiController extends AnchorPane {
     public ObservableList<AboData> getSelList() {
         final ObservableList<AboData> ret = tableView.getSelectionModel().getSelectedItems();
         if (ret == null || ret.isEmpty()) {
-            PAlert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection();
         }
         return ret;
     }
@@ -103,7 +103,7 @@ public class AboGuiController extends AnchorPane {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
             if (show) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             }
             return Optional.empty();
         }

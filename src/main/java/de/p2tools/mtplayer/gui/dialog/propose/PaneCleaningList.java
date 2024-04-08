@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningData;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
@@ -113,7 +113,7 @@ public class PaneCleaningList {
         btnDel.setOnAction(event -> {
             final ObservableList<CleaningData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             } else {
                 cleaningDataList.removeAll(selected);
                 tableView.getSelectionModel().clearSelection();
@@ -134,7 +134,7 @@ public class PaneCleaningList {
         btnClear.setTooltip(new Tooltip("Alle Einträge in der Liste werden gelöscht"));
         btnClear.setOnAction(event -> {
             if (cleaningDataList.size() > 0) {
-                if (!PAlert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
+                if (!P2Alert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
                         "Die Tabelle wird komplett gelöscht und alle Einträge gehen verloren.")) {
                     return;
                 }

@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.controller.data.blackdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.configfile.pdata.PDataList;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @SuppressWarnings("serial")
-public class BlackList extends SimpleListProperty<BlackData> implements PDataList<BlackData> {
+public class BlackList extends SimpleListProperty<BlackData> implements P2DataList<BlackData> {
 
     public String TAG = "BlackList";
     private int no = 1;
@@ -66,9 +66,9 @@ public class BlackList extends SimpleListProperty<BlackData> implements PDataLis
     }
 
     public synchronized void filteredListSetPred(Predicate<BlackData> predicate) {
-        PDuration.counterStart("filteredListSetPred");
+        P2Duration.counterStart("filteredListSetPred");
         getFilteredList().setPredicate(predicate);
-        PDuration.counterStop("filteredListSetPred");
+        P2Duration.counterStop("filteredListSetPred");
     }
 
     @Override

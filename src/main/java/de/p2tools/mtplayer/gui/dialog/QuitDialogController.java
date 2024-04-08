@@ -29,7 +29,7 @@ import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
-import de.p2tools.p2lib.tools.PShutDown;
+import de.p2tools.p2lib.tools.P2ShutDown;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -131,7 +131,7 @@ public class QuitDialogController extends P2DialogExtra {
     }
 
     private void setSystemCallText() {
-        if (ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe().equals(PShutDown.getShutDownCommand())) {
+        if (ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe().equals(P2ShutDown.getShutDownCommand())) {
             //dann ist es der normale Systemaufruf zum Herunterfahren
             chkShutDown.setText("Nach Warten und Programmende, Rechner herunterfahren");
             lblSystemCall.setText("");

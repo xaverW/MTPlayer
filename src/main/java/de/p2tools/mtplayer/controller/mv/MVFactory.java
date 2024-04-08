@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
@@ -56,9 +56,9 @@ public class MVFactory {
 
             if ((abo = AboFactory.aboExistsAlready(aboData, false)) != null) {
                 // dann gibts das Abo schon, "themeExact" gibts hier nicht, ist immer false
-                PAlert.BUTTON btn;
+                P2Alert.BUTTON btn;
                 if (!remember.getValue()) {
-                    btn = PAlert.alert_yes_no_remember(stage, "Fehler", "Abo anlegen",
+                    btn = P2Alert.alert_yes_no_remember(stage, "Fehler", "Abo anlegen",
                             "Ein Abo mit den Einstellungen existiert bereits: " +
                                     "\n\n" +
                                     (abo.getChannel().isEmpty() ? "" : "Sender: " + abo.getChannel() + "\n") +
@@ -68,7 +68,7 @@ public class MVFactory {
                                     (abo.getSomewhere().isEmpty() ? "" : "Irgendwo: " + abo.getSomewhere()) +
                                     "\n\n" +
                                     "Trotzdem anlegen?", remember, "Immer");
-                    todo = btn.equals(PAlert.BUTTON.YES);
+                    todo = btn.equals(P2Alert.BUTTON.YES);
                 }
 
                 if (!todo) {

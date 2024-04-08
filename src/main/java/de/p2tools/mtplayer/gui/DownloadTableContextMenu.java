@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
-import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.P2SystemUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -95,11 +95,11 @@ public class DownloadTableContextMenu {
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
         miCopyName.setOnAction(a -> {
-            PSystemUtils.copyToClipboard(download.getTitle());
+            P2SystemUtils.copyToClipboard(download.getTitle());
         });
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
         miCopyTheme.setOnAction(a -> {
-            PSystemUtils.copyToClipboard(download.getTheme());
+            P2SystemUtils.copyToClipboard(download.getTheme());
         });
 
         miFilmInfo.setDisable(download == null);

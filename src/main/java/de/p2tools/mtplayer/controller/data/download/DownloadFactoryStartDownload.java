@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,7 +52,7 @@ public class DownloadFactoryStartDownload {
             return false;
         }
 
-        PDuration.counterStart("startDownloads");
+        P2Duration.counterStart("startDownloads");
         final ArrayList<DownloadData> listStartDownloads = new ArrayList<>();
 
         // das Starten von neuen Downloads etwas Pausieren
@@ -70,13 +70,13 @@ public class DownloadFactoryStartDownload {
         // alle Downloads starten/wiederstarten
         startDownloads(downloadList, listStartDownloads);
 
-        PDuration.counterStop("startDownloads");
+        P2Duration.counterStop("startDownloads");
         return true;
     }
 
     private static boolean startAlsoFinishedDownloads(Collection<DownloadData> list,
                                                       Collection<DownloadData> listStartDownloads) {
-        PAlert.BUTTON answer = PAlert.BUTTON.UNKNOWN;
+        P2Alert.BUTTON answer = P2Alert.BUTTON.UNKNOWN;
         final ArrayList<DownloadData> listDelDownloads = new ArrayList<>();
         final ArrayList<DownloadData> listDownloadsRemoveAboHistory = new ArrayList<>();
 
@@ -97,7 +97,7 @@ public class DownloadFactoryStartDownload {
 
             //fehlerhafte nur, wenn gewollt wieder starten
             if (download.isStateError()) {
-                if (answer.equals(PAlert.BUTTON.UNKNOWN)) {
+                if (answer.equals(P2Alert.BUTTON.UNKNOWN)) {
                     answer = DownloadFactoryStopDownload.restartDownload(list.size(), download.getTitle(), answer);
                 }
 
@@ -119,7 +119,7 @@ public class DownloadFactoryStartDownload {
                 }
             }
         }
-        if (answer.equals(PAlert.BUTTON.CANCEL)) {
+        if (answer.equals(P2Alert.BUTTON.CANCEL)) {
             // dann machmer nix
             return false;
         }

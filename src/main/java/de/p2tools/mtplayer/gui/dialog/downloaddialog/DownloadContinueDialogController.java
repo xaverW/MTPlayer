@@ -23,7 +23,7 @@ import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
-import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.StringProperty;
@@ -88,7 +88,7 @@ public class DownloadContinueDialogController extends P2DialogExtra {
     }
 
     public boolean isNewName() {
-        switch (ProgramToolsFactory.getOs()) {
+        switch (P2ToolsFactory.getOs()) {
             case LINUX:
                 return !oldPathFile.equals(download.getDestPathFile());
             case WIN32:

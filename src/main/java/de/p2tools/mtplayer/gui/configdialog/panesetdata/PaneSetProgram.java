@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -150,7 +150,7 @@ public class PaneSetProgram {
             final ObservableList<ProgramData> sels = tableView.getSelectionModel().getSelectedItems();
 
             if (sels == null || sels.isEmpty()) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             } else {
                 setDataObjectProperty.getValue().getProgramList().addDataToUndoList(sels);
                 setDataObjectProperty.getValue().getProgramList().removeAll(sels);
@@ -252,7 +252,7 @@ public class PaneSetProgram {
     private int getSelectedLine() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
-            PAlert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection();
         }
         return sel;
     }

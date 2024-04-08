@@ -18,13 +18,13 @@ package de.p2tools.mtplayer.controller.data.utdata;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class UtDataProps extends PDataSample<UtDataProps> {
+public class UtDataProps extends P2DataSample<UtDataProps> {
 
     public static final String TAG = "UtData";
 

@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 
 import java.util.Iterator;
 
@@ -33,7 +33,7 @@ public class AboFactory {
     public static synchronized void setAboForFilmlist() {
         // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
         // braucht länger
-        PDuration.counterStart("setAboForFilmlist");
+        P2Duration.counterStart("setAboForFilmlist");
         AboList aboList = ProgData.getInstance().aboList;
 
         // leere Abos löschen, die sind Fehler
@@ -66,7 +66,7 @@ public class AboFactory {
         ProgData.getInstance().filmList.parallelStream().
                 forEach(filmDataMTP -> AboFactory.assignAboToFilm(filmDataMTP));
 
-        PDuration.counterStop("setAboForFilmlist");
+        P2Duration.counterStop("setAboForFilmlist");
     }
 
     private static void assignAboToFilm(FilmDataMTP film) {

@@ -22,10 +22,10 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.dialogs.WhatsNewDialog;
 import de.p2tools.p2lib.dialogs.WhatsNewInfo;
-import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
@@ -40,9 +40,9 @@ public class WhatsNewFactory {
 
     public static void checkUpdate() {
         P2Log.sysLog("Programmstart, alte Programm-Release-Nr: " + ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe());
-        P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + ProgramToolsFactory.getBuild());
+        P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + P2ToolsFactory.getBuild());
 
-        if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(ProgramToolsFactory.getBuild())) {
+        if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(P2ToolsFactory.getBuild())) {
             // dann hat sich die BUILD_NO geändert, neue Version: Dann checken
             showWhatsNew(false);
         } else {
@@ -82,7 +82,7 @@ public class WhatsNewFactory {
 
     private static void checkProgUpdate() {
         // Prüfen obs ein Programmupdate gibt
-        PDuration.onlyPing("checkProgUpdate");
+        P2Duration.onlyPing("checkProgUpdate");
         if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
                 !updateCheckTodayDone()) {
             // nach Updates suchen

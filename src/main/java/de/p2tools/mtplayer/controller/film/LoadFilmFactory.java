@@ -35,7 +35,7 @@ import de.p2tools.p2lib.mtfilm.loadfilmlist.LoadFilmlist;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
@@ -130,7 +130,7 @@ public class LoadFilmFactory {
 
             @Override
             public synchronized void finished(P2LoadEvent event) {
-                PDuration.onlyPing("Filme geladen: Nachbearbeiten");
+                P2Duration.onlyPing("Filme geladen: Nachbearbeiten");
                 afterLoadingFilmList();
             }
         });
@@ -164,7 +164,7 @@ public class LoadFilmFactory {
             DownloadListFactory.addFilmInDownloads();
 
             P2Log.sysLog(logList);
-            PDuration.onlyPing("Filme nachbearbeiten: Ende");
+            P2Duration.onlyPing("Filme nachbearbeiten: Ende");
 
             ProgData.getInstance().maskerPane.setMaskerText("Abos suchen");
             ProgData.getInstance().worker.workOnFilmListLoadFinished();

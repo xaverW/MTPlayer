@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.mediadb;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 
 import javax.xml.stream.XMLInputFactory;
@@ -73,7 +73,7 @@ public class ReadMediaDb implements AutoCloseable {
             return list;
         }
 
-        PDuration.counterStart("readDb");
+        P2Duration.counterStart("readDb");
         XMLStreamReader parser = null;
 
         try (InputStream is = Files.newInputStream(xmlFilePath);
@@ -107,7 +107,7 @@ public class ReadMediaDb implements AutoCloseable {
             }
         }
 
-        PDuration.counterStop("readDb");
+        P2Duration.counterStop("readDb");
         return list;
     }
 

@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.mediadb;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
 
@@ -51,13 +51,13 @@ public class ExportMediaDB implements Runnable {
     }
 
     private void doWork() {
-        PDuration.counterStart("MediaData: Thread: ExportMediaDB");
+        P2Duration.counterStart("MediaData: Thread: ExportMediaDB");
         P2Log.sysLog("MedienDB in Textdatei schreiben: " + list.size() + ", Datei: " + path.toString());
 
         // und jetzt schreiben
         writeMediaDataToFile(list);
 
-        PDuration.counterStop("MediaData: Thread: ExportMediaDB");
+        P2Duration.counterStop("MediaData: Thread: ExportMediaDB");
     }
 
     private boolean writeMediaDataToFile(List<MediaData> list) {

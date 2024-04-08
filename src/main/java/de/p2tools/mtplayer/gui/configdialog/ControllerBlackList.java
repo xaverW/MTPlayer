@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.configdialog.paneblacklist.PaneBlackList;
 import de.p2tools.mtplayer.gui.configpanes.PaneBlack;
-import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
+import de.p2tools.p2lib.dialogs.accordion.P2AccordionPane;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ControllerBlackList extends PAccordionPane {
+public class ControllerBlackList extends P2AccordionPane {
 
     private final ProgData progData;
 

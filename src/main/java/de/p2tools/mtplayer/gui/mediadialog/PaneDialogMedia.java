@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
@@ -101,7 +101,7 @@ public class PaneDialogMedia extends PaneDialogScrollPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 MediaData mediaData = tableMedia.getSelectionModel().getSelectedItem();
                 if (mediaData == null) {
-                    PAlert.showInfoNoSelection();
+                    P2Alert.showInfoNoSelection();
 
                 } else {
                     ContextMenu contextMenu = new PaneMediaContextMenu(stage, mediaData).getContextMenu();

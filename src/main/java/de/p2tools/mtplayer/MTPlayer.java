@@ -20,11 +20,11 @@ import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.p2lib.P2LibInit;
-import de.p2tools.p2lib.ProgIconsP2Lib;
+import de.p2tools.p2lib.P2ProgIcons;
 import de.p2tools.p2lib.guitools.P2GuiSize;
 import de.p2tools.p2lib.tools.IoReadWriteStyle;
-import de.p2tools.p2lib.tools.PLock;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.P2Lock;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -47,7 +47,7 @@ public class MTPlayer extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-        PDuration.counterStart("start");
+        P2Duration.counterStart("start");
         progData = ProgData.getInstance();
         progData.primaryStage = primaryStage;
 
@@ -56,7 +56,7 @@ public class MTPlayer extends Application {
 
         final String xmlFilePath = new ProgInfos().getLockFileStr();
         //wenn gewünscht, Lock-File prüfen
-        if (ProgConfig.SYSTEM_ONLY_ONE_INSTANCE.getValue() && !PLock.getLockInstance(xmlFilePath)) {
+        if (ProgConfig.SYSTEM_ONLY_ONE_INSTANCE.getValue() && !P2Lock.getLockInstance(xmlFilePath)) {
             //dann kann man sich den Rest sparen
             return;
         }
@@ -64,13 +64,13 @@ public class MTPlayer extends Application {
         initRootLayout();
         ProgStartAfterGui.doWorkAfterGui();
 
-        PDuration.onlyPing("Gui steht!");
-        PDuration.counterStop("start");
+        P2Duration.onlyPing("Gui steht!");
+        P2Duration.counterStop("start");
     }
 
     private void initLib() {
         ProgIcons.initIcons();
-        ProgIconsP2Lib.initIcons();
+        P2ProgIcons.initIcons();
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAM_NAME,
                 "", ProgConfig.SYSTEM_DARK_THEME,
                 ProgData.debug, ProgData.duration);

@@ -24,7 +24,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.tools.PShutDown;
+import de.p2tools.p2lib.tools.P2ShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -57,17 +57,17 @@ public class ChangeShutDownCallDialog extends P2DialogExtra {
         final TextField txtCall = new TextField();
         txtCall.textProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL);
         if (txtCall.getText().isEmpty()) {
-            txtCall.setText(PShutDown.getShutDownCommand());
+            txtCall.setText(P2ShutDown.getShutDownCommand());
         }
 
-        Label lblStandard = new Label(PShutDown.getShutDownCommand());
+        Label lblStandard = new Label(P2ShutDown.getShutDownCommand());
         Button btnStandard = new Button("Standard setzen");
-        btnStandard.setOnAction(a -> txtCall.setText(PShutDown.getShutDownCommand()));
+        btnStandard.setOnAction(a -> txtCall.setText(P2ShutDown.getShutDownCommand()));
 
         Button btnTest = new Button("Testen");
         btnTest.setOnAction(a -> {
             ProgSave.saveAll(); // damit nichts verloren geht
-            PShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
+            P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
         });
 
         Button btnHelp = P2Button.helpButton(getStageProp(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);

@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
+import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
@@ -161,7 +161,7 @@ public class FilmMenu {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
             filmSelection.ifPresent(FilmPlayFactory::playFilm);
         });
-        PShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
+        P2ShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
 
         final MenuItem mbPlayAll = new MenuItem("Alle markierten Film abspielen");
         mbPlayAll.setOnAction(a -> {
@@ -170,7 +170,7 @@ public class FilmMenu {
             }
             FilmPlayFactory.playFilmList(ProgData.getInstance().filmGuiController.getSelList(true));
         });
-        PShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
+        P2ShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
 
         final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> {
@@ -179,7 +179,7 @@ public class FilmMenu {
             }
             FilmSaveFactory.saveFilmList();
         });
-        PShortcutWorker.addShortCut(mbSave, PShortcut.SHORTCUT_SAVE_FILM);
+        P2ShortcutWorker.addShortCut(mbSave, PShortcut.SHORTCUT_SAVE_FILM);
 
         mb.getItems().addAll(mbPlay, mbPlayAll, mbSave);
 
@@ -190,7 +190,7 @@ public class FilmMenu {
             }
             progData.filmGuiController.setFilmShown(true);
         });
-        PShortcutWorker.addShortCut(miFilmShown, PShortcut.SHORTCUT_FILM_SHOWN);
+        P2ShortcutWorker.addShortCut(miFilmShown, PShortcut.SHORTCUT_FILM_SHOWN);
 
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> {
@@ -199,7 +199,7 @@ public class FilmMenu {
             }
             progData.filmGuiController.setFilmShown(false);
         });
-        PShortcutWorker.addShortCut(miFilmNotShown, PShortcut.SHORTCUT_FILM_NOT_SHOWN);
+        P2ShortcutWorker.addShortCut(miFilmNotShown, PShortcut.SHORTCUT_FILM_NOT_SHOWN);
 
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_INFO_FILM.getActShortcut());

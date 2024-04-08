@@ -21,14 +21,14 @@ import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_intProp;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PData;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2Data;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
-public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparable<FilmFilter> {
+public class FilmFilterProps extends P2DataSample<FilmFilter> implements Comparable<FilmFilter> {
 
     public static String TAG = "SelectedFilter";
 
@@ -99,7 +99,7 @@ public class FilmFilterProps extends PDataSample<FilmFilter> implements Comparab
         list.add(new Config_stringProp("channel", channel));
 
         list.add(new Config_boolProp("themeVis", themeVis));
-        list.add(new Config_boolProp("themeIsExact" + PData.TAGGER + "themeExact", themeIsExact));
+        list.add(new Config_boolProp("themeIsExact" + P2Data.TAGGER + "themeExact", themeIsExact));
         list.add(new Config_stringProp("theme", theme));
         list.add(new Config_stringProp("exactTheme", exactTheme));
 

@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class DownloadFactoryStopDownload {
 
     public static synchronized boolean delDownloads(DownloadList downloadList, ArrayList<DownloadData> list) {
         // aus dem Menü oder Tabelle-Download-Button
-        PDuration.counterStart("delDownloads");
+        P2Duration.counterStart("delDownloads");
         if (list == null || list.isEmpty()) {
             return false;
         }
@@ -65,7 +65,7 @@ public class DownloadFactoryStopDownload {
         }
         downloadList.removeAll(list);
 
-        PDuration.counterStop("delDownloads");
+        P2Duration.counterStop("delDownloads");
         return true;
     }
 
@@ -110,8 +110,8 @@ public class DownloadFactoryStopDownload {
         return found;
     }
 
-    public static PAlert.BUTTON restartDownload(int size, String title, PAlert.BUTTON answer) {
-        if (answer.equals(PAlert.BUTTON.UNKNOWN)) {
+    public static P2Alert.BUTTON restartDownload(int size, String title, P2Alert.BUTTON answer) {
+        if (answer.equals(P2Alert.BUTTON.UNKNOWN)) {
             // nur einmal fragen
             String text;
             if (size > 1) {
@@ -119,7 +119,7 @@ public class DownloadFactoryStopDownload {
             } else {
                 text = "Film nochmal starten?  ==> " + title;
             }
-            answer = PAlert.showAlert_yes_no_cancel("Download", "Fehlerhafte Downloads", text);
+            answer = P2Alert.showAlert_yes_no_cancel("Download", "Fehlerhafte Downloads", text);
         }
         return answer;
     }

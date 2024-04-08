@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.history;
 
 import de.p2tools.mtplayer.controller.config.PListener;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
 
@@ -59,7 +59,7 @@ public class HistoryWriteToFile implements Runnable {
             return;
         }
 
-        PDuration.counterStart("doWork");
+        P2Duration.counterStart("doWork");
         if (append) {
             P2Log.sysLog("An Historyliste anfügen: " + list.size() + ", Datei: " + fileName);
         } else {
@@ -71,7 +71,7 @@ public class HistoryWriteToFile implements Runnable {
         list.clear(); // wird nicht mehr gebraucht
 
         PListener.notify(PListener.EVENT_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
-        PDuration.counterStop("doWork");
+        P2Duration.counterStop("doWork");
     }
 
     private boolean writeHistoryDataToFile(List<HistoryData> list, boolean append) {

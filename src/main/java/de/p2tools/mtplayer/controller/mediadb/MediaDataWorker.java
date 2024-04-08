@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.controller.mediadb;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -86,12 +86,12 @@ public class MediaDataWorker {
 
 
         if (path.toFile().exists()) {
-            PAlert.BUTTON button = PAlert.showAlert_yes_no("Hinweis", "Mediensammlung in Datei exportieren",
+            P2Alert.BUTTON button = P2Alert.showAlert_yes_no("Hinweis", "Mediensammlung in Datei exportieren",
                     "Die Zieldatei existiert bereits:" + P2LibConst.LINE_SEPARATOR +
                             path.toString() +
                             P2LibConst.LINE_SEPARATORx2 +
                             "Soll die Datei überschrieben werden?");
-            if (button.equals(PAlert.BUTTON.YES)) {
+            if (button.equals(P2Alert.BUTTON.YES)) {
                 path.toFile().delete();
             } else {
                 // dann nix tun

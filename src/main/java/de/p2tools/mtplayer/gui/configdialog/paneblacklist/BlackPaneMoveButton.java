@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Button;
 import javafx.beans.property.BooleanProperty;
@@ -52,7 +52,7 @@ public class BlackPaneMoveButton {
         btnCopy.setOnAction(a -> {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
 
             } else {
                 for (BlackData bl : selected) {
@@ -75,7 +75,7 @@ public class BlackPaneMoveButton {
         btnMove.setOnAction(a -> {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             } else {
                 blackDataChanged.set(true);
                 if (controlBlackListNotFilmFilter) {

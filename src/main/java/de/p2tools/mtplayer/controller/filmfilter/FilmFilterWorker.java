@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 
 import java.util.Optional;
 
@@ -129,7 +129,7 @@ public final class FilmFilterWorker {
             return false;
         }
 
-        if (PAlert.showAlertOkCancel("Löschen", "Filterprofil löschen",
+        if (P2Alert.showAlertOkCancel("Löschen", "Filterprofil löschen",
                 "Soll das Filterprofil: " +
                         sf.getName() + "\n" +
                         "gelöscht werden?")) {
@@ -141,7 +141,7 @@ public final class FilmFilterWorker {
 
     public void removeAllStoredFilter() {
         // delete all stored Filter
-        if (PAlert.showAlertOkCancel("Löschen", "Filterprofile löschen",
+        if (P2Alert.showAlertOkCancel("Löschen", "Filterprofile löschen",
                 "Sollen alle Filterprofile gelöscht werden?")) {
             filmFilterList.clear();
         }

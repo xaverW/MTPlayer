@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.collections.ObservableList;
 
@@ -56,7 +56,7 @@ public class LoadMV implements AutoCloseable {
             return false;
         }
 
-        PDuration.counterStart("readConfiguration");
+        P2Duration.counterStart("readConfiguration");
         boolean ret;
         try (InputStream is = Files.newInputStream(configPath);
              InputStreamReader in = new InputStreamReader(is, StandardCharsets.UTF_8)) {
@@ -66,7 +66,7 @@ public class LoadMV implements AutoCloseable {
             ret = false;
             P2Log.errorLog(951254698, ex);
         }
-        PDuration.counterStop("readConfiguration");
+        P2Duration.counterStop("readConfiguration");
         return ret;
     }
 

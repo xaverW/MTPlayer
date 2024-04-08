@@ -21,14 +21,14 @@ import de.p2tools.mtplayer.gui.configpanes.PaneMediaConfig;
 import de.p2tools.mtplayer.gui.configpanes.PaneMediaDataPath;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediadialog.PaneDialogMedia;
-import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
+import de.p2tools.p2lib.dialogs.accordion.P2AccordionPane;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ControllerMedia extends PAccordionPane {
+public class ControllerMedia extends P2AccordionPane {
 
     private PaneMediaConfig paneMediaConfig;
     private PaneMediaDataPath panePathIntern;

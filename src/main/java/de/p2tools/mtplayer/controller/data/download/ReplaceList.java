@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -27,7 +27,7 @@ import java.io.File;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
-public final class ReplaceList extends SimpleListProperty<ReplaceData> implements PDataList<ReplaceData> {
+public final class ReplaceList extends SimpleListProperty<ReplaceData> implements P2DataList<ReplaceData> {
 
     public static final String TAG = "ReplaceList";
     private final ObservableList<ReplaceData> undoList = FXCollections.observableArrayList();

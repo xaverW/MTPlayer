@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.configfile.config.*;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.date.P2DateConst;
@@ -29,7 +29,7 @@ import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
-public class AboDataProps extends PDataSample<AboData> implements Comparable<AboData> {
+public class AboDataProps extends P2DataSample<AboData> implements Comparable<AboData> {
 
     private final IntegerProperty no = new SimpleIntegerProperty(0);
     private final BooleanProperty active = new SimpleBooleanProperty(true);

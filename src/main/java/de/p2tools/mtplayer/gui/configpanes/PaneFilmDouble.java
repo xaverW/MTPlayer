@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -206,7 +206,7 @@ public class PaneFilmDouble {
     private int getSelectedLine() {
         final int sel = lvSender.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
-            PAlert.showInfoNoSelection(stage);
+            P2Alert.showInfoNoSelection(stage);
         }
         return sel;
     }

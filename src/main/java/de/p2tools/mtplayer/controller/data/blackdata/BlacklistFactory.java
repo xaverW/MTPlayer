@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.gui.dialog.AddBlackListDialogController;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +99,7 @@ public class BlacklistFactory {
         //Aufruf mit Button zum Zählen
         //hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
         //für *jeden* Blacklist-Eintrag ermittelt, wird nicht nach einem Treffer abgebrochen
-        PDuration.counterStart("countHitsList");
+        P2Duration.counterStart("countHitsList");
         for (BlackData bl : list) {
             bl.clearCounter();
         }
@@ -108,7 +108,7 @@ public class BlacklistFactory {
             filmDataMTPS.parallelStream().forEach(film ->
                     BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list));
         }
-        PDuration.counterStop("countHitsList");
+        P2Duration.counterStop("countHitsList");
     }
 
     public static boolean blackIsEmpty(BlackData blackData) {

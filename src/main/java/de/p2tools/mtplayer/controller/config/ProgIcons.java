@@ -135,11 +135,11 @@ public class ProgIcons {
         public boolean searchUrl(String p, Class<?>... clazzAr) {
             URL url;
             url = MTPlayerController.class.getResource(p);
-            if (set(url, p, "P2InfoController.class.getResource")) return true;
+            if (set(url, p, "MTPlayerController.class.getResource")) return true;
             url = ProgConst.class.getResource(p);
             if (set(url, p, "ProgConst.class.getResource")) return true;
             url = ProgIcons.class.getResource(p);
-            if (set(url, p, "ProgIconsInfo.class.getResource")) return true;
+            if (set(url, p, "ProgIcons.class.getResource")) return true;
             url = this.getClass().getResource(p);
             if (set(url, p, "this.getClass().getResource")) return true;
 

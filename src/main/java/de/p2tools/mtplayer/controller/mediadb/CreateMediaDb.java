@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
@@ -156,7 +156,7 @@ public class CreateMediaDb {
     }
 
     private void start() {
-        PDuration.counterStart("createDB");
+        P2Duration.counterStart("createDB");
         mediaDataList.setStopSearching(false);
         mediaDataList.setSearching(true);
         PListener.notify(PListener.EVENT_MEDIA_DB_START, CreateMediaDb.class.getSimpleName());
@@ -166,11 +166,11 @@ public class CreateMediaDb {
         mediaDataList.setSearching(false);
         P2Log.sysLog(logs);
         PListener.notify(PListener.EVENT_MEDIA_DB_STOP, CreateMediaDb.class.getSimpleName());
-        PDuration.counterStop("createDB");
+        P2Duration.counterStop("createDB");
     }
 
     private void errorMsg() {
-        Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Erstellen der Mediensammlung",
+        Platform.runLater(() -> P2Alert.showErrorAlert("Fehler beim Erstellen der Mediensammlung",
                 (more ? "Die Pfade der Mediensammlung können nicht alle gelesen werden:" + P2LibConst.LINE_SEPARATOR
                         : "Der Pfad der Mediensammlung kann nicht gelesen werden:" + P2LibConst.LINE_SEPARATOR) + error));
     }

@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -78,7 +78,7 @@ public class FilmFilterControllerClearFilter extends VBox {
 
 
     private void clearFilter() {
-        PDuration.onlyPing("Filter löschen");
+        P2Duration.onlyPing("Filter löschen");
         progData.filmFilterWorker.clearFilter();
     }
 }

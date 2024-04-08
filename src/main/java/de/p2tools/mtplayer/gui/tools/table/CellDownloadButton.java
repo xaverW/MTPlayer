@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryStopDownload;
 import de.p2tools.p2lib.guitools.P2Open;
-import de.p2tools.p2lib.tools.PGetList;
+import de.p2tools.p2lib.tools.P2GetList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -116,7 +116,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         getTableView().getSelectionModel().select(getIndex());
 
                         DownloadData download = getTableView().getItems().get(getIndex());
-                        DownloadFactoryStopDownload.stopDownloads(new PGetList<DownloadData>().getArrayList(download));
+                        DownloadFactoryStopDownload.stopDownloads(new P2GetList<DownloadData>().getArrayList(download));
 
                         getTableView().refresh();
                         getTableView().requestFocus();

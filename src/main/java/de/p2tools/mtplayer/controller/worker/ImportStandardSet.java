@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.setdata.SetReplacePatternFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
-import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class ImportStandardSet extends LinkedList<String[]> {
         SetDataList setDataList = new SetDataList();
         try {
             //liefert das standard Programmset für das entsprechende BS
-            switch (ProgramToolsFactory.getOs()) {
+            switch (P2ToolsFactory.getOs()) {
                 case LINUX:
                     loadSetDataUrl(setDataList, ProgConst.PROGRAM_SET_URL_LINUX);
                     break;
@@ -52,7 +52,7 @@ public class ImportStandardSet extends LinkedList<String[]> {
             if (setDataList.size() == 0) {
                 P2Log.sysLog("Sets laden hat nicht geklappt, dann aus dem jar");
                 //dann nehmen wir halt die im jar-File
-                switch (ProgramToolsFactory.getOs()) {
+                switch (P2ToolsFactory.getOs()) {
                     case LINUX:
                         loadSetDataLocalFile(setDataList, ProgConst.PSET_FILE_LINUX);
                         break;

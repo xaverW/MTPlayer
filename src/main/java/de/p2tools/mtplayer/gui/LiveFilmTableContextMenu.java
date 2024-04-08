@@ -29,7 +29,7 @@ import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.starter.StartDownloadFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableLiveFilm;
-import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.P2SystemUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -91,11 +91,11 @@ public class LiveFilmTableContextMenu {
 
         final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
         miCopyTheme.setDisable(film == null);
-        miCopyTheme.setOnAction(a -> PSystemUtils.copyToClipboard(film.getTheme()));
+        miCopyTheme.setOnAction(a -> P2SystemUtils.copyToClipboard(film.getTheme()));
 
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
         miCopyName.setDisable(film == null);
-        miCopyName.setOnAction(a -> PSystemUtils.copyToClipboard(film.getTitle()));
+        miCopyName.setOnAction(a -> P2SystemUtils.copyToClipboard(film.getTitle()));
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miLoadUt, miFilmInfo, miMediaDb, miCopyTheme, miCopyName);
@@ -267,33 +267,33 @@ public class LiveFilmTableContextMenu {
             // HD
             if (!uHd.isEmpty()) {
                 item = new MenuItem("in HD-Auflösung");
-                item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD)));
+                item.setOnAction(a -> P2SystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD)));
                 subMenuURL.getItems().add(item);
             }
 
             // normale Auflösung, gibts immer
             item = new MenuItem("in hoher Auflösung");
-            item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
+            item.setOnAction(a -> P2SystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
             subMenuURL.getItems().add(item);
 
             // kleine Auflösung
             if (!uLow.isEmpty()) {
                 item = new MenuItem("in geringer Auflösung");
-                item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL)));
+                item.setOnAction(a -> P2SystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL)));
                 subMenuURL.getItems().add(item);
             }
 
             // Untertitel
             if (!film.getUrlSubtitle().isEmpty()) {
                 item = new MenuItem("Untertitel-URL kopieren");
-                item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlSubtitle()));
+                item.setOnAction(a -> P2SystemUtils.copyToClipboard(film.getUrlSubtitle()));
                 subMenuURL.getItems().addAll(new SeparatorMenuItem(), item);
             }
 
         } else {
             item = new MenuItem("Film-URL kopieren");
             item.setDisable(film == null);
-            item.setOnAction(a -> PSystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
+            item.setOnAction(a -> P2SystemUtils.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
             subMenuURL.getItems().add(item);
         }
 

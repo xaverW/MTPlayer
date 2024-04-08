@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
 import de.p2tools.mtplayer.gui.startdialog.DownPathPane;
 import de.p2tools.mtplayer.gui.startdialog.PathPane;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import javafx.scene.control.Button;
@@ -108,9 +108,9 @@ public class ImportSetDialogController extends P2DialogExtra {
 
         progData.setDataList.clear();
         if (ImportStandardSet.getStandardSet()) {
-            PAlert.showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
+            P2Alert.showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
         } else {
-            PAlert.showErrorAlert("Set importieren", "Sets konnten nicht importiert werden!");
+            P2Alert.showErrorAlert("Set importieren", "Sets konnten nicht importiert werden!");
         }
 
         controllerSet.toFront();

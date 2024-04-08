@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 
-public class SetDataXml extends PDataSample<SetData> {
+public class SetDataXml extends P2DataSample<SetData> {
 
     //Tags Programmgruppen
     public static final int PROGRAMSET_ID = 0;

@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.controller.data.setdata;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.RuntimeExecDownload;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
-import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class SetFactory {
         final String PATH_WIN = "\\VideoLAN\\VLC\\vlc.exe";
         String path = "";
         try {
-            switch (ProgramToolsFactory.getOs()) {
+            switch (P2ToolsFactory.getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
                         path = PATH_FREEBSD;
@@ -96,7 +96,7 @@ public class SetFactory {
         final String PATH_WINDOWS_FFMPEG = "bin\\ffmpeg.exe";
         String path = "";
         try {
-            switch (ProgramToolsFactory.getOs()) {
+            switch (P2ToolsFactory.getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
                         path = PATH_FREEBSD_FFMPEG;
@@ -231,7 +231,7 @@ public class SetFactory {
                 text += "++++++++++++++++++++++++++" + "" + P2LibConst.LINE_SEPARATORx3;
             }
         }
-        PAlert.showInfoAlert("Set", "Sets prüfen", text);
+        P2Alert.showInfoAlert("Set", "Sets prüfen", text);
         return ret;
     }
 }

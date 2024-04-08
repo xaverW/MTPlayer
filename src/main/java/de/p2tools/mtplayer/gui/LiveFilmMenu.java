@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
+import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -109,7 +109,7 @@ public class LiveFilmMenu {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
             filmSelection.ifPresent(FilmPlayFactory::playFilm);
         });
-        PShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
+        P2ShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
 
         final MenuItem mbPlayAll = new MenuItem("Alle markierten Film abspielen");
         mbPlayAll.setOnAction(a -> {
@@ -118,7 +118,7 @@ public class LiveFilmMenu {
             }
             FilmPlayFactory.playFilmList(ProgData.getInstance().liveFilmGuiController.getSelList(true));
         });
-        PShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
+        P2ShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
 
         final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> {
@@ -127,7 +127,7 @@ public class LiveFilmMenu {
             }
             FilmSaveFactory.saveFilmList();
         });
-        PShortcutWorker.addShortCut(mbSave, PShortcut.SHORTCUT_SAVE_FILM);
+        P2ShortcutWorker.addShortCut(mbSave, PShortcut.SHORTCUT_SAVE_FILM);
 
         mb.getItems().addAll(mbPlay, mbPlayAll, mbSave);
 

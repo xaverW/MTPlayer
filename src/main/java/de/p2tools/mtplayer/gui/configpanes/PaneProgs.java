@@ -26,7 +26,7 @@ import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.tools.PShutDown;
+import de.p2tools.p2lib.tools.P2ShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -144,11 +144,11 @@ public class PaneProgs {
         Button btnTest = new Button("Testen");
         btnTest.setOnAction(a -> {
             ProgSave.saveAll(); // damit nichts verloren geht
-            PShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
+            P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
         });
 
         Button btnStandard = new Button("Standard setzen");
-        btnStandard.setOnAction(a -> txtSystemCall.setText(PShutDown.getShutDownCommand()));
+        btnStandard.setOnAction(a -> txtSystemCall.setText(P2ShutDown.getShutDownCommand()));
 
         VBox vBox = new VBox(2);
         HBox hBox = new HBox(5);

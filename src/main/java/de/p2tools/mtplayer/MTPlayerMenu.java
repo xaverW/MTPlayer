@@ -30,7 +30,7 @@ import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.tools.log.P2Logger;
-import de.p2tools.p2lib.tools.shortcut.PShortcutWorker;
+import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Region;
@@ -55,7 +55,7 @@ public class MTPlayerMenu extends MenuButton {
 
         final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung");
         miSearchMediaCollection.setOnAction(a -> new MediaDialogController("", ""));
-        PShortcutWorker.addShortCut(miSearchMediaCollection, PShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
+        P2ShortcutWorker.addShortCut(miSearchMediaCollection, PShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
         final CheckMenuItem miDarkMode = new CheckMenuItem("Dark Mode");
         miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
@@ -65,7 +65,7 @@ public class MTPlayerMenu extends MenuButton {
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
-        PShortcutWorker.addShortCut(miQuit, PShortcut.SHORTCUT_QUIT_PROGRAM);
+        P2ShortcutWorker.addShortCut(miQuit, PShortcut.SHORTCUT_QUIT_PROGRAM);
 
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);

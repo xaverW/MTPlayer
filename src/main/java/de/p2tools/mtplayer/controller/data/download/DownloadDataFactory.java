@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.mtdownload.DownloadFactory;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
-import de.p2tools.p2lib.tools.PSystemUtils;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.P2SystemUtils;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -54,7 +54,7 @@ public class DownloadDataFactory {
             return;
         }
 
-        PDuration.counterStart("searchForAbosAndMaybeStart");
+        P2Duration.counterStart("searchForAbosAndMaybeStart");
         P2Log.sysLog("Downloads aus Abos suchen");
         //erledigte entfernen, nicht gestartete Abos entfernen und nach neuen Abos suchen
         ProgData.getInstance().downloadList.searchForDownloadsFromAbos();
@@ -64,7 +64,7 @@ public class DownloadDataFactory {
             P2Log.sysLog("Downloads aus Abos starten");
             ProgData.getInstance().downloadList.startAllDownloads();
         }
-        PDuration.counterStop("searchForAbosAndMaybeStart");
+        P2Duration.counterStop("searchForAbosAndMaybeStart");
     }
 
     public static void preferDownloads(DownloadList downloadList, List<DownloadData> prefDownList) {
@@ -171,7 +171,7 @@ public class DownloadDataFactory {
 
     public static String getDownloadPath() {
         return ProgConfig.START_DIALOG_DOWNLOAD_PATH.get().isEmpty() ?
-                PSystemUtils.getStandardDownloadPath() : ProgConfig.START_DIALOG_DOWNLOAD_PATH.get();
+                P2SystemUtils.getStandardDownloadPath() : ProgConfig.START_DIALOG_DOWNLOAD_PATH.get();
     }
 
     /**

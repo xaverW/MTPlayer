@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.log.P2Log;
 
@@ -33,7 +33,7 @@ public class MTInfoFile {
         if (download.getDestPath().isEmpty()) {
             // das darf nicht sein!
             // todo
-            PAlert.showErrorAlert("Info File anlegen", "Kann die Info-Datei nicht anlegen.");
+            P2Alert.showErrorAlert("Info File anlegen", "Kann die Info-Datei nicht anlegen.");
             return;
         }
 

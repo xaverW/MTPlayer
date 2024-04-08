@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.util.List;
@@ -71,7 +71,7 @@ public class BlacklistFilterFactory {
         //und das dauert: Filmliste geladen, addBlack, ConfigDialog, Filter blkBtn
 
         boolean maskerSet = false;
-        PDuration.counterStart("markFilmBlack");
+        P2Duration.counterStart("markFilmBlack");
         P2Log.sysLog("markFilmBlack -> start");
 
         if (!ProgData.getInstance().maskerPane.isVisible()) {
@@ -90,7 +90,7 @@ public class BlacklistFilterFactory {
         getBlackFilteredFilmlist();
 
         P2Log.sysLog("markFilmBlack -> stop");
-        PDuration.counterStop("markFilmBlack");
+        P2Duration.counterStop("markFilmBlack");
 
         if (maskerSet) {
             //nur dann wieder ausschalten
@@ -110,7 +110,7 @@ public class BlacklistFilterFactory {
         final FilmListMTP filmList = progData.filmList;
         final FilmListMTP filmListFiltered = progData.filmListFiltered;
 
-        PDuration.counterStart("getBlackFilteredFilmlist");
+        P2Duration.counterStart("getBlackFilteredFilmlist");
         loadCurrentBlacklistSettings();
         filmListFiltered.clear();
 
@@ -139,7 +139,7 @@ public class BlacklistFilterFactory {
             // Array mit Sendernamen/Themen füllen
             filmListFiltered.loadTheme();
         }
-        PDuration.counterStop("getBlackFilteredFilmlist");
+        P2Duration.counterStop("getBlackFilteredFilmlist");
     }
 
     private static void loadCurrentBlacklistSettings() {

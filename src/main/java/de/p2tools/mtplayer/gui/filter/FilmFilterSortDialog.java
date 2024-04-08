@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 import javafx.geometry.Pos;
@@ -105,7 +105,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             } else {
                 int res = progData.filmFilterWorker.getStoredFilterList().top(sel, true);
                 tableView.getSelectionModel().select(res);
@@ -118,7 +118,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             } else {
                 int res = progData.filmFilterWorker.getStoredFilterList().top(sel, false);
                 tableView.getSelectionModel().select(res);
@@ -131,7 +131,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             } else {
                 int res = progData.filmFilterWorker.getStoredFilterList().up(sel, true);
                 tableView.getSelectionModel().select(res);
@@ -144,7 +144,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             } else {
                 int res = progData.filmFilterWorker.getStoredFilterList().up(sel, false);
                 tableView.getSelectionModel().select(res);
@@ -183,7 +183,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
     private void delFilter() {
         FilmFilter sf = tableView.getSelectionModel().getSelectedItem();
         if (sf == null) {
-            PAlert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection();
             return;
         }
 

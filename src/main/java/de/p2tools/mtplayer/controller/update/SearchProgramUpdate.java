@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.checkforactinfos.FoundAll;
 import de.p2tools.p2lib.checkforactinfos.FoundSearchData;
-import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -66,7 +66,7 @@ public class SearchProgramUpdate {
 //            SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
 //        }
 
-        final P2Date pd = new P2Date(ProgramToolsFactory.getCompileDate());
+        final P2Date pd = new P2Date(P2ToolsFactory.getCompileDate());
         final String buildDate = pd.get_yyyy_MM_dd();
 
         final FoundSearchData foundSearchData;
@@ -112,8 +112,8 @@ public class SearchProgramUpdate {
                     ProgConst.URL_WEBSITE,
                     ProgConst.URL_WEBSITE_DOWNLOAD,
                     ProgConst.PROGRAM_NAME,
-                    ProgramToolsFactory.getProgVersion(),
-                    ProgramToolsFactory.getBuild(),
+                    P2ToolsFactory.getProgVersion(),
+                    P2ToolsFactory.getBuild(),
                     buildDate,
                     ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
                     showAlways);

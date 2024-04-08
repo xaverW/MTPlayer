@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigWriteFile;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -77,7 +77,7 @@ public class ProgSave {
         } catch (final Exception ex) {
             P2Log.errorLog(912012014, ex, "Die Einstellungen konnten nicht zurückgesetzt werden.");
             try {
-                PAlert.showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
+                P2Alert.showErrorAlert("Fehler", "Einstellungen zurückgesetzen",
                         "Die Einstellungen konnten nicht zurückgesetzt werden." + P2LibConst.LINE_SEPARATORx2
                                 + "Sie müssen jetzt das Programm beenden, dann den Ordner:" + P2LibConst.LINE_SEPARATORx2
                                 + ProgInfos.getSettingsDirectory_String()

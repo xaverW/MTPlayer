@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import javafx.application.Platform;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -120,7 +120,7 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
                 ArrayList<HistoryData> historyDataArrayList = new ArrayList<>();
                 HistoryData historyData = tableAboOrHistory.getSelectionModel().getSelectedItem();
                 if (historyData == null) {
-                    PAlert.showInfoNoSelection();
+                    P2Alert.showInfoNoSelection();
 
                 } else {
                     historyDataArrayList.add(historyData);
@@ -176,7 +176,7 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
             ArrayList<HistoryData> historyDataArrayList =
                     new ArrayList<>(tableAboOrHistory.getSelectionModel().getSelectedItems());
             if (historyDataArrayList.isEmpty()) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
 
             } else {
                 if (mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_HISTORY) {

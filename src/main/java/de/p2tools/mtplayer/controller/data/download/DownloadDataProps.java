@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.mtdownload.DownloadSize;
 import de.p2tools.p2lib.tools.date.*;
 import javafx.application.Platform;
@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class DownloadDataProps extends PDataSample<DownloadData> {
+public class DownloadDataProps extends P2DataSample<DownloadData> {
 
     private final ObservableList<String> urlList = FXCollections.observableArrayList(); // wenn mehrere Filme gestartet werden sollen
     private final IntegerProperty no = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);

@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadStopDialogControlle
 import de.p2tools.mtplayer.gui.tools.MTInfoFile;
 import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -47,7 +47,7 @@ public class DownloadFactoryDelDownloadFiles {
         }
 
         if (download.isStateStartedRun()) {
-            PAlert.showErrorAlert("Film löschen", "Download läuft noch", "Download erst stoppen!");
+            P2Alert.showErrorAlert("Film löschen", "Download läuft noch", "Download erst stoppen!");
             return;
         }
 
@@ -200,7 +200,7 @@ public class DownloadFactoryDelDownloadFiles {
                     }
             }
         } catch (Exception ex) {
-            PAlert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen");
+            P2Alert.showErrorAlert("Film löschen", "Konnte die Datei nicht löschen!", "Fehler beim löschen");
             P2Log.errorLog(503231450, "Fehler beim löschen");
             delDownload = false;
         }
@@ -274,7 +274,7 @@ public class DownloadFactoryDelDownloadFiles {
             final String df = delFile;
             if (showErrorDialog) {
                 Platform.runLater(() -> {
-                    PAlert.showErrorAlert("Datei löschen",
+                    P2Alert.showErrorAlert("Datei löschen",
                             "Konnte die Datei nicht löschen!",
                             "Fehler beim Löschen von:" + P2LibConst.LINE_SEPARATORx2 + df);
                     P2Log.errorLog(989754125, "Fehler beim löschen: " + df);

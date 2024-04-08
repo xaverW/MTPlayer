@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
@@ -70,7 +70,7 @@ public class WriteMediaDb implements AutoCloseable {
             final File dir = new File(file.getParent());
             if (!dir.exists() && !dir.mkdirs()) {
                 P2Log.errorLog(932102478, "Kann den Pfad nicht anlegen: " + dir.toString());
-                Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
+                Platform.runLater(() -> P2Alert.showErrorAlert("Fehler beim Schreiben",
                         "Der Pfad zum Schreiben der Mediensammlung kann nicht angelegt werden: " + P2LibConst.LINE_SEPARATOR +
                                 path.toString()));
                 return;
@@ -84,7 +84,7 @@ public class WriteMediaDb implements AutoCloseable {
         } catch (final Exception ex) {
             logList.add("   --> Fehler, nicht geschrieben!");
             P2Log.errorLog(931201478, ex, "nach: " + path.toString());
-            Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
+            Platform.runLater(() -> P2Alert.showErrorAlert("Fehler beim Schreiben",
                     "Die Mediensammlung konnte nicht geschrieben werden:" + P2LibConst.LINE_SEPARATOR +
                             path.toString()));
         }
@@ -102,7 +102,7 @@ public class WriteMediaDb implements AutoCloseable {
         } catch (final Exception ex) {
             logList.add("Fehler, nicht geschrieben!");
             P2Log.errorLog(656328109, ex);
-            Platform.runLater(() -> PAlert.showErrorAlert("Fehler beim Schreiben",
+            Platform.runLater(() -> P2Alert.showErrorAlert("Fehler beim Schreiben",
                     "Die Mediensammlung konnte nicht geschrieben werden:" + P2LibConst.LINE_SEPARATOR +
                             file.toString()));
         }

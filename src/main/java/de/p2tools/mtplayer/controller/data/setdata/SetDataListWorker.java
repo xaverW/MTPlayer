@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.setdata;
 
-import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class SetDataListWorker extends SimpleListProperty<SetData> implements PDataList<SetData> {
+public class SetDataListWorker extends SimpleListProperty<SetData> implements P2DataList<SetData> {
     // Liste aller Programmsets
     public static final String TAG = "SetDataList";
     private BooleanProperty listChanged = new SimpleBooleanProperty(true);

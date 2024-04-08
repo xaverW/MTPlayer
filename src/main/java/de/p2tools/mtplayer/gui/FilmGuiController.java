@@ -27,10 +27,10 @@ import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
-import de.p2tools.p2lib.tools.PSystemUtils;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.P2SystemUtils;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -103,13 +103,13 @@ public class FilmGuiController extends AnchorPane {
 
     public void copyFilmThemeTitle(boolean theme) {
         final Optional<FilmDataMTP> filmSelection = getSel(false, false);
-        filmSelection.ifPresent(mtp -> PSystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
+        filmSelection.ifPresent(mtp -> P2SystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 
     public ArrayList<FilmDataMTP> getSelList(boolean markSel/*markieren was vor dem SEL ist*/) {
         final ArrayList<FilmDataMTP> ret = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
-            PAlert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection();
         } else if (markSel) {
             setLastShown(ret.get(0));
         }
@@ -123,7 +123,7 @@ public class FilmGuiController extends AnchorPane {
             mtp = Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
             if (show) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             }
             mtp = Optional.empty();
         }
@@ -289,7 +289,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void selectLastShown_() {
-        PDuration.counterStart("selectLastShown");
+        P2Duration.counterStart("selectLastShown");
         // nach dem Filtern/ändern der Filmliste wird ... in der Tabelle selektiert
         if (tableView.getItems().isEmpty()) {
             return;
@@ -378,7 +378,7 @@ public class FilmGuiController extends AnchorPane {
                     tableView.refresh();
                 });
 
-        PDuration.counterStart("selectLastShown");
+        P2Duration.counterStart("selectLastShown");
     }
 
     private void setFilmInfos(FilmDataMTP film) {

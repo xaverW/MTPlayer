@@ -5,7 +5,7 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.config.ProxyFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -43,7 +43,7 @@ public class LiveFactory {
         Platform.runLater(() -> {
             if (jsonInfoDto.getList().isEmpty()) {
                 // dann hats nicht geklappt
-                PAlert.showErrorAlert("Film suchen", "Es konnte kein Film gefunden werden.");
+                P2Alert.showErrorAlert("Film suchen", "Es konnte kein Film gefunden werden.");
                 return;
             }
 

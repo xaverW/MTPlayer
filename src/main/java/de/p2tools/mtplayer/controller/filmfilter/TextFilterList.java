@@ -16,11 +16,11 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
-import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-public final class TextFilterList extends SimpleListProperty<TextFilter> implements PDataList<TextFilter> {
+public final class TextFilterList extends SimpleListProperty<TextFilter> implements P2DataList<TextFilter> {
     public final String TAG = "TextFilterList";
 
     public TextFilterList() {

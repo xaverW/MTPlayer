@@ -20,10 +20,10 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import javafx.beans.property.*;
 
-public class ProgramDataProps extends PDataSample<ProgramData> {
+public class ProgramDataProps extends P2DataSample<ProgramData> {
 
     public static final String TAG = "Program";
     public static final int PROGRAM_NAME = 0;

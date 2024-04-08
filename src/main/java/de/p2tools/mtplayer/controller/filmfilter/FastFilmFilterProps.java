@@ -18,13 +18,13 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class FastFilmFilterProps extends PDataSample<FastFilmFilter> implements Comparable<FastFilmFilter> {
+public class FastFilmFilterProps extends P2DataSample<FastFilmFilter> implements Comparable<FastFilmFilter> {
 
     public static String TAG = "FastFilmFilterProps";
 

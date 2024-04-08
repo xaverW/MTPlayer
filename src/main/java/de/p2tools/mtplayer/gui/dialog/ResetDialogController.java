@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2BigButton;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -106,8 +106,8 @@ public class ResetDialogController extends P2DialogExtra {
             TextFlow tf = new TextFlow();
             tf.getChildren().addAll(t1, t2, t3);
 
-            if (PAlert.showAlert_yes_no_cancel("Einstellungen zurücksetzen",
-                    "alle Einstellungen zurücksetzen!", tf, false) == PAlert.BUTTON.YES) {
+            if (P2Alert.showAlert_yes_no_cancel("Einstellungen zurücksetzen",
+                    "alle Einstellungen zurücksetzen!", tf, false) == P2Alert.BUTTON.YES) {
                 // damit wird vor dem Beenden das Konfig-Verzeichnis umbenannt und so startet das
                 // Programm wie beim ersten Start
                 ProgData.reset = true;

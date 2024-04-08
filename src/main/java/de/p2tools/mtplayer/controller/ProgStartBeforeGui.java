@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
 import de.p2tools.mtplayer.gui.startdialog.StartDialogController;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.application.Platform;
@@ -40,7 +40,7 @@ public class ProgStartBeforeGui {
     public static void workBeforeGui() {
         if (!loadAll()) {
             // dann ist der erste Start
-            PDuration.onlyPing("Erster Start");
+            P2Duration.onlyPing("Erster Start");
             ProgData.firstProgramStart = true;
 
             ProgConfigUpdate.setUpdateDone(); // dann ist's ja kein Programmupdate
@@ -56,11 +56,11 @@ public class ProgStartBeforeGui {
                 System.exit(0);
             }
 
-            PDuration.onlyPing("Erster Start: PSet");
+            P2Duration.onlyPing("Erster Start: PSet");
             ImportStandardSet.getStandardSet();
-            PDuration.onlyPing("Erster Start: PSet geladen");
+            P2Duration.onlyPing("Erster Start: PSet geladen");
             FilmFilterSamples.addStandardFilter();
-            PDuration.onlyPing("Erster Start: CleaningList init");
+            P2Duration.onlyPing("Erster Start: CleaningList init");
             ProgData.getInstance().cleaningDataListMedia.initList();
             ProgData.getInstance().cleaningDataListPropose.initList();
         }
@@ -93,7 +93,7 @@ public class ProgStartBeforeGui {
 
     private static boolean load() {
         final Path xmlFilePath = ProgInfos.getSettingsFile();
-        PDuration.onlyPing("ProgStartFactory.loadProgConfigData");
+        P2Duration.onlyPing("ProgStartFactory.loadProgConfigData");
         try {
             if (!Files.exists(xmlFilePath)) {
                 //dann gibts das Konfig-File gar nicht

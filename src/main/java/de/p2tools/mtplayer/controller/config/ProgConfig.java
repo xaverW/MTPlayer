@@ -26,13 +26,13 @@ import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.filmfilter.LiveFilter;
 import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
-import de.p2tools.p2lib.data.PDataProgConfig;
+import de.p2tools.p2lib.data.P2DataProgConfig;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.PShutDown;
-import de.p2tools.p2lib.tools.PStringUtils;
-import de.p2tools.p2lib.tools.PSystemUtils;
-import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.P2ShutDown;
+import de.p2tools.p2lib.tools.P2StringUtils;
+import de.p2tools.p2lib.tools.P2SystemUtils;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.*;
@@ -44,7 +44,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ProgConfig extends PDataProgConfig {
+public class ProgConfig extends P2DataProgConfig {
 
     private static ProgConfig instance;
 
@@ -73,9 +73,9 @@ public class ProgConfig extends PDataProgConfig {
     // ===========================================
 
     // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-    public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", ProgramToolsFactory.getProgVersion());
-    public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", ProgramToolsFactory.getBuild());
-    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", ProgramToolsFactory.getCompileDate()); //z.B.: 27.07.2
+    public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", P2ToolsFactory.getProgVersion());
+    public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", P2ToolsFactory.getBuild());
+    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", P2ToolsFactory.getCompileDate()); //z.B.: 27.07.2
 
     //Configs zur Anzeige der Diakritika in der Filmliste
     //TRUE: dann werden Diakritika nicht geändert und angezeigt --> das kommt weg
@@ -135,7 +135,7 @@ public class ProgConfig extends PDataProgConfig {
     public static StringProperty SYSTEM_TRAY_ICON_PATH = addStrProp("system-tray-icon", ""); //ein eigenes Tray-Icon
     public static StringProperty SYSTEM_USERAGENT = addStrProp("system-useragent", ProgConst.USER_AGENT_DEFAULT); //Useragent für direkte Downloads
     public static IntegerProperty SYSTEM_FILMLIST_FILTER = addIntProp("system-filmlist-filter", BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
-    public static StringProperty SYSTEM_SHUT_DOWN_CALL = addStrProp("system-shut-down-call", PShutDown.getShutDownCommand()); // shutDown call
+    public static StringProperty SYSTEM_SHUT_DOWN_CALL = addStrProp("system-shut-down-call", P2ShutDown.getShutDownCommand()); // shutDown call
     public static BooleanProperty SYSTEM_SHUT_DOWN_CALL_ON = addBoolProp("system-shut-down-call-on", false); // das shutDown ist aktiv
 
     //Configs Statusbar
@@ -429,7 +429,7 @@ public class ProgConfig extends PDataProgConfig {
     public static DoubleProperty CONFIG_DIALOG_BLACKLIST_SPLITPANE = addDoubleProp("config-dialog-blacklist-splitpane", 0.7);
 
     // StartDialog
-    public static StringProperty START_DIALOG_DOWNLOAD_PATH = addStrProp("start-dialog-download-path", PSystemUtils.getStandardDownloadPath());
+    public static StringProperty START_DIALOG_DOWNLOAD_PATH = addStrProp("start-dialog-download-path", P2SystemUtils.getStandardDownloadPath());
 
     // FilmInfoDialog
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_URL = addBoolProp("film-info-dialog-show-url", Boolean.FALSE);
@@ -571,9 +571,9 @@ public class ProgConfig extends PDataProgConfig {
         ProgData progData = ProgData.getInstance();
 
         // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-        ProgConfig.SYSTEM_PROG_VERSION.set(ProgramToolsFactory.getProgVersion());
-        ProgConfig.SYSTEM_PROG_BUILD_NO.set(ProgramToolsFactory.getBuild());
-        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(ProgramToolsFactory.getCompileDate());
+        ProgConfig.SYSTEM_PROG_VERSION.set(P2ToolsFactory.getProgVersion());
+        ProgConfig.SYSTEM_PROG_BUILD_NO.set(P2ToolsFactory.getBuild());
+        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(P2ToolsFactory.getCompileDate());
 
         configFile.addConfigs(ProgConfig.getInstance()); // ProgConfig
         configFile.addConfigs(ProgColorList.getInstance()); // Color
@@ -633,7 +633,7 @@ public class ProgConfig extends PDataProgConfig {
 
             list.add(s + "  " + c.getActValueString());
         });
-        PStringUtils.appendString(list, "#  ", "#");
+        P2StringUtils.appendString(list, "#  ", "#");
 
         list.add(P2Log.LILNE1);
         P2Log.debugLog(list);

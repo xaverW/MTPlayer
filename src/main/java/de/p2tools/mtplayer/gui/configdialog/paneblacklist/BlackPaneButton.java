@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2TableFactory;
@@ -58,7 +58,7 @@ public class BlackPaneButton {
         btnDel.setOnAction(event -> {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             } else {
                 blackDataChanged.set(true);
                 list.removeBlackData(selected);
@@ -107,7 +107,7 @@ public class BlackPaneButton {
         btnClear.setTooltip(new Tooltip("Alle Einträge in der Liste werden gelöscht"));
         btnClear.setOnAction(event -> {
             if (list.size() > 0) {
-                if (!PAlert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
+                if (!P2Alert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
                         "Die Tabelle wird komplett gelöscht und alle Einträge gehen verloren.")) {
                     return;
                 }

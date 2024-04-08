@@ -21,12 +21,12 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.data.PColorData;
+import de.p2tools.p2lib.data.P2ColorData;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
-import de.p2tools.p2lib.tools.PColorFactory;
+import de.p2tools.p2lib.tools.P2ColorFactory;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -57,12 +57,12 @@ public class PaneColor {
         final Button btnHelpTheme = P2Button.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
 
-        TableView<PColorData> tableViewFont = new TableView<>();
+        TableView<P2ColorData> tableViewFont = new TableView<>();
         initTableColor(tableViewFont);
         tableViewFont.setPrefHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableViewFont.setItems(ProgColorList.getColorListFront());
 
-        TableView<PColorData> tableViewBackground = new TableView<>();
+        TableView<P2ColorData> tableViewBackground = new TableView<>();
         initTableColor(tableViewBackground);
         tableViewBackground.setItems(ProgColorList.getColorListBackground());
 
@@ -97,30 +97,30 @@ public class PaneColor {
         result.add(tpColor);
     }
 
-    private void initTableColor(TableView<PColorData> tableView) {
+    private void initTableColor(TableView<P2ColorData> tableView) {
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
             P2TableFactory.refreshTable(tableView);
             tableView.refresh();
         });
 
-        final TableColumn<PColorData, String> textColumn = new TableColumn<>("Beschreibung");
+        final TableColumn<P2ColorData, String> textColumn = new TableColumn<>("Beschreibung");
         textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         textColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<PColorData, String> changeColumn = new TableColumn<>("Farbe");
+        final TableColumn<P2ColorData, String> changeColumn = new TableColumn<>("Farbe");
         changeColumn.setCellFactory(cellFactoryChange);
         changeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<PColorData, String> resetColumn = new TableColumn<>("Reset");
+        final TableColumn<P2ColorData, String> resetColumn = new TableColumn<>("Reset");
         resetColumn.setCellFactory(cellFactoryReset);
         resetColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<PColorData, Color> colorColumn = new TableColumn<>("Farbe");
+        final TableColumn<P2ColorData, Color> colorColumn = new TableColumn<>("Farbe");
         colorColumn.setCellValueFactory(new PropertyValueFactory<>("color"));
         colorColumn.setCellFactory(cellFactoryColor);
         colorColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<PColorData, Color> colorOrgColumn = new TableColumn<>("Original");
+        final TableColumn<P2ColorData, Color> colorOrgColumn = new TableColumn<>("Original");
         colorOrgColumn.setCellValueFactory(new PropertyValueFactory<>("resetColor"));
         colorOrgColumn.setCellFactory(cellFactoryColorReset);
         colorOrgColumn.getStyleClass().add("alignCenter");
@@ -131,10 +131,10 @@ public class PaneColor {
         tableView.getColumns().addAll(textColumn, changeColumn, colorColumn, colorOrgColumn, resetColumn);
     }
 
-    private Callback<TableColumn<PColorData, String>, TableCell<PColorData, String>> cellFactoryChange
-            = (final TableColumn<PColorData, String> param) -> {
+    private Callback<TableColumn<P2ColorData, String>, TableCell<P2ColorData, String>> cellFactoryChange
+            = (final TableColumn<P2ColorData, String> param) -> {
 
-        final TableCell<PColorData, String> cell = new TableCell<PColorData, String>() {
+        final TableCell<P2ColorData, String> cell = new TableCell<P2ColorData, String>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -145,7 +145,7 @@ public class PaneColor {
                     return;
                 }
 
-                PColorData pColorData = getTableView().getItems().get(getIndex());
+                P2ColorData pColorData = getTableView().getItems().get(getIndex());
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
                 hbox.setAlignment(Pos.CENTER);
@@ -166,10 +166,10 @@ public class PaneColor {
         return cell;
     };
 
-    private Callback<TableColumn<PColorData, String>, TableCell<PColorData, String>> cellFactoryReset
-            = (final TableColumn<PColorData, String> param) -> {
+    private Callback<TableColumn<P2ColorData, String>, TableCell<P2ColorData, String>> cellFactoryReset
+            = (final TableColumn<P2ColorData, String> param) -> {
 
-        final TableCell<PColorData, String> cell = new TableCell<PColorData, String>() {
+        final TableCell<P2ColorData, String> cell = new TableCell<P2ColorData, String>() {
 
             @Override
             public void updateItem(String item, boolean empty) {
@@ -180,7 +180,7 @@ public class PaneColor {
                     return;
                 }
 
-                PColorData pColorData = getTableView().getItems().get(getIndex());
+                P2ColorData pColorData = getTableView().getItems().get(getIndex());
                 final HBox hbox = new HBox();
                 hbox.setSpacing(5);
                 hbox.setAlignment(Pos.CENTER);
@@ -198,10 +198,10 @@ public class PaneColor {
         return cell;
     };
 
-    private Callback<TableColumn<PColorData, Color>, TableCell<PColorData, Color>> cellFactoryColor
-            = (final TableColumn<PColorData, Color> param) -> {
+    private Callback<TableColumn<P2ColorData, Color>, TableCell<P2ColorData, Color>> cellFactoryColor
+            = (final TableColumn<P2ColorData, Color> param) -> {
 
-        final TableCell<PColorData, Color> cell = new TableCell<PColorData, Color>() {
+        final TableCell<P2ColorData, Color> cell = new TableCell<P2ColorData, Color>() {
 
 
             @Override
@@ -212,7 +212,7 @@ public class PaneColor {
                     setText(null);
                     return;
                 }
-                PColorData pColorData = getTableView().getItems().get(getIndex());
+                P2ColorData pColorData = getTableView().getItems().get(getIndex());
                 setStyle("-fx-background-color:" + pColorData.getColorSelectedToWeb());
             }
 
@@ -220,10 +220,10 @@ public class PaneColor {
         return cell;
     };
 
-    private Callback<TableColumn<PColorData, Color>, TableCell<PColorData, Color>> cellFactoryColorReset
-            = (final TableColumn<PColorData, Color> param) -> {
+    private Callback<TableColumn<P2ColorData, Color>, TableCell<P2ColorData, Color>> cellFactoryColorReset
+            = (final TableColumn<P2ColorData, Color> param) -> {
 
-        final TableCell<PColorData, Color> cell = new TableCell<PColorData, Color>() {
+        final TableCell<P2ColorData, Color> cell = new TableCell<P2ColorData, Color>() {
 
             @Override
             public void updateItem(Color item, boolean empty) {
@@ -233,8 +233,8 @@ public class PaneColor {
                     setText(null);
                     return;
                 }
-                PColorData pColorData = getTableView().getItems().get(getIndex());
-                setStyle("-fx-background-color:" + PColorFactory.getColorToWeb(pColorData.getResetColor()));
+                P2ColorData pColorData = getTableView().getItems().get(getIndex());
+                setStyle("-fx-background-color:" + P2ColorFactory.getColorToWeb(pColorData.getResetColor()));
             }
 
         };

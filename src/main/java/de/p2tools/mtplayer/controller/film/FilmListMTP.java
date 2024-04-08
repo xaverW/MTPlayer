@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.film;
 
 import de.p2tools.p2lib.mtfilm.film.*;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
@@ -201,7 +201,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
      * für die Filterfelder in GuiFilme.
      */
     public synchronized void loadTheme() {
-        PDuration.counterStart("loadTheme");
+        P2Duration.counterStart("loadTheme");
         final LinkedHashSet<String> senderSet = new LinkedHashSet<>(21);
         // der erste Sender ist ""
         senderSet.add("");
@@ -253,6 +253,6 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
             hashSet[i].clear();
         }
 
-        PDuration.counterStop("loadTheme");
+        P2Duration.counterStop("loadTheme");
     }
 }

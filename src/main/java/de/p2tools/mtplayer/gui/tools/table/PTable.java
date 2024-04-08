@@ -17,10 +17,10 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
-import de.p2tools.p2lib.configfile.pdata.PData;
+import de.p2tools.p2lib.configfile.pdata.P2Data;
 import javafx.scene.control.TableView;
 
-public class PTable<E extends PData> extends TableView<E> {
+public class PTable<E extends P2Data> extends TableView<E> {
     Table.TABLE_ENUM table_enum;
 
     public PTable(Table.TABLE_ENUM table_enum) {

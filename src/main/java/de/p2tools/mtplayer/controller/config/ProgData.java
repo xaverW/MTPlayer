@@ -48,7 +48,7 @@ import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -190,7 +190,7 @@ public class ProgData {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.setDelay(Duration.seconds(5));
         timeline.play();
-        PDuration.onlyPing("Timer gestartet");
+        P2Duration.onlyPing("Timer gestartet");
     }
 
     private void doTimerWorkOneSecond() {

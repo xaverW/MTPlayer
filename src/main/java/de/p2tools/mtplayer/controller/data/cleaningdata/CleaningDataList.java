@@ -16,13 +16,13 @@
 
 package de.p2tools.mtplayer.controller.data.cleaningdata;
 
-import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
-public class CleaningDataList extends SimpleListProperty<CleaningData> implements PDataList<CleaningData> {
+public class CleaningDataList extends SimpleListProperty<CleaningData> implements P2DataList<CleaningData> {
 
     public String TAG;
 

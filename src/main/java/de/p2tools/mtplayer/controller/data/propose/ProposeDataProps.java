@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.propose;
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_intProp;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,7 +27,7 @@ import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class ProposeDataProps extends PDataSample<ProposeDataProps> {
+public class ProposeDataProps extends P2DataSample<ProposeDataProps> {
 
     public static final String TAG = "ProposeData";
 

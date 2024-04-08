@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtdownload.MLInputStream;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -362,7 +362,7 @@ public class DownloadDirectHttp extends Thread {
         AtomicBoolean dialog = new AtomicBoolean(true);
         AtomicBoolean ret = new AtomicBoolean(false);
         Platform.runLater(() -> {
-            ret.set(PAlert.showAlertOkCancel("HTTPS",
+            ret.set(P2Alert.showAlertOkCancel("HTTPS",
                     "Problem mit der HTTPS-Verbindung",
                     "Beim Verbindungsaufbau mit der HTTPS-URL trat ein Problem auf. Soll " +
                             "versucht werden, die Verbindung ohne die Prüfung des Zertifikats " +

@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.worker;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -41,7 +41,7 @@ public class ThemeListFactory {
 
     public synchronized static void createThemeList(ProgData progData, String sender) {
         //toDo geht vielleicht besser??
-        PDuration.counterStart("createThemeList");
+        P2Duration.counterStart("createThemeList");
         final ArrayList<String> newThemeList = new ArrayList<>();
         if (sender.isEmpty()) {
             newThemeList.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[0]));
@@ -70,7 +70,7 @@ public class ThemeListFactory {
         progData.worker.resetFilter();
         themeForChannelChanged.setValue(!themeForChannelChanged.getValue());
 //        });
-        PDuration.counterStop("createThemeList");
+        P2Duration.counterStop("createThemeList");
     }
 
     private static void makeTheme(ProgData progData, String sender, ArrayList<String> theme) {

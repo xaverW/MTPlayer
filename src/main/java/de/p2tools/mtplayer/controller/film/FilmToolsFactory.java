@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.controller.film;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.history.HistoryList;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
@@ -115,7 +115,7 @@ public class FilmToolsFactory {
         }
 
         if (allSender) {
-            Platform.runLater(() -> PAlert.showErrorAlert(stage,
+            Platform.runLater(() -> P2Alert.showErrorAlert(stage,
                     "Sender laden",
                     "Es werden keine Filme geladen. Alle Sender " +
                             "sind vom Laden ausgenommen!" +
@@ -133,11 +133,11 @@ public class FilmToolsFactory {
         final HashSet<String> urlHashSet = new HashSet<>(filmList.size(), 0.75F);
         countDouble = 0;
 
-        PDuration.counterStart("markFilms");
+        P2Duration.counterStart("markFilms");
         if (senderArr.length == 0 || senderArr.length == 1 && senderArr[0].isEmpty()) {
             // dann wie bisher
             try {
-                PDuration.counterStart("mark(FilmData filmData)");
+                P2Duration.counterStart("mark(FilmData filmData)");
                 filmList.forEach((FilmData f) -> {
                     mark(f);
                     if (!urlHashSet.add(getHashFromFilm(f))) {
@@ -145,14 +145,14 @@ public class FilmToolsFactory {
                         f.setDoubleUrl(true);
                     }
                 });
-                PDuration.counterStop("mark(FilmData filmData)");
+                P2Duration.counterStop("mark(FilmData filmData)");
             } catch (Exception ex) {
                 P2Log.errorLog(951024789, ex);
             }
 
         } else {
             // dann nach Sender-Reihenfolge
-            PDuration.counterStart("mark(FilmData filmData)");
+            P2Duration.counterStart("mark(FilmData filmData)");
             filmList.forEach((FilmData f) -> {
                 mark(f);
             });
@@ -161,17 +161,17 @@ public class FilmToolsFactory {
             }
             // und dann noch für den Rest
             addSender(filmList, urlHashSet, senderArr, "");
-            PDuration.counterStop("mark(FilmData filmData)");
+            P2Duration.counterStop("mark(FilmData filmData)");
         }
         urlHashSet.clear();
 
         if (ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE.getValue()) {
             // dann auch gleich noch entfernen
-            PDuration.counterStart("filmlist-remove-double");
+            P2Duration.counterStart("filmlist-remove-double");
             filmList.removeIf(FilmDataProps::isDoubleUrl);
-            PDuration.counterStop("filmlist-remove-double");
+            P2Duration.counterStop("filmlist-remove-double");
         }
-        PDuration.counterStop("markFilms");
+        P2Duration.counterStop("markFilms");
 
         ProgConfig.SYSTEM_FILMLIST_COUNT_DOUBLE.setValue(countDouble);
         return countDouble;

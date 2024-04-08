@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
-import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.P2SystemUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -164,7 +164,7 @@ public class InitPathName {
 
         String stdPath;
         if (addDownloadDto.getAct().download.getSetData().getDestPath().isEmpty()) {
-            stdPath = PSystemUtils.getStandardDownloadPath();
+            stdPath = P2SystemUtils.getStandardDownloadPath();
         } else {
             stdPath = addDownloadDto.getAct().download.getSetData().getDestPath();
         }

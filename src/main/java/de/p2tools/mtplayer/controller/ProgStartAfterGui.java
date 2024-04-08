@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
 import de.p2tools.p2lib.dialogs.dialog.P2Dialog;
 import de.p2tools.p2lib.guitools.P2WindowIcon;
-import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.log.P2LogMessage;
 
 import java.util.ArrayList;
@@ -77,9 +77,9 @@ public class ProgStartAfterGui {
 
     private static void setTitle() {
         if (ProgData.debug) {
-            ProgData.getInstance().primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + ProgramToolsFactory.getProgVersion() + " / DEBUG");
+            ProgData.getInstance().primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + P2ToolsFactory.getProgVersion() + " / DEBUG");
         } else {
-            ProgData.getInstance().primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + ProgramToolsFactory.getProgVersion());
+            ProgData.getInstance().primaryStage.setTitle(ProgConst.PROGRAM_NAME + " " + P2ToolsFactory.getProgVersion());
         }
     }
 }

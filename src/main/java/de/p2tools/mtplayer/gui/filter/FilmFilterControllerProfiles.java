@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
@@ -82,7 +82,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
         btnSaveFilter.setOnAction(a -> {
             if (cboFilterProfiles.getSelectionModel().getSelectedItem() == null
-                    || PAlert.showAlertOkCancel("Speichern", "Filterprofil speichern",
+                    || P2Alert.showAlertOkCancel("Speichern", "Filterprofil speichern",
                     "Soll das Filterprofil überschrieben werden?")) {
                 saveFilter();
             }
@@ -252,7 +252,7 @@ public class FilmFilterControllerProfiles extends VBox {
     private void delFilter() {
         FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
-            PAlert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection();
             return;
         }
 
@@ -266,7 +266,7 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void resetFilter() {
-        if (PAlert.showAlertOkCancel("Zurücksetzen", "Filterprofile zurücksetzen",
+        if (P2Alert.showAlertOkCancel("Zurücksetzen", "Filterprofile zurücksetzen",
                 "Sollen alle Filterprofile gelöscht " +
                         "und durch die Profile vom ersten Programmstart " +
                         "ersetzt werden?")) {

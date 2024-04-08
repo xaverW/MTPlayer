@@ -27,7 +27,7 @@ import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
-import de.p2tools.p2lib.tools.ProgramToolsFactory;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -85,7 +85,7 @@ public class PathPane {
         btnEmpty.setVisible(false);
         gridPane.add(btnEmpty, 2, row);
 
-        switch (ProgramToolsFactory.getOs()) {
+        switch (P2ToolsFactory.getOs()) {
             case WIN32:
             case WIN64:
                 // da wird nur der VLC gebraucht, der Rest wird mitgeliefert

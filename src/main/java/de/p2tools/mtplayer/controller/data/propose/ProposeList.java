@@ -18,14 +18,14 @@ package de.p2tools.mtplayer.controller.data.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
 @SuppressWarnings("serial")
-public class ProposeList extends SimpleListProperty<ProposeData> implements PDataList<ProposeData> {
+public class ProposeList extends SimpleListProperty<ProposeData> implements P2DataList<ProposeData> {
 
     public String TAG = "ProposeList";
     private FilteredList<ProposeData> filteredList = null;

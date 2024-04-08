@@ -17,17 +17,17 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.tools.PIndex;
+import de.p2tools.p2lib.tools.P2Index;
 
 public class SetData extends SetDataProps {
 
     public SetData() {
-        setId(PIndex.getIndexStr());
+        setId(P2Index.getIndexStr());
     }
 
     public SetData(String name) {
         // neue Pset sind immer gleich Button
-        setId(PIndex.getIndexStr());
+        setId(P2Index.getIndexStr());
         setVisibleName(name);
         setButton(true);
     }
@@ -141,7 +141,7 @@ public class SetData extends SetDataProps {
             ret.properties[i].setValue(this.properties[i].getValue());
         }
         //es darf nur einen geben!
-        ret.setId(PIndex.getIndexStr());
+        ret.setId(P2Index.getIndexStr());
         ret.setVisibleName("Kopie-" + getVisibleName());
         ret.setPlay(false);
 

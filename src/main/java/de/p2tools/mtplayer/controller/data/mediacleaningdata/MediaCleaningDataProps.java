@@ -18,13 +18,13 @@ package de.p2tools.mtplayer.controller.data.mediacleaningdata;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class MediaCleaningDataProps extends PDataSample<MediaCleaningDataProps> {
+public class MediaCleaningDataProps extends P2DataSample<MediaCleaningDataProps> {
 
     public static final String TAG = "MediaCleaningData";
 

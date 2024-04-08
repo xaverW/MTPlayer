@@ -20,14 +20,14 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.gui.configpanes.PaneDownload;
 import de.p2tools.mtplayer.gui.configpanes.PaneDownloadStop;
 import de.p2tools.mtplayer.gui.configpanes.PaneReplace;
-import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
+import de.p2tools.p2lib.dialogs.accordion.P2AccordionPane;
 import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ControllerDownload extends PAccordionPane {
+public class ControllerDownload extends P2AccordionPane {
 
     private PaneDownload paneDownload;
     private PaneDownloadStop paneDownloadStop;
@@ -54,7 +54,7 @@ public class ControllerDownload extends PAccordionPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         paneDownload = new PaneDownload(stage);
         paneDownload.makeDownload(result);
-        
+
         paneDownloadStop = new PaneDownloadStop(stage);
         paneDownloadStop.makeDownload(result);
 

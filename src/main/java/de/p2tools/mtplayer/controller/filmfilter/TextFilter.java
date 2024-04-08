@@ -2,13 +2,13 @@ package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class TextFilter extends PDataSample<TextFilter> implements Comparable<TextFilter> {
+public class TextFilter extends P2DataSample<TextFilter> implements Comparable<TextFilter> {
     public static String TAG = "TextFilter";
 
     private final StringProperty channel = new SimpleStringProperty("");

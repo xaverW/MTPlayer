@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.gui.configpanes.PaneFilmDouble;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmLoad;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.mtplayer.gui.configpanes.PaneFilmUt;
-import de.p2tools.p2lib.dialogs.accordion.PAccordionPane;
+import de.p2tools.p2lib.dialogs.accordion.P2AccordionPane;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.TitledPane;
@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ControllerLoadFilmList extends PAccordionPane {
+public class ControllerLoadFilmList extends P2AccordionPane {
 
     private PaneFilmLoad paneFilmLoad;
     private PaneFilmDouble paneFilmDouble;

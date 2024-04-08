@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
-import de.p2tools.p2lib.tools.PShutDown;
+import de.p2tools.p2lib.tools.P2ShutDown;
 import de.p2tools.p2lib.tools.log.P2LogMessage;
 import javafx.application.Platform;
 
@@ -42,7 +42,7 @@ public class ProgQuit {
      */
     public static void quitShutDown() {
         saveConfig();
-        PShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
+        P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
         exitProg();
     }
 

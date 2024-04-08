@@ -17,13 +17,13 @@
 package de.p2tools.mtplayer.controller.mediadb;
 
 import de.p2tools.p2lib.configfile.config.*;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
-import de.p2tools.p2lib.tools.PIndex;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
+import de.p2tools.p2lib.tools.P2Index;
 import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
-public class MediaCollectionData extends PDataSample<MediaCollectionData> {
+public class MediaCollectionData extends P2DataSample<MediaCollectionData> {
 
     public final static String[] COLUMN_NAMES = {"Id", "Pfad", "Sammlung", "Extern"};
     public final static String[] XML_NAMES = COLUMN_NAMES;
@@ -44,7 +44,7 @@ public class MediaCollectionData extends PDataSample<MediaCollectionData> {
         setPath(path);
         setCollectionName(collectionName);
         setExternal(external);
-        setIdInt(PIndex.getIndexInt());
+        setIdInt(P2Index.getIndexInt());
     }
 
     @Override

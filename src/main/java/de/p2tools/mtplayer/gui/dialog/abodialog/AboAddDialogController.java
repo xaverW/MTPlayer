@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -247,7 +247,7 @@ public class AboAddDialogController extends P2DialogExtra {
         }
         if (abo != null) {
             // dann gibts das Abo schon
-            if (PAlert.showAlert_yes_no(getStage(), "Fehler", "Abo anlegen",
+            if (P2Alert.showAlert_yes_no(getStage(), "Fehler", "Abo anlegen",
                     "Ein Abo mit den Einstellungen existiert bereits, es " +
                             "findet die gleichen (oder mehr) Filme:" +
                             "\n\n" +
@@ -258,7 +258,7 @@ public class AboAddDialogController extends P2DialogExtra {
                             (abo.getTitle().isEmpty() ? "" : "Titel: " + abo.getTitle() + "\n") +
                             (abo.getSomewhere().isEmpty() ? "" : "Irgendwo: " + abo.getSomewhere()) +
                             "\n\n" +
-                            (addAboDto.isNewAbo ? "Trotzdem anlegen?" : "Trotzdem aktualisieren?")).equals(PAlert.BUTTON.NO)) {
+                            (addAboDto.isNewAbo ? "Trotzdem anlegen?" : "Trotzdem aktualisieren?")).equals(P2Alert.BUTTON.NO)) {
                 return false;
             }
         }
@@ -273,7 +273,7 @@ public class AboAddDialogController extends P2DialogExtra {
         }
         if (empty) {
             // dann ists leer
-            PAlert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
+            P2Alert.showErrorAlert(getStage(), "Fehler", "Abo anlegen",
                     "Abo-Nr: " + abo.getNo() + "\n" +
                             "Das Abo ist \"leer\", es enthält keine Filter.");
             return false;

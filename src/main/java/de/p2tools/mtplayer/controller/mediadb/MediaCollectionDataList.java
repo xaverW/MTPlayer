@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.controller.mediadb;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.configfile.pdata.PDataList;
-import de.p2tools.p2lib.tools.PIndex;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
+import de.p2tools.p2lib.tools.P2Index;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionData> implements PDataList<MediaCollectionData> {
+public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionData> implements P2DataList<MediaCollectionData> {
 
     public static final String TAG = "MediaCollectionDataList";
     private SortedList<MediaCollectionData> sortedListInternal = null;
@@ -56,7 +56,7 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
 
         if (mediaCollectionData.getIdInt() == 0) {
             // dann muss sie gesetzt werden
-            mediaCollectionData.setIdInt(PIndex.getIndexInt());
+            mediaCollectionData.setIdInt(P2Index.getIndexInt());
         }
         return super.add(mediaCollectionData);
     }

@@ -20,7 +20,7 @@ import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_lDate;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -30,7 +30,7 @@ import javafx.beans.property.StringProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class BlackDataProps extends PDataSample<BlackDataProps> {
+public class BlackDataProps extends P2DataSample<BlackDataProps> {
 
     public static final String TAG = "BlackData";
 

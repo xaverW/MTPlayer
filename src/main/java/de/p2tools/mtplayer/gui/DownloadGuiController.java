@@ -35,12 +35,12 @@ import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
-import de.p2tools.p2lib.alert.PAlert;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.PSystemUtils;
+import de.p2tools.p2lib.tools.P2SystemUtils;
 import javafx.application.Platform;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -109,7 +109,7 @@ public class DownloadGuiController extends AnchorPane {
         final ArrayList<DownloadData> ret = new ArrayList<>();
         ret.addAll(tableView.getSelectionModel().getSelectedItems());
         if (ret.isEmpty()) {
-            PAlert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection();
         }
         return ret;
     }
@@ -124,7 +124,7 @@ public class DownloadGuiController extends AnchorPane {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
         } else {
             if (show) {
-                PAlert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection();
             }
             return Optional.empty();
         }
@@ -174,7 +174,7 @@ public class DownloadGuiController extends AnchorPane {
 
     public void copyFilmThemeTitle(boolean theme) {
         final Optional<DownloadData> downloadData = getSel(true);
-        downloadData.ifPresent(data -> PSystemUtils.copyToClipboard(theme ? data.getTheme() : data.getTitle()));
+        downloadData.ifPresent(data -> P2SystemUtils.copyToClipboard(theme ? data.getTheme() : data.getTitle()));
     }
 
     public void copyUrl() {
@@ -182,7 +182,7 @@ public class DownloadGuiController extends AnchorPane {
         if (download.isEmpty()) {
             return;
         }
-        PSystemUtils.copyToClipboard(download.get().getUrl());
+        P2SystemUtils.copyToClipboard(download.get().getUrl());
     }
 
     private void setFilmInfos(DownloadData download) {

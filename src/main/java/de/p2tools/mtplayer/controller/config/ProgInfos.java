@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.Main;
 import de.p2tools.p2lib.configfile.SettingsDirectory;
-import de.p2tools.p2lib.tools.PException;
+import de.p2tools.p2lib.tools.P2Exception;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -119,7 +119,7 @@ public class ProgInfos {
      * @throws IllegalStateException Will be thrown if settings directory don't exist and if there is
      *                               an error on creating it.
      */
-    public static Path getSettingsDirectory() throws PException {
+    public static Path getSettingsDirectory() throws P2Exception {
         return SettingsDirectory.getSettingsDirectory(ProgData.configDir,
                 ProgConst.CONFIG_DIRECTORY);
     }

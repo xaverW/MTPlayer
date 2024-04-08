@@ -16,14 +16,14 @@
 
 package de.p2tools.mtplayer.controller.data.utdata;
 
-import de.p2tools.p2lib.configfile.pdata.PDataList;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.List;
 
-public class UtDataList extends SimpleListProperty<UtData> implements PDataList<UtData> {
+public class UtDataList extends SimpleListProperty<UtData> implements P2DataList<UtData> {
 
     public final String TAG = "UtDataList";
     private final ObservableList<UtData> undoList = FXCollections.observableArrayList();

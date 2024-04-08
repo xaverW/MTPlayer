@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.tools.date.P2Date;
-import de.p2tools.p2lib.tools.duration.PDuration;
+import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -48,7 +48,7 @@ public class DownloadFactoryAbo {
 
     private static void refreshDownloads(DownloadList downloadList) {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
-        PDuration.counterStart("refreshDownloads");
+        P2Duration.counterStart("refreshDownloads");
         List<DownloadData> syncRemoveList = Collections.synchronizedList(new ArrayList<>());
 
         downloadList.stream()
@@ -75,12 +75,12 @@ public class DownloadFactoryAbo {
         // und zurückgestellte wieder aktivieren
         downloadList.resetPlacedBack();
 
-        PDuration.counterStop("refreshDownloads");
+        P2Duration.counterStop("refreshDownloads");
     }
 
     private static void searchForNewDownloadsForAbos(DownloadList downloadList) {
         // in der Filmliste nach passenden Filmen (für Abos) suchen und Downloads anlegen
-        PDuration.counterStart("searchForNewDownloads");
+        P2Duration.counterStart("searchForNewDownloads");
         List<DownloadData> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
 
         // den Abo-Trefferzähler zurücksetzen
@@ -155,7 +155,7 @@ public class DownloadFactoryAbo {
         // und jetzt die hits eintragen (hier, damit nicht bei jedem die Tabelle geändert werden muss)
         ProgData.getInstance().aboList.forEach(AboDataProps::setCountedHits);
 
-        PDuration.counterStop("searchForNewDownloads");
+        P2Duration.counterStop("searchForNewDownloads");
     }
 
     private static void checkDoubleNames(List<DownloadData> foundNewDownloads, List<DownloadData> downloadList) {

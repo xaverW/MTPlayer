@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.controller.data.download;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.configfile.pdata.PDataList;
-import de.p2tools.p2lib.tools.PGetList;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
+import de.p2tools.p2lib.tools.P2GetList;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class DownloadList extends SimpleListProperty<DownloadData> implements PDataList<DownloadData> {
+public class DownloadList extends SimpleListProperty<DownloadData> implements P2DataList<DownloadData> {
 
     public static final String TAG = "DownloadList";
     private final ProgData progData;
@@ -186,7 +186,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
 
     public synchronized void delDownloads(DownloadData download) {
         // Button in der Tabelle-Downloads, Download noch nicht abgeschlossen
-        DownloadFactoryStopDownload.delDownloads(this, new PGetList<DownloadData>().getArrayList(download));
+        DownloadFactoryStopDownload.delDownloads(this, new P2GetList<DownloadData>().getArrayList(download));
     }
 
     public synchronized void delDownloads(ArrayList<DownloadData> list) {
@@ -209,7 +209,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements PD
     public synchronized void startDownloads(DownloadData download) {
         // Menü/Button
         DownloadFactoryStartDownload.startDownloads(this,
-                new PGetList<DownloadData>().getArrayList(download));
+                new P2GetList<DownloadData>().getArrayList(download));
         setDownloadsChanged();
     }
 

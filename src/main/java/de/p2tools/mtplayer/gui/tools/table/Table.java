@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.p2lib.configfile.pdata.PDataSample;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
@@ -179,7 +179,7 @@ public class Table {
         }
     }
 
-    private static void initColumn(TableView<PDataSample> table) {
+    private static void initColumn(TableView<P2DataSample> table) {
         tArray = table.getColumns().toArray(TableColumn[]::new);
         table.getColumns().clear();
 
