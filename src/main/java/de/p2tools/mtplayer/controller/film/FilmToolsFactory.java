@@ -136,7 +136,6 @@ public class FilmToolsFactory {
         PDuration.counterStart("markFilms");
         if (senderArr.length == 0 || senderArr.length == 1 && senderArr[0].isEmpty()) {
             // dann wie bisher
-            // todo exception parallel?? Unterschied ~10ms (bei Gesamt: 110ms)
             try {
                 PDuration.counterStart("mark(FilmData filmData)");
                 filmList.forEach((FilmData f) -> {
@@ -157,24 +156,24 @@ public class FilmToolsFactory {
             filmList.forEach((FilmData f) -> {
                 mark(f);
             });
-            PDuration.counterStop("mark(FilmData filmData)");
             for (String sender : senderArr) {
                 addSender(filmList, urlHashSet, senderArr, sender);
             }
             // und dann noch für den Rest
             addSender(filmList, urlHashSet, senderArr, "");
+            PDuration.counterStop("mark(FilmData filmData)");
         }
         urlHashSet.clear();
 
-        PDuration.counterStop("markFilms");
         if (ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE.getValue()) {
             // dann auch gleich noch entfernen
-            PDuration.counterStart("markFilms.removeMarkedFilms");
+            PDuration.counterStart("filmlist-remove-double");
             filmList.removeIf(FilmDataProps::isDoubleUrl);
+            PDuration.counterStop("filmlist-remove-double");
         }
-        PDuration.counterStop("markFilms.removeMarkedFilms");
-        ProgConfig.SYSTEM_FILMLIST_COUNT_DOUBLE.setValue(countDouble);
+        PDuration.counterStop("markFilms");
 
+        ProgConfig.SYSTEM_FILMLIST_COUNT_DOUBLE.setValue(countDouble);
         return countDouble;
     }
 
