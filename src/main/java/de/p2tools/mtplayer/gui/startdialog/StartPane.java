@@ -71,8 +71,7 @@ public class StartPane {
 
         hBox.getChildren().add(text);
 
-        TitledPane tpConfig = new TitledPane("Infos zur Programmoberfläche", hBox);
-        return tpConfig;
+        return new TitledPane("Infos zur Programmoberfläche", hBox);
     }
 
     public TitledPane makeStart2() {
@@ -108,12 +107,15 @@ public class StartPane {
 
                         P2LibConst.LINE_SEPARATORx2 +
                         "5) Damit kann eine vereinfachte" + P2LibConst.LINE_SEPARATOR +
-                        "Suche ausgewählt werden.");
+                        "Suche ausgewählt werden." +
+
+                        P2LibConst.LINE_SEPARATORx2 +
+                        "6) Die Live-Suche kann " + P2LibConst.LINE_SEPARATOR +
+                        "damit ein- und ausgeblendet werden..");
 
         hBox.getChildren().add(text);
 
-        TitledPane tpConfig = new TitledPane("Infos zum Filmfilter", hBox);
-        return tpConfig;
+        return new TitledPane("Infos zum Filmfilter", hBox);
     }
 
     private javafx.scene.image.Image getHelpScreen1() {

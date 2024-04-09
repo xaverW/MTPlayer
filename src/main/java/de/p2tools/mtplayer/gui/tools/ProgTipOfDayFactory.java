@@ -79,6 +79,20 @@ public class ProgTipOfDayFactory {
         pToolTipList.add(pToolTip);
 
         text = START;
+        text += "Live-Suche in den ARD/ZDF\n" +
+                "Mediatheken:\n\n" +
+                "Ist die Live-Suche eingeschaltet,\n" +
+                "kann damit in den Mediatheken\n" +
+                "von ARD und ZDF gesucht werden.\n" +
+                "Es ist auch möglich, mit der URL\n" +
+                "einer Filmseite den Film zu suchen.\n" +
+                "Die Filme können dann ganz normal\n" +
+                "angesehen oder gespeichert werden.";
+        image = "/de/p2tools/mtplayer/res/tooltips/Live_Suche.png";
+        pToolTip = new P2TipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
         text += "Suche in der Mediensammlung:\n\n" +
                 "Ein Doppelklick auf einen\n" +
                 "Suchbegriff stellt diesen frei.\n\n" +
@@ -158,6 +172,29 @@ public class ProgTipOfDayFactory {
         pToolTipList.add(pToolTip);
 
         text = START;
+        text += "In den Einstellungen des Abos\n" +
+                "kann auch die Startzeit\n" +
+                "der Downloads aus diesem\n" +
+                "Abo vorgegeben werden.\n\n" +
+                "Downloads aus diesem Abo\n" +
+                "haben dann automatisch\n" +
+                "diese Startzeit.";
+        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Startzeit.png";
+        pToolTip = new P2TipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
+        text += "In den Einstellungen des Abos\n" +
+                "kann auch ein eigener Pfad\n" +
+                "und auch ein eigener Dateiname\n" +
+                "für Downloads aus diesem Abo\n" +
+                "vorgegeben werden. Die Einstellungen\n" +
+                "des Sets werden dann überschrieben.";
+        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Pfad.png";
+        pToolTip = new P2TipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
         text += "Im Programm sind immer zwei\n" +
                 "Menüs sichtbar.\n\n" +
                 "Das obere enthält Menüpunkte,\n" +
@@ -165,7 +202,7 @@ public class ProgTipOfDayFactory {
                 "wichtig sind.\n\n" +
                 "Das untere Menü ist immer\n" +
                 "für den jeweils angezeigten\n" +
-                "Tab (Filme, Downloads Abos).";
+                "Tab (Filme, Downloads, Abos).";
         image = "/de/p2tools/mtplayer/res/tooltips/Menue.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
@@ -241,18 +278,6 @@ public class ProgTipOfDayFactory {
                 "mit der Leertaste nach\n" +
                 "unten \"geblättert\" werden.";
         image = "/de/p2tools/mtplayer/res/tooltips/Leertaste.png";
-        pToolTip = new P2TipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch die Startzeit\n" +
-                "der Downloads aus diesem\n" +
-                "Abo vorgegeben werden.\n\n" +
-                "Downloads aus diesem Abo\n" +
-                "haben dann automatisch\n" +
-                "diese Startzeit.";
-        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Startzeit.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
