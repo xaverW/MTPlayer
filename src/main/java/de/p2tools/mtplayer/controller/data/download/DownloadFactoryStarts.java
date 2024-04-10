@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.starter.StartDownloadDto;
 import de.p2tools.p2lib.tools.log.P2Log;
 
@@ -108,7 +109,13 @@ public class DownloadFactoryStarts {
     }
 
     private static boolean checkStartTime(DownloadData download) {
+        if (ProgData.autoMode) {
+            // dann wird immer sofort gestartet
+            return true;
+        }
+
         if (download.getStartTime().isEmpty()) {
+            // dann auch
             return true;
         }
 

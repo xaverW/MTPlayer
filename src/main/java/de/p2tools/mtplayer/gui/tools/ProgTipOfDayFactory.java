@@ -96,9 +96,9 @@ public class ProgTipOfDayFactory {
         text += "Suche in der Mediensammlung:\n\n" +
                 "Ein Doppelklick auf einen\n" +
                 "Suchbegriff stellt diesen frei.\n\n" +
-                "Der Button daneben, stellt den\n" +
-                "ursprünglichen Suchbegriff\n" +
-                "wieder her.";
+                "Der Button (Kreis) wählt aus, wo\n" +
+                "(Dateiname/Pfad) gesucht werden\n" +
+                "soll.";
         image = "/de/p2tools/mtplayer/res/tooltips/Mediensammlung.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);

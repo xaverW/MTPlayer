@@ -121,7 +121,7 @@ public class StarterThread extends Thread {
         if (paused.getValue()) {
             //beim Löschen der Downloads kann das Starten etwas "pausiert" werden
             //damit ein zu löschender Download nicht noch schnell gestartet wird
-            sleep(5 * 1000);
+            sleep(5_1000);
             paused.setValue(false);
         }
         return progData.downloadList.getNextStart();

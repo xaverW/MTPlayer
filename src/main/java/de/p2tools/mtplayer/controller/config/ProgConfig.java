@@ -371,7 +371,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);
     public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", FilterCheck.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
     public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", FilterCheck.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
-    public static StringProperty ABO_DIALOG_EDIT_SIZE = addStrProp("abo-dialog-edit-size", "600:800");
+    public static StringProperty ABO_DIALOG_EDIT_SIZE = addStrProp("abo-dialog-edit-size", "600:750");
     public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDoubleProp("abo-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty ABO_GUI_FILTER_DIVIDER_ON = addBoolProp("abo-gui-filter-divider-on", Boolean.TRUE);
     public static DoubleProperty ABO_GUI_DIVIDER = addDoubleProp("abo-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);
