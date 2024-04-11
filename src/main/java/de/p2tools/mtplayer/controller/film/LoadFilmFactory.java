@@ -55,7 +55,7 @@ public class LoadFilmFactory {
     public void loadNewListFromWeb(boolean alwaysLoadNew) {
         //es wird immer eine neue Filmliste aus dem Web geladen
         initLoadFactoryConst();
-        loadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew, ProgInfos.getLocalFilmListFile());
+        loadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew/*, ProgInfos.getLocalFilmListFile()*/);
     }
 
     public synchronized static final LoadFilmFactory getInstance() {
