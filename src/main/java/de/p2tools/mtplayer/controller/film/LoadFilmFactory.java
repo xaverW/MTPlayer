@@ -71,7 +71,8 @@ public class LoadFilmFactory {
         LoadFactoryConst.dateStoredFilmlist = ProgConfig.SYSTEM_FILMLIST_DATE.getValue();
         LoadFactoryConst.firstProgramStart = ProgData.firstProgramStart;
         LoadFactoryConst.localFilmListFile = ProgInfos.getLocalFilmListFile();
-        LoadFactoryConst.loadNewFilmlistOnProgramStart = ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue();
+        LoadFactoryConst.loadNewFilmlistOnProgramStart = ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue()
+                || ProgData.autoMode; // wenn gewollt oder im AutoMode immer laden
 
         LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MAX_DAYS = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getValue();
         LoadFactoryConst.SYSTEM_LOAD_FILMLIST_MIN_DURATION = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getValue();
@@ -184,8 +185,12 @@ public class LoadFilmFactory {
             if (!doneAtProgramStart) {
                 doneAtProgramStart = true;
                 MediaDataWorker.createMediaDb();
-                WhatsNewFactory.checkUpdate();
-                Platform.runLater(() -> ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false));
+
+                if (!ProgData.autoMode) {
+                    // sonst macht es ja keinen Sinn
+                    WhatsNewFactory.checkUpdate();
+                    Platform.runLater(() -> ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false));
+                }
             }
         }).start();
     }

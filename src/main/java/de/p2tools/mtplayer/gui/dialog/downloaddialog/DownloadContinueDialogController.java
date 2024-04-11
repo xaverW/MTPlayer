@@ -74,13 +74,7 @@ public class DownloadContinueDialogController extends P2DialogExtra {
         this.httpDownload = httpDownload;
         this.oldPathFile = download.getDestPathFile();
 
-        if (ProgData.autoMode) {
-            // dann schaut ja eh keiner zu, also restart des Downloads
-            result = ProgConfigAskBeforeDelete.ContinueDownload.RESTART;
-            return;
-        } else {
-            init(true);
-        }
+        init(true);
     }
 
     public ProgConfigAskBeforeDelete.ContinueDownload getResult() {

@@ -41,7 +41,6 @@ public class WhatsNewFactory {
     public static void checkUpdate() {
         P2Log.sysLog("Programmstart, alte Programm-Release-Nr: " + ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe());
         P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + P2ToolsFactory.getBuild());
-
         if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(P2ToolsFactory.getBuild())) {
             // dann hat sich die BUILD_NO geändert, neue Version: Dann checken
             showWhatsNew(false);

@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFiles;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
@@ -278,16 +277,16 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
-            @Override
-            public void pingFx() {
-                if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode)
-                        && ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()) {
-                    // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-                    DownloadDataFactory.searchForAbosAndMaybeStart();
-                }
-            }
-        });
+//        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode)
+//                        && ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()) {
+//                    // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
+//                    DownloadDataFactory.searchForAbosAndMaybeStart();
+//                }
+//            }
+//        });
         PListener.addListener(new PListener(PListener.EVENT_SET_DATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {

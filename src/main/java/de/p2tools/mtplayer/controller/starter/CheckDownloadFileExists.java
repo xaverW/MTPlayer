@@ -80,7 +80,11 @@ public class CheckDownloadFileExists {
         ProgConfigAskBeforeDelete.ContinueDownload result;
         boolean isNewName = false;
 
-        if (ProgConfig.DOWNLOAD_CONTINUE.getValue() == ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__CONTINUE) {
+        if (ProgData.autoMode) {
+            // dann schaut ja eh keiner zu, also restart des Downloads
+            result = ProgConfigAskBeforeDelete.ContinueDownload.RESTART;
+
+        } else if (ProgConfig.DOWNLOAD_CONTINUE.getValue() == ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__CONTINUE) {
             //weiterführen
             result = ProgConfigAskBeforeDelete.ContinueDownload.CONTINUE;
 
@@ -97,6 +101,7 @@ public class CheckDownloadFileExists {
             isNewName = downloadContinueDialogController.isNewName();
 
         }
+
         if (!httpDownload && result == ProgConfigAskBeforeDelete.ContinueDownload.CONTINUE) {
             // geht dann nicht
             result = ProgConfigAskBeforeDelete.ContinueDownload.RESTART;

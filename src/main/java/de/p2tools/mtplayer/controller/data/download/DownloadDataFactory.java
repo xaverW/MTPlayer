@@ -64,6 +64,8 @@ public class DownloadDataFactory {
             P2Log.sysLog("Downloads aus Abos starten");
             ProgData.getInstance().downloadList.startAllDownloads();
         }
+
+        ProgData.downloadSearchDone = true; // braucht der AutoMode, damit er weiß, wann er anfangen kann
         P2Duration.counterStop("searchForAbosAndMaybeStart");
     }
 

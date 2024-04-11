@@ -62,13 +62,14 @@ public class ProgData {
     private static ProgData instance;
 
     // flags
-    public static boolean debug = false; //Debugmodus
-    public static boolean autoMode = false; //Automodus: start, laden, beenden
-    public static boolean duration = false; //Duration ausgeben
-    public static boolean startMinimized = false; //Minimiert starten
+    public static boolean debug = false; // Debugmodus
+    public static boolean autoMode = false; // Automodus: start, laden, beenden
+    public static boolean downloadSearchDone = false; // wird gesetzt, wenn das erste mal Downloads gesucht wurden
+    public static boolean duration = false; // Duration ausgeben
+    public static boolean startMinimized = false; // Minimiert starten
     public static boolean showUpdate = false; // immer ein ProgrammUpdate anzeigen
-    public static boolean reset = false; //Programm auf Starteinstellungen zurücksetzen
-    public static boolean firstProgramStart = false; //ist der allererste Programmstart: Init wird gemacht
+    public static boolean reset = false; // Programm auf Starteinstellungen zurücksetzen
+    public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
     public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
 
     public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);

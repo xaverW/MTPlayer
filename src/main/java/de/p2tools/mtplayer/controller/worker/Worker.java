@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.worker;
 
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
@@ -37,13 +38,23 @@ public class Worker {
     public Worker(ProgData progData) {
         this.progData = progData;
         getAboNames();
+        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, Worker.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                if (ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()
+                        && ProgConfig.ABO_SEARCH_NOW.getValue()) {
+                    // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
+                    DownloadDataFactory.searchForAbosAndMaybeStart();
+                }
+            }
+        });
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue()) {
                 Platform.runLater(DownloadDataFactory::searchForAbosAndMaybeStart);
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+            if (ProgConfig.ABO_SEARCH_NOW.getValue()) {
                 Platform.runLater(DownloadDataFactory::searchForAbosAndMaybeStart);
             }
             getAboNames();
@@ -88,7 +99,9 @@ public class Worker {
 
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
             ThemeListFactory.createThemeList(progData, progData.filmFilterWorker.getActFilterSettings().getChannel());
+
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+                // wenn gewollt oder im AutoMode immer suchen
                 DownloadDataFactory.searchForAbosAndMaybeStart();
             }
 

@@ -107,7 +107,8 @@ public class StartDownloadFactory {
                         download.getDownloadStartDto().getErrorMsg(),
                         download.getDownloadStartDto().getErrorStream()));
 
-                if (ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW.getValue()) {
+                if (!ProgData.autoMode && ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW.getValue()) {
+                    // nur wenn gewollt und nicht AutoMode
                     new DownloadErrorDialogController(download);
                 }
             });

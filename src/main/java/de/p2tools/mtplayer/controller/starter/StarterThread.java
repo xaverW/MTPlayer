@@ -56,8 +56,8 @@ public class StarterThread extends Thread {
     public synchronized void run() {
         while (!isInterrupted()) {
             try {
-                if (searchFilms.getValue()) {
-                    // da machmer nix
+                if (!ProgData.downloadSearchDone || searchFilms.getValue()) {
+                    // vorher und während des Suchens der Filmliste machmer nix
                     sleep(5_000);
                     continue;
                 }
@@ -76,9 +76,10 @@ public class StarterThread extends Thread {
                     continue;
                 }
 
-                if (!checkQuitAfterDownload.getValue()) {
-                    // alle Downloads sind gestartet und jetzt das Beenden prüfen: Est für den auto mode
-                    // wenn noch nicht geprüft, dann jetzt und beenden, wenn autoMode
+                if (ProgData.autoMode && ProgData.downloadSearchDone && !checkQuitAfterDownload.getValue()) {
+                    // dann haben wir den "Automodus"
+                    // Downloads wurden gesucht, gestartet und jetzt das Beenden prüfen
+                    checkQuitAfterDownload.setValue(true);
                     quitProgramAfterDownload();
                 }
 
@@ -90,29 +91,26 @@ public class StarterThread extends Thread {
     }
 
     private void quitProgramAfterDownload() {
-        checkQuitAfterDownload.setValue(true);
-        if (ProgData.autoMode) {
-            //dann haben wir den "Automodus"
-            Platform.runLater(() -> {
-                if (progData.downloadList.countStartedAndRunningDownloads() == 0) {
-                    //dann gibts keine gestarteten Downloads und das Programm beendet sich sofort nach dem Start
-                    //drum nur eine kurze Info
-                    final AutomodeContinueDialogController dialogController = new AutomodeContinueDialogController();
-                    if (dialogController.isContinueAutomode()) {
-                        ProgQuit.quit(true);
-                    } else {
-                        // autoMode abgebrochen
-                        ProgData.autoMode = false;
-                    }
-
+        //dann haben wir den "Automodus"
+        Platform.runLater(() -> {
+            if (progData.downloadList.countStartedAndRunningDownloads() == 0) {
+                //dann gibts keine gestarteten Downloads und das Programm beendet sich sofort nach dem Start
+                //drum nur eine kurze Info
+                final AutomodeContinueDialogController dialogController = new AutomodeContinueDialogController();
+                if (dialogController.isContinueAutomode()) {
+                    ProgQuit.quit(true);
                 } else {
-                    //dann gleich den "Quitt-Dialog" anzeigen, ist ja eine Weile zu sehen
-                    ProgQuit.quit(true); //->todo
-                    //dann wurde das "Beenden" abgebrochen
+                    // autoMode abgebrochen
                     ProgData.autoMode = false;
                 }
-            });
-        }
+
+            } else {
+                //dann gleich den "Quitt-Dialog" anzeigen, ist ja eine Weile zu sehen
+                ProgQuit.quit(true);
+                //dann wurde das "Beenden" abgebrochen
+                ProgData.autoMode = false;
+            }
+        });
     }
 
     private synchronized DownloadData getNextStart() throws InterruptedException {

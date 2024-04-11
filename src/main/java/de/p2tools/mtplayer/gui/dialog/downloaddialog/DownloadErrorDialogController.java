@@ -76,12 +76,7 @@ public class DownloadErrorDialogController extends P2DialogExtra {
         hBoxTitle = getHBoxTitle();
         vBoxCont = getVBoxCont();
 
-        if (ProgData.autoMode) {
-            // dann schaut ja eh keiner zu
-            return;
-        } else {
-            init(true);
-        }
+        init(true);
     }
 
     @Override

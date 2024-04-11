@@ -46,6 +46,7 @@ public class LogMsgFactory {
             list.add("Ziel: " + download.getDestPathFile());
         }
 
+        list.add("Titel: " + (download.getTitle()));
         list.add("URL: " + download.getUrl());
         list.add("Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(download.getDownloadStartDto().getStartTime()));
         if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {

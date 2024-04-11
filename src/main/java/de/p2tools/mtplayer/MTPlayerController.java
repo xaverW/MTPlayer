@@ -107,7 +107,12 @@ public class MTPlayerController extends StackPane {
 
             initMaskerPane();
             initButton();
-            selPanelFilm();
+            if (ProgData.autoMode) {
+                // dann die Downloads anzeigen
+                selPanelDownload();
+            } else {
+                selPanelFilm();
+            }
         } catch (Exception ex) {
             P2Log.errorLog(597841023, ex);
         }
