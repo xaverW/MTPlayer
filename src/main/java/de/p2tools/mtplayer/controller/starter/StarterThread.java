@@ -114,12 +114,11 @@ public class StarterThread extends Thread {
     }
 
     private synchronized DownloadData getNextStart() throws InterruptedException {
-        //ersten passenden Download der Liste zurückgeben oder null und versuchen,
-        //dass bei mehreren laufenden Downloads ein anderer Sender gesucht wird
+        // ersten passenden Download der Liste zurückgeben oder null
         if (paused.getValue()) {
             //beim Löschen der Downloads kann das Starten etwas "pausiert" werden
             //damit ein zu löschender Download nicht noch schnell gestartet wird
-            sleep(5_1000);
+            sleep(5_000);
             paused.setValue(false);
         }
         return progData.downloadList.getNextStart();
