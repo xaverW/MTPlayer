@@ -25,7 +25,7 @@ import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
-public final class FilmFilter extends FilmFilterProps {
+public final class FilmFilter extends FilmFilterProps implements Filter {
 
     private boolean filterIsOff = true; // Filter ist EIN - meldet Änderungen
     private final PauseTransition pause = new PauseTransition(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue())); // nach Ablauf wird Änderung gemeldet - oder nach Return

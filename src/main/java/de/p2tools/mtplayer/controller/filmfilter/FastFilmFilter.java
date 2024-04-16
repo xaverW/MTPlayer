@@ -22,9 +22,9 @@ import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
-public final class FastFilmFilter extends FastFilmFilterProps {
+public final class FastFilmFilter extends FastFilmFilterProps implements Filter {
 
-    private final PauseTransition pause = new PauseTransition(Duration.millis(200)); // nach Ablauf wird Änderung gemeldet - oder nach Return
+    private final PauseTransition pause = new PauseTransition(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue())); // nach Ablauf wird Änderung gemeldet - oder nach Return
 
     public FastFilmFilter() {
         initFilter();
@@ -33,6 +33,17 @@ public final class FastFilmFilter extends FastFilmFilterProps {
     public void clearFilter() {
         // alle Filter löschen, Button Black bleibt, wie er ist
         setFilterTerm("");
+        if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+            // dann noch melden
+            reportFilterReturn();
+        }
+    }
+
+    public void reportFilterReturn() {
+        // sind die ComboBoxen wenn return gedrückt wird
+        P2Log.debugLog("reportFilterReturn");
+        pause.stop();
+        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
     }
 
     private void initFilter() {
@@ -51,7 +62,6 @@ public final class FastFilmFilter extends FastFilmFilterProps {
     }
 
     private void setTxtFilterChange() {
-        //wird auch ausgelöst durch Eintrag in die FilterHistory, da wird ein neuer SelectedFilter angelegt
         if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
             //dann wird erst nach "RETURN" gestartet
             pause.stop();

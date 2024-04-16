@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer;
+package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
@@ -40,7 +40,8 @@ public class SearchFast extends HBox {
     public SearchFast() {
         this.progData = ProgData.getInstance();
         this.cboSearch = new PCboStringSearch(progData,
-                progData.filmFilterWorker.getFastFilterSettings().filterTermProperty());
+                progData.filmFilterWorker.getFastFilterSettings().filterTermProperty(),
+                progData.filmFilterWorker.getFastFilterSettings());
         make();
     }
 
@@ -107,7 +108,7 @@ public class SearchFast extends HBox {
             }
             PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
         });
-        btnClear.setOnAction(a -> cboSearch.getEditor().clear());
+        btnClear.setOnAction(a -> progData.filmFilterWorker.getFastFilterSettings().clearFilter());
     }
 
     private void setFastSearchOnOff(boolean andSearch) {

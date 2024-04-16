@@ -63,7 +63,7 @@ public final class LiveFilmFilterWorker {
         setFilter();
     }
 
-    private void setFilter() {
+    public void setFilter() {
         Predicate<FilmData> predicate = filter -> true;
 
         final String channel = getActFilterSettings().channelProperty().getValueSafe();

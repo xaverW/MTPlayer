@@ -15,20 +15,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.StringConverter;
 
-public class PCboFilmFilter extends HBox {
+public class PCboTextFilter extends HBox {
 
     private ComboBox<TextFilter> cbo = new ComboBox<>();
     private boolean itsMe = false;
-    private TextFilterList textFilterList;
+    private final TextFilterList textFilterList;
 
-    public PCboFilmFilter() {
+    public PCboTextFilter() {
         this.textFilterList = ProgData.getInstance().filmFilterWorker.getTextFilterList();
         cbo.setMaxWidth(Double.MAX_VALUE);
         cbo.setVisibleRowCount(10);
         getChildren().add(cbo);
         HBox.setHgrow(cbo, Priority.ALWAYS);
 
-        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, PCboFilmFilter.class.getSimpleName()) {
+        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, PCboTextFilter.class.getSimpleName()) {
             @Override
             public void ping() {
                 // dann sel löschen und evtl. neuen Filter hinzufügen

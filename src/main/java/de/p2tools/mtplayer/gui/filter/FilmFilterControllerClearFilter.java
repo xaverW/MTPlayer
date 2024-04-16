@@ -35,7 +35,7 @@ public class FilmFilterControllerClearFilter extends VBox {
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
-    private final PCboFilmFilter cboBack = new PCboFilmFilter();
+    private final PCboTextFilter cboTextFilter = new PCboTextFilter();
 
     private final ProgData progData;
 
@@ -71,8 +71,8 @@ public class FilmFilterControllerClearFilter extends VBox {
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(5, 0, 0, 0));
         hBox.getChildren().addAll(btnEditFilter,
-                cboBack, btnGoBack, btnGoForward, btnClearFilter);
-        HBox.setHgrow(cboBack, Priority.ALWAYS);
+                cboTextFilter, btnGoBack, btnGoForward, btnClearFilter);
+        HBox.setHgrow(cboTextFilter, Priority.ALWAYS);
         getChildren().addAll(hBox);
     }
 
