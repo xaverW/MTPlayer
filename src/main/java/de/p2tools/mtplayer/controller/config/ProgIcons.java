@@ -82,30 +82,30 @@ public class ProgIcons {
     public static PIcon ICON_TOOLBAR_MENU = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-menu.png", 18, 15);
     public static PIcon ICON_TOOLBAR_MENU_TOP = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-menu-top.png", 32, 18);
 
-    public static PIcon ICON_TOOLBAR_DOWNLOAD_CLEAN = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-clean.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_DOWNLOAD_START = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-starten.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_DOWNLOAD_DEL = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-del.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_DOWNLOAD_UNDO = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-undo.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_DOWNLOAD_FILM_START = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-film-start.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_DOWNLOAD_REFRESH = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-refresh.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_DOWNLOAD_START_ALL = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-start-all.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-start-time.png", 28, 28);
+    public static PIcon ICON_TOOLBAR_DOWNLOAD_CLEAN = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-clean.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_DOWNLOAD_START = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-starten.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_DOWNLOAD_DEL = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-del.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_DOWNLOAD_UNDO = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-undo.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_DOWNLOAD_FILM_START = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-film-start.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_DOWNLOAD_REFRESH = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-refresh.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_DOWNLOAD_START_ALL = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-start-all.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-download-start-time.png", 26, 26);
 
-    public static PIcon ICON_TOOLBAR_FILM_START = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-start.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_FILM_ALL_START = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-all-start.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_FILM_REC = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-rec.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_FILM_BOOKMARK = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-bookmark.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_FILM_BOOKMARK_FILTER = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-bookmark-filter.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_FILM_DEL_BOOKMARK = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-del-bookmark.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-del-all-bookmark.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_PROPOSE = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-propose.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_LIVE = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-live.png", 28, 28);
+    public static PIcon ICON_TOOLBAR_FILM_START = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-start.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_FILM_ALL_START = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-all-start.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_FILM_REC = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-rec.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_FILM_BOOKMARK = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-bookmark.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_FILM_BOOKMARK_FILTER = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-bookmark-filter.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_FILM_DEL_BOOKMARK = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-del-bookmark.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-filme-del-all-bookmark.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_PROPOSE = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-propose.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_LIVE = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-live.png", 26, 26);
 
-    public static PIcon ICON_TOOLBAR_ABO_NEW = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-new.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_ABO_ON = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-on.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_ABO_OFF = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-off.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_ABO_DEL = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-del.png", 28, 28);
-    public static PIcon ICON_TOOLBAR_ABO_CONFIG = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-config.png", 28, 28);
+    public static PIcon ICON_TOOLBAR_ABO_NEW = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-new.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_ABO_ON = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-on.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_ABO_OFF = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-off.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_ABO_DEL = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-del.png", 26, 26);
+    public static PIcon ICON_TOOLBAR_ABO_CONFIG = new PIcon(ICON_PATH_LONG, ICON_PATH, "toolbar-abo-config.png", 26, 26);
 
     public static PIcon ICON_FILTER_FILM_LOAD = new PIcon(ICON_PATH_LONG, ICON_PATH, "filter-film-load.png", 22, 22);
     public static PIcon ICON_FILTER_FILM_SAVE = new PIcon(ICON_PATH_LONG, ICON_PATH, "filter-film-save.png", 22, 22);
