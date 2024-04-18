@@ -17,6 +17,9 @@ public class TextFilter extends P2DataSample<TextFilter> implements Comparable<T
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
 
+    public TextFilter() {
+    }
+
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
@@ -31,9 +34,6 @@ public class TextFilter extends P2DataSample<TextFilter> implements Comparable<T
     @Override
     public String getTag() {
         return TAG;
-    }
-
-    public TextFilter() {
     }
 
     public TextFilter(FilmFilter filmFilter) {

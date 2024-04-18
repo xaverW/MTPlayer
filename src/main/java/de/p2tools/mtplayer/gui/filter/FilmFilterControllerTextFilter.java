@@ -28,6 +28,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 
+import java.util.function.BooleanSupplier;
+
 public class FilmFilterControllerTextFilter extends VBox {
 
     private final P2MenuButton mbChannel;
@@ -45,18 +47,18 @@ public class FilmFilterControllerTextFilter extends VBox {
         progData = ProgData.getInstance();
         mbChannel = new P2MenuButton(progData.filmFilterWorker.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelList);
 
-        cboTheme = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeProperty(),
-                progData.filmFilterWorker.getActFilterSettings());
+        final BooleanSupplier booleanSupplier = () -> {
+            progData.filmFilterWorker.getActFilterSettings().reportFilterReturn();
+            return true;
+        };
+
+        cboTheme = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeProperty(), booleanSupplier);
         cboThemeExact = new PCboThemeExact(progData, progData.filmFilterWorker.getActFilterSettings().exactThemeProperty());
 
-        cboThemeTitle = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeTitleProperty(),
-                progData.filmFilterWorker.getActFilterSettings());
-        cboTitle = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().titleProperty(),
-                progData.filmFilterWorker.getActFilterSettings());
-        cboSomewhere = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().somewhereProperty(),
-                progData.filmFilterWorker.getActFilterSettings());
-        cboUrl = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().urlProperty(),
-                progData.filmFilterWorker.getActFilterSettings());
+        cboThemeTitle = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().themeTitleProperty(), booleanSupplier);
+        cboTitle = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().titleProperty(), booleanSupplier);
+        cboSomewhere = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().somewhereProperty(), booleanSupplier);
+        cboUrl = new PCboStringSearch(progData, progData.filmFilterWorker.getActFilterSettings().urlProperty(), booleanSupplier);
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addFilter();

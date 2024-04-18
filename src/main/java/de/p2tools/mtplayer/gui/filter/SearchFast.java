@@ -28,6 +28,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.util.function.BooleanSupplier;
+
 public class SearchFast extends HBox {
     private final Button btnSearch = new Button();
     private final Button btnSelectWhere = new Button();
@@ -39,9 +41,11 @@ public class SearchFast extends HBox {
 
     public SearchFast() {
         this.progData = ProgData.getInstance();
-        this.cboSearch = new PCboStringSearch(progData,
-                progData.filmFilterWorker.getFastFilterSettings().filterTermProperty(),
-                progData.filmFilterWorker.getFastFilterSettings());
+        final BooleanSupplier booleanSupplier = () -> {
+            progData.filmFilterWorker.getFastFilterSettings().reportFilterReturn();
+            return true;
+        };
+        this.cboSearch = new PCboStringSearch(progData, progData.filmFilterWorker.getFastFilterSettings().filterTermProperty(), booleanSupplier);
         make();
     }
 

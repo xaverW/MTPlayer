@@ -30,6 +30,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.function.BooleanSupplier;
+
 public class LiveFilmFilterText extends VBox {
 
     private final P2MenuButton mbChannel;
@@ -42,12 +44,15 @@ public class LiveFilmFilterText extends VBox {
         super();
         progData = ProgData.getInstance();
 
+        final BooleanSupplier booleanSupplier = () -> {
+            progData.liveFilmFilterWorker.getActFilterSettings().reportFilterReturn();
+            return true;
+        };
+
         mbChannel = new P2MenuButton(progData.liveFilmFilterWorker.getActFilterSettings().channelProperty(),
                 ThemeListFactory.allChannelList);
-        cboThema = new PCboStringSearch(progData, progData.liveFilmFilterWorker.getActFilterSettings().themeProperty(),
-                progData.liveFilmFilterWorker.getActFilterSettings());
-        cboTitle = new PCboStringSearch(progData, progData.liveFilmFilterWorker.getActFilterSettings().titleProperty(),
-                progData.liveFilmFilterWorker.getActFilterSettings());
+        cboThema = new PCboStringSearch(progData, progData.liveFilmFilterWorker.getActFilterSettings().themeProperty(), booleanSupplier);
+        cboTitle = new PCboStringSearch(progData, progData.liveFilmFilterWorker.getActFilterSettings().titleProperty(), booleanSupplier);
 
         addFilter();
     }

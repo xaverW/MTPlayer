@@ -19,22 +19,22 @@ package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 
-import java.util.Objects;
+import java.util.function.BooleanSupplier;
 
-public class PCboStringSearch extends ComboBox<PCboSearcher> {
+public class PCboStringSearch extends ComboBox<Label> {
     public static final int MAX_FILTER_HISTORY = 15;
     private final StringProperty strSearchProperty;
     private final ProgData progData;
-    private final Filter actFilter;
+    private final BooleanSupplier actFilter;
 
-    public PCboStringSearch(ProgData progData, StringProperty strSearchProperty, Filter actFilter) {
+    public PCboStringSearch(ProgData progData, StringProperty strSearchProperty, BooleanSupplier actFilter) {
         this.progData = progData;
         this.strSearchProperty = strSearchProperty;
         this.actFilter = actFilter;
@@ -42,7 +42,11 @@ public class PCboStringSearch extends ComboBox<PCboSearcher> {
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         setVisibleRowCount(MAX_FILTER_HISTORY);
         for (int i = 0; i < MAX_FILTER_HISTORY; ++i) {
-            getItems().add(new PCboSearcher());
+            getItems().add(new Label() {
+                public String toString() {
+                    return getText();
+                }
+            });
         }
         init();
     }
@@ -67,17 +71,17 @@ public class PCboStringSearch extends ComboBox<PCboSearcher> {
                     if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
                         // dann melden
                         if (this.isShowing() ||
-                                newValue != null
-                                        && newValue.getClass().equals(PCboSearcher.class)
-                                        && !Objects.equals(strSearchProperty.getValueSafe(), ((PCboSearcher) newValue).getValue())) {
-                            actFilter.reportFilterReturn();
+                                newValue != null &&
+                                        newValue.getClass().equals(Label.class) &&
+                                        !strSearchProperty.getValueSafe().equals(((Label) newValue).getText())) {
+                            actFilter.getAsBoolean();
                         }
                     }
                 });
 
         setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                actFilter.reportFilterReturn();
+                actFilter.getAsBoolean();
             }
         });
         strSearchProperty.addListener((u, o, n) -> getEditor().setText(strSearchProperty.getValue()));
@@ -90,17 +94,17 @@ public class PCboStringSearch extends ComboBox<PCboSearcher> {
             return;
         }
 
-        PCboSearcher tmp = getItems().get(1);
-        if (filterStr.contains(tmp.getValue())) {
+        final Label tmp = getItems().get(1);
+        if (filterStr.contains(tmp.getText())) {
             // dann wird der erste damit ersetzt
-            tmp.setValue(filterStr);
+            tmp.setText(filterStr);
             return;
         }
 
         // dann wird jetzt einfach weitergeschaltet
         for (int i = getItems().size() - 2; i >= 1; --i) {
-            getItems().get(i + 1).setValue(getItems().get(i).getValue());
+            getItems().get(i + 1).setText(getItems().get(i).getText());
         }
-        getItems().get(1).setValue(filterStr);
+        getItems().get(1).setText(filterStr);
     }
 }

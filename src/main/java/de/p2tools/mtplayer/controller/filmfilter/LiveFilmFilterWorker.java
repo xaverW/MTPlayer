@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
@@ -31,15 +32,14 @@ public final class LiveFilmFilterWorker {
     private final LiveFilter actFilterSettings = new LiveFilter();
     private final FilmListMTP liveFilmList; // Filmliste der Live-Filme
 
-
     public LiveFilmFilterWorker() {
         this.liveFilmList = new FilmListMTP();
-
-        actFilterSettings.channelProperty().addListener((u, o, n) -> setFilter());
-        actFilterSettings.themeProperty().addListener((u, o, n) -> setFilter());
-        actFilterSettings.themeTitleProperty().addListener((u, o, n) -> setFilter());
-        actFilterSettings.titleProperty().addListener((u, o, n) -> setFilter());
-        actFilterSettings.somewhereProperty().addListener((u, o, n) -> setFilter());
+        PListener.addListener(new PListener(PListener.EVENT_LIVE_FILTER_CHANGED, LiveFilmFilterWorker.class.getSimpleName()) {
+            @Override
+            public void ping() {
+                filterList();
+            }
+        });
     }
 
     public FilteredList<FilmDataMTP> getFilteredList() {
@@ -60,17 +60,15 @@ public final class LiveFilmFilterWorker {
 
     public synchronized void clearFilter() {
         actFilterSettings.clearFilter();
-        setFilter();
+        filterList();
     }
 
-    public void setFilter() {
+    private void filterList() {
         Predicate<FilmData> predicate = filter -> true;
 
         final String channel = getActFilterSettings().channelProperty().getValueSafe();
         final String theme = getActFilterSettings().themeProperty().getValueSafe();
-        final String themeTitle = getActFilterSettings().themeTitleProperty().getValueSafe();
         final String title = getActFilterSettings().titleProperty().getValueSafe();
-        final String somewhere = getActFilterSettings().somewhereProperty().getValueSafe();
 
         Filter fChannel = new Filter(channel, true);
         if (!fChannel.isEmpty) {
@@ -82,21 +80,10 @@ public final class LiveFilmFilterWorker {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeExact(fTheme, f));
         }
 
-        // ThemaTitel
-        Filter fThemeTitle = new Filter(themeTitle, true);
-        if (!fThemeTitle.isEmpty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeTitle(fThemeTitle, f));
-        }
-
         // Titel
         Filter fTitle = new Filter(title, true);
         if (!fTitle.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fTitle, f));
-        }
-
-        Filter fSomewhere = new Filter(somewhere, true);
-        if (!fSomewhere.isEmpty) {
-            predicate = predicate.and(f -> FilmFilterCheck.checkMatchSomewhere(fSomewhere, f));
         }
 
         liveFilmList.getFilteredList().setPredicate(predicate);

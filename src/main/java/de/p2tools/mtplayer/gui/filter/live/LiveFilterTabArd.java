@@ -17,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.util.function.BooleanSupplier;
+
 public class LiveFilterTabArd extends Tab {
 
     private final ProgData progData;
@@ -59,8 +61,8 @@ public class LiveFilterTabArd extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearch;
-        cboSearch = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_ARD,
-                progData.liveFilmFilterWorker.getActFilterSettings());
+        final BooleanSupplier supplier = () -> false;
+        cboSearch = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_ARD, supplier);
 
         VBox vBox = new VBox();
         vBox.setSpacing(2);
@@ -96,8 +98,11 @@ public class LiveFilterTabArd extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearchUrl;
-        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD,
-                progData.liveFilmFilterWorker.getActFilterSettings());
+        final BooleanSupplier booleanSupplier = () -> {
+            progData.liveFilmFilterWorker.getActFilterSettings().reportFilterReturn();
+            return true;
+        };
+        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD, booleanSupplier);
 
         vBox = new VBox(2);
 

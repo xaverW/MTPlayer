@@ -16,6 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.util.function.BooleanSupplier;
+
 public class LiveFilterTabZdf extends Tab {
 
     private final ProgData progData;
@@ -44,9 +46,9 @@ public class LiveFilterTabZdf extends Tab {
             ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.set("");
         });
 
+        final BooleanSupplier supplier = () -> false;
         final PCboStringSearch cboSearch;
-        cboSearch = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF,
-                progData.liveFilmFilterWorker.getActFilterSettings());
+        cboSearch = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF, supplier);
 
         Button btnSearchZdf = new Button();
         btnSearchZdf.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
@@ -95,9 +97,12 @@ public class LiveFilterTabZdf extends Tab {
         btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(5))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
+        final BooleanSupplier booleanSupplier = () -> {
+            progData.liveFilmFilterWorker.getActFilterSettings().reportFilterReturn();
+            return true;
+        };
         final PCboStringSearch cboSearchUrl;
-        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF,
-                progData.liveFilmFilterWorker.getActFilterSettings());
+        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF, booleanSupplier);
 
         vBox = new VBox(2);
 
