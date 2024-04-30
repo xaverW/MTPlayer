@@ -207,6 +207,7 @@ public class FilmGuiController extends AnchorPane {
 
         tableView.setRowFactory(tableView -> {
             TableRowFilm<FilmDataMTP> row = new TableRowFilm<>();
+
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
                         !row.isEmpty()) {
@@ -222,6 +223,7 @@ public class FilmGuiController extends AnchorPane {
                 }
             });
             return row;
+
         });
         tableView.hoverProperty().addListener((o) -> {
             if (!tableView.isHover()) {

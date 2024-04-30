@@ -34,15 +34,15 @@ public class TableRowLiveFilm<T> extends TableRow<T> {
     }
 
     @Override
-    public void updateItem(T f, boolean empty) {
-        super.updateItem(f, empty);
+    public void updateItem(T item, boolean empty) {
+        super.updateItem(item, empty);
 
-        FilmDataMTP film = (FilmDataMTP) f;
-        if (film == null || empty) {
+        if (item == null || empty) {
             setStyle("");
             setTooltip(null);
 
         } else {
+            FilmDataMTP film = (FilmDataMTP) item;
             if (ProgConfig.LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
                 setTooltip(new Tooltip(film.getTheme() + "\n" + film.getTitle()));
             }
@@ -54,13 +54,13 @@ public class TableRowLiveFilm<T> extends TableRow<T> {
                 }
 
             } else if (geoMelden.get() && film.isGeoBlocked()) {
-                // geogeblockt
+                // geoGeblockt
                 for (int i = 0; i < getChildren().size(); i++) {
                     getChildren().get(i).setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
                 }
 
             } else if (film.isNewFilm()) {
-                // neue Filme
+                // neuer Film
                 for (int i = 0; i < getChildren().size(); i++) {
                     getChildren().get(i).setStyle(ProgColorList.FILM_NEW.getCssFont());
                 }

@@ -24,22 +24,22 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 
 
-public class TableRowAbo<T> extends TableRow {
+public class TableRowAbo<T> extends TableRow<T> {
 
 
     public TableRowAbo() {
     }
 
     @Override
-    public void updateItem(Object f, boolean empty) {
-        super.updateItem(f, empty);
+    public void updateItem(T item, boolean empty) {
+        super.updateItem(item, empty);
 
-        AboData abo = (AboData) f;
-        if (abo == null || empty) {
+        if (item == null || empty) {
             setStyle("");
             setTooltip(null);
 
         } else {
+            AboData abo = (AboData) item;
             if (ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
                 setTooltip(new Tooltip(
                         abo.getChannel().isEmpty() ? "" : "Titel: " + abo.getChannel() + "\n" +

@@ -26,7 +26,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 
 
-public class TableRowDownload<T> extends TableRow {
+public class TableRowDownload<T> extends TableRow<T> {
 
     private final BooleanProperty geoMelden;
 
@@ -35,21 +35,21 @@ public class TableRowDownload<T> extends TableRow {
     }
 
     @Override
-    public void updateItem(Object f, boolean empty) {
-        super.updateItem(f, empty);
+    public void updateItem(T item, boolean empty) {
+        super.updateItem(item, empty);
 
-        DownloadData download = (DownloadData) f;
-        if (download == null || empty) {
+        if (item == null || empty) {
             setStyle("");
             setTooltip(null);
 
         } else {
+            DownloadData download = (DownloadData) item;
             if (ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
                 setTooltip(new Tooltip(download.getTheme() + "\n" + download.getTitle()));
             }
 
             if (geoMelden.get() && download.getGeoBlocked()) {
-                // geogeblockt
+                // geoGeblockt
                 for (int i = 0; i < getChildren().size(); i++) {
                     getChildren().get(i).setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
                 }

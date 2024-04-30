@@ -118,6 +118,7 @@ public class PanePropFilmList {
         });
         tableFilm.setRowFactory(tableView -> {
             TableRowFilm<FilmDataMTP> row = new TableRowFilm<>();
+
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
                         !row.isEmpty()) {
