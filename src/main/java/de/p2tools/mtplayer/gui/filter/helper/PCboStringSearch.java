@@ -23,12 +23,11 @@ import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 
 import java.util.function.BooleanSupplier;
 
-public class PCboStringSearch extends ComboBox<Label> {
+public class PCboStringSearch extends ComboBox<PCboSearchLabel> {
     public static final int MAX_FILTER_HISTORY = 15;
     private final StringProperty strSearchProperty;
     private final ProgData progData;
@@ -42,11 +41,7 @@ public class PCboStringSearch extends ComboBox<Label> {
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         setVisibleRowCount(MAX_FILTER_HISTORY);
         for (int i = 0; i < MAX_FILTER_HISTORY; ++i) {
-            getItems().add(new Label() {
-                public String toString() {
-                    return getText();
-                }
-            });
+            getItems().add(new PCboSearchLabel());
         }
         init();
     }
@@ -72,8 +67,8 @@ public class PCboStringSearch extends ComboBox<Label> {
                         // dann melden
                         if (this.isShowing() ||
                                 newValue != null &&
-                                        newValue.getClass().equals(Label.class) &&
-                                        !strSearchProperty.getValueSafe().equals(((Label) newValue).getText())) {
+                                        newValue.getClass().equals(PCboSearchLabel.class) &&
+                                        !strSearchProperty.getValueSafe().equals(((PCboSearchLabel) newValue).getText())) {
                             actFilter.getAsBoolean();
                         }
                     }
@@ -94,7 +89,7 @@ public class PCboStringSearch extends ComboBox<Label> {
             return;
         }
 
-        final Label tmp = getItems().get(1);
+        final PCboSearchLabel tmp = getItems().get(1);
         if (filterStr.contains(tmp.getText())) {
             // dann wird der erste damit ersetzt
             tmp.setText(filterStr);

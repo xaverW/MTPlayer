@@ -97,12 +97,8 @@ public class LiveFilterTabZdf extends Tab {
         btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(5))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
-        final BooleanSupplier booleanSupplier = () -> {
-            progData.liveFilmFilterWorker.getActFilterSettings().reportFilterReturn();
-            return true;
-        };
         final PCboStringSearch cboSearchUrl;
-        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF, booleanSupplier);
+        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF, supplier);
 
         vBox = new VBox(2);
 

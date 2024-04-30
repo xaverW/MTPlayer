@@ -98,11 +98,7 @@ public class LiveFilterTabArd extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearchUrl;
-        final BooleanSupplier booleanSupplier = () -> {
-            progData.liveFilmFilterWorker.getActFilterSettings().reportFilterReturn();
-            return true;
-        };
-        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD, booleanSupplier);
+        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD, supplier);
 
         vBox = new VBox(2);
 
