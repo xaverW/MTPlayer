@@ -102,9 +102,9 @@ public class ProgInfos {
     }
 
     /**
-     * Return the path to "mtplayer.xml"
+     * Return the path to styleFile
      *
-     * @return Path object to mtplayer.xml file
+     * @return Path object to style.css file
      */
     public static Path getStyleFile() {
         return SettingsDirectory.getSettingsFile(ProgData.configDir,

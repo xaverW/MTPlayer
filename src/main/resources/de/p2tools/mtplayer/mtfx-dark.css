@@ -12,7 +12,7 @@
 .downloadInfoGrid {
     -fx-background-color: #82888b;
 }
-/* ist die abgesetzte Zeile im Downloaddialog */
+/* ist die abgesetzte Zeile im DownloadDialog */
 .downloadDialog {
     -fx-background-color: #64696b;
 }

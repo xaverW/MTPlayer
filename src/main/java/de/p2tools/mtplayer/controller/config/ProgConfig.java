@@ -160,7 +160,7 @@ public class ProgConfig extends P2DataProgConfig {
 
     public static BooleanProperty SYSTEM_MARK_GEO = addBoolProp("system-mark-geo", Boolean.TRUE);
     public static StringProperty SYSTEM_GEO_HOME_PLACE = addStrProp("system-geo-home-place", FilmDataMTP.GEO_DE);
-    public static BooleanProperty SYSTEM_STYLE = addBoolProp("system-style", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_STYLE = addBoolProp("system-style", Boolean.FALSE); // für die Schriftgröße
     public static IntegerProperty SYSTEM_STYLE_SIZE = addIntProp("system-style-size", 14);
     public static StringProperty SYSTEM_LOG_DIR = addStrProp("system-log-dir", "");
     public static BooleanProperty SYSTEM_LOG_ON = addBoolProp("system-log-on", Boolean.TRUE);

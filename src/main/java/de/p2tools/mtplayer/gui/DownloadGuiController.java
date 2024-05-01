@@ -331,6 +331,7 @@ public class DownloadGuiController extends AnchorPane {
                     setFilmInfos(tableView.getSelectionModel().getSelectedItem());
                 }
             });
+
             return row;
         });
         tableView.hoverProperty().addListener((o) -> {

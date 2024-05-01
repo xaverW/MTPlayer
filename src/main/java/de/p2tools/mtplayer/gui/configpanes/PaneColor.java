@@ -64,6 +64,7 @@ public class PaneColor {
 
         TableView<P2ColorData> tableViewBackground = new TableView<>();
         initTableColor(tableViewBackground);
+        tableViewBackground.setPrefHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableViewBackground.setItems(ProgColorList.getColorListBackground());
 
         Button button = new Button("Alle _Farben zurücksetzen");
@@ -83,8 +84,9 @@ public class PaneColor {
 
         gridPane.add(new Label("Schriftfarben"), 0, ++row, 2, 1);
         gridPane.add(tableViewFont, 0, ++row, 2, 1);
+
         ++row;
-        gridPane.add(new Label("Hintergrundfarben"), 0, ++row, 2, 1);
+        gridPane.add(new Label("Hintergrundfarben"), 0, row, 2, 1);
         gridPane.add(tableViewBackground, 0, ++row, 2, 1);
 
         gridPane.add(button, 0, ++row, 2, 1);
