@@ -124,6 +124,15 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "Dateinamen.", 100);
         add(whatsNewInfo);
 
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 5, 4),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_10.png",
+
+                "Rechte Menüleiste",
+                "Die rechte Menüleiste kann ein- und ausgeblendet werden, das ist über das Programm-Menü " +
+                        "möglich. Ein Klick mit der rechten Maustaste " +
+                        "in der rechten Menüleiste blendet sie auch aus.", 70);
+        add(whatsNewInfo);
+
         whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 3, 3), "",
                 "Was sich sonst noch geändert hat",
                 "* Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +
