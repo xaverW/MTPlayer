@@ -94,7 +94,7 @@ public class LiveFilterTabArd extends Tab {
         btnSearchUrlArd.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
         btnSearchUrlArd.setTooltip(new Tooltip("Suche starten"));
         btnSearchUrlArd.setOnAction(a -> searchUrl());
-        btnSearchUrlArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.length().lessThan(5))
+        btnSearchUrlArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearchUrl;

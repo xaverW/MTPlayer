@@ -94,7 +94,7 @@ public class LiveFilterTabZdf extends Tab {
         btnSearchUrlZdf.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
         btnSearchUrlZdf.setTooltip(new Tooltip("Suche starten"));
         btnSearchUrlZdf.setOnAction(a -> searchUrl());
-        btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(5))
+        btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboStringSearch cboSearchUrl;
