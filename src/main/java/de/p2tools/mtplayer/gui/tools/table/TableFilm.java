@@ -35,7 +35,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
     public TableFilm(Table.TABLE_ENUM table_enum, ProgData progData) {
         super(table_enum);
         this.table_enum = table_enum;
-        initFileRunnerColumn();
+        iniColumn();
     }
 
     @Override
@@ -44,11 +44,11 @@ public class TableFilm extends PTable<FilmDataMTP> {
     }
 
     public void resetTable() {
-        initFileRunnerColumn();
+        iniColumn();
         Table.resetTable(this);
     }
 
-    private void initFileRunnerColumn() {
+    private void iniColumn() {
         getColumns().clear();
 
         setTableMenuButtonVisible(true);
@@ -62,8 +62,12 @@ public class TableFilm extends PTable<FilmDataMTP> {
         ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_BOOKMARK.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
-        ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
+
+        // ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
+
+        // ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
+        ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
 
         final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");

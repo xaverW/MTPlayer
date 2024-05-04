@@ -54,12 +54,10 @@ public class TableAbo extends PTable<AboData> {
         getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO.addListener((observableValue, s, t1) -> refresh());
-        ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
-        ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> refresh());
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> {
-            P2TableFactory.refreshTable(this);
-        });
+        ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
+        ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
+        ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
 
         final TableColumn<AboData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));

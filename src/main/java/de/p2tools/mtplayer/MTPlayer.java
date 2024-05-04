@@ -89,6 +89,7 @@ public class MTPlayer extends Application {
             ProgColorList.setColorTheme(); // Farben einrichten
 
             if (ProgConfig.SYSTEM_STYLE.getValue()) {
+                // für die Schriftgröße
                 P2LibInit.setStyleFile(ProgInfos.getStyleFile().toString());
                 IoReadWriteStyle.readStyle(ProgInfos.getStyleFile(), scene);
             }

@@ -51,7 +51,6 @@ public class Main {
         }
     }
 
-
     private void startGuiFxMode(final String[] args) {
         // JavaFX stuff
         Platform.setImplicitExit(false);
