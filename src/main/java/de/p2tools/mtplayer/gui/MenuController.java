@@ -16,9 +16,11 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
@@ -45,15 +47,43 @@ public class MenuController extends ScrollPane {
         switch (sm) {
             case Film:
                 new FilmMenu(vb).init();
+                visibleProperty().bind(ProgConfig.FILM_GUI_SHOW_MENU);
+                managedProperty().bind(ProgConfig.FILM_GUI_SHOW_MENU);
+                setOnMouseClicked(mouseEvent -> {
+                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                        ProgConfig.FILM_GUI_SHOW_MENU.set(!ProgConfig.FILM_GUI_SHOW_MENU.get());
+                    }
+                });
                 break;
             case LIVE_FILM:
                 new LiveFilmMenu(vb).init();
+                visibleProperty().bind(ProgConfig.LIVE_FILM_GUI_SHOW_MENU);
+                managedProperty().bind(ProgConfig.LIVE_FILM_GUI_SHOW_MENU);
+                setOnMouseClicked(mouseEvent -> {
+                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                        ProgConfig.LIVE_FILM_GUI_SHOW_MENU.set(!ProgConfig.LIVE_FILM_GUI_SHOW_MENU.get());
+                    }
+                });
                 break;
             case DOWNLOAD:
                 new DownloadMenu(vb).init();
+                visibleProperty().bind(ProgConfig.DOWNLOAD_GUI_SHOW_MENU);
+                managedProperty().bind(ProgConfig.DOWNLOAD_GUI_SHOW_MENU);
+                setOnMouseClicked(mouseEvent -> {
+                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                        ProgConfig.DOWNLOAD_GUI_SHOW_MENU.set(!ProgConfig.DOWNLOAD_GUI_SHOW_MENU.get());
+                    }
+                });
                 break;
             case ABO:
                 new AboMenu(vb).init();
+                visibleProperty().bind(ProgConfig.ABO_GUI_SHOW_MENU);
+                managedProperty().bind(ProgConfig.ABO_GUI_SHOW_MENU);
+                setOnMouseClicked(mouseEvent -> {
+                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                        ProgConfig.ABO_GUI_SHOW_MENU.set(!ProgConfig.ABO_GUI_SHOW_MENU.get());
+                    }
+                });
                 break;
         }
     }

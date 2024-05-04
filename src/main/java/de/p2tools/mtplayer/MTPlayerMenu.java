@@ -63,6 +63,7 @@ public class MTPlayerMenu extends MenuButton {
         final CheckMenuItem miLive = new CheckMenuItem("Live-Suche");
         miLive.selectedProperty().bindBidirectional(ProgConfig.LIVE_FILM_IS_VISIBLE);
 
+
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
         P2ShortcutWorker.addShortCut(miQuit, PShortcut.SHORTCUT_QUIT_PROGRAM);
@@ -72,8 +73,30 @@ public class MTPlayerMenu extends MenuButton {
         getStyleClass().addAll("btnFunction", "btnFunc-2");
         setText("");
         setGraphic(ProgIcons.ICON_TOOLBAR_MENU_TOP.getImageView());
-        getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode, miLive, addHelp(progData),
-                new SeparatorMenuItem(), miQuit);
+
+        getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode, miLive);
+        addMenuButton();
+        getItems().addAll(addHelp(progData), new SeparatorMenuItem(), miQuit);
+    }
+
+    private void addMenuButton() {
+        final CheckMenuItem miFilm = new CheckMenuItem("Rechte Menüleiste");
+        miFilm.visibleProperty().bind(ProgData.FILM_TAB_ON);
+        miFilm.selectedProperty().bindBidirectional(ProgConfig.FILM_GUI_SHOW_MENU);
+
+        final CheckMenuItem miLiveFilm = new CheckMenuItem("Rechte Menüleiste");
+        miLiveFilm.visibleProperty().bind(ProgData.LIVE_FILM_TAB_ON);
+        miLiveFilm.selectedProperty().bindBidirectional(ProgConfig.LIVE_FILM_GUI_SHOW_MENU);
+
+        final CheckMenuItem miDownload = new CheckMenuItem("Rechte Menüleiste");
+        miDownload.visibleProperty().bind(ProgData.DOWNLOAD_TAB_ON);
+        miDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_SHOW_MENU);
+
+        final CheckMenuItem miAbo = new CheckMenuItem("Rechte Menüleiste");
+        miAbo.visibleProperty().bind(ProgData.ABO_TAB_ON);
+        miAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_GUI_SHOW_MENU);
+
+        getItems().addAll(miFilm, miLiveFilm, miDownload, miAbo);
     }
 
     private Menu addHelp(ProgData progData) {

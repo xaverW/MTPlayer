@@ -61,7 +61,6 @@ public class LiveFilmGui {
     public SplitPane pack() {
         // Menü
         final MenuController menuController = new MenuController(MenuController.StartupMode.LIVE_FILM);
-//        menuController.setId("film-menu-pane");
 
         // Gui
         progData.liveFilmGuiController = liveFilmGuiController;

@@ -60,9 +60,8 @@ public class DownloadGui {
     }
 
     public SplitPane pack() {
-
+        // Menü
         final MenuController menuController = new MenuController(MenuController.StartupMode.DOWNLOAD);
-//        menuController.setId("download-menu-pane");
 
         // Gui
         progData.downloadGuiController = guiController;
