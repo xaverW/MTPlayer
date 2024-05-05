@@ -32,6 +32,7 @@ import java.util.Collection;
 
 public class PaneGeo {
     private final RadioButton rbDe = new RadioButton("DE - Deutschland");
+    private final RadioButton rbFr = new RadioButton("FR - Frankreich");
     private final RadioButton rbCh = new RadioButton("CH - Schweiz");
     private final RadioButton rbAt = new RadioButton("AT - Österreich");
     private final RadioButton rbEu = new RadioButton("EU (EBU - European Broadcasting Union)");
@@ -57,9 +58,12 @@ public class PaneGeo {
         final Button btnHelpGeo = P2Button.helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
-        tg.getToggles().addAll(rbDe, rbCh, rbAt, rbEu, rbSonst);
+        tg.getToggles().addAll(rbDe, rbFr, rbCh, rbAt, rbEu, rbSonst);
 
         switch (ProgConfig.SYSTEM_GEO_HOME_PLACE.get()) {
+            case FilmDataMTP.GEO_FR:
+                rbFr.setSelected(true);
+                break;
             case FilmDataMTP.GEO_CH:
                 rbCh.setSelected(true);
                 break;
@@ -77,6 +81,9 @@ public class PaneGeo {
         }
         rbDe.setOnAction(e -> {
             ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_DE);
+        });
+        rbFr.setOnAction(e -> {
+            ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_FR);
         });
         rbCh.setOnAction(e -> {
             ProgConfig.SYSTEM_GEO_HOME_PLACE.setValue(FilmDataMTP.GEO_CH);
@@ -106,6 +113,7 @@ public class PaneGeo {
         gridPane.add(new Label("Mein Standort:"), 0, ++row);
 
         gridPane.add(rbDe, 1, row);
+        gridPane.add(rbFr, 1, ++row);
         gridPane.add(rbCh, 1, ++row);
         gridPane.add(rbAt, 1, ++row);
         gridPane.add(rbEu, 1, ++row);

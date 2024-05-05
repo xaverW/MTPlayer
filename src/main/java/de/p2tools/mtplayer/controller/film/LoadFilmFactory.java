@@ -87,11 +87,13 @@ public class LoadFilmFactory {
         if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
             //ist sonst evtl. noch von "vorher" gesetzt
             LoadFactoryConst.checker = null;
+
         } else if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
             //dann sollen Filme geprüft werden
             ProgData.getInstance().filmListFilter.clearCounter();
             LoadFactoryConst.checker = filmData -> BlacklistFilterFactory.checkFilmListFilterAndCountHits(filmData,
                     ProgData.getInstance().filmListFilter, true);
+
         } else {
             //dann ist er inverse
             ProgData.getInstance().filmListFilter.clearCounter();
