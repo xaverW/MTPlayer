@@ -29,9 +29,7 @@ import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
-import de.p2tools.mtplayer.controller.filmfilter.LiveFilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmfilter.*;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
@@ -85,7 +83,10 @@ public class ProgData {
     // zentrale Klassen
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public PShortcut pShortcut; // verwendete Shortcuts
-    public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile
+    public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile FILME
+    public TextFilterList textFilterList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
+    public StringFilter stringFilterLists; // sind die Text-Filter in den CBO's
+
     public LiveFilmFilterWorker liveFilmFilterWorker; // gespeicherte Filterprofile LIVE
     public FilmFilterRunner filmFilterRunner;
 
@@ -136,6 +137,8 @@ public class ProgData {
         utDataList = new UtDataList();
         downloadErrorList = new DownloadErrorList();
 
+        textFilterList = new TextFilterList();
+        stringFilterLists = new StringFilter();
         filmFilterWorker = new FilmFilterWorker();
         liveFilmFilterWorker = new LiveFilmFilterWorker();
 

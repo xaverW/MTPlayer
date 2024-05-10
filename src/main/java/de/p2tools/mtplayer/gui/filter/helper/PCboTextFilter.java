@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.gui.filter;
+package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -22,7 +22,7 @@ public class PCboTextFilter extends HBox {
     private final TextFilterList textFilterList;
 
     public PCboTextFilter() {
-        this.textFilterList = ProgData.getInstance().filmFilterWorker.getTextFilterList();
+        this.textFilterList = ProgData.getInstance().textFilterList;
         cbo.setMaxWidth(Double.MAX_VALUE);
         cbo.setVisibleRowCount(10);
         getChildren().add(cbo);
@@ -56,7 +56,7 @@ public class PCboTextFilter extends HBox {
 
         cbo.setConverter(new StringConverter<>() {
             @Override
-            public String toString(TextFilter person) {
+            public String toString(TextFilter textFilter) {
                 return "";
             }
 
@@ -76,7 +76,7 @@ public class PCboTextFilter extends HBox {
             final Label lblSomewhere = new Label();
 
             {
-                btnDel.setGraphic(ProgIcons.ICON_BUTTON_FILMFILTER_DEL.getImageView());
+                btnDel.setGraphic(ProgIcons.ICON_BUTTON_DEL_SW.getImageView());
                 btnDel.getStyleClass().add("buttonVerySmall");
                 hBox.setPadding(new Insets(0));
                 hBox.setSpacing(5);

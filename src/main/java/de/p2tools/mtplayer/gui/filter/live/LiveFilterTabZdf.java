@@ -7,7 +7,7 @@ import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
+import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch2;
 import de.p2tools.p2lib.P2LibConst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,8 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
-import java.util.function.BooleanSupplier;
 
 public class LiveFilterTabZdf extends Tab {
 
@@ -46,9 +44,9 @@ public class LiveFilterTabZdf extends Tab {
             ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.set("");
         });
 
-        final BooleanSupplier supplier = () -> false;
-        final PCboStringSearch cboSearch;
-        cboSearch = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF, supplier);
+        final PCboStringSearch2 cboSearch;
+        cboSearch = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListZdfLive(),
+                ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF);
 
         Button btnSearchZdf = new Button();
         btnSearchZdf.setGraphic(ProgIcons.ICON_BUTTON_SEARCH_16.getImageView());
@@ -97,8 +95,9 @@ public class LiveFilterTabZdf extends Tab {
         btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
-        final PCboStringSearch cboSearchUrl;
-        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF, supplier);
+        final PCboStringSearch2 cboSearchUrl;
+        cboSearchUrl = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListZdfUrl(),
+                ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF);
 
         vBox = new VBox(2);
 

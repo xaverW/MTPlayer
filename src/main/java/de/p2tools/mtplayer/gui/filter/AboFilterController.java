@@ -20,14 +20,14 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.p2lib.guitools.P2MenuButton;
+import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch2;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
+import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -35,8 +35,8 @@ public class AboFilterController extends FilterController {
 
     private P2MenuButton mbChannel;
     private ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
-    private TextField txtDescription = new TextField();
-    private TextField txtName = new TextField();
+    private PCboStringSearch2 cboName;
+    private PCboStringSearch2 cboDescription;
     private Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
 
     private final VBox vBoxFilter;
@@ -50,45 +50,39 @@ public class AboFilterController extends FilterController {
         mbChannel = new P2MenuButton(ProgConfig.FILTER_ABO_CHANNEL,
                 ThemeListFactory.channelsForAbosList);
 
-
+        initFilter();
         addCont("Abos für Sender", mbChannel, vBoxFilter);
         addCont("Status", cboArt, vBoxFilter);
-        addCont("Name", txtName, vBoxFilter);
-        addCont("Beschreibung", txtDescription, vBoxFilter);
+        addCont("Name", cboName, vBoxFilter);
+        addCont("Beschreibung", cboDescription, vBoxFilter);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(10, 0, 0, 0));
         hBox.getChildren().add(btnClear);
         vBoxFilter.getChildren().add(hBox);
-
-        initFilter();
-
         btnClear.setOnAction(a -> clearFilter());
     }
 
     private void initFilter() {
-        txtName.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_NAME);
-        FilterCheckRegEx fN = new FilterCheckRegEx(txtName);
-        txtName.textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
+        cboName = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListAboName(),
+                ProgConfig.FILTER_ABO_NAME);
+        FilterCheckRegEx fN = new FilterCheckRegEx(cboName.getEditor());
+        cboName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
 
-        txtDescription.textProperty().bindBidirectional(ProgConfig.FILTER_ABO_DESCRIPTION);
-        FilterCheckRegEx fD = new FilterCheckRegEx(txtDescription);
-        txtDescription.textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
+        cboDescription = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListAboDescription(),
+                ProgConfig.FILTER_ABO_DESCRIPTION);
+        FilterCheckRegEx fD = new FilterCheckRegEx(cboDescription.getEditor());
+        cboDescription.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
 
-        cboArt.getItems().addAll(AboConstants.ALL,
-                AboConstants.ABO_ON,
-                AboConstants.ABO_OFF);
+        cboArt.getItems().addAll(AboConstants.ALL, AboConstants.ABO_ON, AboConstants.ABO_OFF);
         cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE);
     }
 
     private void clearFilter() {
-        txtName.setText("");
-        txtDescription.setText("");
+        ProgConfig.FILTER_ABO_NAME.set("");
+        ProgConfig.FILTER_ABO_DESCRIPTION.set("");
         ProgConfig.FILTER_ABO_CHANNEL.setValue("");
-
-        if (cboArt.getSelectionModel() != null) {
-            cboArt.getSelectionModel().selectFirst();
-        }
+        ProgConfig.FILTER_ABO_TYPE.set("");
     }
 }

@@ -592,11 +592,11 @@ public class ProgConfig extends P2DataProgConfig {
         akt_sf.setName(FilmFilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
 
-
         configFile.addConfigs(progData.filmFilterWorker.getStoredFilterList()); // Filterprofile
         configFile.addConfigs(progData.filmFilterWorker.getBackwardFilterList()); // Filterprofile
         configFile.addConfigs(progData.filmFilterWorker.getForwardFilterList()); // Filterprofile
-        configFile.addConfigs(progData.filmFilterWorker.getTextFilterList()); // Filterprofile
+        configFile.addConfigs(progData.textFilterList); // ist der "sortierte" Textfilter (Thema, Titel ..)
+        configFile.addConfigs(progData.stringFilterLists); // sind die Textfilter in den CBO's
 
         // Live-Filter
         final LiveFilter akt_live = progData.liveFilmFilterWorker.getActFilterSettings(); // Live-Filter

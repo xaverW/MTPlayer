@@ -31,14 +31,13 @@ public final class FilmFilterWorker {
     public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
     // ist der "aktuelle" Filter im Programm
     private final FilmFilter actFilterSettings = new FilmFilter(SELECTED_FILTER_NAME);
+
     // ist die Liste der gespeicherten Filter
     private final FilmFilterList filmFilterList = new FilmFilterList();
     // ist die Liste der BACK Filter
     private final FilmFilterList backwardFilterList = new FilmFilterList("BackwardFilterList");
     // ist die Liste der FORWARD Filter
     private final FilmFilterList forwardFilterList = new FilmFilterList("ForwardFilterList");
-    // sind die Filter in der CBO
-    private final TextFilterList textFilterList = new TextFilterList();
 
     // ist der FastFilter
     private final FastFilmFilter fastFilter = new FastFilmFilter();
@@ -67,10 +66,6 @@ public final class FilmFilterWorker {
 
     public FilmFilterList getForwardFilterList() {
         return forwardFilterList;
-    }
-
-    public TextFilterList getTextFilterList() {
-        return textFilterList;
     }
 
     public FastFilmFilter getFastFilterSettings() {

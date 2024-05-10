@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.gui.filter.helper.PCboTextFilter;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;

@@ -7,7 +7,7 @@ import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch;
+import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch2;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
@@ -16,8 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-
-import java.util.function.BooleanSupplier;
 
 public class LiveFilterTabArd extends Tab {
 
@@ -60,9 +58,9 @@ public class LiveFilterTabArd extends Tab {
         btnKeepOnArd.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
-        final PCboStringSearch cboSearch;
-        final BooleanSupplier supplier = () -> false;
-        cboSearch = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_ARD, supplier);
+        final PCboStringSearch2 cboSearch;
+        cboSearch = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListArdLive(),
+                ProgConfig.LIVE_FILM_GUI_SEARCH_ARD);
 
         VBox vBox = new VBox();
         vBox.setSpacing(2);
@@ -97,8 +95,9 @@ public class LiveFilterTabArd extends Tab {
         btnSearchUrlArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
-        final PCboStringSearch cboSearchUrl;
-        cboSearchUrl = new PCboStringSearch(progData, ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD, supplier);
+        final PCboStringSearch2 cboSearchUrl;
+        cboSearchUrl = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListArdUrl(),
+                ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD);
 
         vBox = new VBox(2);
 
