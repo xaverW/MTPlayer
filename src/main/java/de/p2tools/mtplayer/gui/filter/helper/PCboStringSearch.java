@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -30,11 +29,9 @@ import java.util.function.BooleanSupplier;
 public class PCboStringSearch extends ComboBox<PCboSearchLabel> {
     public static final int MAX_FILTER_HISTORY = 15;
     private final StringProperty strSearchProperty;
-    private final ProgData progData;
     private final BooleanSupplier actFilter;
 
-    public PCboStringSearch(ProgData progData, StringProperty strSearchProperty, BooleanSupplier actFilter) {
-        this.progData = progData;
+    public PCboStringSearch(StringProperty strSearchProperty, BooleanSupplier actFilter) {
         this.strSearchProperty = strSearchProperty;
         this.actFilter = actFilter;
         setEditable(true);

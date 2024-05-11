@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.binding.Bindings;
@@ -43,20 +42,17 @@ public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
     private final ObservableList<PCboSearchLabel> itemList = FXCollections.observableArrayList(new PCboSearchLabel(""));
 
     private final StringProperty strSearchProperty;
-    private final ProgData progData;
     private final BooleanSupplier doSomething; // Funktion, was bei Auswahl gemacht werden soll, Rückgabewert wird nicht gebraucht
 
-    public PCboStringSearch2(ProgData progData, ObservableList<String> storedFilterList, StringProperty strSearchProperty) {
-        this.progData = progData;
+    public PCboStringSearch2(ObservableList<String> storedFilterList, StringProperty strSearchProperty) {
         this.storedFilterList = storedFilterList;
         this.strSearchProperty = strSearchProperty;
         this.doSomething = () -> true;
         start();
     }
 
-    public PCboStringSearch2(ProgData progData, ObservableList<String> storedFilterList,
+    public PCboStringSearch2(ObservableList<String> storedFilterList,
                              StringProperty strSearchProperty, BooleanSupplier doSomething) {
-        this.progData = progData;
         this.storedFilterList = storedFilterList;
         this.strSearchProperty = strSearchProperty;
         this.doSomething = doSomething;

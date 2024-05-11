@@ -45,7 +45,7 @@ public class SearchFast extends HBox {
             progData.filmFilterWorker.getFastFilterSettings().reportFilterReturn();
             return true;
         };
-        this.cboSearch = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListFastFilter(),
+        this.cboSearch = new PCboStringSearch2(progData.stringFilterLists.getFilterListFastFilter(),
                 progData.filmFilterWorker.getFastFilterSettings().filterTermProperty(), booleanSupplier);
         make();
     }

@@ -203,20 +203,18 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setFilter() {
-        Predicate<AboData> predicate = downloadData -> true;
         final String sender = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
         final String type = ProgConfig.FILTER_ABO_TYPE.getValueSafe();
         final String name = ProgConfig.FILTER_ABO_NAME.getValueSafe().trim();
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim();
 
+        Predicate<AboData> predicate = aboData -> true;
         if (!sender.isEmpty()) {
             Filter filter = new Filter(sender, true);
             predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getChannel()));
         }
-
         if (!type.isEmpty()) {
-            predicate = predicate.and(aboData -> type.isEmpty() ||
-                    type.equals(AboConstants.ABO_ON) && aboData.isActive() ||
+            predicate = predicate.and(aboData -> type.equals(AboConstants.ABO_ON) && aboData.isActive() ||
                     type.equals(AboConstants.ABO_OFF) && !aboData.isActive());
         }
         if (!name.isEmpty()) {

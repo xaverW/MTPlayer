@@ -53,15 +53,15 @@ public class FilmFilterControllerTextFilter extends VBox {
         };
 
         cboThemeExact = new PCboThemeExact(progData, progData.filmFilterWorker.getActFilterSettings().exactThemeProperty());
-        cboTheme = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListTheme(),
+        cboTheme = new PCboStringSearch2(progData.stringFilterLists.getFilterListTheme(),
                 progData.filmFilterWorker.getActFilterSettings().themeProperty(), supplierReportReturn);
-        cboThemeTitle = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListThemeTitle(),
+        cboThemeTitle = new PCboStringSearch2(progData.stringFilterLists.getFilterListThemeTitle(),
                 progData.filmFilterWorker.getActFilterSettings().themeTitleProperty(), supplierReportReturn);
-        cboTitle = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListTitel(),
+        cboTitle = new PCboStringSearch2(progData.stringFilterLists.getFilterListTitel(),
                 progData.filmFilterWorker.getActFilterSettings().titleProperty(), supplierReportReturn);
-        cboSomewhere = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListSomewhere(),
+        cboSomewhere = new PCboStringSearch2(progData.stringFilterLists.getFilterListSomewhere(),
                 progData.filmFilterWorker.getActFilterSettings().somewhereProperty(), supplierReportReturn);
-        cboUrl = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListUrl(),
+        cboUrl = new PCboStringSearch2(progData.stringFilterLists.getFilterListUrl(),
                 progData.filmFilterWorker.getActFilterSettings().urlProperty(), supplierReportReturn);
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);

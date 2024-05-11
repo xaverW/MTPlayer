@@ -47,8 +47,6 @@ public class AboFilterController extends FilterController {
         vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
         progData.aboFilterController = this;
-        mbChannel = new P2MenuButton(ProgConfig.FILTER_ABO_CHANNEL,
-                ThemeListFactory.channelsForAbosList);
 
         initFilter();
         addCont("Abos für Sender", mbChannel, vBoxFilter);
@@ -65,18 +63,21 @@ public class AboFilterController extends FilterController {
     }
 
     private void initFilter() {
-        cboName = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListAboName(),
+        mbChannel = new P2MenuButton(ProgConfig.FILTER_ABO_CHANNEL,
+                ThemeListFactory.channelsForAbosList);
+
+        cboArt.getItems().addAll(AboConstants.ALL, AboConstants.ABO_ON, AboConstants.ABO_OFF);
+        cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE);
+
+        cboName = new PCboStringSearch2(progData.stringFilterLists.getFilterListAboName(),
                 ProgConfig.FILTER_ABO_NAME);
         FilterCheckRegEx fN = new FilterCheckRegEx(cboName.getEditor());
         cboName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
 
-        cboDescription = new PCboStringSearch2(progData, progData.stringFilterLists.getFilterListAboDescription(),
+        cboDescription = new PCboStringSearch2(progData.stringFilterLists.getFilterListAboDescription(),
                 ProgConfig.FILTER_ABO_DESCRIPTION);
         FilterCheckRegEx fD = new FilterCheckRegEx(cboDescription.getEditor());
         cboDescription.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
-
-        cboArt.getItems().addAll(AboConstants.ALL, AboConstants.ABO_ON, AboConstants.ABO_OFF);
-        cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE);
     }
 
     private void clearFilter() {
