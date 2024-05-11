@@ -297,6 +297,11 @@ public class FilmGuiController extends AnchorPane {
             return;
         }
 
+        if (ProgConfig.SYSTEM_FILTER_NONE_ROW.get()) {
+            // dann soll nix ausgewählt werden
+            return;
+        }
+
         if (ProgConfig.SYSTEM_FILTER_FIRST_ROW.getValue()) {
             // dann immer die erste Zeile
             tableView.getSelectionModel().select(0);

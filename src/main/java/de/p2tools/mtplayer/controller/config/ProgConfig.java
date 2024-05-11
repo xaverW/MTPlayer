@@ -177,6 +177,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty SYSTEM_FILTER_WAIT_TIME = addIntProp("system-filter-wait-time", 250);
     public static BooleanProperty SYSTEM_FILTER_RETURN = addBoolProp("system-filter-return", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILTER_FIRST_ROW = addBoolProp("system-filter-first-row", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_FILTER_NONE_ROW = addBoolProp("system-filter-none-row", Boolean.FALSE);
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStrProp("system-download-dir-new-version", "");
 
     // Fenstereinstellungen

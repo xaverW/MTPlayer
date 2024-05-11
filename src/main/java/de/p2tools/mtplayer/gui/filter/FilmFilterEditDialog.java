@@ -26,22 +26,29 @@ import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 
 public class FilmFilterEditDialog extends P2DialogExtra {
 
-    final ProgData progData;
+    private final ProgData progData;
+    private final RadioButton rbLast = new RadioButton("Die letzte vorhandene Zeile auswählen");
+    private final RadioButton rbFirst = new RadioButton("Die erste Tabellenzeile auswählen");
+    private final RadioButton rbNothing = new RadioButton("Nichts neues auswählen");
 
     public FilmFilterEditDialog(ProgData progData) {
         super(progData.primaryStage, null, "Filtereinstellungen", true, true, DECO.NO_BORDER);
         this.progData = progData;
 
         init(true);
+    }
+
+    @Override
+    public void close() {
+        rbFirst.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_FIRST_ROW);
+        rbNothing.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_NONE_ROW);
+        super.close();
     }
 
     @Override
@@ -161,9 +168,28 @@ public class FilmFilterEditDialog extends P2DialogExtra {
         slider.disableProperty().bind(tglReturn.selectedProperty());
         lblValue.disableProperty().bind(tglReturn.selectedProperty());
 
-        P2ToggleSwitch tglFirstTableRow = new P2ToggleSwitch("Nach der Suche immer die erste Zeile\n" +
-                "in der Tabelle auswählen");
-        tglFirstTableRow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_FIRST_ROW);
+        rbLast.setTooltip(new Tooltip("Nach einer Suche, sind nicht mehr die gleichen\n" +
+                "Filme in der Tabelle. Hier kann vorgegeben werden,\n" +
+                "welche Zeile dann ausgewählt werden soll."));
+        rbFirst.setTooltip(new Tooltip("Nach einer Suche, sind nicht mehr die gleichen\n" +
+                "Filme in der Tabelle. Hier kann vorgegeben werden,\n" +
+                "welche Zeile dann ausgewählt werden soll."));
+        rbNothing.setTooltip(new Tooltip("Nach einer Suche, sind nicht mehr die gleichen\n" +
+                "Filme in der Tabelle. Hier kann vorgegeben werden,\n" +
+                "welche Zeile dann ausgewählt werden soll."));
+
+        ToggleGroup tg = new ToggleGroup();
+        rbLast.setToggleGroup(tg);
+        rbFirst.setToggleGroup(tg);
+        rbNothing.setToggleGroup(tg);
+
+        rbFirst.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_FIRST_ROW);
+        rbNothing.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_NONE_ROW);
+        if (!ProgConfig.SYSTEM_FILTER_FIRST_ROW.get() &&
+                !ProgConfig.SYSTEM_FILTER_NONE_ROW.get()) {
+            // ist die Standardeinstellung
+            rbLast.setSelected(true);
+        }
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(5);
@@ -184,8 +210,11 @@ public class FilmFilterEditDialog extends P2DialogExtra {
         ++row;
         gridPane.add(tglReturn, 0, ++row, 2, 1);
 
-        gridPane.add(new Label(), 0, ++row, 2, 1);
-        gridPane.add(tglFirstTableRow, 0, ++row, 2, 1);
+        gridPane.add(new Label(""), 0, ++row, 2, 1);
+        gridPane.add(new Label("Welche Zeile soll nach einer Suche ausgewählt werden:"), 0, ++row, 2, 1);
+        gridPane.add(rbFirst, 0, ++row, 2, 1);
+        gridPane.add(rbLast, 0, ++row, 2, 1);
+        gridPane.add(rbNothing, 0, ++row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
                 P2ColumnConstraints.getCcPrefSize(),
