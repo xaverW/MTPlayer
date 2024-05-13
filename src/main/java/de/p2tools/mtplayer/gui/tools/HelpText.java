@@ -404,33 +404,47 @@ public class HelpText {
                     "\n";
 
     public static final String GUI_FILMS_EDIT_FILTER =
-            "Hier können Filter aktiviert und deaktiviert werden." +
-                    "\n" +
-                    "\n" +
-                    "Deaktivierte Filter werden beim Suchen der Filme nicht berücksichtigt, " +
+            "=============\n" +
+                    "Filter\n" +
+                    "Hier können Filter aktiviert und deaktiviert werden. Deaktivierte Filter " +
+                    "werden beim Suchen der Filme nicht berücksichtigt, " +
                     "daher ist eine Suche mit weniger Filtern schneller." +
                     "\n" +
                     "\n" +
 
-                    "Suchbeginn verzögern: Hier kann eine Zeit eingestellt werden, die den Start der " +
-                    "Suche verzögert." +
+                    "=============\n" +
+                    "Einstellungen\n" +
+
+                    "Suchbeginn verzögern:\n" +
+                    "Hier kann eine Zeit eingestellt werden, die den Start der " +
+                    "Suche verzögert. Gibt man einen Suchbegriff ein, wird nicht sofort nach jedem " +
+                    "eingegebenen Buchstaben, die Suche gestartet." +
                     "\n" +
                     "\n" +
-                    "\"Return\": Diese Einstellung startet die Suche in den Textfeldern erst nach Eingabe " +
+                    "Return:\n" +
+                    "Diese Einstellung startet die Suche in den Textfeldern erst nach Eingabe " +
                     "der Return-Taste." +
                     "\n" +
                     "\n" +
                     "In den Textfeldern wird die Suche immer sofort nach Eingabe der Return-Taste " +
-                    "gestartet. Mit der Einstellung \"Return\" aber ausschließlich. " +
-                    "Bei den anderen Suchfeldern (Zeit, Datum, ..) startet die " +
-                    "Suche immer nach der eingestellten Wartezeit." +
+                    "gestartet. Mit der Einstellung \"Return\" aber ausschließlich." +
                     "\n" +
                     "\n" +
                     "Ich kann eine Suche also starten wenn ich ein Suchfeld " +
                     "(egal welches) ändere und die Wartezeit abwarte. " +
                     "In einem Textfeld (egal welchem) kann ich zusätzlich die Suche starten " +
-                    "wenn ich \"Return\" tippe." +
-                    "\n";
+                    "wenn ich \"Return\" klicke." +
+                    "\n" +
+                    "\n" +
+                    "Auswahl der Tabellenzeile:\n" +
+                    "Nach einer Suche ist ja eine andere Auswahl an Filmen in der Filmliste. " +
+                    "\n" +
+                    "\"Die erste Tabellenzeile:\" Hier wird dann immer die erste Zeile ausgewählt" +
+                    "\n" +
+                    "\"Letzte vorhandene Zeile:\" Damit wird die erste noch vorhandene Tabellenzeile ausgewählt " +
+                    "die vor der, vorher ausgewählten Zeile liegt." +
+                    "\n" +
+                    "\"Nichts auswählen:\" Das macht genau das, in der Filmtabelle wird nichts ausgewählt.";
 
     public static final String SETDATA_PREFIX =
             "Wenn die URL eines Films mit <Präfix> beginnt bzw. mit <Suffix> " +

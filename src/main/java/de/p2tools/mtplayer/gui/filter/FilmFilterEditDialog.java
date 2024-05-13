@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -53,19 +54,34 @@ public class FilmFilterEditDialog extends P2DialogExtra {
 
     @Override
     public void make() {
-        init(getVBoxCont());
+        init();
 
-        final Button btnHelp = P2Button.helpButton(getStage(), "Filtereinstellungen",
-                HelpText.GUI_FILMS_EDIT_FILTER);
-
-        Button btnOk = new Button("_Ok");
+        final Button btnHelp = P2Button.helpButton(getStage(), "Filtereinstellungen", HelpText.GUI_FILMS_EDIT_FILTER);
+        final Button btnOk = new Button("_Ok");
         btnOk.setOnAction(event -> close());
         addOkButton(btnOk);
         addHlpButton(btnHelp);
     }
 
-    public void init(VBox vBox) {
+    public void init() {
+        final TabPane tabPane = new TabPane();
+        VBox vBox = getVBoxCont();
+        vBox.getChildren().add(tabPane);
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
+        addFilterTab(tabPane);
+        addConfigTab(tabPane);
+    }
+
+    public void addFilterTab(TabPane tabPane) {
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(20, P2LibConst.PADDING_VBOX, P2LibConst.PADDING_VBOX, P2LibConst.PADDING_VBOX));
         vBox.setSpacing(15);
+
+        Tab tab = new Tab();
+        tab.setText("Filter");
+        tab.setClosable(false);
+        tab.setContent(vBox);
+        tabPane.getTabs().add(tab);
 
         P2ToggleSwitch tglChannel = new P2ToggleSwitch("Sender");
         tglChannel.setMaxWidth(Double.MAX_VALUE);
@@ -141,9 +157,20 @@ public class FilmFilterEditDialog extends P2DialogExtra {
         tglNot.setMaxWidth(Double.MAX_VALUE);
         tglNot.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().notVisProperty());
         vBox.getChildren().add(tglNot);
+    }
 
+    public void addConfigTab(TabPane tabPane) {
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(20, P2LibConst.PADDING_VBOX, P2LibConst.PADDING_VBOX, P2LibConst.PADDING_VBOX));
+        vBox.setSpacing(15);
 
-        //Wartezeit
+        Tab tab = new Tab();
+        tab.setText("Einstellungen");
+        tab.setClosable(false);
+        tab.setContent(vBox);
+        tabPane.getTabs().add(tab);
+
+        // Anlegen
         P2ToggleSwitch tglReturn = new P2ToggleSwitch("In Textfeldern Suchbeginn erst mit \"Return\" starten");
         tglReturn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_RETURN);
 
@@ -191,6 +218,7 @@ public class FilmFilterEditDialog extends P2DialogExtra {
             rbLast.setSelected(true);
         }
 
+        // Einbauen
         GridPane gridPane = new GridPane();
         gridPane.setHgap(5);
         gridPane.setVgap(5);
@@ -207,9 +235,10 @@ public class FilmFilterEditDialog extends P2DialogExtra {
         GridPane.setHgrow(slider, Priority.ALWAYS);
         slider.setPadding(new Insets(0, 0, 0, 0));
 
-        ++row;
+        gridPane.add(new Label(), 0, ++row, 2, 1);
         gridPane.add(tglReturn, 0, ++row, 2, 1);
 
+        gridPane.add(new Label(""), 0, ++row, 2, 1);
         gridPane.add(new Label(""), 0, ++row, 2, 1);
         gridPane.add(new Label("Welche Zeile soll nach einer Suche ausgewählt werden:"), 0, ++row, 2, 1);
         gridPane.add(rbFirst, 0, ++row, 2, 1);
@@ -220,10 +249,7 @@ public class FilmFilterEditDialog extends P2DialogExtra {
                 P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcComputedSizeAndHgrowRight());
 
-        Separator sp1 = new Separator();
-        sp1.getStyleClass().add("pseperator2");
-        sp1.setMinHeight(0);
-        vBox.getChildren().addAll(sp1, gridPane);
+        vBox.getChildren().addAll(gridPane);
     }
 
     private int setLabel(Label lblValue) {
