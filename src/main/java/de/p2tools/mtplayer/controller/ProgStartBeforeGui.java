@@ -88,6 +88,10 @@ public class ProgStartBeforeGui {
             return false;
         }
 
+        if (ProgConfig.SYSTEM_LOG_ON.getValue()) {
+            // dann nochmal für die evtl. geänderten LogPfad
+            P2Logger.setFileHandler(ProgInfos.getLogDirectory_String());
+        }
         return true;
     }
 
