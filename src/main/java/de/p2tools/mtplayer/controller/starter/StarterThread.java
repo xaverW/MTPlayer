@@ -56,9 +56,9 @@ public class StarterThread extends Thread {
     public synchronized void run() {
         while (!isInterrupted()) {
             try {
-                if (!ProgData.downloadSearchDone || searchFilms.getValue()) {
+                if (searchFilms.getValue()) {
                     // vorher und während des Suchens der Filmliste machmer nix
-                    sleep(5_000);
+                    Thread.sleep(5_000);
                     continue;
                 }
 
@@ -68,7 +68,7 @@ public class StarterThread extends Thread {
                     }
                     startDownload(download);
                     // alle 5 Sekunden einen Download starten
-                    sleep(5_000);
+                    Thread.sleep(5_000);
                 }
 
                 if (searchFilms.getValue()) {
@@ -76,14 +76,16 @@ public class StarterThread extends Thread {
                     continue;
                 }
 
-                if (ProgData.autoMode && ProgData.downloadSearchDone && !checkQuitAfterDownload.getValue()) {
+                if (ProgData.autoMode &&
+                        ProgData.downloadSearchDone &&
+                        !checkQuitAfterDownload.getValue()) {
                     // dann haben wir den "Automodus"
                     // Downloads wurden gesucht, gestartet und jetzt das Beenden prüfen
                     checkQuitAfterDownload.setValue(true);
                     quitProgramAfterDownload();
                 }
 
-                sleep(3_000);
+                Thread.sleep(3_000);
             } catch (final Exception ex) {
                 P2Log.errorLog(613822015, ex);
             }

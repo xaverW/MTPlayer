@@ -43,6 +43,11 @@ public class DownloadDataFactory {
     }
 
     public static void searchForAbosAndMaybeStart() {
+        // über Menü oder Button: "Download auffrischen"
+        // EVENT_BLACKLIST_CHANGED geändert und "Abo suchen" ist ein
+        // SYSTEM_BLACKLIST_SHOW_ABO geändert und "Abo suchen" ist ein
+        // AboList geändert und "Abo suchen" ist ein
+        // workOnFilmListLoadFinished und "Abo suchen" ist ein oder AUTOMODE
         if (LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             return;
