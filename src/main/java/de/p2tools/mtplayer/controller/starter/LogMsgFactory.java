@@ -32,6 +32,41 @@ public class LogMsgFactory {
     private LogMsgFactory() {
     }
 
+    public static void addNewDownloadMsg(DownloadData download, boolean start, boolean changeDownload) {
+        P2Log.sysLog("");
+        final ArrayList<String> list = new ArrayList<>();
+        list.add(P2Log.LILNE3);
+
+        if (changeDownload) {
+            if (start) {
+                list.add("Download ÄNDERN und STARTEN");
+            } else {
+                list.add("Download ÄNDERN und noch NICHT STARTEN");
+            }
+        } else {
+            if (start) {
+                list.add("Download ANLEGEN und STARTEN");
+            } else {
+                list.add("Download ANLEGEN und noch NICHT STARTEN");
+            }
+        }
+
+        list.add("Programmset: " + (download.getSetData() == null ? "" : download.getSetData().getVisibleName()));
+        list.add("Ziel: " + download.getDestPathFile());
+        list.add("Titel: " + (download.getTitle()));
+        list.add("URL: " + download.getUrl());
+        list.add("Vorgegebene Startzeit: " + download.getStartTime());
+        if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
+            list.add(DownloadConstants.TYPE_DOWNLOAD);
+        } else {
+            list.add("Programmaufruf: " + download.getProgramCall());
+            list.add("Programmaufruf[]: " + download.getProgramCallArray());
+        }
+
+        list.add(P2Log.LILNE_EMPTY);
+        P2Log.sysLog(list.toArray(new String[0]));
+    }
+
     public static void startMsg(DownloadData download) {
         P2Log.sysLog("");
         final ArrayList<String> list = new ArrayList<>();
@@ -41,14 +76,15 @@ public class LogMsgFactory {
         if (play) {
             list.add("Film abspielen");
         } else {
-            list.add("Download starten");
+            list.add("Download mit dem LADEN STARTEN");
             list.add("Programmset: " + (download.getSetData() == null ? "" : download.getSetData().getVisibleName()));
             list.add("Ziel: " + download.getDestPathFile());
         }
 
         list.add("Titel: " + (download.getTitle()));
         list.add("URL: " + download.getUrl());
-        list.add("Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(download.getDownloadStartDto().getStartTime()));
+        list.add("Vorgegebene Startzeit: " + download.getStartTime());
+        list.add("Download Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(download.getDownloadStartDto().getStartTime()));
         if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             list.add(DownloadConstants.TYPE_DOWNLOAD);
         } else {

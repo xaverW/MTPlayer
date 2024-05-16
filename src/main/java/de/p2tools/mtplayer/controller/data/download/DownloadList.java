@@ -83,7 +83,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
     }
 
     public synchronized void addWithNo(List<DownloadData> list) {
-        list.stream().forEach(download -> super.add(download));
+        super.addAll(list);
         setNumbersInList();
     }
 

@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 
 public class DownloadFactoryStarts {
 
+    private static String lastLogMsg = "";
+
     private DownloadFactoryStarts() {
     }
 
@@ -95,6 +97,12 @@ public class DownloadFactoryStarts {
         // Download mit der kleinsten Nr finden, der zu Starten ist
         DownloadData tmpDownload = null;
         int nr = -1;
+
+        final DownloadData d = downloadList.stream().filter(DownloadData::isStateStartedWaiting).findAny().orElse(null);
+        if (d == null) {
+            logMsg("Download zum Start suchen: Keiner mit stateStartedWaiting");
+        }
+
         for (DownloadData download : downloadList) {
             if (download.isStateStartedWaiting() &&
                     checkStartTime(download) &&
@@ -126,6 +134,7 @@ public class DownloadFactoryStarts {
                 // dann starten
                 return true;
             } else {
+                logMsg("Download zum Start suchen: Startzeit nicht erreicht");
                 return false;
             }
         } catch (Exception ex) {
@@ -142,6 +151,7 @@ public class DownloadFactoryStarts {
                 if (download.isStateStartedRun()) {
                     ++count;
                     if (count >= max) {
+                        logMsg("Download zum Start suchen: Es laufen: " + count + " - Max: " + max);
                         return false;
                     }
                 }
@@ -151,5 +161,13 @@ public class DownloadFactoryStarts {
             P2Log.errorLog(794519083, ex);
         }
         return false;
+    }
+
+    private static void logMsg(String log) {
+        if (!lastLogMsg.equals(log)) {
+            // dann hats sichs geändert
+            lastLogMsg = log;
+            P2Log.sysLog(new String[]{P2Log.LILNE3, lastLogMsg, P2Log.LILNE3});
+        }
     }
 }

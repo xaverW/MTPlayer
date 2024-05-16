@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.starter.LogMsgFactory;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
@@ -228,11 +229,15 @@ public class DownloadAddDialogController extends P2DialogExtra {
         List<DownloadData> list = new ArrayList<>();
         List<DownloadData> listStarts = new ArrayList<>();
         for (AddDownloadData addDownloadData : addDownloadDto.addDownloadData) {
-            final DownloadData downloadData = addDownloadData.download;
-            if (downloadData.getStartTime().isEmpty() && addDownloadData.startNow) {
-                listStarts.add(downloadData);
+            if (!addDownloadData.download.getStartTime().isEmpty() || addDownloadData.startNow) {
+                // wenn Startzeit vorgegeben, oder SOFORT dann starten
+                listStarts.add(addDownloadData.download);
+                LogMsgFactory.addNewDownloadMsg(addDownloadData.download, true, false);
+            } else {
+                LogMsgFactory.addNewDownloadMsg(addDownloadData.download, false, false);
             }
-            list.add(downloadData);
+
+            list.add(addDownloadData.download);
         }
 
         progData.downloadList.addWithNo(list);
@@ -249,10 +254,15 @@ public class DownloadAddDialogController extends P2DialogExtra {
 
             addDownloadData.download.resetDownload(); // Status wieder zurücksetzen
             addDownloadData.downloadOrg.copyToMe(addDownloadData.download);
-            if (addDownloadData.download.getStartTime().isEmpty() && addDownloadData.startNow) {
+            if (!addDownloadData.download.getStartTime().isEmpty() || addDownloadData.startNow) {
+                // wenn Startzeit vorgegeben, oder SOFORT dann starten
                 list.add(addDownloadData.downloadOrg);
+                LogMsgFactory.addNewDownloadMsg(addDownloadData.downloadOrg, true, true);
+            } else {
+                LogMsgFactory.addNewDownloadMsg(addDownloadData.downloadOrg, false, true);
             }
         }
+
         progData.downloadList.startDownloads(list, false);
     }
 }
