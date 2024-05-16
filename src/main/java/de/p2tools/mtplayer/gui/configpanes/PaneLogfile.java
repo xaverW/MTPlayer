@@ -38,14 +38,7 @@ import java.util.Collection;
 
 public class PaneLogfile {
 
-    private final P2ToggleSwitch tglSearch = new P2ToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
-    private final P2ToggleSwitch tglSearchBeta = new P2ToggleSwitch("auch nach neuen Vorabversionen suchen");
-    private final CheckBox chkDaily = new CheckBox("Zwischenschritte (Dailys) mit einbeziehen");
     private final BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
-
-    private final P2ToggleSwitch tglSearchAbo = new P2ToggleSwitch("Abos automatisch suchen:");
-    private final P2ToggleSwitch tglStartDownload = new P2ToggleSwitch("Downloads aus Abos sofort starten:");
-    private final P2ToggleSwitch tglTipOfDay = new P2ToggleSwitch("Tip des Tages anzeigen");
     private final P2ToggleSwitch tglEnableLog = new P2ToggleSwitch("Ein Logfile anlegen:");
     private TextField txtLogFile;
 
@@ -56,14 +49,8 @@ public class PaneLogfile {
     }
 
     public void close() {
-        tglSearchAbo.selectedProperty().unbindBidirectional(ProgConfig.ABO_SEARCH_NOW);
-        tglStartDownload.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
-        tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
         tglEnableLog.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_ON);
         txtLogFile.textProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_DIR);
-        tglSearch.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_ACT);
-        tglSearchBeta.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_BETA);
-        chkDaily.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
     }
 
     public void makeLogfile(Collection<TitledPane> result) {

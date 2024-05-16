@@ -778,10 +778,18 @@ public class HelpText {
                     "\n";
 
     public static final String SEARCH_ABOS_IMMEDIATELY =
-            "Nach dem Neuladen einer Filmliste wird automatisch nach neuen " +
+            "Nach dem Neuladen einer Filmliste (und beim Programmstart) wird automatisch nach neuen " +
                     "Downloads aus Abos gesucht. Wenn dies ausgeschaltet ist, muss man die " +
-                    "Suche manuell anstoßen (in der Ansicht \"Downloads\" " +
-                    "auf \"Downloads aktualisieren\" klicken)." +
+                    "Suche manuell anstoßen, dazu in der Ansicht \"Downloads\" " +
+                    "auf \"Downloads aktualisieren\" klicken." +
+                    "\n";
+
+    public static final String START_DOWNLOADS_FROM_ABOS_IMMEDIATELY =
+            "Nach dem Suchen von Downloads werden diese sofort gestartet. Das kann " +
+                    "beim Programmstart sein, nach dem Neuladen einer Filmliste " +
+                    "oder beim manuellem Suchen nach Abos. " +
+                    "Sind auch manuell angelegte Downloads vorhanden, werden diese dann auch " +
+                    "gestartet." +
                     "\n";
 
     public static final String SMALL_BUTTON =
@@ -833,11 +841,6 @@ public class HelpText {
                     "das z.B. eine Möglichkeit: 'Mozilla/5.0'.\n" +
                     "\n" +
                     "Es sind nur ASCII-Zeichen erlaubt und die Textlänge ist begrenzt auf 100 Zeichen." +
-                    "\n";
-
-    public static final String START_DOWNLOADS_FROM_ABOS_IMMEDIATELY =
-            "Downloads die aus Abos neu angelegt wurden, starten sofort. " +
-                    "Wenn dies ausgeschaltet ist muss man sie manuell starten." +
                     "\n";
 
     public static final String ONLY_ONE_INSTANCE =

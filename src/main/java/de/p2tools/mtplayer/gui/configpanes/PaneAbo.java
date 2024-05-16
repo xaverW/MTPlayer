@@ -36,7 +36,7 @@ import java.util.Collection;
 public class PaneAbo {
 
     private final P2ToggleSwitch tglSearchAbo = new P2ToggleSwitch("Abos automatisch suchen:");
-    private final P2ToggleSwitch tglStartDownload = new P2ToggleSwitch("Downloads aus Abos sofort starten:");
+    private final P2ToggleSwitch tglStartDownload = new P2ToggleSwitch("Nach dem Suchen Downloads sofort starten:");
     private final ToggleGroup groupOnlyStop = new ToggleGroup();
     private final RadioButton rbOnlyStopAsk = new RadioButton("Vor dem Löschen fragen");
     private final RadioButton rbOnlyStopDelete = new RadioButton("Abo sofort löschen ohne zu fragen");
@@ -72,7 +72,7 @@ public class PaneAbo {
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
 
         tglStartDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
-        final Button btnHelpDownload = P2Button.helpButton(stage, "Downloads sofort starten",
+        final Button btnHelpDownload = P2Button.helpButton(stage, "Nach dem Suchen Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
 
         final Button btnHelpStop = P2Button.helpButton(stage, "Abos löschen",
