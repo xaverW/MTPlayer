@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.filmfilter.LiveFilter;
 import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
+import de.p2tools.p2lib.configfile.pdata.P2Data;
 import de.p2tools.p2lib.data.P2DataProgConfig;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
@@ -130,7 +131,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty MEDIA_DB_EXPORT_FILE = addStrProp("media-db-export-file");
 
     // Configs
-    public static BooleanProperty SYSTEM_USE_OWN_PROGRAM_ICON = addBoolProp("system-use--own-program-icon", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_USE_OWN_PROGRAM_ICON = addBoolProp("system-use-own-program-icon" + P2Data.TAGGER + "system-use--own-program-icon", Boolean.FALSE);
     public static StringProperty SYSTEM_PROGRAM_ICON_PATH = addStrProp("system-program-icon", ""); //ein eigenes Programm-Icon
     public static BooleanProperty SYSTEM_TRAY = addBoolProp("system-tray", Boolean.FALSE);
     public static BooleanProperty SYSTEM_TRAY_USE_OWN_ICON = addBoolProp("system-tray-own-icon", Boolean.FALSE);
