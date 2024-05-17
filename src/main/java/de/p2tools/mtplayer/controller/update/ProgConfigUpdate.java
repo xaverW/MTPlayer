@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.update;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 
@@ -33,6 +34,7 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER.setValue(true);
         ProgConfig.SYSTEM_AFTER_UPDATE_RBTV.setValue(true);
         ProgConfig.SYSTEM_ABO_START_TIME.setValue(true); // für Version 17
+        ProgConfig.SYSTEM_CHANGE_LOG_DIR.setValue(true); // für Version 17
     }
 
     public static void update() {
@@ -105,6 +107,16 @@ public class ProgConfigUpdate {
             ProgData.getInstance().downloadList.forEach(downloadData -> {
                 downloadData.setStartTime("");
             });
+        }
+
+        if (!ProgConfig.SYSTEM_CHANGE_LOG_DIR.getValue()) {
+            // dann sind noch alte LogDir Einstellungen gespeichert
+            final String logDir = ProgConfig.SYSTEM_LOG_DIR.getValueSafe();
+            final String standardDir = ProgInfos.getStandardLogDirectory_String();
+            if (logDir.equals(standardDir)) {
+                // wenn eh der StandardPfad drin steht, dann löschen
+                ProgConfig.SYSTEM_LOG_DIR.setValue("");
+            }
         }
 
         setUpdateDone();

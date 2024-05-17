@@ -91,6 +91,8 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER = addBoolProp("system-after-update-theme-exact-filter", Boolean.FALSE);
     public static BooleanProperty SYSTEM_AFTER_UPDATE_RBTV = addBoolProp("system-after-update-rbtv", Boolean.FALSE);
     public static BooleanProperty SYSTEM_ABO_START_TIME = addBoolProp("system-abo-start-time", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_CHANGE_LOG_DIR = addBoolProp("system-change-log-dir", Boolean.FALSE);
+
     // configs zum Anzeigen der WhatsNew
     public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
 
