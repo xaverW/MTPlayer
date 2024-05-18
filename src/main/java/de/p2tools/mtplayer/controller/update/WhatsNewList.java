@@ -133,6 +133,15 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "in der rechten Menüleiste blendet sie auch aus.", 70);
         add(whatsNewInfo);
 
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 5, 24),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_11.png",
+
+                "Textfilter",
+                "Die Textfilter werden jetzt gespeichert. Im Filter kann mit dem Button vor dem Eintrag " +
+                        "dieser gelöscht werden. Der erste Eintrag löscht den Filter und der " +
+                        "Button davor löscht alle Einträge in dem Filter.", 70);
+        add(whatsNewInfo);
+
         whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 3, 3), "",
                 "Was sich sonst noch geändert hat",
                 "* Die Filme des Senders \"Radio Bremen TV\" wurden mit dem Sendernamen \"Radio Bremen TV\", " +
