@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.config;
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.icons.P2Icon;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -117,7 +118,7 @@ public class ProgIcons {
             String url = p.genUrl(PIcon.class, MTPlayerController.class, ProgConst.class, ProgIcons.class, P2LibConst.class);
             if (url.isEmpty()) {
                 // dann wurde keine gefunden
-                System.out.println("ProgIconsInfo: keine URL, icon: " + p.getPathFileNameDark() + " - " + p.getFileName());
+                P2Log.errorLog(915245458, "ProgIconsInfo: keine URL, icon: " + p.getPathFileNameDark() + " - " + p.getFileName());
             }
         });
     }

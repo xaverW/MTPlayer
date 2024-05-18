@@ -133,25 +133,25 @@ public class LiveSearchZdf {
         // jetzt jeden Film abarbeiten
         final Optional<Document> document = LiveFactory.loadPage(url);
         if (document.isEmpty()) {
-            System.out.println("document.isEmpty(): error");
+            P2Log.debugLog("document.isEmpty(): error");
             return;
         }
 
         final Elements elements = document.get().select("div.b-playerbox.b-ratiobox.js-rb-live");
         if (elements.isEmpty()) {
-            System.out.println("elements.isEmpty(): error");
+            P2Log.debugLog("elements.isEmpty(): error");
             return;
         }
 
         Element element = elements.first();
         if (element == null) {
-            System.out.println("elements.first()==null: error");
+            P2Log.debugLog("elements.first()==null: error");
             return;
         }
 
         String urlElement = element.attr("data-zdfplayer-id");
         if (urlElement.isEmpty()) {
-            System.out.println("urlElement.isEmpty(): error");
+            P2Log.debugLog("urlElement.isEmpty(): error");
             return;
         }
 

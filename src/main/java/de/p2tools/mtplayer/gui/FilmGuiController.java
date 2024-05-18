@@ -117,7 +117,6 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public Optional<FilmDataMTP> getSel(boolean markSel/*markieren was vor dem SEL ist*/, boolean show) {
-        System.out.println("getSel");
         Optional<FilmDataMTP> mtp;
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {

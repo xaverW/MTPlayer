@@ -108,7 +108,7 @@ public class LiveFactory {
             case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(progress));
 
         }
-        System.out.println("Filme suchen: " + progress);
+        P2Log.debugLog("Filme suchen: " + progress);
     }
 
     public static void setProgressWait(CHANNEL channel) {

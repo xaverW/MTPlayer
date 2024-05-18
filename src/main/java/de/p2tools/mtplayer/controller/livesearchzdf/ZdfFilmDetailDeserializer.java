@@ -64,7 +64,7 @@ public class ZdfFilmDetailDeserializer {
                 if (rootNode.get(JSON_ELEMENT_PROGRAM_ITEM) != null) {
                     Iterator<JsonNode> children = rootNode.get(JSON_ELEMENT_PROGRAM_ITEM).elements();
                     if (!children.hasNext()) {
-                        System.out.println("getVideoUrl: error");
+                        P2Log.debugLog("getVideoUrl: error");
                         return;
                     }
 
