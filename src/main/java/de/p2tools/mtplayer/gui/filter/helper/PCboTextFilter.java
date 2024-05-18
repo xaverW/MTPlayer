@@ -30,7 +30,7 @@ public class PCboTextFilter extends HBox {
 
         PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, PCboTextFilter.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 // dann sel löschen und evtl. neuen Filter hinzufügen
                 addNewToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
             }

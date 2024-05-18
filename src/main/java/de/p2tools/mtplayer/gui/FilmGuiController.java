@@ -36,7 +36,6 @@ import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Cell;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -60,7 +59,8 @@ public class FilmGuiController extends AnchorPane {
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
     DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER;
     private boolean boundSplitPaneDivPos = false;
-    private double selPos = -1;
+    //     private double selPos = Double.MAX_VALUE; // letzte Pos
+    private boolean setShown = false;
 
     public FilmGuiController() {
         progData = ProgData.getInstance();
@@ -117,6 +117,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public Optional<FilmDataMTP> getSel(boolean markSel/*markieren was vor dem SEL ist*/, boolean show) {
+        System.out.println("getSel");
         Optional<FilmDataMTP> mtp;
         final int selectedTableRow = tableView.getSelectionModel().getSelectedIndex();
         if (selectedTableRow >= 0) {
@@ -131,6 +132,34 @@ public class FilmGuiController extends AnchorPane {
             setLastShown(mtp.get());
         }
         return mtp;
+    }
+
+    private void setLastShown(FilmDataMTP mtp) {
+        // die Filme vor dem letzten angezeigten Film markieren
+        boolean set = true;
+        for (FilmDataMTP filmDataMTP : sortedList) {
+            if (filmDataMTP == mtp) {
+                // dann ist es der Start
+                set = false;
+            }
+            filmDataMTP.setWasHere(set);
+        }
+
+//        System.out.println("setLastShown");
+//        selPos = Double.MAX_VALUE;
+//        int selected = tableView.getSelectionModel().getSelectedIndex();
+//        if (selected == -1) return;
+//        TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
+//        skin.getChildren().stream()
+//                .filter(VirtualFlow.class::isInstance)
+//                .map(VirtualFlow.class::cast)
+//                .findAny()
+//                .ifPresent(vf -> {
+//                    Cell<?> cell = vf.getCell(selected);
+//                    selPos = cell.getLayoutY();
+//                    System.out.println("get SelPos: " + selPos);
+//                });
+
     }
 
     public void bookmarkFilm(boolean bookmark) {
@@ -153,9 +182,8 @@ public class FilmGuiController extends AnchorPane {
         if (list.isEmpty()) {
             return;
         }
-        getSel(true, false); // damit sel gesetzt wird
         FilmToolsFactory.setFilmShown(list, set);
-        selectLastShown();
+        setShown = true;
     }
 
     public void saveTable() {
@@ -223,7 +251,6 @@ public class FilmGuiController extends AnchorPane {
                 }
             });
             return row;
-
         });
         tableView.hoverProperty().addListener((o) -> {
             if (!tableView.isHover()) {
@@ -264,44 +291,22 @@ public class FilmGuiController extends AnchorPane {
         });
     }
 
-    private void setLastShown(FilmDataMTP mtp) {
-        // die Filme vor dem letzten angezeigten Film markieren
-        boolean set = true;
-        for (FilmDataMTP filmDataMTP : sortedList) {
-            if (filmDataMTP == mtp) {
-                // dann ist es der Start
-                set = false;
-            }
-            filmDataMTP.setWasHere(set);
-        }
-
-        selPos = -1;
-
-        int selected = tableView.getSelectionModel().getSelectedIndex();
-        if (selected == -1) return;
-        TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
-        skin.getChildren().stream()
-                .filter(VirtualFlow.class::isInstance)
-                .map(VirtualFlow.class::cast)
-                .findAny()
-                .ifPresent(vf -> {
-                    Cell<?> cell = vf.getCell(selected);
-                    selPos = cell.getLayoutY();
-                });
-    }
-
     private void selectLastShown_() {
-        P2Duration.counterStart("selectLastShown");
         // nach dem Filtern/ändern der Filmliste wird ... in der Tabelle selektiert
+        P2Duration.counterStart("selectLastShown");
+
+        if (setShown) {
+            // dann wurde nur Shown gesetzt/gelöscht
+            setShown = false;
+            return;
+        }
         if (tableView.getItems().isEmpty()) {
             return;
         }
-
         if (ProgConfig.SYSTEM_FILTER_NONE_ROW.get()) {
             // dann soll nix ausgewählt werden
             return;
         }
-
         if (ProgConfig.SYSTEM_FILTER_FIRST_ROW.getValue()) {
             // dann immer die erste Zeile
             tableView.getSelectionModel().select(0);
@@ -312,80 +317,63 @@ public class FilmGuiController extends AnchorPane {
         FilmDataMTP filmDataMTP = tableView.getSelectionModel().getSelectedItem();
         if (filmDataMTP != null) {
             // dann ist schon was selektiert, passt.
-            // todo: fx20 kann das nicht!!!!!!!!!!!
             tableView.scrollTo(filmDataMTP);
+
+        } else {
+            for (int i = sortedList.size() - 1; i >= 0; --i) {
+                // von hinten den ersten Treffer suchen
+                FilmDataMTP film = sortedList.get(i);
+                if (film.isWasHere()) {
+                    //dann haben wir den ersten
+                    tableView.getSelectionModel().select(film);
+                    tableView.scrollTo(film);
+                    break;
+                }
+            }
+        }
+        setCenter();
+
+        P2Duration.counterStart("selectLastShown");
+    }
+
+    private void setCenter() {
+        // und dann zu selected scrollen
+        int selected = tableView.getSelectionModel().getSelectedIndex();
+        if (selected == -1) {
             return;
         }
 
+        Platform.runLater(() -> {
+            TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
+            skin.getChildren().stream()
+                    .filter(VirtualFlow.class::isInstance)
+                    .map(VirtualFlow.class::cast)
+                    .findAny()
+                    .ifPresent(vf -> {
 
-        // und JETZT wird gearbeitet
-//        boolean found = false;
-//        for (int i = sortedList.size() - 1; i >= 0; --i) {
-//            FilmDataMTP film = sortedList.get(i);
-//            if (film.isWasHere()) {
-        // dann haben wir den ersten
-        // todo: fx20 kann das nicht!!!!!!!!!!!
-//                tableView.getSelectionModel().select(film);
-//                tableView.scrollTo(film);
-//                found = true;
-//                break;
-//            }
-//        }
-//        if (!found) {
-        // dann wurde der erste Tabelleneintrag entfernt
-//            tableView.getSelectionModel().select(0);
-//            tableView.scrollTo(0);
-//        }
-
-
-        for (int i = sortedList.size() - 1; i >= 0; --i) {
-            FilmDataMTP film = sortedList.get(i);
-            if (film.isWasHere()) {
-                //dann haben wir den ersten
-                tableView.getSelectionModel().select(film);
-                break;
-            }
-        }
-
-        int selected = tableView.getSelectionModel().getSelectedIndex();
-        if (selected == -1) return;
-        TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
-        skin.getChildren().stream()
-                .filter(VirtualFlow.class::isInstance)
-                .map(VirtualFlow.class::cast)
-                .findAny()
-                .ifPresent(vf -> {
-
-//                    vf.scrollTo(selected);
-//                    vf.layout();
-//                    if (selPos >= 0) {
-//                        Cell<?> cell = vf.getCell(selected);
-//                        System.out.println(selPos);
-//                        System.out.println(vf.getHeight());
-//                        double to = (-1 * selPos);
-//                        System.out.println(to);
-//                        vf.scrollPixels(to);
+//                        vf.scrollTo(selected);
+//                        vf.layout();
+//                        System.out.println("sel selPos: " + selPos);
+//                        if (selPos != Double.MAX_VALUE) {
+//                            // letzte Pos
+//                            double to = (-1 * selPos / 2);
+//                            System.out.println("to: " + to);
+//                            System.out.println("yy: " + -vf.getHeight() / 2); // Mitte
+//                            vf.scrollPixels(to);
+//                            vf.scrollPixels(to); // brauchts 2x??
 //
-//                        double y = cell.getBoundsInParent().getCenterY();
-//                        System.out.println(y - vf.getHeight() / 2);
-//                    } else {
-//                    vf.scrollPixels(-vf.getHeight() / 2);
-//                    }
+//                        } else {
+//                            // dann in die Mitte
+//                            System.out.println("dann Mitte");
+//                            vf.scrollPixels(-vf.getHeight() / 2);
+//                        }
 
-//                    vf.scrollTo(selected);
-//                    vf.layout();
-//                    Cell<?> cell = vf.getCell(selected);
-//                    double y = cell.getBoundsInParent().getCenterY();
-//                    vf.scrollPixels(y - vf.getHeight() / 2);
-
-
-                    vf.scrollToTop(selected);
-                    vf.layout();
-                    vf.scrollPixels(-vf.getHeight() / 2);
-                    tableView.refresh();
-                });
-
-        P2Duration.counterStart("selectLastShown");
+                        vf.scrollToTop(selected);
+                        vf.layout();
+                        vf.scrollPixels(-vf.getHeight() / 2);
+                        tableView.refresh();
+                    });
+        });
     }
 
     private void setFilmInfos(FilmDataMTP film) {

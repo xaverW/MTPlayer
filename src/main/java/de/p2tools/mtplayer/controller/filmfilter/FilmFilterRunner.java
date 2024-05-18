@@ -89,6 +89,7 @@ public class FilmFilterRunner {
                             ProgData.getInstance().filmFilterWorker.getActFilterSettings().isThemeIsExact() &&
                             !ThemeListFactory.themeForChannelList
                                     .contains(ProgData.getInstance().filmFilterWorker.getActFilterSettings().getExactTheme())) {
+                        // Filter ExactTheme kontrollieren
                         P2Log.debugLog("Clear filter");
 
                         progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
@@ -96,8 +97,9 @@ public class FilmFilterRunner {
                         progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
                     }
 
+                    progData.filmGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird
                     progData.filmListFiltered.filteredListSetPred(PredicateFactory.getPredicate(progData));
-                    progData.filmGuiController.selectLastShown();
+                    progData.filmGuiController.selectLastShown(); // und jetzt wieder setzen
 
                     search.set(false);
                     if (research.get()) {
