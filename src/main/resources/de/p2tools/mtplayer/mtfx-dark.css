@@ -3,53 +3,6 @@
 .root {
 }
 
-
-
-
-/* Tabelle */
-.table-view{
-   -fx-background-color: transparent;
-}
-.table-view .table-cell{
-    -fx-border-color: #9a9a9a;
-}
-.table-row-cell:odd{
-    -fx-background-color: derive(-fx-control-inner-background, 20%);
-}
-.table-row-cell:even{
-    -fx-background-color: derive(-fx-control-inner-background, 30%);
-}
-
-.table-row-cell:hover {
-    -fx-background-color: derive(-fx-control-inner-background, 50%);
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-}
-.table-row-cell:selected{
-    -fx-background-color: derive(-fx-control-inner-background, 80%);
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-}
-.table-row-cell:selected:hover{
-    -fx-background-color: derive(-fx-control-inner-background, 150%);
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-}
-
-/* damit leere Tabellenzeilen nicht angezeigt werden */
-.table-row-cell:empty {
-    -fx-background-color: transparent;
- }
-.table-row-cell:empty .table-cell {
-    -fx-border-width: 0px;
- }
-
-
-
-
-
-
-
 /*ist der Text in Downloads unten in den Tabs*/
 .downloadGuiMediaText{
     -fx-fill: #e7e7e7;
