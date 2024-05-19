@@ -293,6 +293,8 @@ public class FilmGuiController extends AnchorPane {
     private void selectLastShown_() {
         // nach dem Filtern/ändern der Filmliste wird ... in der Tabelle selektiert
         P2Duration.counterStart("selectLastShown");
+        P2TableFactory.refreshTable(tableView);
+        tableView.refresh();
 
         if (setShown) {
             // dann wurde nur Shown gesetzt/gelöscht
@@ -308,7 +310,7 @@ public class FilmGuiController extends AnchorPane {
         }
         if (ProgConfig.SYSTEM_FILTER_FIRST_ROW.getValue()) {
             // dann immer die erste Zeile
-            tableView.getSelectionModel().select(0);
+            tableView.getSelectionModel().clearAndSelect(0);
             tableView.scrollTo(0);
             return;
         }
