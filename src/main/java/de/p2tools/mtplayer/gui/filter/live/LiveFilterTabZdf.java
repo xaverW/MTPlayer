@@ -69,7 +69,7 @@ public class LiveFilterTabZdf extends Tab {
         hBox.setSpacing(P2LibConst.SPACING_HBOX);
         hBox.getChildren().addAll(cboSearch, btnClear);
         HBox.setHgrow(cboSearch, Priority.ALWAYS);
-        vBox.getChildren().addAll(new Label("Livesuche"), hBox);
+        vBox.getChildren().addAll(new Label("Livesuche ZDF"), hBox);
 
         hBox = new HBox();
         hBox.setPadding(new Insets(2, 0, 0, 0));
@@ -105,7 +105,7 @@ public class LiveFilterTabZdf extends Tab {
         hBox.setSpacing(P2LibConst.SPACING_HBOX);
         hBox.getChildren().addAll(cboSearchUrl, btnClearUrl);
         HBox.setHgrow(cboSearchUrl, Priority.ALWAYS);
-        vBox.getChildren().addAll(new Label("URL Filmseite"), hBox);
+        vBox.getChildren().addAll(new Label("URL ZDF-Filmseite"), hBox);
 
         hBox = new HBox();
         hBox.setPadding(new Insets(2, 0, 0, 0));

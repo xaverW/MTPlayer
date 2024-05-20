@@ -1015,10 +1015,12 @@ public class HelpText {
             "Hier kann eine Live-Suche in den Mediatheken von ARD und ZDF gestartet werden. " +
                     "Es wird dann in der Mediathek gesucht und die " +
                     "gefundenen Filme werden aufgelistet. Mit dem " +
-                    "Button \">\" kann mit dem Suchbegriff weiter gesucht werden." +
+                    "Button \">\" können mit dem Suchbegriff weitere Filme gesucht werden. " +
+                    "Die Suche wird mit dem Button \"Lupe\" gestartet. Der Suchbegriff muss mindestens " +
+                    "4 Zeichen lang sein." +
                     "\n\n" +
                     "Mit der Suche: \"URL Filmseite\" kann ein Film für die spezielle Filmseite angelegt " +
-                    "werden." +
+                    "werden. Die URL ist die URL von Filmseiten aus der Mediathek von ARD oder ZDF." +
                     "\n";
 
 }
