@@ -74,7 +74,7 @@ public class ProgTipOfDayFactory {
                 "Tabelle ein und aus.\n\n" +
                 "Beides ist auch über das\n" +
                 "Menü möglich";
-        String image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter.png";
+        String image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_ein_aus.png";
         P2TipOfDay pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
@@ -202,7 +202,7 @@ public class ProgTipOfDayFactory {
                 "wichtig sind.\n\n" +
                 "Das untere Menü ist immer\n" +
                 "für den jeweils angezeigten\n" +
-                "Tab (Filme, Downloads, Abos).";
+                "Tab (Filme, Live, Downloads, Abos).";
         image = "/de/p2tools/mtplayer/res/tooltips/Menue.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
@@ -282,6 +282,25 @@ public class ProgTipOfDayFactory {
         pToolTipList.add(pToolTip);
 
         text = START;
+        text += "Einstellungen zum Filtern\n" +
+                "im Tab Filme können hier\n" +
+                "erreicht werden.";
+        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_1.png";
+        pToolTip = new P2TipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
+        text += "In den Filtereinstellungen bei\n" +
+                "den Filmen können Filter ein- und\n" +
+                "ausgeschaltet werden. Beim Suchen werden\n" +
+                "nur die eingeschalteten Filter\n" +
+                "verwendet. Das Suchen ist schneller\n" +
+                "wenn nicht alle Filter eingeschaltet sind.";
+        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_2.png";
+        pToolTip = new P2TipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
         text += "In den Filtereinstellungen bei\n" +
                 "den Filmen kann eine Wartezeit\n" +
                 "vorgegeben werden.\n\n" +
@@ -290,7 +309,7 @@ public class ProgTipOfDayFactory {
                 "bis die Suche beginnt.\n\n" +
                 "Es wird dann nicht bei jedem\n" +
                 "Buchstaben die Suche gestartet.";
-        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Wartezeit.png";
+        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_3.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
     }
