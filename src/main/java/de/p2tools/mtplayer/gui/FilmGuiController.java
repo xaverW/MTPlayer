@@ -293,12 +293,12 @@ public class FilmGuiController extends AnchorPane {
     private void selectLastShown_() {
         // nach dem Filtern/ändern der Filmliste wird ... in der Tabelle selektiert
         P2Duration.counterStart("selectLastShown");
-        P2TableFactory.refreshTable(tableView);
-        tableView.refresh();
 
         if (setShown) {
             // dann wurde nur Shown gesetzt/gelöscht
             setShown = false;
+            tableView.refresh();
+            P2TableFactory.refreshTable(tableView);
             return;
         }
         if (tableView.getItems().isEmpty()) {
@@ -306,12 +306,16 @@ public class FilmGuiController extends AnchorPane {
         }
         if (ProgConfig.SYSTEM_FILTER_NONE_ROW.get()) {
             // dann soll nix ausgewählt werden
+            tableView.refresh();
+            P2TableFactory.refreshTable(tableView);
             return;
         }
         if (ProgConfig.SYSTEM_FILTER_FIRST_ROW.getValue()) {
             // dann immer die erste Zeile
             tableView.getSelectionModel().clearAndSelect(0);
             tableView.scrollTo(0);
+            tableView.refresh();
+            P2TableFactory.refreshTable(tableView);
             return;
         }
 
@@ -334,13 +338,15 @@ public class FilmGuiController extends AnchorPane {
         }
         setCenter();
 
-        P2Duration.counterStart("selectLastShown");
+        P2Duration.counterStop("selectLastShown");
     }
 
     private void setCenter() {
         // und dann zu selected scrollen
         int selected = tableView.getSelectionModel().getSelectedIndex();
         if (selected == -1) {
+            tableView.refresh();
+            P2TableFactory.refreshTable(tableView);
             return;
         }
 
@@ -373,6 +379,7 @@ public class FilmGuiController extends AnchorPane {
                         vf.layout();
                         vf.scrollPixels(-vf.getHeight() / 2);
                         tableView.refresh();
+                        P2TableFactory.refreshTable(tableView);
                     });
         });
     }
