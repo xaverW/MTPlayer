@@ -54,7 +54,7 @@ public class MTPlayer extends Application {
         initLib();
         ProgStartBeforeGui.workBeforeGui();
 
-        final String xmlFilePath = new ProgInfos().getLockFileStr();
+        final String xmlFilePath = ProgInfos.getLockFileStr();
         //wenn gewünscht, Lock-File prüfen
         if (ProgConfig.SYSTEM_ONLY_ONE_INSTANCE.getValue() && !P2Lock.getLockInstance(xmlFilePath)) {
             //dann kann man sich den Rest sparen
@@ -122,8 +122,8 @@ public class MTPlayer extends Application {
             primaryStage.xProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
             primaryStage.yProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
 
-            primaryStage.setIconified(ProgData.startMinimized);
             primaryStage.show();
+            primaryStage.setIconified(ProgData.startMinimized);
         } catch (final Exception e) {
             e.printStackTrace();
         }
