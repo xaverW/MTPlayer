@@ -55,6 +55,12 @@ public class LoadFilmFactory {
     public void loadNewListFromWeb(boolean alwaysLoadNew) {
         //es wird immer eine neue Filmliste aus dem Web geladen
         initLoadFactoryConst();
+
+        if (!alwaysLoadNew && ProgData.getInstance().filmGuiController != null /*mal vorsichtshalber*/) {
+            // sonst machts keinen Sinn, sind dann ja alle neu
+            ProgData.getInstance().filmGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird
+        }
+
         loadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew/*, ProgInfos.getLocalFilmListFile()*/);
     }
 

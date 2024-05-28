@@ -78,6 +78,7 @@ public class TableAbo extends PTable<AboData> {
         nameColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<AboData, String> startColumn = new TableColumn<>("");
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("buttonDummy"));
         startColumn.setCellFactory(new CellAboButton<>().cellFactory);
         startColumn.getStyleClass().add("alignCenter");
 

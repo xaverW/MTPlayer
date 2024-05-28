@@ -87,6 +87,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
         titleColumn.getStyleClass().add("alignCenterLeft");
 
         final TableColumn<FilmDataMTP, String> startColumn = new TableColumn<>("");
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("buttonDummy"));
         startColumn.setCellFactory(new CellFilmButton().cellFactory);
         startColumn.getStyleClass().add("alignCenter");
 

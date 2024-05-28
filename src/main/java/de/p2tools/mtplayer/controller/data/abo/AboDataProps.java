@@ -56,6 +56,7 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
 
     private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
     private int countHit = 0;
+    private String buttonDummy = "";
 
     public final Property[] properties = {no, active, hit, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
@@ -405,6 +406,10 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
 
     public void setCountedHits() {
         this.setHit(countHit);
+    }
+
+    public String getButtonDummy() {
+        return buttonDummy;
     }
 
     public int compareTo(AboDataProps arg0) {
