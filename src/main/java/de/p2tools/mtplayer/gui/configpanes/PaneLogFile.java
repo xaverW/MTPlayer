@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 
 import java.util.Collection;
 
-public class PaneLogfile {
+public class PaneLogFile {
 
     private final BooleanProperty logfileChanged = new SimpleBooleanProperty(false);
     private final P2ToggleSwitch tglEnableLog = new P2ToggleSwitch("Ein Logfile anlegen:");
@@ -45,7 +45,7 @@ public class PaneLogfile {
 
     private final Stage stage;
 
-    public PaneLogfile(Stage stage) {
+    public PaneLogFile(Stage stage) {
         this.stage = stage;
     }
 
