@@ -4,7 +4,7 @@ plugins {
     id "org.beryx.runtime" version "1.13.1"
 }
 javafx {
-    version = "19"
+    version = "21.0.3"
     modules = ['javafx.controls']
 }
 repositories {
@@ -19,7 +19,6 @@ def jarName = 'MTPlayer.jar'
 def theMainClass = 'de/p2tools/mtplayer/Main'
 def fatJarDir = layout.buildDirectory.get().toString() + "/fatJar" + "/"
 
-
 // ===========================================
 // build project
 // ===========================================
@@ -29,32 +28,36 @@ application {
 }
 
 dependencies {
-    //<><><><><><><><><><><><><><><><><><><><>
     implementation ':commons-cli-1.6.0'
     implementation ':commons-io-2.12.0'
     implementation ':commons-lang3-3.12.0'
+
     implementation ':jackson-core-2.15.2'
+    implementation ':jackson-databind-2.15.2'
+    implementation ':jackson-annotations-2.15.2'
+
     implementation ':xz-1.9'
+    implementation 'org.jsoup:jsoup:1.17.2'
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     implementation ':p2lib'
     implementation ':controlsfx-11.1.3'
 
-    implementation "org.openjfx:javafx-fxml:19:linux"
-    implementation "org.openjfx:javafx-controls:19:linux"
-    implementation "org.openjfx:javafx-graphics:19:linux"
-    implementation "org.openjfx:javafx-base:19:linux"
+    implementation "org.openjfx:javafx-fxml:21:linux"
+    implementation "org.openjfx:javafx-controls:21:linux"
+    implementation "org.openjfx:javafx-graphics:21:linux"
+    implementation "org.openjfx:javafx-base:21:linux"
 
-    implementation "org.openjfx:javafx-fxml:19:win"
-    implementation "org.openjfx:javafx-controls:19:win"
-    implementation "org.openjfx:javafx-graphics:19:win"
-    implementation "org.openjfx:javafx-base:19:win"
+    implementation "org.openjfx:javafx-fxml:21:win"
+    implementation "org.openjfx:javafx-controls:21:win"
+    implementation "org.openjfx:javafx-graphics:21:win"
+    implementation "org.openjfx:javafx-base:21:win"
 
-    implementation "org.openjfx:javafx-fxml:19:mac"
-    implementation "org.openjfx:javafx-controls:19:mac"
-    implementation "org.openjfx:javafx-graphics:19:mac"
-    implementation "org.openjfx:javafx-base:19:mac"
+    implementation "org.openjfx:javafx-fxml:21:mac"
+    implementation "org.openjfx:javafx-controls:21:mac"
+    implementation "org.openjfx:javafx-graphics:21:mac"
+    implementation "org.openjfx:javafx-base:21:mac"
 }
 
 java {
@@ -70,9 +73,8 @@ jar {
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
-
 tasks.register('fatJar', Jar) {
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest.from jar.manifest
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -97,7 +99,10 @@ tasks.withType(JavaCompile).configureEach {
 
 tasks.withType(Zip).configureEach { task ->
     task.doLast {
+        //ant.checksum file: archiveFile.get().asFile
         ant.checksum(algorithm: 'SHA-512', file: archiveFile.get().asFile)
     }
 }
+
+
 

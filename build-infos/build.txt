@@ -29,23 +29,23 @@ $ gradle init
   Parametern auswählen
 ==================================
 
-Select type of project to generate:
-  1: basic
-  2: application
-  3: library
-  4: Gradle plugin
-Enter selection (default: basic) [1..4] --> default
+Select type of build to generate:
+  1: Application
+  2: Library
+  3: Gradle plugin
+  4: Basic (build structure only)
+Enter selection (default: Application) [1..4] --> 4
+
+Project name (default: MTPlayer): --> default
 
 Select build script DSL:
   1: Kotlin
   2: Groovy
 Enter selection (default: Kotlin) [1..2] --> 2
 
-Project name (default: MTPlayer): --> default
-
-Generate build using new APIs and behavior (some
-features may change in the next minor release)?
-(default: no) [yes, no] --> default
+Generate build using new APIs and behavior 
+(some features may change in the next minor 
+release)? (default: no) [yes, no] --> default
 
 
 ==================================
@@ -58,11 +58,19 @@ $ cp ./build-infos/gitignore ./.gitignore
 
 
 ==================================
-* ins MTPlayer-Verzeichis wechseln
-  und dann das Programm bauen
+* im MTPlayer-Verzeichis dann das
+  Programm bauen
 ==================================
 
 $ ./gradlew fatJar
+
+==================================
+* im MTPlayer-Verzeichis kann dann
+  das Programm auch mit gradle
+  gestartet werden
+==================================
+
+$ ./gradlew run
 
 
 ==================================
@@ -73,6 +81,7 @@ $ ./gradlew fatJar
 
 $ cd build/fatJar
 $ java -jar MTPlayer.jar
+
 
 
 ==================================

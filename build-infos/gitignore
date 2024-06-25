@@ -1,11 +1,7 @@
 # Ignore everything in the root except ...
-/*
 
+/*
 !src/
 !libs/
-libs/*doc.jar
-libs/*sources.jar
-
 !README.md
 !RELEASE.md
-
