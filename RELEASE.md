@@ -1,5 +1,55 @@
 # MTPlayer
 
+**Release 17**
+
+* Neuer Tab: Live-Suche (kann über einen Menü-Button oder das Programm-Menü ein- und ausgeblendet werden). Hier kann in den Mediatheken von ARD und ZDF nach Filmen gesucht werden. Es kann auch mit einer URL einer Film-Seite aus der Mediathek ein Film angelegt werden.
+* Tabelle Filme: Es gibt eine neue Spalte für "Doppelte"
+* Doppelte Filme können beim Laden der Filmliste ausgeschlossen werden (Achtung: Bei Abos muss dann evtl. der Sender angepasst werden.)
+* Beim Markieren von doppelten Filmen, kann die Reihenfolge der Sender vorgegeben werden (also welche Sender als "Doppelt" markiert werden). Es kann weiter auch noch festgelegt werden, dass zur gleichen URL auch Thema/Titel gleich sein muss
+* Blacklist: Es können jetzt auch doppelte Filme ausgeblendet werden
+* Filme mit dem Untertitel im "Filmtitel" können jetzt auch als UT markiert werden und es gibt einen Eintrag im Kontextmenü zum Download der Untertitel-Dateien
+* Filmfilter: "Thema exakt", die Liste der Themen kann mit Texteingabe gefiltert werden
+* Filmfilter: Textfilter werden in einer eigenen ComboBox gesammelt und werden gespeichert. Bei der Auswahl eines der Filter, werden die angezeigten Filter *NICHT* geändert, es werden nur die Inhalte in die Textfilter eingetragen.
+* Alle Textfilter im Programm werden jetzt gespeichert, es gibt eine ComboBox in der sie gelistet werden und ausgewählt/gelöscht werden können
+* Im Filminfo-Dialog sind jetzt alle URLs (niedrig, hoch, hd) enthalten und können kopiert werden
+* Selektierte Tabellenzeile (Filme) nach dem Filtern überarbeitet und es gibt eine neue Einstellung: Nichts machen, es wird nichts ausgewählt
+* Die Filmliste wird jetzt in komprimierter Form gespeichert, (das PlugIn im TV-Browser läuft jetzt damit)
+* Im Tab Download gibt es einen neuen Info-Tab der die Downloadfehler anzeigt und die Anzeige bei Downloadfehlern wurde erweitert
+* Loginfos bei Downloads wurden erweitert
+* Überholte Einstellungen beim Download: "Nur ein Download pro Server" entfernt
+* Für Pfad- und Dateinamen von Downloads können in der Ersetzungstabelle (Einstellungen->Download) jetzt auch RegEx verwendet werden
+* Max. Bandbreite wurde überarbeitet: Max (10 MByte/s) ist jetzt 10x der alte Wert und der Max-Wert ist jetzt "0", also links, so kann der Max-Wert auch eingestellt werden
+* Bei der Startzeit von Downloads kann jetzt die Zeit von 00:00 bis 23:45 Uhr angegeben werden. Liegt die Zeit in der Vergangenheit wird der Download morgen um diese Zeit gestartet.
+* In Abos können jetzt ein eigener Pfad/Dateiname zum Speichern vorgegeben werden. Wird das gesetzt, werden die Vorgaben aus dem Set überschrieben.
+* Auto-Mode überarbeitet: Downloads werden alle sofort gestartet (unabhängig von der Startzeit)
+* ToolTips in den Tabellen Filme/Live/Downloads/Abos können im Kontextmenü der Tabelle ein- und ausgeschaltet werden
+* Gibt's neue Funktionen im Programm, zeigt ein Dialog beim Start dies an
+* Der Sender "Radio Bremen TV" wurden mit dem Sendernamen "Radio Bremen TV", "rbtv" und "RBTV" gelistet und die werden jetzt zusammengefasst zu "RBTV".
+* Es gibt ein neues ShortCut zum Anzeigen der Blacklist-Einstellungen: ALT+B
+* In den Programmeinstellungen->Proxy kann ein Proxy-Server eingerichtet werden
+* Erledigte Abos / History: Es kann jetzt auch eine Auswahl gelöscht werden
+* Das Prgramm startet jetzt auch unter Win maximiert, wenn es so beendet wurde
+* In den Einstellungen kann vorgegeben werden, dass das Programm immer maximiert startet, egal wie es beendet wurde
+* Dialog "Warten aufs Beenden" hat jetzt eine neue Animation mit weniger Prozessor-Last
+* Rechte Menüleiste kann ausgeblendet werden
+* FR kann als GEO-Standort eingestellt werden
+* Fehler mit einem eigenem Pfad für das Logfile wurde behoben
+* Farben im Darkmode wurden etwas angepasst
+* About Dialog enthält jetzt auch den Speicherverbrauch des Programms
+* Tips (Menü->Hilfe) wurden an die aktuelle Version angepasst und erweitert
+* GUI-Toolkit aktualisiert
+* ffmpeg für Win aktualisiert
+* Java für die Versionen "mit Java" aktualisiert
+* ...
+
+
+**Release 16**
+
+* Es gab einen Fehler wenn der Film bei gespeicherten Downloads nicht mehr in der Filmliste ist
+* Filmfiter Sendezeit: Gui überarbeitet
+* ...
+
+
 **Release 15**
 
 * Die Java-Version wurde auf mind. Java 17 angehoben
