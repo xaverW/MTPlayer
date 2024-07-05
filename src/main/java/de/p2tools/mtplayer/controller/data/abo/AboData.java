@@ -73,12 +73,13 @@ public class AboData extends AboDataProps {
         setSetData(progData.setDataList.getSetDataForAbo());
     }
 
-    void initAbo(ProgData progData) {
+    void initAbo(ProgData progData, int no) {
         // init beim Programmstart,
         // kann ein anderes Set notwendig sein (wenn es gelöscht wurde)
         SetData setData = progData.setDataList.getSetDataForAbo(getSetDataId());
         setSetData(setData);
         setSetDataId(setData == null ? "" : setData.getId());
+        setNo(no);
     }
 
     private void initFilter() {

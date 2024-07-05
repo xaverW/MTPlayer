@@ -35,7 +35,7 @@ import java.util.List;
 public class AboList extends SimpleListProperty<AboData> implements P2DataList<AboData> {
     private final ProgData progData;
     public static final String TAG = "AboList";
-    private int nr;
+    private int no;
     private static final GermanStringSorter sorter = GermanStringSorter.getInstance();
     private final BooleanProperty listChanged = new SimpleBooleanProperty(true);
     private final ObservableList<AboData> undoList = FXCollections.observableArrayList();
@@ -72,18 +72,18 @@ public class AboList extends SimpleListProperty<AboData> implements P2DataList<A
     }
 
     public synchronized void initAboList() {
-        this.forEach(abo -> abo.initAbo(progData));
+        this.forEach(abo -> abo.initAbo(progData, ++no));
     }
 
     public synchronized void addAbo(AboData abo) {
         // die Änderung an der Liste wird nicht gemeldet!!
-        // für das Lesen der Konfig-Datei beim Programmstart
-        ++nr;
-        abo.setNo(nr);
+        // für Import MediathekView, Dialog neues Abo anlegen
+        ++no;
+        abo.setNo(no);
 
         if (abo.getName().isEmpty()) {
             // Downloads ohne "Aboname" sind manuelle Downloads
-            abo.setName("Abo_" + nr);
+            abo.setName("Abo_" + no);
         }
         if (abo.getResolution().isEmpty()) {
             abo.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
