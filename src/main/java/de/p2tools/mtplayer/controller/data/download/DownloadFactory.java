@@ -40,13 +40,13 @@ public class DownloadFactoryAbo {
     private DownloadFactoryAbo() {
     }
 
-    static synchronized void searchDownloadsFromAbos(DownloadList downloadList) {
-        // Downloads für Abos suchen
-        refreshDownloads(downloadList);
-        searchForNewDownloadsForAbos(downloadList);
-    }
+//    static synchronized void searchDownloadsFromAbos(DownloadList downloadList) {
+//        // Downloads für Abos suchen
+//        refreshDownloads(downloadList);
+//        searchForNewDownloadsForAbos(downloadList);
+//    }
 
-    private static void refreshDownloads(DownloadList downloadList) {
+    static void refreshDownloads(DownloadList downloadList) {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
         P2Duration.counterStart("refreshDownloads");
         List<DownloadData> syncRemoveList = Collections.synchronizedList(new ArrayList<>());
@@ -78,7 +78,7 @@ public class DownloadFactoryAbo {
         P2Duration.counterStop("refreshDownloads");
     }
 
-    private static void searchForNewDownloadsForAbos(DownloadList downloadList) {
+    static void searchForNewDownloadsForAbos(DownloadList downloadList) {
         // in der Filmliste nach passenden Filmen (für Abos) suchen und Downloads anlegen
         P2Duration.counterStart("searchForNewDownloads");
         List<DownloadData> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
@@ -146,11 +146,13 @@ public class DownloadFactoryAbo {
 
         if (found) {
             checkDoubleNames(syncDownloadArrayList, downloadList);
-            downloadList.addAll(syncDownloadArrayList);
-            downloadList.setNumbersInList();
+            Platform.runLater(() -> {
+                downloadList.addAll(syncDownloadArrayList);
+                downloadList.setNumbersInList();
+                syncDownloadArrayList.clear();
+                syncDownloadsAlreadyInTheListHash.clear();
+            });
         }
-        syncDownloadArrayList.clear();
-        syncDownloadsAlreadyInTheListHash.clear();
 
         // und jetzt die hits eintragen (hier, damit nicht bei jedem die Tabelle geändert werden muss)
         ProgData.getInstance().aboList.forEach(AboDataProps::setCountedHits);
@@ -159,6 +161,31 @@ public class DownloadFactoryAbo {
     }
 
     private static void checkDoubleNames(List<DownloadData> foundNewDownloads, List<DownloadData> downloadList) {
+        // prüfen ob schon ein Download mit dem Zieldateinamen in der DownloadListe existiert
+        try {
+            Set<String> fileNames = Collections.synchronizedSet(new HashSet<>(foundNewDownloads.size() + downloadList.size()));
+            downloadList.forEach((download) -> fileNames.add(download.getDestPathFile()));
+
+            for (DownloadData foundDownload : foundNewDownloads) {
+                if (fileNames.contains(foundDownload.getDestPathFile())) {
+                    // dann einen neuen Namen suchen
+                    int i = 1;
+                    String newName = getNextFileName(foundDownload.getDestPathFile(), i);
+                    while (fileNames.contains(newName)) {
+                        // dann ist er schon drin
+                        i += 1;
+                        newName = getNextFileName(foundDownload.getDestPathFile(), i);
+                    }
+                    foundDownload.setFile(newName);
+                }
+                fileNames.add(foundDownload.getDestPathFile());
+            }
+        } catch (final Exception ex) {
+            P2Log.errorLog(303021458, ex);
+        }
+    }
+
+    private static void checkDoubleNames_old(List<DownloadData> foundNewDownloads, List<DownloadData> downloadList) {
         // prüfen ob schon ein Download mit dem Zieldateinamen in der Downloadliste existiert
         try {
             final List<DownloadData> alreadyDone = new ArrayList<>();

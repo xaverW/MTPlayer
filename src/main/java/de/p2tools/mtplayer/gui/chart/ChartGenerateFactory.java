@@ -153,7 +153,7 @@ public class ChartGenerateFactory {
         int dataPos = (int) Math.round(BandwidthDataFactory.MAX_DATA - chartPos * dataPerPixel);
         dataPos = Math.max(dataPos, 0);
         dataPos = Math.min(dataPos, BandwidthDataFactory.MAX_DATA - 1);
-        return Math.round(bandwidthData.data[dataPos]);
+        return Math.round(bandwidthData.getData()[dataPos]);
     }
 
     private static synchronized void colorChartName(LineChart<Number, Number> lineChart, ChartData chartData) {

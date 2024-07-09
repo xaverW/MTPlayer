@@ -29,8 +29,9 @@ public class BandwidthData {
     private int downloadState = DownloadConstants.STATE_INIT;
     private String name = "";
     private long startTimeSec = -1; // Startzeit in Sekunden
-    private boolean isShowing = false;
-    int[] data = new int[BandwidthDataFactory.MAX_DATA]; // sind kByte!!!!
+    private boolean showing = false;
+    private boolean downloading = true;
+    private int[] data = new int[BandwidthDataFactory.MAX_DATA]; // sind kByte!!!!
 
     public BandwidthData(DownloadData download) {
         this.download = download;
@@ -78,7 +79,7 @@ public class BandwidthData {
             setStartTimeNow();
         }
 
-        tmpValue += a / 1000; // data sind kByte!!!!!!!!
+        tmpValue += (int) (a / 1000); // data sind kByte!!!!!!!!
         if (BandwidthDataFactory.GET_DATA_COUNT >= BandwidthDataFactory.DATA_ALL_SECONDS - 1) {
             // neuer Wert wird der LETZTE in der Liste
             for (int i = 1; i < data.length; ++i) {
@@ -98,11 +99,23 @@ public class BandwidthData {
     }
 
     public boolean isShowing() {
-        return isShowing;
+        return showing;
+    }
+
+    public boolean isDownloading() {
+        return downloading;
+    }
+
+    public void setDownloading(boolean downloading) {
+        this.downloading = downloading;
+    }
+
+    public int[] getData() {
+        return data;
     }
 
     public void setShowing(boolean showing) {
-        isShowing = showing;
+        this.showing = showing;
     }
 
     public boolean isEmpty() {
