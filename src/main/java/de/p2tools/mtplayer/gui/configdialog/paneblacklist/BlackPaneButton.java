@@ -17,10 +17,12 @@
 
 package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -85,8 +87,15 @@ public class BlackPaneButton {
                 "Für jeden Eintrag in der Blacklist wird gezählt,\n" +
                 "wie viele Filme damit geblockt werden."));
         btnCountHits.setOnAction(a -> {
-            BlacklistFactory.countHits(list);
-            P2TableFactory.refreshTable(tableView);
+            if (ProgData.busy.isBusy()) {
+                return;
+            }
+            ProgData.busy.busyOnFx("Blacklist", -1, false);
+            new Thread(() -> {
+                BlacklistFilterFactory.countHits(list);
+                P2TableFactory.refreshTable(tableView);
+                ProgData.busy.busyOffFx();
+            }).start();
         });
 
         Button btnAddStandards = new Button("_Standards einfügen");

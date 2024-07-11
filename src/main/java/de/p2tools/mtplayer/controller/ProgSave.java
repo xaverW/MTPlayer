@@ -41,17 +41,24 @@ public class ProgSave {
     }
 
     public static void saveAll() {
-        //sind die Programmeinstellungen
+        // nach dem Filmliste laden: Plattform.runLater...
+        // aus dem Debug-Menü, nach dem Laden der Filmliste, aus den Einstellungen/ShutDownDialog: Beenden "Testen"
+        // DownloadAddDialog, AboAddDialog
+        ProgData.busy.busyOn("Speichern:", -1.0, false);
+
         P2Log.sysLog("Alle Programmeinstellungen sichern");
         final Path xmlFilePath = ProgInfos.getSettingsFile();
         ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true);
-        ProgConfig.addConfigData(configFile);
+        ProgConfig.addConfigData(configFile, true);
         ConfigWriteFile.writeConfigFile(configFile);
 
         if (ProgData.reset) {
             reset();
         }
+
+        ProgData.busy.busyOffFx();
     }
+
 
     private static void reset() {
         // das Programm soll beim nächsten Start mit den Standardeinstellungen gestartet werden

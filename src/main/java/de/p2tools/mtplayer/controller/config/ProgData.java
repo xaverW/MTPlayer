@@ -34,6 +34,7 @@ import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
 import de.p2tools.mtplayer.controller.starter.StartDownload;
+import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.controller.worker.CheckForNewFilmlist;
 import de.p2tools.mtplayer.controller.worker.Worker;
 import de.p2tools.mtplayer.gui.AboGuiController;
@@ -60,8 +61,10 @@ public class ProgData {
     private static ProgData instance;
 
     // flags
-    public static boolean debug = false; // Debugmodus
+    public static boolean debug = false; // DebugModus
     public static boolean autoMode = false; // Automodus: start, laden, beenden
+    public static Busy busy;
+
     public static boolean downloadSearchDone = false; // wird gesetzt, wenn das erste mal Downloads gesucht wurden
     public static boolean duration = false; // Duration ausgeben
     public static boolean startMinimized = false; // Minimiert starten
@@ -132,6 +135,7 @@ public class ProgData {
     public ProposeList proposeList;
 
     private ProgData() {
+        busy = new Busy();
         pShortcut = new PShortcut();
         replaceList = new ReplaceList();
         utDataList = new UtDataList();

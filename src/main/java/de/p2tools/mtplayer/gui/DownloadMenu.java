@@ -22,8 +22,9 @@ import de.p2tools.mtplayer.controller.config.PShortKeyFactory;
 import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
-import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.beans.binding.Bindings;
@@ -75,12 +76,12 @@ public class DownloadMenu {
                 "Film Starten", "Gespeicherten Film abspielen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
 
         btnRefresh.setOnAction(a -> {
-            DownloadDataFactory.searchForAbosAndMaybeStart();
+            AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
             progData.downloadGuiController.tableView.refresh();
             progData.downloadGuiController.tableView.requestFocus();
         });
         btnClear.setOnAction(a -> {
-            DownloadDataFactory.cleanUpList(progData.downloadList);
+            DownloadFactory.cleanUpList(progData.downloadList);
             progData.downloadGuiController.tableView.refresh();
             progData.downloadGuiController.tableView.requestFocus();
         });
@@ -195,7 +196,7 @@ public class DownloadMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
-            DownloadDataFactory.searchForAbosAndMaybeStart();
+            AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
         });
         P2ShortcutWorker.addShortCut(mbUpdateList, PShortcut.SHORTCUT_DOWNLOADS_UPDATE);
 
@@ -204,7 +205,7 @@ public class DownloadMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
                 return;
             }
-            DownloadDataFactory.cleanUpList(progData.downloadList);
+            DownloadFactory.cleanUpList(progData.downloadList);
         });
         P2ShortcutWorker.addShortCut(mbClean, PShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
 

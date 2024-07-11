@@ -181,7 +181,7 @@ public class ImportMVDialog extends P2DialogExtra {
         final Button btnAddAbo = new Button();
         btnAddAbo.setTooltip(new Tooltip("Gefundene Abos an die eigenen Abos anhängen"));
         btnAddAbo.setOnAction(event -> {
-            int found = MVFactory.addAbos(this.getStage(), aboList);
+            int found = MVFactory.importAbosMediathekView(this.getStage(), aboList);
             lblFoundAbos.setText(found + "");
         });
         btnAddAbo.setGraphic(ProgIcons.ICON_BUTTON_UPDATE.getImageView());

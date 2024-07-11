@@ -46,7 +46,8 @@ public class MVFactory {
         return "";
     }
 
-    public static int addAbos(Stage stage, ObservableList<AboData> aboList) {
+    public static int importAbosMediathekView(Stage stage, ObservableList<AboData> aboList) {
+        // Import MediathekView
         int ret = 0;
         BooleanProperty remember = new SimpleBooleanProperty(false);
         boolean todo = true; //Abo nehmen

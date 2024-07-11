@@ -58,7 +58,7 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
 
     private void reportBlacklistChange() {
         if (!filterIsOff) { // todo ??
-            BlacklistFilterFactory.getBlackFilteredFilmlist();
+            BlacklistFilterFactory.makeBlackFilteredFilmlist();
             PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
         }
     }

@@ -20,11 +20,8 @@ package de.p2tools.mtplayer.controller.data.blackdata;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.gui.dialog.AddBlackListDialogController;
-import de.p2tools.p2lib.tools.duration.P2Duration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,30 +82,6 @@ public class BlacklistFactory {
     public static void addBlack(String sender, String theme, String titel) {
         BlackData blackData = new BlackData(sender, theme, titel, "");
         ProgData.getInstance().blackList.addAndNotify(blackData);
-    }
-
-    public static synchronized void countHits(BlackData blackData) {
-        //Aufruf mit Button zum Zählen
-        //hier wird ein BlackDate gegen die Filmliste gefiltert und die Treffer ermittelt
-        List<BlackData> bl = new ArrayList<>();
-        bl.add(blackData);
-        countHits(bl);
-    }
-
-    public static synchronized void countHits(List<BlackData> list) {
-        //Aufruf mit Button zum Zählen
-        //hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
-        //für *jeden* Blacklist-Eintrag ermittelt, wird nicht nach einem Treffer abgebrochen
-        P2Duration.counterStart("countHitsList");
-        for (BlackData bl : list) {
-            bl.clearCounter();
-        }
-        final FilmListMTP filmDataMTPS = ProgData.getInstance().filmList;
-        if (filmDataMTPS != null) {
-            filmDataMTPS.parallelStream().forEach(film ->
-                    BlacklistFilterFactory.checkFilmIsBlockedAndCountHits(film, list));
-        }
-        P2Duration.counterStop("countHitsList");
     }
 
     public static boolean blackIsEmpty(BlackData blackData) {

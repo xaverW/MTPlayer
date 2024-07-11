@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.worker;
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
+import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -44,27 +44,31 @@ public class Worker {
                 if (ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()
                         && ProgConfig.ABO_SEARCH_NOW.getValue()) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-                    DownloadDataFactory.searchForAbosAndMaybeStart();
+                    AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
                 }
             }
         });
         ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getValue()) {
-                Platform.runLater(DownloadDataFactory::searchForAbosAndMaybeStart);
+                Platform.runLater(AboSearchDownloadsFactory::searchForDownloadsFromAbosAndMaybeStart);
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (ProgConfig.ABO_SEARCH_NOW.getValue()) {
-                Platform.runLater(DownloadDataFactory::searchForAbosAndMaybeStart);
+                Platform.runLater(() -> {
+                    AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
+                    getAboNames();
+                });
             }
-            getAboNames();
         });
 
-        progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
-                getAboNames());
-
-        progData.downloadList.sizeProperty().addListener((observable, oldValue, newValue) ->
-                getAboNames());
+//        progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) -> {
+////            Platform.runLater(this::getAboNames);
+//        });
+//
+//        progData.downloadList.sizeProperty().addListener((observable, oldValue, newValue) -> {
+////            Platform.runLater(this::getAboNames);
+//        });
 
         progData.checkForNewFilmlist.foundNewListProperty().addListener((u, o, n) -> {
             if (!ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY.getValue()) {
@@ -86,10 +90,17 @@ public class Worker {
         });
     }
 
-
     public void workOnFilmListLoadStart() {
         // the channel combo will be reset, therefore save the filter
         saveFilter();
+    }
+
+    public void workOnConfigLoaded() {
+        getAboNames();
+    }
+
+    public void workOnConfigSaved() {
+        getAboNames();
     }
 
     public void workOnFilmListLoadFinished() {
@@ -102,7 +113,7 @@ public class Worker {
 
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 // wenn gewollt oder im AutoMode immer suchen
-                DownloadDataFactory.searchForAbosAndMaybeStart();
+                AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
             }
 
             // activate the saved filter
@@ -140,11 +151,9 @@ public class Worker {
     private void getAboNames() {
         final ArrayList<String> listAboChannel = progData.aboList.getAboChannelList();
         final ArrayList<String> listAboName = progData.aboList.getAboNameList();
-        Platform.runLater(() -> {
-            saveFilter();
-            ThemeListFactory.channelsForAbosList.setAll(listAboChannel);
-            ThemeListFactory.allAboNamesList.setAll(listAboName);
-            resetFilter();
-        });
+        saveFilter();
+        ThemeListFactory.channelsForAbosList.setAll(listAboChannel);
+        ThemeListFactory.allAboNamesList.setAll(listAboName);
+        resetFilter();
     }
 }

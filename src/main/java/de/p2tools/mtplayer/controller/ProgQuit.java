@@ -33,17 +33,21 @@ public class ProgQuit {
      * Quit the MTPlayer application
      */
     public static void quit() {
-        saveConfig();
-        exitProg();
+        // ResetDialog, QuittDialog (wenn noch Downloads laufen)
+        // kann aus der Reihe kommen
+        save(false);
+//        exitProg();
     }
 
     /**
      * Quit the MTPlayer application and shutDown the computer
      */
     public static void quitShutDown() {
-        saveConfig();
-        P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
-        exitProg();
+        // QuittDialog (wenn noch Downloads laufen)
+        // kann aus der Reihe kommen
+        save(true);
+//        P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
+//        exitProg();
     }
 
     /**
@@ -61,39 +65,49 @@ public class ProgQuit {
 
         } else {
             //dann Programm beenden
-            saveConfig();
-            exitProg();
+            save(false);
+//            exitProg();
         }
     }
 
-    private static void saveConfig() {
-        stopAllDownloads();
-        writeTabSettings();
-        ProgSave.saveAll();
-        P2LogMessage.endMsg();
-    }
-
-    private static void exitProg() {
-        // dann jetzt beenden -> Thüss
+    private static void save(boolean shutDown) {
+        // ProgQuitt-> vor dem Beenden
+        // kann aus der Reihe kommen
+        ProgData.busy.busyOnFx("Speichern:", -1.0, false);
         Platform.runLater(() -> {
-            Platform.exit();
-            System.exit(0);
+
+            stopAllDownloads();
+            writeTabSettings();
+            ProgSave.saveAll();
+            P2LogMessage.endMsg();
+
+            if (shutDown) {
+                P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
+            }
+
+            exitProg();
         });
     }
 
+    private static void exitProg() {
+        // dann jetzt beenden -> Tschüss
+        Platform.exit();
+        System.exit(0);
+    }
+
     private static void stopAllDownloads() {
-        //erst mal alle Downloads stoppen und da evtl. auch aus AUTO: kein Dialog
+        // erst mal alle Downloads stoppen und da evtl. auch aus AUTO: kein Dialog
         ProgData.getInstance().downloadList.forEach(download -> {
             if (download.isStateStartedRun()) {
                 download.stopDownload(false);
             }
         });
 
-        //unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
-        //Download, (Abo müssen neu angelegt werden)
-        ProgData.getInstance().downloadList.removeIf(download ->
-                (!download.isStateStopped() &&
-                        (download.isAbo() || download.isStateFinished())));
+//        // unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
+//        // Download, (Abo müssen neu angelegt werden)
+//        ProgData.getInstance().downloadList.removeIf(download ->
+//                (!download.isStateStopped() &&
+//                        (download.isAbo() || download.isStateFinished())));
     }
 
     private static void writeTabSettings() {

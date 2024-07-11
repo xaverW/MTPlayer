@@ -111,6 +111,7 @@ public class PaneBlackList {
         blackPaneButton.addButton(stage, vBox, tableView, blackDataChanged, list);
         BlackPaneMoveButton.addMoveButton(stage, vBox, tableView, progData, controlBlackListNotFilmFilter, blackDataChanged, list);
         addConfigs(vBox);
+        vBox.getChildren().add(ProgData.busy.getBusyHbox());
 
         TitledPane tpBlack = new TitledPane(controlBlackListNotFilmFilter ? "Blacklist" : "Filme ausschließen", vBox);
         result.add(tpBlack);

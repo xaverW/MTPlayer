@@ -55,7 +55,7 @@ public class DownloadDirectHttp extends Thread {
 
     private final PListener listener = new PListener(PListener.EVENT_TIMER_HALF_SECOND, DownloadDirectHttp.class.getSimpleName()) {
         @Override
-        public void ping() {
+        public void pingFx() {
             updateDownloadInfos = true;
         }
     };

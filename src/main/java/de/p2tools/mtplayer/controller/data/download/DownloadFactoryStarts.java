@@ -145,16 +145,11 @@ public class DownloadFactoryStarts {
     }
 
     private static boolean getDown(DownloadList downloadList, int max) {
-        int count = 0;
         try {
-            for (final DownloadData download : downloadList) {
-                if (download.isStateStartedRun()) {
-                    ++count;
-                    if (count >= max) {
-                        logMsg("Download zum Start suchen: Es laufen: " + count + " - Max: " + max);
-                        return false;
-                    }
-                }
+            int count = downloadList.countRunningDownloads();
+            if (count >= max) {
+                logMsg("Download zum Start suchen: Es laufen: " + count + " - Max: " + max);
+                return false;
             }
             return true;
         } catch (Exception ex) {
@@ -163,6 +158,25 @@ public class DownloadFactoryStarts {
         return false;
     }
 
+    //    private static boolean getDown(DownloadList downloadList, int max) {
+//        int count = 0;
+//        try {
+//            for (final DownloadData download : downloadList) {
+//                if (download.isStateStartedRun()) {
+//                    ++count;
+//                    if (count >= max) {
+//                        logMsg("Download zum Start suchen: Es laufen: " + count + " - Max: " + max);
+//                        return false;
+//                    }
+//                }
+//            }
+//            return true;
+//        } catch (Exception ex) {
+//            P2Log.errorLog(794519083, ex);
+//        }
+//        return false;
+//    }
+//
     private static void logMsg(String log) {
         if (!lastLogMsg.equals(log)) {
             // dann hats sichs geändert

@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
@@ -156,7 +156,7 @@ public class LiveFilmTableContextMenu {
         miAboAddFilter.setOnAction(a -> {
             AboListFactory.addNewAboFromFilterButton();
         });
-        AboData aboData = film == null ? null : BlacklistFilterFactory.findAbo(film);
+        AboData aboData = film == null ? null : AboFactory.findAbo(film);
         if (aboData == null) {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen

@@ -129,7 +129,7 @@ public class DownloadFactoryMakeParameter {
                 }
             }
 
-            name = DownloadDataFactory.replaceEmptyFileName(name,
+            name = DownloadFactory.replaceEmptyFileName(name,
                     false /* pfad */,
                     ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                     ProgConfig.SYSTEM_ONLY_ASCII.getValue());
@@ -180,7 +180,7 @@ public class DownloadFactoryMakeParameter {
                     // --> das wird aber nur beim ersten mal klappen, dann wird im
                     // DownloadDialog immer der letzte Pfad zuerst angeboten
                     path = P2FileUtils.addsPath(path,
-                            DownloadDataFactory.replaceEmptyFileName(download.getTheme(),
+                            DownloadFactory.replaceEmptyFileName(download.getTheme(),
                                     true /* pfad */,
                                     ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                                     ProgConfig.SYSTEM_ONLY_ASCII.getValue()));
@@ -311,7 +311,7 @@ public class DownloadFactoryMakeParameter {
     }
 
     private static String getField(String name, int length) {
-        name = DownloadDataFactory.replaceEmptyFileName(name,
+        name = DownloadFactory.replaceEmptyFileName(name,
                 false /* pfad */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());

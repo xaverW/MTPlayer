@@ -18,35 +18,86 @@ package de.p2tools.mtplayer.controller.data.download;
 
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.data.abo.AboDataProps;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
-import de.p2tools.p2lib.tools.date.P2Date;
+import de.p2tools.mtplayer.controller.tools.SizeTools;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
+import de.p2tools.p2lib.tools.P2SystemUtils;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
-import de.p2tools.p2lib.tools.log.P2Log;
-import javafx.application.Platform;
+import javafx.scene.control.Label;
+import org.apache.commons.lang3.SystemUtils;
 
-import java.nio.file.Paths;
 import java.util.*;
 
-public class DownloadFactoryAbo {
-    private static boolean found = false;
+public class DownloadFactory {
 
-    private DownloadFactoryAbo() {
+    private DownloadFactory() {
     }
 
-//    static synchronized void searchDownloadsFromAbos(DownloadList downloadList) {
-//        // Downloads für Abos suchen
-//        refreshDownloads(downloadList);
-//        searchForNewDownloadsForAbos(downloadList);
-//    }
+    public static void preferDownloads(DownloadList downloadList, List<DownloadData> prefDownList) {
+        // macht nur Sinn, wenn der Download auf Laden wartet: Init
+        // todo auch bei noch nicht gestarteten ermöglichen
+        prefDownList.removeIf(d -> d.getState() != DownloadConstants.STATE_STARTED_WAITING);
+        if (prefDownList.isEmpty()) {
+            return;
+        }
 
-    static void refreshDownloads(DownloadList downloadList) {
+        // zum neu nummerieren der alten Downloads
+        List<DownloadData> list = new ArrayList<>();
+        for (final DownloadData download : downloadList) {
+            final int i = download.getNo();
+            if (i < P2LibConst.NUMBER_NOT_STARTED) {
+                list.add(download);
+            }
+        }
+        prefDownList.forEach(list::remove);
+        list.sort(new Comparator<>() {
+            @Override
+            public int compare(DownloadData d1, DownloadData d2) {
+                return (d1.getNo() < d2.getNo()) ? -1 : 1;
+            }
+        });
+        int addNr = prefDownList.size();
+        for (final DownloadData download : list) {
+            ++addNr;
+            download.setNo(addNr);
+        }
+
+        // und jetzt die vorgezogenen Downloads nummerieren
+        int i = 1;
+        for (final DownloadData dataDownload : prefDownList) {
+            dataDownload.setNo(i++);
+        }
+    }
+
+    public static synchronized void cleanUpList(DownloadList downloadList) {
+        // fertige Downloads löschen, fehlerhafte zurücksetzen
+        boolean found = false;
+        Iterator<DownloadData> it = downloadList.iterator();
+        while (it.hasNext()) {
+            DownloadData download = it.next();
+            if (download.isStateInit() ||
+                    download.isStateStopped()) {
+                continue;
+            }
+            if (download.isStateFinished()) {
+                // alles was fertig/fehlerhaft ist, kommt beim putzen weg
+                it.remove();
+                found = true;
+            } else if (download.isStateError()) {
+                // fehlerhafte werden zurückgesetzt
+                download.resetDownload();
+                found = true;
+            }
+        }
+
+        if (found) {
+            downloadList.setDownloadsChanged();
+        }
+    }
+
+    public static void refreshDownloads(DownloadList downloadList) {
         // fehlerhafte und nicht gestartete löschen, wird nicht gemeldet ob was gefunden wurde
         P2Duration.counterStart("refreshDownloads");
         List<DownloadData> syncRemoveList = Collections.synchronizedList(new ArrayList<>());
@@ -78,147 +129,107 @@ public class DownloadFactoryAbo {
         P2Duration.counterStop("refreshDownloads");
     }
 
-    static void searchForNewDownloadsForAbos(DownloadList downloadList) {
-        // in der Filmliste nach passenden Filmen (für Abos) suchen und Downloads anlegen
-        P2Duration.counterStart("searchForNewDownloads");
-        List<DownloadData> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
-
-        // den Abo-Trefferzähler zurücksetzen
-        ProgData.getInstance().aboList.forEach(AboDataProps::clearCountHit);
-
-        if (ProgData.getInstance().setDataList.getSetDataForAbo("") == null) {
-            // dann fehlt ein Set für die Abos
-            Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.ABO));
+    /**
+     * Calculate free disk space on volume and check if the movies can be safely downloaded.
+     */
+    public static void calculateAndCheckDiskSpace(DownloadData download, String path, Label lblSizeFree) {
+        if (path == null || path.isEmpty()) {
             return;
         }
-
-        // mit den bereits enthaltenen Download-URLs füllen
-        Set<String> syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(new HashSet<>(500)); //todo für 90% übertrieben, für 10% immer noch zu wenig???
-        downloadList.forEach((download) -> syncDownloadsAlreadyInTheListHash.add(download.getUrl()));
-
-        // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
-        final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue();
-
-        // und jetzt die Filmliste ablaufen
-        ProgData.getInstance().filmList.parallelStream().forEach(film -> {
-            final AboData aboData = film.getAbo();
-            if (aboData == null) {
-                //dann gibts dafür kein Abo
-                //oder abo ist ausgeschaltet, ...
-                return;
-            }
-
-            aboData.incrementCountHit();
-
-            if (checkWithBlackList && BlacklistFilterFactory.checkFilmIsBlockedCompleteBlackData(film, false)) {
-                // Blacklist auch bei Abos anwenden und Film wird blockiert
-                return;
-            }
-
-            if (ProgData.getInstance().historyListAbos.checkIfUrlAlreadyIn(film.getUrlHistory())) {
-                // ist schon mal geladen worden
-                return;
-            }
-
-            // mit der tatsächlichen URL prüfen, ob die URL schon in der Downloadliste ist
-            final String urlDownload = film.getUrlForResolution(aboData.getResolution());
-            if (!syncDownloadsAlreadyInTheListHash.add(urlDownload)) {
-                return;
-            }
-
-            //dann haben wir einen Treffer :)
-            //und dann auch in die Liste schreiben
-            aboData.setDate(new P2Date());
-            final SetData setData = aboData.getSetData(ProgData.getInstance());
-            DownloadData downloadData;
-
-            if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
-                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData,
-                        "", "", "", true);
+        try {
+            String noSize = "";
+            long usableSpace = P2FileUtils.getFreeDiskSpace(path);
+            String sizeFree = "";
+            if (usableSpace == 0) {
+                lblSizeFree.setText("");
             } else {
-                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData,
-                        "", "", "", false);
+                sizeFree = SizeTools.humanReadableByteCount(usableSpace, true);
             }
 
-            syncDownloadArrayList.add(downloadData);
-            found = true;
-        });
+            // jetzt noch prüfen, obs auf die Platte passt
+            usableSpace /= 1_000_000;
+            if (usableSpace > 0) {
+                long size = download.getDownloadSize().getTargetSize();
+                size /= 1_000_000;
+                if (size > usableSpace) {
+                    noSize = " [ nicht genug Speicher: ";
 
-        if (found) {
-            checkDoubleNames(syncDownloadArrayList, downloadList);
-            Platform.runLater(() -> {
-                downloadList.addAll(syncDownloadArrayList);
-                downloadList.setNumbersInList();
-                syncDownloadArrayList.clear();
-                syncDownloadsAlreadyInTheListHash.clear();
-            });
-        }
-
-        // und jetzt die hits eintragen (hier, damit nicht bei jedem die Tabelle geändert werden muss)
-        ProgData.getInstance().aboList.forEach(AboDataProps::setCountedHits);
-
-        P2Duration.counterStop("searchForNewDownloads");
-    }
-
-    private static void checkDoubleNames(List<DownloadData> foundNewDownloads, List<DownloadData> downloadList) {
-        // prüfen ob schon ein Download mit dem Zieldateinamen in der DownloadListe existiert
-        try {
-            Set<String> fileNames = Collections.synchronizedSet(new HashSet<>(foundNewDownloads.size() + downloadList.size()));
-            downloadList.forEach((download) -> fileNames.add(download.getDestPathFile()));
-
-            for (DownloadData foundDownload : foundNewDownloads) {
-                if (fileNames.contains(foundDownload.getDestPathFile())) {
-                    // dann einen neuen Namen suchen
-                    int i = 1;
-                    String newName = getNextFileName(foundDownload.getDestPathFile(), i);
-                    while (fileNames.contains(newName)) {
-                        // dann ist er schon drin
-                        i += 1;
-                        newName = getNextFileName(foundDownload.getDestPathFile(), i);
-                    }
-                    foundDownload.setFile(newName);
                 }
-                fileNames.add(foundDownload.getDestPathFile());
             }
+
+            if (noSize.isEmpty()) {
+                lblSizeFree.setText(" [ noch frei: " + sizeFree + " ]");
+            } else {
+                lblSizeFree.setText(noSize + sizeFree + " ]");
+            }
+
+
         } catch (final Exception ex) {
-            P2Log.errorLog(303021458, ex);
+            ex.printStackTrace();
         }
     }
 
-    private static void checkDoubleNames_old(List<DownloadData> foundNewDownloads, List<DownloadData> downloadList) {
-        // prüfen ob schon ein Download mit dem Zieldateinamen in der Downloadliste existiert
-        try {
-            final List<DownloadData> alreadyDone = new ArrayList<>();
-
-            foundNewDownloads.forEach(download -> {
-                final String oldName = download.getDestPathFile();
-                String newName = oldName;
-                int i = 0;
-                while (searchName(downloadList, newName) || searchName(alreadyDone, newName)) {
-                    ++i;
-                    newName = getNextFileName(oldName, i);
-                }
-
-                if (!oldName.equals(newName)) {
-                    download.setFile(newName);
-                }
-
-                alreadyDone.add(download);
-            });
-        } catch (final Exception ex) {
-            P2Log.errorLog(303021458, ex);
+    /**
+     * Entferne verbotene Zeichen aus Dateiname.
+     *
+     * @param name        Dateiname
+     * @param isPath
+     * @param userReplace
+     * @param onlyAscii
+     * @return Bereinigte Fassung
+     */
+    public static String replaceEmptyFileName(String name, boolean isPath, boolean userReplace, boolean onlyAscii) {
+        String ret = name;
+        boolean isWindowsPath = false;
+        if (SystemUtils.IS_OS_WINDOWS && isPath && ret.length() > 1 && ret.charAt(1) == ':') {
+            // damit auch "d:" und nicht nur "d:\" als Pfad geht
+            isWindowsPath = true;
+            ret = ret.replaceFirst(":", ""); // muss zum Schluss wieder rein, kann aber so nicht ersetzt werden
         }
+
+        // zuerst die Ersetzungstabelle mit den Wünschen des Users
+        if (userReplace) {
+            ret = ProgData.getInstance().replaceList.replace(ret, isPath);
+        }
+
+        // und wenn gewünscht: "NUR Ascii-Zeichen"
+        if (onlyAscii) {
+            ret = FileNameUtils.convertToASCIIEncoding(ret, isPath);
+        } else {
+            ret = FileNameUtils.convertToNativeEncoding(ret, isPath);
+        }
+
+        if (isWindowsPath) {
+            // c: wieder herstellen
+            if (ret.length() == 1) {
+                ret = ret + ":";
+            } else if (ret.length() > 1) {
+                ret = ret.charAt(0) + ":" + ret.substring(1);
+            }
+        }
+        return ret;
     }
 
-    private static String getNextFileName(String file, int i) {
-        String suffix = P2FileUtils.getFileNameSuffix(file);
-        String name = P2FileUtils.getFileNameWithOutExtension(file);
-        String path = P2FileUtils.getPath(file);
-        return Paths.get(path, name + "_" + i + "." + suffix).toString();
+    public static String getDownloadPath() {
+        return ProgConfig.START_DIALOG_DOWNLOAD_PATH.get().isEmpty() ?
+                P2SystemUtils.getStandardDownloadPath() : ProgConfig.START_DIALOG_DOWNLOAD_PATH.get();
     }
 
+    public static void setDownloadSize(DownloadData download) {
+        // https://srf-vod-amd.....x-f1-v1-a1.m3u8
+        final String M3U8 = ".m3u8";
+        if (download.getFilmSizeHd().isEmpty() &&
+                !download.getFilmUrlHd().endsWith(M3U8)) {
 
-    private static boolean searchName(List<DownloadData> searchDownloadList, String name) {
-        return searchDownloadList.stream().anyMatch(download -> download.getDestPathFile().equals(name));
+            download.setFilmSizeHd(download.getFilmUrlHd().isEmpty() ?
+                    "" : de.p2tools.p2lib.mtdownload.DownloadFactory.getContentLengthMB(download.getFilmUrlHd()));
+        }
+
+        if (download.getFilmSizeSmall().isEmpty() &&
+                !download.getFilmUrlSmall().endsWith(M3U8)) {
+
+            download.setFilmSizeSmall(download.getFilmUrlSmall().isEmpty() ?
+                    "" : de.p2tools.p2lib.mtdownload.DownloadFactory.getContentLengthMB(download.getFilmUrlSmall()));
+        }
     }
 }

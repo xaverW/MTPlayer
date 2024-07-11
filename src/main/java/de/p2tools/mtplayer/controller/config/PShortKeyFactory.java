@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.MTPlayerFactory;
+import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutKey;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCodeCombination;
@@ -38,7 +39,7 @@ public class PShortKeyFactory {
         // quitt and wait
         pShortcut = PShortcut.SHORTCUT_QUIT_PROGRAM_WAIT;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
-        rn = MTPlayerFactory::quitAndWait;
+        rn = () -> ProgQuit.quit(true);
         scene.getAccelerators().put(kc, rn);
 
         // Center GUI

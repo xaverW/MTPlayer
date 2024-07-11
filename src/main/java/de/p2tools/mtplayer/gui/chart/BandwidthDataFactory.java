@@ -21,12 +21,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.tools.date.P2LDateTimeFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
-import java.time.LocalDateTime;
 import java.util.Iterator;
 
 public class BandwidthDataFactory {
@@ -57,12 +55,12 @@ public class BandwidthDataFactory {
             count = 0;
         }
 
-        System.out.println("BandwidthDataFactory: " + P2LDateTimeFactory.toString(LocalDateTime.now()));
-        System.out.println("BandSize: " + progData.chartData.getBandwidthDataList().size());
+//        System.out.println("BandwidthDataFactory: " + P2LDateTimeFactory.toString(LocalDateTime.now()));
+//        System.out.println("BandSize: " + progData.chartData.getBandwidthDataList().size());
 
-        P2Duration.counterStart("BandwidthDataFactory");
+        P2Duration.counterStart("addBandwidthData");
         inputDownloadsAndBandwidthValue(progData);
-        P2Duration.counterStop("BandwidthDataFactory");
+        P2Duration.counterStop("addBandwidthData");
     }
 
     private static synchronized void inputDownloadsAndBandwidthValue(ProgData progData) {

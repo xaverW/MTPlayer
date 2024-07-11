@@ -51,7 +51,6 @@ public class PaneBandwidthChart extends AnchorPane {
     public synchronized void searchInfos(boolean visible) {
         BandwidthDataFactory.addBandwidthData();
         if (visible) {
-//            System.out.println("DownloadChart " + LocalTime.now());
             ChartDataFactory.runChart(lineChart);
         }
     }

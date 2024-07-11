@@ -102,7 +102,7 @@ public class AboTableContextMenu {
         final MenuItem miAboToFilter = new MenuItem("Abo  -->  Filmfilter (Filmfilter aus Abo setzen)");
         miAboToFilter.setOnAction(a -> AboListFactory.setFilmFilterFromAbo());
         final MenuItem miFilterToAbo = new MenuItem("Filmfilter  -->  Abo (Abo aus Filmfilter setzen)");
-        miFilterToAbo.setOnAction(a -> AboListFactory.setAboFromFilmFilter());
+        miFilterToAbo.setOnAction(a -> AboListFactory.changeAboFromFilterButton());
 
         Menu mFilter = new Menu("Filmfilter - Abo");
         mFilter.setDisable(abo == null);

@@ -575,7 +575,7 @@ public class ProgConfig extends P2DataProgConfig {
         return instance == null ? instance = new ProgConfig() : instance;
     }
 
-    public static void addConfigData(ConfigFile configFile) {
+    public static void addConfigData(ConfigFile configFile, boolean save) {
         ProgData progData = ProgData.getInstance();
 
         // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
@@ -615,7 +615,13 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.proposeList);
         configFile.addConfigs(progData.replaceList);
         configFile.addConfigs(progData.utDataList);
-        configFile.addConfigs(progData.downloadList);
+        if (save) {
+            // dann nur die selbst angelegten Downloads
+            configFile.addConfigs(progData.downloadList.getCopyForSaving());
+        } else {
+            // beim lesen in die DownloadListe einsortieren
+            configFile.addConfigs(progData.downloadList);
+        }
         configFile.addConfigs(progData.mediaCollectionDataList);
     }
 

@@ -64,7 +64,7 @@ public class DownloadInfos {
         this.progData = progData;
         PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadInfos.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 clean();
                 generateDownloadInfos();
                 generateBandwidthInfo();

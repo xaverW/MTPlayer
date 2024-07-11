@@ -97,13 +97,13 @@ public class LoadFilmFactory {
         } else if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
             //dann sollen Filme geprüft werden
             ProgData.getInstance().filmListFilter.clearCounter();
-            LoadFactoryConst.checker = filmData -> BlacklistFilterFactory.checkFilmListFilterAndCountHits(filmData,
+            LoadFactoryConst.checker = filmData -> BlacklistFilterFactory.checkFilmAndCountHits(filmData,
                     ProgData.getInstance().filmListFilter, true);
 
         } else {
             //dann ist er inverse
             ProgData.getInstance().filmListFilter.clearCounter();
-            LoadFactoryConst.checker = filmData -> !BlacklistFilterFactory.checkFilmListFilterAndCountHits(filmData,
+            LoadFactoryConst.checker = filmData -> !BlacklistFilterFactory.checkFilmAndCountHits(filmData,
                     ProgData.getInstance().filmListFilter, true);
         }
     }
@@ -188,7 +188,7 @@ public class LoadFilmFactory {
 
             if (ProgData.firstProgramStart) {
                 ProgData.firstProgramStart = false;
-                ProgSave.saveAll(); // damit nichts verloren geht
+                Platform.runLater(ProgSave::saveAll); // damit nichts verloren geht
             }
             if (!doneAtProgramStart) {
                 doneAtProgramStart = true;

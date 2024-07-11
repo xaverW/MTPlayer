@@ -94,6 +94,10 @@ public class MTPlayerController extends StackPane {
             splitPaneAbo = aboGui.pack();
             stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneLiveFilm, splitPaneDownload, splitPaneAbo);
 
+            VBox vBox = new VBox();
+            vBox.getChildren().addAll(stackPaneCont, ProgData.busy.getBusyHbox());
+            VBox.setVgrow(stackPaneCont, Priority.ALWAYS);
+
             // Statusbar
             statusBarController = new StatusBarController(progData);
             statusBarController.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_ON);
@@ -101,7 +105,7 @@ public class MTPlayerController extends StackPane {
 
             // Gui zusammenbauen
             borderPane.setTop(hBoxTop);
-            borderPane.setCenter(stackPaneCont);
+            borderPane.setCenter(vBox);
             borderPane.setBottom(statusBarController);
             this.setPadding(new Insets(0));
             this.getChildren().addAll(borderPane, maskerPane);

@@ -111,8 +111,13 @@ public class ProgStartBeforeGui {
                     clearTheConfigs();
                 }
             };
-            ProgConfig.addConfigData(configFile);
-            if (ConfigReadFile.readConfig(configFile)) {
+
+            // Config laden
+            ProgConfig.addConfigData(configFile, false);
+            boolean ok = ConfigReadFile.readConfig(configFile);
+            ProgData.getInstance().worker.workOnConfigLoaded();
+
+            if (ok) {
                 initAfterLoad();
                 logList.add("Konfig wurde geladen!");
                 return true;

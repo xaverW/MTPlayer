@@ -67,6 +67,7 @@ public class ProgIcons {
     public static PIcon IMAGE_TABLE_DOWNLOAD_STOP = new PIcon(ICON_PATH_LONG, ICON_PATH, "table-download-stop.png", 14, 14);
     public static PIcon IMAGE_TABLE_DOWNLOAD_OPEN_DIR = new PIcon(ICON_PATH_LONG, ICON_PATH, "table-download-open-dir.png", 14, 14);
 
+    public static PIcon ICON_BUTTON_WORKER_STOP = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-worker-stop.png", 12, 12);
     public static PIcon ICON_BUTTON_STOP = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-stop.png", 16, 16);
     public static PIcon ICON_BUTTON_NEXT = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-next.png", 16, 16);
     public static PIcon ICON_BUTTON_PREV = new PIcon(ICON_PATH_LONG, ICON_PATH, "button-prev.png", 16, 16);

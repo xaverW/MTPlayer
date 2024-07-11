@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
 import de.p2tools.mtplayer.gui.dialog.abodialog.AboAddDialogController;
@@ -38,37 +38,8 @@ public class AboListFactory {
     private AboListFactory() {
     }
 
-//    public static synchronized void initAboList() {
-//        ProgData progData = ProgData.getInstance();
-//        progData.aboList.forEach(abo -> abo.initAbo(progData));
-//        Collections.sort(progData.aboList);
-//        int nr = 0;
-//        for (AboData abo : progData.aboList) {
-//            abo.setNo(++nr);
-//        }
-//    }
-
-    public static void setFilmFilterFromAbo() {
-        Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
-        ProgData.getInstance().filmFilterWorker.loadStoredFilterFromAbo(abo);
-    }
-
-    public static void setAboFromFilmFilter() {
-        Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
-        changeAboFromFilterButton(abo, ProgData.getInstance().filmFilterWorker.getActFilterSettings());
-    }
-
-    public static void setAboActive(boolean on) {
-        List<AboData> lAbo = ProgData.getInstance().aboGuiController.getSelList();
-        ProgData.getInstance().aboList.setAboActive(lAbo, on);
-    }
-
-    public static void setAboActive(AboData abo, boolean on) {
-        ProgData.getInstance().aboList.setAboActive(abo, on);
-    }
-
     public static void addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
-        // abo anlegen, oder false wenns schon existiert
+        // Menü: abo anlegen
         int minDuration, maxDuration;
         try {
             minDuration = ProgConfig.ABO_MINUTE_MIN_SIZE.getValue();
@@ -80,7 +51,7 @@ public class AboListFactory {
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilterCheck.FILTER_DURATION_MAX_MINUTE);
         }
 
-        String namePath = DownloadDataFactory.replaceEmptyFileName(aboName,
+        String namePath = DownloadFactory.replaceEmptyFileName(aboName,
                 false /* nur ein Ordner */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());
@@ -100,54 +71,8 @@ public class AboListFactory {
         new AboAddDialogController(ProgData.getInstance(), abo);
     }
 
-    public static void deleteAbo() {
-        deleteAbo(ProgData.getInstance().aboGuiController.getSelList());
-    }
-
-    public static void deleteAbo(AboData abo) {
-        if (abo == null) {
-            return;
-        }
-        deleteAbo(FXCollections.observableArrayList(abo));
-    }
-
-    public static void deleteAbo(ObservableList<AboData> lAbo) {
-        if (lAbo.isEmpty()) {
-            return;
-        }
-
-        if (ProgConfig.ABO_ONLY_STOP.getValue() == ProgConfigAskBeforeDelete.ABO_DELETE__ASK) {
-            // dann erst mal fragen
-            AboDelDialogController aboDelDialog =
-                    new AboDelDialogController(lAbo);
-            if (aboDelDialog.getState() != P2DialogExtra.STATE.STATE_OK) {
-                //dann soll nix gemacht werden
-                P2Log.sysLog("Abo löschen: Abbruch");
-                return;
-            }
-        }
-
-        ProgData.getInstance().aboList.deleteAbo(lAbo);
-    }
-
-
-    public static void editAbo() {
-        //Abos aus Tab Abo (Menü, Doppelklick Tabelle) ändern
-        List<AboData> aboList = ProgData.getInstance().aboGuiController.getSelList();
-        if (!aboList.isEmpty()) {
-            new AboAddDialogController(ProgData.getInstance(), aboList);
-        }
-    }
-
-    public static void editAbo(AboData abo) {
-        //Abo aus Tab Filme/Download ändern
-        if (abo != null) {
-            new AboAddDialogController(ProgData.getInstance(), FXCollections.observableArrayList(abo));
-        }
-    }
-
     public static void addNewAboFromFilterButton() {
-        //abo anlegen, oder false wenns schon existiert
+        // aus Menü/TableContextMenü
         FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
         String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
 
@@ -184,7 +109,7 @@ public class AboListFactory {
         if (searchTitle.isEmpty()) {
             searchTitle = "Abo aus Filter";
         }
-        searchTitle = DownloadDataFactory.replaceEmptyFileName(searchTitle,
+        searchTitle = DownloadFactory.replaceEmptyFileName(searchTitle,
                 false /* nur ein Ordner */,
                 ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
                 ProgConfig.SYSTEM_ONLY_ASCII.getValue());
@@ -205,13 +130,79 @@ public class AboListFactory {
         new AboAddDialogController(ProgData.getInstance(), abo);
     }
 
-    public static void changeAboFromFilterButton(Optional<AboData> oAbo, FilmFilter filmFilter) {
-        // abo mit den Filterwerten einstellen
+    public static void changeAboFromFilterButton() {
+        // Menü
+        Optional<AboData> oAbo = ProgData.getInstance().aboGuiController.getSel();
         if (oAbo.isEmpty()) {
             return;
         }
 
         final AboData abo = oAbo.get();
-        new AboAddDialogController(ProgData.getInstance(), filmFilter, abo);
+        new AboAddDialogController(ProgData.getInstance(),
+                ProgData.getInstance().filmFilterWorker.getActFilterSettings(), abo);
+    }
+
+    public static void setFilmFilterFromAbo() {
+        // Menü
+        Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
+        ProgData.getInstance().filmFilterWorker.loadStoredFilterFromAbo(abo);
+    }
+
+    public static void editAbo() {
+        //Abos aus Tab Abo (Menü, Doppelklick Tabelle) ändern
+        List<AboData> aboList = ProgData.getInstance().aboGuiController.getSelList();
+        if (!aboList.isEmpty()) {
+            new AboAddDialogController(ProgData.getInstance(), aboList);
+        }
+    }
+
+    public static void editAbo(AboData abo) {
+        //Abo aus Tab Filme/Download ändern
+        if (abo != null) {
+            new AboAddDialogController(ProgData.getInstance(), FXCollections.observableArrayList(abo));
+        }
+    }
+
+    public static void setAboActive(boolean on) {
+        // Menü
+        List<AboData> lAbo = ProgData.getInstance().aboGuiController.getSelList();
+        ProgData.getInstance().aboList.setAboActive(lAbo, on);
+    }
+
+    public static void setAboActive(AboData abo, boolean on) {
+        // Menü
+        ProgData.getInstance().aboList.setAboActive(abo, on);
+    }
+
+    public static void deleteAbo() {
+        // Menü
+        deleteAbo(ProgData.getInstance().aboGuiController.getSelList());
+    }
+
+    public static void deleteAbo(AboData abo) {
+        // Menü/Tabelle Button
+        if (abo == null) {
+            return;
+        }
+        deleteAbo(FXCollections.observableArrayList(abo));
+    }
+
+    private static void deleteAbo(ObservableList<AboData> lAbo) {
+        if (lAbo.isEmpty()) {
+            return;
+        }
+
+        if (ProgConfig.ABO_ONLY_STOP.getValue() == ProgConfigAskBeforeDelete.ABO_DELETE__ASK) {
+            // dann erst mal fragen
+            AboDelDialogController aboDelDialog =
+                    new AboDelDialogController(lAbo);
+            if (aboDelDialog.getState() != P2DialogExtra.STATE.STATE_OK) {
+                //dann soll nix gemacht werden
+                P2Log.sysLog("Abo löschen: Abbruch");
+                return;
+            }
+        }
+
+        ProgData.getInstance().aboList.deleteAbo(lAbo);
     }
 }

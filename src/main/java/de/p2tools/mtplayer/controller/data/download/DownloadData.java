@@ -93,7 +93,7 @@ public final class DownloadData extends DownloadDataProps {
             setStartTimeToday(abo.getStartTime());
         }
         if (setSize) {
-            DownloadDataFactory.setDownloadSize(this);
+            DownloadFactory.setDownloadSize(this);
         }
         initResolution(resolution);
 

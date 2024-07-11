@@ -384,38 +384,40 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilter() {
-        Predicate<DownloadData> predicate = downloadData -> true;
-        final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
-        final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
-        final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.getValueSafe();
-        final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.getValueSafe();
-        final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
+        Platform.runLater(() -> {
+            Predicate<DownloadData> predicate = downloadData -> true;
+            final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
+            final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
+            final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.getValueSafe();
+            final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.getValueSafe();
+            final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
 
-        predicate = predicate.and(download -> !download.isPlacedBack());
+            predicate = predicate.and(download -> !download.isPlacedBack());
 
-        if (!sender.isEmpty()) {
-            Filter filter = new Filter(sender, true);
-            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()));
-        }
+            if (!sender.isEmpty()) {
+                Filter filter = new Filter(sender, true);
+                predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()));
+            }
 
-        if (!abo.isEmpty()) {
-            predicate = predicate.and(downloadData -> downloadData.getAboName().equals(abo));
-        }
-        if (!source.isEmpty()) {
-            predicate = predicate.and(downloadData -> downloadData.getSource().equals(source));
-        }
-        if (!type.isEmpty()) {
-            predicate = predicate.and(downloadData -> downloadData.getType().equals(type));
-        }
-        if (!state.isEmpty()) {
-            predicate = predicate.and(downloadData -> state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !downloadData.isStarted() ||
-                    state.equals(DownloadConstants.STATE_COMBO_WAITING) && downloadData.isStateStartedWaiting() ||
-                    state.equals(DownloadConstants.STATE_COMBO_STARTED) && downloadData.isStarted() ||
-                    state.equals(DownloadConstants.STATE_COMBO_LOADING) && downloadData.isStateStartedRun() ||
-                    state.equals(DownloadConstants.STATE_COMBO_ERROR) && downloadData.isStateError());
-        }
+            if (!abo.isEmpty()) {
+                predicate = predicate.and(downloadData -> downloadData.getAboName().equals(abo));
+            }
+            if (!source.isEmpty()) {
+                predicate = predicate.and(downloadData -> downloadData.getSource().equals(source));
+            }
+            if (!type.isEmpty()) {
+                predicate = predicate.and(downloadData -> downloadData.getType().equals(type));
+            }
+            if (!state.isEmpty()) {
+                predicate = predicate.and(downloadData -> state.equals(DownloadConstants.STATE_COMBO_NOT_STARTED) && !downloadData.isStarted() ||
+                        state.equals(DownloadConstants.STATE_COMBO_WAITING) && downloadData.isStateStartedWaiting() ||
+                        state.equals(DownloadConstants.STATE_COMBO_STARTED) && downloadData.isStarted() ||
+                        state.equals(DownloadConstants.STATE_COMBO_LOADING) && downloadData.isStateStartedRun() ||
+                        state.equals(DownloadConstants.STATE_COMBO_ERROR) && downloadData.isStateError());
+            }
 
-        filteredListDownloads.setPredicate(predicate);
+            filteredListDownloads.setPredicate(predicate);
+        });
     }
 
     private void setFilmShown(boolean shown) {

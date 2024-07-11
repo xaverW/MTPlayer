@@ -204,7 +204,7 @@ public final class FilmFilterWorker {
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
-        BlacklistFilterFactory.getBlackFilteredFilmlist();
+        BlacklistFilterFactory.makeBlackFilteredFilmlist();
         PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
     }
 }

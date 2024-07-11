@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -106,7 +106,7 @@ public class AddBlackListDialogController extends P2DialogExtra {
 
     private void initGridPane() {
         btnCount.setOnAction(a -> {
-            BlacklistFactory.countHits(blackData);
+            BlacklistFilterFactory.countHits(blackData);
             lblCount.setText(blackData.getCountHits() + "");
         });
 

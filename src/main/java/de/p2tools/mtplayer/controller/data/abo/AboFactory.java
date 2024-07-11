@@ -18,16 +18,37 @@
 package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 
-import java.util.Iterator;
-
 public class AboFactory {
     private AboFactory() {
+    }
+
+    public static AboData findAbo(FilmData film) {
+        //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
+        if (film.isLive()) {
+            //Livestreams gehören nicht in ein Abo
+            return null;
+        }
+
+        film.setLowerCase();
+        final AboData aboData = ProgData.getInstance().aboList.stream()
+                .filter(abo -> FilmFilterCheck.checkFilterMatch(
+                        abo.fChannel,
+                        abo.fTheme,
+                        abo.fThemeTitle,
+                        abo.fTitle,
+                        abo.fSomewhere,
+                        film))
+                .findFirst()
+                .orElse(null);
+
+        film.clearLowerCase();
+        return aboData;
     }
 
     public static synchronized void setAboForFilmlist() {
@@ -37,17 +58,11 @@ public class AboFactory {
         AboList aboList = ProgData.getInstance().aboList;
 
         // leere Abos löschen, die sind Fehler
-        Iterator<AboData> it = aboList.listIterator();
-        while (it.hasNext()) {
-            AboData aboData = it.next();
-            if (aboData.isEmpty()) {
-                it.remove();
-            }
-        }
+        aboList.removeIf(AboData::isEmpty);
 
         if (aboList.isEmpty()) {
             // dann nur die Abos in der Filmliste löschen
-            ProgData.getInstance().filmList.parallelStream().forEach(film -> {
+            ProgData.getInstance().filmList.forEach(film -> {
                 // für jeden Film Abo löschen
                 film.arr[FilmDataXml.FILM_ABO_NAME] = "";
                 film.setAbo(null);
@@ -55,7 +70,7 @@ public class AboFactory {
             return;
         }
 
-        aboList.stream().forEach(abo -> {
+        aboList.forEach(abo -> {
             // damit jedes Abo auch einen Namen hat
             if (abo.getName().isEmpty()) {
                 abo.setName("Abo " + abo.getNo());
@@ -63,14 +78,13 @@ public class AboFactory {
         });
 
         // das kostet die Zeit!!
-        ProgData.getInstance().filmList.parallelStream().
-                forEach(filmDataMTP -> AboFactory.assignAboToFilm(filmDataMTP));
+        ProgData.getInstance().filmList.forEach(AboFactory::assignAboToFilm);
 
         P2Duration.counterStop("setAboForFilmlist");
     }
 
     private static void assignAboToFilm(FilmDataMTP film) {
-        final AboData abo = BlacklistFilterFactory.findAbo(film);
+        final AboData abo = findAbo(film);
 
         if (abo == null) {
             // kein Abo gefunden

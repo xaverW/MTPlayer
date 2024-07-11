@@ -99,12 +99,11 @@ public class BlackList extends SimpleListProperty<BlackData> implements P2DataLi
         return super.add(b);
     }
 
-    public synchronized boolean addAndNotify(BlackData b) {
-        //add durch Button
+    public synchronized void addAndNotify(BlackData b) {
+        //add durch Button/Menü
         b.setNo(no++);
-        final boolean ret = super.add(b);
+        super.add(b);
         new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
-        return ret;
     }
 
     public synchronized void removeBlackData(List<BlackData> list) {

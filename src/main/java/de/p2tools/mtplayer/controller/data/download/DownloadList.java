@@ -91,7 +91,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
         return downloadsChanged.get();
     }
 
-    synchronized void setDownloadsChanged() {
+    public synchronized void setDownloadsChanged() {
         downloadsChanged.set(!downloadsChanged.get());
     }
 
@@ -129,8 +129,18 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
         return ret;
     }
 
+    public synchronized int countRunningDownloads() {
+        int count = 0;
+        for (final DownloadData download : this) {
+            if (download.isStateStartedRun()) {
+                ++count;
+            }
+        }
+        return count;
+    }
+
     public synchronized void preferDownloads(ArrayList<DownloadData> prefDownList) {
-        DownloadDataFactory.preferDownloads(this, prefDownList);
+        DownloadFactory.preferDownloads(this, prefDownList);
     }
 
     public synchronized DownloadData getDownloadWithFilmUrl(String urlFilm) {
@@ -142,17 +152,19 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
         return null;
     }
 
-    /**
-     * search downloads for abos after loading a filmlist
-     */
-    public synchronized void searchForDownloadsFromAbos() {
-        final int count = getSize();
-        DownloadFactoryAbo.searchDownloadsFromAbos(this);
-        if (getSize() == count) {
-            // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
-            setDownloadsChanged();
-        }
-    }
+//    /**
+//     * search downloads for abos after loading a filmlist
+//     */
+//    public synchronized void searchForDownloadsFromAbos() {
+//        final int count = getSize();
+//        DownloadFactoryAbo.refreshDownloads(this);
+//        DownloadFactoryAbo.searchForNewDownloadsForAbos(this);
+////        DownloadFactoryAbo.searchDownloadsFromAbos(this);
+//        if (getSize() == count) {
+//            // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
+//            setDownloadsChanged();
+//        }
+//    }
 
     public synchronized List<DownloadData> getListOfStartsNotFinished(String source) {
         return DownloadFactoryStarts.getListOfStartsNotFinished(this, source);
@@ -166,13 +178,25 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
         DownloadFactoryStarts.cleanUpButtonStarts(this);
     }
 
-    public synchronized DownloadData getNextStart() {
-        return DownloadFactoryStarts.getNextStart(this);
-    }
+//    public synchronized DownloadData getNextStart() {
+//        return DownloadFactoryStarts.getNextStart(this);
+//    }
 
     public synchronized void resetPlacedBack() {
         // zurückgestellte wieder aktivieren
         forEach(d -> d.setPlacedBack(false));
+    }
+
+    public DownloadList getCopyForSaving() {
+        // unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
+        // Download, (Abo müssen neu angelegt werden)
+
+        DownloadList dl = new DownloadList(progData);
+        dl.addAll(this);
+        dl.removeIf(download -> (!download.isStateStopped() && (download.isAbo() ||
+                download.isStateFinished())));
+
+        return dl;
     }
 
     // ==============================

@@ -124,3 +124,9 @@
     -fx-border-width: 1;
     -fx-padding: 0 5;
 }
+
+.hBoxWorker {
+    -fx-border-color: cornflowerblue;
+    -fx-border-width: 1;
+    -fx-padding: 5;
+}

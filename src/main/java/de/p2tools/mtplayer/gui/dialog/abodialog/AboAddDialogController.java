@@ -110,6 +110,7 @@ public class AboAddDialogController extends P2DialogExtra {
     @Override
     public void make() {
         initGui();
+        initHBoxWoker();
         initButton();
         addAboDto.updateAct();
     }
@@ -195,6 +196,11 @@ public class AboAddDialogController extends P2DialogExtra {
         addHlpButton(P2Button.helpButton(getStage(), "Abo", HelpText.ABO_SEARCH));
     }
 
+    private void initHBoxWoker() {
+        // busy
+        getVBoxCont().getChildren().add(ProgData.busy.getBusyHbox());
+    }
+
     private void initButton() {
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         setMaskerPane();
@@ -216,7 +222,6 @@ public class AboAddDialogController extends P2DialogExtra {
                 close();
             }
         });
-
         btnApply.setOnAction(a -> {
             if (check()) {
                 apply();

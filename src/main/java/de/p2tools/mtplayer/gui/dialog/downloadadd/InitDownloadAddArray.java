@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.download.DownloadDataFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 
 import java.util.ArrayList;
@@ -137,7 +137,7 @@ public class InitDownloadAddArray {
     private static void addSize(AddDownloadData[] addDownloadData, int i) {
         // Dateigröße
         if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
-            DownloadDataFactory.setDownloadSize(addDownloadData[i].download);
+            DownloadFactory.setDownloadSize(addDownloadData[i].download);
         }
     }
 }

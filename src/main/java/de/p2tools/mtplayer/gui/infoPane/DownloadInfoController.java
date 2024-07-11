@@ -61,6 +61,7 @@ public class DownloadInfoController extends P2ClosePaneH {
                         ProgConfig.DOWNLOAD_GUI_DIVIDER_ON, ProgConfig.DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON)) {
                     paneDownloadInfo.setInfoText();
                 }
+
             }
         });
     }

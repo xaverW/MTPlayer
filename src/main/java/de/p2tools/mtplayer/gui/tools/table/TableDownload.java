@@ -202,7 +202,7 @@ public class TableDownload extends PTable<DownloadData> {
 
         PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
             @Override
-            public void ping() {
+            public void pingFx() {
                 if (!getSortOrder().isEmpty() &&
                         (getSortOrder().get(0).equals(progressColumn) ||
                                 getSortOrder().get(0).equals(remainingColumn) ||
