@@ -148,7 +148,7 @@ public class Worker {
         }
     }
 
-    private void getAboNames() {
+    public void getAboNames() {
         final ArrayList<String> listAboChannel = progData.aboList.getAboChannelList();
         final ArrayList<String> listAboName = progData.aboList.getAboNameList();
         saveFilter();

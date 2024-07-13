@@ -11,16 +11,22 @@ import javafx.scene.layout.Priority;
 
 public class Busy {
 
+    public enum BUSY_SRC {
+        GUI, ABO_DIALOG, PANE_BLACKLIST
+    }
+
     private final BooleanProperty busy = new SimpleBooleanProperty(false);
     private final DoubleProperty progress = new SimpleDoubleProperty(0.0);
     private final BooleanProperty stopProp = new SimpleBooleanProperty(false);
     private final BooleanProperty stopBtn = new SimpleBooleanProperty(true);
     private final StringProperty text = new SimpleStringProperty();
+    private BUSY_SRC enumBusy = null;
 
     public Busy() {
     }
 
-    public void busyOn(String text, double value, boolean stopBtn) {
+    public void busyOn(BUSY_SRC b, String text, double value, boolean stopBtn) {
+        enumBusy = b;
         busy.set(true);
         textProperty().set(text);
         progress.set(value);
@@ -28,8 +34,9 @@ public class Busy {
         this.stopBtn.set(stopBtn);
     }
 
-    public void busyOnFx(String text, double value, boolean stopBtn) {
+    public void busyOnFx(BUSY_SRC b, String text, double value, boolean stopBtn) {
         Platform.runLater(() -> {
+            enumBusy = b;
             busy.set(true);
             textProperty().set(text);
             progress.set(value);
@@ -47,8 +54,7 @@ public class Busy {
         });
     }
 
-
-    public HBox getBusyHbox() {
+    public HBox getBusyHbox(BUSY_SRC busySrc) {
         final HBox busyHBox = new HBox(10);
         final Label busyLbl = new Label("");
         final ProgressBar busyProgressBar = new ProgressBar();
@@ -64,8 +70,16 @@ public class Busy {
         busyProgressBar.progressProperty().bind(progressProperty());
         busyProgressBar.setMaxWidth(Double.MAX_VALUE);
         busyLbl.textProperty().bind(text);
-        busyHBox.visibleProperty().bind(busyProperty());
-        busyHBox.managedProperty().bind(busyProperty());
+        busyHBox.setVisible(false);
+        busyHBox.setManaged(false);
+
+        busyProperty().addListener((u, o, n) -> {
+            if (!n || enumBusy.equals(busySrc)) {
+                // Einschalten nur wenns stimmt
+                busyHBox.setVisible(n);
+                busyHBox.setManaged(n);
+            }
+        });
 
         busyHBox.getChildren().addAll(busyLbl, busyProgressBar, busyBtnStop);
         HBox.setHgrow(busyProgressBar, Priority.ALWAYS);

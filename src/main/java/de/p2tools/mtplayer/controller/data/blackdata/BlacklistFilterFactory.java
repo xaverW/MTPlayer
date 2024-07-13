@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
+import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
@@ -46,7 +47,7 @@ public class BlacklistFilterFactory {
     }
 
     public static void markFilmBlackThread(boolean notify) {
-        ProgData.busy.busyOnFx("Blacklist", -1, false);
+        ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Blacklist", -1, false);
         new Thread(() -> {
             BlacklistFilterFactory.markFilmBlack(notify);
             ProgData.busy.busyOffFx();
@@ -265,7 +266,7 @@ public class BlacklistFilterFactory {
     private static boolean checkFilmIsBlocked(BlackData blackData, FilmData filmData) {
         // erst mal "schnell" prüfen->bringt ~20%
         if (blackData.quickChannel) {
-            if (FilmData.FILM_CHANNEL_STR.contains(blackData.fChannel.filterArr[0])) {
+            if (filmData.FILM_CHANNEL_STR.contains(blackData.fChannel.filterArr[0])) {
                 //dann wird geblockt
                 return true;
             } else {
@@ -274,7 +275,7 @@ public class BlacklistFilterFactory {
         }
         if (blackData.quickTheme) {
             if (blackData.fTheme.isExact) {
-                if (FilmData.FILM_THEME_STR.equals(blackData.fTheme.filterArr[0])) {
+                if (filmData.FILM_THEME_STR.equals(blackData.fTheme.filterArr[0])) {
                     //dann wird geblockt
                     return true;
                 } else {
@@ -282,7 +283,7 @@ public class BlacklistFilterFactory {
                 }
 
             } else {
-                if (FilmData.FILM_THEME_STR.contains(blackData.fTheme.filterArr[0])) {
+                if (filmData.FILM_THEME_STR.contains(blackData.fTheme.filterArr[0])) {
                     //dann wird geblockt
                     return !blackData.fTheme.exclude;
                 } else {
@@ -291,8 +292,8 @@ public class BlacklistFilterFactory {
             }
         }
         if (blackData.quickThemTitle) {
-            if (FilmData.FILM_THEME_STR.contains(blackData.fThemeTitle.filterArr[0]) ||
-                    FilmData.FILM_TITLE_STR.contains(blackData.fThemeTitle.filterArr[0])) {
+            if (filmData.FILM_THEME_STR.contains(blackData.fThemeTitle.filterArr[0]) ||
+                    filmData.FILM_TITLE_STR.contains(blackData.fThemeTitle.filterArr[0])) {
                 //dann wird geblockt
                 return !blackData.fThemeTitle.exclude;
             } else {
@@ -300,7 +301,7 @@ public class BlacklistFilterFactory {
             }
         }
         if (blackData.quickTitle) {
-            if (FilmData.FILM_TITLE_STR.contains(blackData.fTitle.filterArr[0])) {
+            if (filmData.FILM_TITLE_STR.contains(blackData.fTitle.filterArr[0])) {
                 //dann wird geblockt
                 return !blackData.fTitle.exclude;
             } else {

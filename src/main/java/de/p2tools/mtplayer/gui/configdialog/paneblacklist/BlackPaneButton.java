@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -90,7 +91,7 @@ public class BlackPaneButton {
             if (ProgData.busy.isBusy()) {
                 return;
             }
-            ProgData.busy.busyOnFx("Blacklist", -1, false);
+            ProgData.busy.busyOnFx(Busy.BUSY_SRC.PANE_BLACKLIST, "Blacklist", -1, false);
             new Thread(() -> {
                 BlacklistFilterFactory.countHits(list);
                 P2TableFactory.refreshTable(tableView);

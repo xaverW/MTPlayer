@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.configfile.ConfigFile;
@@ -41,10 +42,15 @@ public class ProgSave {
     }
 
     public static void saveAll() {
+        saveAll(true);
+    }
+
+    public static void saveAll(boolean busy) {
         // nach dem Filmliste laden: Plattform.runLater...
         // aus dem Debug-Menü, nach dem Laden der Filmliste, aus den Einstellungen/ShutDownDialog: Beenden "Testen"
         // DownloadAddDialog, AboAddDialog
-        ProgData.busy.busyOn("Speichern:", -1.0, false);
+        if (busy)
+            ProgData.busy.busyOn(Busy.BUSY_SRC.GUI, "Speichern:", -1.0, false);
 
         P2Log.sysLog("Alle Programmeinstellungen sichern");
         final Path xmlFilePath = ProgInfos.getSettingsFile();
@@ -56,7 +62,8 @@ public class ProgSave {
             reset();
         }
 
-        ProgData.busy.busyOffFx();
+        if (busy)
+            ProgData.busy.busyOffFx();
     }
 
 

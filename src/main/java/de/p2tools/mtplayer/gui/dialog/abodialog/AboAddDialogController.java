@@ -22,7 +22,9 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
+import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -97,6 +99,13 @@ public class AboAddDialogController extends P2DialogExtra {
         init(true);
     }
 
+    @Override
+    public void close() {
+        btnOk.disableProperty().unbind();
+        btnApply.disableProperty().unbind();
+        super.close();
+    }
+
     public AboAddDialogController(ProgData progData, List<AboData> aboList) {
         // hier werden bestehende Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
@@ -110,7 +119,7 @@ public class AboAddDialogController extends P2DialogExtra {
     @Override
     public void make() {
         initGui();
-        initHBoxWoker();
+//        initHBoxWoker();
         initButton();
         addAboDto.updateAct();
     }
@@ -168,9 +177,13 @@ public class AboAddDialogController extends P2DialogExtra {
 
         TabPane tabPane = new TabPane();
         tabPane.getTabs().addAll(tabAbo, tabSearch, tabPath);
-        getVBoxCont().getChildren().add(tabPane);
-        VBox.setVgrow(tabPane, Priority.ALWAYS);
         tabPane.tabMinWidthProperty().bind(tabPane.widthProperty().divide(4));
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
+
+        VBox vBoxTabPane = new VBox(P2LibConst.PADDING_VBOX);
+        vBoxTabPane.getChildren().addAll(tabPane, ProgData.busy.getBusyHbox(Busy.BUSY_SRC.ABO_DIALOG));
+        VBox.setVgrow(vBoxTabPane, Priority.ALWAYS);
+        getVBoxCont().getChildren().add(vBoxTabPane);
 
         AboAddDialogGuiAbo aboAddDialogGuiAbo = new AboAddDialogGuiAbo(progData, getStage(), addAboDto, vBoxAbo);
         aboAddDialogGuiAbo.addCont();
@@ -196,11 +209,6 @@ public class AboAddDialogController extends P2DialogExtra {
         addHlpButton(P2Button.helpButton(getStage(), "Abo", HelpText.ABO_SEARCH));
     }
 
-    private void initHBoxWoker() {
-        // busy
-        getVBoxCont().getChildren().add(ProgData.busy.getBusyHbox());
-    }
-
     private void initButton() {
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         setMaskerPane();
@@ -216,15 +224,19 @@ public class AboAddDialogController extends P2DialogExtra {
             addAboDto.updateAct();
         });
 
+        btnOk.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
+//        btnOk.disableProperty().bind(ProgData.busy.busyProperty());
         btnOk.setOnAction(a -> {
             if (check()) {
-                apply();
+                apply(true);
                 close();
             }
         });
+        btnApply.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
+//        btnApply.disableProperty().bind(ProgData.busy.busyProperty());
         btnApply.setOnAction(a -> {
             if (check()) {
-                apply();
+                apply(false);
             }
         });
 
@@ -287,7 +299,7 @@ public class AboAddDialogController extends P2DialogExtra {
         return true;
     }
 
-    private void apply() {
+    private void apply(boolean fromOk) {
         if (addAboDto.isNewAbo) {
             // dann soll ein neues angelegt werden
             addNewAbos();
@@ -301,10 +313,10 @@ public class AboAddDialogController extends P2DialogExtra {
         ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(addAboDto.getAct().abo.getMaxDurationMinute());
 
         // da nicht modal!!
-        progData.aboList.notifyChanges();
+        AboSearchDownloadsFactory.searchFromDialog(fromOk);
 
         // und jetzt noch die Einstellungen speichern
-        ProgSave.saveAll();
+        ProgSave.saveAll(false);
     }
 
     private void addNewAbos() {

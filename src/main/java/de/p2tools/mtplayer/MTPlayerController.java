@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.SearchFast;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
@@ -95,7 +96,7 @@ public class MTPlayerController extends StackPane {
             stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneLiveFilm, splitPaneDownload, splitPaneAbo);
 
             VBox vBox = new VBox();
-            vBox.getChildren().addAll(stackPaneCont, ProgData.busy.getBusyHbox());
+            vBox.getChildren().addAll(stackPaneCont, ProgData.busy.getBusyHbox(Busy.BUSY_SRC.GUI));
             VBox.setVgrow(stackPaneCont, Priority.ALWAYS);
 
             // Statusbar

@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
 import de.p2tools.p2lib.tools.P2ShutDown;
@@ -73,7 +74,7 @@ public class ProgQuit {
     private static void save(boolean shutDown) {
         // ProgQuitt-> vor dem Beenden
         // kann aus der Reihe kommen
-        ProgData.busy.busyOnFx("Speichern:", -1.0, false);
+        ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Speichern:", -1.0, false);
         Platform.runLater(() -> {
 
             stopAllDownloads();
