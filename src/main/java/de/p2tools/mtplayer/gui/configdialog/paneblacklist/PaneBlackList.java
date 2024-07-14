@@ -24,6 +24,8 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.mtplayer.gui.tools.table.Table;
+import de.p2tools.mtplayer.gui.tools.table.TableBlacklist;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -37,6 +39,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -47,7 +50,7 @@ import java.util.Collection;
 public class PaneBlackList {
 
     private SplitPane splitPane;
-    private final TableView<BlackData> tableView = new TableView<>();
+    private final TableBlacklist tableView;
     private final RadioButton rbBlack = new RadioButton("Blacklist");
     private final RadioButton rbWhite = new RadioButton("Whitelist");
     private final RadioButton rbOff = new RadioButton("Alles anzeigen");
@@ -83,9 +86,15 @@ public class PaneBlackList {
                 ThemeListFactory.allChannelList, true);
 
         if (controlBlackListNotFilmFilter) {
+            tableView = new TableBlacklist(Table.TABLE_ENUM.BLACKLIST);
+            Table.setTable(tableView);
+
             sortedList = progData.blackList.getSortedList();
             list = progData.blackList;
         } else {
+            tableView = new TableBlacklist(Table.TABLE_ENUM.FILMFILTER);
+            Table.setTable(tableView);
+
             sortedList = progData.filmListFilter.getSortedList();
             list = progData.filmListFilter;
         }
@@ -95,8 +104,10 @@ public class PaneBlackList {
         list.getUndoList().clear();
         blackPaneButton.close();
         if (controlBlackListNotFilmFilter) {
+            Table.saveTable(tableView, Table.TABLE_ENUM.BLACKLIST);
             splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.CONFIG_DIALOG_BLACKLIST_SPLITPANE);
         } else {
+            Table.saveTable(tableView, Table.TABLE_ENUM.FILMFILTER);
             splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.CONFIG_DIALOG_FILMLIST_FILTER_SPLITPANE);
         }
     }
@@ -139,10 +150,30 @@ public class PaneBlackList {
     }
 
     private void initTable() {
-        BlackPaneTable.initTable(tableView, list);
+        tableView.setOnMousePressed(m -> {
+            if (m.getButton().equals(MouseButton.SECONDARY)) {
+                ContextMenu contextMenu = getContextMenu(list);
+                tableView.setContextMenu(contextMenu);
+            }
+        });
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setActBlackData());
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
+    }
+
+    private ContextMenu getContextMenu(BlackList list) {
+        final ContextMenu contextMenu = new ContextMenu();
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        miUndo.setOnAction(a -> list.undoBlackData());
+        miUndo.setDisable(list.getUndoList().isEmpty());
+        contextMenu.getItems().addAll(miUndo);
+
+        MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
+        resetTable.setOnAction(e -> tableView.resetTable());
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(resetTable);
+
+        return contextMenu;
     }
 
     private void addConfigs(VBox vBox) {

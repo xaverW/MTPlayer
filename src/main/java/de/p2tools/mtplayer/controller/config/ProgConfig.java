@@ -211,16 +211,26 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_ABO = addBoolProp("system-blacklist-show-abo");
     public static IntegerProperty SYSTEM_BLACKLIST_MAX_FILM_DAYS = addIntProp("system-blacklist-max-film-days", 0);
     public static IntegerProperty SYSTEM_BLACKLIST_MIN_FILM_DURATION = addIntProp("system-blacklist-min-film-duration", 0); // Minuten
+    public static StringProperty BLACKLIST_TABLE_WIDTH = addStrProp("blacklist-table-width");
+    public static StringProperty BLACKLIST_TABLE_SORT = addStrProp("blacklist-table-sort");
+    public static StringProperty BLACKLIST_TABLE_UP_DOWN = addStrProp("blacklist-table-up-down");
+    public static StringProperty BLACKLIST_TABLE_VIS = addStrProp("blacklist-table-vis");
+    public static StringProperty BLACKLIST_TABLE_ORDER = addStrProp("blacklist-table-order");
+
+    // Filmfilter
+    public static StringProperty FILMFILTER_TABLE_WIDTH = addStrProp("filmfilter-table-width");
+    public static StringProperty FILMFILTER_TABLE_SORT = addStrProp("filmfilter-table-sort");
+    public static StringProperty FILMFILTER_TABLE_UP_DOWN = addStrProp("filmfilter-table-up-down");
+    public static StringProperty FILMFILTER_TABLE_VIS = addStrProp("filmfilter-table-vis");
+    public static StringProperty FILMFILTER_TABLE_ORDER = addStrProp("filmfilter-table-order");
 
     // Download
     public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_BEEP = addBoolProp("download-beep");
-    //    public static BooleanProperty DOWNLOAD_ERROR_MSG = addBoolProp("download-error-msg", Boolean.TRUE);
     public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads ohne Dateien
     public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads mit bereits geladenen Dateien
     public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__ASK);
     public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 2);
-    //    public static BooleanProperty DOWNLOAD_MAX_ONE_PER_SERVER = addBoolProp("download-max-one-per-server"); // nur ein Download pro Server - sonst max 2
     public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_BYTE = addIntProp("download-max-bandwidth-byte", MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_SHOW = addBoolProp("download-dialog-error-show", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_TIME = addBoolProp("download-dialog-error-time", Boolean.TRUE);
