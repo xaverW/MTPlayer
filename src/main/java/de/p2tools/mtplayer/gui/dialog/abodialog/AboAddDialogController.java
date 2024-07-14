@@ -68,6 +68,16 @@ public class AboAddDialogController extends P2DialogExtra {
         init(true);
     }
 
+    public AboAddDialogController(ProgData progData, List<AboData> aboList) {
+        // hier werden bestehende Abos geändert
+        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
+                "Abo ändern", false, false, DECO.NO_BORDER, true);
+
+        this.progData = progData;
+        this.addAboDto = new AddAboDto(progData, false, aboList);
+        init(true);
+    }
+
     public AboAddDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
         // hier wird ein bestehendes Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
@@ -106,20 +116,9 @@ public class AboAddDialogController extends P2DialogExtra {
         super.close();
     }
 
-    public AboAddDialogController(ProgData progData, List<AboData> aboList) {
-        // hier werden bestehende Abos geändert
-        super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo ändern", false, false, DECO.BORDER_SMALL, true);
-
-        this.progData = progData;
-        this.addAboDto = new AddAboDto(progData, false, aboList);
-        init(true);
-    }
-
     @Override
     public void make() {
         initGui();
-//        initHBoxWoker();
         initButton();
         addAboDto.updateAct();
     }
@@ -135,6 +134,8 @@ public class AboAddDialogController extends P2DialogExtra {
 
         boolean size = addAboDto.addAboData.length > 1;
         // Top
+        VBox vBoxCont = getVBoxCont();
+
         if (size) {
             // wenns nur einen Download gibt, macht dann keinen Sinn
             final HBox hBoxTop = new HBox();
@@ -143,7 +144,7 @@ public class AboAddDialogController extends P2DialogExtra {
             hBoxTop.setAlignment(Pos.CENTER);
             hBoxTop.setPadding(new Insets(5));
             hBoxTop.getChildren().addAll(addAboDto.btnPrev, addAboDto.lblSum, addAboDto.btnNext);
-            getVBoxCont().getChildren().add(hBoxTop);
+            vBoxCont.getChildren().add(hBoxTop);
         }
 
         Font font = Font.font(null, FontWeight.BOLD, -1);
@@ -158,55 +159,47 @@ public class AboAddDialogController extends P2DialogExtra {
                 DownloadAddDialogFactory.getText(AboFieldNames.ABO_HIT + ":"), addAboDto.lblHit,
                 P2GuiTools.getHBoxGrower(),
                 addAboDto.btnAll);
-        getVBoxCont().getChildren().add(hBoxBtn);
+        vBoxCont.getChildren().add(hBoxBtn);
 
-        Tab tabAbo = new Tab("Abo");
-        tabAbo.setClosable(false);
-        VBox vBoxAbo = new VBox();
-        tabAbo.setContent(vBoxAbo);
-
-        Tab tabSearch = new Tab("Suche");
-        tabSearch.setClosable(false);
-        VBox vBoxSearch = new VBox();
-        tabSearch.setContent(vBoxSearch);
-
-        Tab tabPath = new Tab("Pfad");
-        tabPath.setClosable(false);
-        VBox vBoxPath = new VBox();
-        tabPath.setContent(vBoxPath);
-
-        TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(tabAbo, tabSearch, tabPath);
-        tabPane.tabMinWidthProperty().bind(tabPane.widthProperty().divide(4));
-        VBox.setVgrow(tabPane, Priority.ALWAYS);
-
-        VBox vBoxTabPane = new VBox(P2LibConst.PADDING_VBOX);
-        vBoxTabPane.getChildren().addAll(tabPane, ProgData.busy.getBusyHbox(Busy.BUSY_SRC.ABO_DIALOG));
-        VBox.setVgrow(vBoxTabPane, Priority.ALWAYS);
-        getVBoxCont().getChildren().add(vBoxTabPane);
-
-        AboAddDialogGuiAbo aboAddDialogGuiAbo = new AboAddDialogGuiAbo(progData, getStage(), addAboDto, vBoxAbo);
-        aboAddDialogGuiAbo.addCont();
-        aboAddDialogGuiAbo.init();
-
-        AboAddDialogGuiSearch aboAddDialogGuiSearch = new AboAddDialogGuiSearch(progData, getStage(), addAboDto, vBoxSearch);
-        aboAddDialogGuiSearch.addCont();
-        aboAddDialogGuiSearch.init();
-
-        AboAddDialogGuiPath aboAddDialogGuiPath = new AboAddDialogGuiPath(progData, getStage(), addAboDto, vBoxPath);
-        aboAddDialogGuiPath.addCont();
-        aboAddDialogGuiPath.init();
+        vBoxCont.getChildren().add(getTabPane());
+        vBoxCont.getChildren().add(ProgData.busy.getBusyHbox(Busy.BUSY_SRC.ABO_DIALOG));
 
         // Letztes Abo, Angelegt
         HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
         hBox.getChildren().addAll(DownloadAddDialogFactory.getText(AboFieldNames.ABO_DATE_LAST_ABO + ":"), addAboDto.lblLastAbo,
                 P2GuiTools.getHBoxGrower(),
                 DownloadAddDialogFactory.getText(AboFieldNames.ABO_GEN_DATE + ":"), addAboDto.lblGenDate);
-        getVBoxCont().getChildren().add(hBox);
-
+        vBoxCont.getChildren().add(hBox);
 
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
         addHlpButton(P2Button.helpButton(getStage(), "Abo", HelpText.ABO_SEARCH));
+    }
+
+    private TabPane getTabPane() {
+        AboAddDialogGuiAbo aboAddDialogGuiAbo = new AboAddDialogGuiAbo(progData, getStage(), addAboDto);
+        AboAddDialogGuiSearch aboAddDialogGuiSearch = new AboAddDialogGuiSearch(progData, getStage(), addAboDto);
+        AboAddDialogGuiPath aboAddDialogGuiPath = new AboAddDialogGuiPath(progData, getStage(), addAboDto);
+
+        Tab tabAbo = new Tab("Abo");
+        tabAbo.setClosable(false);
+        tabAbo.setContent(aboAddDialogGuiAbo);
+
+        Tab tabSearch = new Tab("Suche");
+        tabSearch.setClosable(false);
+        tabSearch.setContent(aboAddDialogGuiSearch);
+
+        Tab tabPath = new Tab("Pfad");
+        tabPath.setClosable(false);
+        tabPath.setContent(aboAddDialogGuiPath);
+
+        TabPane tabPane = new TabPane();
+        tabPane.getTabs().addAll(tabAbo, tabSearch, tabPath);
+        tabPane.tabMinWidthProperty().bind(tabPane.widthProperty().divide(4));
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
+
+        // ScrollPane wird sonst nicht angezeigt??
+        aboAddDialogGuiPath.heightProperty().addListener((u, o, n) -> tabPane.setMinHeight((double) n));
+        return tabPane;
     }
 
     private void initButton() {

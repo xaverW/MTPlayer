@@ -36,22 +36,23 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class AboAddDialogGuiPath {
+public class AboAddDialogGuiPath extends VBox {
 
     private final AddAboDto addAboDto;
     private final ProgData progData;
-    private final VBox vBoxCont;
     private final Stage stage;
 
-    public AboAddDialogGuiPath(ProgData progData, Stage stage, AddAboDto addAboDto, VBox vBoxCont) {
+    public AboAddDialogGuiPath(ProgData progData, Stage stage, AddAboDto addAboDto) {
         //hier wird ein neues Abo angelegt -> Button, abo ist immer neu
         this.progData = progData;
         this.stage = stage;
         this.addAboDto = addAboDto;
-        this.vBoxCont = vBoxCont;
+
+        addCont();
+        init();
     }
 
-    public void addCont() {
+    private void addCont() {
         addContSet();
         addContPath();
         addContFileName();
@@ -63,7 +64,7 @@ public class AboAddDialogGuiPath {
         hBoxHelp.setPadding(new Insets(10));
         hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
         hBoxHelp.getChildren().add(btnHelp);
-        vBoxCont.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBoxHelp);
+        getChildren().addAll(P2GuiTools.getVBoxGrower(), hBoxHelp);
     }
 
     private void addContSet() {
@@ -77,7 +78,7 @@ public class AboAddDialogGuiPath {
         grid.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSizeCenter());
-        vBoxCont.getChildren().add(grid);
+        getChildren().add(grid);
 
         int row = 0;
 
@@ -94,7 +95,7 @@ public class AboAddDialogGuiPath {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(20, 10, 10, 10));
         hBox.getChildren().add(txtPath);
-        vBoxCont.getChildren().add(hBox);
+        getChildren().add(hBox);
 
         // Grid
         final GridPane grid = new GridPane();
@@ -108,7 +109,7 @@ public class AboAddDialogGuiPath {
                 P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcPrefSizeCenter());
-        vBoxCont.getChildren().add(grid);
+        getChildren().add(grid);
 
 
         int row = 0;
@@ -169,7 +170,7 @@ public class AboAddDialogGuiPath {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(30, 10, 10, 10));
         hBox.getChildren().add(txtFileName);
-        vBoxCont.getChildren().add(hBox);
+        getChildren().add(hBox);
 
         // Grid
         final GridPane grid = new GridPane();
@@ -182,7 +183,7 @@ public class AboAddDialogGuiPath {
                 P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSizeCenter());
-        vBoxCont.getChildren().add(grid);
+        getChildren().add(grid);
 
         addAboDto.cboAboFileName.disableProperty().bind(addAboDto.rbOwnFileName.selectedProperty().not());
 
@@ -218,7 +219,7 @@ public class AboAddDialogGuiPath {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(30, 10, 10, 10));
         hBox.getChildren().add(txtFileName);
-        vBoxCont.getChildren().add(hBox);
+        getChildren().add(hBox);
 
         // Grid
         final GridPane grid = new GridPane();
@@ -230,7 +231,7 @@ public class AboAddDialogGuiPath {
         grid.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcComputedSizeAndHgrow());
-        vBoxCont.getChildren().add(grid);
+        getChildren().add(grid);
 
         Text txtPath = DownloadAddDialogFactory.getTextBlack("Pfad:");
         Text txtName = DownloadAddDialogFactory.getTextBlack("Dateiname:");
@@ -246,7 +247,7 @@ public class AboAddDialogGuiPath {
         grid.add(addAboDto.lblResFileName, 2, row);
     }
 
-    public void init() {
+    private void init() {
         AboAddAllFactory.init(addAboDto);
     }
 }

@@ -29,22 +29,23 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AboAddDialogGuiSearch {
+public class AboAddDialogGuiSearch extends VBox {
 
     private final AddAboDto addAboDto;
     private final ProgData progData;
-    private final VBox vBoxCont;
     private final Stage stage;
 
-    public AboAddDialogGuiSearch(ProgData progData, Stage stage, AddAboDto addAboDto, VBox vBoxCont) {
+    public AboAddDialogGuiSearch(ProgData progData, Stage stage, AddAboDto addAboDto) {
         //hier wird ein neues Abo angelegt -> Button, abo ist immer neu
         this.progData = progData;
         this.stage = stage;
         this.addAboDto = addAboDto;
-        this.vBoxCont = vBoxCont;
+
+        addCont();
+        init();
     }
 
-    public void addCont() {
+    private void addCont() {
         // Grid
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -57,7 +58,7 @@ public class AboAddDialogGuiSearch {
                 P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSizeCenter());
 
-        vBoxCont.getChildren().add(gridPane);
+        getChildren().add(gridPane);
 
         int row = 0;
 
@@ -98,7 +99,7 @@ public class AboAddDialogGuiSearch {
         gridPane.add(addAboDto.chkSomewhereAll, 2, row);
     }
 
-    public void init() {
+    private void init() {
         AboAddAllFactory.init(addAboDto);
     }
 
