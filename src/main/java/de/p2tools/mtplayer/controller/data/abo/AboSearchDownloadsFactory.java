@@ -67,7 +67,7 @@ public class AboSearchDownloadsFactory {
         // SYSTEM_BLACKLIST_SHOW_ABO geändert und "Abo suchen" ist ein
         // AboList geändert und "Abo suchen" ist ein
         // workOnFilmListLoadFinished und "Abo suchen" ist ein oder AUTOMODE
-        ProgData.busy.busyOnFx(Busy.BUSY_SRC.ABO_DIALOG, "Downloads suchen:", -1.0, false);
+        ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Downloads suchen:", -1.0, false);
 
         if (LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
