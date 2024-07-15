@@ -109,14 +109,16 @@ public class AboSearchDownloadsFactory {
         P2Duration.counterStart("searchForNewDownloadsForAbos");
         List<DownloadData> syncDownloadArrayList = Collections.synchronizedList(new ArrayList<>());
 
-        // den Abo-Trefferzähler zurücksetzen
+        // den Abo-TrefferZähler zurücksetzen
         ProgData.getInstance().aboList.forEach(AboDataProps::clearCountHit);
+
 
         if (ProgData.getInstance().setDataList.getSetDataForAbo("") == null) {
             // dann fehlt ein Set für die Abos
             Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.ABO));
             return;
         }
+
 
         // mit den bereits enthaltenen Download-URLs füllen
         Set<String> syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(new HashSet<>(500)); //todo für 90% übertrieben, für 10% immer noch zu wenig???
