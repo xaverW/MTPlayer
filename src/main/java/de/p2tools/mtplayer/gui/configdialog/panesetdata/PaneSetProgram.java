@@ -310,7 +310,8 @@ public class PaneSetProgram {
     }
 
     private void unBindProgData() {
-        tableView.setItems(null);
+//        tableView.setItems(null);
+        tableView.getItems().clear();
         setData = null;
     }
 }
