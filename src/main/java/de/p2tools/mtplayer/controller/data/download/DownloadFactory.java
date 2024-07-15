@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.tools.SizeTools;
+import de.p2tools.mtplayer.controller.config.SizeTools;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.P2SystemUtils;

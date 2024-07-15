@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.tools;
+package de.p2tools.mtplayer.controller.config;
 
 public class SizeTools {
 
