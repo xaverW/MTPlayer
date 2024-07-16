@@ -116,6 +116,10 @@ public class SetDataList extends SetDataListWorker {
         return get(0);
     }
 
+    public SetData getSetDataForDownloads() {
+        return getSetDataForDownloads("");
+    }
+
     public SetData getSetDataForDownloads(String id) {
         // liefert mit dem SetNamen das passende Set zurück
         // wird nichts gefunden, wird das erste Set (der Abos/Downloads) genommen
@@ -135,7 +139,6 @@ public class SetDataList extends SetDataListWorker {
                 return pset;
             }
         }
-
 
         // das erste Set der Downloads
         for (final SetData pset : this) {
@@ -159,7 +162,7 @@ public class SetDataList extends SetDataListWorker {
 
     public SetDataList getSetDataListSave() {
         // liefert eine Liste Programmsets, die zum Speichern angelegt sind (ist meist nur eins)
-        return stream().filter(setData -> setData.isSave())
+        return stream().filter(SetDataProps::isSave)
                 .collect(Collectors.toCollection(SetDataList::new));
     }
 

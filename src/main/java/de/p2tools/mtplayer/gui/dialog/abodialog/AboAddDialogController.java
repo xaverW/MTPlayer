@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.worker.Busy;
+import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -33,6 +34,7 @@ import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -49,14 +51,12 @@ import java.util.List;
 
 public class AboAddDialogController extends P2DialogExtra {
 
-    final Button btnOk = new Button("_Ok");
-    final Button btnApply = new Button("_Anwenden");
-    final Button btnCancel = new Button("_Abbrechen");
+    private final Button btnOk = new Button("_Ok");
+    private final Button btnApply = new Button("_Anwenden");
+    private final Button btnCancel = new Button("_Abbrechen");
 
-    boolean ok = false;
-    ProgData progData;
-
-    final AddAboDto addAboDto;
+    private final ProgData progData;
+    private final AddAboDto addAboDto;
 
     public AboAddDialogController(ProgData progData, AboData abo) {
         // hier wird ein neues Abo angelegt!
@@ -118,20 +118,26 @@ public class AboAddDialogController extends P2DialogExtra {
 
     @Override
     public void make() {
+        if (progData.setDataList.getSetDataListAbo().isEmpty()) {
+            // Satz mit x, war wohl nix
+            Platform.runLater(() -> {
+                super.close();
+                new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.ABO);
+            });
+            return;
+        }
+        if (addAboDto.aboList.isEmpty()) {
+            // Satz mit x, war wohl nix
+            Platform.runLater(super::close);
+            return;
+        }
+
         initGui();
         initButton();
         addAboDto.updateAct();
     }
 
     private void initGui() {
-        if (progData.setDataList.getSetDataListAbo().isEmpty() ||
-                addAboDto.aboList.isEmpty()) {
-            // Satz mit x, war wohl nix
-            ok = false;
-            close();
-            return;
-        }
-
         boolean size = addAboDto.addAboData.length > 1;
         // Top
         VBox vBoxCont = getVBoxCont();
@@ -234,7 +240,6 @@ public class AboAddDialogController extends P2DialogExtra {
         });
 
         btnCancel.setOnAction(a -> {
-            ok = false;
             close();
         });
         btnOk.requestFocus();

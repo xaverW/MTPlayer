@@ -17,8 +17,10 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.duration.P2Duration;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +32,12 @@ public class DownloadFactoryStartDownload {
 
     public static void startDownloads(DownloadList downloadList, ArrayList<DownloadData> downloads) {
         // Menü/Automatisch
+        if (ProgData.getInstance().setDataList.getSetDataListSave().isEmpty()) {
+            // Satz mit x, war wohl nix
+            Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.SAVE));
+            return;
+        }
+
         if (downloads.isEmpty()) {
             return;
         }
@@ -38,15 +46,14 @@ public class DownloadFactoryStartDownload {
         ProgData.getInstance().historyList.addDownloadDataListToHistory(downloads);
     }
 
-    /**
-     * eine Liste Downloads starten
-     *
-     * @param list
-     * @param alsoFinished
-     */
-
     public static boolean startDownloads(DownloadList downloadList, Collection<DownloadData> list,
                                          boolean alsoFinished) {
+        if (ProgData.getInstance().setDataList.getSetDataListSave().isEmpty()) {
+            // Satz mit x, war wohl nix
+            Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.SAVE));
+            return false;
+        }
+
         // Button/Menü oder automatisch
         if (list == null || list.isEmpty()) {
             return false;

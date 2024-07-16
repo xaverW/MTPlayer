@@ -32,6 +32,7 @@ import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -311,7 +312,7 @@ public class PaneSetProgram {
 
     private void unBindProgData() {
 //        tableView.setItems(null);
-        tableView.getItems().clear();
+        tableView.setItems(FXCollections.observableArrayList());
         setData = null;
     }
 }
