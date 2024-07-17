@@ -54,12 +54,12 @@ public class Worker {
             }
         });
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.ABO_SEARCH_NOW.getValue()) {
-                Platform.runLater(() -> {
+            Platform.runLater(() -> {
+                getAboNames();
+                if (ProgConfig.ABO_SEARCH_NOW.getValue()) {
                     AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
-                    getAboNames();
-                });
-            }
+                }
+            });
         });
 
 //        progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) -> {

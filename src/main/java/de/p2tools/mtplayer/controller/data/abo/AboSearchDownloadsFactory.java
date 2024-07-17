@@ -51,14 +51,19 @@ public class AboSearchDownloadsFactory {
     }
 
     public static void searchFromDialog(boolean fromOk) {
-        // wird danach eh gemacht
-        ProgData.busy.busyOn(fromOk ? Busy.BUSY_SRC.GUI : Busy.BUSY_SRC.ABO_DIALOG,
-                "Downloads suchen:", -1.0, false);
-        alreadyRunning.set(true);
+        if (ProgConfig.ABO_SEARCH_NOW.getValue()) {
+            // nur dann werden Downloads gesucht
+            ProgData.busy.busyOn(fromOk ? Busy.BUSY_SRC.GUI : Busy.BUSY_SRC.ABO_DIALOG,
+                    "Downloads suchen:", -1.0, false);
+            alreadyRunning.set(true);
+        }
 
-        AboFactory.setAboForFilmlist();
-        ProgData.getInstance().worker.getAboNames();
-        searchForDownloadsFromAbosAndMaybeStart();
+        ProgData.getInstance().aboList.notifyChanges();
+
+//        AboFactory.setAboForFilmlist();
+//        ProgData.getInstance().worker.getAboNames();
+//        searchForDownloadsFromAbosAndMaybeStart();
+//        ProgData.getInstance().filmFilterRunner.filterList();
     }
 
     public static void searchForDownloadsFromAbosAndMaybeStart() {
