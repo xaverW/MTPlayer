@@ -778,7 +778,8 @@ public class HelpText {
                     "\n";
 
     public static final String SEARCH_ABOS_IMMEDIATELY =
-            "Nach dem Neuladen einer Filmliste (und beim Programmstart) wird automatisch nach neuen " +
+            "Nach dem Neuladen einer Filmliste (und beim Programmstart) oder beim Anlegen/Ändern " +
+                    "eines Abos wird automatisch nach neuen " +
                     "Downloads aus Abos gesucht. Wenn dies ausgeschaltet ist, muss man die " +
                     "Suche manuell anstoßen, dazu in der Ansicht \"Downloads\" " +
                     "auf \"Downloads aktualisieren\" klicken." +

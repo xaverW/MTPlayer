@@ -35,7 +35,7 @@ import java.util.Collection;
 
 public class PaneAbo {
 
-    private final P2ToggleSwitch tglSearchAbo = new P2ToggleSwitch("Abos automatisch suchen:");
+    private final P2ToggleSwitch tglSearchAbo = new P2ToggleSwitch("Downloads aus Abos automatisch suchen:");
     private final P2ToggleSwitch tglStartDownload = new P2ToggleSwitch("Nach dem Suchen Downloads sofort starten:");
     private final ToggleGroup groupOnlyStop = new ToggleGroup();
     private final RadioButton rbOnlyStopAsk = new RadioButton("Vor dem Löschen fragen");
@@ -68,7 +68,7 @@ public class PaneAbo {
         vBoxAll.getChildren().add(gridPane);
 
         tglSearchAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_SEARCH_NOW);
-        final Button btnHelpAbo = P2Button.helpButton(stage, "Abos automatisch suchen",
+        final Button btnHelpAbo = P2Button.helpButton(stage, "Downloads aus Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
 
         tglStartDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
