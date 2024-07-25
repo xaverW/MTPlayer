@@ -46,6 +46,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Collection;
+import java.util.List;
 
 public class PaneBlackList {
 
@@ -158,6 +159,38 @@ public class PaneBlackList {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 ContextMenu contextMenu = getContextMenu(list);
                 tableView.setContextMenu(contextMenu);
+            }
+        });
+
+        tableView.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                List<TablePosition> cells = tableView.getSelectionModel().getSelectedCells();
+                if (cells != null && !cells.isEmpty()) {
+                    String cel = cells.get(0).getTableColumn().getText();
+                    switch (cel) {
+                        case "Sender":
+                            mbChannel.requestFocus();
+                            mbChannel.show();
+                            break;
+                        case "Thema":
+                            txtTheme.requestFocus();
+                            break;
+                        case "Thema exakt":
+                            tgThemeExact.setSelected(!tgThemeExact.isSelected());
+                            break;
+                        case "Titel":
+                            txtTitle.requestFocus();
+                            break;
+                        case "Thema-Titel":
+                            txtThemeTitle.requestFocus();
+                            break;
+                        case "Aktiv":
+                            tglActive.setSelected(!tglActive.isSelected());
+                            break;
+                        default:
+                            txtTheme.requestFocus();
+                    }
+                }
             }
         });
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setActBlackData());
