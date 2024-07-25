@@ -70,7 +70,8 @@ public class PaneBlackList {
     private final BooleanProperty blackDataChanged;
     private boolean selectedBlackDataChanged = false;
     private final boolean controlBlackListNotFilmFilter;
-    private final BlackPaneButton blackPaneButton;
+    private final PanelButton panelButton;
+    private final PanelFilterGrid panelFilterGrid;
 
     private final Stage stage;
     private final ProgData progData;
@@ -80,7 +81,7 @@ public class PaneBlackList {
         this.progData = progData;
         this.controlBlackListNotFilmFilter = controlBlackListNotFilmFilter;
         this.blackDataChanged = blackDataChanged;
-        this.blackPaneButton = new BlackPaneButton();
+        this.panelButton = new PanelButton();
 
         mbChannel = new P2MenuButton(mbChannelProp,
                 ThemeListFactory.allChannelList, true);
@@ -98,11 +99,14 @@ public class PaneBlackList {
             sortedList = progData.filmListFilter.getSortedList();
             list = progData.filmListFilter;
         }
+        panelFilterGrid = new PanelFilterGrid(tableView, list,
+                controlBlackListNotFilmFilter ? progData.blackListFilterBlackList : progData.blackListFilterFilmList);
     }
 
     public void close() {
         list.getUndoList().clear();
-        blackPaneButton.close();
+        panelButton.close();
+        panelFilterGrid.close();
         if (controlBlackListNotFilmFilter) {
             Table.saveTable(tableView, Table.TABLE_ENUM.BLACKLIST);
             splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.CONFIG_DIALOG_BLACKLIST_SPLITPANE);
@@ -119,9 +123,9 @@ public class PaneBlackList {
 
         makeConfigBlackList(vBox);
         initTable();
-        splitPane = new BlackPaneFilterGrid(tableView, list).addFilterGrid(vBox, controlBlackListNotFilmFilter);
-        blackPaneButton.addButton(stage, vBox, tableView, blackDataChanged, list);
-        BlackPaneMoveButton.addMoveButton(stage, vBox, tableView, progData, controlBlackListNotFilmFilter, blackDataChanged, list);
+        splitPane = panelFilterGrid.addFilterGrid(vBox, controlBlackListNotFilmFilter);
+        panelButton.addButton(stage, vBox, tableView, blackDataChanged, list);
+        PanelMoveButton.addMoveButton(stage, vBox, tableView, progData, controlBlackListNotFilmFilter, blackDataChanged, list);
         addConfigs(vBox);
         vBox.getChildren().add(ProgData.busy.getBusyHbox(Busy.BUSY_SRC.PANE_BLACKLIST));
 

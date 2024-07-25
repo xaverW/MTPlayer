@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.config;
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.data.abo.AboList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackListFilter;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
@@ -133,6 +134,8 @@ public class ProgData {
     public HistoryList historyListAbos; // erfolgreich geladenen Abos
     public HistoryList historyListBookmarks; // markierte Filme
     public ProposeList proposeList;
+    public final BlackListFilter blackListFilterFilmList;
+    public final BlackListFilter blackListFilterBlackList;
 
     private ProgData() {
         busy = new Busy();
@@ -171,6 +174,9 @@ public class ProgData {
         mediaCollectionDataList = new MediaCollectionDataList();
 
         proposeList = new ProposeList(this);
+
+        blackListFilterFilmList = new BlackListFilter();
+        blackListFilterBlackList = new BlackListFilter();
 
         startDownload = new StartDownload(this);
         downloadInfos = new DownloadInfos(this);

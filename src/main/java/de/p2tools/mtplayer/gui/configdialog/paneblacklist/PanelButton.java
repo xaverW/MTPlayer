@@ -43,11 +43,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class BlackPaneButton {
+public class PanelButton {
 
     P2LoadListener listenerLoadFilmlist;
 
-    public BlackPaneButton() {
+    public PanelButton() {
     }
 
     void close() {

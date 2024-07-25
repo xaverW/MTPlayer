@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
+import de.p2tools.mtplayer.controller.data.blackdata.BlackListFilter;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
@@ -39,24 +40,60 @@ import javafx.scene.layout.VBox;
 
 import java.util.function.Predicate;
 
-public class BlackPaneFilterGrid {
+public class PanelFilterGrid {
     private final BlackList list;
     private final P2MenuButton mbFilterChannel;
     private final StringProperty mbFilterChannelProp = new SimpleStringProperty();
+
     private final TextField txtFilterThema = new TextField();
     private final TextField txtFilterTitel = new TextField();
     private final TextField txtFilterThemaTitel = new TextField();
-    private final P2ToggleSwitch tglFilterExact = new P2ToggleSwitch("Thema exakt");
+    private final TextField txtFilterSomewhere = new TextField();
+
+    private final P2ToggleSwitch tglFilterThemeExact = new P2ToggleSwitch("Thema exakt");
     private final P2ToggleSwitch tglFilterActive = new P2ToggleSwitch("Aktiv");
-    private final TextField txtFilterAll = new TextField();
+
     private final Button btnClearFilter = P2ButtonClearFilterFactory.getPButtonClear();
     private final TableView<BlackData> tableView;
+    private final BlackListFilter blackListFilterBlackList;
 
-
-    public BlackPaneFilterGrid(TableView<BlackData> tableView, BlackList list) {
+    public PanelFilterGrid(TableView<BlackData> tableView, BlackList list, BlackListFilter blackListFilterBlackList) {
         this.tableView = tableView;
         this.list = list;
-        mbFilterChannel = new P2MenuButton(mbFilterChannelProp, ThemeListFactory.allChannelList);
+        this.blackListFilterBlackList = blackListFilterBlackList;
+        this.mbFilterChannel = new P2MenuButton(mbFilterChannelProp, ThemeListFactory.allChannelList);
+
+        bind();
+        addPredicate();
+    }
+
+    private void bind() {
+        mbFilterChannelProp.bindBidirectional(blackListFilterBlackList.channelProperty());
+        txtFilterThema.textProperty().bindBidirectional(blackListFilterBlackList.themeProperty());
+        txtFilterTitel.textProperty().bindBidirectional(blackListFilterBlackList.titleProperty());
+        txtFilterThemaTitel.textProperty().bindBidirectional(blackListFilterBlackList.themeTitleProperty());
+        txtFilterSomewhere.textProperty().bindBidirectional(blackListFilterBlackList.somewhereProperty());
+
+        tglFilterThemeExact.setAllowIndeterminate(true);
+        tglFilterActive.setAllowIndeterminate(true);
+
+        tglFilterThemeExact.indeterminateProperty().bindBidirectional(blackListFilterBlackList.themeExactIndeterminateProperty());
+        tglFilterThemeExact.selectedProperty().bindBidirectional(blackListFilterBlackList.themeExactProperty());
+        tglFilterActive.indeterminateProperty().bindBidirectional(blackListFilterBlackList.filterActiveIndeterminateProperty());
+        tglFilterActive.selectedProperty().bindBidirectional(blackListFilterBlackList.filterActiveProperty());
+    }
+
+    public void close() {
+        mbFilterChannelProp.unbindBidirectional(blackListFilterBlackList.channelProperty());
+        txtFilterThema.textProperty().unbindBidirectional(blackListFilterBlackList.themeProperty());
+        txtFilterTitel.textProperty().unbindBidirectional(blackListFilterBlackList.titleProperty());
+        txtFilterThemaTitel.textProperty().unbindBidirectional(blackListFilterBlackList.themeTitleProperty());
+        txtFilterSomewhere.textProperty().unbindBidirectional(blackListFilterBlackList.somewhereProperty());
+
+        tglFilterThemeExact.indeterminateProperty().unbindBidirectional(blackListFilterBlackList.themeExactIndeterminateProperty());
+        tglFilterThemeExact.selectedProperty().unbindBidirectional(blackListFilterBlackList.themeExactProperty());
+        tglFilterActive.indeterminateProperty().unbindBidirectional(blackListFilterBlackList.filterActiveIndeterminateProperty());
+        tglFilterActive.selectedProperty().unbindBidirectional(blackListFilterBlackList.filterActiveProperty());
     }
 
     SplitPane addFilterGrid(VBox vBox, boolean controlBlackListNotFilmFilter) {
@@ -78,7 +115,7 @@ public class BlackPaneFilterGrid {
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(SPACE_TITLE);
-        vb.getChildren().addAll(new Label("Thema"), txtFilterThema, P2GuiTools.getVDistance(2), tglFilterExact);
+        vb.getChildren().addAll(new Label("Thema"), txtFilterThema, P2GuiTools.getVDistance(2), tglFilterThemeExact);
         vb1.getChildren().addAll(vb, P2GuiTools.getVDistance(1));
         HBox.setHgrow(vb, Priority.ALWAYS);
 
@@ -99,7 +136,7 @@ public class BlackPaneFilterGrid {
         vb2.setAlignment(Pos.TOP_LEFT);
         vb2.setPadding(new Insets(SPACE_VBOX));
         vb2.getStyleClass().add("extra-pane");
-        vb2.getChildren().addAll(new Label("Alle Felder durchsuchen:"), txtFilterAll);
+        vb2.getChildren().addAll(new Label("Alle Felder durchsuchen:"), txtFilterSomewhere);
 
         VBox vb3 = new VBox();
         vb3.setAlignment(Pos.CENTER_RIGHT);
@@ -134,26 +171,21 @@ public class BlackPaneFilterGrid {
         txtFilterThema.textProperty().addListener((u, o, n) -> addPredicate());
         txtFilterTitel.textProperty().addListener((u, o, n) -> addPredicate());
         txtFilterThemaTitel.textProperty().addListener((u, o, n) -> addPredicate());
-        txtFilterAll.textProperty().addListener((u, o, n) -> addPredicate());
+        txtFilterSomewhere.textProperty().addListener((u, o, n) -> addPredicate());
 
-        tglFilterExact.setIndeterminate(true);
-        tglFilterExact.setAllowIndeterminate(true);
-        tglFilterExact.selectedProperty().addListener((u, o, n) -> addPredicate());
-        tglFilterExact.indeterminateProperty().addListener((u, o, n) -> addPredicate());
-
-        tglFilterActive.setIndeterminate(true);
-        tglFilterActive.setAllowIndeterminate(true);
+        tglFilterThemeExact.selectedProperty().addListener((u, o, n) -> addPredicate());
+        tglFilterThemeExact.indeterminateProperty().addListener((u, o, n) -> addPredicate());
         tglFilterActive.selectedProperty().addListener((u, o, n) -> addPredicate());
         tglFilterActive.indeterminateProperty().addListener((u, o, n) -> addPredicate());
 
         btnClearFilter.setOnAction(a -> {
             mbFilterChannelProp.setValue("");
             txtFilterThema.clear();
-            tglFilterExact.setSelected(false);
-            tglFilterExact.setIndeterminate(true);
+            tglFilterThemeExact.setSelected(false);
+            tglFilterThemeExact.setIndeterminate(true);
             txtFilterTitel.clear();
             txtFilterThemaTitel.clear();
-            txtFilterAll.clear();
+            txtFilterSomewhere.clear();
             tglFilterActive.setSelected(false);
             tglFilterActive.setIndeterminate(true);
         });
@@ -170,15 +202,6 @@ public class BlackPaneFilterGrid {
             Filter filter = new Filter(txtFilterThema.getText(), true);
             predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getTheme()));
         }
-        if (!tglFilterExact.isIndeterminate()) {
-            predicate = predicate.and(blackData -> {
-                if (tglFilterExact.isSelected()) {
-                    return blackData.isThemeExact();
-                } else {
-                    return !blackData.isThemeExact();
-                }
-            });
-        }
         if (!txtFilterTitel.getText().isEmpty()) {
             Filter filter = new Filter(txtFilterTitel.getText(), true);
             predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getTitle()));
@@ -186,6 +209,25 @@ public class BlackPaneFilterGrid {
         if (!txtFilterThemaTitel.getText().isEmpty()) {
             Filter filter = new Filter(txtFilterThemaTitel.getText(), true);
             predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getThemeTitle()));
+        }
+        if (!txtFilterSomewhere.getText().isEmpty()) {
+            Filter filter = new Filter(txtFilterSomewhere.getText(), true);
+            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()) ||
+                    FilterCheck.check(filter, blackData.getTheme()) ||
+                    FilterCheck.check(filter, blackData.getTitle()) ||
+                    FilterCheck.check(filter, blackData.getThemeTitle())
+
+            );
+        }
+
+        if (!tglFilterThemeExact.isIndeterminate()) {
+            predicate = predicate.and(blackData -> {
+                if (tglFilterThemeExact.isSelected()) {
+                    return blackData.isThemeExact();
+                } else {
+                    return !blackData.isThemeExact();
+                }
+            });
         }
         if (!tglFilterActive.isIndeterminate()) {
             predicate = predicate.and(blackData -> {
@@ -195,16 +237,6 @@ public class BlackPaneFilterGrid {
                     return !blackData.isActive();
                 }
             });
-        }
-
-        if (!txtFilterAll.getText().isEmpty()) {
-            Filter filter = new Filter(txtFilterAll.getText(), true);
-            predicate = predicate.and(blackData -> FilterCheck.check(filter, blackData.getChannel()) ||
-                    FilterCheck.check(filter, blackData.getTheme()) ||
-                    FilterCheck.check(filter, blackData.getTitle()) ||
-                    FilterCheck.check(filter, blackData.getThemeTitle())
-
-            );
         }
 
         list.filteredListSetPred(predicate);
