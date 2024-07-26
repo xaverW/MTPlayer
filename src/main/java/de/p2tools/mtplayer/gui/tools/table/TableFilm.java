@@ -21,8 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.guitools.P2TableFactory;
-import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
-import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
 import de.p2tools.p2lib.mtfilm.film.FilmSize;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.scene.control.SelectionMode;
@@ -73,72 +71,88 @@ public class TableFilm extends PTable<FilmDataMTP> {
         final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
+        TableFilmFactory.columnFactoryInteger(nrColumn);
 
         final TableColumn<FilmDataMTP, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         channelColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryString(channelColumn);
 
         final TableColumn<FilmDataMTP, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("alignCenterLeft");
+        TableFilmFactory.columnFactoryString(themeColumn);
 
         final TableColumn<FilmDataMTP, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
+        TableFilmFactory.columnFactoryString(titleColumn);
 
         final TableColumn<FilmDataMTP, String> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("buttonDummy"));
-        startColumn.setCellFactory(new CellFilmButton().cellFactory);
+//        startColumn.setCellFactory(new CellFilmButton().cellFactory);
         startColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryButton(startColumn);
 
         final TableColumn<FilmDataMTP, P2Date> dateColumn = new TableColumn<>("Datum");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryP2Date(dateColumn);
 
         final TableColumn<FilmDataMTP, String> timeColumn = new TableColumn<>("Zeit");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         timeColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryString(timeColumn);
 
         final TableColumn<FilmDataMTP, Integer> durationColumn = new TableColumn<>("Dauer [min]");
-        durationColumn.setCellFactory(new P2CellIntNull().cellFactory);
+//        durationColumn.setCellFactory(new P2CellIntNull().cellFactory);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenterRightPadding_25");
+        TableFilmFactory.columnFactoryInteger(durationColumn);
 
         final TableColumn<FilmDataMTP, FilmSize> sizeColumn = new TableColumn<>("Größe [MB]");
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("filmSize"));
         sizeColumn.getStyleClass().add("alignCenterRightPadding_25");
+        TableFilmFactory.columnFactoryFilmSize(sizeColumn);
 
         final TableColumn<FilmDataMTP, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
-        hdColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+//        hdColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         hdColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryBoolean(hdColumn);
 
         final TableColumn<FilmDataMTP, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
-        utColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+//        utColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         utColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryBoolean(utColumn);
 
         final TableColumn<FilmDataMTP, String> geoColumn = new TableColumn<>("Geo");
         geoColumn.setCellValueFactory(new PropertyValueFactory<>("geo"));
         geoColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryString(geoColumn);
 
-        final TableColumn<FilmDataMTP, String> doubleColumn = new TableColumn<>("Doppelt");
+        final TableColumn<FilmDataMTP, Boolean> doubleColumn = new TableColumn<>("Doppelt");
         doubleColumn.setCellValueFactory(new PropertyValueFactory<>("doubleUrl"));
-        doubleColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+//        doubleColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         doubleColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryBoolean(doubleColumn);
 
         final TableColumn<FilmDataMTP, String> urlColumn = new TableColumn<>("URL");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         urlColumn.getStyleClass().add("alignCenterLeft");
+        TableFilmFactory.columnFactoryString(urlColumn);
 
         final TableColumn<FilmDataMTP, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
         aboColumn.getStyleClass().add("alignCenterLeft");
+        TableFilmFactory.columnFactoryString(aboColumn);
 
         final TableColumn<FilmDataMTP, Boolean> bookmarkColumn = new TableColumn<>("Bookmark");
         bookmarkColumn.setCellValueFactory(new PropertyValueFactory<>("bookmark"));
-        bookmarkColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+//        bookmarkColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         bookmarkColumn.getStyleClass().add("alignCenter");
+        TableFilmFactory.columnFactoryBoolean(bookmarkColumn);
 
         nrColumn.setPrefWidth(50);
         channelColumn.setPrefWidth(80);

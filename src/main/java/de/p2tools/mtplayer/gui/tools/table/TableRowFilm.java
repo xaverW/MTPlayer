@@ -20,17 +20,16 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 
 
 public class TableRowFilm<T> extends TableRow<T> {
 
-    private final BooleanProperty geoMelden;
+//    private final BooleanProperty geoMelden;
 
     public TableRowFilm() {
-        geoMelden = ProgConfig.SYSTEM_MARK_GEO;
+//        geoMelden = ProgConfig.SYSTEM_MARK_GEO;
     }
 
     @Override
@@ -47,29 +46,29 @@ public class TableRowFilm<T> extends TableRow<T> {
                 setTooltip(new Tooltip(film.getTheme() + "\n" + film.getTitle()));
             }
 
-            if (film.isLive()) {
-                // livestream
-                for (int i = 0; i < getChildren().size(); i++) {
-                    getChildren().get(i).setStyle(ProgColorList.FILM_LIVESTREAM.getCssFontBold());
-                }
-
-            } else if (geoMelden.get() && film.isGeoBlocked()) {
-                // geoGeblockt
-                for (int i = 0; i < getChildren().size(); i++) {
-                    getChildren().get(i).setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
-                }
-
-            } else if (film.isNewFilm()) {
-                // neuer Film
-                for (int i = 0; i < getChildren().size(); i++) {
-                    getChildren().get(i).setStyle(ProgColorList.FILM_NEW.getCssFont());
-                }
-
-            } else {
-                for (int i = 0; i < getChildren().size(); i++) {
-                    getChildren().get(i).setStyle("");
-                }
-            }
+//            if (film.isLive()) {
+//                // livestream
+//                for (int i = 0; i < getChildren().size(); i++) {
+//                    getChildren().get(i).setStyle(ProgColorList.FILM_LIVESTREAM.getCssFontBold());
+//                }
+//
+//            } else if (geoMelden.get() && film.isGeoBlocked()) {
+//                // geoGeblockt
+//                for (int i = 0; i < getChildren().size(); i++) {
+//                    getChildren().get(i).setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
+//                }
+//
+//            } else if (film.isNewFilm()) {
+//                // neuer Film
+//                for (int i = 0; i < getChildren().size(); i++) {
+//                    getChildren().get(i).setStyle(ProgColorList.FILM_NEW.getCssFont());
+//                }
+//
+//            } else {
+//                for (int i = 0; i < getChildren().size(); i++) {
+//                    getChildren().get(i).setStyle("");
+//                }
+//            }
 
             if (film.isBookmark()) {
                 setStyle(ProgColorList.FILM_BOOKMARK.getCssBackground());
