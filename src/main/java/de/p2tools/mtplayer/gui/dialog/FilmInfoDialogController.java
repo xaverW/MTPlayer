@@ -52,14 +52,14 @@ public class FilmInfoDialogController extends P2DialogExtra {
     private final ImageView ivNew = new ImageView();
 
     private final P2Hyperlink p2HyperlinkUrlSmall = new P2Hyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+            ProgConfig.SYSTEM_PROG_OPEN_URL);
     private final P2Hyperlink p2HyperlinkUrlHeight = new P2Hyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+            ProgConfig.SYSTEM_PROG_OPEN_URL);
     private final P2Hyperlink p2HyperlinkUrlHd = new P2Hyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+            ProgConfig.SYSTEM_PROG_OPEN_URL);
 
     private final P2Hyperlink p2HyperlinkWebsite = new P2Hyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+            ProgConfig.SYSTEM_PROG_OPEN_URL);
 
 
     private FilmInfoDialogController() {

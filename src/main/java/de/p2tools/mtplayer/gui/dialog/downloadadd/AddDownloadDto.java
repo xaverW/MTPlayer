@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
@@ -78,9 +77,9 @@ public class AddDownloadDto {
 
     // URL
     public final P2Hyperlink p2HyperlinkUrlFilm = new P2Hyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+            ProgConfig.SYSTEM_PROG_OPEN_URL);
     public final P2Hyperlink p2HyperlinkUrlDownload = new P2Hyperlink("",
-            ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+            ProgConfig.SYSTEM_PROG_OPEN_URL);
 
     // Programmaufruf
     public final Label lblProgramIsDownload = new Label("Direkter Download");

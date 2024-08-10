@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.configpanes;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -101,7 +100,7 @@ public class PaneUpdate {
 
         btnNow.setOnAction(event -> new SearchProgramUpdate(progData).searchNewProgramVersion(true));
         P2Hyperlink hyperlink = new P2Hyperlink(ProgConst.URL_WEBSITE,
-                ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+                ProgConfig.SYSTEM_PROG_OPEN_URL);
 
         int row = 0;
         gridPane.add(tglSearch, 0, row);

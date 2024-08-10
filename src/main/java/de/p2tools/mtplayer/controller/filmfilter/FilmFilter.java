@@ -56,13 +56,6 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         }
     }
 
-    private void reportBlacklistChange() {
-        if (!filterIsOff) { // todo ??
-            BlacklistFilterFactory.makeBlackFilteredFilmlist();
-            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
-        }
-    }
-
     public void switchFilterOff(boolean switchOff) {
         pause.stop();
         this.filterIsOff = switchOff;
@@ -250,6 +243,13 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         notFutureProperty().addListener(l -> setFilterChange(true));
 
         blacklistOnOffProperty().addListener(l -> reportBlacklistChange());
+    }
+
+    private void reportBlacklistChange() {
+        if (!filterIsOff) { // todo ??
+            BlacklistFilterFactory.makeBlackFilteredFilmlist();
+            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
+        }
     }
 
     private void setFilterChange(boolean startNow) {

@@ -61,6 +61,7 @@ public class Main {
 //        }
 
         checkMemory(args);
+        // todo
         MTPlayer.main(args);
     }
 

@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.P2LibConst;
@@ -154,7 +153,7 @@ public class PaneLiveFilmInfo extends VBox {
 
         if (!film.arr[FilmDataXml.FILM_WEBSITE].isEmpty()) {
             P2Hyperlink hyperlink = new P2Hyperlink(film.arr[FilmDataXml.FILM_WEBSITE],
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+                    ProgConfig.SYSTEM_PROG_OPEN_URL);
             hBoxUrl.getChildren().addAll(lblUrl, hyperlink);
         }
     }

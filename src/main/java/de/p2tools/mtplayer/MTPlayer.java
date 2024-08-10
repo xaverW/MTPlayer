@@ -72,7 +72,8 @@ public class MTPlayer extends Application {
         ProgIcons.initIcons();
         P2ProgIcons.initIcons();
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAM_NAME,
-                "", ProgConfig.SYSTEM_DARK_THEME,
+                "",
+                ProgConfig.SYSTEM_DARK_THEME, null,
                 ProgData.debug, ProgData.duration);
         P2LibInit.addCssFile(ProgConst.CSS_FILE);
     }
