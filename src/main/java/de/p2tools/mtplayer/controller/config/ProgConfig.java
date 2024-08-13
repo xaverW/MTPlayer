@@ -172,6 +172,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addBoolProp("system-small-row-table-download", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_ABO = addBoolProp("system-small-row-table-abo", Boolean.FALSE);
     public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_BLACK_WHITE_ICON = addBoolProp("system-black-white-icon", Boolean.FALSE);
     public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");
     public static BooleanProperty SYSTEM_SSL_ALWAYS_TRUE = addBoolProp("system-ssl-always-true");
     public static BooleanProperty TIP_OF_DAY_SHOW = addBoolProp("tip-of-day-show", Boolean.TRUE); //Tips anzeigen

@@ -93,7 +93,7 @@ public class ConfigDialogController extends P2DialogExtra {
         this.getMaskerPane().visibleProperty().bind(ProgData.getInstance().maskerPane.visibleProperty());
         Button btnStop = getMaskerPane().getButton();
         getMaskerPane().setButtonText("");
-        btnStop.setGraphic(ProgIcons.ICON_BUTTON_STOP.getImageView());
+        btnStop.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
         listener = new P2LoadListener() {
             @Override

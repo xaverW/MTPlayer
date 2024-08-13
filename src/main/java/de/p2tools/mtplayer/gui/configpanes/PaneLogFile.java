@@ -88,7 +88,7 @@ public class PaneLogFile {
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
 
         final Button btnClear = new Button();
-        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAN.getImageView());
+        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         btnClear.setTooltip(new Tooltip("Pfad löschen"));
         btnClear.setOnAction(event -> {
             txtLogFile.setText("");

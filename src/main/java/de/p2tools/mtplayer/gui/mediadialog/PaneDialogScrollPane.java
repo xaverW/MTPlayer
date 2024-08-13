@@ -155,7 +155,7 @@ public class PaneDialogScrollPane extends ScrollPane {
         btnReset.setOnAction(a -> txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle));
 
         final Button btnClear = new Button();
-        btnClear.setGraphic(ProgIcons.ICON_BUTTON_STOP.getImageView());
+        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
         btnClear.setOnAction(a -> txtSearch.clear());
 
@@ -222,7 +222,7 @@ public class PaneDialogScrollPane extends ScrollPane {
         progress.setMaxHeight(Double.MAX_VALUE);
         progress.setMaxWidth(Double.MAX_VALUE);
 
-        btnStopSearching.setGraphic(ProgIcons.ICON_BUTTON_STOP.getImageView());
+        btnStopSearching.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
         btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         hBoxProgress.getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);

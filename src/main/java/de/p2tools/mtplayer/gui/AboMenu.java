@@ -69,7 +69,7 @@ public class AboMenu {
         final ToolBarButton btDel = new ToolBarButton(vBox,
                 "Abos löschen", "Markierte Abos löschen", ProgIcons.ICON_TOOLBAR_ABO_DEL.getImageView());
         final ToolBarButton btChange = new ToolBarButton(vBox,
-                "Abos ändern", "Markierte Abos ändern", ProgIcons.ICON_TOOLBAR_ABO_CONFIG.getImageView());
+                "Abos ändern", "Markierte Abos ändern", ProgIcons.ICON_TOOLBAR_CONFIG.getImageView());
 
         btNew.setOnAction(a -> {
             AboListFactory.addNewAbo("Neu", "", "", "");

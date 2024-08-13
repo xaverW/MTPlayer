@@ -109,21 +109,21 @@ public class FilmInfoDialogController extends P2DialogExtra {
                             break;
                         case FilmDataXml.FILM_HD:
                             if (film.isHd()) {
-                                ivHD.setImage(ProgIcons.ICON_DIALOG_ON.getImage());
+                                ivHD.setImage(ProgIcons.ICON_BOOLEAN_IS_ON.getImage());
                             } else {
                                 ivHD.setImage(null);
                             }
                             break;
                         case FilmDataXml.FILM_UT:
                             if (film.isUt()) {
-                                ivUT.setImage(ProgIcons.ICON_DIALOG_ON.getImage());
+                                ivUT.setImage(ProgIcons.ICON_BOOLEAN_IS_ON.getImage());
                             } else {
                                 ivUT.setImage(null);
                             }
                             break;
                         case FilmDataXml.FILM_NEW:
                             if (film.isNewFilm()) {
-                                ivNew.setImage(ProgIcons.ICON_DIALOG_ON.getImage());
+                                ivNew.setImage(ProgIcons.ICON_BOOLEAN_IS_ON.getImage());
                             } else {
                                 ivNew.setImage(null);
                             }

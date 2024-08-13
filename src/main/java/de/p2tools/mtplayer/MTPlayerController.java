@@ -131,7 +131,7 @@ public class MTPlayerController extends StackPane {
         maskerPane.toFront();
         Button btnStop = maskerPane.getButton();
         maskerPane.setButtonText("");
-        btnStop.setGraphic(ProgIcons.ICON_BUTTON_STOP.getImageView());
+        btnStop.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
     }
 

@@ -150,12 +150,12 @@ public class DownloadAddDialogController extends P2DialogExtra {
             addDownloadDto.initPathName.pathChanged();
         });
 
-        addDownloadDto.btnPropose.setGraphic(ProgIcons.ICON_BUTTON_PROPOSE.getImageView());
+        addDownloadDto.btnPropose.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
         addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
         addDownloadDto.btnPropose.setOnAction(event ->
                 addDownloadDto.initPathName.proposeDestination());
 
-        addDownloadDto.btnClean.setGraphic(ProgIcons.ICON_BUTTON_CLEAN.getImageView());
+        addDownloadDto.btnClean.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         addDownloadDto.btnClean.setTooltip(new Tooltip("Die Liste der Pfade löschen"));
         addDownloadDto.btnClean.setOnAction(a -> addDownloadDto.initPathName.clearPath());
 

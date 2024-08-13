@@ -61,11 +61,11 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markierten Film abspielen", ProgIcons.ICON_TOOLBAR_FILM_START.getImageView());
+                "Abspielen", "Markierten Film abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
-                "Alle Abspielen", "Alle Markierten Filme abspielen", ProgIcons.ICON_TOOLBAR_FILM_ALL_START.getImageView());
+                "Alle Abspielen", "Alle Markierten Filme abspielen", ProgIcons.ICON_TOOLBAR_START_ALL.getImageView());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_FILM_REC.getImageView());
+                "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_REC.getImageView());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
@@ -92,13 +92,13 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
-                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIcons.ICON_TOOLBAR_FILM_BOOKMARK.getImageView());
+                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIcons.ICON_TOOLBAR_BOOKMARK.getImageView());
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
-                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIcons.ICON_TOOLBAR_FILM_DEL_BOOKMARK.getImageView());
+                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIcons.ICON_TOOLBAR_DEL_BOOKMARK.getImageView());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
-                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.ICON_TOOLBAR_FILM_DEL_ALL_BOOKMARK.getImageView());
+                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.ICON_TOOLBAR_DEL_ALL_BOOKMARK.getImageView());
         final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
-                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_FILM_BOOKMARK_FILTER.getImageView());
+                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_FILTER.getImageView());
 
         btBookmark.setOnAction(a -> {
             progData.filmGuiController.bookmarkFilm(true);

@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.p2lib.P2LibInit;
-import de.p2tools.p2lib.P2ProgIcons;
 import de.p2tools.p2lib.guitools.P2GuiSize;
 import de.p2tools.p2lib.tools.IoReadWriteStyle;
 import de.p2tools.p2lib.tools.P2Lock;
@@ -69,11 +68,11 @@ public class MTPlayer extends Application {
     }
 
     private void initLib() {
-        ProgIcons.initIcons();
-        P2ProgIcons.initIcons();
+//        ProgIcons.initIcons();
+//        P2ProgIcons.initIcons();
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAM_NAME,
                 "",
-                ProgConfig.SYSTEM_DARK_THEME, null,
+                ProgConfig.SYSTEM_DARK_THEME, ProgConfig.SYSTEM_BLACK_WHITE_ICON,
                 ProgData.debug, ProgData.duration);
         P2LibInit.addCssFile(ProgConst.CSS_FILE);
     }
@@ -96,10 +95,10 @@ public class MTPlayer extends Application {
             }
 
             ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
-                addThemeCss();
-                //erst css ändern, dann
-                ProgColorList.setColorTheme();
-                ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getValue());
+                changeTheme();
+            });
+            ProgConfig.SYSTEM_BLACK_WHITE_ICON.addListener((u, o, n) -> {
+                changeTheme();
             });
 
             primaryStage.setScene(scene);
@@ -128,6 +127,13 @@ public class MTPlayer extends Application {
         } catch (final Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void changeTheme() {
+        addThemeCss();
+        //erst css ändern, dann
+        ProgColorList.setColorTheme();
+        ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getValue());
     }
 
     private void addThemeCss() {

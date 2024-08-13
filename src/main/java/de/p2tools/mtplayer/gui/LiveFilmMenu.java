@@ -62,11 +62,11 @@ public class LiveFilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markierten Film abspielen", ProgIcons.ICON_TOOLBAR_FILM_START.getImageView());
+                "Abspielen", "Markierten Film abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
-                "Alle Abspielen", "Alle Markierten Filme abspielen", ProgIcons.ICON_TOOLBAR_FILM_ALL_START.getImageView());
+                "Alle Abspielen", "Alle Markierten Filme abspielen", ProgIcons.ICON_TOOLBAR_START_ALL.getImageView());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_FILM_REC.getImageView());
+                "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_REC.getImageView());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);

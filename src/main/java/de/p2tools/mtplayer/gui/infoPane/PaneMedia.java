@@ -165,7 +165,7 @@ public class PaneMedia extends VBox {
         });
 
         btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen"));
-        btnDialogMedia.setGraphic(ProgIcons.ICON_BUTTON_MENU.getImageView());
+        btnDialogMedia.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
         btnDialogMedia.setOnAction(a -> {
             new MediaDialogController(mediaDataDtoMedia);
             setSearchStringMedia();
@@ -175,7 +175,7 @@ public class PaneMedia extends VBox {
         });
 
         btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
-        btnClear.setGraphic(ProgIcons.ICON_BUTTON_STOP.getImageView());
+        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         btnClear.setOnAction(a -> {
             txtSearchMedia.clear();
             txtSearchAbo.clear();

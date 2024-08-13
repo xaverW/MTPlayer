@@ -96,7 +96,7 @@ public class QuitDialogController extends P2DialogExtra {
 
         final Button btnHelp = P2Button.helpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
         final Button btnEdit = new Button();
-        btnEdit.setGraphic(ProgIcons.ICON_BUTTON_EDIT_FILTER.getImageView());
+        btnEdit.setGraphic(ProgIcons.ICON_BUTTON_EDIT.getImageView());
         btnEdit.setOnAction(a -> new ChangeShutDownCallDialog(getStageProp().getValue()));
         btnEdit.setTooltip(new Tooltip("Systembefehl nach Programmende anpassen"));
 
@@ -106,7 +106,7 @@ public class QuitDialogController extends P2DialogExtra {
         gridPane.setPadding(new Insets(20));
 
         int row = 0;
-        gridPane.add(ProgIcons.ICON_DIALOG_QUIT.getImageView(), 0, 0, 1, 1);
+        gridPane.add(ProgIcons.ICON_ATTENTION_64.getImageView(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, row);
         gridPane.add(cancelButton, 1, ++row);
         gridPane.add(quitButton, 1, ++row);

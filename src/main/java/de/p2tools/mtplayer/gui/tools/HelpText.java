@@ -825,6 +825,11 @@ public class HelpText {
                     "Programmneustart notwendig sein." +
                     "\n";
 
+    public static final String BLACK_WHITE_ICON =
+            "Die Programmicons werden in Schwarz-Weiß angezeigt. Damit alle Icons geändert werden, " +
+                    "muss das Programm neu gestartet werden." +
+                    "\n";
+
     public static final String SHORTCUT =
             "Zum Ändern eines Tastenkürzels seinen \"Ändern\"-Button klicken und dann " +
                     "die gewünschten neuen Tasten drücken.\n" +

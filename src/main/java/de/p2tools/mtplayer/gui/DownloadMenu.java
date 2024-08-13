@@ -67,13 +67,13 @@ public class DownloadMenu {
         final ToolBarButton btnDel = new ToolBarButton(vBox,
                 "Downloads löschen", "Markierte Downloads löschen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
         final ToolBarButton btnChange = new ToolBarButton(vBox,
-                "Downloads ändern", "Markierte Downloads ändern", ProgIcons.ICON_TOOLBAR_ABO_CONFIG.getImageView());
+                "Downloads ändern", "Markierte Downloads ändern", ProgIcons.ICON_TOOLBAR_CONFIG.getImageView());
         final ToolBarButton btnClear = new ToolBarButton(vBox,
                 "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
-                "Film Starten", "Gespeicherten Film abspielen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_FILM_START.getImageView());
+                "Film Starten", "Gespeicherten Film abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
 
         btnRefresh.setOnAction(a -> {
             AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();

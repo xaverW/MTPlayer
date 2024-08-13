@@ -106,7 +106,7 @@ public class DownloadErrorDialogController extends P2DialogExtra {
         btnErrorStream.setVisible(!download.getDownloadStartDto().getErrStreamList().isEmpty());
         btnErrorStream.setManaged(btnErrorStream.isVisible());
 
-        imageView.setImage(ProgIcons.IMAGE_ACHTUNG_64.getImage());
+        imageView.setImage(ProgIcons.ICON_ATTENTION_64.getImage());
         chkTime.setSelected(ProgConfig.DOWNLOAD_DIALOG_ERROR_TIME.get());
         chkTime.setOnAction(a -> {
             ProgConfig.DOWNLOAD_DIALOG_ERROR_TIME.setValue(chkTime.isSelected());
