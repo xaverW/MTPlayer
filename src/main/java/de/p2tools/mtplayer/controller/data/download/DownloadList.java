@@ -62,7 +62,10 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
     @Override
     public void addNewItem(Object obj) {
         if (obj.getClass().equals(DownloadData.class)) {
-            add((DownloadData) obj);
+            DownloadData d = (DownloadData) obj;
+            // cleanUp
+            d.setPlacedBack(false);
+            add(d);
         }
     }
 

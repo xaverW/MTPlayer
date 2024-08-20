@@ -96,6 +96,7 @@ public class AboSearchDownloadsFactory {
                 searchForNewDownloadsForAbos(ProgData.getInstance().downloadList);
                 alreadyRunning.set(false);
                 ProgData.busy.busyOffFx();
+                ProgData.getInstance().downloadList.setDownloadsChanged();
                 return null;
             }
         }).start();
