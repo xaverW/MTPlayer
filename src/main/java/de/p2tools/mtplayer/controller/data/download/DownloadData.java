@@ -314,18 +314,6 @@ public final class DownloadData extends DownloadDataProps {
         return downloadStartDto;
     }
 
-    public String getFileNameWithoutSuffix() {
-        return PUrlTools.getFileNameWithoutSuffix(getDestFileName());
-    }
-
-    public String getPathFileNameWithoutSuffix() {
-        return PUrlTools.getFileNameWithoutSuffix(getDestPathFile());
-    }
-
-    public String getFileNameSuffix() {
-        return P2FileUtils.getFileNameSuffix(getDestPathFile());
-    }
-
     public void setDownloadStartDto(StartDownloadDto startDownloadDto) {
         this.downloadStartDto = startDownloadDto;
     }
@@ -402,6 +390,18 @@ public final class DownloadData extends DownloadDataProps {
             setInfoFile(setData.isInfoFile());
             setSubtitle(setData.isSubtitle());
         }
+    }
+
+    public String getFileNameWithoutSuffix() {
+        return PUrlTools.getFileNameWithoutSuffix(getDestFileName());
+    }
+
+    public String getPathFileNameWithoutSuffix() {
+        return PUrlTools.getFileNameWithoutSuffix(getDestPathFile());
+    }
+
+    public String getFileNameSuffix() {
+        return P2FileUtils.getFileNameSuffix(getDestPathFile());
     }
 
     public File getFile() {
