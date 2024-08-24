@@ -57,7 +57,7 @@ public class MTPlayerFactory {
                 ProgConfig.FILM_GUI_INFO_ON.setValue(!ProgConfig.FILM_GUI_INFO_ON.getValue());
                 break;
             case LIVE_FILM:
-                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.getValue());
+                ProgConfig.LIVE_FILM_GUI_INFO_ON.setValue(!ProgConfig.LIVE_FILM_GUI_INFO_ON.getValue());
                 break;
             case DOWNLOAD:
                 ProgConfig.DOWNLOAD_GUI_INFO_ON.setValue(!ProgConfig.DOWNLOAD_GUI_INFO_ON.getValue());

@@ -30,7 +30,6 @@ import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.tools.P2SystemUtils;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
@@ -50,8 +49,7 @@ public class LiveFilmGuiController extends AnchorPane {
     public final TableLiveFilm tableView;
     private final ProgData progData;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
-    DoubleProperty splitPaneProperty = ProgConfig.LIVE_FILM_GUI_DIVIDER;
-    private boolean boundSplitPaneDivPos = false;
+    private boolean bound = false;
     private double selPos = -1;
 
     public LiveFilmGuiController() {
@@ -130,10 +128,10 @@ public class LiveFilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM_GUI_INFO_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
-                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.set(true);
+                ProgConfig.LIVE_FILM_GUI_INFO_ON.set(true);
             }
         });
     }
@@ -209,24 +207,27 @@ public class LiveFilmGuiController extends AnchorPane {
 
     private void setInfoPane() {
         // hier wird das InfoPane ein- ausgeblendet
-        if (ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.getValue()) {
-            boundSplitPaneDivPos = true;
-            if (splitPane.getItems().size() != 2) {
-                // erst mal splitPane einrichten, dass Tabelle und Infos angezeigt werden
-                splitPane.getItems().clear();
-                splitPane.getItems().addAll(scrollPaneTableFilm, liveFilmInfoController);
-                SplitPane.setResizableWithParent(liveFilmInfoController, false);
-            }
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+        if (bound && splitPane.getItems().size() > 1) {
+            bound = false;
+            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.LIVE_FILM_GUI_INFO_DIVIDER);
+        }
+
+        splitPane.getItems().clear();
+        if (!liveFilmInfoController.isPaneShowing()) {
+            // dann wird nix angezeigt
+            splitPane.getItems().add(scrollPaneTableFilm);
+            ProgConfig.LIVE_FILM_GUI_INFO_ON.set(false);
+            return;
+        }
+
+        if (ProgConfig.LIVE_FILM_GUI_INFO_ON.getValue()) {
+            bound = true;
+            splitPane.getItems().addAll(scrollPaneTableFilm, liveFilmInfoController);
+            SplitPane.setResizableWithParent(liveFilmInfoController, false);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.LIVE_FILM_GUI_INFO_DIVIDER);
 
         } else {
-            if (boundSplitPaneDivPos) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
-            }
-            if (splitPane.getItems().size() != 1) {
-                splitPane.getItems().clear();
-                splitPane.getItems().add(scrollPaneTableFilm);
-            }
+            splitPane.getItems().add(scrollPaneTableFilm);
         }
     }
 }

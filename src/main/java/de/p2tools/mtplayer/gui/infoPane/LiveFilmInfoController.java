@@ -41,7 +41,7 @@ public class LiveFilmInfoController extends P2ClosePaneH {
     private final ProgData progData;
 
     public LiveFilmInfoController() {
-        super(ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, true, true);
+        super(ProgConfig.LIVE_FILM_GUI_INFO_ON, true, true);
         progData = ProgData.getInstance();
         initInfoPane();
     }
@@ -49,18 +49,25 @@ public class LiveFilmInfoController extends P2ClosePaneH {
     public void setFilmInfos(FilmDataMTP film) {
         if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM,
                 getVBoxAll(), tabPane, paneLiveFilmInfo,
-                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON)) {
+                ProgConfig.LIVE_FILM_GUI_INFO_ON, ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON)) {
             paneLiveFilmInfo.setFilm(film);
         }
         if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM,
                 getVBoxAll(), tabPane, paneMedia,
-                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON)) {
+                ProgConfig.LIVE_FILM_GUI_INFO_ON, ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON)) {
             paneMedia.setSearchPredicate(film);
         }
     }
 
+    public boolean isPaneShowing() {
+        return !ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON.getValue() ||
+                !ProgConfig.LIVE_FILM_PANE_DIALOG_BUTTON_ON.getValue() ||
+                !ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON.getValue();
+    }
+
+
     private void initInfoPane() {
-        paneLiveFilmInfo = new PaneLiveFilmInfo(ProgConfig.LIVE_FILM_GUI_INFO_DIVIDER);
+        paneLiveFilmInfo = new PaneLiveFilmInfo(ProgConfig.LIVE_FILM_PANE_INFO_DIVIDER);
         paneButton = new PaneFilmButton(true);
         MediaDataDto mDtoMedia = new MediaDataDto();
         MediaDataDto mDtoAbo = new MediaDataDto();
@@ -121,19 +128,19 @@ public class LiveFilmInfoController extends P2ClosePaneH {
     private void setDialogInfo() {
         InfoPaneFactory.setDialogInfo(tabLiveFilmInfo, paneLiveFilmInfo, "Filminfos",
                 ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_SIZE, ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON,
-                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgData.LIVE_FILM_TAB_ON);
+                ProgConfig.LIVE_FILM_GUI_INFO_ON, ProgData.LIVE_FILM_TAB_ON);
     }
 
     private void setDialogButton() {
         InfoPaneFactory.setDialogInfo(tabButton, paneButton, "Startbutton",
                 ProgConfig.LIVE_FILM_PANE_DIALOG_BUTTON_SIZE, ProgConfig.LIVE_FILM_PANE_DIALOG_BUTTON_ON,
-                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgData.LIVE_FILM_TAB_ON);
+                ProgConfig.LIVE_FILM_GUI_INFO_ON, ProgData.LIVE_FILM_TAB_ON);
     }
 
     private void setDialogMedia() {
         InfoPaneFactory.setDialogInfo(tabMedia, paneMedia, "Mediensammlung",
                 ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_SIZE, ProgConfig.LIVE_FILM_PANE_DIALOG_MEDIA_ON,
-                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON, ProgData.LIVE_FILM_TAB_ON);
+                ProgConfig.LIVE_FILM_GUI_INFO_ON, ProgData.LIVE_FILM_TAB_ON);
     }
 
     private void setTabs() {
@@ -176,17 +183,21 @@ public class LiveFilmInfoController extends P2ClosePaneH {
 
         if (i == 0) {
             getVBoxAll().getChildren().clear();
-            ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.set(false);
+            ProgConfig.LIVE_FILM_GUI_INFO_ON.set(false);
+
         } else if (i == 1) {
             // dann gibts einen Tab
             final Node node = tabPane.getTabs().get(0).getContent();
             tabPane.getTabs().remove(0);
             getVBoxAll().getChildren().setAll(node);
             VBox.setVgrow(node, Priority.ALWAYS);
+            ProgConfig.LIVE_FILM_GUI_INFO_ON.set(true);
+
         } else {
             // dann gibts mehre Tabs
             getVBoxAll().getChildren().setAll(tabPane);
             VBox.setVgrow(tabPane, Priority.ALWAYS);
+            ProgConfig.LIVE_FILM_GUI_INFO_ON.set(true);
         }
     }
 }

@@ -209,7 +209,7 @@ public class MTPlayerController extends StackPane {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.getValue());
+                ProgConfig.LIVE_FILM_GUI_INFO_ON.setValue(!ProgConfig.LIVE_FILM_GUI_INFO_ON.getValue());
             }
         });
         btnDownload.setOnMouseClicked(mouseEvent -> {

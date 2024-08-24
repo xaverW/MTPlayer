@@ -267,15 +267,15 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.TRUE);
     public static DoubleProperty LIVE_FILM_GUI_FILTER_DIVIDER = addDoubleProp("live-film-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty LIVE_FILM_GUI_FILTER_DIVIDER_ON = addBoolProp("live-film-gui-filter-divider-on", Boolean.TRUE);
-    public static DoubleProperty LIVE_FILM_GUI_DIVIDER = addDoubleProp("live-film-gui-divider", ProgConst.GUI_DIVIDER_LOCATION);
-    public static BooleanProperty LIVE_FILM_GUI_DIVIDER_ON = addBoolProp("live-film-gui-divider-on", Boolean.TRUE);
+    public static DoubleProperty LIVE_FILM_GUI_INFO_DIVIDER = addDoubleProp("live-film-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
+    public static BooleanProperty LIVE_FILM_GUI_INFO_ON = addBoolProp("live-film-gui-info-on", Boolean.TRUE);
 
     public static StringProperty LIVE_FILM_GUI_TABLE_WIDTH = addStrProp("live-film-gui-table-width");
     public static StringProperty LIVE_FILM_GUI_TABLE_SORT = addStrProp("live-film-gui-table-sort");
     public static StringProperty LIVE_FILM_GUI_TABLE_UP_DOWN = addStrProp("live-film-gui-table-up-down");
     public static StringProperty LIVE_FILM_GUI_TABLE_VIS = addStrProp("live-film-gui-table-vis");
     public static StringProperty LIVE_FILM_GUI_TABLE_ORDER = addStrProp("live-film-gui-table-order");
-    public static DoubleProperty LIVE_FILM_GUI_INFO_DIVIDER = addDoubleProp("live-film-gui-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+    public static DoubleProperty LIVE_FILM_PANE_INFO_DIVIDER = addDoubleProp("live-film-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
     public static StringProperty LIVE_FILM_GUI_SEARCH_ARD = addStrProp("live-film-gui-search-ard");
     public static StringProperty LIVE_FILM_GUI_SEARCH_ZDF = addStrProp("live-film-gui-search-zdf");
@@ -413,7 +413,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("film-pane-dialog-media-size");
     public static BooleanProperty FILM_PANE_DIALOG_MEDIA_ON = addBoolProp("film-pane-dialog-media-on");
 
-    public static StringProperty LIVE_FILM_PANE_DIALOG_INFO_SIZE = addStrProp("live-film-pane-dialog-info-size");
+    public static StringProperty LIVE_FILM_PANE_DIALOG_INFO_SIZE = addStrProp("live-film-pane-dialog-info-size", "400:400");
     public static BooleanProperty LIVE_FILM_PANE_DIALOG_INFO_ON = addBoolProp("live-film-pane-dialog-info-on");
     public static StringProperty LIVE_FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("live-film-pane-dialog-button-size");
     public static BooleanProperty LIVE_FILM_PANE_DIALOG_BUTTON_ON = addBoolProp("live-film-pane-dialog-button-on");
