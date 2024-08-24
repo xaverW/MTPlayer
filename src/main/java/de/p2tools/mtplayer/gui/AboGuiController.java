@@ -73,7 +73,7 @@ public class AboGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        ProgConfig.ABO_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.ABO_GUI_INFO_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         filteredAbos = new FilteredList<>(progData.aboList, p -> true);
         sortedAbos = new SortedList<>(filteredAbos);
@@ -229,20 +229,28 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        if (!ProgConfig.ABO_GUI_DIVIDER_ON.getValue()) {
-            if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.ABO_GUI_DIVIDER);
-            }
+        // hier wird das InfoPane ein- ausgeblendet
+        if (bound && splitPane.getItems().size() > 1) {
+            bound = false;
+            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.ABO_GUI_INFO_DIVIDER);
+        }
 
-            splitPane.getItems().clear();
+        splitPane.getItems().clear();
+        if (!aboInfoController.isPaneShowing()) {
+            // dann wird nix angezeigt
             splitPane.getItems().add(scrollPane);
+            ProgConfig.ABO_GUI_INFO_ON.set(false);
+            return;
+        }
 
-        } else {
+        if (ProgConfig.ABO_GUI_INFO_ON.getValue()) {
             bound = true;
-            splitPane.getItems().clear();
             splitPane.getItems().addAll(scrollPane, aboInfoController);
             SplitPane.setResizableWithParent(aboInfoController, false);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_DIVIDER);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_INFO_DIVIDER);
+
+        } else {
+            splitPane.getItems().add(scrollPane);
         }
     }
 }

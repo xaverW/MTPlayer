@@ -38,14 +38,14 @@ public class AboInfoController extends P2ClosePaneH {
     private final TabPane tabPane = new TabPane();
 
     public AboInfoController() {
-        super(ProgConfig.ABO_GUI_DIVIDER_ON, false, true);
+        super(ProgConfig.ABO_GUI_INFO_ON, false, true);
         initInfoPane();
         PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadInfoController.class.getSimpleName()) {
             @Override
             public void pingFx() {
                 if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO,
                         getVBoxAll(), tabPane, paneAboListInfo,
-                        ProgConfig.ABO_GUI_DIVIDER_ON, ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON)) {
+                        ProgConfig.ABO_GUI_INFO_ON, ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON)) {
                     paneAboListInfo.setInfoText();
                 }
             }
@@ -55,9 +55,14 @@ public class AboInfoController extends P2ClosePaneH {
     public void setAboInfos(AboData abo) {
         if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO,
                 getVBoxAll(), tabPane, paneAboInfo,
-                ProgConfig.ABO_GUI_DIVIDER_ON, ProgConfig.ABO_PANE_DIALOG_INFO_ON)) {
+                ProgConfig.ABO_GUI_INFO_ON, ProgConfig.ABO_PANE_DIALOG_INFO_ON)) {
             paneAboInfo.setAbo(abo);
         }
+    }
+
+    public boolean isPaneShowing() {
+        return !ProgConfig.ABO_PANE_DIALOG_INFO_ON.getValue() ||
+                !ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON.getValue();
     }
 
     private void initInfoPane() {
@@ -92,13 +97,13 @@ public class AboInfoController extends P2ClosePaneH {
     private void dialogInfo() {
         InfoPaneFactory.setDialogInfo(tabAboInfo, paneAboInfo, "Abo Infos",
                 ProgConfig.ABO_PANE_DIALOG_INFO_SIZE, ProgConfig.ABO_PANE_DIALOG_INFO_ON,
-                ProgConfig.ABO_GUI_DIVIDER_ON, ProgData.ABO_TAB_ON);
+                ProgConfig.ABO_GUI_INFO_ON, ProgData.ABO_TAB_ON);
     }
 
     private void dialogListInfo() {
         InfoPaneFactory.setDialogInfo(tabAboListInfo, paneAboListInfo, "AboList Infos",
                 ProgConfig.ABO_PANE_DIALOG_List_INFO_SIZE, ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON,
-                ProgConfig.ABO_GUI_DIVIDER_ON, ProgData.ABO_TAB_ON);
+                ProgConfig.ABO_GUI_INFO_ON, ProgData.ABO_TAB_ON);
     }
 
     private void setTabs() {
@@ -126,7 +131,7 @@ public class AboInfoController extends P2ClosePaneH {
 
         if (i == 0) {
             getVBoxAll().getChildren().clear();
-            ProgConfig.ABO_GUI_DIVIDER_ON.set(false);
+            ProgConfig.ABO_GUI_INFO_ON.set(false);
 
         } else if (i == 1) {
             // dann gibts einen Tab
@@ -134,11 +139,13 @@ public class AboInfoController extends P2ClosePaneH {
             tabPane.getTabs().remove(0);
             getVBoxAll().getChildren().setAll(node);
             VBox.setVgrow(node, Priority.ALWAYS);
+            ProgConfig.ABO_GUI_INFO_ON.set(true);
 
         } else {
             // dann gibts mehre Tabs
             getVBoxAll().getChildren().setAll(tabPane);
             VBox.setVgrow(tabPane, Priority.ALWAYS);
+            ProgConfig.ABO_GUI_INFO_ON.set(true);
         }
     }
 }

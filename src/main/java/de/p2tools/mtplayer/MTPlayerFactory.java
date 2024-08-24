@@ -54,16 +54,16 @@ public class MTPlayerFactory {
     public static void setInfos() {
         switch (MTPlayerController.paneShown) {
             case FILM:
-                ProgConfig.FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_DIVIDER_ON.getValue());
+                ProgConfig.FILM_GUI_INFO_ON.setValue(!ProgConfig.FILM_GUI_INFO_ON.getValue());
                 break;
             case LIVE_FILM:
                 ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.setValue(!ProgConfig.LIVE_FILM_GUI_DIVIDER_ON.getValue());
                 break;
             case DOWNLOAD:
-                ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue());
+                ProgConfig.DOWNLOAD_GUI_INFO_ON.setValue(!ProgConfig.DOWNLOAD_GUI_INFO_ON.getValue());
                 break;
             case ABO:
-                ProgConfig.ABO_GUI_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_DIVIDER_ON.getValue());
+                ProgConfig.ABO_GUI_INFO_ON.setValue(!ProgConfig.ABO_GUI_INFO_ON.getValue());
                 break;
         }
     }

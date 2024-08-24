@@ -84,7 +84,7 @@ public class PaneAboInfo extends VBox {
 
         SplitPane splitPane = new SplitPane();
         splitPane.getItems().addAll(gridPaneLeft, gridPaneRight);
-        splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_INFO_DIVIDER);
+        splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_PANE_INFO_DIVIDER);
         SplitPane.setResizableWithParent(gridPaneRight, false);
         VBox.setVgrow(splitPane, Priority.ALWAYS);
 

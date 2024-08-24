@@ -33,7 +33,6 @@ import de.p2tools.p2lib.tools.P2SystemUtils;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ContextMenu;
@@ -57,8 +56,7 @@ public class FilmGuiController extends AnchorPane {
     private final ProgData progData;
     private final SortedList<FilmDataMTP> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
-    DoubleProperty splitPaneProperty = ProgConfig.FILM_GUI_DIVIDER;
-    private boolean boundSplitPaneDivPos = false;
+    private boolean bound = false;
     //     private double selPos = Double.MAX_VALUE; // letzte Pos
     private boolean setShown = false;
 
@@ -199,7 +197,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        ProgConfig.FILM_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.FILM_GUI_INFO_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
 //        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
 //            selectLastShown();
 //        });
@@ -209,7 +207,7 @@ public class FilmGuiController extends AnchorPane {
 
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
-                ProgConfig.FILM_GUI_DIVIDER_ON.set(true);
+                ProgConfig.FILM_GUI_INFO_ON.set(true);
             }
         });
         PListener.addListener(new PListener(new int[]{PListener.EVENT_HISTORY_CHANGED},
@@ -392,24 +390,27 @@ public class FilmGuiController extends AnchorPane {
 
     private void setInfoPane() {
         // hier wird das InfoPane ein- ausgeblendet
-        if (ProgConfig.FILM_GUI_DIVIDER_ON.getValue()) {
-            boundSplitPaneDivPos = true;
-            if (splitPane.getItems().size() != 2) {
-                // erst mal splitPane einrichten, dass Tabelle und Infos angezeigt werden
-                splitPane.getItems().clear();
-                splitPane.getItems().addAll(scrollPaneTableFilm, filmInfoController);
-                SplitPane.setResizableWithParent(filmInfoController, false);
-            }
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(splitPaneProperty);
+        if (bound && splitPane.getItems().size() > 1) {
+            bound = false;
+            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.FILM_GUI_INFO_DIVIDER);
+        }
+
+        splitPane.getItems().clear();
+        if (!filmInfoController.isPaneShowing()) {
+            // dann wird nix angezeigt
+            splitPane.getItems().add(scrollPaneTableFilm);
+            ProgConfig.FILM_GUI_INFO_ON.set(false);
+            return;
+        }
+
+        if (ProgConfig.FILM_GUI_INFO_ON.getValue()) {
+            bound = true;
+            splitPane.getItems().addAll(scrollPaneTableFilm, filmInfoController);
+            SplitPane.setResizableWithParent(filmInfoController, false);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.FILM_GUI_INFO_DIVIDER);
 
         } else {
-            if (boundSplitPaneDivPos) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(splitPaneProperty);
-            }
-            if (splitPane.getItems().size() != 1) {
-                splitPane.getItems().clear();
-                splitPane.getItems().add(scrollPaneTableFilm);
-            }
+            splitPane.getItems().add(scrollPaneTableFilm);
         }
     }
 }

@@ -82,7 +82,7 @@ public class DownloadGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.DOWNLOAD_GUI_INFO_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         filteredListDownloads = new FilteredList<>(progData.downloadList, p -> true);
         sortedListDownloads = new SortedList<>(filteredListDownloads);
@@ -471,20 +471,28 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        if (!ProgConfig.DOWNLOAD_GUI_DIVIDER_ON.getValue()) {
-            if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_DIVIDER);
-            }
-            splitPane.getItems().clear();
+        // hier wird das InfoPane ein- ausgeblendet
+        if (bound && splitPane.getItems().size() > 1) {
+            bound = false;
+            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_INFO_DIVIDER);
+        }
+
+        splitPane.getItems().clear();
+        if (!downloadInfoController.isPaneShowing()) {
+            // dann wird nix angezeigt
             splitPane.getItems().add(scrollPane);
+            ProgConfig.DOWNLOAD_GUI_INFO_ON.set(false);
+            return;
+        }
+
+        if (ProgConfig.DOWNLOAD_GUI_INFO_ON.getValue()) {
+            bound = true;
+            splitPane.getItems().addAll(scrollPane, downloadInfoController);
+            SplitPane.setResizableWithParent(downloadInfoController, false);
+            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_INFO_DIVIDER);
 
         } else {
-            bound = true;
-
-            splitPane.getItems().clear();
-            splitPane.getItems().addAll(scrollPane, downloadInfoController);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_DIVIDER);
-            SplitPane.setResizableWithParent(downloadInfoController, false);
+            splitPane.getItems().add(scrollPane);
         }
     }
 }
