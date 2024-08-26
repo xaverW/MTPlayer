@@ -53,6 +53,7 @@ public class FilmFilterControllerTextFilter extends VBox {
         };
 
         cboThemeExact = new PCboThemeExact(progData, progData.filmFilterWorker.getActFilterSettings().exactThemeProperty());
+
         cboTheme = new PCboStringSearch2(progData.stringFilterLists.getFilterListTheme(),
                 progData.filmFilterWorker.getActFilterSettings().themeProperty(), supplierReportReturn);
         cboThemeTitle = new PCboStringSearch2(progData.stringFilterLists.getFilterListThemeTitle(),

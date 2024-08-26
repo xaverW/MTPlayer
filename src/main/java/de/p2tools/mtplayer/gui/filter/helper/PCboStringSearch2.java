@@ -71,6 +71,7 @@ public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
             }
         });
         setItems(itemList);
+        fillStoredList(); // zum Putzen, hatte den Fehler zu wachsen
 
         setEditable(true);
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);

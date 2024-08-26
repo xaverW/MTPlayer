@@ -12,21 +12,21 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
 
     public static String TAG = "StringFilter";
 
-    private final ObservableList<String> filterListTheme = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListThemeTitle = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListTitel = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListSomewhere = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListUrl = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListFastFilter = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListAboName = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListAboDescription = FXCollections.observableArrayList("");
+    private final ObservableList<String> filterListTheme = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListThemeTitle = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListTitel = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListSomewhere = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListUrl = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListFastFilter = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListAboName = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListAboDescription = FXCollections.observableArrayList();
 
-    private final ObservableList<String> filterListArdLive = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListArdUrl = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListZdfLive = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListZdfUrl = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListLiveThema = FXCollections.observableArrayList("");
-    private final ObservableList<String> filterListLiveTitel = FXCollections.observableArrayList("");
+    private final ObservableList<String> filterListArdLive = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListArdUrl = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListZdfLive = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListZdfUrl = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListLiveThema = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListLiveTitel = FXCollections.observableArrayList();
 
 
     public StringFilter() {
