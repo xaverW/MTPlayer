@@ -49,5 +49,13 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "an verschiedenen Stellen im Programm " +
                         "angezeigt.", 110);
         add(whatsNewInfo);
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 8, 27),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_02.png",
+
+                "Anzeige Programm",
+                "In den Einstellungen->Farben kann die Programmoberfläche " +
+                        "auf \"Schwarz-Weiß\" umgestellt werden. (Das Programm " +
+                        "muss zur Übernahme neu gestartet werden).", 110);
+        add(whatsNewInfo);
     }
 }
