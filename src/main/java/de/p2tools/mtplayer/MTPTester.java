@@ -20,6 +20,7 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
@@ -84,6 +85,13 @@ public class MTPTester {
                 BlacklistFilterFactory.markFilmBlackThread(true);
             });
             gridPane.add(btnBlack, 0, ++row);
+
+
+            Button btnQuitt = new Button("Quitt, waiting false");
+            btnQuitt.setOnAction(a -> {
+                new QuitDialogController(false);
+            });
+            gridPane.add(btnQuitt, 0, ++row);
         }
     }
 

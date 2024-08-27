@@ -140,6 +140,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty SYSTEM_FILMLIST_FILTER = addIntProp("system-filmlist-filter", BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
     public static StringProperty SYSTEM_SHUT_DOWN_CALL = addStrProp("system-shut-down-call", P2ShutDown.getShutDownCommand()); // shutDown call
     public static BooleanProperty SYSTEM_SHUT_DOWN_CALL_ON = addBoolProp("system-shut-down-call-on", false); // das shutDown ist aktiv
+    public static BooleanProperty SYSTEM_QUITT_DIALOG_MINIMIZE = addBoolProp("system-quitt-dialog-minimize", false); // Programm minimize nach "Warten"
 
     //Configs Statusbar
     public static BooleanProperty SYSTEM_STATUS_BAR_ON = addBoolProp("system-status-bar-on", true);

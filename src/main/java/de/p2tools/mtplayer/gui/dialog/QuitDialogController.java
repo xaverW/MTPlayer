@@ -45,6 +45,7 @@ import javafx.scene.layout.VBox;
 public class QuitDialogController extends P2DialogExtra {
 
     private CheckBox chkShutDown = new CheckBox("Rechner anschließend herunterfahren");
+    private CheckBox chkBlend = new CheckBox(ProgData.getInstance().progTray.getSystemTray() != null ? "Programm Ausblenden" : "Programm Minimieren");
     private Label lblSystemCall = new Label("");
 
     private final StackPane stackPane = new StackPane();
@@ -56,8 +57,16 @@ public class QuitDialogController extends P2DialogExtra {
         super(ProgData.getInstance().primaryStage, null, "Programm beenden",
                 true, false, DECO.BORDER);
         this.startWithWaiting = startWithWaiting;
-        addButton();
         init(true);
+    }
+
+    @Override
+    public void close() {
+        cancelWaitTask();
+        maskerPane.switchOffMasker();
+        chkShutDown.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL_ON);
+        chkBlend.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_QUITT_DIALOG_MINIMIZE);
+        super.close();
     }
 
     @Override
@@ -88,12 +97,13 @@ public class QuitDialogController extends P2DialogExtra {
         P2BigButton waitButton = new P2BigButton(ProgIcons.ICON_BUTTON_QUIT.getImageView(),
                 "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> startWaiting());
+
         chkShutDown.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL_ON);
+        chkBlend.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_QUITT_DIALOG_MINIMIZE);
         setSystemCallText();
         ProgConfig.SYSTEM_SHUT_DOWN_CALL.addListener((u, o, n) -> {
             setSystemCallText();
         });
-
         final Button btnHelp = P2Button.helpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
         final Button btnEdit = new Button();
         btnEdit.setGraphic(ProgIcons.ICON_BUTTON_EDIT.getImageView());
@@ -112,19 +122,25 @@ public class QuitDialogController extends P2DialogExtra {
         gridPane.add(quitButton, 1, ++row);
 
         gridPane.add(new Label(), 1, ++row);
-        gridPane.add(waitButton, 1, ++row);
+
+        HBox hBoxBlend = new HBox(P2LibConst.PADDING_HBOX);
+        hBoxBlend.setAlignment(Pos.CENTER_LEFT);
+        hBoxBlend.getChildren().addAll(P2GuiTools.getVDistance(10), chkBlend);
+
+        HBox hBoxQuitt = new HBox(P2LibConst.PADDING_HBOX);
+        hBoxQuitt.setAlignment(Pos.CENTER_LEFT);
+        hBoxQuitt.getChildren().addAll(P2GuiTools.getVDistance(10), chkShutDown, P2GuiTools.getHBoxGrower(), btnEdit, btnHelp);
+
+        HBox hBoxCall = new HBox(0);
+        hBoxCall.setAlignment(Pos.CENTER_LEFT);
+        hBoxCall.getChildren().addAll(P2GuiTools.getVDistance(25), lblSystemCall);
 
         VBox vBox = new VBox(1);
-        HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        HBox hBoxCall = new HBox(0);
-        hBoxCall.getChildren().addAll(P2GuiTools.getVDistance(25), lblSystemCall);
-        hBox.getChildren().addAll(chkShutDown, P2GuiTools.getHBoxGrower(), btnEdit, btnHelp);
-        vBox.getChildren().addAll(hBox, hBoxCall);
+        vBox.getChildren().addAll(waitButton, P2GuiTools.getHDistance(5), hBoxBlend, hBoxQuitt, hBoxCall);
         gridPane.add(vBox, 1, ++row);
 
         stackPane.getChildren().addAll(gridPane, maskerPane);
-        getVBoxCont().getChildren().addAll(stackPane/*, vBox*/);
+        getVBoxCont().getChildren().addAll(stackPane);
         if (startWithWaiting) {
             startWaiting();
         }
@@ -145,23 +161,18 @@ public class QuitDialogController extends P2DialogExtra {
         }
     }
 
-    private void addButton() {
-        // Wenn es ein Tray gibt, dann ins Tray legen, ansonsten nur minimieren
-        Button btnTray = new Button(ProgData.getInstance().progTray.getSystemTray() != null ? "Ausblenden" : "Minimieren");
-        btnTray.setOnAction(a -> {
+    private void startWaiting() {
+        maskerPane.setMaskerVisible(true, chkShutDown.isSelected(), true);
+        maskerPane.setMaskerText(chkShutDown.isSelected() ? chkShutDown.getText() : "");
+
+        if (chkBlend.isSelected()) {
             if (ProgData.getInstance().progTray.getSystemTray() != null) {
                 ProgData.getInstance().progTray.closeDialog();
             } else {
                 ProgData.getInstance().primaryStage.setIconified(true);
                 this.getStage().setIconified(true);
             }
-        });
-        addAnyButton(btnTray);
-    }
-
-    public void startWaiting() {
-        maskerPane.setMaskerVisible(true, chkShutDown.isSelected(), true);
-        maskerPane.setMaskerText(chkShutDown.isSelected() ? chkShutDown.getText() : "");
+        }
 
         Thread th = new Thread(getWaitTask());
         th.setName("startWaiting");
@@ -193,13 +204,6 @@ public class QuitDialogController extends P2DialogExtra {
     public void closeMaskerPane() {
         cancelWaitTask();
         maskerPane.switchOffMasker();
-    }
-
-    @Override
-    public void close() {
-        cancelWaitTask();
-        maskerPane.switchOffMasker();
-        super.close();
     }
 
     private WaitTask getWaitTask() {
