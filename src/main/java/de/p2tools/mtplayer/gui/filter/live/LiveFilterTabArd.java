@@ -7,7 +7,7 @@ import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch2;
+import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
@@ -58,8 +58,8 @@ public class LiveFilterTabArd extends Tab {
         btnKeepOnArd.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
-        final PCboStringSearch2 cboSearch;
-        cboSearch = new PCboStringSearch2(progData.stringFilterLists.getFilterListArdLive(),
+        final PCboString cboSearch;
+        cboSearch = new PCboString(progData.stringFilterLists.getFilterListArdLive(),
                 ProgConfig.LIVE_FILM_GUI_SEARCH_ARD);
 
         VBox vBox = new VBox();
@@ -95,8 +95,8 @@ public class LiveFilterTabArd extends Tab {
         btnSearchUrlArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
-        final PCboStringSearch2 cboSearchUrl;
-        cboSearchUrl = new PCboStringSearch2(progData.stringFilterLists.getFilterListArdUrl(),
+        final PCboString cboSearchUrl;
+        cboSearchUrl = new PCboString(progData.stringFilterLists.getFilterListArdUrl(),
                 ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD);
 
         vBox = new VBox(2);

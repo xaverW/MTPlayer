@@ -22,16 +22,17 @@ import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 
 import java.util.function.BooleanSupplier;
 
-public class PCboStringSearch extends ComboBox<PCboSearchLabel> {
+public class PCboString_ extends ComboBox<PCboString_.PCboSearchLabel> {
     public static final int MAX_FILTER_HISTORY = 15;
     private final StringProperty strSearchProperty;
     private final BooleanSupplier actFilter;
 
-    public PCboStringSearch(StringProperty strSearchProperty, BooleanSupplier actFilter) {
+    public PCboString_(StringProperty strSearchProperty, BooleanSupplier actFilter) {
         this.strSearchProperty = strSearchProperty;
         this.actFilter = actFilter;
         setEditable(true);
@@ -99,4 +100,25 @@ public class PCboStringSearch extends ComboBox<PCboSearchLabel> {
         }
         getItems().get(1).setText(filterStr);
     }
+
+    static class PCboSearchLabel extends Label implements Comparable<PCboSearchLabel> {
+
+        public PCboSearchLabel() {
+        }
+
+        public PCboSearchLabel(String value) {
+            setText(value);
+        }
+
+        @Override
+        public String toString() {
+            return getText();
+        }
+
+        @Override
+        public int compareTo(PCboSearchLabel arg0) {
+            return getText().compareTo(arg0.getText());
+        }
+    }
+
 }

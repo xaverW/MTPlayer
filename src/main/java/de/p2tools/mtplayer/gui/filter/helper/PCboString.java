@@ -36,23 +36,23 @@ import javafx.scene.layout.HBox;
 
 import java.util.function.BooleanSupplier;
 
-public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
+public class PCboString extends ComboBox<PCboString.PCboLabel> {
     public static final int MAX_FILTER_HISTORY = 15;
     private final ObservableList<String> storedFilterList;
-    private final ObservableList<PCboSearchLabel> itemList = FXCollections.observableArrayList(new PCboSearchLabel(""));
+    private final ObservableList<PCboLabel> itemList = FXCollections.observableArrayList(new PCboLabel(""));
 
     private final StringProperty strSearchProperty;
     private final BooleanSupplier doSomething; // Funktion, was bei Auswahl gemacht werden soll, Rückgabewert wird nicht gebraucht
 
-    public PCboStringSearch2(ObservableList<String> storedFilterList, StringProperty strSearchProperty) {
+    public PCboString(ObservableList<String> storedFilterList, StringProperty strSearchProperty) {
         this.storedFilterList = storedFilterList;
         this.strSearchProperty = strSearchProperty;
         this.doSomething = () -> true;
         start();
     }
 
-    public PCboStringSearch2(ObservableList<String> storedFilterList,
-                             StringProperty strSearchProperty, BooleanSupplier doSomething) {
+    public PCboString(ObservableList<String> storedFilterList,
+                      StringProperty strSearchProperty, BooleanSupplier doSomething) {
         this.storedFilterList = storedFilterList;
         this.strSearchProperty = strSearchProperty;
         this.doSomething = doSomething;
@@ -62,11 +62,11 @@ public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
     private void start() {
         storedFilterList.forEach(s -> {
             if (!s.isEmpty()) {
-                PCboSearchLabel tf = itemList.stream().filter(pCboSearchLabel ->
+                PCboLabel tf = itemList.stream().filter(pCboSearchLabel ->
                         pCboSearchLabel.getText().equals(s)).findFirst().orElse(null);
                 if (tf == null) {
                     // sonst ist er schon drin
-                    itemList.add(new PCboSearchLabel(s));
+                    itemList.add(new PCboLabel(s));
                 }
             }
         });
@@ -96,12 +96,12 @@ public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
         getSelectionModel().selectedItemProperty().addListener(
                 (ChangeListener<Object>) (observable, oldValue, newValue) -> {
                     // kann auch ein String!!!! sein
-                    if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) {
+                    if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) { // nuss nicht sein
                         // dann melden
                         if (this.isShowing() ||
                                 newValue != null &&
-                                        newValue.getClass().equals(PCboSearchLabel.class) &&
-                                        !strSearchProperty.getValueSafe().equals(((PCboSearchLabel) newValue).getText())) {
+                                        newValue.getClass().equals(PCboLabel.class) &&
+                                        !strSearchProperty.getValueSafe().equals(((PCboLabel) newValue).getText())) {
                             doSomething.getAsBoolean();
                         }
                     }
@@ -132,7 +132,7 @@ public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
             }
 
             @Override
-            protected void updateItem(PCboSearchLabel searchLabel, boolean empty) {
+            protected void updateItem(PCboLabel searchLabel, boolean empty) {
                 super.updateItem(searchLabel, empty);
                 setVisibleRowCount(8);
                 setVisibleRowCount(10);
@@ -165,7 +165,7 @@ public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
         // einen neuen Filter einfügen
         getSelectionModel().clearSelection();
 
-        PCboSearchLabel addFilter = new PCboSearchLabel(addF);
+        PCboLabel addFilter = new PCboLabel(addF);
         if (addFilter.getText().isEmpty()) {
             return;
         }
@@ -176,13 +176,13 @@ public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
             return;
         }
 
-        final PCboSearchLabel tmp = getItems().get(1);
+        final PCboLabel tmp = getItems().get(1);
         if (addF.contains(tmp.getText())) {
             // dann wird der erste damit ersetzt
             tmp.setText(addF);
         }
 
-        PCboSearchLabel tf = itemList.stream().filter(pCboSearchLabel ->
+        PCboLabel tf = itemList.stream().filter(pCboSearchLabel ->
                 pCboSearchLabel.getText().equals(addF)).findFirst().orElse(null);
 
         if (tf == null) {
@@ -206,5 +206,22 @@ public class PCboStringSearch2 extends ComboBox<PCboSearchLabel> {
         itemList.forEach(s -> {
             storedFilterList.add(s.toString());
         });
+    }
+
+    static class PCboLabel extends Label implements Comparable<PCboLabel> {
+
+        public PCboLabel(String value) {
+            setText(value);
+        }
+
+        @Override
+        public String toString() {
+            return getText();
+        }
+
+        @Override
+        public int compareTo(PCboLabel arg0) {
+            return getText().compareTo(arg0.getText());
+        }
     }
 }

@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch2;
+import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
@@ -35,8 +35,8 @@ public class AboFilterController extends FilterController {
 
     private P2MenuButton mbChannel;
     private ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
-    private PCboStringSearch2 cboName;
-    private PCboStringSearch2 cboDescription;
+    private PCboString cboName;
+    private PCboString cboDescription;
     private Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
 
     private final VBox vBoxFilter;
@@ -69,12 +69,12 @@ public class AboFilterController extends FilterController {
         cboArt.getItems().addAll(AboConstants.ALL, AboConstants.ABO_ON, AboConstants.ABO_OFF);
         cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE);
 
-        cboName = new PCboStringSearch2(progData.stringFilterLists.getFilterListAboName(),
+        cboName = new PCboString(progData.stringFilterLists.getFilterListAboName(),
                 ProgConfig.FILTER_ABO_NAME);
         FilterCheckRegEx fN = new FilterCheckRegEx(cboName.getEditor());
         cboName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
 
-        cboDescription = new PCboStringSearch2(progData.stringFilterLists.getFilterListAboDescription(),
+        cboDescription = new PCboString(progData.stringFilterLists.getFilterListAboDescription(),
                 ProgConfig.FILTER_ABO_DESCRIPTION);
         FilterCheckRegEx fD = new FilterCheckRegEx(cboDescription.getEditor());
         cboDescription.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());

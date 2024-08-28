@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch2;
+import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -34,7 +34,7 @@ public class SearchFast extends HBox {
     private final Button btnSearch = new Button();
     private final Button btnSelectWhere = new Button();
     private final Button btnClear = new Button();
-    private final PCboStringSearch2 cboSearch;
+    private final PCboString cboSearch;
     private final Label lblTitel = new Label("");
 
     private final ProgData progData;
@@ -45,7 +45,7 @@ public class SearchFast extends HBox {
             progData.filmFilterWorker.getFastFilterSettings().reportFilterReturn();
             return true;
         };
-        this.cboSearch = new PCboStringSearch2(progData.stringFilterLists.getFilterListFastFilter(),
+        this.cboSearch = new PCboString(progData.stringFilterLists.getFilterListFastFilter(),
                 progData.filmFilterWorker.getFastFilterSettings().filterTermProperty(), booleanSupplier);
         make();
     }

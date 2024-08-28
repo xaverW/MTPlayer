@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch2;
+import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.mtplayer.gui.filter.helper.PCboThemeExact;
 import de.p2tools.p2lib.guitools.P2MenuButton;
 import javafx.beans.property.BooleanProperty;
@@ -34,11 +34,11 @@ public class FilmFilterControllerTextFilter extends VBox {
 
     private final P2MenuButton mbChannel;
     private final PCboThemeExact cboThemeExact;
-    private final PCboStringSearch2 cboTheme;
-    private final PCboStringSearch2 cboThemeTitle;
-    private final PCboStringSearch2 cboTitle;
-    private final PCboStringSearch2 cboSomewhere;
-    private final PCboStringSearch2 cboUrl;
+    private final PCboString cboTheme;
+    private final PCboString cboThemeTitle;
+    private final PCboString cboTitle;
+    private final PCboString cboSomewhere;
+    private final PCboString cboUrl;
 
     private final ProgData progData;
 
@@ -54,15 +54,15 @@ public class FilmFilterControllerTextFilter extends VBox {
 
         cboThemeExact = new PCboThemeExact(progData, progData.filmFilterWorker.getActFilterSettings().exactThemeProperty());
 
-        cboTheme = new PCboStringSearch2(progData.stringFilterLists.getFilterListTheme(),
+        cboTheme = new PCboString(progData.stringFilterLists.getFilterListTheme(),
                 progData.filmFilterWorker.getActFilterSettings().themeProperty(), supplierReportReturn);
-        cboThemeTitle = new PCboStringSearch2(progData.stringFilterLists.getFilterListThemeTitle(),
+        cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListThemeTitle(),
                 progData.filmFilterWorker.getActFilterSettings().themeTitleProperty(), supplierReportReturn);
-        cboTitle = new PCboStringSearch2(progData.stringFilterLists.getFilterListTitel(),
+        cboTitle = new PCboString(progData.stringFilterLists.getFilterListTitel(),
                 progData.filmFilterWorker.getActFilterSettings().titleProperty(), supplierReportReturn);
-        cboSomewhere = new PCboStringSearch2(progData.stringFilterLists.getFilterListSomewhere(),
+        cboSomewhere = new PCboString(progData.stringFilterLists.getFilterListSomewhere(),
                 progData.filmFilterWorker.getActFilterSettings().somewhereProperty(), supplierReportReturn);
-        cboUrl = new PCboStringSearch2(progData.stringFilterLists.getFilterListUrl(),
+        cboUrl = new PCboString(progData.stringFilterLists.getFilterListUrl(),
                 progData.filmFilterWorker.getActFilterSettings().urlProperty(), supplierReportReturn);
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);

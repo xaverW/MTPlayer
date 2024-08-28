@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.filter.live;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.filter.helper.PCboStringSearch2;
+import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.guitools.P2MenuButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -35,8 +35,8 @@ import java.util.function.BooleanSupplier;
 public class LiveFilmFilterText extends VBox {
 
     private final P2MenuButton mbChannel;
-    private final PCboStringSearch2 cboThema;
-    private final PCboStringSearch2 cboTitle;
+    private final PCboString cboThema;
+    private final PCboString cboTitle;
 
     private final ProgData progData;
 
@@ -51,9 +51,9 @@ public class LiveFilmFilterText extends VBox {
 
         mbChannel = new P2MenuButton(progData.liveFilmFilterWorker.getActFilterSettings().channelProperty(),
                 ThemeListFactory.allChannelList);
-        cboThema = new PCboStringSearch2(progData.stringFilterLists.getFilterListLiveThema(),
+        cboThema = new PCboString(progData.stringFilterLists.getFilterListLiveThema(),
                 progData.liveFilmFilterWorker.getActFilterSettings().themeProperty(), booleanSupplier);
-        cboTitle = new PCboStringSearch2(progData.stringFilterLists.getFilterListLiveTitel(),
+        cboTitle = new PCboString(progData.stringFilterLists.getFilterListLiveTitel(),
                 progData.liveFilmFilterWorker.getActFilterSettings().titleProperty(), booleanSupplier);
 
         addFilter();
