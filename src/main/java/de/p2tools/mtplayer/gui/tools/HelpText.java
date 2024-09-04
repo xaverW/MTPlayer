@@ -821,13 +821,14 @@ public class HelpText {
 
     public static final String DARK_THEME =
             "Das Programm wird damit mit einer dunklen Programmoberfläche angezeigt. " +
-                    "Damit alle Elemente der Programmoberfläche geändert werden, kann ein " +
+                    "Für einige Elemente kann ein " +
                     "Programmneustart notwendig sein." +
                     "\n";
 
     public static final String BLACK_WHITE_ICON =
-            "Die Programmicons werden in Schwarz-Weiß angezeigt. Damit alle Icons geändert werden, " +
-                    "muss das Programm neu gestartet werden." +
+            "Die Programmicons werden in Schwarz-Weiß angezeigt. " +
+                    "Für einige Elemente kann ein " +
+                    "Programmneustart notwendig sein." +
                     "\n";
 
     public static final String SHORTCUT =
