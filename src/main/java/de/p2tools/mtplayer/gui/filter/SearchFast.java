@@ -42,11 +42,11 @@ public class SearchFast extends HBox {
     public SearchFast() {
         this.progData = ProgData.getInstance();
         final BooleanSupplier booleanSupplier = () -> {
-            progData.filmFilterWorker.getFastFilterSettings().reportFilterReturn();
+            progData.filterWorker.getFastFilterSettings().reportFilterReturn();
             return true;
         };
         this.cboSearch = new PCboString(progData.stringFilterLists.getFilterListFastFilter(),
-                progData.filmFilterWorker.getFastFilterSettings().filterTermProperty(), booleanSupplier);
+                progData.filterWorker.getFastFilterSettings().filterTermProperty(), booleanSupplier);
         make();
     }
 
@@ -113,7 +113,7 @@ public class SearchFast extends HBox {
             }
             PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
         });
-        btnClear.setOnAction(a -> progData.filmFilterWorker.getFastFilterSettings().clearFilter());
+        btnClear.setOnAction(a -> progData.filterWorker.getFastFilterSettings().clearFilter());
     }
 
     private void setFastSearchOnOff(boolean andSearch) {

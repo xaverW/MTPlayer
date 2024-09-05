@@ -73,7 +73,7 @@ public class AboListFactory {
 
     public static void addNewAboFromFilterButton() {
         // aus Menü/TableContextMenü
-        FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
+        FilmFilter filmFilter = ProgData.getInstance().filterWorker.getActFilterSettings();
         String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
 
         boolean themeIsExact = filmFilter.isThemeIsExact();
@@ -139,13 +139,13 @@ public class AboListFactory {
 
         final AboData abo = oAbo.get();
         new AboAddDialogController(ProgData.getInstance(),
-                ProgData.getInstance().filmFilterWorker.getActFilterSettings(), abo);
+                ProgData.getInstance().filterWorker.getActFilterSettings(), abo);
     }
 
     public static void setFilmFilterFromAbo() {
         // Menü
         Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
-        ProgData.getInstance().filmFilterWorker.loadStoredFilterFromAbo(abo);
+        ProgData.getInstance().filterWorker.loadStoredFilterFromAbo(abo);
     }
 
     public static void editAbo() {

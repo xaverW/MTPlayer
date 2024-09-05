@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filmfilter.FastFilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterWorker;
+import de.p2tools.mtplayer.controller.filmfilter.FilterWorker;
 import de.p2tools.mtplayer.controller.filmfilter.LiveFilter;
 import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
@@ -601,16 +601,16 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.setDataList);
 
         // Filter
-        final FastFilmFilter fastFilmFilter = progData.filmFilterWorker.getFastFilterSettings(); // Fast-Filter
+        final FastFilmFilter fastFilmFilter = progData.filterWorker.getFastFilterSettings(); // Fast-Filter
         configFile.addConfigs(fastFilmFilter);
 
-        final FilmFilter akt_sf = progData.filmFilterWorker.getActFilterSettings(); // akt-Filter
-        akt_sf.setName(FilmFilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
+        final FilmFilter akt_sf = progData.filterWorker.getActFilterSettings(); // akt-Filter
+        akt_sf.setName(FilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
 
-        configFile.addConfigs(progData.filmFilterWorker.getStoredFilterList()); // Filterprofile
-        configFile.addConfigs(progData.filmFilterWorker.getBackwardFilterList()); // Filterprofile
-        configFile.addConfigs(progData.filmFilterWorker.getForwardFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filterWorker.getStoredFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filterWorker.getBackwardFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filterWorker.getForwardFilterList()); // Filterprofile
         configFile.addConfigs(progData.textFilterList); // ist der "sortierte" Textfilter (Thema, Titel ..)
         configFile.addConfigs(progData.stringFilterLists); // sind die Textfilter in den CBO's
 

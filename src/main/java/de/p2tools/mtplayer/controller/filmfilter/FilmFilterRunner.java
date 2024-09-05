@@ -50,7 +50,7 @@ public class FilmFilterRunner {
         PListener.addListener(new PListener(PListener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
             @Override
             public void ping() {
-                FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
+                FilmFilter filmFilter = progData.filterWorker.getActFilterSettings();
                 if (filmFilter.isNotVis() && filmFilter.isNotHistory() ||
                         filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory()) {
                     //nur dann wird History gefiltert
@@ -85,16 +85,16 @@ public class FilmFilterRunner {
                             "=======================================";
                     P2Log.debugLog(text);
 
-                    if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().isThemeVis() &&
-                            ProgData.getInstance().filmFilterWorker.getActFilterSettings().isThemeIsExact() &&
+                    if (ProgData.getInstance().filterWorker.getActFilterSettings().isThemeVis() &&
+                            ProgData.getInstance().filterWorker.getActFilterSettings().isThemeIsExact() &&
                             !ThemeListFactory.themeForChannelList
-                                    .contains(ProgData.getInstance().filmFilterWorker.getActFilterSettings().getExactTheme())) {
+                                    .contains(ProgData.getInstance().filterWorker.getActFilterSettings().getExactTheme())) {
                         // Filter ExactTheme kontrollieren
                         P2Log.debugLog("Clear filter");
 
-                        progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
-                        ProgData.getInstance().filmFilterWorker.getActFilterSettings().setExactTheme("");
-                        progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
+                        progData.filterWorker.getActFilterSettings().switchFilterOff(true);
+                        ProgData.getInstance().filterWorker.getActFilterSettings().setExactTheme("");
+                        progData.filterWorker.getActFilterSettings().switchFilterOff(false);
                     }
 
                     progData.filmGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird

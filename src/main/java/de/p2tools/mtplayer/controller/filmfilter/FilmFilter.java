@@ -44,14 +44,14 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         // sind die ComboBoxen wenn return gedrückt wird
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
-        ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+        ProgData.getInstance().filterWorker.getBackwardFilmFilter().addBackward();
         PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
     }
 
     private void reportFilterChange() {
         // sind die anderen Filter (ändern, ein-ausschalten), wenn Pause abgelaufen ist / gestoppt ist
         if (!filterIsOff) {
-            ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+            ProgData.getInstance().filterWorker.getBackwardFilmFilter().addBackward();
             PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
         }
     }

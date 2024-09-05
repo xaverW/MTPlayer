@@ -32,13 +32,13 @@ public class PCboTextFilter extends HBox {
             @Override
             public void pingFx() {
                 // dann sel löschen und evtl. neuen Filter hinzufügen
-                addNewToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
+                addNewToList(ProgData.getInstance().filterWorker.getActFilterSettings());
             }
         });
 
         cbo.valueProperty().addListener((u, o, n) -> {
             if (n != null) {
-                FilmFilter actFilmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
+                FilmFilter actFilmFilter = ProgData.getInstance().filterWorker.getActFilterSettings().getCopy();
                 actFilmFilter.setChannel(n.getChannel());
                 actFilmFilter.setExactTheme(n.getTheme());
                 actFilmFilter.setTheme(n.getTheme());
@@ -46,7 +46,7 @@ public class PCboTextFilter extends HBox {
                 actFilmFilter.setTitle(n.getTitle());
                 actFilmFilter.setSomewhere(n.getSomewhere());
                 itsMe = true;
-                ProgData.getInstance().filmFilterWorker.setActFilterSettings(actFilmFilter);
+                ProgData.getInstance().filterWorker.setActFilterSettings(actFilmFilter);
                 itsMe = false;
             }
         });

@@ -61,7 +61,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         addAnyButton(btnClearFilter);
         btnClearFilter.setTooltip(new Tooltip("Der Filter (nicht das Filterprofil) wird gelöscht"));
         btnClearFilter.setOnAction(a -> {
-            progData.filmFilterWorker.clearFilter();
+            progData.filterWorker.clearFilter();
             tableView.getSelectionModel().clearSelection();
         });
 
@@ -75,7 +75,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         tableView.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
             FilmFilter filmFilter = n;
             if (n != null) {
-                progData.filmFilterWorker.setActFilterSettings(n);
+                progData.filterWorker.setActFilterSettings(n);
             }
         });
 
@@ -100,7 +100,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setCellFactory(cellFactory);
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.filmFilterWorker.getStoredFilterList());
+        tableView.setItems(progData.filterWorker.getStoredFilterList());
 
     }
 

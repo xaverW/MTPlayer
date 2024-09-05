@@ -9,41 +9,41 @@ public class BackwardFilmFilter {
 
     public void goBackward() {
         // Button back
-        if (ProgData.getInstance().filmFilterWorker.getBackwardFilterList().size() <= 1) {
+        if (ProgData.getInstance().filterWorker.getBackwardFilterList().size() <= 1) {
             // dann gibts noch keine oder ist nur die aktuelle Einstellung drin
             return;
         }
 
-        FilmFilter sf = ProgData.getInstance().filmFilterWorker.getBackwardFilterList()
-                .remove(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().size() - 1); // ist die aktuelle Einstellung
+        FilmFilter sf = ProgData.getInstance().filterWorker.getBackwardFilterList()
+                .remove(ProgData.getInstance().filterWorker.getBackwardFilterList().size() - 1); // ist die aktuelle Einstellung
 
-        ProgData.getInstance().filmFilterWorker.getForwardFilterList().addToList(sf);
-        sf = ProgData.getInstance().filmFilterWorker.getBackwardFilterList()
-                .remove(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().size() - 1); // ist die davor
-        ProgData.getInstance().filmFilterWorker.setActFilterSettings(sf);
+        ProgData.getInstance().filterWorker.getForwardFilterList().addToList(sf);
+        sf = ProgData.getInstance().filterWorker.getBackwardFilterList()
+                .remove(ProgData.getInstance().filterWorker.getBackwardFilterList().size() - 1); // ist die davor
+        ProgData.getInstance().filterWorker.setActFilterSettings(sf);
     }
 
     public void goForward() {
         // Button forward
-        if (ProgData.getInstance().filmFilterWorker.getForwardFilterList().isEmpty()) {
+        if (ProgData.getInstance().filterWorker.getForwardFilterList().isEmpty()) {
             // dann gibts keine
             return;
         }
 
-        final FilmFilter sf = ProgData.getInstance().filmFilterWorker.getForwardFilterList()
-                .remove(ProgData.getInstance().filmFilterWorker.getForwardFilterList().size() - 1);
-        ProgData.getInstance().filmFilterWorker.setActFilterSettings(sf);
+        final FilmFilter sf = ProgData.getInstance().filterWorker.getForwardFilterList()
+                .remove(ProgData.getInstance().filterWorker.getForwardFilterList().size() - 1);
+        ProgData.getInstance().filterWorker.setActFilterSettings(sf);
     }
 
     public void addBackward() {
         final FilmFilter actFilter = new FilmFilter();
-        ProgData.getInstance().filmFilterWorker.getActFilterSettings().copyTo(actFilter);
-        if (ProgData.getInstance().filmFilterWorker.getBackwardFilterList().isEmpty()) {
-            ProgData.getInstance().filmFilterWorker.getBackwardFilterList().addToList(actFilter);
+        ProgData.getInstance().filterWorker.getActFilterSettings().copyTo(actFilter);
+        if (ProgData.getInstance().filterWorker.getBackwardFilterList().isEmpty()) {
+            ProgData.getInstance().filterWorker.getBackwardFilterList().addToList(actFilter);
             return;
         }
 
-        FilmFilter backwardFilter = ProgData.getInstance().filmFilterWorker.getBackwardFilterList().get(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().size() - 1);
+        FilmFilter backwardFilter = ProgData.getInstance().filterWorker.getBackwardFilterList().get(ProgData.getInstance().filterWorker.getBackwardFilterList().size() - 1);
         if (actFilter.isSame(backwardFilter)) {
             // dann hat sich nichts geändert (z.B. mehrmals gelöscht)
             return;
@@ -77,7 +77,7 @@ public class BackwardFilmFilter {
         }
 
         // dann wars kein Textfilter
-        ProgData.getInstance().filmFilterWorker.getBackwardFilterList().addToList(actFilter);
+        ProgData.getInstance().filterWorker.getBackwardFilterList().addToList(actFilter);
     }
 
     private boolean checkText(StringProperty old, StringProperty nnew, FilmFilter oldSf, FilmFilter newSf,
@@ -91,7 +91,7 @@ public class BackwardFilmFilter {
             // dann hat sich nur ein Teil geändert und wird ersetzt
             old.setValue(nnew.getValue());
         } else {
-            ProgData.getInstance().filmFilterWorker.getBackwardFilterList().add(newSf);
+            ProgData.getInstance().filterWorker.getBackwardFilterList().add(newSf);
         }
         return true;
     }

@@ -86,7 +86,7 @@ public class ProgIcons {
     public static P2Image ICON_TOOLBAR_ABO_OFF = new P2Image(ICON_PATH_LONG, "toolbar-abo-off.png", 26, 26);
     public static P2Image ICON_TOOLBAR_ABO_DEL = new P2Image(ICON_PATH_LONG, "toolbar-abo-del.png", 26, 26);
 
-    public static P2Image ICON_FILTER_FILM_LOAD = new P2Image(ICON_PATH_LONG, "filter-film-load.png", 22, 22);
-    public static P2Image ICON_FILTER_FILM_SAVE = new P2Image(ICON_PATH_LONG, "filter-film-save.png", 22, 22);
-    public static P2Image ICON_FILTER_FILM_NEW = new P2Image(ICON_PATH_LONG, "filter-film-new.png", 22, 22);
+    public static P2Image ICON_FILTER_LOAD = new P2Image(ICON_PATH_LONG, "filter-load.png", 22, 22);
+    public static P2Image ICON_FILTER_SAVE = new P2Image(ICON_PATH_LONG, "filter-save.png", 22, 22);
+    public static P2Image ICON_FILTER_NEW = new P2Image(ICON_PATH_LONG, "filter-new.png", 22, 22);
 }

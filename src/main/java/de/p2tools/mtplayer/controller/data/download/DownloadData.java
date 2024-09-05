@@ -52,7 +52,7 @@ public final class DownloadData extends DownloadDataProps {
         // und der wird nicht in die DownloadListe einsortiert, muss also sofort gestartet werden
 
         String resolution;
-        if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().isOnlyHd()) {
+        if (ProgData.getInstance().filterWorker.getActFilterSettings().isOnlyHd()) {
             resolution = FilmDataMTP.RESOLUTION_HD;
         } else {
             resolution = setData.getResolution();

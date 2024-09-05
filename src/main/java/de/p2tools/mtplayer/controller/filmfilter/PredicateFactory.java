@@ -36,8 +36,8 @@ public class PredicateFactory {
 
     public static Predicate<FilmData> getPredicate(ProgData progData) {
 
-        FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
-        FastFilmFilter fastFilmFilter = progData.filmFilterWorker.getFastFilterSettings();
+        FilmFilter filmFilter = progData.filterWorker.getActFilterSettings();
+        FastFilmFilter fastFilmFilter = progData.filterWorker.getFastFilterSettings();
 
         Filter fChannel;
         Filter fSomewhere;

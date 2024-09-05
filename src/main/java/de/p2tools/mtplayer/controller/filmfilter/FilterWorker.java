@@ -25,7 +25,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 
 import java.util.Optional;
 
-public final class FilmFilterWorker {
+public final class FilterWorker {
 
     // ist der aktuell angezeigte Filter
     public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
@@ -44,7 +44,7 @@ public final class FilmFilterWorker {
     // da werden die Forward/Backward Filter verwaltet
     private final BackwardFilmFilter backwardFilmFilter = new BackwardFilmFilter();
 
-    public FilmFilterWorker() {
+    public FilterWorker() {
         getActFilterSettings().channelProperty().addListener(l -> {
             ThemeListFactory.createThemeList(ProgData.getInstance(), getActFilterSettings().channelProperty().getValueSafe());
         });
@@ -199,12 +199,12 @@ public final class FilmFilterWorker {
 
     private void postFilterChange() {
         backwardFilmFilter.addBackward();
-        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilterWorker.class.getSimpleName());
     }
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
         BlacklistFilterFactory.makeBlackFilteredFilmlist();
-        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilterWorker.class.getSimpleName());
+        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilterWorker.class.getSimpleName());
     }
 }

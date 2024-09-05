@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilterSamples;
+import de.p2tools.mtplayer.controller.filmfilter.FilterSamples;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
@@ -118,23 +118,23 @@ public class FilmMenu {
         });
 
         btFilterBookmark.setOnAction(a -> {
-            FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
-            FilmFilter bookmarkFilter = FilmFilterSamples.getBookmarkFilter();
+            FilmFilter sf = progData.filterWorker.getActFilterSettings();
+            FilmFilter bookmarkFilter = FilterSamples.getBookmarkFilter();
 
             if (sf.isSame(bookmarkFilter)) {
                 // dann ist der BlackFilter aktiv, dann zurückschalten
                 if (storedActFilterSettings != null) {
                     // dann haben wir einen gespeicherten Filter
-                    progData.filmFilterWorker.setActFilterSettings(storedActFilterSettings);
+                    progData.filterWorker.setActFilterSettings(storedActFilterSettings);
                     storedActFilterSettings = null;
                 } else {
                     // dann gibts keinen gespeicherten, dann einfach löschen
-                    progData.filmFilterWorker.getActFilterSettings().clearFilter();
+                    progData.filterWorker.getActFilterSettings().clearFilter();
                 }
             } else {
                 // dann ist es ein anderer Filter, Black einschalten und ActFilter merken
-                storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
-                progData.filmFilterWorker.setActFilterSettings(bookmarkFilter);
+                storedActFilterSettings = progData.filterWorker.getActFilterSettings().getCopy();
+                progData.filterWorker.setActFilterSettings(bookmarkFilter);
             }
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();

@@ -87,7 +87,7 @@ public class ProgData {
     // zentrale Klassen
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public PShortcut pShortcut; // verwendete Shortcuts
-    public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile FILME
+    public FilterWorker filterWorker; // gespeicherte Filterprofile FILME
     public TextFilterList textFilterList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
     public StringFilter stringFilterLists; // sind die Text-Filter in den CBO's
 
@@ -146,7 +146,7 @@ public class ProgData {
 
         textFilterList = new TextFilterList();
         stringFilterLists = new StringFilter();
-        filmFilterWorker = new FilmFilterWorker();
+        filterWorker = new FilterWorker();
         liveFilmFilterWorker = new LiveFilmFilterWorker();
 
         filmList = new FilmListMTP();
