@@ -73,7 +73,7 @@ public class FilterSamples {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur neue Fernsehfilme");
@@ -114,12 +114,12 @@ public class FilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         // nur Bookmark
         sf = getBookmarkFilter();
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("aktuelle Nachrichten");
@@ -161,7 +161,7 @@ public class FilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Nachrichten mit Europa UND Brexit");
@@ -203,7 +203,7 @@ public class FilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur ARD ODER ZDF");
@@ -245,7 +245,7 @@ public class FilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Livestreams");
@@ -286,7 +286,7 @@ public class FilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Abendkrimi");
@@ -329,7 +329,7 @@ public class FilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur \"neue\" in HD");
@@ -372,7 +372,7 @@ public class FilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("keine Beitrage mit: \"Audiodeskription\" und \"Gebärdensprache\" anzeigen");
@@ -416,6 +416,6 @@ public class FilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filterWorker.getStoredFilterList().add(sf);
+        progData.filterWorker.getFilmFilterList().add(sf);
     }
 }

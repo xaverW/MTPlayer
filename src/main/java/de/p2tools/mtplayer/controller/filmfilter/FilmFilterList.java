@@ -17,6 +17,8 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -100,5 +102,63 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
         }
         add(neu, filmFilter);
         return neu;
+    }
+
+    public void addNewStoredFilter(String name) {
+        // einen neuen Filter zu den gespeicherten hinzufügen
+        final FilmFilter sf = new FilmFilter();
+        ProgData.getInstance().filterWorker.getActFilterSettings().copyTo(sf);
+        sf.setName(name.isEmpty() ? getNextName() : name);
+        add(sf);
+    }
+
+    public String getNextName() {
+        String ret = "";
+        int id = 1;
+        boolean found = false;
+        while (!found) {
+            final String name = "Filter " + id;
+            if (stream().noneMatch(f -> name.equalsIgnoreCase(f.getName()))) {
+                ret = name;
+                found = true;
+            }
+            ++id;
+        }
+        return ret;
+    }
+
+    public boolean removeStoredFilter(FilmFilter sf) {
+        // delete stored filter
+        if (sf == null) {
+            return false;
+        }
+
+        if (P2Alert.showAlertOkCancel("Löschen", "Filterprofil löschen",
+                "Soll das Filterprofil: " +
+                        sf.getName() + "\n" +
+                        "gelöscht werden?")) {
+            remove(sf);
+            return true;
+        }
+        return false;
+    }
+
+    public void removeAllStoredFilter() {
+        // delete all stored Filter
+        if (P2Alert.showAlertOkCancel("Löschen", "Filterprofile löschen",
+                "Sollen alle Filterprofile gelöscht werden?")) {
+            clear();
+        }
+    }
+
+    public void saveStoredFilter(FilmFilter sf) {
+        // gesicherten Filter mit den aktuellen Einstellungen überschreiben
+        if (sf == null) {
+            return;
+        }
+
+        final String name = sf.getName();
+        ProgData.getInstance().filterWorker.getActFilterSettings().copyTo(sf);
+        sf.setName(name);
     }
 }

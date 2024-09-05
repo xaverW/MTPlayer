@@ -97,7 +97,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private void filterProfiles() {
         // Filterprofile einrichten
-        cboFilterProfiles.setItems(progData.filterWorker.getStoredFilterList());
+        cboFilterProfiles.setItems(progData.filterWorker.getFilmFilterList());
         cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
@@ -110,7 +110,7 @@ public class FilmFilterControllerProfiles extends VBox {
             @Override
             public FilmFilter fromString(String id) {
                 final int i = cboFilterProfiles.getSelectionModel().getSelectedIndex();
-                return progData.filterWorker.getStoredFilterList().get(i);
+                return progData.filterWorker.getFilmFilterList().get(i);
             }
         };
         cboFilterProfiles.setConverter(converter);
@@ -244,7 +244,7 @@ public class FilmFilterControllerProfiles extends VBox {
         if (sf == null) {
             newFilter();
         } else {
-            progData.filterWorker.saveStoredFilter(sf);
+            progData.filterWorker.getFilmFilterList().saveStoredFilter(sf);
             checkCboFilter();
         }
     }
@@ -256,13 +256,13 @@ public class FilmFilterControllerProfiles extends VBox {
             return;
         }
 
-        if (progData.filterWorker.removeStoredFilter(sf)) {
+        if (progData.filterWorker.getFilmFilterList().removeStoredFilter(sf)) {
             cboFilterProfiles.getSelectionModel().selectFirst();
         }
     }
 
     private void delAllFilter() {
-        progData.filterWorker.removeAllStoredFilter();
+        progData.filterWorker.getFilmFilterList().removeAllStoredFilter();
     }
 
     private void resetFilter() {
@@ -270,14 +270,14 @@ public class FilmFilterControllerProfiles extends VBox {
                 "Sollen alle Filterprofile gelöscht " +
                         "und durch die Profile vom ersten Programmstart " +
                         "ersetzt werden?")) {
-            progData.filterWorker.getStoredFilterList().clear();
+            progData.filterWorker.getFilmFilterList().clear();
             FilterSamples.addStandardFilter();
             cboFilterProfiles.getSelectionModel().selectFirst();
         }
     }
 
     private void newFilter() {
-        final TextInputDialog dialog = new TextInputDialog(progData.filterWorker.getNextName());
+        final TextInputDialog dialog = new TextInputDialog(progData.filterWorker.getFilmFilterList().getNextName());
         dialog.setTitle("Filterprofilname");
         dialog.setHeaderText("Den Namen des Filterprofils vorgeben");
         dialog.setContentText("Name:");
@@ -286,7 +286,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            progData.filterWorker.addNewStoredFilter(result.get());
+            progData.filterWorker.getFilmFilterList().addNewStoredFilter(result.get());
             cboFilterProfiles.getSelectionModel().selectLast();
         }
     }

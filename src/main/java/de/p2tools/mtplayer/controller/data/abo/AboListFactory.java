@@ -145,7 +145,7 @@ public class AboListFactory {
     public static void setFilmFilterFromAbo() {
         // Menü
         Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
-        ProgData.getInstance().filterWorker.loadStoredFilterFromAbo(abo);
+        ProgData.getInstance().filterWorker.setFilterFromAbo(abo);
     }
 
     public static void editAbo() {

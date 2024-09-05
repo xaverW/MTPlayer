@@ -89,7 +89,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         nameColumn.setCellFactory(cellFactory);
 
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.filterWorker.getStoredFilterList());
+        tableView.setItems(progData.filterWorker.getFilmFilterList());
 
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
         btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
@@ -107,7 +107,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filterWorker.getStoredFilterList().top(sel, true);
+                int res = progData.filterWorker.getFilmFilterList().top(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -120,7 +120,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filterWorker.getStoredFilterList().top(sel, false);
+                int res = progData.filterWorker.getFilmFilterList().top(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -133,7 +133,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filterWorker.getStoredFilterList().up(sel, true);
+                int res = progData.filterWorker.getFilmFilterList().up(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -146,7 +146,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filterWorker.getStoredFilterList().up(sel, false);
+                int res = progData.filterWorker.getFilmFilterList().up(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -187,7 +187,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             return;
         }
 
-        if (progData.filterWorker.removeStoredFilter(sf)) {
+        if (progData.filterWorker.getFilmFilterList().removeStoredFilter(sf)) {
             tableView.getSelectionModel().selectFirst();
         }
     }
@@ -196,9 +196,9 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         FilmFilter sf = new FilmFilter(P2SeparatorComboBox.SEPARATOR);
         if (sel < 0) {
-            progData.filterWorker.getStoredFilterList().add(sf);
+            progData.filterWorker.getFilmFilterList().add(sf);
         } else {
-            progData.filterWorker.getStoredFilterList().add(sel + 1, sf);
+            progData.filterWorker.getFilmFilterList().add(sel + 1, sf);
         }
     }
 }

@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.p2lib.alert.P2Alert;
 
 import java.util.Optional;
 
@@ -55,7 +54,7 @@ public final class FilterWorker {
         return actFilterSettings;
     }
 
-    public FilmFilterList getStoredFilterList() {
+    public FilmFilterList getFilmFilterList() {
         // sind die gesicherten Filterprofile
         return filmFilterList;
     }
@@ -95,65 +94,7 @@ public final class FilterWorker {
         }
     }
 
-    public void addNewStoredFilter(String name) {
-        // einen neuen Filter zu den gespeicherten hinzufügen
-        final FilmFilter sf = new FilmFilter();
-        actFilterSettings.copyTo(sf);
-        sf.setName(name.isEmpty() ? getNextName() : name);
-        filmFilterList.add(sf);
-    }
-
-    public String getNextName() {
-        String ret = "";
-        int id = 1;
-        boolean found = false;
-        while (!found) {
-            final String name = "Filter " + id;
-            if (filmFilterList.stream().noneMatch(f -> name.equalsIgnoreCase(f.getName()))) {
-                ret = name;
-                found = true;
-            }
-            ++id;
-        }
-        return ret;
-    }
-
-    public boolean removeStoredFilter(FilmFilter sf) {
-        // delete stored filter
-        if (sf == null) {
-            return false;
-        }
-
-        if (P2Alert.showAlertOkCancel("Löschen", "Filterprofil löschen",
-                "Soll das Filterprofil: " +
-                        sf.getName() + "\n" +
-                        "gelöscht werden?")) {
-            filmFilterList.remove(sf);
-            return true;
-        }
-        return false;
-    }
-
-    public void removeAllStoredFilter() {
-        // delete all stored Filter
-        if (P2Alert.showAlertOkCancel("Löschen", "Filterprofile löschen",
-                "Sollen alle Filterprofile gelöscht werden?")) {
-            filmFilterList.clear();
-        }
-    }
-
-    public void saveStoredFilter(FilmFilter sf) {
-        // gesicherten Filter mit den aktuellen Einstellungen überschreiben
-        if (sf == null) {
-            return;
-        }
-
-        final String name = sf.getName();
-        actFilterSettings.copyTo(sf);
-        sf.setName(name);
-    }
-
-    public synchronized void loadStoredFilterFromAbo(Optional<AboData> oAbo) {
+    public synchronized void setFilterFromAbo(Optional<AboData> oAbo) {
         // Filter nach einem Abo einstellen
         if (oAbo.isEmpty()) {
             return;

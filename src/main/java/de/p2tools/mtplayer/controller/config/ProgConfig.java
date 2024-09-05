@@ -608,7 +608,7 @@ public class ProgConfig extends P2DataProgConfig {
         akt_sf.setName(FilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
 
-        configFile.addConfigs(progData.filterWorker.getStoredFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filterWorker.getFilmFilterList()); // Filterprofile
         configFile.addConfigs(progData.filterWorker.getBackwardFilterList()); // Filterprofile
         configFile.addConfigs(progData.filterWorker.getForwardFilterList()); // Filterprofile
         configFile.addConfigs(progData.textFilterList); // ist der "sortierte" Textfilter (Thema, Titel ..)

@@ -152,7 +152,7 @@ public class ProgStartBeforeGui {
         ProgData.getInstance().cleaningDataListPropose.initList();
 
         //Filter einrichten
-        if (ProgData.getInstance().filterWorker.getStoredFilterList().isEmpty()) {
+        if (ProgData.getInstance().filterWorker.getFilmFilterList().isEmpty()) {
             FilterSamples.addStandardFilter();
         }
 

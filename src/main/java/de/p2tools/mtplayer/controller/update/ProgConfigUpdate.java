@@ -49,7 +49,7 @@ public class ProgConfigUpdate {
             if (ProgData.getInstance().filterWorker.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
                 ProgData.getInstance().filterWorker.getActFilterSettings().setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
             }
-            ProgData.getInstance().filterWorker.getStoredFilterList().forEach(sf -> {
+            ProgData.getInstance().filterWorker.getFilmFilterList().forEach(sf -> {
                 if (sf.getTimeRange() == FILTER_DAYS_MAX__OLD) {
                     sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
                 }
@@ -63,7 +63,7 @@ public class ProgConfigUpdate {
                 filmFilter.setExactTheme(filmFilter.getTheme());
             }
 
-            ProgData.getInstance().filterWorker.getStoredFilterList().forEach(sf -> {
+            ProgData.getInstance().filterWorker.getFilmFilterList().forEach(sf -> {
                 // exactTheme ist neu
                 if (sf.isThemeIsExact()) {
                     sf.setExactTheme(sf.getTheme());
@@ -80,7 +80,7 @@ public class ProgConfigUpdate {
                 filmFilter.setChannel(filmFilter.channelProperty().getValueSafe().replaceAll("Radio Bremen TV", "RBTV"));
             }
 
-            ProgData.getInstance().filterWorker.getStoredFilterList().forEach(sf -> {
+            ProgData.getInstance().filterWorker.getFilmFilterList().forEach(sf -> {
                 if (sf.channelProperty().getValueSafe().contains("rbtv") ||
                         sf.channelProperty().getValueSafe().contains("Radio Bremen TV")) {
                     sf.setChannel(sf.channelProperty().getValueSafe().replaceAll("rbtv", "RBTV"));

@@ -100,7 +100,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setCellFactory(cellFactory);
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.filterWorker.getStoredFilterList());
+        tableView.setItems(progData.filterWorker.getFilmFilterList());
 
     }
 
