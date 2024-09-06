@@ -306,6 +306,7 @@ public class FilmFilterControllerProfiles extends VBox {
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             sf.setName(result.get());
+            cboFilterProfiles.getSelectionModel().clearSelection();
             cboFilterProfiles.getSelectionModel().select(sf);
         }
     }
