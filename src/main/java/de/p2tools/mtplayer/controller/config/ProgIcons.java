@@ -47,6 +47,7 @@ public class ProgIcons {
     public static P2Image ICON_BUTTON_MOVE_TOP = new P2Image(ICON_PATH_LONG, "button-move-top.png", 16, 16);
     public static P2Image ICON_BUTTON_MOVE_BOTTOM = new P2Image(ICON_PATH_LONG, "button-move-bottom.png", 16, 16);
     public static P2Image ICON_BUTTON_DEL_SW = new P2Image(ICON_PATH_LONG, "button-del-sw.png", 12, 12);
+    public static P2Image ICON_BUTTON_SEPARATOR_WIDTH = new P2Image(ICON_PATH_LONG, "button-separator-width.png", 100, 16);
 
     public static P2Image IMAGE_TABLE_ABO_ON = new P2Image(ICON_PATH_LONG, "table-abo-on.png", 14, 14);
     public static P2Image IMAGE_TABLE_ABO_OFF = new P2Image(ICON_PATH_LONG, "table-abo-off.png", 14, 14);

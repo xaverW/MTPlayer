@@ -16,20 +16,17 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
-import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 public class FilmFilterDialog extends P2DialogExtra {
 
@@ -55,9 +52,9 @@ public class FilmFilterDialog extends P2DialogExtra {
             setMaskerPane();
         });
 
+        // Button
         addOkButton(btnOk);
         btnOk.setOnAction(a -> close());
-
         addAnyButton(btnClearFilter);
         btnClearFilter.setTooltip(new Tooltip("Der Filter (nicht das Filterprofil) wird gelöscht"));
         btnClearFilter.setOnAction(a -> {
@@ -65,43 +62,35 @@ public class FilmFilterDialog extends P2DialogExtra {
             tableView.getSelectionModel().clearSelection();
         });
 
+        // Tabelle
         getVBoxCont().getChildren().add(tableView);
-
+        VBox.setVgrow(tableView, Priority.ALWAYS);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setMaxHeight(Double.MAX_VALUE);
-        VBox.setVgrow(tableView, Priority.ALWAYS);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
-            FilmFilter filmFilter = n;
             if (n != null) {
                 progData.filterWorker.setActFilterSettings(n);
             }
         });
-
-        tableView.setRowFactory(param -> new TableRow<FilmFilter>() {
+        tableView.setRowFactory(param -> new TableRow<>() {
             @Override
             protected void updateItem(FilmFilter item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
-                    if (P2SeparatorComboBox.isSeparator(item.toString())) {
-                        this.setDisable(true);
-                        setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
-                    } else {
-                        this.setDisable(false);
-                        setStyle("");
-                    }
+                    this.setDisable(P2SeparatorComboBox.isSeparator(item.toString()));
                 }
             }
         });
 
-
         final TableColumn<FilmFilter, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameColumn.setCellFactory(cellFactory);
+        columnFactoryString(nameColumn);
+
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> columnFactoryString(nameColumn));
         tableView.getColumns().add(nameColumn);
         tableView.setItems(progData.filterWorker.getFilmFilterList());
-
     }
 
     @Override
@@ -124,31 +113,31 @@ public class FilmFilterDialog extends P2DialogExtra {
         }
     }
 
-    private Callback<TableColumn<FilmFilter, String>, TableCell<FilmFilter, String>> cellFactory
-            = (final TableColumn<FilmFilter, String> param) -> {
-
-        final TableCell<FilmFilter, String> cell = new TableCell<>() {
-
+    private void columnFactoryString(TableColumn<FilmFilter, String> column) {
+        column.setCellFactory(c -> new TableCell<>() {
             @Override
-            public void updateItem(String item, boolean empty) {
+            protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if (empty) {
+                if (item == null || empty) {
                     setGraphic(null);
                     setText(null);
+                    setStyle("");
                     return;
                 }
 
-                FilmFilter filmFilter = getTableView().getItems().get(getIndex());
-                HBox hBox = new HBox();
-                Label lbl = new Label(filmFilter.getName());
-                hBox.getChildren().add(lbl);
-                setGraphic(hBox);
-                if (P2SeparatorComboBox.isSeparator(filmFilter.toString())) {
-                    hBox.setAlignment(Pos.CENTER);
+                if (P2SeparatorComboBox.isSeparator(item.toString())) {
+                    setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR_WIDTH.getImageView());
+                    setText(null);
+                    setStyle("-fx-alignment: center;");
+                    setDisable(true);
+                } else {
+                    setGraphic(null);
+                    setText(item.toString());
+                    setStyle("");
+                    setDisable(false);
                 }
             }
-        };
-        return cell;
-    };
+        });
+    }
 }

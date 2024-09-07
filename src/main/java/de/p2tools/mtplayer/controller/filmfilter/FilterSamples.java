@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 
 public class FilterSamples {
 
@@ -37,6 +37,7 @@ public class FilterSamples {
 
         //========================================================
         FilmFilter sf = new FilmFilter("alles anzeigen");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -47,16 +48,9 @@ public class FilterSamples {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
-
         sf.setMinMaxDurVis(false);
-        sf.setMinDur(0);
-        sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(0);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -76,7 +70,11 @@ public class FilterSamples {
         progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
+        progData.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+
+        //========================================================
         sf = new FilmFilter("nur neue Fernsehfilme");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
         sf.setThemeVis(true);
@@ -89,15 +87,11 @@ public class FilterSamples {
 
         sf.setTimeRangeVis(true);
         sf.setTimeRange(10);
-
         sf.setMinMaxDurVis(true);
         sf.setMinDur(40);
-        sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(0);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -123,6 +117,7 @@ public class FilterSamples {
 
         //========================================================
         sf = new FilmFilter("aktuelle Nachrichten");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -136,15 +131,11 @@ public class FilterSamples {
 
         sf.setTimeRangeVis(true);
         sf.setTimeRange(15);
-
         sf.setMinMaxDurVis(true);
-        sf.setMinDur(0);
         sf.setMaxDur(30);
 
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(0);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -165,6 +156,7 @@ public class FilterSamples {
 
         //========================================================
         sf = new FilmFilter("Nachrichten mit Europa UND Brexit");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
@@ -177,16 +169,10 @@ public class FilterSamples {
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
-
         sf.setMinMaxDurVis(true);
-        sf.setMinDur(0);
         sf.setMaxDur(45);
-
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(0);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -207,28 +193,21 @@ public class FilterSamples {
 
         //========================================================
         sf = new FilmFilter("nur ARD ODER ZDF");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
         sf.setChannel("ard,zdf");
         sf.setThemeVis(false);
         sf.setThemeIsExact(true);
         sf.setThemeTitleVis(true);
-        sf.setThemeTitle("");
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
-
         sf.setMinMaxDurVis(false);
-        sf.setMinDur(0);
-        sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(0);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -249,27 +228,20 @@ public class FilterSamples {
 
         //========================================================
         sf = new FilmFilter("Livestreams");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
         sf.setThemeVis(false);
         sf.setThemeIsExact(true);
         sf.setThemeTitleVis(true);
-        sf.setThemeTitle("");
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
-        sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
-
         sf.setMinMaxDurVis(false);
-        sf.setMinDur(0);
-        sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(0);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -290,13 +262,13 @@ public class FilterSamples {
 
         //========================================================
         sf = new FilmFilter("Abendkrimi");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
         sf.setChannel("ard,zdf");
         sf.setThemeVis(false);
         sf.setThemeIsExact(true);
         sf.setThemeTitleVis(true);
-        sf.setThemeTitle("");
         sf.setTitleVis(false);
         sf.setSomewhereVis(true);
         sf.setSomewhere("Krimi,Thriller,Tatort,Film");
@@ -304,15 +276,11 @@ public class FilterSamples {
 
         sf.setTimeRangeVis(true);
         sf.setTimeRange(10);
-
         sf.setMinMaxDurVis(true);
         sf.setMinDur(40);
-        sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-
         sf.setMinMaxTimeVis(true);
         sf.setMinMaxTimeInvert(false);
         sf.setMinTime(64800);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(false);
         sf.setOnlyBookmark(false);
@@ -333,16 +301,14 @@ public class FilterSamples {
 
         //========================================================
         sf = new FilmFilter("nur \"neue\" in HD");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
-        sf.setChannel("");
         sf.setThemeVis(false);
         sf.setThemeIsExact(true);
         sf.setThemeTitleVis(true);
-        sf.setThemeTitle("");
         sf.setTitleVis(false);
         sf.setSomewhereVis(false);
-        sf.setSomewhere("");
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(true);
@@ -350,12 +316,8 @@ public class FilterSamples {
 
         sf.setMinMaxDurVis(true);
         sf.setMinDur(20);
-        sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(0);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(true);
         sf.setOnlyBookmark(false);
@@ -376,30 +338,21 @@ public class FilterSamples {
 
         //========================================================
         sf = new FilmFilter("keine Beitrage mit: \"Audiodeskription\" und \"Gebärdensprache\" anzeigen");
+        sf.clearFilter();
 
         sf.setChannelVis(true);
-        sf.setChannel("");
         sf.setThemeVis(false);
         sf.setThemeIsExact(true);
         sf.setThemeTitleVis(true);
-        sf.setThemeTitle("");
         sf.setTitleVis(true);
         sf.setTitle("#:(?!.*Audiodeskription)(?!.*Gebärdensprache).*");
         sf.setSomewhereVis(false);
-        sf.setSomewhere("");
         sf.setUrlVis(false);
 
         sf.setTimeRangeVis(false);
-        sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
-
         sf.setMinMaxDurVis(false);
-        sf.setMinDur(FilterCheck.FILTER_ALL_OR_MIN);
-        sf.setMaxDur(FilterCheck.FILTER_DURATION_MAX_MINUTE);
-
         sf.setMinMaxTimeVis(false);
         sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(FilterCheck.FILTER_ALL_OR_MIN);
-        sf.setMaxTime(FilterCheck.FILTER_TIME_MAX_SEC);
 
         sf.setOnlyVis(false);
         sf.setOnlyBookmark(false);

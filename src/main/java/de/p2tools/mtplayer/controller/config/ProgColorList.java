@@ -45,8 +45,6 @@ public class ProgColorList extends P2ColorList {
             Color.rgb(255, 236, 151), Color.rgb(177, 164, 105), "Tabelle Filme, Bookmarks");
     public static final P2ColorData FILM_GEOBLOCK = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND",
             Color.rgb(255, 168, 0), Color.rgb(236, 153, 0), "Tabelle Filme, geogeblockt");
-    public static final P2ColorData FILTER_PROFILE_SEPARATOR = addNewKey("COLOR_FILTER_PROFILE_SEPARATOR",
-            Color.rgb(180, 180, 255), "Filterprofile Filme, Trenner");
 
     // Tabelle Downloads
     public static final P2ColorData DOWNLOAD_WAIT = addNewKey("COLOR_DOWNLOAD_WAIT",

@@ -16,7 +16,10 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
-import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilterSamples;
@@ -32,7 +35,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 import java.util.Optional;
 
@@ -101,20 +103,6 @@ public class FilmFilterControllerProfiles extends VBox {
         cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
-        final StringConverter<FilmFilter> converter = new StringConverter<>() {
-            @Override
-            public String toString(FilmFilter selFilter) {
-                return selFilter == null ? "" : selFilter.getName();
-            }
-
-            @Override
-            public FilmFilter fromString(String id) {
-                final int i = cboFilterProfiles.getSelectionModel().getSelectedIndex();
-                return progData.filterWorker.getFilmFilterList().get(i);
-            }
-        };
-        cboFilterProfiles.setConverter(converter);
-
         final MenuItem miLoad = new MenuItem("Aktuelles Filterprofil wieder laden");
         miLoad.setOnAction(e -> loadFilter());
         miLoad.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
@@ -166,51 +154,10 @@ public class FilmFilterControllerProfiles extends VBox {
                 loadFilter();
             }
         });
-        ProgColorList.FILTER_PROFILE_SEPARATOR.colorProperty().addListener((a, b, c) -> cboFilterProfiles.setCellFactory(new Callback<>() {
-            @Override
-            public ListCell<FilmFilter> call(ListView<FilmFilter> param) {
-                final ListCell<FilmFilter> cell = new ListCell<>() {
-                    @Override
-                    public void updateItem(FilmFilter item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!empty) {
-                            setText(item.toString());
-                            if (P2SeparatorComboBox.isSeparator(item.toString())) {
-                                this.setDisable(true);
-                                setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
-                            } else {
-                                this.setDisable(false);
-                                setStyle("");
-                            }
-                        }
-                    }
-                };
-                return cell;
-            }
-        }));
 
-        cboFilterProfiles.setCellFactory(new Callback<>() {
-            @Override
-            public ListCell<FilmFilter> call(ListView<FilmFilter> param) {
-                final ListCell<FilmFilter> cell = new ListCell<>() {
-                    @Override
-                    public void updateItem(FilmFilter item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!empty) {
-                            setText(item.toString());
-                            if (P2SeparatorComboBox.isSeparator(item.toString())) {
-                                this.setDisable(true);
-                                setStyle(ProgColorList.FILTER_PROFILE_SEPARATOR.getCssBackgroundAndSel());
-                            } else {
-                                this.setDisable(false);
-                                setStyle("");
-                            }
-                        }
-                    }
-                };
-                return cell;
-            }
-        });
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) ->
+                cboFilterProfiles.setCellFactory(new ListViewListCellCallback()));
+        cboFilterProfiles.setCellFactory(new ListViewListCellCallback());
     }
 
 
@@ -296,6 +243,7 @@ public class FilmFilterControllerProfiles extends VBox {
         if (sf == null) {
             return;
         }
+
         final TextInputDialog dialog = new TextInputDialog(sf.getName());
         dialog.setTitle("Filterprofil umbenennen");
         dialog.setHeaderText("Den Namen des Filterprofils ändern");
@@ -319,6 +267,37 @@ public class FilmFilterControllerProfiles extends VBox {
             markFilterOk(true);
         } else {
             markFilterOk(false);
+        }
+    }
+
+    private static class ListViewListCellCallback implements Callback<ListView<FilmFilter>, ListCell<FilmFilter>> {
+        @Override
+        public ListCell<FilmFilter> call(ListView<FilmFilter> param) {
+            return new ListCell<>() {
+                @Override
+                public void updateItem(FilmFilter item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setGraphic(null);
+                        setText(null);
+                        setStyle("");
+                        return;
+                    }
+
+                    if (P2SeparatorComboBox.isSeparator(item.toString())) {
+                        setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR_WIDTH.getImageView());
+                        setText(null);
+                        setStyle("-fx-alignment: center;");
+                        setDisable(true);
+                    } else {
+                        setGraphic(null);
+                        setText(item.toString());
+                        setStyle("");
+                        setDisable(false);
+                    }
+                }
+            };
         }
     }
 }
