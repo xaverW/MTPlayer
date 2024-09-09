@@ -70,6 +70,120 @@ public class FilterSamples {
         progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
+        sf = new FilmFilter("nur \"neue\" anzeigen");
+        sf.clearFilter();
+
+        sf.setChannelVis(true);
+        sf.setThemeVis(false);
+        sf.setThemeIsExact(true);
+        sf.setThemeTitleVis(true);
+        sf.setTitleVis(false);
+        sf.setSomewhereVis(false);
+        sf.setUrlVis(false);
+
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(10);
+        sf.setMinMaxDurVis(false);
+        sf.setMinMaxTimeVis(false);
+        sf.setMinMaxTimeInvert(false);
+
+        sf.setOnlyVis(true);
+        sf.setOnlyBookmark(false);
+        sf.setOnlyHd(false);
+        sf.setOnlyNew(true);
+        sf.setOnlyUt(false);
+        sf.setOnlyLive(false);
+        sf.setOnlyActHistory(false);
+
+        sf.setNotVis(true);
+        sf.setNotAbo(false);
+        sf.setNotHistory(true);
+        sf.setNotDouble(true);
+        sf.setNotGeo(true);
+        sf.setNotFuture(false);
+
+        progData.filterWorker.getFilmFilterList().add(sf);
+
+        //========================================================
+        sf = new FilmFilter("nur \"neue\" in HD");
+        sf.clearFilter();
+
+        sf.setChannelVis(true);
+        sf.setThemeVis(false);
+        sf.setThemeIsExact(true);
+        sf.setThemeTitleVis(true);
+        sf.setTitleVis(false);
+        sf.setSomewhereVis(false);
+        sf.setUrlVis(false);
+
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(10);
+
+        sf.setMinMaxDurVis(true);
+        sf.setMinDur(20);
+        sf.setMinMaxTimeVis(false);
+        sf.setMinMaxTimeInvert(false);
+
+        sf.setOnlyVis(true);
+        sf.setOnlyBookmark(false);
+        sf.setOnlyHd(true);
+        sf.setOnlyNew(true);
+        sf.setOnlyUt(false);
+        sf.setOnlyLive(false);
+        sf.setOnlyActHistory(false);
+
+        sf.setNotVis(true);
+        sf.setNotAbo(false);
+        sf.setNotHistory(true);
+        sf.setNotDouble(true);
+        sf.setNotGeo(true);
+        sf.setNotFuture(false);
+
+        progData.filterWorker.getFilmFilterList().add(sf);
+
+        //========================================================
+        progData.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+
+        //========================================================
+        sf = new FilmFilter("Livestreams");
+        sf.clearFilter();
+
+        sf.setChannelVis(true);
+        sf.setThemeVis(false);
+        sf.setThemeIsExact(true);
+        sf.setThemeTitleVis(true);
+        sf.setTitleVis(false);
+        sf.setSomewhereVis(false);
+        sf.setUrlVis(false);
+
+        sf.setTimeRangeVis(true);
+        sf.setMinMaxDurVis(false);
+        sf.setMinMaxTimeVis(false);
+        sf.setMinMaxTimeInvert(false);
+
+        sf.setOnlyVis(true);
+        sf.setOnlyBookmark(false);
+        sf.setOnlyHd(false);
+        sf.setOnlyNew(false);
+        sf.setOnlyUt(false);
+        sf.setOnlyLive(true);
+        sf.setOnlyActHistory(false);
+
+        sf.setNotVis(true);
+        sf.setNotAbo(false);
+        sf.setNotHistory(false);
+        sf.setNotDouble(false);
+        sf.setNotGeo(true);
+        sf.setNotFuture(false);
+
+        progData.filterWorker.getFilmFilterList().add(sf);
+
+        //========================================================
+        // nur Bookmark
+        sf = getBookmarkFilter();
+        progData.filterWorker.getFilmFilterList().add(sf);
+
+        //========================================================
         progData.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
 
         //========================================================
@@ -111,8 +225,42 @@ public class FilterSamples {
         progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
-        // nur Bookmark
-        sf = getBookmarkFilter();
+        sf = new FilmFilter("Abendkrimi");
+        sf.clearFilter();
+
+        sf.setChannelVis(true);
+        sf.setChannel("ard,zdf");
+        sf.setThemeVis(false);
+        sf.setThemeIsExact(true);
+        sf.setThemeTitleVis(true);
+        sf.setTitleVis(false);
+        sf.setSomewhereVis(true);
+        sf.setSomewhere("Krimi,Thriller,Tatort,Film");
+        sf.setUrlVis(false);
+
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(10);
+        sf.setMinMaxDurVis(true);
+        sf.setMinDur(40);
+        sf.setMinMaxTimeVis(true);
+        sf.setMinMaxTimeInvert(false);
+        sf.setMinTime(64800);
+
+        sf.setOnlyVis(false);
+        sf.setOnlyBookmark(false);
+        sf.setOnlyHd(false);
+        sf.setOnlyNew(false);
+        sf.setOnlyUt(false);
+        sf.setOnlyLive(false);
+        sf.setOnlyActHistory(false);
+
+        sf.setNotVis(true);
+        sf.setNotAbo(false);
+        sf.setNotHistory(false);
+        sf.setNotDouble(false);
+        sf.setNotGeo(true);
+        sf.setNotFuture(false);
+
         progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
@@ -221,116 +369,6 @@ public class FilterSamples {
         sf.setNotAbo(false);
         sf.setNotHistory(false);
         sf.setNotDouble(false);
-        sf.setNotGeo(true);
-        sf.setNotFuture(false);
-
-        progData.filterWorker.getFilmFilterList().add(sf);
-
-        //========================================================
-        sf = new FilmFilter("Livestreams");
-        sf.clearFilter();
-
-        sf.setChannelVis(true);
-        sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
-        sf.setThemeTitleVis(true);
-        sf.setTitleVis(false);
-        sf.setSomewhereVis(false);
-        sf.setUrlVis(false);
-
-        sf.setTimeRangeVis(true);
-        sf.setMinMaxDurVis(false);
-        sf.setMinMaxTimeVis(false);
-        sf.setMinMaxTimeInvert(false);
-
-        sf.setOnlyVis(true);
-        sf.setOnlyBookmark(false);
-        sf.setOnlyHd(false);
-        sf.setOnlyNew(false);
-        sf.setOnlyUt(false);
-        sf.setOnlyLive(true);
-        sf.setOnlyActHistory(false);
-
-        sf.setNotVis(true);
-        sf.setNotAbo(false);
-        sf.setNotHistory(false);
-        sf.setNotDouble(false);
-        sf.setNotGeo(true);
-        sf.setNotFuture(false);
-
-        progData.filterWorker.getFilmFilterList().add(sf);
-
-        //========================================================
-        sf = new FilmFilter("Abendkrimi");
-        sf.clearFilter();
-
-        sf.setChannelVis(true);
-        sf.setChannel("ard,zdf");
-        sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
-        sf.setThemeTitleVis(true);
-        sf.setTitleVis(false);
-        sf.setSomewhereVis(true);
-        sf.setSomewhere("Krimi,Thriller,Tatort,Film");
-        sf.setUrlVis(false);
-
-        sf.setTimeRangeVis(true);
-        sf.setTimeRange(10);
-        sf.setMinMaxDurVis(true);
-        sf.setMinDur(40);
-        sf.setMinMaxTimeVis(true);
-        sf.setMinMaxTimeInvert(false);
-        sf.setMinTime(64800);
-
-        sf.setOnlyVis(false);
-        sf.setOnlyBookmark(false);
-        sf.setOnlyHd(false);
-        sf.setOnlyNew(false);
-        sf.setOnlyUt(false);
-        sf.setOnlyLive(false);
-        sf.setOnlyActHistory(false);
-
-        sf.setNotVis(true);
-        sf.setNotAbo(false);
-        sf.setNotHistory(false);
-        sf.setNotDouble(false);
-        sf.setNotGeo(true);
-        sf.setNotFuture(false);
-
-        progData.filterWorker.getFilmFilterList().add(sf);
-
-        //========================================================
-        sf = new FilmFilter("nur \"neue\" in HD");
-        sf.clearFilter();
-
-        sf.setChannelVis(true);
-        sf.setThemeVis(false);
-        sf.setThemeIsExact(true);
-        sf.setThemeTitleVis(true);
-        sf.setTitleVis(false);
-        sf.setSomewhereVis(false);
-        sf.setUrlVis(false);
-
-        sf.setTimeRangeVis(true);
-        sf.setTimeRange(10);
-
-        sf.setMinMaxDurVis(true);
-        sf.setMinDur(20);
-        sf.setMinMaxTimeVis(false);
-        sf.setMinMaxTimeInvert(false);
-
-        sf.setOnlyVis(true);
-        sf.setOnlyBookmark(false);
-        sf.setOnlyHd(true);
-        sf.setOnlyNew(true);
-        sf.setOnlyUt(false);
-        sf.setOnlyLive(false);
-        sf.setOnlyActHistory(false);
-
-        sf.setNotVis(true);
-        sf.setNotAbo(false);
-        sf.setNotHistory(true);
-        sf.setNotDouble(true);
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 

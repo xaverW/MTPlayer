@@ -50,20 +50,20 @@ public class FilmFilterProps extends P2DataSample<FilmFilter> implements Compara
     private final BooleanProperty urlVis = new SimpleBooleanProperty(false);
     private final StringProperty url = new SimpleStringProperty();
 
-    private final BooleanProperty timeRangeVis = new SimpleBooleanProperty(false);
+    private final BooleanProperty timeRangeVis = new SimpleBooleanProperty(false); // max Tage
     private final IntegerProperty timeRange = new SimpleIntegerProperty(15);
 
-    private final BooleanProperty minMaxDurVis = new SimpleBooleanProperty(true);
+    private final BooleanProperty minMaxDurVis = new SimpleBooleanProperty(true); // Filmlänge
     private final IntegerProperty minDur = new SimpleIntegerProperty(0);
     private final IntegerProperty maxDur = new SimpleIntegerProperty(FilterCheck.FILTER_DURATION_MAX_MINUTE);
 
-    private final BooleanProperty minMaxTimeVis = new SimpleBooleanProperty(true);
+    private final BooleanProperty minMaxTimeVis = new SimpleBooleanProperty(true); // Tageszeit
     private final BooleanProperty minMaxTimeInvert = new SimpleBooleanProperty(false);
     private final IntegerProperty minTime = new SimpleIntegerProperty(0); // Tageszeit in Sekunden
     private final IntegerProperty maxTime = new SimpleIntegerProperty(FilterCheck.FILTER_TIME_MAX_SEC); // Tageszeit in Sekunden
 
-    private final BooleanProperty showDateVis = new SimpleBooleanProperty(false);
-    private final StringProperty showDate = new SimpleStringProperty(FilterCheck.FILTER_SHOW_DATE_ALL); //Sendedatum
+    private final BooleanProperty showDateVis = new SimpleBooleanProperty(false); //Sendedatum
+    private final StringProperty showDate = new SimpleStringProperty(FilterCheck.FILTER_SHOW_DATE_ALL);
 
     private final BooleanProperty onlyVis = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyBookmark = new SimpleBooleanProperty(false);
