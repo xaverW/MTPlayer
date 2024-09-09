@@ -39,6 +39,7 @@ public class AboFilterController extends FilterController {
     private P2MenuButton mbChannel;
     private ComboBox<String> cboState = new ComboBox<>(); // Abo ein-/ausgeschaltet
     private PCboString cboName;
+    private PCboString cboSearchText;
     private PCboString cboDescription;
     private Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
 
@@ -55,6 +56,7 @@ public class AboFilterController extends FilterController {
         addCont("Abos für Sender", mbChannel, vBoxFilter);
         addCont("Status", cboState, vBoxFilter);
         addCont("Name", cboName, vBoxFilter);
+        addCont("Filtertext", cboSearchText, vBoxFilter);
         addCont("Beschreibung", cboDescription, vBoxFilter);
 
         HBox hBox = new HBox();
@@ -83,6 +85,11 @@ public class AboFilterController extends FilterController {
         FilterCheckRegEx fN = new FilterCheckRegEx(cboName.getEditor());
         cboName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
 
+        cboSearchText = new PCboString(progData.stringFilterLists.getFilterListAboSearchText(),
+                ProgConfig.FILTER_ABO_SEARCH_TEXT);
+        FilterCheckRegEx fS = new FilterCheckRegEx(cboSearchText.getEditor());
+        cboSearchText.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fS.checkPattern());
+
         cboDescription = new PCboString(progData.stringFilterLists.getFilterListAboDescription(),
                 ProgConfig.FILTER_ABO_DESCRIPTION);
         FilterCheckRegEx fD = new FilterCheckRegEx(cboDescription.getEditor());
@@ -91,6 +98,7 @@ public class AboFilterController extends FilterController {
 
     private void clearFilter() {
         ProgConfig.FILTER_ABO_NAME.set("");
+        ProgConfig.FILTER_ABO_SEARCH_TEXT.set("");
         ProgConfig.FILTER_ABO_DESCRIPTION.set("");
         ProgConfig.FILTER_ABO_CHANNEL.setValue("");
         ProgConfig.FILTER_ABO_TYPE.set("");

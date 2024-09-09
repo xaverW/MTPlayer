@@ -614,8 +614,10 @@ public class HelpText {
                     "Aboliste erstellt.\n" +
                     "\n" +
                     "-- Suchen und Filtern --\n" +
-                    "\"Name\" und \"Beschreibung\" sucht Abos die im \"Namen\" bzw. im der " +
+                    "\"Name\", \"Beschreibung\" sucht Abos die im \"Namen\" bzw. im der " +
                     "\"Beschreibung\" den Filtertext enthalten.\n" +
+                    "\"Filtertext\" sucht Abos die im \"Thema\", \"Thema-Titel\", \"Titel\" oder in \"Irgendwo\" " +
+                    "den Filtertext enthalten.\n" +
                     "\n";
 
     public static final String DOWNLOAD_FINISHED =

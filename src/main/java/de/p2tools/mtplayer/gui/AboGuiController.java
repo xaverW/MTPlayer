@@ -199,6 +199,7 @@ public class AboGuiController extends AnchorPane {
         ProgConfig.FILTER_ABO_CHANNEL.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_TYPE.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_NAME.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_SEARCH_TEXT.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_DESCRIPTION.addListener((observable, oldValue, newValue) -> setFilter());
     }
 
@@ -206,6 +207,7 @@ public class AboGuiController extends AnchorPane {
         final String sender = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
         final String type = ProgConfig.FILTER_ABO_TYPE.getValueSafe();
         final String name = ProgConfig.FILTER_ABO_NAME.getValueSafe().trim();
+        final String searchText = ProgConfig.FILTER_ABO_SEARCH_TEXT.getValueSafe().trim();
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim();
 
         Predicate<AboData> predicate = aboData -> true;
@@ -220,6 +222,14 @@ public class AboGuiController extends AnchorPane {
         if (!name.isEmpty()) {
             Filter filter = new Filter(name, true);
             predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getName()));
+        }
+        if (!searchText.isEmpty()) {
+            Filter filter = new Filter(searchText, true);
+            predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getTheme()) ||
+                    FilterCheck.check(filter, aboData.getThemeTitle()) ||
+                    FilterCheck.check(filter, aboData.getTitle()) ||
+                    FilterCheck.check(filter, aboData.getSomewhere())
+            );
         }
         if (!description.isEmpty()) {
             Filter filter = new Filter(description, true);
