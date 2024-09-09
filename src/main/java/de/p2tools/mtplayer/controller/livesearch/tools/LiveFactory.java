@@ -3,6 +3,7 @@ package de.p2tools.mtplayer.controller.livesearch.tools;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.config.ProxyFactory;
+import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -50,12 +51,15 @@ public class LiveFactory {
             ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList().forEach(filmDataMTP -> {
                 hashSet.add(getHash(filmDataMTP));
             });
+
             jsonInfoDto.getList().forEach(filmDataMTP -> {
                 if (!hashSet.contains(getHash(filmDataMTP))) {
                     hashSet.add(getHash(filmDataMTP));
                     ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList().importFilmOnlyWithNr(filmDataMTP);
                 }
             });
+
+            AboFactory.setAboForFilmlist(ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList());
         });
     }
 

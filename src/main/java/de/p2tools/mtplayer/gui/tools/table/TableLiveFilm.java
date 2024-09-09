@@ -122,6 +122,11 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         urlColumn.getStyleClass().add("alignCenterLeft");
 
+        final TableColumn<FilmDataMTP, String> aboColumn = new TableColumn<>("Abo");
+        aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
+        aboColumn.getStyleClass().add("alignCenterLeft");
+        TableFilmFactory.columnFactoryString(aboColumn);
+
         nrColumn.setPrefWidth(50);
         channelColumn.setPrefWidth(80);
         themeColumn.setPrefWidth(180);
@@ -133,6 +138,6 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
                 channelColumn, themeColumn, titleColumn,
                 startColumn,
                 dateColumn, timeColumn, durationColumn, sizeColumn,
-                hdColumn, utColumn, geoColumn, urlColumn);
+                hdColumn, utColumn, geoColumn, urlColumn, aboColumn);
     }
 }

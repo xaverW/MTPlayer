@@ -30,7 +30,7 @@ import javafx.scene.layout.VBox;
 
 public class LiveFilmInfoController extends P2ClosePaneH {
 
-    private PaneLiveFilmInfo paneLiveFilmInfo;
+    private PaneFilmInfo paneFilmInfo;
     private PaneFilmButton paneButton;
     private PaneMedia paneMedia;
     private Tab tabLiveFilmInfo;
@@ -48,9 +48,9 @@ public class LiveFilmInfoController extends P2ClosePaneH {
 
     public void setFilmInfos(FilmDataMTP film) {
         if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM,
-                getVBoxAll(), tabPane, paneLiveFilmInfo,
+                getVBoxAll(), tabPane, paneFilmInfo,
                 ProgConfig.LIVE_FILM_GUI_INFO_ON, ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON)) {
-            paneLiveFilmInfo.setFilm(film);
+            paneFilmInfo.setFilm(film);
         }
         if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM,
                 getVBoxAll(), tabPane, paneMedia,
@@ -67,7 +67,7 @@ public class LiveFilmInfoController extends P2ClosePaneH {
 
 
     private void initInfoPane() {
-        paneLiveFilmInfo = new PaneLiveFilmInfo(ProgConfig.LIVE_FILM_PANE_INFO_DIVIDER);
+        paneFilmInfo = new PaneFilmInfo(ProgConfig.LIVE_FILM_PANE_INFO_DIVIDER);
         paneButton = new PaneFilmButton(true);
         MediaDataDto mDtoMedia = new MediaDataDto();
         MediaDataDto mDtoAbo = new MediaDataDto();
@@ -81,7 +81,7 @@ public class LiveFilmInfoController extends P2ClosePaneH {
         tabMedia.setClosable(false);
 
         super.getRipProperty().addListener((u, o, n) -> {
-            if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneLiveFilmInfo)) {
+            if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneFilmInfo)) {
                 setDialogInfo();
             } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneButton)) {
                 setDialogButton();
@@ -126,7 +126,7 @@ public class LiveFilmInfoController extends P2ClosePaneH {
     }
 
     private void setDialogInfo() {
-        InfoPaneFactory.setDialogInfo(tabLiveFilmInfo, paneLiveFilmInfo, "Filminfos",
+        InfoPaneFactory.setDialogInfo(tabLiveFilmInfo, paneFilmInfo, "Filminfos",
                 ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_SIZE, ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON,
                 ProgConfig.LIVE_FILM_GUI_INFO_ON, ProgData.LIVE_FILM_TAB_ON);
     }
@@ -149,7 +149,7 @@ public class LiveFilmInfoController extends P2ClosePaneH {
         if (ProgConfig.LIVE_FILM_PANE_DIALOG_INFO_ON.getValue()) {
             tabPane.getTabs().remove(tabLiveFilmInfo);
         } else {
-            tabLiveFilmInfo.setContent(paneLiveFilmInfo);
+            tabLiveFilmInfo.setContent(paneFilmInfo);
             if (!tabPane.getTabs().contains(tabLiveFilmInfo)) {
                 tabPane.getTabs().add(i, tabLiveFilmInfo);
             }

@@ -17,16 +17,15 @@
 package de.p2tools.mtplayer.gui.filter.live;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
+import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2MenuButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -66,9 +65,7 @@ public class LiveFilmFilterText extends VBox {
         addTxt("Thema", cboThema, this);
         addTxt("Titel", cboTitle, this);
 
-        Button btnClear = new Button();
-        btnClear.setTooltip(new Tooltip("Filter löschen"));
-        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        Button btnClear = P2ButtonClearFilterFactory.getPButtonClear();
         btnClear.setOnAction(a -> progData.liveFilmFilterWorker.clearFilter());
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);

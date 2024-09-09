@@ -19,11 +19,12 @@ package de.p2tools.mtplayer.gui.filter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.filter.helper.PCboTextFilter;
+import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.duration.P2Duration;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
@@ -67,14 +68,16 @@ public class FilmFilterControllerClearFilter extends VBox {
         btnEditFilter.setOnAction(a -> new FilmFilterEditDialog(progData));
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
+        HBox hBox1 = new HBox(P2LibConst.DIST_BUTTON);
+        hBox1.getChildren().addAll(btnEditFilter, P2GuiTools.getHBoxGrower(), btnGoBack, btnGoForward,
+                P2GuiTools.getHBoxGrower(), btnClearFilter);
 
-        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.setPadding(new Insets(5, 0, 0, 0));
-        hBox.getChildren().addAll(btnEditFilter,
-                cboTextFilter, btnGoBack, btnGoForward, btnClearFilter);
+        final Button btnHelp = P2Button.helpButton("Filter", HelpText.FILTER_INFO);
+        HBox hBox2 = new HBox(P2LibConst.DIST_BUTTON);
+        hBox2.getChildren().addAll(cboTextFilter, btnHelp);
         HBox.setHgrow(cboTextFilter, Priority.ALWAYS);
-        getChildren().addAll(hBox);
+
+        getChildren().addAll(hBox1, hBox2);
     }
 
 

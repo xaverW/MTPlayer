@@ -21,7 +21,10 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
+import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.geometry.Insets;
@@ -34,7 +37,7 @@ import javafx.scene.layout.VBox;
 public class AboFilterController extends FilterController {
 
     private P2MenuButton mbChannel;
-    private ComboBox<String> cboArt = new ComboBox<>(); // Abo ein-/ausgeschaltet
+    private ComboBox<String> cboState = new ComboBox<>(); // Abo ein-/ausgeschaltet
     private PCboString cboName;
     private PCboString cboDescription;
     private Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
@@ -50,7 +53,7 @@ public class AboFilterController extends FilterController {
 
         initFilter();
         addCont("Abos für Sender", mbChannel, vBoxFilter);
-        addCont("Status", cboArt, vBoxFilter);
+        addCont("Status", cboState, vBoxFilter);
         addCont("Name", cboName, vBoxFilter);
         addCont("Beschreibung", cboDescription, vBoxFilter);
 
@@ -58,7 +61,13 @@ public class AboFilterController extends FilterController {
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(10, 0, 0, 0));
         hBox.getChildren().add(btnClear);
-        vBoxFilter.getChildren().add(hBox);
+
+        final Button btnHelpFilter = P2Button.helpButton("Filter", HelpText.GUI_ABO_FILTER);
+        HBox hBoxHelp = new HBox();
+        hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
+        hBoxHelp.getChildren().add(btnHelpFilter);
+
+        vBoxFilter.getChildren().addAll(hBox, P2GuiTools.getVBoxGrower(), hBoxHelp);
         btnClear.setOnAction(a -> clearFilter());
     }
 
@@ -66,8 +75,8 @@ public class AboFilterController extends FilterController {
         mbChannel = new P2MenuButton(ProgConfig.FILTER_ABO_CHANNEL,
                 ThemeListFactory.channelsForAbosList);
 
-        cboArt.getItems().addAll(AboConstants.ALL, AboConstants.ABO_ON, AboConstants.ABO_OFF);
-        cboArt.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE);
+        cboState.getItems().addAll(AboConstants.ALL, AboConstants.ABO_ON, AboConstants.ABO_OFF);
+        cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE);
 
         cboName = new PCboString(progData.stringFilterLists.getFilterListAboName(),
                 ProgConfig.FILTER_ABO_NAME);

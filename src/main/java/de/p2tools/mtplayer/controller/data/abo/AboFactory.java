@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mtfilm.film.Filmlist;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 
@@ -52,6 +53,10 @@ public class AboFactory {
     }
 
     public static synchronized void setAboForFilmlist() {
+        setAboForFilmlist(ProgData.getInstance().filmList);
+    }
+
+    public static synchronized void setAboForFilmlist(Filmlist<FilmDataMTP> filmlist) {
         // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
         // braucht länger
         P2Duration.counterStart("setAboForFilmlist");
@@ -62,7 +67,7 @@ public class AboFactory {
 
         if (aboList.isEmpty()) {
             // dann nur die Abos in der Filmliste löschen
-            ProgData.getInstance().filmList.forEach(film -> {
+            filmlist.forEach(film -> {
                 // für jeden Film Abo löschen
                 film.arr[FilmDataXml.FILM_ABO_NAME] = "";
                 film.setAbo(null);
@@ -78,7 +83,7 @@ public class AboFactory {
         });
 
         // das kostet die Zeit!!
-        ProgData.getInstance().filmList.forEach(AboFactory::assignAboToFilm);
+        filmlist.forEach(AboFactory::assignAboToFilm);
 
         P2Duration.counterStop("setAboForFilmlist");
     }

@@ -22,15 +22,15 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2MenuButton;
 import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
@@ -73,18 +73,19 @@ public class DownloadFilterController extends FilterController {
         addCont("Abo", cboAbo, vBoxFilter);
         addCont("Status", cboState, vBoxFilter);
 
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.setPadding(new Insets(10, 0, 0, 0));
-        hBox.getChildren().add(btnClear);
-        hBox.setAlignment(Pos.TOP_RIGHT);
-        VBox.setVgrow(hBox, Priority.ALWAYS);
+        final Button btnHelpFilter = P2Button.helpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
 
-        Separator sp = new Separator();
-        sp.getStyleClass().add("pseperator3");
-        sp.setMinHeight(0);
-        vBoxFilter.getChildren().addAll(hBox, sp);
+        HBox hBoxClear = new HBox(P2LibConst.SPACING_HBOX);
+        hBoxClear.setAlignment(Pos.CENTER_RIGHT);
+        hBoxClear.getChildren().addAll(btnClear);
 
+        HBox hBoxHelp = new HBox();
+        hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
+        hBoxHelp.getChildren().add(btnHelpFilter);
+
+        vBoxFilter.getChildren().addAll(hBoxClear, P2GuiTools.getVBoxGrower(), hBoxHelp);
+
+        // black
         VBox vb = new VBox(FilterController.FILTER_SPACING_TEXTFILTER);
         addCont("Gleichzeitige Downloads", spinnerAnz, vb);
 
@@ -94,19 +95,12 @@ public class DownloadFilterController extends FilterController {
                 "oder unbegrenzt wenn \"aus\""));
         sliderBandwidth.setTooltip(new Tooltip("Maximale Bandbreite die ein einzelner Download beanspruchen darf \n" +
                 "oder unbegrenzt wenn \"aus\""));
-        HBox hh = new HBox();
-        HBox.setHgrow(hh, Priority.ALWAYS);
+
         HBox h = new HBox();
-        h.getChildren().addAll(lblText, hh, lblBandwidth);
+        h.getChildren().addAll(lblText, P2GuiTools.getHBoxGrower(), lblBandwidth);
         addCont(h, sliderBandwidth, vb);
 
-        final Button btnHelp = P2Button.helpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
-        hBox = new HBox(10);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(btnHelp);
-        vb.getChildren().add(hBox);
-
-        vBoxFilter.getChildren().add(vb);
+        getVBoxBlack().getChildren().add(vb);
     }
 
     private void initFilter() {

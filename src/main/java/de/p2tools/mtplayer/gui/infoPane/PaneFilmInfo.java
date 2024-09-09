@@ -107,7 +107,6 @@ public class PaneFilmInfo extends VBox {
 
         splitPane.getItems().addAll(vBoxLeft, gridPane);
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(dividerProp);
-        SplitPane.setResizableWithParent(vBoxLeft, Boolean.FALSE);
         SplitPane.setResizableWithParent(gridPane, Boolean.FALSE);
 
         setSpacing(0);

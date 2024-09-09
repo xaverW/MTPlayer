@@ -18,43 +18,25 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 
 public class FilmFilterController extends FilterController {
 
-    private FilmFilterControllerTextFilter filmFilterControllerTextFilter;
-    private FilmFilterControllerFilter filmFilterControllerFilter;
-    private FilmFilterControllerClearFilter filmFilterControllerClearFilter;
-    private FilmFilterControllerProfiles filmFilterControllerProfiles;
-    private FilmFilterControllerBlacklist filmFilterControllerBlacklist;
-
     public FilmFilterController() {
         super(ProgConfig.FILM_GUI_FILTER_DIVIDER_ON);
+        final FilmFilterControllerTextFilter filmFilterControllerTextFilter = new FilmFilterControllerTextFilter();
+        final FilmFilterControllerFilter filmFilterControllerFilter = new FilmFilterControllerFilter();
+        final FilmFilterControllerClearFilter filmFilterControllerClearFilter = new FilmFilterControllerClearFilter();
+        final FilmFilterControllerProfiles filmFilterControllerProfiles = new FilmFilterControllerProfiles();
+        final FilmFilterControllerBlacklist filmFilterControllerBlacklist = new FilmFilterControllerBlacklist();
 
-        filmFilterControllerTextFilter = new FilmFilterControllerTextFilter();
-        filmFilterControllerFilter = new FilmFilterControllerFilter();
-        filmFilterControllerClearFilter = new FilmFilterControllerClearFilter();
-        filmFilterControllerProfiles = new FilmFilterControllerProfiles();
-        filmFilterControllerBlacklist = new FilmFilterControllerBlacklist();
-
-        Separator sp1 = new Separator();
-        sp1.getStyleClass().add("pseperator1");
-        sp1.setMinHeight(0);
-
-        Separator sp2 = new Separator();
-        sp2.getStyleClass().add("pseperator3");
-        sp2.setMinHeight(0);
-
-        final VBox vBoxFilter = getVBoxFilter(true);
-        vBoxFilter.setSpacing(10);
-//        VBox.setVgrow(filmFilterControllerClearFilter, Priority.ALWAYS);
-        vBoxFilter.getChildren().addAll(filmFilterControllerTextFilter,
+        final VBox vBox = getVBoxFilter(true);
+        vBox.getChildren().addAll(filmFilterControllerTextFilter,
                 filmFilterControllerFilter,
-                P2GuiTools.getVBoxGrower(), sp1,
-                filmFilterControllerClearFilter, sp2,
-                filmFilterControllerProfiles);
+                P2GuiTools.getVBoxGrower(),
+                filmFilterControllerClearFilter);
 
-        getVBoxBottom().getChildren().add(filmFilterControllerBlacklist);
+        getVBoxBlack().getChildren().add(filmFilterControllerProfiles);
+        getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
     }
 }

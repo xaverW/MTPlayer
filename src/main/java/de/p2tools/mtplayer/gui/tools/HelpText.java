@@ -279,56 +279,67 @@ public class HelpText {
                     "http://ffmpeg.org" +
                     "\n";
 
-    public static final String GUI_FILM_FILTER =
+    public static final String FILTER_INFO_PROFILE =
+            "Mit den Filterprofilen können Filtereinstellungen gespeichert " +
+                    "und wieder abgerufen werden. Der Pfeil \"nach oben\" stellt " +
+                    "den ausgewählten Filter ein, Der Pfeil \"nach unter\" schreibt die " +
+                    "eingestellten Filter in das gewählte Filterprofil. Der \"Kreis\" speichert " +
+                    "die aktuellen Filtereinstellungen in einem neuen Profil." +
+                    "\n\n" +
+                    "Solange die Filtereinstellungen mit dem ausgewählten Profil übereinstimmen, " +
+                    "wird der Name des Profils unterstrichen." +
+                    "\n";
+
+    public static final String FILTER_INFO =
             "Die Menüs, Textfelder und Schieberegler erlauben ein detailliertes " +
                     "Durchsuchen und Filtern der vorhandenen Filme.\n" +
-                    "\n" +
                     "\n" +
                     "Im Bereich darunter können ganze Such-/Filtereinstellungen als Profile " +
                     "angelegt und verwaltet werden.\n" +
                     "\n" +
-                    "\n" +
-                    "Die Blacklist (anlegen unter Einstellungen > Blacklist) kann für die " +
-                    "Anzeige aktiviert bzw. deaktiviert werden.\n" +
+                    "Darunter wird ein Schalter zum Ein/Ausschalten der Blacklist " +
+                    "angezeigt. (Aber nur wenn in den Programm-Einstellungen > Blacklist diese eingeschaltet ist)\n" +
                     "  - Blacklist aus: Alle Filme werden angezeigt.\n" +
                     "  - Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
                     "  - Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt.\n" +
                     "\n" +
+                    "Die Buttons \"<\" und \">\" blättern durch die letzten Filtereinstellungen.\n" +
+                    "In dem Manü darunter werden die zuletzt verwendeten Textfilter angezeigt und können " +
+                    "damit wieder ausgewählt werden." +
                     "\n" +
-                    "Der Einstellungs-Button (das Zahnrad) öffnet einen Dialog in dem die einzelnen " +
+                    "\n" +
+                    "Der Filter-Einstellungsbutton (das Zahnrad) öffnet einen Dialog in dem die einzelnen " +
                     "Filter ein- oder ausgeschaltet werden können.\n" +
+                    "Z.B. kann dort das Suchfeld: \"Thema\" für freies Suchen " +
+                    "umgeschaltet werden. Angezeigt werden immer nur eingeschaltete Filter.\n" +
                     "\n" +
                     "-- Menüs \"Sender\" und \"Thema\" --\n" +
                     "Die Einträge der Filtermenüs \"Sender\" und \"Thema\" werden automatisch aus der " +
                     "Filmliste erstellt.\n" +
                     "\n" +
-                    "Im Einstellungs-Dialog kann für \"Thema\" ein Textfeld für freies Suchen " +
-                    "zugeschaltet werden.\n" +
                     "\n" +
                     "-- Suchen und Filtern --\n" +
-                    "Mit den Textfeldern ([Thema] wenn eingeschaltet, [Thema oder Titel], [Titel], [Irgendwo] " +
+                    "Mit den Textfeldern ([Thema] wenn freie Suche eingeschaltet, [Thema oder Titel], [Titel], [Irgendwo] " +
                     "und [URL]) kann sehr detailliert gesucht werden. \"Zeitraum\", \"Filmlänge\", \"Sendezeit\" " +
                     "(ein- oder ausschließen), \"anzeigen\" und \"ausschließen\" erlauben noch " +
                     "weitergehende Filterung.\n" +
                     "\n" +
-                    FILTER_FIELD + "\n" +
-                    "\n" +
+
                     "-- Besonderheiten --\n" +
                     "[Thema oder Titel] durchsucht THEMA und TITEL der Filmliste. [Irgendwo] sucht " +
-                    "außerdem noch in BESCHREIBUNG und DATUM.\n" +
+                    "außerdem noch in BESCHREIBUNG und DATUM. \n" +
                     "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben " +
                     "Datenfeld vorkommen. Ein Film mit 'Sport' in THEMA und 'Fussball' in TITEL wird " +
                     "von 'Sport:Fussball' nicht erfasst.\n" +
                     "\n" +
                     "[URL] sucht in der URL des Films sowie in der URL der Webseite des Films.\n" +
                     "\n" +
-                    "-- Filterprofile --\n" +
-                    "Die Buttons \"<\" und \">\") blättern durch die letzten Such/Filtereinstellungen.\n" +
                     "\n" +
-                    "Darunter kann man die aktuellen Einstellungen als Profil speichern bzw. aus dem " +
-                    "gespeicherten Zustand wieder laden. " +
-                    "Solange ein geladenes Profil nicht verändert wurde ist sein Name unterstrichen." +
+                    "==================================================" +
+                    "\n" +
+                    FILTER_FIELD +
                     "\n";
+
     public static final String SEARCH_SPECIAL =
             "-- Besonderheiten --" +
                     "\n" +
@@ -567,7 +578,7 @@ public class HelpText {
                     "\n";
 
     public static final String DOWNLOAD_BANDWIDTH =
-            "Mit den Schiebereglern [gleichzeitige Downloads] und [max. Bandbreite] " +
+            "Mit den Schiebereglern \"gleichzeitige Downloads\" und \"max. Bandbreite\" " +
                     "kann die Anzahl der gleichzeitigen Downloads die geladen werden und die maximale " +
                     "Bandbreite, festgelegt werden." +
                     "\n\n" +
@@ -577,7 +588,7 @@ public class HelpText {
                     "\n";
 
     public static final String GUI_DOWNLOAD_FILTER =
-            "Die Menüs und Schieberegler erlauben ein detailliertes " +
+            "Die Filter erlauben ein detailliertes " +
                     "Durchsuchen und Filtern der vorhandenen Downloads.\n" +
                     "\n" +
                     "-- Menüs \"Quelle\", \"Downloadart\", \"Sender\", \"Abo\" und \"Status\" --\n" +
@@ -585,13 +596,27 @@ public class HelpText {
                     "Filmliste und Downloadliste erstellt.\n" +
                     "\n" +
                     "-- Suchen und Filtern --\n" +
-                    "[Quelle] filtert nach Herkunft, also Downloads von Hand oder durch ein Abo angelegt.\n" +
-                    "[Downloadart] sucht nach Downloads die direkt geladen werden können oder Downloads " +
+                    "\"Quelle\" filtert nach Herkunft, also Downloads von Hand oder durch ein Abo angelegt.\n" +
+                    "\"Downloadart\" sucht nach Downloads die direkt geladen werden können oder Downloads " +
                     "die durch ein externes Programm geladen werden müssen.\n" +
                     "\n" +
-                    "[Sender], [Abo], [Status] sucht Downloads mit dem Sender, " +
+                    "\"Sender\", \"Abo\", \"Status\" sucht Downloads mit dem Sender, " +
                     "aus dem Abo, oder mit dem Status (nicht/gestartet, fertig).\n" +
-                    "\n" + DOWNLOAD_BANDWIDTH;
+                    "\n" +
+                    DOWNLOAD_BANDWIDTH;
+
+    public static final String GUI_ABO_FILTER =
+            "Die Filter erlauben ein detailliertes " +
+                    "Durchsuchen und Filtern der vorhandenen Abos.\n" +
+                    "\n" +
+                    "-- Menüs \"Abos für Sender\" und \"Status\" --\n" +
+                    "Die Einträge der Filtermenüs werden automatisch aus der " +
+                    "Aboliste erstellt.\n" +
+                    "\n" +
+                    "-- Suchen und Filtern --\n" +
+                    "\"Name\" und \"Beschreibung\" sucht Abos die im \"Namen\" bzw. im der " +
+                    "\"Beschreibung\" den Filtertext enthalten.\n" +
+                    "\n";
 
     public static final String DOWNLOAD_FINISHED =
             "Wenn ein Download erfolgreich beendet ist, wird mit einem Fenster informiert." +

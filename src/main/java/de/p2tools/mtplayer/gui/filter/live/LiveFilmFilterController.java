@@ -24,7 +24,6 @@ import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -45,16 +44,7 @@ public class LiveFilmFilterController extends FilterController {
         this.progData = ProgData.getInstance();
         this.liveFilmFilterText = new LiveFilmFilterText();
         this.liveFilmFilterClearList = new LiveFilmFilterClearList();
-
-
-        Separator sp = new Separator();
-        sp.getStyleClass().add("pseperator3");
-        sp.setMinHeight(0);
-
         vBoxFilter = getVBoxFilter(true);
-        vBoxFilter.setSpacing(15);
-        vBoxFilter.setAlignment(Pos.TOP_LEFT);
-
         init();
     }
 
@@ -66,18 +56,13 @@ public class LiveFilmFilterController extends FilterController {
         tabPane.getTabs().addAll(liveFilterTabArd, liveFilterTabZdf);
         vBoxFilter.getChildren().add(tabPane);
 
-        vBoxFilter.getChildren().addAll(liveFilmFilterText);
-
         final Button btnHelp = P2Button.helpButton(progData.primaryStage, "Live-Suche",
                 HelpText.LIVE_SEARCH);
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().add(btnHelp);
 
-        vBoxFilter.getChildren().add(P2GuiTools.getVBoxGrower());
-        Separator sp1 = new Separator();
-        sp1.getStyleClass().add("pseperator3");
-        sp1.setMinHeight(0);
-        vBoxFilter.getChildren().addAll(liveFilmFilterClearList, sp1, hBox);
+        vBoxFilter.getChildren().addAll(liveFilmFilterText, P2GuiTools.getVBoxGrower(), hBox);
+        getVBoxBlack().getChildren().addAll(liveFilmFilterClearList);
     }
 }
