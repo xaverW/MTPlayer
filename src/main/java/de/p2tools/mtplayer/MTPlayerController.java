@@ -233,7 +233,7 @@ public class MTPlayerController extends StackPane {
     private void selPanelFilm() {
         if (paneShown == PANE_SHOWN.FILM) {
             // dann ist der 2. Klick
-            filmGui.closeSplit();
+            MTPlayerFactory.setFilter();
             return;
         }
 
@@ -251,7 +251,7 @@ public class MTPlayerController extends StackPane {
     private void selPanelLiveFilm() {
         if (paneShown == PANE_SHOWN.LIVE_FILM) {
             // dann ist der 2. Klick
-            liveFilmGui.closeSplit();
+            MTPlayerFactory.setFilter();
             return;
         }
 
@@ -269,7 +269,7 @@ public class MTPlayerController extends StackPane {
     private void selPanelDownload() {
         if (paneShown == PANE_SHOWN.DOWNLOAD) {
             // dann ist der 2. Klick
-            downloadGui.closeSplit();
+            MTPlayerFactory.setFilter();
             return;
         }
 
@@ -287,7 +287,7 @@ public class MTPlayerController extends StackPane {
     private void selPanelAbo() {
         if (paneShown == PANE_SHOWN.ABO) {
             // dann ist der 2. Klick
-            aboGui.closeSplit();
+            MTPlayerFactory.setFilter();
             return;
         }
 

@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
+import de.p2tools.mtplayer.gui.filter.FilterPaneDialog;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -30,32 +31,44 @@ public class DownloadGui {
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
     private final DownloadFilterController downloadFilterController;
-    private final DownloadGuiController guiController;
-
+    private final DownloadGuiController downloadGuiController;
     private boolean bound = false;
+    private FilterPaneDialog filterPaneDialog = null;
 
     public DownloadGui() {
         progData = ProgData.getInstance();
         downloadFilterController = new DownloadFilterController();
-        guiController = new DownloadGuiController();
-    }
-
-    public void closeSplit() {
-        ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.get());
+        downloadGuiController = new DownloadGuiController();
     }
 
     private void setSplit() {
-        if (ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getValue()) {
-            splitPane.getItems().clear();
-            splitPane.getItems().addAll(downloadFilterController, guiController);
-            bound = true;
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
-        } else {
-            if (bound) {
-                splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
+        if (bound) {
+            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
+            bound = false;
+        }
+        if (filterPaneDialog != null) {
+            filterPaneDialog.closeSetNoRip();
+            filterPaneDialog = null;
+        }
+        splitPane.getItems().clear();
+
+        if (ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.get()) {
+
+            if (ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.get()) {
+
+                filterPaneDialog = new FilterPaneDialog(downloadFilterController, "Downloadfilter",
+                        ProgConfig.DOWNLOAD_GUI_FILTER_DIALOG_SIZE,
+                        ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP, ProgData.DOWNLOAD_TAB_ON);
+                splitPane.getItems().addAll(downloadGuiController);
+
+            } else {
+                splitPane.getItems().addAll(downloadFilterController, downloadGuiController);
+                splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
+                bound = true;
             }
-            splitPane.getItems().clear();
-            splitPane.getItems().addAll(guiController);
+
+        } else {
+            splitPane.getItems().addAll(downloadGuiController);
         }
     }
 
@@ -64,7 +77,7 @@ public class DownloadGui {
         final MenuController menuController = new MenuController(MenuController.StartupMode.DOWNLOAD);
 
         // Gui
-        progData.downloadGuiController = guiController;
+        progData.downloadGuiController = downloadGuiController;
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         SplitPane.setResizableWithParent(downloadFilterController, Boolean.FALSE);
@@ -75,7 +88,8 @@ public class DownloadGui {
         HBox.setHgrow(splitPane, Priority.ALWAYS);
         hBox.getChildren().addAll(splitPane, menuController);
 
-        ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.addListener((observable, oldValue, newValue) -> setSplit());
         setSplit();
         return new SplitPane(hBox);
     }

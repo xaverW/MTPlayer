@@ -47,7 +47,7 @@ public class AboFilterController extends FilterController {
     private final ProgData progData;
 
     public AboFilterController() {
-        super(ProgConfig.ABO_GUI_FILTER_DIVIDER_ON);
+        super(ProgConfig.ABO_GUI_FILTER_IS_VISIBLE, ProgConfig.ABO_GUI_FILTER_IS_RIP);
         vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
         progData.aboFilterController = this;

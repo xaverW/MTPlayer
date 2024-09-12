@@ -53,8 +53,8 @@ public class SearchFast extends HBox {
     private void make() {
         ProgConfig.FAST_SEARCH_ON.addListener((u, o, n) -> setFastSearchOnOff(true));
         ProgConfig.FAST_SEARCH_WHERE.addListener((u, o, n) -> setLblText());
-        ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.addListener((observable, oldValue, newValue) -> {
-            if (ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getValue() && ProgConfig.FAST_SEARCH_ON.getValue()) {
+        ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.addListener((observable, oldValue, newValue) -> {
+            if (ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.getValue() && ProgConfig.FAST_SEARCH_ON.getValue()) {
                 // dann das Suchfeld wieder ausschalten
                 ProgConfig.FAST_SEARCH_ON.setValue(false);
             }
@@ -102,7 +102,7 @@ public class SearchFast extends HBox {
     private void initListener() {
         btnSearch.setOnMouseClicked(mouseEvent -> {
             ProgConfig.FAST_SEARCH_ON.setValue(!ProgConfig.FAST_SEARCH_ON.getValue());
-            ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.FAST_SEARCH_ON.getValue());
+            ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.FAST_SEARCH_ON.getValue());
         });
         btnSelectWhere.setOnMouseClicked(event -> {
             // beim Umschalten des FastFilters

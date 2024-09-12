@@ -16,8 +16,8 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
+import de.p2tools.mtplayer.gui.tools.P2ClosePaneV;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneV;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
@@ -31,8 +31,8 @@ public class FilterController extends P2ClosePaneV {
     public static final int FILTER_SPACING_TEXTFILTER = 10;
     private final VBox vBoxAll;
 
-    public FilterController(BooleanProperty mlConfig) {
-        super(mlConfig, true);
+    public FilterController(BooleanProperty visible, BooleanProperty rip) {
+        super(visible, rip, true);
         vBoxAll = super.getVBoxAll();
         vBoxAll.setSpacing(P2LibConst.SPACING_VBOX);
     }
@@ -59,7 +59,6 @@ public class FilterController extends P2ClosePaneV {
         vBox.getStyleClass().add("extra-pane-filter");
         vBox.setPadding(new Insets(P2LibConst.PADDING));
         vBox.setSpacing(FILTER_SPACING_TEXTFILTER);
-//        vBox.setMaxWidth(Double.MAX_VALUE);
         vBoxAll.getChildren().addAll(vBox);
         return vBox;
     }

@@ -37,16 +37,16 @@ public class MTPlayerFactory {
     public static void setFilter() {
         switch (MTPlayerController.paneShown) {
             case FILM:
-                ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.FILM_GUI_FILTER_DIVIDER_ON.getValue());
+                ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.getValue());
                 break;
             case LIVE_FILM:
-                ProgConfig.LIVE_FILM_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.LIVE_FILM_GUI_FILTER_DIVIDER_ON.getValue());
+                ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.getValue());
                 break;
             case DOWNLOAD:
-                ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER_ON.getValue());
+                ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.getValue());
                 break;
             case ABO:
-                ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.setValue(!ProgConfig.ABO_GUI_FILTER_DIVIDER_ON.getValue());
+                ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.getValue());
                 break;
         }
     }

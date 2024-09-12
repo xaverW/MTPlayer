@@ -39,7 +39,7 @@ public class LiveFilmFilterController extends FilterController {
     private final LiveFilmFilterClearList liveFilmFilterClearList;
 
     public LiveFilmFilterController() {
-        super(ProgConfig.LIVE_FILM_GUI_FILTER_DIVIDER_ON);
+        super(ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE, ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP);
 
         this.progData = ProgData.getInstance();
         this.liveFilmFilterText = new LiveFilmFilterText();
