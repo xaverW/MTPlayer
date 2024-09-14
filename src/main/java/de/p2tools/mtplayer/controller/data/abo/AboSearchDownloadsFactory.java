@@ -194,9 +194,11 @@ public class AboSearchDownloadsFactory {
         if (found) {
             Platform.runLater(() -> {
                 searchDownloadsAfter(syncDownloadArrayList, downloadList, syncDownloadsAlreadyInTheListHash);
+                ProgData.downloadSearchDone = true; // braucht der AutoMode, damit er weiß, wann er anfangen kann
                 P2Duration.counterStop("searchForNewDownloadsForAbos");
             });
         } else {
+            ProgData.downloadSearchDone = true; // braucht der AutoMode, damit er weiß, wann er anfangen kann
             P2Duration.counterStop("searchForNewDownloadsForAbos");
         }
     }
@@ -222,8 +224,6 @@ public class AboSearchDownloadsFactory {
             P2Log.sysLog("Downloads aus Abos starten");
             ProgData.getInstance().downloadList.startAllDownloads();
         }
-
-        ProgData.downloadSearchDone = true; // braucht der AutoMode, damit er weiß, wann er anfangen kann
     }
 
     private static void checkDoubleNames(List<DownloadData> foundNewDownloads, List<DownloadData> downloadList) {
