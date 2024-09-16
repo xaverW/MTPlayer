@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.gui.tools.P2ClosePaneH;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;

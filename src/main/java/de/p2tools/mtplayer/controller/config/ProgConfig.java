@@ -49,29 +49,37 @@ public class ProgConfig extends P2DataProgConfig {
 
     private static ProgConfig instance;
 
-    // Programm-Configs, änderbar nur im Konfig-File
     // ============================================
+    // Programm-Configs, änderbar nur im Config-File
+
     // 250 Sekunden, wie bei Firefox
     public static int SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT = 250;
     public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND = addIntProp("__system-parameter__download-timeout-second_250__", SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT);
+
     // max. Startversuche für fehlgeschlagene Downloads (insgesamt: restart * restart_http Versuche)
     public static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT = 3;
     public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART = addIntProp("__system-parameter__download-max-restart_5__", SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT);
-    // max. Startversuche für fehlgeschlagene Downloads, direkt beim Download
-//    public static int SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT = 5;
-//    public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP = addIntProp("__system-parameter__download-max-restart-http_10__", SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT);
+
     // Beim Dialog "Download weiterführen" wird nach dieser Zeit der Download weitergeführt
     public static int SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT = 60;
     public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS = addIntProp("__system-parameter__download-continue-second_60__", SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT);
+
     // Beim Dialog "Automode" wird nach dieser Zeit der das Programm beendet
     public static int SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS_INIT = 15;
     public static IntegerProperty SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS = addIntProp("__system-parameter__automode-quitt-second_60__", SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS_INIT);
+
     // Downloadfehlermeldung wird xx Sedunden lang angezeigt
     public static int SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND_INIT = 30;
     public static IntegerProperty SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND = addIntProp("__system-parameter__download-errormsg-in-second_30__", SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND_INIT);
+
     // Downloadprogress im Terminal anzeigen
     public static BooleanProperty SYSTEM_PARAMETER_DOWNLOAD_PROGRESS = addBoolProp("__system-parameter__download_progress_", Boolean.TRUE);
-    // ===========================================
+    // ========================================================
+
+
+    // ===============================================================
+    // ====== SYSTEM =================================================
+    // ===============================================================
 
     // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
     public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", P2ToolsFactory.getProgVersion());
@@ -85,7 +93,6 @@ public class ProgConfig extends P2DataProgConfig {
     //Configs zur Anzeige der Diakritika in der Filmliste
     //TRUE: dann werden Diakritika nicht geändert und angezeigt
     public static BooleanProperty SYSTEM_REMOVE_DIACRITICS = addBoolProp("system-remove-diacritics", Boolean.FALSE);
-
 
     // Configs zum Aktualisieren beim Programmupdate
     public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBoolProp("system-after-update-filter", Boolean.FALSE);
@@ -116,19 +123,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_FILM = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_BLACKLIST = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_DOWNLOAD = new SimpleIntegerProperty(-1);
-    public static IntegerProperty SYSTEM_CONFIG_DIALOG_ABO = new SimpleIntegerProperty(-1);
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_MEDIA = new SimpleIntegerProperty(-1);
-
-    // MediaDB
-    public static StringProperty MEDIA_DIALOG_SIZE = addStrProp("media-dialog-size", "800:700");
-    public static StringProperty MEDIA_DB_SUFFIX = addStrProp("media-db-suffix");
-    public static BooleanProperty MEDIA_DB_WITH_OUT_SUFFIX = addBoolProp("media-db-with-out-suffix");
-    public static BooleanProperty MEDIA_DB_NO_HIDDEN_FILES = addBoolProp("media-db-no-hidden-files");
-    public static IntegerProperty MEDIA_DB_FILE_SIZE_MBYTE = addIntProp("media-db-filesize_mbyte", ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES);
-    public static BooleanProperty MEDIA_DB_EXPORT_INTERN = addBoolProp("media-db-export-intern", Boolean.FALSE);
-    public static BooleanProperty MEDIA_DB_EXPORT_EXTERN = addBoolProp("media-db-export-extern", Boolean.FALSE);
-    public static BooleanProperty MEDIA_DB_EXPORT_INTERN_EXTERN = addBoolProp("media-db-export-intern-extern", Boolean.TRUE);
-    public static StringProperty MEDIA_DB_EXPORT_FILE = addStrProp("media-db-export-file");
 
     // Configs
     public static BooleanProperty SYSTEM_USE_OWN_PROGRAM_ICON = addBoolProp("system-use-own-program-icon" + P2Data.TAGGER + "system-use--own-program-icon", Boolean.FALSE);
@@ -161,7 +156,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");
     public static StringProperty SYSTEM_PROG_OPEN_URL = addStrProp("system-prog-open-url");
     public static StringProperty SYSTEM_PROG_PLAY_FILME = addStrProp("system-prog-play-filme");
-
     public static BooleanProperty SYSTEM_MARK_GEO = addBoolProp("system-mark-geo", Boolean.TRUE);
     public static StringProperty SYSTEM_GEO_HOME_PLACE = addStrProp("system-geo-home-place", FilmDataMTP.GEO_DE);
     public static BooleanProperty SYSTEM_STYLE = addBoolProp("system-style", Boolean.FALSE); // für die Schriftgröße
@@ -206,6 +200,22 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_PATH_FFMPEG = addStrProp("system-path-ffmpeg", SetFactory.getTemplatePathFFmpeg());
     public static IntegerProperty SYSTEM_FILMLIST_COUNT_DOUBLE = addIntProp("system-filmlist-count-double", 0); // Anzahl der doppelten Filme
 
+    // Download
+    public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_BEEP = addBoolProp("download-beep");
+    public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads ohne Dateien
+    public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads mit bereits geladenen Dateien
+    public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__ASK);
+    public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 2);
+    public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_BYTE = addIntProp("download-max-bandwidth-byte", MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
+    public static BooleanProperty DOWNLOAD_DIALOG_ERROR_SHOW = addBoolProp("download-dialog-error-show", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_DIALOG_ERROR_TIME = addBoolProp("download-dialog-error-time", Boolean.TRUE);
+
+
+    // ===============================================================
+    // ====== Filter =================================================
+    // ===============================================================
+
     // Blacklist
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBoolProp("system-blacklist-show-no-future");
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_GEO = addBoolProp("system-blacklist-show-no-geo", Boolean.TRUE);
@@ -226,18 +236,28 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILMFILTER_TABLE_VIS = addStrProp("filmfilter-table-vis");
     public static StringProperty FILMFILTER_TABLE_ORDER = addStrProp("filmfilter-table-order");
 
-    // Download
-    public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);
-    public static BooleanProperty DOWNLOAD_BEEP = addBoolProp("download-beep");
-    public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads ohne Dateien
-    public static IntegerProperty DOWNLOAD_STOP = addIntProp("download-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads mit bereits geladenen Dateien
-    public static IntegerProperty DOWNLOAD_CONTINUE = addIntProp("download-continue", ProgConfigAskBeforeDelete.DOWNLOAD_RESTART__ASK);
-    public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 2);
-    public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_BYTE = addIntProp("download-max-bandwidth-byte", MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
-    public static BooleanProperty DOWNLOAD_DIALOG_ERROR_SHOW = addBoolProp("download-dialog-error-show", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_DIALOG_ERROR_TIME = addBoolProp("download-dialog-error-time", Boolean.TRUE);
+    // Filter Filme
+    public static IntegerProperty FILTER_FILM_SEL_FILTER = addIntProp("filter-film-sel-filter");
 
-    // Gui Film
+    // Filter Abo
+    public static StringProperty FILTER_ABO_CHANNEL = addStrProp("filter-abo-channel");
+    public static StringProperty FILTER_ABO_NAME = addStrProp("filter-abo-name");
+    public static StringProperty FILTER_ABO_SEARCH_TEXT = addStrProp("filter-abo-search-text");
+    public static StringProperty FILTER_ABO_DESCRIPTION = addStrProp("filter-abo-description");
+    public static StringProperty FILTER_ABO_TYPE = addStrProp("filter-abo-type");
+
+    // Filter Download
+    public static StringProperty FILTER_DOWNLOAD_CHANNEL = addStrProp("filter-download-channel");
+    public static StringProperty FILTER_DOWNLOAD_SOURCE = addStrProp("filter-download-source");
+    public static StringProperty FILTER_DOWNLOAD_TYPE = addStrProp("filter-download-type");
+    public static StringProperty FILTER_DOWNLOAD_ABO = addStrProp("filter-download-abo");
+    public static StringProperty FILTER_DOWNLOAD_STATE = addStrProp("filter-download-state");
+
+
+    // ===============================================================
+    // ====== GUI Filme ===============================================
+    // ===============================================================
+
     public static BooleanProperty FILM_GUI_SHOW_MENU = addBoolProp("film-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("film-gui-show-table-tool-tip", Boolean.TRUE);
     public static StringProperty FILM_GUI_FILTER_DIALOG = addStrProp("film-gui-filter-dialog", "400:500");
@@ -255,24 +275,25 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty ADD_BLACK_DIALOG_SIZE = addStrProp("add-black-dialog-size", "600:400");
     public static DoubleProperty FILM_PANE_INFO_DIVIDER = addDoubleProp("film-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
-    // Gui Filme Info-Panes
-    public static BooleanProperty FILM_GUI_INFO_IS_SHOWING = addBoolProp("film-gui-info-is-showing", Boolean.TRUE);
-    public static BooleanProperty FILM_GUI_INFO_IS_RIP = addBoolProp("film-gui-info-is-rip", Boolean.FALSE);
-
-    // Propose
-    public static StringProperty PROPOSE_DIALOG_CONTROLLER_SIZE = addStrProp("propose-dialog-controller-size");
-
     // Gui Film -> fast search
     public static BooleanProperty FAST_SEARCH_ON = addBoolProp("fast-search-on", Boolean.FALSE);
     public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
 
     // Film Info Pane
+    public static BooleanProperty FILM_GUI_INFO_IS_SHOWING = addBoolProp("film-gui-info-is-showing", Boolean.TRUE);
     public static BooleanProperty FILM_INFO_TAB_IS_SHOWING = addBoolProp("film-info-tab-is-showing", Boolean.TRUE);
     public static BooleanProperty FILM_PANE_INFO_IS_RIP = addBoolProp("film-pane-info-is-rip", false);
     public static BooleanProperty FILM_PANE_BUTTON_IS_RIP = addBoolProp("film-pane-button-is-rip", false);
     public static BooleanProperty FILM_PANE_MEDIA_IS_RIP = addBoolProp("film-pane-media-is-rip", false);
+    public static StringProperty FILM_PANE_DIALOG_INFO_SIZE = addStrProp("film-pane-dialog-info-size");
+    public static StringProperty FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("film-pane-dialog-button-size");
+    public static StringProperty FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("film-pane-dialog-media-size");
 
-    // LiveFilmGui
+
+    // ===============================================================
+    // ====== GUI Live-Filme =========================================
+    // ===============================================================
+
     public static BooleanProperty LIVE_FILM_IS_VISIBLE = addBoolProp("live-film-is-visible", Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_GUI_SHOW_MENU = addBoolProp("live-film-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.TRUE);
@@ -282,7 +303,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty LIVE_FILM_GUI_FILTER_DIALOG_SIZE = addStrProp("live-film-gui-filter-dialog-size", "400:600");
     public static DoubleProperty LIVE_FILM_GUI_INFO_DIVIDER = addDoubleProp("live-film-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
     public static BooleanProperty LIVE_FILM_GUI_INFO_IS_SHOWING = addBoolProp("live-film-gui-info-is-showing", Boolean.TRUE);
-    public static BooleanProperty LIVE_FILM_GUI_INFO_IS_RIP = addBoolProp("live-film-gui-info-is-rip", Boolean.FALSE);
 
     public static StringProperty LIVE_FILM_GUI_TABLE_WIDTH = addStrProp("live-film-gui-table-width");
     public static StringProperty LIVE_FILM_GUI_TABLE_SORT = addStrProp("live-film-gui-table-sort");
@@ -301,8 +321,15 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty LIVE_FILM_PANE_INFO_IS_RIP = addBoolProp("live-film-pane-info-is-rip", false);
     public static BooleanProperty LIVE_FILM_PANE_BUTTON_IS_RIP = addBoolProp("live-film-pane-button-is-rip", false);
     public static BooleanProperty LIVE_FILM_PANE_MEDIA_IS_RIP = addBoolProp("live-film-pane-media-is-rip");
+    public static StringProperty LIVE_FILM_PANE_DIALOG_INFO_SIZE = addStrProp("live-film-pane-dialog-info-size", "400:400");
+    public static StringProperty LIVE_FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("live-film-pane-dialog-button-size");
+    public static StringProperty LIVE_FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("live-film-pane-dialog-media-size");
 
-    // Gui Download
+
+    // ===============================================================
+    // ====== GUI Downloads ==========================================
+    // ===============================================================
+
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);
     public static List<String> DOWNLOAD_DIALOG_DOWNLOAD_PATH = addListProp("download-dialog-download-path"); // gesammelten Downloadpfade im Downloaddialog
@@ -310,7 +337,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addBoolProp("download-dialog-start-download-now", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addBoolProp("download-dialog-start-download-not", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addBoolProp("download-dialog-start-download-time", Boolean.FALSE);
-    public static StringProperty DOWNLOAD_DIALOG_EDIT_SIZE = addStrProp("download-dialog-edit-size", "800:800");
     public static StringProperty DOWNLOAD_DIALOG_START_AT_TIME_SIZE = addStrProp("download-dialog-start-at-time-size", "800:400");
     public static StringProperty DOWNLOAD_DIALOG_ADD_SIZE = addStrProp("download-dialog-add-size", "700:700");
     public static StringProperty DOWNLOAD_DIALOG_ADD_MORE_SIZE = addStrProp("download-dialog-add-more-size", "800:700");
@@ -339,13 +365,14 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty DOWNLOAD_DIALOG_ADD_INFO_ALL = addBoolProp("download-dialog-add-info-all", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_ADD_START_TIME_ALL = addBoolProp("download-dialog-add-start-time-all", Boolean.TRUE);
 
-    // Download Info-Panes
-    public static BooleanProperty DOWNLOAD_GUI_INFO_IS_RIP = addBoolProp("download-gui-info-is-rip", Boolean.FALSE);
+    // DownloadChart
+    public static IntegerProperty DOWNLOAD_CHART_SHOW_WHAT = addIntProp("download-chart-show-what", ChartGenerateFactory.GEN_CHART_SHOW_DOWN);
+    public static BooleanProperty DOWNLOAD_CHART_ONLY_EXISTING = addBoolProp("download-chart-only-existing", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_CHART_ONLY_RUNNING = addBoolProp("download-chart-only-running", Boolean.FALSE);
+    public static IntegerProperty DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN = addIntProp("download-chart-max-time-to-show-min", 30); //MAX Minuten im Chart
 
     // Download Info-Panes
     public static BooleanProperty DOWNLOAD_INFO_TAB_IS_SHOWING = addBoolProp("download-info-tab-is-showing", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_CHART_TAB_IS_SHOWING = addBoolProp("download-chart-tab-is-showing", Boolean.TRUE);
-
     public static StringProperty DOWNLOAD_PANE_DIALOG_INFO_SIZE = addStrProp("download-dialog-info-size", "400:400");
     public static StringProperty DOWNLOAD_DIALOG_MEDIA_SIZE = addStrProp("download-dialog-media-size");
     public static StringProperty DOWNLOAD_DIALOG_CHART_SIZE = addStrProp("download-dialog-chart-size");
@@ -359,7 +386,10 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty DOWNLOAD_PANE_INFO_LIST_IS_RIP = addBoolProp("download-pane-info-list-is-rip");
 
 
-    // Gui Abo
+    // ===============================================================
+    // ====== GUI Abos ===============================================
+    // ===============================================================
+
     public static BooleanProperty ABO_GUI_SHOW_MENU = addBoolProp("abo-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty ABO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("abo-gui-show-table-tool-tip", Boolean.TRUE);
     public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);
@@ -388,7 +418,21 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty ABO_PANE_INFO_LIST_IS_RIP = addBoolProp("abo-pane-info-list-is-rip", Boolean.FALSE);
 
 
-    // ===================== MEDIA ===================================
+    // ===============================================================
+    // ====== MEDIA ==================================================
+    // ===============================================================
+
+    // MediaDB
+    public static StringProperty MEDIA_DIALOG_SIZE = addStrProp("media-dialog-size", "800:700");
+    public static StringProperty MEDIA_DB_SUFFIX = addStrProp("media-db-suffix");
+    public static BooleanProperty MEDIA_DB_WITH_OUT_SUFFIX = addBoolProp("media-db-with-out-suffix");
+    public static BooleanProperty MEDIA_DB_NO_HIDDEN_FILES = addBoolProp("media-db-no-hidden-files");
+    public static IntegerProperty MEDIA_DB_FILE_SIZE_MBYTE = addIntProp("media-db-filesize_mbyte", ProgConst.MEDIA_COLLECTION_FILESIZE_ALL_FILES);
+    public static BooleanProperty MEDIA_DB_EXPORT_INTERN = addBoolProp("media-db-export-intern", Boolean.FALSE);
+    public static BooleanProperty MEDIA_DB_EXPORT_EXTERN = addBoolProp("media-db-export-extern", Boolean.FALSE);
+    public static BooleanProperty MEDIA_DB_EXPORT_INTERN_EXTERN = addBoolProp("media-db-export-intern-extern", Boolean.TRUE);
+    public static StringProperty MEDIA_DB_EXPORT_FILE = addStrProp("media-db-export-file");
+
     // Gui Media Search -> Infobereich Film
     public static IntegerProperty INFO_FILM_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("info-film-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
     public static IntegerProperty INFO_FILM_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("info-film-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
@@ -442,32 +486,13 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("dialog-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
     public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_ABO = addIntProp("dialog-search-in-what-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
     public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_HISTORY = addIntProp("dialog-search-in-what-for-history", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
-    // ========================================================
 
     public static StringProperty GUI_MEDIA_CONFIG_DIALOG_SIZE = addStrProp("gui-media-config-dialog-size", "800:700");
 
-    // DownloadChart
-    public static IntegerProperty DOWNLOAD_CHART_SHOW_WHAT = addIntProp("download-chart-show-what", ChartGenerateFactory.GEN_CHART_SHOW_DOWN);
-    public static BooleanProperty DOWNLOAD_CHART_ONLY_EXISTING = addBoolProp("download-chart-only-existing", Boolean.FALSE);
-    public static BooleanProperty DOWNLOAD_CHART_ONLY_RUNNING = addBoolProp("download-chart-only-running", Boolean.FALSE);
-    public static IntegerProperty DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN = addIntProp("download-chart-max-time-to-show-min", 30); //MAX Minuten im Chart
 
-
-    // GuiPaneDialog
-    public static StringProperty FILM_PANE_DIALOG_INFO_SIZE = addStrProp("film-pane-dialog-info-size");
-    public static BooleanProperty FILM_PANE_DIALOG_INFO_ON = addBoolProp("film-pane-dialog-info-on");
-    public static StringProperty FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("film-pane-dialog-button-size");
-    public static BooleanProperty FILM_PANE_DIALOG_BUTTON_ON = addBoolProp("film-pane-dialog-button-on");
-    public static StringProperty FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("film-pane-dialog-media-size");
-    public static BooleanProperty FILM_PANE_DIALOG_MEDIA_ON = addBoolProp("film-pane-dialog-media-on");
-
-    public static StringProperty LIVE_FILM_PANE_DIALOG_INFO_SIZE = addStrProp("live-film-pane-dialog-info-size", "400:400");
-    public static BooleanProperty LIVE_FILM_PANE_DIALOG_INFO_ON = addBoolProp("live-film-pane-dialog-info-on");
-    public static StringProperty LIVE_FILM_PANE_DIALOG_BUTTON_SIZE = addStrProp("live-film-pane-dialog-button-size");
-    public static BooleanProperty LIVE_FILM_PANE_DIALOG_BUTTON_ON = addBoolProp("live-film-pane-dialog-button-on");
-    public static StringProperty LIVE_FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("live-film-pane-dialog-media-size");
-    public static BooleanProperty LIVE_FILM_PANE_DIALOG_MEDIA_ON = addBoolProp("live-film-pane-dialog-media-on");
-
+    // ===============================================================
+    // ====== Dialoge ================================================
+    // ===============================================================
 
     // ConfigDialog
     public static StringProperty DOWNLOAD_SUBTITLE_DIALOG_SIZE = addStrProp("download-subtitle-dialog-size", "");
@@ -488,22 +513,9 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_WEBSITE_URL = addBoolProp("film-info-dialog-show-website-url", Boolean.FALSE);
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_DESCRIPTION = addBoolProp("film-info-dialog-show-description", Boolean.TRUE);
 
-    // Filter Filme
-    public static IntegerProperty FILTER_FILM_SEL_FILTER = addIntProp("filter-film-sel-filter");
 
-    // Filter Abo
-    public static StringProperty FILTER_ABO_CHANNEL = addStrProp("filter-abo-channel");
-    public static StringProperty FILTER_ABO_NAME = addStrProp("filter-abo-name");
-    public static StringProperty FILTER_ABO_SEARCH_TEXT = addStrProp("filter-abo-search-text");
-    public static StringProperty FILTER_ABO_DESCRIPTION = addStrProp("filter-abo-description");
-    public static StringProperty FILTER_ABO_TYPE = addStrProp("filter-abo-type");
-
-    // Filter Download
-    public static StringProperty FILTER_DOWNLOAD_CHANNEL = addStrProp("filter-download-channel");
-    public static StringProperty FILTER_DOWNLOAD_SOURCE = addStrProp("filter-download-source");
-    public static StringProperty FILTER_DOWNLOAD_TYPE = addStrProp("filter-download-type");
-    public static StringProperty FILTER_DOWNLOAD_ABO = addStrProp("filter-download-abo");
-    public static StringProperty FILTER_DOWNLOAD_STATE = addStrProp("filter-download-state");
+    // ===============================================================
+    // ====== Shorcuts ===============================================
 
     // Shortcuts, Programmweit
     public static String SHORTCUT_CENTER_INIT = "Ctrl+W";
@@ -581,8 +593,11 @@ public class ProgConfig extends P2DataProgConfig {
     public static String SHORTCUT_DOWNLOAD_CLEAN_UP_INIT = "CTRL+O";
     public static StringProperty SHORTCUT_DOWNLOAD_CLEAN_UP = addStrProp("SHORTCUT_DOWNLOAD_CLEAN_UP", SHORTCUT_DOWNLOAD_CLEAN_UP_INIT);
 
+
+    // ========================================================
+    // ========================================================
     private static final String[] PARAMETER_INFO = new String[]{
-            "\"__system-parameter__xxx\" können nur im Konfigfile geändert werden",
+            "\"System-Parameter\" können nur im Configfile geändert werden",
             "\t" + "und sind auch nicht für ständige Änderungen gedacht.",
             "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt.",
             P2Log.LILNE3,
@@ -592,8 +607,6 @@ public class ProgConfig extends P2DataProgConfig {
             "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
                     SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue(),
             "  *" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download,",
-//            "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: "
-//                    + SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP.getValue(),
             "  *" + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
                     + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue(),
             "  *" + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
@@ -606,7 +619,6 @@ public class ProgConfig extends P2DataProgConfig {
     static {
         check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT, 5, 200);
         check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT, 0, 10);
-//        check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP, SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_HTTP_INIT, 0, 10);
         check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS, SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT, 5, 200);
         check(SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS, SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS_INIT, 5, 200);
         check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND_INIT, 5, 200);
@@ -675,6 +687,8 @@ public class ProgConfig extends P2DataProgConfig {
         list.add(P2Log.LILNE1);
 
         Collections.addAll(list, PARAMETER_INFO);
+        list.add("");
+        list.add("");
         list.add(P2Log.LILNE2);
         list.add("Programmeinstellungen");
         list.add(P2Log.LILNE3);
