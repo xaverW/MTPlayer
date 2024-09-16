@@ -37,7 +37,7 @@ public class AboInfoController extends VBox {
         PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadInfoController.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, tabPane, paneAboInfoList)) {
+                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfoList)) {
                     paneAboInfoList.setInfoText();
                 }
             }
@@ -45,7 +45,7 @@ public class AboInfoController extends VBox {
     }
 
     public void setAboInfos(AboData abo) {
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, tabPane, paneAboInfo)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
             paneAboInfo.setAbo(abo);
         }
     }
@@ -67,7 +67,7 @@ public class AboInfoController extends VBox {
             if (n) {
                 dialogInfo();
             } else {
-                ProgConfig.ABO_INFO_TAB_IS_SHOWING.set(true);
+                ProgConfig.ABO_GUI_INFO_IS_SHOWING.set(true);
             }
             setTabs();
         });
@@ -79,7 +79,7 @@ public class AboInfoController extends VBox {
             if (n) {
                 dialogInfoList();
             } else {
-                ProgConfig.ABO_INFO_TAB_IS_SHOWING.set(true);
+                ProgConfig.ABO_GUI_INFO_IS_SHOWING.set(true);
             }
             setTabs();
         });
@@ -106,16 +106,16 @@ public class AboInfoController extends VBox {
 
         if (!ProgConfig.ABO_PANE_INFO_IS_RIP.get()) {
             tabPane.getTabs().add(
-                    InfoPaneFactory.makeTab(paneAboInfo, "Beschreibung", ProgConfig.ABO_INFO_TAB_IS_SHOWING, ProgConfig.ABO_PANE_INFO_IS_RIP));
-
+                    InfoPaneFactory.makeTab(paneAboInfo, "Beschreibung", ProgConfig.ABO_GUI_INFO_IS_SHOWING, ProgConfig.ABO_PANE_INFO_IS_RIP));
         }
         if (!ProgConfig.ABO_PANE_INFO_LIST_IS_RIP.get()) {
             tabPane.getTabs().add(
-                    InfoPaneFactory.makeTab(paneAboInfoList, "Infos", ProgConfig.ABO_INFO_TAB_IS_SHOWING, ProgConfig.ABO_PANE_INFO_LIST_IS_RIP));
+                    InfoPaneFactory.makeTab(paneAboInfoList, "Infos", ProgConfig.ABO_GUI_INFO_IS_SHOWING, ProgConfig.ABO_PANE_INFO_LIST_IS_RIP));
         }
 
         if (tabPane.getTabs().isEmpty()) {
             // keine Tabs
+
         } else if (tabPane.getTabs().size() == 1) {
             // dann gibts einen Tab
             final Node node = tabPane.getTabs().get(0).getContent();

@@ -32,7 +32,6 @@ public class FilmInfoController extends VBox {
     private PaneFilmButton paneButton;
     private PaneMedia paneMedia;
     private final TabPane tabPane = new TabPane();
-
     private final ProgData progData;
 
     public FilmInfoController() {
@@ -41,12 +40,10 @@ public class FilmInfoController extends VBox {
     }
 
     public void setFilmInfos(FilmDataMTP film) {
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.FILM,
-                tabPane, paneFilmInfo)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.FILM, paneFilmInfo)) {
             paneFilmInfo.setFilm(film);
         }
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.FILM,
-                tabPane, paneMedia)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.FILM, paneMedia)) {
             paneMedia.setSearchPredicate(film);
         }
     }

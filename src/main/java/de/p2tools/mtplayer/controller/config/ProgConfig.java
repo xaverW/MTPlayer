@@ -263,7 +263,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILM_GUI_FILTER_DIALOG = addStrProp("film-gui-filter-dialog", "400:500");
     public static BooleanProperty FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBoolProp("film-gui-filter-dialog-is-showing", Boolean.FALSE);
     public static DoubleProperty FILM_GUI_FILTER_DIVIDER = addDoubleProp("film-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
-    public static BooleanProperty FILM_GUI_FILTER_IS_VISIBLE = addBoolProp("film-gui-filter-is-visible", Boolean.TRUE);
+    public static BooleanProperty FILM_GUI_FILTER_IS_SHOWING = addBoolProp("film-gui-filter-is-showing", Boolean.TRUE);
     public static BooleanProperty FILM_GUI_FILTER_IS_RIP = addBoolProp("film-gui-filter-is-rip", Boolean.FALSE);
     public static StringProperty FILM_GUI_FILTER_DIALOG_SIZE = addStrProp("film-gui-filter-dialog-size", "400:600");
     public static DoubleProperty FILM_GUI_INFO_DIVIDER = addDoubleProp("film-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
@@ -372,7 +372,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN = addIntProp("download-chart-max-time-to-show-min", 30); //MAX Minuten im Chart
 
     // Download Info-Panes
-    public static BooleanProperty DOWNLOAD_INFO_TAB_IS_SHOWING = addBoolProp("download-info-tab-is-showing", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_GUI_INFO_IS_SHOWING = addBoolProp("download-gui-is-showing", Boolean.TRUE);
     public static StringProperty DOWNLOAD_PANE_DIALOG_INFO_SIZE = addStrProp("download-dialog-info-size", "400:400");
     public static StringProperty DOWNLOAD_DIALOG_MEDIA_SIZE = addStrProp("download-dialog-media-size");
     public static StringProperty DOWNLOAD_DIALOG_CHART_SIZE = addStrProp("download-dialog-chart-size");
@@ -397,7 +397,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", FilterCheck.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
     public static StringProperty ABO_DIALOG_EDIT_SIZE = addStrProp("abo-dialog-edit-size", "600:750");
     public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDoubleProp("abo-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
-    public static BooleanProperty ABO_GUI_FILTER_IS_VISIBLE = addBoolProp("abo-gui-filter-is-visible", Boolean.TRUE);
+    public static BooleanProperty ABO_GUI_FILTER_IS_SHOWING = addBoolProp("abo-gui-filter-is-showing", Boolean.TRUE);
     public static BooleanProperty ABO_GUI_FILTER_IS_RIP = addBoolProp("abo-gui-filter-is-rip", Boolean.FALSE);
     public static StringProperty ABO_GUI_FILTER_DIALOG_SIZE = addStrProp("abo-gui-filter-dialog-size", "400:600");
     public static DoubleProperty ABO_GUI_INFO_DIVIDER = addDoubleProp("abo-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
@@ -411,7 +411,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty ABO_ONLY_STOP = addIntProp("abo-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK);
 
     // Abo Info-Panes
-    public static BooleanProperty ABO_INFO_TAB_IS_SHOWING = addBoolProp("abo-info-tab-is-showing", Boolean.TRUE);
+    public static BooleanProperty ABO_GUI_INFO_IS_SHOWING = addBoolProp("abo-gui-info-is-showing", Boolean.TRUE);
     public static StringProperty ABO_PANE_DIALOG_INFO_SIZE = addStrProp("abo-pane-dialog-info-size", "400:400");
     public static StringProperty ABO_PANE_DIALOG_INFO_LIST_SIZE = addStrProp("abo-pane-dialog-info-list-size", "400:400");
     public static BooleanProperty ABO_PANE_INFO_IS_RIP = addBoolProp("abo-pane-info-is-rip", Boolean.FALSE);

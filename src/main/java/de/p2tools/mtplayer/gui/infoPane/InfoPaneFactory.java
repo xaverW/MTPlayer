@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 
 public class InfoPaneFactory {
@@ -39,7 +38,7 @@ public class InfoPaneFactory {
         return tab;
     }
 
-    public static boolean paneIsVisible(MTPlayerController.PANE_SHOWN paneShown, TabPane tabPane, Pane infoPane) {
+    public static boolean paneIsVisible(MTPlayerController.PANE_SHOWN paneShown, Pane infoPane) {
         if (MTPlayerController.paneShown != paneShown) {
             return false;
 

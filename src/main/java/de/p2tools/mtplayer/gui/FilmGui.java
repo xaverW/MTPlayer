@@ -53,8 +53,7 @@ public class FilmGui {
         }
         splitPane.getItems().clear();
 
-        if (ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.get()) {
-
+        if (ProgConfig.FILM_GUI_FILTER_IS_SHOWING.get()) {
             if (ProgConfig.FILM_GUI_FILTER_IS_RIP.get()) {
 
                 filterPaneDialog = new FilterPaneDialog(filmFilterController, "Filmfilter",
@@ -65,7 +64,7 @@ public class FilmGui {
             } else {
                 P2ClosePaneV closePaneV = new P2ClosePaneV();
                 closePaneV.addPane(filmFilterController);
-                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.set(false));
+                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.FILM_GUI_FILTER_IS_SHOWING.set(false));
                 closePaneV.getButtonRip().setOnAction(a -> ProgConfig.FILM_GUI_FILTER_IS_RIP.set(!ProgConfig.FILM_GUI_FILTER_IS_RIP.get()));
 
                 splitPane.getItems().addAll(closePaneV, filmGuiController);
@@ -94,7 +93,7 @@ public class FilmGui {
         HBox.setHgrow(splitPane, Priority.ALWAYS);
         hBox.getChildren().addAll(splitPane, menuController);
 
-        ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.FILM_GUI_FILTER_IS_SHOWING.addListener((observable, oldValue, newValue) -> setSplit());
         ProgConfig.FILM_GUI_FILTER_IS_RIP.addListener((observable, oldValue, newValue) -> setSplit());
         setSplit();
         return new SplitPane(hBox);

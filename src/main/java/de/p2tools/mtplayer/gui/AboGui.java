@@ -42,43 +42,6 @@ public class AboGui {
         aboGuiController = new AboGuiController();
     }
 
-    private void setSplit() {
-        if (bound) {
-            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.ABO_GUI_FILTER_DIVIDER);
-            bound = false;
-        }
-
-        if (filterPaneDialog != null) {
-            filterPaneDialog.closeSetNoRip();
-            filterPaneDialog = null;
-        }
-        splitPane.getItems().clear();
-
-        if (ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.get()) {
-            if (ProgConfig.ABO_GUI_FILTER_IS_RIP.get()) {
-
-                filterPaneDialog = new FilterPaneDialog(aboFilterController, "Abofilter",
-                        ProgConfig.ABO_GUI_FILTER_DIALOG_SIZE,
-                        ProgConfig.ABO_GUI_FILTER_IS_RIP, ProgData.ABO_TAB_ON);
-
-                splitPane.getItems().addAll(aboGuiController);
-
-            } else {
-                P2ClosePaneV closePaneV = new P2ClosePaneV();
-                closePaneV.addPane(aboFilterController);
-                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.set(false));
-                closePaneV.getButtonRip().setOnAction(a -> ProgConfig.ABO_GUI_FILTER_IS_RIP.set(!ProgConfig.ABO_GUI_FILTER_IS_RIP.get()));
-
-                splitPane.getItems().addAll(closePaneV, aboGuiController);
-                splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_FILTER_DIVIDER);
-                bound = true;
-            }
-
-        } else {
-            splitPane.getItems().addAll(aboGuiController);
-        }
-    }
-
     public SplitPane pack() {
         // Menü
         final MenuController menuController = new MenuController(MenuController.StartupMode.ABO);
@@ -95,9 +58,46 @@ public class AboGui {
         HBox.setHgrow(splitPane, Priority.ALWAYS);
         hBox.getChildren().addAll(splitPane, menuController);
 
-        ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.ABO_GUI_FILTER_IS_SHOWING.addListener((observable, oldValue, newValue) -> setSplit());
         ProgConfig.ABO_GUI_FILTER_IS_RIP.addListener((observable, oldValue, newValue) -> setSplit());
         setSplit();
         return new SplitPane(hBox);
+    }
+
+    private void setSplit() {
+        if (bound) {
+            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.ABO_GUI_FILTER_DIVIDER);
+            bound = false;
+        }
+
+        if (filterPaneDialog != null) {
+            filterPaneDialog.closeSetNoRip();
+            filterPaneDialog = null;
+        }
+        splitPane.getItems().clear();
+
+        if (ProgConfig.ABO_GUI_FILTER_IS_SHOWING.get()) {
+            if (ProgConfig.ABO_GUI_FILTER_IS_RIP.get()) {
+
+                filterPaneDialog = new FilterPaneDialog(aboFilterController, "Abofilter",
+                        ProgConfig.ABO_GUI_FILTER_DIALOG_SIZE,
+                        ProgConfig.ABO_GUI_FILTER_IS_RIP, ProgData.ABO_TAB_ON);
+
+                splitPane.getItems().addAll(aboGuiController);
+
+            } else {
+                P2ClosePaneV closePaneV = new P2ClosePaneV();
+                closePaneV.addPane(aboFilterController);
+                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.ABO_GUI_FILTER_IS_SHOWING.set(false));
+                closePaneV.getButtonRip().setOnAction(a -> ProgConfig.ABO_GUI_FILTER_IS_RIP.set(!ProgConfig.ABO_GUI_FILTER_IS_RIP.get()));
+
+                splitPane.getItems().addAll(closePaneV, aboGuiController);
+                splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_FILTER_DIVIDER);
+                bound = true;
+            }
+
+        } else {
+            splitPane.getItems().addAll(aboGuiController);
+        }
     }
 }

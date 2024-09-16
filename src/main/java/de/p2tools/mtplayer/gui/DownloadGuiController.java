@@ -82,7 +82,7 @@ public class DownloadGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
         ProgConfig.DOWNLOAD_PANE_INFO_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
         ProgConfig.DOWNLOAD_PANE_MEDIA_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
         ProgConfig.DOWNLOAD_PANE_ERROR_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
@@ -486,11 +486,11 @@ public class DownloadGuiController extends AnchorPane {
         if (!downloadInfoController.arePanesShowing()) {
             // dann wird nix angezeigt
             splitPane.getItems().add(scrollPane);
-            ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.set(false);
+            ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.set(false);
             return;
         }
 
-        if (ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.getValue()) {
+        if (ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.getValue()) {
             bound = true;
             splitPane.getItems().addAll(scrollPane, downloadInfoController);
             SplitPane.setResizableWithParent(downloadInfoController, false);

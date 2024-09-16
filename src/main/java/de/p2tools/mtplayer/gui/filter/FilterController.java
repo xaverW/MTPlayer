@@ -29,7 +29,6 @@ public class FilterController extends VBox {
     public static final int FILTER_SPACING_TEXTFILTER = 10;
 
     public FilterController() {
-        super();
         setSpacing(P2LibConst.SPACING_VBOX);
     }
 

@@ -41,12 +41,10 @@ public class LiveFilmInfoController extends VBox {
     }
 
     public void setFilmInfos(FilmDataMTP film) {
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM,
-                tabPane, paneFilmInfo)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM, paneFilmInfo)) {
             paneFilmInfo.setFilm(film);
         }
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM,
-                tabPane, paneMedia)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM, paneMedia)) {
             paneMedia.setSearchPredicate(film);
         }
     }
@@ -56,7 +54,6 @@ public class LiveFilmInfoController extends VBox {
                 !ProgConfig.LIVE_FILM_PANE_BUTTON_IS_RIP.getValue() ||
                 !ProgConfig.LIVE_FILM_PANE_MEDIA_IS_RIP.getValue();
     }
-
 
     private void initInfoPane() {
         paneFilmInfo = new PaneFilmInfo(ProgConfig.LIVE_FILM_PANE_INFO_DIVIDER);

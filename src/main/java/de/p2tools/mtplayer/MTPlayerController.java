@@ -201,7 +201,7 @@ public class MTPlayerController extends StackPane {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                ProgConfig.FILM_INFO_TAB_IS_SHOWING.setValue(!ProgConfig.FILM_INFO_TAB_IS_SHOWING.getValue());
+                MTPlayerFactory.setInfos();
             }
         });
         btnLive.setOnMouseClicked(mouseEvent -> {
@@ -209,7 +209,7 @@ public class MTPlayerController extends StackPane {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                ProgConfig.LIVE_FILM_INFO_TAB_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM_INFO_TAB_IS_SHOWING.getValue());
+                MTPlayerFactory.setInfos();
             }
         });
         btnDownload.setOnMouseClicked(mouseEvent -> {
@@ -217,7 +217,7 @@ public class MTPlayerController extends StackPane {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.getValue());
+                MTPlayerFactory.setInfos();
             }
         });
         btnAbo.setOnMouseClicked(mouseEvent -> {
@@ -225,7 +225,7 @@ public class MTPlayerController extends StackPane {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                ProgConfig.ABO_INFO_TAB_IS_SHOWING.setValue(!ProgConfig.ABO_INFO_TAB_IS_SHOWING.getValue());
+                MTPlayerFactory.setInfos();
             }
         });
     }

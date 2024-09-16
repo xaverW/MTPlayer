@@ -45,11 +45,11 @@ public class DownloadInfoController extends VBox {
             @Override
             public void pingFx() {
                 paneBandwidthChart.searchInfos(InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
-                        tabPane, paneBandwidthChart)
+                        paneBandwidthChart)
                 );
 
                 if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
-                        tabPane, paneDownloadInfoList)) {
+                        paneDownloadInfoList)) {
                     paneDownloadInfoList.setInfoText();
                 }
 
@@ -59,11 +59,11 @@ public class DownloadInfoController extends VBox {
 
     public void setDownloadInfos(DownloadData download) {
         if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
-                tabPane, paneFilmInfo)) {
+                paneFilmInfo)) {
             paneFilmInfo.setFilm(download);
         }
         if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
-                tabPane, paneMedia)) {
+                paneMedia)) {
             paneMedia.setSearchPredicate(download);
         }
     }
@@ -95,7 +95,7 @@ public class DownloadInfoController extends VBox {
             if (n) {
                 dialogInfo();
             } else {
-                ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.set(true);
+                ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.set(true);
             }
             setTabs();
         });
@@ -107,7 +107,7 @@ public class DownloadInfoController extends VBox {
             if (n) {
                 dialogMedia();
             } else {
-                ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.set(true);
+                ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.set(true);
             }
             setTabs();
         });
@@ -119,7 +119,7 @@ public class DownloadInfoController extends VBox {
             if (n) {
                 dialogChart();
             } else {
-                ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.set(true);
+                ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.set(true);
             }
             setTabs();
         });
@@ -131,7 +131,7 @@ public class DownloadInfoController extends VBox {
             if (n) {
                 dialogDownloadError();
             } else {
-                ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.set(true);
+                ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.set(true);
             }
             setTabs();
         });
@@ -143,7 +143,7 @@ public class DownloadInfoController extends VBox {
             if (n) {
                 dialogInfoList();
             } else {
-                ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.set(true);
+                ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.set(true);
             }
             setTabs();
         });
@@ -210,27 +210,27 @@ public class DownloadInfoController extends VBox {
 
         if (!ProgConfig.DOWNLOAD_PANE_INFO_IS_RIP.getValue()) {
             tabPane.getTabs().add(
-                    InfoPaneFactory.makeTab(paneFilmInfo, "Beschreibung", ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_INFO_IS_RIP));
+                    InfoPaneFactory.makeTab(paneFilmInfo, "Beschreibung", ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_INFO_IS_RIP));
         }
 
         if (!ProgConfig.DOWNLOAD_PANE_MEDIA_IS_RIP.getValue()) {
             tabPane.getTabs().add(
-                    InfoPaneFactory.makeTab(paneMedia, "Mediensammlung", ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_MEDIA_IS_RIP));
+                    InfoPaneFactory.makeTab(paneMedia, "Mediensammlung", ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_MEDIA_IS_RIP));
         }
 
         if (!ProgConfig.DOWNLOAD_PANE_CHART_IS_RIP.getValue()) {
             tabPane.getTabs().add(
-                    InfoPaneFactory.makeTab(paneBandwidthChart, "Downloadchart", ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_CHART_IS_RIP));
+                    InfoPaneFactory.makeTab(paneBandwidthChart, "Downloadchart", ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_CHART_IS_RIP));
         }
 
         if (!ProgConfig.DOWNLOAD_PANE_ERROR_IS_RIP.getValue()) {
             tabPane.getTabs().add(
-                    InfoPaneFactory.makeTab(paneDownloadError, "Downloadfehler", ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_ERROR_IS_RIP));
+                    InfoPaneFactory.makeTab(paneDownloadError, "Downloadfehler", ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_ERROR_IS_RIP));
         }
 
         if (!ProgConfig.DOWNLOAD_PANE_INFO_LIST_IS_RIP.getValue()) {
             tabPane.getTabs().add(
-                    InfoPaneFactory.makeTab(paneDownloadInfoList, "Infos", ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_INFO_LIST_IS_RIP));
+                    InfoPaneFactory.makeTab(paneDownloadInfoList, "Infos", ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING, ProgConfig.DOWNLOAD_PANE_INFO_LIST_IS_RIP));
         }
 
         if (tabPane.getTabs().isEmpty()) {

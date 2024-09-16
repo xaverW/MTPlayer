@@ -37,7 +37,7 @@ public class MTPlayerFactory {
     public static void setFilter() {
         switch (MTPlayerController.paneShown) {
             case FILM:
-                ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.FILM_GUI_FILTER_IS_VISIBLE.getValue());
+                ProgConfig.FILM_GUI_FILTER_IS_SHOWING.setValue(!ProgConfig.FILM_GUI_FILTER_IS_SHOWING.getValue());
                 break;
             case LIVE_FILM:
                 ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.getValue());
@@ -46,7 +46,7 @@ public class MTPlayerFactory {
                 ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.getValue());
                 break;
             case ABO:
-                ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.getValue());
+                ProgConfig.ABO_GUI_FILTER_IS_SHOWING.setValue(!ProgConfig.ABO_GUI_FILTER_IS_SHOWING.getValue());
                 break;
         }
     }
@@ -60,10 +60,10 @@ public class MTPlayerFactory {
                 ProgConfig.LIVE_FILM_GUI_INFO_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM_GUI_INFO_IS_SHOWING.getValue());
                 break;
             case DOWNLOAD:
-                ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD_INFO_TAB_IS_SHOWING.getValue());
+                ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.getValue());
                 break;
             case ABO:
-                ProgConfig.ABO_INFO_TAB_IS_SHOWING.setValue(!ProgConfig.ABO_INFO_TAB_IS_SHOWING.getValue());
+                ProgConfig.ABO_GUI_INFO_IS_SHOWING.setValue(!ProgConfig.ABO_GUI_INFO_IS_SHOWING.getValue());
                 break;
         }
     }
