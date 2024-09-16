@@ -24,50 +24,79 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class P2ClosePaneH extends HBox {
 
     private final VBox vBoxAll = new VBox();
-    private final BooleanProperty closeProperty;
-    private final boolean scroll;
-    private final BooleanProperty ripProperty;
+    private final boolean addScroll;
+    private final boolean addRipButton;
+    private final Button buttonClose = new Button();
+    private final Button buttonRip = new Button();
+    private final BooleanProperty showNoButton;
 
-    public P2ClosePaneH(BooleanProperty closeProperty, boolean scroll) {
-        this.closeProperty = closeProperty;
-        this.scroll = scroll;
-        this.ripProperty = null;
+    public P2ClosePaneH() {
+        // alles anzeigen
+        this.addScroll = true;
+        this.addRipButton = true;
+        this.showNoButton = null;
         init();
     }
 
-    public P2ClosePaneH(BooleanProperty closeProperty, boolean scroll, boolean rip) {
-        this.closeProperty = closeProperty;
-        this.scroll = scroll;
-        this.ripProperty = new SimpleBooleanProperty();
+    public P2ClosePaneH(boolean addRipButton, boolean addScroll) {
+        this.addScroll = addScroll;
+        this.addRipButton = addRipButton;
+        this.showNoButton = null;
         init();
+    }
+
+    public P2ClosePaneH(boolean addRipButton, boolean addScroll, BooleanProperty showNoButton) {
+        this.addScroll = addScroll;
+        this.addRipButton = addRipButton;
+        this.showNoButton = showNoButton == null ? new SimpleBooleanProperty(true) : showNoButton;
+        init();
+    }
+
+    public Button getButtonClose() {
+        return buttonClose;
+    }
+
+    public Button getButtonRip() {
+        return buttonRip;
+    }
+
+    public void addPane(Pane pane) {
+        getVBoxAll().getChildren().add(pane);
+    }
+
+    public VBox getVBoxAll() {
+        return vBoxAll;
     }
 
     private void init() {
-        Button button = new Button();
-        button.getStyleClass().add("close-button");
-        button.setGraphic(P2ProgIcons.ICON_BUTTON_CLOSE.getImageView());
-        button.setOnAction(a -> closeProperty.setValue(false));
+        buttonClose.getStyleClass().add("close-button");
+        buttonClose.setGraphic(P2ProgIcons.ICON_BUTTON_CLOSE.getImageView());
+
+        buttonRip.getStyleClass().add("rip-button");
+        buttonRip.setGraphic(P2ProgIcons.ICON_BUTTON_RIP.getImageView());
 
         VBox vBox = new VBox();
         vBox.getStyleClass().add("close-pane");
         vBox.setAlignment(Pos.TOP_CENTER);
-        if (ripProperty != null) {
-            Button buttonRip = new Button();
-            buttonRip.getStyleClass().add("rip-button");
-            buttonRip.setGraphic(P2ProgIcons.ICON_BUTTON_RIP.getImageView());
-            buttonRip.setOnAction(a -> ripProperty.setValue(!ripProperty.get()));
-            vBox.getChildren().addAll(button, P2GuiTools.getVBoxGrower(), buttonRip);
-        } else {
-            vBox.getChildren().addAll(button);
+        if (showNoButton != null) {
+            vBox.visibleProperty().bind(showNoButton.not());
+            vBox.managedProperty().bind(showNoButton.not());
         }
 
-        if (scroll) {
+        if (addRipButton) {
+            vBox.getChildren().addAll(buttonClose, P2GuiTools.getVBoxGrower(), buttonRip);
+        } else {
+            vBox.getChildren().addAll(buttonClose);
+        }
+
+        if (addScroll) {
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setFitToHeight(true);
             scrollPane.setFitToWidth(true);
@@ -75,17 +104,10 @@ public class P2ClosePaneH extends HBox {
 
             getChildren().addAll(scrollPane, vBox);
             HBox.setHgrow(scrollPane, Priority.ALWAYS);
+
         } else {
             getChildren().addAll(vBoxAll, vBox);
             HBox.setHgrow(vBoxAll, Priority.ALWAYS);
         }
-    }
-
-    public VBox getVBoxAll() {
-        return vBoxAll;
-    }
-
-    public BooleanProperty getRipProperty() {
-        return ripProperty;
     }
 }

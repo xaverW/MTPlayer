@@ -48,12 +48,10 @@ public class DownloadFilterController extends FilterController {
     private final Label lblBandwidth = new Label();
 
     private final VBox vBoxFilter;
-    private final ProgData progData;
 
     public DownloadFilterController() {
-        super(ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE, ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP);
         vBoxFilter = getVBoxFilter(true);
-        progData = ProgData.getInstance();
+        ProgData progData = ProgData.getInstance();
         progData.downloadFilterController = this;
 
         mbChannel = new P2MenuButton(ProgConfig.FILTER_DOWNLOAD_CHANNEL,

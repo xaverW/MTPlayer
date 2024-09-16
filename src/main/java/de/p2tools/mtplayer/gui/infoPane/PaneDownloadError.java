@@ -26,13 +26,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class PaneDownloadError extends AnchorPane {
+public class PaneDownloadError extends VBox {
 
     private final VBox vBoxCont = new VBox();
     private final ScrollPane scrollPane = new ScrollPane();
     private final Button btnClear = new Button();
-
-
     private final ProgData progData;
 
     public PaneDownloadError() {

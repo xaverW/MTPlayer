@@ -26,23 +26,27 @@ import de.p2tools.p2lib.guitools.P2Color;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 
-public class PaneFilmButton extends TilePane {
+public class PaneFilmButton extends VBox {
 
     private final boolean live;
+    private final TilePane tilePane;
 
     public PaneFilmButton(boolean live) {
         this.live = live;
-        setVgap(P2LibConst.DIST_BUTTON);
-        setHgap(P2LibConst.DIST_BUTTON);
-        setPadding(new Insets(P2LibConst.PADDING));
+        this.tilePane = new TilePane();
+        tilePane.setVgap(P2LibConst.DIST_BUTTON);
+        tilePane.setHgap(P2LibConst.DIST_BUTTON);
+        tilePane.setPadding(new Insets(P2LibConst.PADDING));
 
         addButton();
         ProgData.getInstance().setDataList.addListener((u, o, n) -> addButton());
     }
 
     private void addButton() {
-        getChildren().clear();
+        tilePane.getChildren().clear();
+
         SetDataList setDataList = ProgData.getInstance().setDataList.getSetDataListButton();
         setDataList.forEach(setData -> {
             Button btn = new Button();
@@ -66,7 +70,11 @@ public class PaneFilmButton extends TilePane {
                         }
                     }
             );
-            getChildren().add(btn);
+            tilePane.getChildren().add(btn);
         });
+
+        setSpacing(0);
+        setPadding(new Insets(0));
+        getChildren().add(tilePane);
     }
 }

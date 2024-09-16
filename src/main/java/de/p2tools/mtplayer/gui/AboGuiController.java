@@ -73,7 +73,9 @@ public class AboGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        ProgConfig.ABO_GUI_INFO_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.ABO_INFO_TAB_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.ABO_PANE_INFO_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.ABO_PANE_INFO_LIST_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         filteredAbos = new FilteredList<>(progData.aboList, p -> true);
         sortedAbos = new SortedList<>(filteredAbos);
@@ -246,14 +248,14 @@ public class AboGuiController extends AnchorPane {
         }
 
         splitPane.getItems().clear();
-        if (!aboInfoController.isPaneShowing()) {
+        if (!aboInfoController.arePanesShowing()) {
             // dann wird nix angezeigt
             splitPane.getItems().add(scrollPane);
-            ProgConfig.ABO_GUI_INFO_ON.set(false);
+            ProgConfig.ABO_INFO_TAB_IS_SHOWING.set(false);
             return;
         }
 
-        if (ProgConfig.ABO_GUI_INFO_ON.getValue()) {
+        if (ProgConfig.ABO_INFO_TAB_IS_SHOWING.getValue()) {
             bound = true;
             splitPane.getItems().addAll(scrollPane, aboInfoController);
             SplitPane.setResizableWithParent(aboInfoController, false);

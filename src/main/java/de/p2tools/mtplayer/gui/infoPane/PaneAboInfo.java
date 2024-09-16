@@ -94,7 +94,6 @@ public class PaneAboInfo extends VBox {
     }
 
     public void setAbo(AboData newAbo) {
-//        System.out.println("PaneAboInfo " + LocalDateTime.now());
         if (abo != null) {
             txtName.textProperty().unbindBidirectional(abo.nameProperty());
             txtInfo.textProperty().unbindBidirectional(abo.descriptionProperty());

@@ -29,13 +29,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class PaneAboListInfo extends AnchorPane {
+public class PaneAboInfoList extends VBox {
 
     private final VBox vBoxHeader = new VBox();
     private final GridPane gridPane = new GridPane();
     private final ProgData progData;
 
-    public PaneAboListInfo() {
+    public PaneAboInfoList() {
         progData = ProgData.getInstance();
 
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -62,7 +62,6 @@ public class PaneAboListInfo extends AnchorPane {
     }
 
     public void setInfoText() {
-//        System.out.println("AboListInfo " + LocalDateTime.now());
         vBoxHeader.getChildren().clear();
         gridPane.getChildren().clear();
 

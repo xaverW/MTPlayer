@@ -16,14 +16,12 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.scene.layout.VBox;
 
 public class FilmFilterController extends FilterController {
 
     public FilmFilterController() {
-        super(ProgConfig.FILM_GUI_FILTER_IS_VISIBLE, ProgConfig.FILM_GUI_FILTER_IS_RIP);
         final FilmFilterControllerTextFilter filmFilterControllerTextFilter = new FilmFilterControllerTextFilter();
         final FilmFilterControllerFilter filmFilterControllerFilter = new FilmFilterControllerFilter();
         final FilmFilterControllerClearFilter filmFilterControllerClearFilter = new FilmFilterControllerClearFilter();

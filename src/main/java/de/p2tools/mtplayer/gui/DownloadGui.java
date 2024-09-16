@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilterPaneDialog;
+import de.p2tools.mtplayer.gui.tools.P2ClosePaneV;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -62,7 +63,12 @@ public class DownloadGui {
                 splitPane.getItems().addAll(downloadGuiController);
 
             } else {
-                splitPane.getItems().addAll(downloadFilterController, downloadGuiController);
+                P2ClosePaneV closePaneV = new P2ClosePaneV();
+                closePaneV.addPane(downloadFilterController);
+                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.set(false));
+                closePaneV.getButtonRip().setOnAction(a -> ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.set(!ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.get()));
+
+                splitPane.getItems().addAll(closePaneV, downloadGuiController);
                 splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
                 bound = true;
             }

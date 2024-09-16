@@ -50,7 +50,6 @@ public class LiveFilmGuiController extends AnchorPane {
     private final ProgData progData;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
     private boolean bound = false;
-    private double selPos = -1;
 
     public LiveFilmGuiController() {
         progData = ProgData.getInstance();
@@ -67,6 +66,11 @@ public class LiveFilmGuiController extends AnchorPane {
         scrollPaneTableFilm.setFitToHeight(true);
         scrollPaneTableFilm.setFitToWidth(true);
         scrollPaneTableFilm.setContent(tableView);
+
+        ProgConfig.LIVE_FILM_INFO_TAB_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM_PANE_INFO_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM_PANE_BUTTON_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM_PANE_MEDIA_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         setInfoPane();
         initTable();
@@ -128,10 +132,10 @@ public class LiveFilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        ProgConfig.LIVE_FILM_GUI_INFO_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM_GUI_INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
-                ProgConfig.LIVE_FILM_GUI_INFO_ON.set(true);
+                ProgConfig.LIVE_FILM_GUI_INFO_IS_SHOWING.set(true);
             }
         });
     }
@@ -198,7 +202,6 @@ public class LiveFilmGuiController extends AnchorPane {
         });
     }
 
-
     private void setFilmInfos(FilmDataMTP film) {
         // Film in FilmInfoDialog setzen
         liveFilmInfoController.setFilmInfos(film);
@@ -213,14 +216,14 @@ public class LiveFilmGuiController extends AnchorPane {
         }
 
         splitPane.getItems().clear();
-        if (!liveFilmInfoController.isPaneShowing()) {
+        if (!liveFilmInfoController.arePanesShowing()) {
             // dann wird nix angezeigt
             splitPane.getItems().add(scrollPaneTableFilm);
-            ProgConfig.LIVE_FILM_GUI_INFO_ON.set(false);
+            ProgConfig.LIVE_FILM_INFO_TAB_IS_SHOWING.set(false);
             return;
         }
 
-        if (ProgConfig.LIVE_FILM_GUI_INFO_ON.getValue()) {
+        if (ProgConfig.LIVE_FILM_INFO_TAB_IS_SHOWING.getValue()) {
             bound = true;
             splitPane.getItems().addAll(scrollPaneTableFilm, liveFilmInfoController);
             SplitPane.setResizableWithParent(liveFilmInfoController, false);

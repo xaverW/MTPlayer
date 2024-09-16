@@ -29,26 +29,26 @@ import javafx.scene.layout.VBox;
 
 public class InfoPaneDialog extends P2DialogExtra {
     private final Pane pane;
-    private final BooleanProperty onProperty;
-    private final BooleanProperty infoOnProperty;
-    private final BooleanProperty tabIsOnProperty;
-    ChangeListener<? super Boolean> l = (ChangeListener<Boolean>) (observable, oldValue, newValue) ->
-            setVis(newValue);
+    private final BooleanProperty dialogIsRip; // wird beim Beenden ausgeschaltet
+    private final BooleanProperty tabIsShowing; // Film, Abo, ..
+    private final ChangeListener<? super Boolean> tabListener = (ChangeListener<Boolean>) (observable, oldValue, newValue) ->
+            setVis();
 
     public InfoPaneDialog(Pane pane, String title,
-                          StringProperty sizeProperty, BooleanProperty onProperty, BooleanProperty infoOnProperty,
-                          BooleanProperty tabIsOnProperty) {
+                          StringProperty sizeProperty,
+                          BooleanProperty dialogIsRip,
+                          BooleanProperty tabIsShowing) {
+
         super(ProgData.getInstance().primaryStage, sizeProperty, title,
                 false, false, DECO.NO_BORDER);
 
         this.pane = pane;
-        this.tabIsOnProperty = tabIsOnProperty;
-        this.onProperty = onProperty;// zeigt an, ob Dialog zu sehen
-        this.infoOnProperty = infoOnProperty;// infoPane anzeigen
+        this.dialogIsRip = dialogIsRip; // zeigt an, ob Dialog zu sehen
+        this.tabIsShowing = tabIsShowing;
 
-        init(this.tabIsOnProperty.getValue());
-        this.onProperty.setValue(true);
-        this.tabIsOnProperty.addListener(l);
+        init(this.tabIsShowing.get());
+        this.tabIsShowing.addListener(tabListener);
+        setVis();
     }
 
     @Override
@@ -61,13 +61,12 @@ public class InfoPaneDialog extends P2DialogExtra {
     @Override
     public void close() {
         super.close();
-        tabIsOnProperty.removeListener(l);
-        onProperty.setValue(false);
-        infoOnProperty.setValue(true);
+        tabIsShowing.removeListener(tabListener);
+        dialogIsRip.set(false);
     }
 
-    private void setVis(boolean value) {
-        if (value) {
+    private void setVis() {
+        if (tabIsShowing.get()) {
             showDialog();
         } else {
             getStage().hide();

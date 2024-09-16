@@ -19,57 +19,85 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.P2ProgIcons;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class P2ClosePaneV extends VBox {
 
     private final VBox vBoxAll = new VBox();
-    private final boolean scroll;
-    private final BooleanProperty visibleProperty;
-    private final BooleanProperty ripProperty;
+    private final boolean addScroll;
+    private final boolean addRipButton;
+    private final Button buttonClose = new Button();
+    private final Button buttonRip = new Button();
+    private final BooleanProperty showNoButton;
 
-    public P2ClosePaneV(BooleanProperty visibleProperty, boolean scroll) {
-        this.scroll = scroll;
-        this.visibleProperty = visibleProperty;
-        this.ripProperty = null;
+    public P2ClosePaneV() {
+        // alles anzeigen
+        this.addScroll = true;
+        this.addRipButton = true;
+        this.showNoButton = null;
         init();
     }
 
-    public P2ClosePaneV(BooleanProperty visibleProperty, BooleanProperty ripProperty, boolean scroll) {
-        this.scroll = scroll;
-        this.visibleProperty = visibleProperty;
-        this.ripProperty = ripProperty;
+    public P2ClosePaneV(boolean addRipButton, boolean addScroll) {
+        this.addScroll = addScroll;
+        this.addRipButton = addRipButton;
+        this.showNoButton = null;
         init();
+    }
+
+    public P2ClosePaneV(boolean addRipButton, boolean addScroll, BooleanProperty showNoButton) {
+        this.addScroll = addScroll;
+        this.addRipButton = addRipButton;
+        this.showNoButton = showNoButton == null ? new SimpleBooleanProperty(true) : showNoButton;
+        init();
+    }
+
+    public Button getButtonClose() {
+        return buttonClose;
+    }
+
+    public Button getButtonRip() {
+        return buttonRip;
+    }
+
+    public void addPane(Pane pane) {
+        getVBoxAll().getChildren().add(pane);
+    }
+
+    public VBox getVBoxAll() {
+        return vBoxAll;
     }
 
     private void init() {
-        Button button = new Button();
-        button.getStyleClass().add("close-button");
-        button.setGraphic(P2ProgIcons.ICON_BUTTON_CLOSE.getImageView());
-        button.setOnAction(a -> visibleProperty.setValue(false));
+        buttonClose.getStyleClass().add("close-button");
+        buttonClose.setGraphic(P2ProgIcons.ICON_BUTTON_CLOSE.getImageView());
+
+        buttonRip.getStyleClass().add("rip-button");
+        buttonRip.setGraphic(P2ProgIcons.ICON_BUTTON_RIP.getImageView());
 
         HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
         hBox.getStyleClass().add("close-pane");
         hBox.setAlignment(Pos.TOP_RIGHT);
-        if (ripProperty != null) {
-            Button buttonRip = new Button();
-            buttonRip.getStyleClass().add("rip-button");
-            buttonRip.setGraphic(P2ProgIcons.ICON_BUTTON_RIP.getImageView());
-            buttonRip.setOnAction(a -> ripProperty.setValue(true));
-            hBox.getChildren().addAll(buttonRip, button);
-            hBox.visibleProperty().bind(ripProperty.not());
-            hBox.managedProperty().bind(ripProperty.not());
-
-        } else {
-            hBox.getChildren().addAll(button);
+        if (showNoButton != null) {
+            hBox.visibleProperty().bind(showNoButton.not());
+            hBox.managedProperty().bind(showNoButton.not());
         }
 
-        if (scroll) {
+        if (addRipButton) {
+            hBox.getChildren().addAll(buttonRip, buttonClose);
+
+        } else {
+            hBox.getChildren().addAll(buttonClose);
+        }
+
+        if (addScroll) {
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setFitToHeight(true);
             scrollPane.setFitToWidth(true);
@@ -77,13 +105,11 @@ public class P2ClosePaneV extends VBox {
 
             getChildren().addAll(hBox, scrollPane);
             VBox.setVgrow(scrollPane, Priority.ALWAYS);
+            
         } else {
             getChildren().addAll(hBox, vBoxAll);
             VBox.setVgrow(vBoxAll, Priority.ALWAYS);
         }
     }
 
-    public VBox getVBoxAll() {
-        return vBoxAll;
-    }
 }

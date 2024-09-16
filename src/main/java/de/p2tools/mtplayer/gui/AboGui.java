@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.FilterPaneDialog;
+import de.p2tools.mtplayer.gui.tools.P2ClosePaneV;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -27,11 +28,11 @@ import javafx.scene.layout.Region;
 
 public class AboGui {
 
-    ProgData progData;
+    private final ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
     private final AboFilterController aboFilterController;
-    private AboGuiController aboGuiController;
+    private final AboGuiController aboGuiController;
     private boolean bound = false;
     private FilterPaneDialog filterPaneDialog = null;
 
@@ -46,6 +47,7 @@ public class AboGui {
             splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.ABO_GUI_FILTER_DIVIDER);
             bound = false;
         }
+
         if (filterPaneDialog != null) {
             filterPaneDialog.closeSetNoRip();
             filterPaneDialog = null;
@@ -54,6 +56,7 @@ public class AboGui {
 
         if (ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.get()) {
             if (ProgConfig.ABO_GUI_FILTER_IS_RIP.get()) {
+
                 filterPaneDialog = new FilterPaneDialog(aboFilterController, "Abofilter",
                         ProgConfig.ABO_GUI_FILTER_DIALOG_SIZE,
                         ProgConfig.ABO_GUI_FILTER_IS_RIP, ProgData.ABO_TAB_ON);
@@ -61,7 +64,12 @@ public class AboGui {
                 splitPane.getItems().addAll(aboGuiController);
 
             } else {
-                splitPane.getItems().addAll(aboFilterController, aboGuiController);
+                P2ClosePaneV closePaneV = new P2ClosePaneV();
+                closePaneV.addPane(aboFilterController);
+                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.ABO_GUI_FILTER_IS_VISIBLE.set(false));
+                closePaneV.getButtonRip().setOnAction(a -> ProgConfig.ABO_GUI_FILTER_IS_RIP.set(!ProgConfig.ABO_GUI_FILTER_IS_RIP.get()));
+
+                splitPane.getItems().addAll(closePaneV, aboGuiController);
                 splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_FILTER_DIVIDER);
                 bound = true;
             }

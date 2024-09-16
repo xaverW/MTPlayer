@@ -26,14 +26,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class PaneDownloadInfo extends AnchorPane {
+public class PaneDownloadInfoList extends VBox {
 
-    private final VBox vBoxAll = new VBox();
     private final VBox vBoxHeader = new VBox();
     private final GridPane gridPane = new GridPane();
     private final ProgData progData;
 
-    public PaneDownloadInfo() {
+    public PaneDownloadInfoList() {
         progData = ProgData.getInstance();
 
         gridPane.setHgap(30);
@@ -41,6 +40,7 @@ public class PaneDownloadInfo extends AnchorPane {
         gridPane.setPadding(new Insets(10));
         gridPane.getStyleClass().add("downloadInfoGrid");
 
+        VBox vBoxAll = new VBox();
         vBoxAll.setSpacing(10);
         vBoxAll.setPadding(new Insets(10));
         vBoxAll.getChildren().addAll(vBoxHeader, gridPane);
@@ -55,7 +55,6 @@ public class PaneDownloadInfo extends AnchorPane {
     }
 
     public void setInfoText() {
-//        System.out.println("DownloadInfo " + LocalTime.now());
         Text text1, text2;
         vBoxHeader.getChildren().clear();
         gridPane.getChildren().clear();
@@ -69,7 +68,6 @@ public class PaneDownloadInfo extends AnchorPane {
             gridPane.setVisible(false);
             return;
         }
-
 
         int row = 0;
         gridPane.setVisible(true);

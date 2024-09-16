@@ -37,18 +37,14 @@ import javafx.scene.layout.VBox;
 public class AboFilterController extends FilterController {
 
     private P2MenuButton mbChannel;
-    private ComboBox<String> cboState = new ComboBox<>(); // Abo ein-/ausgeschaltet
+    private final ComboBox<String> cboState = new ComboBox<>(); // Abo ein-/ausgeschaltet
     private PCboString cboName;
     private PCboString cboSearchText;
     private PCboString cboDescription;
-    private Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
-
-    private final VBox vBoxFilter;
     private final ProgData progData;
 
     public AboFilterController() {
-        super(ProgConfig.ABO_GUI_FILTER_IS_VISIBLE, ProgConfig.ABO_GUI_FILTER_IS_RIP);
-        vBoxFilter = getVBoxFilter(true);
+        VBox vBoxFilter = getVBoxFilter(true);
         progData = ProgData.getInstance();
         progData.aboFilterController = this;
 
@@ -62,6 +58,7 @@ public class AboFilterController extends FilterController {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(10, 0, 0, 0));
+        Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
         hBox.getChildren().add(btnClear);
 
         final Button btnHelpFilter = P2Button.helpButton("Filter", HelpText.GUI_ABO_FILTER);

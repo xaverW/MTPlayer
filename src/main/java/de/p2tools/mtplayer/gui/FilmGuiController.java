@@ -57,7 +57,6 @@ public class FilmGuiController extends AnchorPane {
     private final SortedList<FilmDataMTP> sortedList;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
     private boolean bound = false;
-    //     private double selPos = Double.MAX_VALUE; // letzte Pos
     private boolean setShown = false;
 
     public FilmGuiController() {
@@ -76,6 +75,11 @@ public class FilmGuiController extends AnchorPane {
         scrollPaneTableFilm.setFitToHeight(true);
         scrollPaneTableFilm.setFitToWidth(true);
         scrollPaneTableFilm.setContent(tableView);
+
+        ProgConfig.FILM_INFO_TAB_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.FILM_PANE_INFO_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.FILM_PANE_BUTTON_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.FILM_PANE_MEDIA_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         setInfoPane();
         initTable();
@@ -197,7 +201,7 @@ public class FilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        ProgConfig.FILM_GUI_INFO_ON.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.FILM_GUI_INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
 //        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
 //            selectLastShown();
 //        });
@@ -207,7 +211,7 @@ public class FilmGuiController extends AnchorPane {
 
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
-                ProgConfig.FILM_GUI_INFO_ON.set(true);
+                ProgConfig.FILM_GUI_INFO_IS_SHOWING.set(true);
             }
         });
         PListener.addListener(new PListener(new int[]{PListener.EVENT_HISTORY_CHANGED},
@@ -396,14 +400,14 @@ public class FilmGuiController extends AnchorPane {
         }
 
         splitPane.getItems().clear();
-        if (!filmInfoController.isPaneShowing()) {
+        if (!filmInfoController.arePanesShowing()) {
             // dann wird nix angezeigt
             splitPane.getItems().add(scrollPaneTableFilm);
-            ProgConfig.FILM_GUI_INFO_ON.set(false);
+            ProgConfig.FILM_INFO_TAB_IS_SHOWING.set(false);
             return;
         }
 
-        if (ProgConfig.FILM_GUI_INFO_ON.getValue()) {
+        if (ProgConfig.FILM_INFO_TAB_IS_SHOWING.getValue()) {
             bound = true;
             splitPane.getItems().addAll(scrollPaneTableFilm, filmInfoController);
             SplitPane.setResizableWithParent(filmInfoController, false);

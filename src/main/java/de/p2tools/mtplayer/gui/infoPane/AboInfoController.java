@@ -21,131 +21,112 @@ import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.scene.Node;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class AboInfoController extends P2ClosePaneH {
+public class AboInfoController extends VBox {
 
-    private Tab tabAboInfo;
-    private Tab tabAboListInfo;
-
-    private PaneAboInfo paneAboInfo;
-    private PaneAboListInfo paneAboListInfo;
     private final TabPane tabPane = new TabPane();
+    private PaneAboInfo paneAboInfo;
+    private PaneAboInfoList paneAboInfoList;
 
     public AboInfoController() {
-        super(ProgConfig.ABO_GUI_INFO_ON, false, true);
         initInfoPane();
         PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadInfoController.class.getSimpleName()) {
             @Override
             public void pingFx() {
-                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO,
-                        getVBoxAll(), tabPane, paneAboListInfo,
-                        ProgConfig.ABO_GUI_INFO_ON, ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON)) {
-                    paneAboListInfo.setInfoText();
+                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, tabPane, paneAboInfoList)) {
+                    paneAboInfoList.setInfoText();
                 }
             }
         });
     }
 
     public void setAboInfos(AboData abo) {
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO,
-                getVBoxAll(), tabPane, paneAboInfo,
-                ProgConfig.ABO_GUI_INFO_ON, ProgConfig.ABO_PANE_DIALOG_INFO_ON)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, tabPane, paneAboInfo)) {
             paneAboInfo.setAbo(abo);
         }
     }
 
-    public boolean isPaneShowing() {
-        return !ProgConfig.ABO_PANE_DIALOG_INFO_ON.getValue() ||
-                !ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON.getValue();
+    public boolean arePanesShowing() {
+        // dann wird wenigsten eins angezeigt
+        return !ProgConfig.ABO_PANE_INFO_IS_RIP.get() ||
+                !ProgConfig.ABO_PANE_INFO_LIST_IS_RIP.getValue();
     }
 
     private void initInfoPane() {
         paneAboInfo = new PaneAboInfo();
-        paneAboListInfo = new PaneAboListInfo();
+        paneAboInfoList = new PaneAboInfoList();
 
-        tabAboInfo = new Tab("Beschreibung");
-        tabAboInfo.setClosable(false);
-        tabAboListInfo = new Tab("Infos");
-        tabAboListInfo.setClosable(false);
-
-        super.getRipProperty().addListener((u, o, n) -> {
-            if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneAboInfo)) {
-                dialogInfo();
-            } else if (InfoPaneFactory.isSelPane(getVBoxAll(), tabPane, paneAboListInfo)) {
-                dialogListInfo();
-            }
-        });
-
-        if (ProgConfig.ABO_PANE_DIALOG_INFO_ON.getValue()) {
+        if (ProgConfig.ABO_PANE_INFO_IS_RIP.get()) {
             dialogInfo();
         }
-        if (ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON.getValue()) {
-            dialogListInfo();
-        }
+        ProgConfig.ABO_PANE_INFO_IS_RIP.addListener((u, o, n) -> {
+            if (n) {
+                dialogInfo();
+            } else {
+                ProgConfig.ABO_INFO_TAB_IS_SHOWING.set(true);
+            }
+            setTabs();
+        });
 
-        ProgConfig.ABO_PANE_DIALOG_INFO_ON.addListener((u, o, n) -> setTabs());
-        ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON.addListener((u, o, n) -> setTabs());
+        if (ProgConfig.ABO_PANE_INFO_LIST_IS_RIP.get()) {
+            dialogInfoList();
+        }
+        ProgConfig.ABO_PANE_INFO_LIST_IS_RIP.addListener((u, o, n) -> {
+            if (n) {
+                dialogInfoList();
+            } else {
+                ProgConfig.ABO_INFO_TAB_IS_SHOWING.set(true);
+            }
+            setTabs();
+        });
+
         setTabs();
     }
 
     private void dialogInfo() {
-        InfoPaneFactory.setDialogInfo(tabAboInfo, paneAboInfo, "Abo Infos",
-                ProgConfig.ABO_PANE_DIALOG_INFO_SIZE, ProgConfig.ABO_PANE_DIALOG_INFO_ON,
-                ProgConfig.ABO_GUI_INFO_ON, ProgData.ABO_TAB_ON);
+        new InfoPaneDialog(paneAboInfo, "Abo Infos",
+                ProgConfig.ABO_PANE_DIALOG_INFO_SIZE,
+                ProgConfig.ABO_PANE_INFO_IS_RIP,
+                ProgData.ABO_TAB_ON);
     }
 
-    private void dialogListInfo() {
-        InfoPaneFactory.setDialogInfo(tabAboListInfo, paneAboListInfo, "AboList Infos",
-                ProgConfig.ABO_PANE_DIALOG_List_INFO_SIZE, ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON,
-                ProgConfig.ABO_GUI_INFO_ON, ProgData.ABO_TAB_ON);
+    private void dialogInfoList() {
+        new InfoPaneDialog(paneAboInfoList, "AboList Infos",
+                ProgConfig.ABO_PANE_DIALOG_INFO_LIST_SIZE,
+                ProgConfig.ABO_PANE_INFO_LIST_IS_RIP,
+                ProgData.ABO_TAB_ON);
     }
 
     private void setTabs() {
-        int i = 0;
+        tabPane.getTabs().clear();
 
-        if (ProgConfig.ABO_PANE_DIALOG_INFO_ON.getValue()) {
-            tabPane.getTabs().remove(tabAboInfo);
-        } else {
-            tabAboInfo.setContent(paneAboInfo);
-            if (!tabPane.getTabs().contains(tabAboInfo)) {
-                tabPane.getTabs().add(i, tabAboInfo);
-            }
-            ++i;
+        if (!ProgConfig.ABO_PANE_INFO_IS_RIP.get()) {
+            tabPane.getTabs().add(
+                    InfoPaneFactory.makeTab(paneAboInfo, "Beschreibung", ProgConfig.ABO_INFO_TAB_IS_SHOWING, ProgConfig.ABO_PANE_INFO_IS_RIP));
+
+        }
+        if (!ProgConfig.ABO_PANE_INFO_LIST_IS_RIP.get()) {
+            tabPane.getTabs().add(
+                    InfoPaneFactory.makeTab(paneAboInfoList, "Infos", ProgConfig.ABO_INFO_TAB_IS_SHOWING, ProgConfig.ABO_PANE_INFO_LIST_IS_RIP));
         }
 
-        if (ProgConfig.ABO_PANE_DIALOG_LIST_INFO_ON.getValue()) {
-            tabPane.getTabs().remove(tabAboListInfo);
-        } else {
-            tabAboListInfo.setContent(paneAboListInfo);
-            if (!tabPane.getTabs().contains(tabAboListInfo)) {
-                tabPane.getTabs().add(i, tabAboListInfo);
-            }
-            ++i;
-        }
-
-        if (i == 0) {
-            getVBoxAll().getChildren().clear();
-            ProgConfig.ABO_GUI_INFO_ON.set(false);
-
-        } else if (i == 1) {
+        if (tabPane.getTabs().isEmpty()) {
+            // keine Tabs
+        } else if (tabPane.getTabs().size() == 1) {
             // dann gibts einen Tab
             final Node node = tabPane.getTabs().get(0).getContent();
             tabPane.getTabs().remove(0);
-            getVBoxAll().getChildren().setAll(node);
+            getChildren().setAll(node);
             VBox.setVgrow(node, Priority.ALWAYS);
-            ProgConfig.ABO_GUI_INFO_ON.set(true);
 
         } else {
             // dann gibts mehre Tabs
-            getVBoxAll().getChildren().setAll(tabPane);
+            getChildren().setAll(tabPane);
             VBox.setVgrow(tabPane, Priority.ALWAYS);
-            ProgConfig.ABO_GUI_INFO_ON.set(true);
         }
     }
 }

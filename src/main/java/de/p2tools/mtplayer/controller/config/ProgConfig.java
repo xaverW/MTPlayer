@@ -247,15 +247,17 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty FILM_GUI_FILTER_IS_RIP = addBoolProp("film-gui-filter-is-rip", Boolean.FALSE);
     public static StringProperty FILM_GUI_FILTER_DIALOG_SIZE = addStrProp("film-gui-filter-dialog-size", "400:600");
     public static DoubleProperty FILM_GUI_INFO_DIVIDER = addDoubleProp("film-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
-    public static BooleanProperty FILM_GUI_INFO_ON = addBoolProp("film-gui-info-on", Boolean.TRUE);
     public static StringProperty FILM_GUI_TABLE_WIDTH = addStrProp("film-gui-table-width");
     public static StringProperty FILM_GUI_TABLE_SORT = addStrProp("film-gui-table-sort");
     public static StringProperty FILM_GUI_TABLE_UP_DOWN = addStrProp("film-gui-table-up-down");
     public static StringProperty FILM_GUI_TABLE_VIS = addStrProp("film-gui-table-vis");
     public static StringProperty FILM_GUI_TABLE_ORDER = addStrProp("film-gui-table-order");
-
     public static StringProperty ADD_BLACK_DIALOG_SIZE = addStrProp("add-black-dialog-size", "600:400");
     public static DoubleProperty FILM_PANE_INFO_DIVIDER = addDoubleProp("film-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+
+    // Gui Filme Info-Panes
+    public static BooleanProperty FILM_GUI_INFO_IS_SHOWING = addBoolProp("film-gui-info-is-showing", Boolean.TRUE);
+    public static BooleanProperty FILM_GUI_INFO_IS_RIP = addBoolProp("film-gui-info-is-rip", Boolean.FALSE);
 
     // Propose
     public static StringProperty PROPOSE_DIALOG_CONTROLLER_SIZE = addStrProp("propose-dialog-controller-size");
@@ -263,6 +265,12 @@ public class ProgConfig extends P2DataProgConfig {
     // Gui Film -> fast search
     public static BooleanProperty FAST_SEARCH_ON = addBoolProp("fast-search-on", Boolean.FALSE);
     public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
+
+    // Film Info Pane
+    public static BooleanProperty FILM_INFO_TAB_IS_SHOWING = addBoolProp("film-info-tab-is-showing", Boolean.TRUE);
+    public static BooleanProperty FILM_PANE_INFO_IS_RIP = addBoolProp("film-pane-info-is-rip", false);
+    public static BooleanProperty FILM_PANE_BUTTON_IS_RIP = addBoolProp("film-pane-button-is-rip", false);
+    public static BooleanProperty FILM_PANE_MEDIA_IS_RIP = addBoolProp("film-pane-media-is-rip", false);
 
     // LiveFilmGui
     public static BooleanProperty LIVE_FILM_IS_VISIBLE = addBoolProp("live-film-is-visible", Boolean.FALSE);
@@ -273,7 +281,8 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty LIVE_FILM_GUI_FILTER_IS_RIP = addBoolProp("live-film-gui-filter-is-rip", Boolean.FALSE);
     public static StringProperty LIVE_FILM_GUI_FILTER_DIALOG_SIZE = addStrProp("live-film-gui-filter-dialog-size", "400:600");
     public static DoubleProperty LIVE_FILM_GUI_INFO_DIVIDER = addDoubleProp("live-film-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
-    public static BooleanProperty LIVE_FILM_GUI_INFO_ON = addBoolProp("live-film-gui-info-on", Boolean.TRUE);
+    public static BooleanProperty LIVE_FILM_GUI_INFO_IS_SHOWING = addBoolProp("live-film-gui-info-is-showing", Boolean.TRUE);
+    public static BooleanProperty LIVE_FILM_GUI_INFO_IS_RIP = addBoolProp("live-film-gui-info-is-rip", Boolean.FALSE);
 
     public static StringProperty LIVE_FILM_GUI_TABLE_WIDTH = addStrProp("live-film-gui-table-width");
     public static StringProperty LIVE_FILM_GUI_TABLE_SORT = addStrProp("live-film-gui-table-sort");
@@ -286,6 +295,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty LIVE_FILM_GUI_SEARCH_ZDF = addStrProp("live-film-gui-search-zdf");
     public static StringProperty LIVE_FILM_GUI_SEARCH_URL_ARD = addStrProp("live-film-gui-search-url-ard");
     public static StringProperty LIVE_FILM_GUI_SEARCH_URL_ZDF = addStrProp("live-film-gui-search-url-zdf");
+
+    // Live Info Pane
+    public static BooleanProperty LIVE_FILM_INFO_TAB_IS_SHOWING = addBoolProp("live-film-info-tab-is-showing", Boolean.TRUE);
+    public static BooleanProperty LIVE_FILM_PANE_INFO_IS_RIP = addBoolProp("live-film-pane-info-is-rip", false);
+    public static BooleanProperty LIVE_FILM_PANE_BUTTON_IS_RIP = addBoolProp("live-film-pane-button-is-rip", false);
+    public static BooleanProperty LIVE_FILM_PANE_MEDIA_IS_RIP = addBoolProp("live-film-pane-media-is-rip");
 
     // Gui Download
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
@@ -300,14 +315,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty DOWNLOAD_DIALOG_ADD_SIZE = addStrProp("download-dialog-add-size", "700:700");
     public static StringProperty DOWNLOAD_DIALOG_ADD_MORE_SIZE = addStrProp("download-dialog-add-more-size", "800:700");
     public static StringProperty DOWNLOAD_DIALOG_CONTINUE_SIZE = addStrProp("download-dialog-continue-size");
-    public static StringProperty DOWNLOAD_DIALOG_ERROR_SIZE = addStrProp("download-dialog-error-size", "600:500");
     public static StringProperty DOWNLOAD_DIALOG_ERROR_STREAM_SIZE = addStrProp("download-dialog-error-steam-size", "600:500");
     public static DoubleProperty DOWNLOAD_GUI_FILTER_DIVIDER = addDoubleProp("download-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty DOWNLOAD_GUI_FILTER_IS_VISIBLE = addBoolProp("download-gui-filter-is-visible", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_FILTER_IS_RIP = addBoolProp("download-gui-filter-is-rip", Boolean.FALSE);
     public static StringProperty DOWNLOAD_GUI_FILTER_DIALOG_SIZE = addStrProp("download-gui-filter-dialog-size", "400:600");
     public static DoubleProperty DOWNLOAD_GUI_INFO_DIVIDER = addDoubleProp("download-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
-    public static BooleanProperty DOWNLOAD_GUI_INFO_ON = addBoolProp("download-gui-info-on", Boolean.TRUE);
     public static StringProperty DOWNLOAD_GUI_TABLE_WIDTH = addStrProp("download-gui-table-width");
     public static StringProperty DOWNLOAD_GUI_TABLE_SORT = addStrProp("download-gui-table-sort");
     public static StringProperty DOWNLOAD_GUI_TABLE_UP_DOWN = addStrProp("download-gui-table-up-down");
@@ -325,6 +338,54 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty DOWNLOAD_DIALOG_ADD_SUBTITLE_ALL = addBoolProp("download-dialog-add-subtitle-all", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_ADD_INFO_ALL = addBoolProp("download-dialog-add-info-all", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_ADD_START_TIME_ALL = addBoolProp("download-dialog-add-start-time-all", Boolean.TRUE);
+
+    // Download Info-Panes
+    public static BooleanProperty DOWNLOAD_GUI_INFO_IS_RIP = addBoolProp("download-gui-info-is-rip", Boolean.FALSE);
+
+    // Download Info-Panes
+    public static BooleanProperty DOWNLOAD_INFO_TAB_IS_SHOWING = addBoolProp("download-info-tab-is-showing", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_CHART_TAB_IS_SHOWING = addBoolProp("download-chart-tab-is-showing", Boolean.TRUE);
+
+    public static StringProperty DOWNLOAD_PANE_DIALOG_INFO_SIZE = addStrProp("download-dialog-info-size", "400:400");
+    public static StringProperty DOWNLOAD_DIALOG_MEDIA_SIZE = addStrProp("download-dialog-media-size");
+    public static StringProperty DOWNLOAD_DIALOG_CHART_SIZE = addStrProp("download-dialog-chart-size");
+    public static StringProperty DOWNLOAD_DIALOG_ERROR_SIZE = addStrProp("download-dialog-error-size", "400:400");
+    public static StringProperty DOWNLOAD_DIALOG_INFO_LIST_SIZE = addStrProp("download-dialog-info-list-size", "400:400");
+
+    public static BooleanProperty DOWNLOAD_PANE_INFO_IS_RIP = addBoolProp("download-pane-info-is-rip");
+    public static BooleanProperty DOWNLOAD_PANE_MEDIA_IS_RIP = addBoolProp("download-pane-media-is-rip");
+    public static BooleanProperty DOWNLOAD_PANE_CHART_IS_RIP = addBoolProp("download-pane-chart-is-rip");
+    public static BooleanProperty DOWNLOAD_PANE_ERROR_IS_RIP = addBoolProp("download-pane-error-is-rip");
+    public static BooleanProperty DOWNLOAD_PANE_INFO_LIST_IS_RIP = addBoolProp("download-pane-info-list-is-rip");
+
+
+    // Gui Abo
+    public static BooleanProperty ABO_GUI_SHOW_MENU = addBoolProp("abo-gui-show-menu", Boolean.TRUE);
+    public static BooleanProperty ABO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("abo-gui-show-table-tool-tip", Boolean.TRUE);
+    public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);
+    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", FilterCheck.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
+    public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", FilterCheck.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
+    public static StringProperty ABO_DIALOG_EDIT_SIZE = addStrProp("abo-dialog-edit-size", "600:750");
+    public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDoubleProp("abo-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
+    public static BooleanProperty ABO_GUI_FILTER_IS_VISIBLE = addBoolProp("abo-gui-filter-is-visible", Boolean.TRUE);
+    public static BooleanProperty ABO_GUI_FILTER_IS_RIP = addBoolProp("abo-gui-filter-is-rip", Boolean.FALSE);
+    public static StringProperty ABO_GUI_FILTER_DIALOG_SIZE = addStrProp("abo-gui-filter-dialog-size", "400:600");
+    public static DoubleProperty ABO_GUI_INFO_DIVIDER = addDoubleProp("abo-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
+    public static StringProperty ABO_GUI_TABLE_WIDTH = addStrProp("abo-gui-table-width");
+    public static StringProperty ABO_GUI_TABLE_SORT = addStrProp("abo-gui-table-sort");
+    public static StringProperty ABO_GUI_TABLE_UP_DOWN = addStrProp("abo-gui-table-up-down");
+    public static StringProperty ABO_GUI_TABLE_VIS = addStrProp("abo-gui-table-vis");
+    public static StringProperty ABO_GUI_TABLE_ORDER = addStrProp("abo-gui-table-order");
+    public static DoubleProperty ABO_PANE_INFO_DIVIDER = addDoubleProp("abo-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+    public static StringProperty ABO_DEL_DIALOG_SIZE = addStrProp("abo-del-dialog-size", "600:400");
+    public static IntegerProperty ABO_ONLY_STOP = addIntProp("abo-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK);
+
+    // Abo Info-Panes
+    public static BooleanProperty ABO_INFO_TAB_IS_SHOWING = addBoolProp("abo-info-tab-is-showing", Boolean.TRUE);
+    public static StringProperty ABO_PANE_DIALOG_INFO_SIZE = addStrProp("abo-pane-dialog-info-size", "400:400");
+    public static StringProperty ABO_PANE_DIALOG_INFO_LIST_SIZE = addStrProp("abo-pane-dialog-info-list-size", "400:400");
+    public static BooleanProperty ABO_PANE_INFO_IS_RIP = addBoolProp("abo-pane-info-is-rip", Boolean.FALSE);
+    public static BooleanProperty ABO_PANE_INFO_LIST_IS_RIP = addBoolProp("abo-pane-info-list-is-rip", Boolean.FALSE);
 
 
     // ===================== MEDIA ===================================
@@ -391,28 +452,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty DOWNLOAD_CHART_ONLY_RUNNING = addBoolProp("download-chart-only-running", Boolean.FALSE);
     public static IntegerProperty DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN = addIntProp("download-chart-max-time-to-show-min", 30); //MAX Minuten im Chart
 
-    // Gui Abo
-    public static BooleanProperty ABO_GUI_SHOW_MENU = addBoolProp("abo-gui-show-menu", Boolean.TRUE);
-    public static BooleanProperty ABO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("abo-gui-show-table-tool-tip", Boolean.TRUE);
-    public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);
-    public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", FilterCheck.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
-    public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", FilterCheck.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos
-    public static StringProperty ABO_DIALOG_EDIT_SIZE = addStrProp("abo-dialog-edit-size", "600:750");
-    public static DoubleProperty ABO_GUI_FILTER_DIVIDER = addDoubleProp("abo-gui-filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
-    public static BooleanProperty ABO_GUI_FILTER_IS_VISIBLE = addBoolProp("abo-gui-filter-is-visible", Boolean.TRUE);
-    public static BooleanProperty ABO_GUI_FILTER_IS_RIP = addBoolProp("abo-gui-filter-is-rip", Boolean.FALSE);
-    public static StringProperty ABO_GUI_FILTER_DIALOG_SIZE = addStrProp("abo-gui-filter-dialog-size", "400:600");
-    public static DoubleProperty ABO_GUI_INFO_DIVIDER = addDoubleProp("abo-gui-info-divider", ProgConst.GUI_DIVIDER_LOCATION);
-    public static BooleanProperty ABO_GUI_INFO_ON = addBoolProp("abo-gui-info-on", Boolean.TRUE);
-    public static StringProperty ABO_GUI_TABLE_WIDTH = addStrProp("abo-gui-table-width");
-    public static StringProperty ABO_GUI_TABLE_SORT = addStrProp("abo-gui-table-sort");
-    public static StringProperty ABO_GUI_TABLE_UP_DOWN = addStrProp("abo-gui-table-up-down");
-    public static StringProperty ABO_GUI_TABLE_VIS = addStrProp("abo-gui-table-vis");
-    public static StringProperty ABO_GUI_TABLE_ORDER = addStrProp("abo-gui-table-order");
-    public static DoubleProperty ABO_PANE_INFO_DIVIDER = addDoubleProp("abo-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
-    public static StringProperty ABO_DEL_DIALOG_SIZE = addStrProp("abo-del-dialog-size", "600:400");
-    public static IntegerProperty ABO_ONLY_STOP = addIntProp("abo-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK);
-
 
     // GuiPaneDialog
     public static StringProperty FILM_PANE_DIALOG_INFO_SIZE = addStrProp("film-pane-dialog-info-size");
@@ -429,21 +468,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty LIVE_FILM_PANE_DIALOG_MEDIA_SIZE = addStrProp("live-film-pane-dialog-media-size");
     public static BooleanProperty LIVE_FILM_PANE_DIALOG_MEDIA_ON = addBoolProp("live-film-pane-dialog-media-on");
 
-    public static StringProperty DOWNLOAD_PANE_DIALOG_INFO_SIZE = addStrProp("download-pane-dialog-info-size", "400:400");
-    public static BooleanProperty DOWNLOAD_PANE_DIALOG_INFO_ON = addBoolProp("download-pane-dialog-info-on");
-    public static StringProperty DOWNLOAD_PANE_DIALOG_MEDIA_SIZE = addStrProp("download-pane-dialog-media-size");
-    public static BooleanProperty DOWNLOAD_PANE_DIALOG_MEDIA_ON = addBoolProp("download-pane-dialog-media-on");
-    public static StringProperty DOWNLOAD_PANE_DIALOG_CHART_SIZE = addStrProp("download-pane-dialog-chart-size");
-    public static BooleanProperty DOWNLOAD_PANE_DIALOG_CHART_ON = addBoolProp("download-pane-dialog-chart-on");
-    public static StringProperty DOWNLOAD_PANE_DIALOG_ERROR_SIZE = addStrProp("download-pane-dialog-error-size", "400:400");
-    public static BooleanProperty DOWNLOAD_PANE_DIALOG_ERROR_ON = addBoolProp("download-pane-dialog-error-on");
-    public static StringProperty DOWNLOAD_PANE_DIALOG_DOWN_INFO_SIZE = addStrProp("download-pane-dialog-down-info-size", "400:400");
-    public static BooleanProperty DOWNLOAD_PANE_DIALOG_DOWN_INFO_ON = addBoolProp("download-pane-dialog-down-info-on");
-
-    public static StringProperty ABO_PANE_DIALOG_INFO_SIZE = addStrProp("abo-pane-dialog-info-size", "400:400");
-    public static StringProperty ABO_PANE_DIALOG_List_INFO_SIZE = addStrProp("abo-pane-dialog-list-info-size", "400:400");
-    public static BooleanProperty ABO_PANE_DIALOG_INFO_ON = addBoolProp("abo-pane-dialog-info-on");
-    public static BooleanProperty ABO_PANE_DIALOG_LIST_INFO_ON = addBoolProp("abo-pane-dialog-list-info-on");
 
     // ConfigDialog
     public static StringProperty DOWNLOAD_SUBTITLE_DIALOG_SIZE = addStrProp("download-subtitle-dialog-size", "");

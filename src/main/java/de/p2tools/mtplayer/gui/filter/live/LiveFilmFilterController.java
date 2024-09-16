@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.gui.filter.live;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -30,17 +29,12 @@ import javafx.scene.layout.VBox;
 
 public class LiveFilmFilterController extends FilterController {
 
-    //    private final ProgressBar progress = new ProgressBar();
     private final VBox vBoxFilter;
     private final ProgData progData;
-
-
     private final LiveFilmFilterText liveFilmFilterText;
     private final LiveFilmFilterClearList liveFilmFilterClearList;
 
     public LiveFilmFilterController() {
-        super(ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE, ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP);
-
         this.progData = ProgData.getInstance();
         this.liveFilmFilterText = new LiveFilmFilterText();
         this.liveFilmFilterClearList = new LiveFilmFilterClearList();

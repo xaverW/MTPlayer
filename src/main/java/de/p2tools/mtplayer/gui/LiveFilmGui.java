@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.FilterPaneDialog;
 import de.p2tools.mtplayer.gui.filter.live.LiveFilmFilterController;
+import de.p2tools.mtplayer.gui.tools.P2ClosePaneV;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -62,7 +63,12 @@ public class LiveFilmGui {
                 splitPane.getItems().addAll(liveFilmGuiController);
 
             } else {
-                splitPane.getItems().addAll(liveFilmFilterController, liveFilmGuiController);
+                P2ClosePaneV closePaneV = new P2ClosePaneV();
+                closePaneV.addPane(liveFilmFilterController);
+                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.set(false));
+                closePaneV.getButtonRip().setOnAction(a -> ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP.set(!ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP.get()));
+
+                splitPane.getItems().addAll(closePaneV, liveFilmGuiController);
                 splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.LIVE_FILM_GUI_FILTER_DIVIDER);
                 bound = true;
             }

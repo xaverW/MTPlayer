@@ -80,7 +80,6 @@ public class PaneMedia extends VBox {
     }
 
     public void setSearchPredicate(FilmData filmDataMTP) {
-//        System.out.println("PaneMediaFilm " + LocalTime.now());
         mediaDataDtoMedia.searchTheme = filmDataMTP == null ? "" : filmDataMTP.getTheme().trim();
         mediaDataDtoMedia.searchTitle = filmDataMTP == null ? "" : filmDataMTP.getTitle().trim();
         mediaDataDtoAbo.searchTheme = filmDataMTP == null ? "" : filmDataMTP.getTheme().trim();
@@ -90,7 +89,6 @@ public class PaneMedia extends VBox {
     }
 
     public void setSearchPredicate(DownloadData downloadData) {
-//        System.out.println("PaneMediaDownload " + LocalTime.now());
         mediaDataDtoMedia.searchTheme = downloadData == null ? "" : downloadData.getTheme().trim();
         mediaDataDtoMedia.searchTitle = downloadData == null ? "" : downloadData.getTitle().trim();
         mediaDataDtoAbo.searchTheme = downloadData == null ? "" : downloadData.getTheme().trim();
@@ -150,9 +148,9 @@ public class PaneMedia extends VBox {
         splitPane.getItems().addAll(vLeft, vRight);
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_MEDIA_DIVIDER);
 
-        super.setSpacing(P2LibConst.DIST_BUTTON);
-        super.setPadding(new Insets(P2LibConst.PADDING));
-        super.getChildren().addAll(hBoxTop, splitPane);
+        setSpacing(P2LibConst.DIST_BUTTON);
+        setPadding(new Insets(P2LibConst.PADDING));
+        getChildren().addAll(hBoxTop, splitPane);
     }
 
     private void initMenu() {
