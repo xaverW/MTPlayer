@@ -59,8 +59,13 @@ public class MTInfoFile {
             br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_TIME] + ":          " + download.getFilmTime());
             br.write(P2LibConst.LINE_SEPARATOR);
             br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_DURATION] + ":   " + download.getDurationMinute());
-            br.write(P2LibConst.LINE_SEPARATOR);
-            br.write(DownloadFieldNames.DOWNLOAD_SIZE + ":    " + download.getDownloadSize());
+
+            if (!download.getDownloadSize().toString().isEmpty()) {
+                // Größe nur schreiben, wenn auch vorhanden
+                br.write(P2LibConst.LINE_SEPARATOR);
+                br.write(DownloadFieldNames.DOWNLOAD_SIZE + ":    " + download.getDownloadSize());
+            }
+
             br.write(P2LibConst.LINE_SEPARATORx2);
 
             br.write(FilmDataXml.COLUMN_NAMES[FilmDataXml.FILM_WEBSITE] + P2LibConst.LINE_SEPARATOR);
