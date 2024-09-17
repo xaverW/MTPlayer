@@ -67,6 +67,7 @@ public class DownloadGui {
                 closePaneV.addPane(downloadFilterController);
                 closePaneV.getButtonClose().setOnAction(a -> ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.set(false));
                 closePaneV.getButtonRip().setOnAction(a -> ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.set(!ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.get()));
+                SplitPane.setResizableWithParent(closePaneV, Boolean.FALSE);
 
                 splitPane.getItems().addAll(closePaneV, downloadGuiController);
                 splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);

@@ -50,7 +50,6 @@ public class AboGui {
         progData.aboGuiController = aboGuiController;
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        SplitPane.setResizableWithParent(aboFilterController, Boolean.FALSE);
 
         hBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         hBox.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
@@ -90,6 +89,7 @@ public class AboGui {
                 closePaneV.addPane(aboFilterController);
                 closePaneV.getButtonClose().setOnAction(a -> ProgConfig.ABO_GUI_FILTER_IS_SHOWING.set(false));
                 closePaneV.getButtonRip().setOnAction(a -> ProgConfig.ABO_GUI_FILTER_IS_RIP.set(!ProgConfig.ABO_GUI_FILTER_IS_RIP.get()));
+                SplitPane.setResizableWithParent(closePaneV, Boolean.FALSE);
 
                 splitPane.getItems().addAll(closePaneV, aboGuiController);
                 splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_FILTER_DIVIDER);

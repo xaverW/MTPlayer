@@ -66,6 +66,7 @@ public class FilmGui {
                 closePaneV.addPane(filmFilterController);
                 closePaneV.getButtonClose().setOnAction(a -> ProgConfig.FILM_GUI_FILTER_IS_SHOWING.set(false));
                 closePaneV.getButtonRip().setOnAction(a -> ProgConfig.FILM_GUI_FILTER_IS_RIP.set(!ProgConfig.FILM_GUI_FILTER_IS_RIP.get()));
+                SplitPane.setResizableWithParent(closePaneV, Boolean.FALSE);
 
                 splitPane.getItems().addAll(closePaneV, filmGuiController);
                 splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.FILM_GUI_FILTER_DIVIDER);

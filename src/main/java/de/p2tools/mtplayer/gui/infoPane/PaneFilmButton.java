@@ -40,6 +40,10 @@ public class PaneFilmButton extends VBox {
         tilePane.setHgap(P2LibConst.DIST_BUTTON);
         tilePane.setPadding(new Insets(P2LibConst.PADDING));
 
+        setSpacing(0);
+        setPadding(new Insets(0));
+        getChildren().add(tilePane);
+
         addButton();
         ProgData.getInstance().setDataList.addListener((u, o, n) -> addButton());
     }
@@ -72,9 +76,5 @@ public class PaneFilmButton extends VBox {
             );
             tilePane.getChildren().add(btn);
         });
-
-        setSpacing(0);
-        setPadding(new Insets(0));
-        getChildren().add(tilePane);
     }
 }

@@ -17,6 +17,7 @@
             <maxSize>0</maxSize>
             <maxField>25</maxField>
             <description>Standardset zum Speichern der Filme</description>
+            <infoFile>true</infoFile>
             <ProgramList>
                 <Program>
                     <name>ffmpeg</name>
