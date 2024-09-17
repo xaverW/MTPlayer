@@ -44,7 +44,7 @@ public class AboFilterController extends FilterController {
     private final ProgData progData;
 
     public AboFilterController() {
-        VBox vBoxFilter = getVBoxFilter(true);
+        VBox vBoxFilter = getVBoxFilter();
         progData = ProgData.getInstance();
         progData.aboFilterController = this;
 

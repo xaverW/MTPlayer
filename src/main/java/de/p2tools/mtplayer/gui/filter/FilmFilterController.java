@@ -25,10 +25,11 @@ public class FilmFilterController extends FilterController {
         final FilmFilterControllerTextFilter filmFilterControllerTextFilter = new FilmFilterControllerTextFilter();
         final FilmFilterControllerFilter filmFilterControllerFilter = new FilmFilterControllerFilter();
         final FilmFilterControllerClearFilter filmFilterControllerClearFilter = new FilmFilterControllerClearFilter();
+
         final FilmFilterControllerProfiles filmFilterControllerProfiles = new FilmFilterControllerProfiles();
         final FilmFilterControllerBlacklist filmFilterControllerBlacklist = new FilmFilterControllerBlacklist();
 
-        final VBox vBox = getVBoxFilter(true);
+        final VBox vBox = getVBoxFilter();
         vBox.getChildren().addAll(filmFilterControllerTextFilter,
                 filmFilterControllerFilter,
                 P2GuiTools.getVBoxGrower(),

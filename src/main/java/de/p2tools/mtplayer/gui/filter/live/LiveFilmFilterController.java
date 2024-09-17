@@ -38,7 +38,7 @@ public class LiveFilmFilterController extends FilterController {
         this.progData = ProgData.getInstance();
         this.liveFilmFilterText = new LiveFilmFilterText();
         this.liveFilmFilterClearList = new LiveFilmFilterClearList();
-        vBoxFilter = getVBoxFilter(true);
+        vBoxFilter = getVBoxFilter();
         init();
     }
 

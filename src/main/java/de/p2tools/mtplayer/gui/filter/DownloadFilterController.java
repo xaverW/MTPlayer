@@ -50,7 +50,7 @@ public class DownloadFilterController extends FilterController {
     private final VBox vBoxFilter;
 
     public DownloadFilterController() {
-        vBoxFilter = getVBoxFilter(true);
+        vBoxFilter = getVBoxFilter();
         ProgData progData = ProgData.getInstance();
         progData.downloadFilterController = this;
 
