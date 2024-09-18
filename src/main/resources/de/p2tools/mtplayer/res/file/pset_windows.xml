@@ -21,8 +21,8 @@
                     <destName>%t-%T-%Z.mp4</destName>
                     <progPath>bin\ffmpeg.exe</progPath>
                     <progSwitch>-user_agent "Mozilla/5.0" -i %f -c copy -bsf:a aac_adtstoasc "**"</progSwitch>
-                    <prefix>http</prefix>
-                    <suffix>m3u8</suffix>
+                    <!--<prefix>http</prefix>-->
+                    <!--<suffix>m3u8</suffix>-->
                     <restart>false</restart>
                     <downManager>false</downManager>
                 </Program>
@@ -45,7 +45,6 @@
                 </Program>
             </ProgramList>
         </SetData>
-
 
         <SetData>
             <id>Google: Titel suchen</id>
@@ -74,8 +73,6 @@
             <save>false</save>
             <button>true</button>
             <abo>false</abo>
-            <maxSize>0</maxSize>
-            <maxField>0</maxField>
             <description>Set zum Suchen des Titels in Youtube</description>
             <ProgramList>
                 <Program>

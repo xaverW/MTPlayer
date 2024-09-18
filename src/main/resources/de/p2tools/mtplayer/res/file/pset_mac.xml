@@ -21,8 +21,8 @@
                     <destName>%t-%T-%Z.mp4</destName>
                     <progPath>PFAD_FFMPEG</progPath>
                     <progSwitch>-user_agent "Mozilla/5.0" -i %f -c copy -bsf:a aac_adtstoasc **</progSwitch>
-                    <prefix>http</prefix>
-                    <suffix>m3u8</suffix>
+                    <!--<prefix>http</prefix>-->
+                    <!--<suffix>m3u8</suffix>-->
                     <restart>false</restart>
                     <downManager>false</downManager>
                 </Program>
@@ -36,8 +36,6 @@
             <save>false</save>
             <button>true</button>
             <abo>false</abo>
-            <maxSize>0</maxSize>
-            <maxField>25</maxField>
             <description>Standardset zum direkten Abspielen der Filme</description>
             <ProgramList>
                 <Program>
@@ -48,7 +46,6 @@
             </ProgramList>
         </SetData>
 
-
         <SetData>
             <id>Google: Titel suchen</id>
             <visibleName>Google: Titel suchen</visibleName>
@@ -57,8 +54,6 @@
             <save>false</save>
             <button>true</button>
             <abo>false</abo>
-            <maxSize>0</maxSize>
-            <maxField>0</maxField>
             <description>Set zum Suchen des Titels in Google</description>
             <ProgramList>
                 <Program>
@@ -78,8 +73,6 @@
             <save>false</save>
             <button>true</button>
             <abo>false</abo>
-            <maxSize>0</maxSize>
-            <maxField>0</maxField>
             <description>Set zum Suchen des Titels in Youtube</description>
             <ProgramList>
                 <Program>
@@ -90,7 +83,6 @@
                 </Program>
             </ProgramList>
         </SetData>
-
 
     </SetDataList>
 </Mediathek>
