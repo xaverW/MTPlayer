@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -110,10 +111,14 @@ public class PaneSetFunction {
         gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_BUTTON), 2, row);
 
+        colorPicker.setOnAction(a ->
+                PListener.notify(PListener.EVENT_FILM_BUTTON_CHANGED, PaneSetFunction.class.getSimpleName())
+        );
         Label lblColor = new Label("Farbe:");
         Button btnResetColor = new Button("_Standardfarbe");
         btnResetColor.setOnAction(event -> {
             setDataObjectProperty.getValue().setColor(SetData.RESET_COLOR);
+            PListener.notify(PListener.EVENT_FILM_BUTTON_CHANGED, PaneSetFunction.class.getSimpleName());
         });
         final Button btnHelpColor = P2Button.helpButton(stage, "Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR);

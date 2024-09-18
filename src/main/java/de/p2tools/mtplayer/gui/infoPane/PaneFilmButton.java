@@ -17,10 +17,12 @@
 
 package de.p2tools.mtplayer.gui.infoPane;
 
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
+import de.p2tools.mtplayer.controller.filmfilter.FilmFilterRunner;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Color;
 import javafx.geometry.Insets;
@@ -46,6 +48,12 @@ public class PaneFilmButton extends VBox {
 
         addButton();
         ProgData.getInstance().setDataList.addListener((u, o, n) -> addButton());
+        PListener.addListener(new PListener(PListener.EVENT_FILM_BUTTON_CHANGED, FilmFilterRunner.class.getSimpleName()) {
+            @Override
+            public void ping() {
+                addButton();
+            }
+        });
     }
 
     private void addButton() {
