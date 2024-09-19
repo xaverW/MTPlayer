@@ -44,6 +44,7 @@ public class PaneBandwidthChart extends VBox {
 
     public PaneBandwidthChart(ProgData progData) {
         this.progData = progData;
+        VBox.setVgrow(this, Priority.ALWAYS);
         initList();
         initCharts();
     }
@@ -67,6 +68,7 @@ public class PaneBandwidthChart extends VBox {
         lineChart.setAnimated(false);
         lineChart.setCreateSymbols(false);
         lineChart.setTitle("Downloads");
+        VBox.setVgrow(lineChart, Priority.ALWAYS);
 
         lineChart.setOnMouseClicked(e -> {
             if (cm != null && cm.isShowing()) {

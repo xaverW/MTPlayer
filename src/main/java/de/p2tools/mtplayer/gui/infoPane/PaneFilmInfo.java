@@ -57,6 +57,8 @@ public class PaneFilmInfo extends VBox {
     private String oldDescription = "";
 
     public PaneFilmInfo(DoubleProperty dividerProp) {
+        VBox.setVgrow(this, Priority.ALWAYS);
+
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(textArea, btnReset);
         StackPane.setAlignment(btnReset, Pos.BOTTOM_RIGHT);

@@ -27,6 +27,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Color;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
@@ -37,6 +38,8 @@ public class PaneFilmButton extends VBox {
 
     public PaneFilmButton(boolean live) {
         this.live = live;
+        VBox.setVgrow(this, Priority.ALWAYS);
+
         this.tilePane = new TilePane();
         tilePane.setVgap(P2LibConst.DIST_BUTTON);
         tilePane.setHgap(P2LibConst.DIST_BUTTON);

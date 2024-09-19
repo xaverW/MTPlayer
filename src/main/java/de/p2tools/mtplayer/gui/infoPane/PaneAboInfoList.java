@@ -24,6 +24,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -37,6 +38,7 @@ public class PaneAboInfoList extends VBox {
 
     public PaneAboInfoList() {
         progData = ProgData.getInstance();
+        VBox.setVgrow(this, Priority.ALWAYS);
 
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);

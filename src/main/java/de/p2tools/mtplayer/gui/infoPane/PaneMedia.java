@@ -69,9 +69,11 @@ public class PaneMedia extends VBox {
 
     public PaneMedia(MediaDataDto mediaDataDtoMedia, MediaDataDto mediaDataDtoAbo) {
         // sind die Media im Infobereich unter "Filme" und "Download", wird also 2x verwendet
+        progData = ProgData.getInstance();
+        VBox.setVgrow(this, Priority.ALWAYS);
+
         this.mediaDataDtoMedia = mediaDataDtoMedia;
         this.mediaDataDtoAbo = mediaDataDtoAbo;
-        progData = ProgData.getInstance();
         init();
         initMenu();
         initTableMedia();
@@ -142,11 +144,14 @@ public class PaneMedia extends VBox {
 
         tableMedia.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
         tableAbo.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
+        VBox.setVgrow(tableMedia, Priority.ALWAYS);
+        VBox.setVgrow(tableAbo, Priority.ALWAYS);
 
         SplitPane splitPane = new SplitPane();
         splitPane.setPadding(new Insets(0));
         splitPane.getItems().addAll(vLeft, vRight);
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_MEDIA_DIVIDER);
+        VBox.setVgrow(splitPane, Priority.ALWAYS);
 
         setSpacing(P2LibConst.DIST_BUTTON);
         setPadding(new Insets(P2LibConst.PADDING));

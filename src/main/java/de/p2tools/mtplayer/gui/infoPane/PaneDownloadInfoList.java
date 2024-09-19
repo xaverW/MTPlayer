@@ -21,6 +21,7 @@ import de.p2tools.p2lib.tools.file.P2FileSize;
 import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -34,6 +35,7 @@ public class PaneDownloadInfoList extends VBox {
 
     public PaneDownloadInfoList() {
         progData = ProgData.getInstance();
+        VBox.setVgrow(this, Priority.ALWAYS);
 
         gridPane.setHgap(30);
         gridPane.setVgap(10);

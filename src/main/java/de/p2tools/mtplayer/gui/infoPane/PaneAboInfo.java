@@ -43,6 +43,7 @@ public class PaneAboInfo extends VBox {
     private AboData abo = null;
 
     public PaneAboInfo() {
+        VBox.setVgrow(this, Priority.ALWAYS);
         txtName.setFont(Font.font(null, FontWeight.BOLD, -1));
         txtName.setTooltip(new Tooltip("Name des Abos"));
         txtInfo.setWrapText(true);
