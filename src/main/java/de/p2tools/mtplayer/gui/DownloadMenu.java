@@ -18,10 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
-import de.p2tools.mtplayer.controller.config.PShortKeyFactory;
-import de.p2tools.mtplayer.controller.config.PShortcut;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
@@ -266,10 +263,16 @@ public class DownloadMenu {
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
         //ausgeführt wird aber der Button im Tab Filme!!
+        miShowFilter.disableProperty().bind(ProgConfig.DOWNLOAD__FILTER_IS_RIP);
         miShowFilter.setOnAction(a -> MTPlayerFactory.setFilter());
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
+        miShowInfo.disableProperty().bind(ProgConfig.DOWNLOAD__INFO_PANE_IS_RIP
+                .and(ProgConfig.DOWNLOAD__CHART_PANE_IS_RIP)
+                .and(ProgConfig.DOWNLOAD__ERROR_PANE_IS_RIP)
+                .and(ProgConfig.DOWNLOAD__MEDIA_PANE__IS_RIP)
+                .and(ProgConfig.DOWNLOAD__LIST_PANE_IS_RIP));
         miShowInfo.setOnAction(a -> MTPlayerFactory.setInfos());
 
         mb.getItems().add(new SeparatorMenuItem());

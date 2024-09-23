@@ -18,13 +18,18 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.filter.FilterPaneDialog;
 import de.p2tools.mtplayer.gui.filter.live.LiveFilmFilterController;
-import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneV;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+
+import java.util.ArrayList;
 
 public class LiveFilmGui {
 
@@ -33,50 +38,21 @@ public class LiveFilmGui {
     private final HBox hBox = new HBox();
     private final LiveFilmFilterController liveFilmFilterController;
     private final LiveFilmGuiController liveFilmGuiController;
-    private boolean bound = false;
-    private FilterPaneDialog filterPaneDialog = null;
+    private final BooleanProperty boundFilter = new SimpleBooleanProperty(false);
+    private final P2InfoController infoControllerFilter;
 
     public LiveFilmGui() {
         progData = ProgData.getInstance();
         liveFilmFilterController = new LiveFilmFilterController();
         liveFilmGuiController = new LiveFilmGuiController();
-    }
 
-    private void setSplit() {
-        if (bound) {
-            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.LIVE_FILM_GUI_FILTER_DIVIDER);
-            bound = false;
-        }
-        if (filterPaneDialog != null) {
-            filterPaneDialog.closeSetNoRip();
-            filterPaneDialog = null;
-        }
-        splitPane.getItems().clear();
-
-        if (ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.get()) {
-
-            if (ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP.get()) {
-
-                filterPaneDialog = new FilterPaneDialog(liveFilmFilterController, "Live-Filmfilter",
-                        ProgConfig.LIVE_FILM_GUI_FILTER_DIALOG_SIZE,
-                        ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP, ProgData.LIVE_FILM_TAB_ON);
-                splitPane.getItems().addAll(liveFilmGuiController);
-
-            } else {
-                P2ClosePaneV closePaneV = new P2ClosePaneV();
-                closePaneV.addPane(liveFilmFilterController);
-                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.set(false));
-                closePaneV.getButtonRip().setOnAction(a -> ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP.set(!ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP.get()));
-                SplitPane.setResizableWithParent(closePaneV, Boolean.FALSE);
-
-                splitPane.getItems().addAll(closePaneV, liveFilmGuiController);
-                splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.LIVE_FILM_GUI_FILTER_DIVIDER);
-                bound = true;
-            }
-
-        } else {
-            splitPane.getItems().addAll(liveFilmGuiController);
-        }
+        ArrayList<P2InfoDto> list = new ArrayList<>();
+        P2InfoDto infoDto = new P2InfoDto(liveFilmFilterController,
+                ProgConfig.LIVE_FILM__FILTER_IS_RIP,
+                ProgConfig.LIVE_FILM__FILTER_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
+                "Filter", "Filter", true);
+        list.add(infoDto);
+        infoControllerFilter = new P2InfoController(list, ProgConfig.LIVE_FILM__FILTER_IS_SHOWING);
     }
 
     public SplitPane pack() {
@@ -95,9 +71,15 @@ public class LiveFilmGui {
         HBox.setHgrow(splitPane, Priority.ALWAYS);
         hBox.getChildren().addAll(splitPane, menuController);
 
-        ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.addListener((observable, oldValue, newValue) -> setSplit());
-        ProgConfig.LIVE_FILM_GUI_FILTER_IS_RIP.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.LIVE_FILM__FILTER_IS_RIP.addListener((observable, oldValue, newValue) -> setSplit());
         setSplit();
         return new SplitPane(hBox);
+    }
+
+    private void setSplit() {
+        P2ClosePaneFactory.setSplit(boundFilter, splitPane,
+                infoControllerFilter, true, liveFilmGuiController,
+                ProgConfig.LIVE_FILM__FILTER_DIVIDER, ProgConfig.LIVE_FILM__FILTER_IS_SHOWING);
     }
 }

@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -29,7 +30,8 @@ import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadStartAtTimeController;
-import de.p2tools.mtplayer.gui.infoPane.DownloadInfoController;
+import de.p2tools.mtplayer.gui.infoPane.*;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
@@ -37,10 +39,15 @@ import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.P2SystemUtils;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Orientation;
@@ -60,15 +67,20 @@ public class DownloadGuiController extends AnchorPane {
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
     public final TableDownload tableView;
-    private final DownloadInfoController downloadInfoController;
     private final ProgData progData;
     private final FilteredList<DownloadData> filteredListDownloads;
     private final SortedList<DownloadData> sortedListDownloads;
-    private boolean bound = false;
+
+    private final PaneFilmInfo paneFilmInfo;
+    private final PaneMedia paneMedia;
+    private final PaneBandwidthChart paneBandwidthChart;
+    private final PaneDownloadError paneDownloadError;
+    private final PaneDownloadInfoList paneDownloadInfoList;
+    private final P2InfoController infoController;
+    private final BooleanProperty boundInfo = new SimpleBooleanProperty(false);
 
     public DownloadGuiController() {
         progData = ProgData.getInstance();
-        downloadInfoController = new DownloadInfoController();
         tableView = new TableDownload(Table.TABLE_ENUM.DOWNLOAD);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
@@ -82,12 +94,57 @@ public class DownloadGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.DOWNLOAD_PANE_INFO_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.DOWNLOAD_PANE_MEDIA_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.DOWNLOAD_PANE_ERROR_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.DOWNLOAD_PANE_CHART_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.DOWNLOAD_PANE_INFO_LIST_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+
+        paneFilmInfo = new PaneFilmInfo(ProgConfig.DOWNLOAD_PANE_INFO_DIVIDER);
+
+        MediaDataDto mDtoMedia = new MediaDataDto();
+        MediaDataDto mDtoAbo = new MediaDataDto();
+        initDto(mDtoMedia, mDtoAbo);
+        paneMedia = new PaneMedia(mDtoMedia, mDtoAbo);
+
+        paneBandwidthChart = new PaneBandwidthChart(progData);
+        paneDownloadError = new PaneDownloadError();
+        paneDownloadInfoList = new PaneDownloadInfoList();
+
+        ArrayList<P2InfoDto> list = new ArrayList<>();
+        P2InfoDto infoDto = new P2InfoDto(paneFilmInfo,
+                ProgConfig.DOWNLOAD__INFO_PANE_IS_RIP,
+                ProgConfig.DOWNLOAD__INFO_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                "Beschreibung", "Beschreibung", false);
+        list.add(infoDto);
+
+        infoDto = new P2InfoDto(paneMedia,
+                ProgConfig.DOWNLOAD__MEDIA_PANE__IS_RIP,
+                ProgConfig.DOWNLOAD__MEDIA_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                "Mediensammlung", "Mediensammlung", false);
+        list.add(infoDto);
+
+        infoDto = new P2InfoDto(paneBandwidthChart,
+                ProgConfig.DOWNLOAD__CHART_PANE_IS_RIP,
+                ProgConfig.DOWNLOAD__CHART_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                "Bandbreite", "Bandbreite", false);
+        list.add(infoDto);
+
+        infoDto = new P2InfoDto(paneDownloadError,
+                ProgConfig.DOWNLOAD__ERROR_PANE_IS_RIP,
+                ProgConfig.DOWNLOAD__ERROR_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                "Fehler", "Fehler", false);
+        list.add(infoDto);
+
+        infoDto = new P2InfoDto(paneDownloadInfoList,
+                ProgConfig.DOWNLOAD__LIST_PANE_IS_RIP,
+                ProgConfig.DOWNLOAD__LIST_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                "Infos", "Infos", false);
+        list.add(infoDto);
+
+        infoController = new P2InfoController(list, ProgConfig.DOWNLOAD__INFO_IS_SHOWING);
+
+        ProgConfig.DOWNLOAD__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.DOWNLOAD__INFO_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.DOWNLOAD__MEDIA_PANE__IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.DOWNLOAD__ERROR_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.DOWNLOAD__CHART_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.DOWNLOAD__LIST_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         filteredListDownloads = new FilteredList<>(progData.downloadList, p -> true);
         sortedListDownloads = new SortedList<>(filteredListDownloads);
@@ -190,7 +247,14 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilmInfos(DownloadData download) {
-        downloadInfoController.setDownloadInfos(download);
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+                paneFilmInfo)) {
+            paneFilmInfo.setFilm(download);
+        }
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+                paneMedia)) {
+            paneMedia.setSearchPredicate(download);
+        }
         FilmInfoDialogController.getInstance().setFilm(download != null ? download.getFilm() : null);
     }
 
@@ -476,28 +540,27 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        // hier wird das InfoPane ein- ausgeblendet
-        if (bound && splitPane.getItems().size() > 1) {
-            bound = false;
-            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_INFO_DIVIDER);
-        }
-
-        splitPane.getItems().clear();
-        if (!downloadInfoController.arePanesShowing()) {
-            // dann wird nix angezeigt
-            splitPane.getItems().add(scrollPane);
-            ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.set(false);
-            return;
-        }
-
-        if (ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.getValue()) {
-            bound = true;
-            splitPane.getItems().addAll(scrollPane, downloadInfoController);
-            SplitPane.setResizableWithParent(downloadInfoController, false);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_INFO_DIVIDER);
-
-        } else {
-            splitPane.getItems().add(scrollPane);
-        }
+        P2ClosePaneFactory.setSplit(boundInfo, splitPane,
+                infoController, false, scrollPane,
+                ProgConfig.DOWNLOAD__INFO_DIVIDER, ProgConfig.DOWNLOAD__INFO_IS_SHOWING);
     }
+
+    private void initDto(MediaDataDto mediaDataDtoMedia, MediaDataDto mediaDataDtoAbo) {
+        mediaDataDtoMedia.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_MEDIA;
+        mediaDataDtoMedia.buildSearchFrom = ProgConfig.INFO_DOWNLOAD_BUILD_SEARCH_FROM_FOR_MEDIA;
+        mediaDataDtoMedia.searchInWhat = ProgConfig.INFO_DOWNLOAD_SEARCH_IN_WHAT_FOR_MEDIA;
+        mediaDataDtoMedia.cleaning = ProgConfig.INFO_DOWNLOAD_CLEAN_MEDIA;
+        mediaDataDtoMedia.cleaningExact = ProgConfig.INFO_DOWNLOAD_CLEAN_EXACT_MEDIA;
+        mediaDataDtoMedia.cleaningAndOr = ProgConfig.INFO_DOWNLOAD_CLEAN_AND_OR_MEDIA;
+        mediaDataDtoMedia.cleaningList = ProgConfig.INFO_DOWNLOAD_CLEAN_LIST_MEDIA;
+
+        mediaDataDtoAbo.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_ABO;
+        mediaDataDtoAbo.buildSearchFrom = ProgConfig.INFO_DOWNLOAD_BUILD_SEARCH_FROM_FOR_ABO;
+        mediaDataDtoAbo.searchInWhat = ProgConfig.INFO_DOWNLOAD_SEARCH_IN_WHAT_FOR_ABO;
+        mediaDataDtoAbo.cleaning = ProgConfig.INFO_DOWNLOAD_CLEAN_ABO;
+        mediaDataDtoAbo.cleaningExact = ProgConfig.INFO_DOWNLOAD_CLEAN_EXACT_ABO;
+        mediaDataDtoAbo.cleaningAndOr = ProgConfig.INFO_DOWNLOAD_CLEAN_AND_OR_ABO;
+        mediaDataDtoAbo.cleaningList = ProgConfig.INFO_DOWNLOAD_CLEAN_LIST_ABO;
+    }
+
 }

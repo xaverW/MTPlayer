@@ -19,12 +19,17 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
-import de.p2tools.mtplayer.gui.filter.FilterPaneDialog;
-import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneV;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+
+import java.util.ArrayList;
 
 public class DownloadGui {
 
@@ -33,50 +38,20 @@ public class DownloadGui {
     private final HBox hBox = new HBox();
     private final DownloadFilterController downloadFilterController;
     private final DownloadGuiController downloadGuiController;
-    private boolean bound = false;
-    private FilterPaneDialog filterPaneDialog = null;
+    private final BooleanProperty boundFilter = new SimpleBooleanProperty(false);
+    private final P2InfoController infoControllerFilter;
 
     public DownloadGui() {
         progData = ProgData.getInstance();
         downloadFilterController = new DownloadFilterController();
         downloadGuiController = new DownloadGuiController();
-    }
-
-    private void setSplit() {
-        if (bound) {
-            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
-            bound = false;
-        }
-        if (filterPaneDialog != null) {
-            filterPaneDialog.closeSetNoRip();
-            filterPaneDialog = null;
-        }
-        splitPane.getItems().clear();
-
-        if (ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.get()) {
-
-            if (ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.get()) {
-
-                filterPaneDialog = new FilterPaneDialog(downloadFilterController, "Downloadfilter",
-                        ProgConfig.DOWNLOAD_GUI_FILTER_DIALOG_SIZE,
-                        ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP, ProgData.DOWNLOAD_TAB_ON);
-                splitPane.getItems().addAll(downloadGuiController);
-
-            } else {
-                P2ClosePaneV closePaneV = new P2ClosePaneV();
-                closePaneV.addPane(downloadFilterController);
-                closePaneV.getButtonClose().setOnAction(a -> ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.set(false));
-                closePaneV.getButtonRip().setOnAction(a -> ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.set(!ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.get()));
-                SplitPane.setResizableWithParent(closePaneV, Boolean.FALSE);
-
-                splitPane.getItems().addAll(closePaneV, downloadGuiController);
-                splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_FILTER_DIVIDER);
-                bound = true;
-            }
-
-        } else {
-            splitPane.getItems().addAll(downloadGuiController);
-        }
+        ArrayList<P2InfoDto> list = new ArrayList<>();
+        P2InfoDto infoDto = new P2InfoDto(downloadFilterController,
+                ProgConfig.DOWNLOAD__FILTER_IS_RIP,
+                ProgConfig.DOWNLOAD__FILTER_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                "Filter", "Filter", true);
+        list.add(infoDto);
+        infoControllerFilter = new P2InfoController(list, ProgConfig.DOWNLOAD__FILTER_IS_SHOWING);
     }
 
     public SplitPane pack() {
@@ -95,9 +70,15 @@ public class DownloadGui {
         HBox.setHgrow(splitPane, Priority.ALWAYS);
         hBox.getChildren().addAll(splitPane, menuController);
 
-        ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.addListener((observable, oldValue, newValue) -> setSplit());
-        ProgConfig.DOWNLOAD_GUI_FILTER_IS_RIP.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.DOWNLOAD__FILTER_IS_SHOWING.addListener((observable, oldValue, newValue) -> setSplit());
+        ProgConfig.DOWNLOAD__FILTER_IS_RIP.addListener((observable, oldValue, newValue) -> setSplit());
         setSplit();
         return new SplitPane(hBox);
+    }
+
+    private void setSplit() {
+        P2ClosePaneFactory.setSplit(boundFilter, splitPane,
+                infoControllerFilter, true, downloadGuiController,
+                ProgConfig.DOWNLOAD__FILTER_DIVIDER, ProgConfig.DOWNLOAD__FILTER_IS_SHOWING);
     }
 }

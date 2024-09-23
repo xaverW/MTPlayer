@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -23,14 +24,21 @@ import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
-import de.p2tools.mtplayer.gui.infoPane.AboInfoController;
+import de.p2tools.mtplayer.gui.infoPane.InfoPaneFactory;
+import de.p2tools.mtplayer.gui.infoPane.PaneAboInfo;
+import de.p2tools.mtplayer.gui.infoPane.PaneAboInfoList;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableAbo;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -42,6 +50,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -50,16 +59,17 @@ public class AboGuiController extends AnchorPane {
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPane = new ScrollPane();
     public final TableAbo tableView;
-    private final AboInfoController aboInfoController;
-
     private final ProgData progData;
-    private boolean bound = false;
     private final FilteredList<AboData> filteredAbos;
     private final SortedList<AboData> sortedAbos;
 
+    private final PaneAboInfo paneAboInfo;
+    private final PaneAboInfoList paneAboInfoList;
+    private final P2InfoController infoController;
+    private final BooleanProperty boundInfo = new SimpleBooleanProperty(false);
+
     public AboGuiController() {
         progData = ProgData.getInstance();
-        aboInfoController = new AboInfoController();
         tableView = new TableAbo(Table.TABLE_ENUM.ABO);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
@@ -73,12 +83,29 @@ public class AboGuiController extends AnchorPane {
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
 
-        ProgConfig.ABO_GUI_INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.ABO_PANE_INFO_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.ABO_PANE_INFO_LIST_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        paneAboInfo = new PaneAboInfo();
+        paneAboInfoList = new PaneAboInfoList();
 
         filteredAbos = new FilteredList<>(progData.aboList, p -> true);
         sortedAbos = new SortedList<>(filteredAbos);
+
+        ArrayList<P2InfoDto> list = new ArrayList<>();
+        P2InfoDto infoDto = new P2InfoDto(paneAboInfo,
+                ProgConfig.ABO__INFO_PANE_IS_RIP,
+                ProgConfig.ABO__INFO__DIALOG_SIZE, ProgData.ABO_TAB_ON,
+                "Beschreibung", "Beschreibung", false);
+        list.add(infoDto);
+
+        infoDto = new P2InfoDto(paneAboInfoList,
+                ProgConfig.ABO__LIST_PANE_IS_RIP,
+                ProgConfig.ABO__LIST_DIALOG_SIZE, ProgData.ABO_TAB_ON,
+                "Infos", "Infos", false);
+        list.add(infoDto);
+        infoController = new P2InfoController(list, ProgConfig.ABO__INFO_IS_SHOWING);
+
+        ProgConfig.ABO__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.ABO__INFO_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.ABO__LIST_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         setInfoPane();
         initTable();
@@ -165,15 +192,21 @@ public class AboGuiController extends AnchorPane {
             row.hoverProperty().addListener((observable) -> {
                 final AboData aboData = (AboData) row.getItem();
                 if (row.isHover() && aboData != null) {
-                    aboInfoController.setAboInfos(aboData);
+                    if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
+                        paneAboInfo.setAbo(aboData);
+                    }
                 } else {
-                    aboInfoController.setAboInfos(tableView.getSelectionModel().getSelectedItem());
+                    if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
+                        paneAboInfo.setAbo(tableView.getSelectionModel().getSelectedItem());
+                    }
                 }
             });
             return row;
         });
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            aboInfoController.setAboInfos(tableView.getSelectionModel().getSelectedItem());
+            if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
+                paneAboInfo.setAbo(tableView.getSelectionModel().getSelectedItem());
+            }
         });
 
         tableView.setOnMousePressed(m -> {
@@ -241,28 +274,8 @@ public class AboGuiController extends AnchorPane {
     }
 
     private void setInfoPane() {
-        // hier wird das InfoPane ein- ausgeblendet
-        if (bound && splitPane.getItems().size() > 1) {
-            bound = false;
-            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.ABO_GUI_INFO_DIVIDER);
-        }
-
-        splitPane.getItems().clear();
-        if (!aboInfoController.arePanesShowing()) {
-            // dann wird nix angezeigt
-            splitPane.getItems().add(scrollPane);
-            ProgConfig.ABO_GUI_INFO_IS_SHOWING.set(false);
-            return;
-        }
-
-        if (ProgConfig.ABO_GUI_INFO_IS_SHOWING.getValue()) {
-            bound = true;
-            splitPane.getItems().addAll(scrollPane, aboInfoController);
-            SplitPane.setResizableWithParent(aboInfoController, false);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.ABO_GUI_INFO_DIVIDER);
-
-        } else {
-            splitPane.getItems().add(scrollPane);
-        }
+        P2ClosePaneFactory.setSplit(boundInfo, splitPane,
+                infoController, false, scrollPane,
+                ProgConfig.ABO__INFO_DIVIDER, ProgConfig.ABO__INFO_IS_SHOWING);
     }
 }

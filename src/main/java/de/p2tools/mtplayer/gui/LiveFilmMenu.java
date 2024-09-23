@@ -157,10 +157,14 @@ public class LiveFilmMenu {
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
+        miShowFilter.disableProperty().bind(ProgConfig.LIVE_FILM__FILTER_IS_RIP);
         miShowFilter.setOnAction(a -> MTPlayerFactory.setFilter());
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
+        miShowInfo.disableProperty().bind(ProgConfig.LIVE_FILM__INFO_PANE_IS_RIP
+                .and(ProgConfig.LIVE_FILM__BUTTON_PANE_IS_RIP)
+                .and(ProgConfig.LIVE_FILM__MEDIA_PANE_IS_RIP));
         miShowInfo.setOnAction(a -> MTPlayerFactory.setInfos());
 
         mb.getItems().add(new SeparatorMenuItem());

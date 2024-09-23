@@ -37,16 +37,16 @@ public class MTPlayerFactory {
     public static void setFilter() {
         switch (MTPlayerController.paneShown) {
             case FILM:
-                ProgConfig.FILM_GUI_FILTER_IS_SHOWING.setValue(!ProgConfig.FILM_GUI_FILTER_IS_SHOWING.getValue());
+                ProgConfig.FILM__FILTER_IS_SHOWING.setValue(!ProgConfig.FILM__FILTER_IS_SHOWING.getValue());
                 break;
             case LIVE_FILM:
-                ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.LIVE_FILM_GUI_FILTER_IS_VISIBLE.getValue());
+                ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.getValue());
                 break;
             case DOWNLOAD:
-                ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.setValue(!ProgConfig.DOWNLOAD_GUI_FILTER_IS_VISIBLE.getValue());
+                ProgConfig.DOWNLOAD__FILTER_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD__FILTER_IS_SHOWING.getValue());
                 break;
             case ABO:
-                ProgConfig.ABO_GUI_FILTER_IS_SHOWING.setValue(!ProgConfig.ABO_GUI_FILTER_IS_SHOWING.getValue());
+                ProgConfig.ABO__FILTER_IS_SHOWING.setValue(!ProgConfig.ABO__FILTER_IS_SHOWING.getValue());
                 break;
         }
     }
@@ -54,16 +54,16 @@ public class MTPlayerFactory {
     public static void setInfos() {
         switch (MTPlayerController.paneShown) {
             case FILM:
-                ProgConfig.FILM_GUI_INFO_IS_SHOWING.setValue(!ProgConfig.FILM_GUI_INFO_IS_SHOWING.getValue());
+                ProgConfig.FILM__INFO_IS_SHOWING.setValue(!ProgConfig.FILM__INFO_IS_SHOWING.getValue());
                 break;
             case LIVE_FILM:
-                ProgConfig.LIVE_FILM_GUI_INFO_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM_GUI_INFO_IS_SHOWING.getValue());
+                ProgConfig.LIVE_FILM__INFO_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM__INFO_IS_SHOWING.getValue());
                 break;
             case DOWNLOAD:
-                ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD_GUI_INFO_IS_SHOWING.getValue());
+                ProgConfig.DOWNLOAD__INFO_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD__INFO_IS_SHOWING.getValue());
                 break;
             case ABO:
-                ProgConfig.ABO_GUI_INFO_IS_SHOWING.setValue(!ProgConfig.ABO_GUI_INFO_IS_SHOWING.getValue());
+                ProgConfig.ABO__INFO_IS_SHOWING.setValue(!ProgConfig.ABO__INFO_IS_SHOWING.getValue());
                 break;
         }
     }

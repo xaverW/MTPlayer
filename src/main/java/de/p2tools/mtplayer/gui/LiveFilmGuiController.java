@@ -16,20 +16,30 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
-import de.p2tools.mtplayer.gui.infoPane.LiveFilmInfoController;
+import de.p2tools.mtplayer.gui.infoPane.InfoPaneFactory;
+import de.p2tools.mtplayer.gui.infoPane.PaneFilmButton;
+import de.p2tools.mtplayer.gui.infoPane.PaneFilmInfo;
+import de.p2tools.mtplayer.gui.infoPane.PaneMedia;
+import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableLiveFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowLiveFilm;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
+import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
 import de.p2tools.p2lib.tools.P2SystemUtils;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
@@ -44,16 +54,19 @@ public class LiveFilmGuiController extends AnchorPane {
 
     private final SplitPane splitPane = new SplitPane();
     private final ScrollPane scrollPaneTableFilm = new ScrollPane();
-    private final LiveFilmInfoController liveFilmInfoController;
 
     public final TableLiveFilm tableView;
     private final ProgData progData;
     private final KeyCombination STRG_A = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_ANY);
-    private boolean bound = false;
+
+    private final PaneFilmInfo paneFilmInfo;
+    private final PaneFilmButton paneButton;
+    private final PaneMedia paneMedia;
+    private final P2InfoController infoController;
+    private final BooleanProperty boundInfo = new SimpleBooleanProperty(false);
 
     public LiveFilmGuiController() {
         progData = ProgData.getInstance();
-        liveFilmInfoController = new LiveFilmInfoController();
         tableView = new TableLiveFilm(Table.TABLE_ENUM.LIVE_FILM, progData);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);
@@ -67,10 +80,39 @@ public class LiveFilmGuiController extends AnchorPane {
         scrollPaneTableFilm.setFitToWidth(true);
         scrollPaneTableFilm.setContent(tableView);
 
-        ProgConfig.LIVE_FILM_INFO_TAB_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.LIVE_FILM_PANE_INFO_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.LIVE_FILM_PANE_BUTTON_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
-        ProgConfig.LIVE_FILM_PANE_MEDIA_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        paneFilmInfo = new PaneFilmInfo(ProgConfig.LIVE_FILM_PANE_INFO_DIVIDER);
+        paneButton = new PaneFilmButton(true);
+
+        MediaDataDto mDtoMedia = new MediaDataDto();
+        MediaDataDto mDtoAbo = new MediaDataDto();
+        initDto(mDtoMedia, mDtoAbo);
+        paneMedia = new PaneMedia(mDtoMedia, mDtoAbo);
+
+        ArrayList<P2InfoDto> list = new ArrayList<>();
+        P2InfoDto infoDto = new P2InfoDto(paneFilmInfo,
+                ProgConfig.LIVE_FILM__INFO_PANE_IS_RIP,
+                ProgConfig.LIVE_FILM__INFO_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
+                "Beschreibung", "Beschreibung", false);
+        list.add(infoDto);
+
+        infoDto = new P2InfoDto(paneButton,
+                ProgConfig.LIVE_FILM__BUTTON_PANE_IS_RIP,
+                ProgConfig.LIVE_FILM__BUTTON_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
+                "Buttons", "Buttons", false);
+        list.add(infoDto);
+
+        infoDto = new P2InfoDto(paneMedia,
+                ProgConfig.LIVE_FILM__MEDIA_PANE_IS_RIP,
+                ProgConfig.LIVE_FILM__MEDIA_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
+                "Mediensammlung", "Mediensammlung", false);
+        list.add(infoDto);
+
+        infoController = new P2InfoController(list, ProgConfig.LIVE_FILM__INFO_IS_SHOWING);
+
+        ProgConfig.LIVE_FILM__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM__INFO_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM__BUTTON_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM__MEDIA_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());
 
         setInfoPane();
         initTable();
@@ -132,10 +174,10 @@ public class LiveFilmGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        ProgConfig.LIVE_FILM_GUI_INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
+        ProgConfig.LIVE_FILM__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
-                ProgConfig.LIVE_FILM_GUI_INFO_IS_SHOWING.set(true);
+                ProgConfig.LIVE_FILM__INFO_IS_SHOWING.set(true);
             }
         });
     }
@@ -204,33 +246,36 @@ public class LiveFilmGuiController extends AnchorPane {
 
     private void setFilmInfos(FilmDataMTP film) {
         // Film in FilmInfoDialog setzen
-        liveFilmInfoController.setFilmInfos(film);
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM, paneFilmInfo)) {
+            paneFilmInfo.setFilm(film);
+        }
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM, paneMedia)) {
+            paneMedia.setSearchPredicate(film);
+        }
         FilmInfoDialogController.getInstance().setFilm(film);
     }
 
     private void setInfoPane() {
-        // hier wird das InfoPane ein- ausgeblendet
-        if (bound && splitPane.getItems().size() > 1) {
-            bound = false;
-            splitPane.getDividers().get(0).positionProperty().unbindBidirectional(ProgConfig.LIVE_FILM_GUI_INFO_DIVIDER);
-        }
+        P2ClosePaneFactory.setSplit(boundInfo, splitPane,
+                infoController, false, scrollPaneTableFilm,
+                ProgConfig.LIVE_FILM__INFO_DIVIDER, ProgConfig.LIVE_FILM__INFO_IS_SHOWING);
+    }
 
-        splitPane.getItems().clear();
-        if (!liveFilmInfoController.arePanesShowing()) {
-            // dann wird nix angezeigt
-            splitPane.getItems().add(scrollPaneTableFilm);
-            ProgConfig.LIVE_FILM_INFO_TAB_IS_SHOWING.set(false);
-            return;
-        }
+    private void initDto(MediaDataDto mediaDataDtoMedia, MediaDataDto mediaDataDtoAbo) {
+        mediaDataDtoMedia.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_MEDIA;
+        mediaDataDtoMedia.buildSearchFrom = ProgConfig.INFO_LIVE_FILM_BUILD_SEARCH_FROM_FOR_MEDIA;
+        mediaDataDtoMedia.searchInWhat = ProgConfig.INFO_LIVE_FILM_SEARCH_IN_WHAT_FOR_MEDIA;
+        mediaDataDtoMedia.cleaning = ProgConfig.INFO_LIVE_FILM_CLEAN_MEDIA;
+        mediaDataDtoMedia.cleaningExact = ProgConfig.INFO_LIVE_FILM_CLEAN_EXACT_MEDIA;
+        mediaDataDtoMedia.cleaningAndOr = ProgConfig.INFO_LIVE_FILM_CLEAN_AND_OR_MEDIA;
+        mediaDataDtoMedia.cleaningList = ProgConfig.INFO_LIVE_FILM_CLEAN_LIST_MEDIA;
 
-        if (ProgConfig.LIVE_FILM_INFO_TAB_IS_SHOWING.getValue()) {
-            bound = true;
-            splitPane.getItems().addAll(scrollPaneTableFilm, liveFilmInfoController);
-            SplitPane.setResizableWithParent(liveFilmInfoController, false);
-            splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.LIVE_FILM_GUI_INFO_DIVIDER);
-
-        } else {
-            splitPane.getItems().add(scrollPaneTableFilm);
-        }
+        mediaDataDtoAbo.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_ABO;
+        mediaDataDtoAbo.buildSearchFrom = ProgConfig.INFO_LIVE_FILM_BUILD_SEARCH_FROM_FOR_ABO;
+        mediaDataDtoAbo.searchInWhat = ProgConfig.INFO_LIVE_FILM_SEARCH_IN_WHAT_FOR_ABO;
+        mediaDataDtoAbo.cleaning = ProgConfig.INFO_LIVE_FILM_CLEAN_ABO;
+        mediaDataDtoAbo.cleaningExact = ProgConfig.INFO_LIVE_FILM_CLEAN_EXACT_ABO;
+        mediaDataDtoAbo.cleaningAndOr = ProgConfig.INFO_LIVE_FILM_CLEAN_AND_OR_ABO;
+        mediaDataDtoAbo.cleaningList = ProgConfig.INFO_LIVE_FILM_CLEAN_LIST_ABO;
     }
 }
