@@ -45,6 +45,8 @@ public class LoadMV implements AutoCloseable {
 
         inFactory = XMLInputFactory.newInstance();
         inFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
+        inFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE); // Deaktiviere DTDs
+        inFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE); // Deaktiviere externe Entitäten
     }
 
     public boolean readConfiguration(Path xmlFilePath) {
