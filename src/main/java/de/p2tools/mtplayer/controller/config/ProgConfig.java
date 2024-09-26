@@ -31,23 +31,77 @@ import de.p2tools.p2lib.data.P2DataProgConfig;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.P2ShutDown;
-import de.p2tools.p2lib.tools.P2StringUtils;
 import de.p2tools.p2lib.tools.P2SystemUtils;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
-import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.*;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ProgConfig extends P2DataProgConfig {
 
     private static ProgConfig instance;
+
+    private ProgConfig() {
+        super("ProgConfig");
+    }
+
+    public static ProgConfig getInstance() {
+        return instance == null ? instance = new ProgConfig() : instance;
+    }
+
+    public static void addConfigData(ConfigFile configFile, boolean save) {
+        ProgData progData = ProgData.getInstance();
+
+        // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
+        ProgConfig.SYSTEM_PROG_VERSION.set(P2ToolsFactory.getProgVersion());
+        ProgConfig.SYSTEM_PROG_BUILD_NO.set(P2ToolsFactory.getBuild());
+        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(P2ToolsFactory.getCompileDate());
+
+        configFile.addConfigs(ProgConfig.getInstance()); // ProgConfig
+        configFile.addConfigs(ProgColorList.getInstance()); // Color
+
+        configFile.addConfigs(progData.setDataList);
+
+        // Filter
+        final FastFilmFilter fastFilmFilter = progData.filterWorker.getFastFilterSettings(); // Fast-Filter
+        configFile.addConfigs(fastFilmFilter);
+
+        final FilmFilter akt_sf = progData.filterWorker.getActFilterSettings(); // akt-Filter
+        akt_sf.setName(FilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
+        configFile.addConfigs(akt_sf);
+
+        configFile.addConfigs(progData.filterWorker.getFilmFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filterWorker.getBackwardFilterList()); // Filterprofile
+        configFile.addConfigs(progData.filterWorker.getForwardFilterList()); // Filterprofile
+        configFile.addConfigs(progData.textFilterList); // ist der "sortierte" Textfilter (Thema, Titel ..)
+        configFile.addConfigs(progData.stringFilterLists); // sind die Textfilter in den CBO's
+
+        // Live-Filter
+        final LiveFilter akt_live = progData.liveFilmFilterWorker.getActFilterSettings(); // Live-Filter
+        configFile.addConfigs(akt_live);
+
+        // Rest
+        configFile.addConfigs(progData.aboList);
+        configFile.addConfigs(progData.filmListFilter);
+        configFile.addConfigs(progData.blackList);
+        configFile.addConfigs(progData.cleaningDataListMedia);
+        configFile.addConfigs(progData.cleaningDataListPropose);
+        configFile.addConfigs(progData.proposeList);
+        configFile.addConfigs(progData.replaceList);
+        configFile.addConfigs(progData.utDataList);
+        if (save) {
+            // dann nur die selbst angelegten Downloads
+            configFile.addConfigs(progData.downloadList.getCopyForSaving());
+        } else {
+            // beim lesen in die DownloadListe einsortieren
+            configFile.addConfigs(progData.downloadList);
+        }
+        configFile.addConfigs(progData.mediaCollectionDataList);
+    }
+
 
     // ============================================
     // Programm-Configs, änderbar nur im Config-File
@@ -609,120 +663,12 @@ public class ProgConfig extends P2DataProgConfig {
 
     // ========================================================
     // ========================================================
-    private static final String[] PARAMETER_INFO = new String[]{
-            "\"System-Parameter\" können nur im Configfile geändert werden",
-            "\t" + "und sind auch nicht für ständige Änderungen gedacht.",
-            "\t" + "Wird eine Zeile gelöscht, wird der Parameter wieder mit dem Standardwert angelegt.",
-            P2Log.LILNE3,
-            "  *" + "\t" + "Timeout für direkte Downloads, Standardwert: "
-                    + SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND.getValue(),
-            "  *" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, am Ende aller Downloads",
-            "\t" + "(Versuche insgesamt: DOWNLOAD_MAX_RESTART * DOWNLOAD_MAX_RESTART_HTTP), Standardwert: " +
-                    SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART.getValue(),
-            "  *" + "\t" + "max. Startversuche für fehlgeschlagene Downloads, direkt beim Download,",
-            "  *" + "\t" + "Beim Dialog \"Download weiterführen\" wird nach dieser Zeit der Download weitergeführt, Standardwert: "
-                    + SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS.getValue(),
-            "  *" + "\t" + "Beim Dialog \"Automode\" wird nach dieser Zeit der das Programm beendet, Standardwert: "
-                    + SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue(),
-            "  *" + "\t" + "Downloadfehlermeldung wird xx Sedunden lang angezeigt, Standardwert: "
-                    + SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND.getValue(),
-            "  *" + "\t" + "Downloadprogress im Terminal (-auto) anzeigen: "
-                    + SYSTEM_PARAMETER_DOWNLOAD_PROGRESS.getValue()};
-
     static {
         check(SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND, SYSTEM_PARAMETER_DOWNLOAD_TIMEOUT_SECOND_INIT, 5, 200);
         check(SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART, SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART_INIT, 0, 10);
         check(SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS, SYSTEM_PARAMETER_DOWNLOAD_CONTINUE_IN_SECONDS_INIT, 5, 200);
         check(SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS, SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS_INIT, 5, 200);
         check(SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND, SYSTEM_PARAMETER_DOWNLOAD_ERRORMSG_IN_SECOND_INIT, 5, 200);
-    }
-
-    private ProgConfig() {
-        super("ProgConfig");
-    }
-
-    public static final ProgConfig getInstance() {
-        return instance == null ? instance = new ProgConfig() : instance;
-    }
-
-    public static void addConfigData(ConfigFile configFile, boolean save) {
-        ProgData progData = ProgData.getInstance();
-
-        // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-        ProgConfig.SYSTEM_PROG_VERSION.set(P2ToolsFactory.getProgVersion());
-        ProgConfig.SYSTEM_PROG_BUILD_NO.set(P2ToolsFactory.getBuild());
-        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(P2ToolsFactory.getCompileDate());
-
-        configFile.addConfigs(ProgConfig.getInstance()); // ProgConfig
-        configFile.addConfigs(ProgColorList.getInstance()); // Color
-
-        configFile.addConfigs(progData.setDataList);
-
-        // Filter
-        final FastFilmFilter fastFilmFilter = progData.filterWorker.getFastFilterSettings(); // Fast-Filter
-        configFile.addConfigs(fastFilmFilter);
-
-        final FilmFilter akt_sf = progData.filterWorker.getActFilterSettings(); // akt-Filter
-        akt_sf.setName(FilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
-        configFile.addConfigs(akt_sf);
-
-        configFile.addConfigs(progData.filterWorker.getFilmFilterList()); // Filterprofile
-        configFile.addConfigs(progData.filterWorker.getBackwardFilterList()); // Filterprofile
-        configFile.addConfigs(progData.filterWorker.getForwardFilterList()); // Filterprofile
-        configFile.addConfigs(progData.textFilterList); // ist der "sortierte" Textfilter (Thema, Titel ..)
-        configFile.addConfigs(progData.stringFilterLists); // sind die Textfilter in den CBO's
-
-        // Live-Filter
-        final LiveFilter akt_live = progData.liveFilmFilterWorker.getActFilterSettings(); // Live-Filter
-        configFile.addConfigs(akt_live);
-
-        // Rest
-        configFile.addConfigs(progData.aboList);
-        configFile.addConfigs(progData.filmListFilter);
-        configFile.addConfigs(progData.blackList);
-        configFile.addConfigs(progData.cleaningDataListMedia);
-        configFile.addConfigs(progData.cleaningDataListPropose);
-        configFile.addConfigs(progData.proposeList);
-        configFile.addConfigs(progData.replaceList);
-        configFile.addConfigs(progData.utDataList);
-        if (save) {
-            // dann nur die selbst angelegten Downloads
-            configFile.addConfigs(progData.downloadList.getCopyForSaving());
-        } else {
-            // beim lesen in die DownloadListe einsortieren
-            configFile.addConfigs(progData.downloadList);
-        }
-        configFile.addConfigs(progData.mediaCollectionDataList);
-    }
-
-    public static void logAllConfigs() {
-        final ArrayList<String> list = new ArrayList<>();
-        list.add(P2Log.LILNE1);
-
-        Collections.addAll(list, PARAMETER_INFO);
-        list.add("");
-        list.add("");
-        list.add(P2Log.LILNE2);
-        list.add("Programmeinstellungen");
-        list.add(P2Log.LILNE3);
-        Arrays.stream(ProgConfig.getInstance().getConfigsArr()).forEach(c -> {
-            String s = c.getKey();
-            if (s.startsWith("_")) {
-                while (s.length() < 55) {
-                    s += " ";
-                }
-            } else {
-                while (s.length() < 35) {
-                    s += " ";
-                }
-            }
-
-            list.add(s + "  " + c.getActValueString());
-        });
-        P2StringUtils.appendString(list, "#  ", "#");
-
-        list.add(P2Log.LILNE1);
-        P2Log.debugLog(list);
     }
 
     private static synchronized void check(IntegerProperty mlConfigs, int init, int min, int max) {

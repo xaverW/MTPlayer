@@ -71,7 +71,7 @@ public class ProgStartAfterGui {
         list.add("Verzeichnis Einstellungen: " + ProgInfos.getSettingsDirectory_String());
         P2LogMessage.startMsg(ProgConst.PROGRAM_NAME, list);
         if (showAll) {
-            ProgConfig.logAllConfigs();
+            ProgConfig.getInstance().writeConfigs();
         }
     }
 
