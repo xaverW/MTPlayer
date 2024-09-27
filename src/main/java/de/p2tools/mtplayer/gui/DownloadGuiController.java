@@ -339,6 +339,19 @@ public class DownloadGuiController extends AnchorPane {
         PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
             @Override
             public void pingFx() {
+                paneBandwidthChart.searchInfos(InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+                        paneBandwidthChart)
+                );
+
+                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD, paneDownloadInfoList)) {
+                    paneDownloadInfoList.setInfoText();
+                }
+            }
+        });
+
+        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
                 if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
                     // dann den Filter aktualisieren
                     // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
