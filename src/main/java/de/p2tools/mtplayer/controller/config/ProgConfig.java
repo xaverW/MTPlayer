@@ -212,17 +212,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_PROG_PLAY_FILME = addStrProp("system-prog-play-filme");
     public static BooleanProperty SYSTEM_MARK_GEO = addBoolProp("system-mark-geo", Boolean.TRUE);
     public static StringProperty SYSTEM_GEO_HOME_PLACE = addStrProp("system-geo-home-place", FilmDataMTP.GEO_DE);
-    public static BooleanProperty SYSTEM_STYLE = addBoolProp("system-style", Boolean.FALSE); // für die Schriftgröße
-    public static IntegerProperty SYSTEM_STYLE_SIZE = addIntProp("system-style-size", 14);
     public static StringProperty SYSTEM_LOG_DIR = addStrProp("system-log-dir", "");
     public static BooleanProperty SYSTEM_LOG_ON = addBoolProp("system-log-on", Boolean.TRUE);
     public static BooleanProperty SYSTEM_ONLY_ONE_INSTANCE = addBoolProp("system-only-one-instance", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_FILM = addBoolProp("system-small-row-table-film", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addBoolProp("system-small-row-table-download", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_ABO = addBoolProp("system-small-row-table-abo", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_BLACK_WHITE_ICON = addBoolProp("system-black-white-icon", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");
     public static BooleanProperty SYSTEM_SSL_ALWAYS_TRUE = addBoolProp("system-ssl-always-true");
     public static BooleanProperty TIP_OF_DAY_SHOW = addBoolProp("tip-of-day-show", Boolean.TRUE); //Tips anzeigen
     public static StringProperty TIP_OF_DAY_WAS_SHOWN = addStrProp("tip-of-day-was-shown"); //bereits angezeigte Tips
@@ -232,6 +227,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_FILTER_FIRST_ROW = addBoolProp("system-filter-first-row", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILTER_NONE_ROW = addBoolProp("system-filter-none-row", Boolean.FALSE);
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStrProp("system-download-dir-new-version", "");
+
+    public static IntegerProperty SYSTEM_FONT_SIZE = addIntProp("system-font-size" + TAGGER + "system-style-size", 14);
+    public static BooleanProperty SYSTEM_FONT_SIZE_CHANGE = addBoolProp("system-font-size-change" + TAGGER + "system-style", Boolean.FALSE); // für die Schriftgröße
+    public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_BLACK_WHITE_ICON = addBoolProp("system-black-white-icon", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");
 
     // Fenstereinstellungen
     public static BooleanProperty SYSTEM_GUI_MAXIMISED = addBoolProp("system-gui-maximised", Boolean.FALSE);

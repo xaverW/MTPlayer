@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.p2lib.P2LibInit;
 import de.p2tools.p2lib.guitools.P2GuiSize;
-import de.p2tools.p2lib.tools.IoReadWriteStyle;
 import de.p2tools.p2lib.tools.P2Lock;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.application.Application;
@@ -50,11 +49,11 @@ public class MTPlayer extends Application {
         progData = ProgData.getInstance();
         progData.primaryStage = primaryStage;
 
-        initLib();
         ProgStartBeforeGui.workBeforeGui();
+        initLib();
 
-        final String xmlFilePath = ProgInfos.getLockFileStr();
         //wenn gewünscht, Lock-File prüfen
+        final String xmlFilePath = ProgInfos.getLockFileStr();
         if (ProgConfig.SYSTEM_ONLY_ONE_INSTANCE.getValue() && !P2Lock.getLockInstance(xmlFilePath)) {
             //dann kann man sich den Rest sparen
             return;
@@ -68,38 +67,20 @@ public class MTPlayer extends Application {
     }
 
     private void initLib() {
-//        ProgIcons.initIcons();
-//        P2ProgIcons.initIcons();
         P2LibInit.initLib(primaryStage, ProgConst.PROGRAM_NAME,
                 "",
-                ProgConfig.SYSTEM_DARK_THEME, ProgConfig.SYSTEM_BLACK_WHITE_ICON,
+                ProgConfig.SYSTEM_DARK_THEME, ProgConfig.SYSTEM_BLACK_WHITE_ICON, ProgConfig.SYSTEM_THEME_CHANGED,
+                ProgConst.CSS_FILE, ProgConst.CSS_FILE_DARK_THEME, ProgConfig.SYSTEM_FONT_SIZE,
                 ProgData.debug, ProgData.duration);
-        P2LibInit.addCssFile(ProgConst.CSS_FILE);
     }
+
 
     private void initRootLayout() {
         try {
-            addThemeCss(); // damit es für die 2 schon mal stimmt
             progData.mtPlayerController = new MTPlayerController();
-
             scene = new Scene(progData.mtPlayerController,
                     P2GuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI),
                     P2GuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI)); //Größe der scene != Größe stage!!!
-            addThemeCss(); // und jetzt noch für die neue Scene
-            ProgColorList.setColorTheme(); // Farben einrichten
-
-            if (ProgConfig.SYSTEM_STYLE.getValue()) {
-                // für die Schriftgröße
-                P2LibInit.setStyleFile(ProgInfos.getStyleFile().toString());
-                IoReadWriteStyle.readStyle(ProgInfos.getStyleFile(), scene);
-            }
-
-            ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
-                changeTheme();
-            });
-            ProgConfig.SYSTEM_BLACK_WHITE_ICON.addListener((u, o, n) -> {
-                changeTheme();
-            });
 
             primaryStage.setScene(scene);
             primaryStage.setOnCloseRequest(e -> {
@@ -122,26 +103,15 @@ public class MTPlayer extends Application {
             primaryStage.xProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
             primaryStage.yProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
 
+            P2LibInit.addP2CssToScene(scene); // und jetzt noch CSS einstellen
+            ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
+                ProgColorList.setColorTheme();
+            });
+
             primaryStage.show();
             primaryStage.setIconified(ProgData.startMinimized);
         } catch (final Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void changeTheme() {
-        addThemeCss();
-        //erst css ändern, dann
-        ProgColorList.setColorTheme();
-        ProgConfig.SYSTEM_THEME_CHANGED.setValue(!ProgConfig.SYSTEM_THEME_CHANGED.getValue());
-    }
-
-    private void addThemeCss() {
-        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-            P2LibInit.addCssFile(ProgConst.CSS_FILE_DARK_THEME);
-        } else {
-            P2LibInit.removeCssFile(ProgConst.CSS_FILE_DARK_THEME);
-        }
-        P2LibInit.addP2CssToScene(scene);
     }
 }

@@ -112,6 +112,12 @@ public class ProgInfos {
                 ProgConst.STYLE_FILE);
     }
 
+    public static String getStyleFileStr() {
+        return SettingsDirectory.getSettingsFile(ProgData.configDir,
+                ProgConst.CONFIG_DIRECTORY,
+                ProgConst.STYLE_FILE).toString();
+    }
+
     /**
      * Return the location of the settings directory. If it does not exist, create one.
      *

@@ -209,7 +209,7 @@ public class AboAddDialogController extends P2DialogExtra {
     }
 
     private void initButton() {
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
+//        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
             setMaskerPane();

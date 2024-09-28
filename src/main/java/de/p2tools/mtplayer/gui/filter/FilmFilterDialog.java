@@ -45,7 +45,7 @@ public class FilmFilterDialog extends P2DialogExtra {
 
     @Override
     public void make() {
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
+//        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
 
         setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
@@ -88,7 +88,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnFactoryString(nameColumn);
 
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> columnFactoryString(nameColumn));
+//        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> columnFactoryString(nameColumn));
         tableView.getColumns().add(nameColumn);
         tableView.setItems(progData.filterWorker.getFilmFilterList());
     }

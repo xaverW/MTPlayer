@@ -61,7 +61,6 @@ public class FilmInfoDialogController extends P2DialogExtra {
     private final P2Hyperlink p2HyperlinkWebsite = new P2Hyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL);
 
-
     private FilmInfoDialogController() {
         super(ProgData.getInstance().primaryStage, ProgConfig.SYSTEM_SIZE_DIALOG_FILMINFO,
                 "Filminfos", false, false, DECO.BORDER_SMALL, true);
@@ -138,9 +137,19 @@ public class FilmInfoDialogController extends P2DialogExtra {
     }
 
     @Override
+    public void updateCss() {
+        super.updateCss();
+        for (int i = 0; i < FilmDataXml.MAX_ELEM; ++i) {
+            if (textTitle[i] == null) {
+                return;
+            }
+            textTitle[i].getStyleClass().add("downloadGuiMediaText");
+        }
+    }
+
+    @Override
     public void make() {
         TitledPane tpUrl;
-        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         addOkButton(btnOk);
 
         getMaskerPane().setTextVisible(false);
@@ -264,14 +273,14 @@ public class FilmInfoDialogController extends P2DialogExtra {
         contextMenu.show(lbl, event.getScreenX(), event.getScreenY());
     }
 
-    public synchronized static final FilmInfoDialogController getInstance() {
+    public synchronized static FilmInfoDialogController getInstance() {
         if (instance == null) {
             instance = new FilmInfoDialogController();
         }
         return instance;
     }
 
-    public synchronized static final FilmInfoDialogController getInstanceAndShow() {
+    public synchronized static FilmInfoDialogController getInstanceAndShow() {
         if (instance == null) {
             instance = new FilmInfoDialogController();
         }
