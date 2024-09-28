@@ -228,8 +228,8 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_FILTER_NONE_ROW = addBoolProp("system-filter-none-row", Boolean.FALSE);
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStrProp("system-download-dir-new-version", "");
 
-    public static IntegerProperty SYSTEM_FONT_SIZE = addIntProp("system-font-size" + TAGGER + "system-style-size", 14);
-    public static BooleanProperty SYSTEM_FONT_SIZE_CHANGE = addBoolProp("system-font-size-change" + TAGGER + "system-style", Boolean.FALSE); // für die Schriftgröße
+    public static IntegerProperty SYSTEM_FONT_SIZE = addIntProp("system-font-size", 0);
+    public static BooleanProperty SYSTEM_FONT_SIZE_CHANGE = addBoolProp("system-font-size-change", Boolean.FALSE); // für die Schriftgröße
     public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE);
     public static BooleanProperty SYSTEM_BLACK_WHITE_ICON = addBoolProp("system-black-white-icon", Boolean.FALSE);
     public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");

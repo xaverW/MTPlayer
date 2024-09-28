@@ -51,7 +51,7 @@ public class MTPlayerController extends StackPane {
     private final BorderPane borderPane = new BorderPane();
     private final StackPane stackPaneCont = new StackPane();
 
-    private P2MaskerPane maskerPane = new P2MaskerPane();
+    private final P2MaskerPane maskerPane = new P2MaskerPane();
     private StatusBarController statusBarController;
 
     private SplitPane splitPaneFilm;
