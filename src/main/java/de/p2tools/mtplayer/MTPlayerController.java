@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.SearchFast;
-import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -51,7 +50,6 @@ public class MTPlayerController extends StackPane {
     private final BorderPane borderPane = new BorderPane();
     private final StackPane stackPaneCont = new StackPane();
 
-    private final P2MaskerPane maskerPane = new P2MaskerPane();
     private StatusBarController statusBarController;
 
     private SplitPane splitPaneFilm;
@@ -109,7 +107,7 @@ public class MTPlayerController extends StackPane {
             borderPane.setCenter(vBox);
             borderPane.setBottom(statusBarController);
             this.setPadding(new Insets(0));
-            this.getChildren().addAll(borderPane, maskerPane);
+            this.getChildren().addAll(borderPane, progData.maskerPane);
 
             initMaskerPane();
             initButton();
@@ -125,12 +123,11 @@ public class MTPlayerController extends StackPane {
     }
 
     private void initMaskerPane() {
-        StackPane.setAlignment(maskerPane, Pos.CENTER);
-        progData.maskerPane = maskerPane;
-        maskerPane.setPadding(new Insets(4, 1, 1, 1));
-        maskerPane.toFront();
-        Button btnStop = maskerPane.getButton();
-        maskerPane.setButtonText("");
+        StackPane.setAlignment(progData.maskerPane, Pos.CENTER);
+        progData.maskerPane.setPadding(new Insets(4, 1, 1, 1));
+        progData.maskerPane.toFront();
+        Button btnStop = progData.maskerPane.getButton();
+        progData.maskerPane.setButtonText("");
         btnStop.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
         btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
     }
@@ -197,7 +194,7 @@ public class MTPlayerController extends StackPane {
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
         btnFilm.setOnMouseClicked(mouseEvent -> {
-            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.FILM) {
+            if (progData.maskerPane.isVisible() || paneShown != PANE_SHOWN.FILM) {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
@@ -205,7 +202,7 @@ public class MTPlayerController extends StackPane {
             }
         });
         btnLive.setOnMouseClicked(mouseEvent -> {
-            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.LIVE_FILM) {
+            if (progData.maskerPane.isVisible() || paneShown != PANE_SHOWN.LIVE_FILM) {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
@@ -213,7 +210,7 @@ public class MTPlayerController extends StackPane {
             }
         });
         btnDownload.setOnMouseClicked(mouseEvent -> {
-            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.DOWNLOAD) {
+            if (progData.maskerPane.isVisible() || paneShown != PANE_SHOWN.DOWNLOAD) {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
@@ -221,7 +218,7 @@ public class MTPlayerController extends StackPane {
             }
         });
         btnAbo.setOnMouseClicked(mouseEvent -> {
-            if (maskerPane.isVisible() || paneShown != PANE_SHOWN.ABO) {
+            if (progData.maskerPane.isVisible() || paneShown != PANE_SHOWN.ABO) {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {

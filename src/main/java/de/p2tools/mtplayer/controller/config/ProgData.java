@@ -96,7 +96,7 @@ public class ProgData {
 
     // Gui
     public Stage primaryStage = null;
-    public P2MaskerPane maskerPane = null;
+    public P2MaskerPane maskerPane = new P2MaskerPane();
     public MTPlayerController mtPlayerController = null;
     public FilmGuiController filmGuiController = null; // Tab mit den Filmen
     public LiveFilmGuiController liveFilmGuiController = null; // Tab mit den Filmen

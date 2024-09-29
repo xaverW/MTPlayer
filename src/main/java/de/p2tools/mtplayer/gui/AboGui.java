@@ -49,7 +49,8 @@ public class AboGui {
         P2InfoDto infoDto = new P2InfoDto(aboFilterController,
                 ProgConfig.ABO__FILTER_IS_RIP,
                 ProgConfig.ABO__FILTER_DIALOG_SIZE, ProgData.ABO_TAB_ON,
-                "Filter", "Filter", true);
+                "Filter", "Filter", true,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
         infoControllerFilter = new P2InfoController(list, ProgConfig.ABO__FILTER_IS_SHOWING);
     }

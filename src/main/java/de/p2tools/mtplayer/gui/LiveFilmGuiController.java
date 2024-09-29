@@ -92,19 +92,22 @@ public class LiveFilmGuiController extends AnchorPane {
         P2InfoDto infoDto = new P2InfoDto(paneFilmInfo,
                 ProgConfig.LIVE_FILM__INFO_PANE_IS_RIP,
                 ProgConfig.LIVE_FILM__INFO_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
-                "Beschreibung", "Beschreibung", false);
+                "Beschreibung", "Beschreibung", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2InfoDto(paneButton,
                 ProgConfig.LIVE_FILM__BUTTON_PANE_IS_RIP,
                 ProgConfig.LIVE_FILM__BUTTON_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
-                "Buttons", "Buttons", false);
+                "Buttons", "Buttons", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2InfoDto(paneMedia,
                 ProgConfig.LIVE_FILM__MEDIA_PANE_IS_RIP,
                 ProgConfig.LIVE_FILM__MEDIA_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
-                "Mediensammlung", "Mediensammlung", false);
+                "Mediensammlung", "Mediensammlung", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoController = new P2InfoController(list, ProgConfig.LIVE_FILM__INFO_IS_SHOWING);

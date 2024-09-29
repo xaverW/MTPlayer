@@ -50,7 +50,8 @@ public class LiveFilmGui {
         P2InfoDto infoDto = new P2InfoDto(liveFilmFilterController,
                 ProgConfig.LIVE_FILM__FILTER_IS_RIP,
                 ProgConfig.LIVE_FILM__FILTER_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
-                "Filter", "Filter", true);
+                "Filter", "Filter", true,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
         infoControllerFilter = new P2InfoController(list, ProgConfig.LIVE_FILM__FILTER_IS_SHOWING);
     }

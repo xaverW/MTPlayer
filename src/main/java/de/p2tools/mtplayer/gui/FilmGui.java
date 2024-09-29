@@ -50,7 +50,8 @@ public class FilmGui {
         P2InfoDto infoDto = new P2InfoDto(filmFilterController,
                 ProgConfig.FILM__FILTER_IS_RIP,
                 ProgConfig.FILM__FILTER_DIALOG_SIZE, ProgData.FILM_TAB_ON,
-                "Filter", "Filter", true);
+                "Filter", "Filter", true,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
         infoControllerFilter = new P2InfoController(list, ProgConfig.FILM__FILTER_IS_SHOWING);
     }

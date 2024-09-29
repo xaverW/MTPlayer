@@ -93,13 +93,15 @@ public class AboGuiController extends AnchorPane {
         P2InfoDto infoDto = new P2InfoDto(paneAboInfo,
                 ProgConfig.ABO__INFO_PANE_IS_RIP,
                 ProgConfig.ABO__INFO__DIALOG_SIZE, ProgData.ABO_TAB_ON,
-                "Beschreibung", "Beschreibung", false);
+                "Beschreibung", "Beschreibung", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2InfoDto(paneAboInfoList,
                 ProgConfig.ABO__LIST_PANE_IS_RIP,
                 ProgConfig.ABO__LIST_DIALOG_SIZE, ProgData.ABO_TAB_ON,
-                "Infos", "Infos", false);
+                "Infos", "Infos", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
         infoController = new P2InfoController(list, ProgConfig.ABO__INFO_IS_SHOWING);
 

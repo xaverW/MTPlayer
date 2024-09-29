@@ -110,31 +110,36 @@ public class DownloadGuiController extends AnchorPane {
         P2InfoDto infoDto = new P2InfoDto(paneFilmInfo,
                 ProgConfig.DOWNLOAD__INFO_PANE_IS_RIP,
                 ProgConfig.DOWNLOAD__INFO_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
-                "Beschreibung", "Beschreibung", false);
+                "Beschreibung", "Beschreibung", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2InfoDto(paneMedia,
                 ProgConfig.DOWNLOAD__MEDIA_PANE__IS_RIP,
                 ProgConfig.DOWNLOAD__MEDIA_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
-                "Mediensammlung", "Mediensammlung", false);
+                "Mediensammlung", "Mediensammlung", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2InfoDto(paneBandwidthChart,
                 ProgConfig.DOWNLOAD__CHART_PANE_IS_RIP,
                 ProgConfig.DOWNLOAD__CHART_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
-                "Bandbreite", "Bandbreite", false);
+                "Bandbreite", "Bandbreite", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2InfoDto(paneDownloadError,
                 ProgConfig.DOWNLOAD__ERROR_PANE_IS_RIP,
                 ProgConfig.DOWNLOAD__ERROR_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
-                "Fehler", "Fehler", false);
+                "Fehler", "Fehler", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2InfoDto(paneDownloadInfoList,
                 ProgConfig.DOWNLOAD__LIST_PANE_IS_RIP,
                 ProgConfig.DOWNLOAD__LIST_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
-                "Infos", "Infos", false);
+                "Infos", "Infos", false,
+                progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoController = new P2InfoController(list, ProgConfig.DOWNLOAD__INFO_IS_SHOWING);

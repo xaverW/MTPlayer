@@ -149,12 +149,10 @@ public class FilmInfoDialogController extends P2DialogExtra {
 
     @Override
     public void make() {
-        TitledPane tpUrl;
-        addOkButton(btnOk);
-
-        getMaskerPane().setTextVisible(false);
         this.getMaskerPane().visibleProperty().bind(ProgData.getInstance().maskerPane.visibleProperty());
 
+        TitledPane tpUrl;
+        addOkButton(btnOk);
         btnOk.setOnAction(a -> close());
         getVBoxCont().getChildren().add(gridPane);
 
