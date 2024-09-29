@@ -225,6 +225,47 @@ public class FilterSamples {
         progData.filterWorker.getFilmFilterList().add(sf);
 
         //========================================================
+        sf = new FilmFilter("nur Serien");
+        sf.clearFilter();
+
+        sf.setChannelVis(true);
+        sf.setThemeVis(true);
+        sf.setThemeIsExact(false);
+        sf.setThemeTitleVis(true);
+        sf.setThemeTitleAndVis("#:.*#\\d.*|.*Folge \\d.*|.*(Folge \\d).*" +
+                "|.*Teil \\d.*|.*S0X E0Y -.*|.*(1 4).*|.*(S\\d E\\d).*" +
+                "|.*(S\\d/E\\d).*|.*(S2023/E\\d).*|.*(\\d) (S\\d/E\\d).*" +
+                "|.*Folge \\d ... (S\\d E\\d).*|.*(Staffel \\d, Folge \\d).*");
+        sf.setTitleVis(false);
+        sf.setSomewhereVis(false);
+        sf.setUrlVis(false);
+
+        sf.setTimeRangeVis(true);
+        sf.setTimeRange(25);
+        sf.setMinMaxDurVis(true);
+        sf.setMinDur(10);
+
+        sf.setMinMaxTimeVis(false);
+        sf.setMinMaxTimeInvert(false);
+
+        sf.setOnlyVis(true);
+        sf.setOnlyBookmark(false);
+        sf.setOnlyHd(false);
+        sf.setOnlyNew(false);
+        sf.setOnlyUt(false);
+        sf.setOnlyLive(false);
+        sf.setOnlyActHistory(false);
+
+        sf.setNotVis(true);
+        sf.setNotAbo(false);
+        sf.setNotHistory(false);
+        sf.setNotDouble(true);
+        sf.setNotGeo(true);
+        sf.setNotFuture(false);
+
+        progData.filterWorker.getFilmFilterList().add(sf);
+
+        //========================================================
         sf = new FilmFilter("Abendkrimi");
         sf.clearFilter();
 
