@@ -44,8 +44,8 @@ public class PaneColor {
     private final Stage stage;
     private final P2ToggleSwitch tglDarkTheme = new P2ToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
     private final P2ToggleSwitch tglBlackWhiteIcon = new P2ToggleSwitch("Schwarz-Weiße Icons");
-    TableView<P2ColorData> tableViewFont = new TableView<>();
-    TableView<P2ColorData> tableViewBackground = new TableView<>();
+    private final TableView<P2ColorData> tableViewFont = new TableView<>();
+    private final TableView<P2ColorData> tableViewBackground = new TableView<>();
 
     public PaneColor(Stage stage) {
         this.stage = stage;
@@ -56,7 +56,7 @@ public class PaneColor {
         tglBlackWhiteIcon.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACK_WHITE_ICON);
     }
 
-    public void makeColor(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
         final Button btnHelpTheme = P2Button.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
@@ -115,10 +115,10 @@ public class PaneColor {
     }
 
     private void initTableColor(TableView<P2ColorData> tableView) {
-        final TableColumn<P2ColorData, String> textColumn = new TableColumn<>("Beschreibung");
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
+        final TableColumn<P2ColorData, String> textColumn = new TableColumn<>("Beschreibung");
         textColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
         textColumn.getStyleClass().add("alignCenterLeft");
 
