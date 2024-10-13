@@ -57,5 +57,13 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "auf \"Schwarz-Weiß\" umgestellt werden. (Das Programm " +
                         "muss zur Übernahme neu gestartet werden).", 110);
         add(whatsNewInfo);
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 10, 13),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_03.png",
+
+                "Filter im externen Fenster",
+                "Die Filter neben den Tabellen können " +
+                        "jetzt in einem eigenem Fenster " +
+                        "angezeigt werden", 70);
+        add(whatsNewInfo);
     }
 }
