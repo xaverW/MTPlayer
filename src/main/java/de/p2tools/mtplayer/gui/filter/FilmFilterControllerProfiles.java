@@ -127,9 +127,8 @@ public class FilmFilterControllerProfiles extends VBox {
         miNew.setOnAction(e -> newFilter());
 
         final MenuItem miAbo = new MenuItem("Aus den Filtereinstellungen ein Abo erstellen");
-        miAbo.setOnAction(a -> {
-            AboListFactory.addNewAboFromFilterButton();
-        });
+        miAbo.setOnAction(a -> AboListFactory.addNewAboFromFilterButton());
+        miAbo.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
         final MenuItem miResort = new MenuItem("Filterprofile sortieren");
         miResort.setOnAction(e -> new FilmFilterSortDialog(progData).showDialog());
@@ -137,13 +136,16 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miFilterDialog = new MenuItem("Filterprofile in eigenem Fenster anzeigen");
         miFilterDialog.setOnAction(e -> new FilmFilterDialog(progData).showDialog());
 
+        final MenuItem miAddStandard = new MenuItem("Standard-Filterprofile anhängen");
+        miAddStandard.setOnAction(e -> resetFilter(false));
+
         final MenuItem miReset = new MenuItem("Alle Filterprofile wieder herstellen");
-        miReset.setOnAction(e -> resetFilter());
+        miReset.setOnAction(e -> resetFilter(true));
 
         mbFilterTools.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
         mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo,
                 new SeparatorMenuItem(), miResort, miFilterDialog,
-                new SeparatorMenuItem(), miReset);
+                new SeparatorMenuItem(), miAddStandard, miReset);
         mbFilterTools.setTooltip(new Tooltip("Gespeicherte Filterprofile bearbeiten"));
 
         cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_FILM_SEL_FILTER.get());
@@ -204,23 +206,33 @@ public class FilmFilterControllerProfiles extends VBox {
         }
 
         if (progData.filterWorker.getFilmFilterList().removeStoredFilter(sf)) {
-            cboFilterProfiles.getSelectionModel().selectFirst();
+            cboFilterProfiles.getSelectionModel().clearSelection();
         }
     }
 
     private void delAllFilter() {
         progData.filterWorker.getFilmFilterList().removeAllStoredFilter();
+        cboFilterProfiles.getSelectionModel().clearSelection();
     }
 
-    private void resetFilter() {
-        if (P2Alert.showAlertOkCancel("Zurücksetzen", "Filterprofile zurücksetzen",
-                "Sollen alle Filterprofile gelöscht " +
-                        "und durch die Profile vom ersten Programmstart " +
-                        "ersetzt werden?")) {
+    private void resetFilter(boolean replace) {
+        if (replace) {
+            if (!P2Alert.showAlertOkCancel("Zurücksetzen", "Filterprofile zurücksetzen",
+                    "Sollen alle Filterprofile gelöscht " +
+                            "und durch die Profile vom ersten Programmstart " +
+                            "ersetzt werden?")) {
+                return;
+            }
             progData.filterWorker.getFilmFilterList().clear();
-            FilterSamples.addStandardFilter();
-            cboFilterProfiles.getSelectionModel().selectFirst();
+
+        } else if (!progData.filterWorker.getFilmFilterList().isEmpty()) {
+            // dann eine Markierung
+            progData.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+            progData.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
         }
+
+        FilterSamples.addStandardFilter();
+        cboFilterProfiles.getSelectionModel().selectFirst();
     }
 
     private void newFilter() {
