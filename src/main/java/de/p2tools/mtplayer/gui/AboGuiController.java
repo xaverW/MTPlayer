@@ -32,9 +32,9 @@ import de.p2tools.mtplayer.gui.tools.table.TableAbo;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.beans.property.BooleanProperty;
@@ -65,7 +65,7 @@ public class AboGuiController extends AnchorPane {
 
     private final PaneAboInfo paneAboInfo;
     private final PaneAboInfoList paneAboInfoList;
-    private final P2InfoController infoController;
+    private final P2ClosePaneController infoController;
     private final BooleanProperty boundInfo = new SimpleBooleanProperty(false);
 
     public AboGuiController() {
@@ -89,21 +89,21 @@ public class AboGuiController extends AnchorPane {
         filteredAbos = new FilteredList<>(progData.aboList, p -> true);
         sortedAbos = new SortedList<>(filteredAbos);
 
-        ArrayList<P2InfoDto> list = new ArrayList<>();
-        P2InfoDto infoDto = new P2InfoDto(paneAboInfo,
+        ArrayList<P2ClosePaneDto> list = new ArrayList<>();
+        P2ClosePaneDto infoDto = new P2ClosePaneDto(paneAboInfo,
                 ProgConfig.ABO__INFO_PANE_IS_RIP,
                 ProgConfig.ABO__INFO__DIALOG_SIZE, ProgData.ABO_TAB_ON,
                 "Beschreibung", "Beschreibung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
-        infoDto = new P2InfoDto(paneAboInfoList,
+        infoDto = new P2ClosePaneDto(paneAboInfoList,
                 ProgConfig.ABO__LIST_PANE_IS_RIP,
                 ProgConfig.ABO__LIST_DIALOG_SIZE, ProgData.ABO_TAB_ON,
                 "Infos", "Infos", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
-        infoController = new P2InfoController(list, ProgConfig.ABO__INFO_IS_SHOWING);
+        infoController = new P2ClosePaneController(list, ProgConfig.ABO__INFO_IS_SHOWING);
 
         ProgConfig.ABO__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
         ProgConfig.ABO__INFO_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());

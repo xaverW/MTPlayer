@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.SplitPane;
@@ -38,21 +38,21 @@ public class AboGui {
     private final HBox hBox = new HBox();
     private final AboGuiController aboGuiController;
     private final BooleanProperty boundFilter = new SimpleBooleanProperty(false);
-    private final P2InfoController infoControllerFilter;
+    private final P2ClosePaneController infoControllerFilter;
 
     public AboGui() {
         progData = ProgData.getInstance();
         AboFilterController aboFilterController = new AboFilterController();
         aboGuiController = new AboGuiController();
 
-        ArrayList<P2InfoDto> list = new ArrayList<>();
-        P2InfoDto infoDto = new P2InfoDto(aboFilterController,
+        ArrayList<P2ClosePaneDto> list = new ArrayList<>();
+        P2ClosePaneDto infoDto = new P2ClosePaneDto(aboFilterController,
                 ProgConfig.ABO__FILTER_IS_RIP,
                 ProgConfig.ABO__FILTER_DIALOG_SIZE, ProgData.ABO_TAB_ON,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
-        infoControllerFilter = new P2InfoController(list, ProgConfig.ABO__FILTER_IS_SHOWING);
+        infoControllerFilter = new P2ClosePaneController(list, ProgConfig.ABO__FILTER_IS_SHOWING);
     }
 
     public SplitPane pack() {

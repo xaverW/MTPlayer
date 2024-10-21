@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.SplitPane;
@@ -39,20 +39,20 @@ public class DownloadGui {
     private final DownloadFilterController downloadFilterController;
     private final DownloadGuiController downloadGuiController;
     private final BooleanProperty boundFilter = new SimpleBooleanProperty(false);
-    private final P2InfoController infoControllerFilter;
+    private final P2ClosePaneController infoControllerFilter;
 
     public DownloadGui() {
         progData = ProgData.getInstance();
         downloadFilterController = new DownloadFilterController();
         downloadGuiController = new DownloadGuiController();
-        ArrayList<P2InfoDto> list = new ArrayList<>();
-        P2InfoDto infoDto = new P2InfoDto(downloadFilterController,
+        ArrayList<P2ClosePaneDto> list = new ArrayList<>();
+        P2ClosePaneDto infoDto = new P2ClosePaneDto(downloadFilterController,
                 ProgConfig.DOWNLOAD__FILTER_IS_RIP,
                 ProgConfig.DOWNLOAD__FILTER_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
-        infoControllerFilter = new P2InfoController(list, ProgConfig.DOWNLOAD__FILTER_IS_SHOWING);
+        infoControllerFilter = new P2ClosePaneController(list, ProgConfig.DOWNLOAD__FILTER_IS_SHOWING);
     }
 
     public SplitPane pack() {

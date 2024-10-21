@@ -32,9 +32,9 @@ import de.p2tools.mtplayer.gui.tools.table.TableLiveFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowLiveFilm;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
 import de.p2tools.p2lib.tools.P2SystemUtils;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -62,7 +62,7 @@ public class LiveFilmGuiController extends AnchorPane {
     private final PaneFilmInfo paneFilmInfo;
     private final PaneFilmButton paneButton;
     private final PaneMedia paneMedia;
-    private final P2InfoController infoController;
+    private final P2ClosePaneController infoController;
     private final BooleanProperty boundInfo = new SimpleBooleanProperty(false);
 
     public LiveFilmGuiController() {
@@ -88,29 +88,29 @@ public class LiveFilmGuiController extends AnchorPane {
         initDto(mDtoMedia, mDtoAbo);
         paneMedia = new PaneMedia(mDtoMedia, mDtoAbo);
 
-        ArrayList<P2InfoDto> list = new ArrayList<>();
-        P2InfoDto infoDto = new P2InfoDto(paneFilmInfo,
+        ArrayList<P2ClosePaneDto> list = new ArrayList<>();
+        P2ClosePaneDto infoDto = new P2ClosePaneDto(paneFilmInfo,
                 ProgConfig.LIVE_FILM__INFO_PANE_IS_RIP,
                 ProgConfig.LIVE_FILM__INFO_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
                 "Beschreibung", "Beschreibung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
-        infoDto = new P2InfoDto(paneButton,
+        infoDto = new P2ClosePaneDto(paneButton,
                 ProgConfig.LIVE_FILM__BUTTON_PANE_IS_RIP,
                 ProgConfig.LIVE_FILM__BUTTON_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
                 "Buttons", "Buttons", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
-        infoDto = new P2InfoDto(paneMedia,
+        infoDto = new P2ClosePaneDto(paneMedia,
                 ProgConfig.LIVE_FILM__MEDIA_PANE_IS_RIP,
                 ProgConfig.LIVE_FILM__MEDIA_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
                 "Mediensammlung", "Mediensammlung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
-        infoController = new P2InfoController(list, ProgConfig.LIVE_FILM__INFO_IS_SHOWING);
+        infoController = new P2ClosePaneController(list, ProgConfig.LIVE_FILM__INFO_IS_SHOWING);
 
         ProgConfig.LIVE_FILM__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
         ProgConfig.LIVE_FILM__INFO_PANE_IS_RIP.addListener((observable, oldValue, newValue) -> setInfoPane());

@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.live.LiveFilmFilterController;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
+import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoController;
-import de.p2tools.p2lib.guitools.pclosepane.P2InfoDto;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.SplitPane;
@@ -39,21 +39,21 @@ public class LiveFilmGui {
     private final LiveFilmFilterController liveFilmFilterController;
     private final LiveFilmGuiController liveFilmGuiController;
     private final BooleanProperty boundFilter = new SimpleBooleanProperty(false);
-    private final P2InfoController infoControllerFilter;
+    private final P2ClosePaneController infoControllerFilter;
 
     public LiveFilmGui() {
         progData = ProgData.getInstance();
         liveFilmFilterController = new LiveFilmFilterController();
         liveFilmGuiController = new LiveFilmGuiController();
 
-        ArrayList<P2InfoDto> list = new ArrayList<>();
-        P2InfoDto infoDto = new P2InfoDto(liveFilmFilterController,
+        ArrayList<P2ClosePaneDto> list = new ArrayList<>();
+        P2ClosePaneDto infoDto = new P2ClosePaneDto(liveFilmFilterController,
                 ProgConfig.LIVE_FILM__FILTER_IS_RIP,
                 ProgConfig.LIVE_FILM__FILTER_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
-        infoControllerFilter = new P2InfoController(list, ProgConfig.LIVE_FILM__FILTER_IS_SHOWING);
+        infoControllerFilter = new P2ClosePaneController(list, ProgConfig.LIVE_FILM__FILTER_IS_SHOWING);
     }
 
     public SplitPane pack() {
