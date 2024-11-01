@@ -34,6 +34,10 @@ public class MTPlayerFactory {
         ProgData.getInstance().primaryStage.centerOnScreen();
     }
 
+    public static void minimizeGui() {
+        ProgData.getInstance().primaryStage.setIconified(true);
+    }
+
     public static void setFilter() {
         switch (MTPlayerController.paneShown) {
             case FILM:

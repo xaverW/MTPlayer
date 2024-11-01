@@ -48,6 +48,12 @@ public class PShortKeyFactory {
         rn = MTPlayerFactory::centerGui;
         scene.getAccelerators().put(kc, rn);
 
+        // Minimize GUI
+        pShortcut = PShortcut.SHORTCUT_MINIMIZE_GUI;
+        kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
+        rn = MTPlayerFactory::minimizeGui;
+        scene.getAccelerators().put(kc, rn);
+
         // Info
         pShortcut = PShortcut.SHORTCUT_SHOW_INFOS;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());

@@ -29,6 +29,12 @@ public class PShortcut {
             new P2ShortcutKey(ProgConfig.SHORTCUT_CENTER_GUI, ProgConfig.SHORTCUT_CENTER_INIT,
                     "Center Programm",
                     "Das Programmfenster wird auf dem Bildschirm zentriert positioniert.");
+
+    public static final P2ShortcutKey SHORTCUT_MINIMIZE_GUI =
+            new P2ShortcutKey(ProgConfig.SHORTCUT_MINIMIZE_GUI, ProgConfig.SHORTCUT_MINIMIZE_INIT,
+                    "Programm-GUI minimieren",
+                    "Das Programmfenster wird minimiert.");
+
     // Menü
     public static final P2ShortcutKey SHORTCUT_SEARCH_MEDIACOLLECTION =
             new P2ShortcutKey(ProgConfig.SHORTCUT_SEARCH_MEDIA_COLLECTION, ProgConfig.SHORTCUT_SEARCH_MEDIA_COLLECTION_INIT,
@@ -157,6 +163,7 @@ public class PShortcut {
 
     public PShortcut() {
         shortcutList.add(SHORTCUT_CENTER_GUI);
+        shortcutList.add(SHORTCUT_MINIMIZE_GUI);
 
         shortcutList.add(SHORTCUT_SEARCH_MEDIACOLLECTION);
         shortcutList.add(SHORTCUT_QUIT_PROGRAM);
