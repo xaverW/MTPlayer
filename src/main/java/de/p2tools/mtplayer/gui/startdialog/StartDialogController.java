@@ -162,7 +162,7 @@ public class StartDialogController extends P2DialogExtra {
 
         //geoPane
         paneGeo = new PaneGeo(this.getStage());
-        tGeo = paneGeo.makeGeo();
+        tGeo = paneGeo.make();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
 

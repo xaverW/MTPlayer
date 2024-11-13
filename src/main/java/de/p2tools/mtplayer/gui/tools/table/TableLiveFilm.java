@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -48,6 +49,10 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
         Table.resetTable(this);
     }
 
+    private void refreshTable() {
+        P2TableFactory.refreshTable(this);
+    }
+
     private void initFileRunnerColumn() {
         getColumns().clear();
 
@@ -65,6 +70,12 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
+        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableLiveFilm.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                refreshTable();
+            }
+        });
 
         final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));

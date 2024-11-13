@@ -53,7 +53,7 @@ public class PaneAbo {
         tglStartDownload.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
     }
 
-    public void makeAbo(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         TitledPane tpConfig = new TitledPane("Abo", vBoxAll);
         result.add(tpConfig);
         vBoxAll.setSpacing(P2LibConst.PADDING_VBOX);

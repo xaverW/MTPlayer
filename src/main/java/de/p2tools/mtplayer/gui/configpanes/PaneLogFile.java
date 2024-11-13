@@ -54,7 +54,7 @@ public class PaneLogFile {
         txtLogFile.textProperty().unbindBidirectional(ProgConfig.SYSTEM_LOG_DIR);
     }
 
-    public void makeLogfile(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);

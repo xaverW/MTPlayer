@@ -37,6 +37,8 @@ public class ProgConst {
     public static final String CSS_FILE = "de/p2tools/mtplayer/mtfx.css";
     public static final String CSS_FILE_DARK_THEME = "de/p2tools/mtplayer/mtfx-dark.css";
 
+    public static final String PROGRAM_ICON = "de/p2tools/mtplayer/res/P2_24.png";
+
     public static final int SEARCH_FAST_THEME_TITLE = 0;
     public static final int SEARCH_FAST_THEME = 1;
     public static final int SEARCH_FAST_TITLE = 2;

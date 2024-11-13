@@ -53,6 +53,10 @@ public class TableDownload extends PTable<DownloadData> {
         Table.resetTable(this);
     }
 
+    private void refreshTable() {
+        P2TableFactory.refreshTable(this);
+    }
+
     private void initFileRunnerColumn() {
         getColumns().clear();
 
@@ -70,6 +74,12 @@ public class TableDownload extends PTable<DownloadData> {
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
+        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableDownload.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                refreshTable();
+            }
+        });
 
         final TableColumn<DownloadData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));

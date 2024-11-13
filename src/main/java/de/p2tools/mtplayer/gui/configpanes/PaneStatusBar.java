@@ -52,7 +52,7 @@ public class PaneStatusBar {
         tglRightOn.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
     }
 
-    public void makeStatusBar(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.PADDING));

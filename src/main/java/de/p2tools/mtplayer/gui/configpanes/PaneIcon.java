@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui.configpanes;
 
-import de.p2tools.mtplayer.controller.ProgStartAfterGui;
+import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
@@ -25,7 +25,6 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import de.p2tools.p2lib.guitools.P2WindowIcon;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -57,7 +56,7 @@ public class PaneIcon {
         txtTrayIconPath.textProperty().unbindBidirectional(ProgConfig.SYSTEM_TRAY_ICON_PATH);
     }
 
-    public void makeIcon(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
 
         TitledPane tpConfig = new TitledPane("Programm Icons", gridPane);
@@ -71,6 +70,8 @@ public class PaneIcon {
 
         int row = 0;
         row = addProgIcon(gridPane, row);
+
+        gridPane.add(new Label(), 0, ++row);
         gridPane.add(new Label(), 0, ++row);
         addTryIcon(gridPane, ++row);
     }
@@ -93,12 +94,10 @@ public class PaneIcon {
         btnProgIconFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         txtProgIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROGRAM_ICON_PATH);
         tglOwnProgIcon.selectedProperty().addListener((v, o, n) -> {
-            ProgStartAfterGui.setProgramIcon();
-            P2WindowIcon.setWindowIcon(stage, tglOwnProgIcon.isSelected() ? txtProgIconPath.getText() : "");
+            MTPlayerFactory.setProgramIcon();
         });
         txtProgIconPath.textProperty().addListener((v, o, n) -> {
-            ProgStartAfterGui.setProgramIcon();
-            P2WindowIcon.setWindowIcon(stage, tglOwnProgIcon.isSelected() ? txtProgIconPath.getText() : "");
+            MTPlayerFactory.setProgramIcon();
         });
 
         btnProgIconFile.disableProperty().bind(tglOwnProgIcon.selectedProperty().not());

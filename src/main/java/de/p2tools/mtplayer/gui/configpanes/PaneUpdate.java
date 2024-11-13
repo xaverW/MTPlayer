@@ -63,7 +63,7 @@ public class PaneUpdate {
         chkDaily.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
     }
 
-    public void makeUpdate(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         final VBox vBox = new VBox(P2LibConst.DIST_BUTTON);
         vBox.setPadding(new Insets(P2LibConst.PADDING));
 

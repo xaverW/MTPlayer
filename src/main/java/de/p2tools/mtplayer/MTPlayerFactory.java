@@ -21,14 +21,27 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
+import de.p2tools.p2lib.guitools.P2WindowIcon;
 
 public class MTPlayerFactory {
     private MTPlayerFactory() {
     }
 
-//    public static void quitAndWait() {
-//        ProgQuit.quit(true);
-//    }
+    public static String getOwnIconPath() {
+        if (ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON.getValue()) {
+            return ProgConfig.SYSTEM_PROGRAM_ICON_PATH.getValueSafe();
+        } else {
+            return "";
+        }
+    }
+
+    public static void setProgramIcon() {
+        if (ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON.getValue()) {
+            P2WindowIcon.setStageIcon(ProgConfig.SYSTEM_PROGRAM_ICON_PATH.getValueSafe());
+        } else {
+            P2WindowIcon.setStageIcon("");
+        }
+    }
 
     public static void centerGui() {
         ProgData.getInstance().primaryStage.centerOnScreen();

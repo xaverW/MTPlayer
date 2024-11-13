@@ -54,7 +54,7 @@ public class PaneShortcut {
     public void close() {
     }
 
-    public void makeShortcut(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         final Button btnHelp = P2Button.helpButton(stage, "Tastenkürzel ändern",
                 HelpText.SHORTCUT);
 

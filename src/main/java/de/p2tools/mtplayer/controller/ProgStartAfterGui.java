@@ -22,8 +22,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.filter.FilmFilterDialog;
-import de.p2tools.p2lib.dialogs.dialog.P2Dialog;
-import de.p2tools.p2lib.guitools.P2WindowIcon;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.log.P2LogMessage;
 
@@ -39,7 +37,6 @@ public class ProgStartAfterGui {
      * Filmliste beim Programmstart!! laden
      */
     public static void doWorkAfterGui() {
-        setProgramIcon();
         startMsg(true);
         setTitle();
         ProgData.getInstance().progTray.initProgTray();
@@ -51,17 +48,6 @@ public class ProgStartAfterGui {
         //die gespeicherte Filmliste laden, vorher den FilmFilter einschalten
         ProgData.getInstance().filterWorker.getActFilterSettings().switchFilterOff(false);
         LoadFilmFactory.getInstance().loadFilmlistProgStart();
-    }
-
-    public static void setProgramIcon() {
-        if (ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON.getValue()) {
-            String resource = ProgConfig.SYSTEM_PROGRAM_ICON_PATH.getValueSafe();
-            P2WindowIcon.setWindowIcon(ProgData.getInstance().primaryStage, resource);
-            P2Dialog.setIconPath(resource);
-        } else {
-            P2WindowIcon.addWindowP2Icon(ProgData.getInstance().primaryStage);
-            P2Dialog.setIconPath("");
-        }
     }
 
     public static void startMsg(boolean showAll) {

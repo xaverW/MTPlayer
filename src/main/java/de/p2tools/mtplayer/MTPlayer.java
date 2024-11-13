@@ -50,7 +50,6 @@ public class MTPlayer extends Application {
         progData.primaryStage = primaryStage;
 
         ProgStartBeforeGui.workBeforeGui();
-        initLib();
 
         //wenn gewünscht, Lock-File prüfen
         final String xmlFilePath = ProgInfos.getLockFileStr();
@@ -65,15 +64,6 @@ public class MTPlayer extends Application {
         P2Duration.onlyPing("Gui steht!");
         P2Duration.counterStop("start");
     }
-
-    private void initLib() {
-        P2LibInit.initLib(primaryStage, ProgConst.PROGRAM_NAME,
-                "",
-                ProgConfig.SYSTEM_DARK_THEME, ProgConfig.SYSTEM_BLACK_WHITE_ICON, ProgConfig.SYSTEM_THEME_CHANGED,
-                ProgConst.CSS_FILE, ProgConst.CSS_FILE_DARK_THEME, ProgConfig.SYSTEM_FONT_SIZE,
-                ProgData.debug, ProgData.duration);
-    }
-
 
     private void initRootLayout() {
         try {

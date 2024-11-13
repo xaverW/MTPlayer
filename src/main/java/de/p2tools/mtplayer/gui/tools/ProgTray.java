@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
@@ -37,6 +38,7 @@ import javafx.application.Platform;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -124,13 +126,17 @@ public class ProgTray {
             systemTray.remove(tr);
         }
 
-        Image image;
+        Image image = null;
         if (ProgConfig.SYSTEM_TRAY_USE_OWN_ICON.getValue() && !ProgConfig.SYSTEM_TRAY_ICON_PATH.getValueSafe().isEmpty()) {
-            String resource = ProgConfig.SYSTEM_TRAY_ICON_PATH.getValueSafe();
-            image = Toolkit.getDefaultToolkit().getImage(resource);
-        } else {
-            String resource = "de/p2tools/mtplayer/res/P2_24.png";
-            URL res = ClassLoader.getSystemResource(resource);
+            File file = new File(ProgConfig.SYSTEM_TRAY_ICON_PATH.getValueSafe());
+            if (file.exists()) {
+                String resource = ProgConfig.SYSTEM_TRAY_ICON_PATH.getValueSafe();
+                image = Toolkit.getDefaultToolkit().getImage(resource);
+            }
+        }
+
+        if (image == null) {
+            URL res = ClassLoader.getSystemResource(ProgConst.PROGRAM_ICON);
             image = Toolkit.getDefaultToolkit().getImage(res);
         }
 

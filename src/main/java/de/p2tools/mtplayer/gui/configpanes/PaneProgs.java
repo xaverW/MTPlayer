@@ -59,7 +59,7 @@ public class PaneProgs {
         cbxSystemCallOn.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHUT_DOWN_CALL_ON);
     }
 
-    public void makeProg(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);

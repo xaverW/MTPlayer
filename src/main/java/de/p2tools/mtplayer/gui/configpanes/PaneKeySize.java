@@ -60,7 +60,7 @@ public class PaneKeySize {
         }
     }
 
-    public void makeStyle(Collection<TitledPane> result) {
+    public void make(Collection<TitledPane> result) {
         tglStyle.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FONT_SIZE_CHANGE);
         final Button btnHelpStyle = P2Button.helpButton(stage, "Schriftgröße anpassen", HelpText.CONFIG_STYLE);
 

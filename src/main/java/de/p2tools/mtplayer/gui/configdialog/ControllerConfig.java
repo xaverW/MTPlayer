@@ -73,40 +73,40 @@ public class ControllerConfig extends P2AccordionPane {
         Collection<TitledPane> result = new ArrayList<>();
 
         paneConfig = new PaneConfig(stage);
-        paneConfig.makeConfig(result);
+        paneConfig.make(result);
 
         paneAbo = new PaneAbo(stage);
-        paneAbo.makeAbo(result);
+        paneAbo.make(result);
 
         paneIcon = new PaneIcon(stage);
-        paneIcon.makeIcon(result);
+        paneIcon.make(result);
 
         paneLogFile = new PaneLogFile(stage);
-        paneLogFile.makeLogfile(result);
+        paneLogFile.make(result);
 
         paneColor = new PaneColor(stage);
         paneColor.make(result);
 
         paneStatusBar = new PaneStatusBar(stage);
-        paneStatusBar.makeStatusBar(result);
+        paneStatusBar.make(result);
 
         paneShortcut = new PaneShortcut(stage);
-        paneShortcut.makeShortcut(result);
+        paneShortcut.make(result);
 
         paneGeo = new PaneGeo(stage);
-        paneGeo.makeGeo(result);
+        paneGeo.make(result);
 
         paneProxy = new PaneProxy(stage);
         paneProxy.make(result);
 
         paneKeySize = new PaneKeySize(stage, progData);
-        paneKeySize.makeStyle(result);
+        paneKeySize.make(result);
 
         paneProgs = new PaneProgs(stage);
-        paneProgs.makeProg(result);
+        paneProgs.make(result);
 
         paneUpdate = new PaneUpdate(stage);
-        paneUpdate.makeUpdate(result);
+        paneUpdate.make(result);
         return result;
     }
 }

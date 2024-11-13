@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
@@ -46,6 +47,10 @@ public class TableAbo extends PTable<AboData> {
         Table.resetTable(this);
     }
 
+    private void refreshTable() {
+        P2TableFactory.refreshTable(this);
+    }
+
     private void initFileRunnerColumn() {
         getColumns().clear();
 
@@ -58,7 +63,12 @@ public class TableAbo extends PTable<AboData> {
         ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
-
+        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableAbo.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                refreshTable();
+            }
+        });
         final TableColumn<AboData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
