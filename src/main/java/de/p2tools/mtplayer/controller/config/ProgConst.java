@@ -37,7 +37,7 @@ public class ProgConst {
     public static final String CSS_FILE = "de/p2tools/mtplayer/mtfx.css";
     public static final String CSS_FILE_DARK_THEME = "de/p2tools/mtplayer/mtfx-dark.css";
 
-    public static final String PROGRAM_ICON = "de/p2tools/mtplayer/res/P2_24.png";
+    public static final String PROGRAM_ICON = "de/p2tools/mtplayer/res/p2_logo_32.png";
 
     public static final int SEARCH_FAST_THEME_TITLE = 0;
     public static final int SEARCH_FAST_THEME = 1;
@@ -86,7 +86,7 @@ public class ProgConst {
     public static final String ADRESSE_WEBSITE_VLC = "http://www.videolan.org";
     public static final String ADRESSE_WEBSITE_FFMPEG = "http://ffmpeg.org";
 
-    public static final String FILE_PROG_ICON = "/de/p2tools/mtplayer/res/P2.png";
+//    public static final String FILE_PROG_ICON = "/de/p2tools/mtplayer/res/P2.png";
 
     // Dateien/Verzeichnisse
     public static final String JSON_DATEI_FILME = "filme.json";
