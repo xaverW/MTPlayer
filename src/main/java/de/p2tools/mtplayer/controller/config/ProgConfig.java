@@ -566,7 +566,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty DOWNLOAD_SUBTITLE_DIALOG_SIZE = addStrProp("download-subtitle-dialog-size", "");
     public static StringProperty IMPORT_MV_DIALOG_SIZE = addStrProp("import-mv-dialog-size", "600:800");
     public static StringProperty BLACK_DIALOG_SIZE = addStrProp("black-dialog-size", "700:800");
-    public static StringProperty CONFIG_DIALOG_SIZE = addStrProp("config-dialog-size");
+    public static StringProperty CONFIG_DIALOG_SIZE = addStrProp("config-dialog-size", "800:700");
     public static BooleanProperty CONFIG_DIALOG_ACCORDION = addBoolProp("config_dialog-accordion", Boolean.TRUE);
     public static DoubleProperty CONFIG_DIALOG_SET_DIVIDER = addDoubleProp("config-dialog-set-divider", ProgConst.CONFIG_DIALOG_SET_DIVIDER);
     public static StringProperty CONFIG_DIALOG_IMPORT_SET_SIZE = addStrProp("config-dialog-import-set-size", "800:700");

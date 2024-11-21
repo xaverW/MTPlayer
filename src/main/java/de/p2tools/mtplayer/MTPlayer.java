@@ -73,16 +73,24 @@ public class MTPlayer extends Application {
                     P2GuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI)); //Größe der scene != Größe stage!!!
 
             primaryStage.setScene(scene);
+            primaryStage.sizeToScene();
             primaryStage.setOnCloseRequest(e -> {
                 //beim Beenden
                 e.consume();
+                // P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene);
                 ProgQuit.quit(false);
+            });
+            primaryStage.setOnShowing(e -> {
+                P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null);
+            });
+            primaryStage.setOnShown(e -> {
+                P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null);
             });
 
             PShortKeyFactory.addShortKey(scene);
 
-            //Pos setzen
-            P2GuiSize.setOnlyPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
+            // Pos setzen
+            // P2GuiSize.setOnlyPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
             if (ProgConfig.SYSTEM_GUI_MAXIMISED.get() || ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED.get()) {
                 // dann wars maximiert oder soll immer so gestartet werden
                 primaryStage.setMaximized(true);
