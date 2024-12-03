@@ -316,7 +316,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty FILM_GUI_SHOW_MENU = addBoolProp("film-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("film-gui-show-table-tool-tip", Boolean.TRUE);
     public static BooleanProperty FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBoolProp("film-gui-filter-dialog-is-showing", Boolean.FALSE);
-    public static StringProperty FILM_GUI_FILTER_DIALOG_SIZE = addStrProp("film-gui-filter-dialog-size", "400:600");
+    //    public static StringProperty FILM_GUI_FILTER_DIALOG_SIZE = addStrProp("film-gui-filter-dialog-size", "400:600");
     public static StringProperty FILM_GUI_TABLE_WIDTH = addStrProp("film-gui-table-width");
     public static StringProperty FILM_GUI_TABLE_SORT = addStrProp("film-gui-table-sort");
     public static StringProperty FILM_GUI_TABLE_UP_DOWN = addStrProp("film-gui-table-up-down");

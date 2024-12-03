@@ -68,46 +68,32 @@ public class MTPlayer extends Application {
     private void initRootLayout() {
         try {
             progData.mtPlayerController = new MTPlayerController();
+            // scene = new Scene(progData.mtPlayerController); //Größe der scene != Größe stage!!!
             scene = new Scene(progData.mtPlayerController,
-                    P2GuiSize.getWidth(ProgConfig.SYSTEM_SIZE_GUI),
-                    P2GuiSize.getHeight(ProgConfig.SYSTEM_SIZE_GUI)); //Größe der scene != Größe stage!!!
-
+                    P2GuiSize.getStageSize(ProgConfig.SYSTEM_SIZE_GUI, true),
+                    P2GuiSize.getStageSize(ProgConfig.SYSTEM_SIZE_GUI, false)); //Größe der scene != Größe stage!!!
             primaryStage.setScene(scene);
-            primaryStage.sizeToScene();
+            // primaryStage.sizeToScene(); // macht Probleme
+
             primaryStage.setOnCloseRequest(e -> {
                 //beim Beenden
                 e.consume();
-                // P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene);
                 ProgQuit.quit(false);
             });
-            primaryStage.setOnShowing(e -> {
-                P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null);
-            });
-            primaryStage.setOnShown(e -> {
-                P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null);
-            });
 
-            PShortKeyFactory.addShortKey(scene);
+            primaryStage.setOnShowing(e -> P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null));
+            primaryStage.setOnShown(e -> P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null));
+            ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> ProgColorList.setColorTheme());
 
-            // Pos setzen
-            // P2GuiSize.setOnlyPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
             if (ProgConfig.SYSTEM_GUI_MAXIMISED.get() || ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED.get()) {
                 // dann wars maximiert oder soll immer so gestartet werden
                 primaryStage.setMaximized(true);
             }
-
-            scene.heightProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
-            scene.widthProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
-            primaryStage.xProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
-            primaryStage.yProperty().addListener((v, o, n) -> P2GuiSize.getSizeScene(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, scene));
-
+            PShortKeyFactory.addShortKey(scene);
             P2LibInit.addP2CssToScene(scene); // und jetzt noch CSS einstellen
-            ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
-                ProgColorList.setColorTheme();
-            });
 
-            primaryStage.show();
             primaryStage.setIconified(ProgData.startMinimized);
+            primaryStage.show();
         } catch (final Exception e) {
             e.printStackTrace();
         }

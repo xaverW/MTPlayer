@@ -20,8 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
+import de.p2tools.p2lib.guitools.P2GuiSize;
 import de.p2tools.p2lib.mtdownload.HttpDownload;
 import de.p2tools.p2lib.tools.P2ShutDown;
+import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.log.P2LogMessage;
 import javafx.application.Platform;
 
@@ -37,7 +39,6 @@ public class ProgQuit {
         // ResetDialog, QuittDialog (wenn noch Downloads laufen)
         // kann aus der Reihe kommen
         save(false);
-//        exitProg();
     }
 
     /**
@@ -47,8 +48,6 @@ public class ProgQuit {
         // QuittDialog (wenn noch Downloads laufen)
         // kann aus der Reihe kommen
         save(true);
-//        P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
-//        exitProg();
     }
 
     /**
@@ -67,7 +66,6 @@ public class ProgQuit {
         } else {
             //dann Programm beenden
             save(false);
-//            exitProg();
         }
     }
 
@@ -75,12 +73,37 @@ public class ProgQuit {
         // ProgQuitt-> vor dem Beenden
         // kann aus der Reihe kommen
         ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Speichern:", -1.0, false);
-        Platform.runLater(() -> {
 
+        if (ProgData.getInstance().primaryStage.isShowing()) {
+            P2GuiSize.getSize(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
+        }
+
+        Platform.runLater(() -> {
             stopAllDownloads();
             writeTabSettings();
             ProgSave.saveAll();
             P2LogMessage.endMsg();
+
+
+            // ============
+            if (ProgConfig.SYSTEM_SIZE_GUI.getValue().equals(ProgData.gui)) {
+                P2Log.sysLog("GUI ist gleich");
+                P2Log.sysLog("GUI: " + ProgConfig.SYSTEM_SIZE_GUI.getValue());
+            } else {
+                P2Log.sysLog("GUI: " + ProgData.gui);
+                P2Log.sysLog("GUI: " + ProgConfig.SYSTEM_SIZE_GUI.getValue());
+            }
+
+            P2Log.sysLog("");
+            if (ProgConfig.FILM__FILTER_DIALOG_SIZE.getValue().equals(ProgData.dialog)) {
+                P2Log.sysLog("DIALOG ist gleich");
+                P2Log.sysLog("DIALOG: " + ProgConfig.FILM__FILTER_DIALOG_SIZE.getValue());
+            } else {
+                P2Log.sysLog("DIALOG: " + ProgData.dialog);
+                P2Log.sysLog("DIALOG: " + ProgConfig.FILM__FILTER_DIALOG_SIZE.getValue());
+            }
+            // ============
+
 
             if (shutDown) {
                 P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
@@ -103,12 +126,6 @@ public class ProgQuit {
                 download.stopDownload(false);
             }
         });
-
-//        // unterbrochene werden gespeichert, dass die Info "Interrupt" erhalten bleibt
-//        // Download, (Abo müssen neu angelegt werden)
-//        ProgData.getInstance().downloadList.removeIf(download ->
-//                (!download.isStateStopped() &&
-//                        (download.isAbo() || download.isStateFinished())));
     }
 
     private static void writeTabSettings() {
@@ -116,7 +133,6 @@ public class ProgQuit {
         final ProgData progData = ProgData.getInstance();
 
         ProgConfig.SYSTEM_GUI_MAXIMISED.set(progData.primaryStage.isMaximized());
-
         progData.filmGuiController.saveTable();
         progData.liveFilmGuiController.saveTable();
         progData.downloadGuiController.saveTable();

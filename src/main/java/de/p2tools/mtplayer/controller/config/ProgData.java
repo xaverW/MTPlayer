@@ -66,6 +66,9 @@ public class ProgData {
     public static boolean autoMode = false; // Automodus: start, laden, beenden
     public static Busy busy;
 
+    public static String gui = "";
+    public static String dialog = "";
+
     public static boolean downloadSearchDone = false; // wird gesetzt, wenn das erste mal Downloads gesucht wurden
     public static boolean duration = false; // Duration ausgeben
     public static boolean startMinimized = false; // Minimiert starten
