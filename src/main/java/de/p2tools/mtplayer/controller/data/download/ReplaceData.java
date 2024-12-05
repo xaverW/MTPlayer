@@ -17,8 +17,11 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.p2lib.configfile.config.Config;
+import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -30,6 +33,7 @@ public class ReplaceData extends P2DataSample<ReplaceData> {
 
     StringProperty from = new SimpleStringProperty();
     StringProperty to = new SimpleStringProperty();
+    BooleanProperty active = new SimpleBooleanProperty(true);
 
     public ReplaceData() {
     }
@@ -37,6 +41,7 @@ public class ReplaceData extends P2DataSample<ReplaceData> {
     public ReplaceData(String from, String to) {
         setFrom(from);
         setTo(to);
+        setActive(true);
     }
 
     @Override
@@ -54,6 +59,7 @@ public class ReplaceData extends P2DataSample<ReplaceData> {
         ArrayList<Config> list = new ArrayList<>();
         list.add(new Config_stringProp("from", from));
         list.add(new Config_stringProp("to", to));
+        list.add(new Config_boolProp("active", active));
 
         return list.toArray(new Config[]{});
     }
@@ -80,5 +86,17 @@ public class ReplaceData extends P2DataSample<ReplaceData> {
 
     public void setTo(String to) {
         this.to.set(to);
+    }
+
+    public boolean isActive() {
+        return active.get();
+    }
+
+    public BooleanProperty activeProperty() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active.set(active);
     }
 }

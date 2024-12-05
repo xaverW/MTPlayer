@@ -70,6 +70,10 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> implement
         this.removeIf(replaceData -> replaceData.getFrom().isEmpty()); // Liste putzen
 
         for (ReplaceData replaceData : this) {
+            if (!replaceData.isActive()) {
+                continue;
+            }
+
             if (path && replaceData.getFrom().equals(File.separator)) {
                 // bei Pfaden darf / oder \ natürlich nicht entfernt werden
                 continue;

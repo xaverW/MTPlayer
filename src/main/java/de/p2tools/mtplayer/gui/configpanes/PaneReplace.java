@@ -27,6 +27,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
 import javafx.application.Platform;
@@ -51,6 +52,7 @@ public class PaneReplace {
 
     private final TextField txtFrom = new TextField();
     private final TextField txtTo = new TextField();
+    private final CheckBox chkActive = new CheckBox();
     private final GridPane gridPane = new GridPane();
 
     private TableView<ReplaceData> tableView = new TableView<>();
@@ -116,11 +118,15 @@ public class PaneReplace {
         final TableColumn<ReplaceData, String> toColumn = new TableColumn<>("Nach");
         toColumn.setCellValueFactory(new PropertyValueFactory<>("to"));
 
+        final TableColumn<ReplaceData, Boolean> activeColumn = new TableColumn<>("Aktiv");
+        activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
+        activeColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        tableView.getColumns().addAll(fromColumn, toColumn);
+        tableView.getColumns().addAll(fromColumn, toColumn, activeColumn);
         tableView.setItems(ProgData.getInstance().replaceList);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActReplaceData));
@@ -269,6 +275,8 @@ public class PaneReplace {
         gridPane.add(txtFrom, 1, 0);
         gridPane.add(new Label("Nach: "), 0, 1);
         gridPane.add(txtTo, 1, 1);
+        gridPane.add(new Label("Aktiv: "), 0, 2);
+        gridPane.add(chkActive, 1, 2);
 
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().add(gridPane);
@@ -290,6 +298,7 @@ public class PaneReplace {
         if (replaceDateProp.getValue() != null) {
             txtFrom.textProperty().bindBidirectional(replaceDateProp.getValue().fromProperty());
             txtTo.textProperty().bindBidirectional(replaceDateProp.getValue().toProperty());
+            chkActive.selectedProperty().bindBidirectional(replaceDateProp.getValue().activeProperty());
         }
     }
 
@@ -297,8 +306,10 @@ public class PaneReplace {
         if (replaceDateProp.getValue() != null) {
             txtFrom.textProperty().unbindBidirectional(replaceDateProp.getValue().fromProperty());
             txtTo.textProperty().unbindBidirectional(replaceDateProp.getValue().toProperty());
+            chkActive.selectedProperty().unbindBidirectional(replaceDateProp.getValue().activeProperty());
         }
         txtFrom.setText("");
         txtTo.setText("");
+        chkActive.setSelected(false);
     }
 }

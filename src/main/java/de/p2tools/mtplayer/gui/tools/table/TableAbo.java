@@ -73,10 +73,10 @@ public class TableAbo extends PTable<AboData> {
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        final TableColumn<AboData, Boolean> activColumn = new TableColumn<>("Aktiv");
-        activColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
-        activColumn.setCellFactory(new P2CellCheckBox().cellFactory);
-        activColumn.getStyleClass().add("alignCenter");
+        final TableColumn<AboData, Boolean> activeColumn = new TableColumn<>("Aktiv");
+        activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
+        activeColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+        activeColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> hitColumn = new TableColumn<>("Treffer");
         hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
@@ -157,7 +157,7 @@ public class TableAbo extends PTable<AboData> {
         genDateColumn.getStyleClass().add("alignCenter");
 
         getColumns().addAll(
-                nrColumn, activColumn, hitColumn, nameColumn, startColumn, resColumn, senderColumn,
+                nrColumn, activeColumn, hitColumn, nameColumn, startColumn, resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
                 somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn,
                 destinationColumn, datumColumn, psetColumn, genDateColumn);
