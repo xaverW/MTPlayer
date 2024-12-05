@@ -78,7 +78,7 @@ public class ControllerLoadFilmList extends P2AccordionPane {
         paneBlackList = new PaneBlackList(stage, progData, false, new SimpleBooleanProperty());
         paneBlackList.make(result);
 
-        paneFilmSender = new PaneFilmSender(stage, false);
+        paneFilmSender = new PaneFilmSender(stage);
         paneFilmSender.make(result);
 
         return result;

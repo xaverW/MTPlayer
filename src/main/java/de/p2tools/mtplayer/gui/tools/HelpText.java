@@ -703,25 +703,38 @@ public class HelpText {
                     "Blacklist/Whitelist gefiltert werden sollen." +
                     "\n";
 
-    public static final String LOAD_ONLY_FILMS =
-            "\"Nur Filme der letzten Tage laden:\" Die Filmliste enthält nur Filme aus diesem Zeitraum. " +
+    public static final String LOAD_ONLY_FILMS_STARTDIALOG =
+            "\"Nur Filme der letzten Tage laden\"" +
+                    "\n" +
+                    "Die Filmliste enthält dann nur Filme aus diesem Zeitraum. " +
                     "Filme ohne Datum sind immer enthalten.\n" +
                     "\n" +
-                    "\"Nur Filme mit Mindestlänge laden:\" Die Filmliste enthält nur Filme von " +
+                    "\"Nur Filme mit Mindestlänge laden\"" +
+                    "\n" +
+                    "Die Filmliste enthält dann nur Filme von " +
                     "mindestens dieser Dauer. Filme ohne Längenangabe sind immer enthalten.\n" +
                     "\n" +
-                    "Bei 'alles laden' sind alle Filme enthalten.\n" +
+                    "Bei 'alles laden' sind alle Filme enthalten." +
+                    "\n" +
                     "\n" +
                     "Das Filtern der Filmliste kann bei älteren Rechnern mit wenig Speicher " +
                     "hilfreich sein: Bei 'maximal 250 Tage' oder 'mindestens 5 Minuten' ist die " +
-                    "Filmliste nur etwa halb so groß (~ 300.000 Filme).\n" +
+                    "Filmliste nur etwa halb so groß (~300.000 Filme)." +
+                    "\n";
+
+    public static final String LOAD_ONLY_FILMS =
+            LOAD_ONLY_FILMS_STARTDIALOG +
                     "\n" +
                     "Auswirkung hat das Filtern erst nach dem " +
                     "Neuladen der Filmliste." +
                     "\n";
 
+    public static final String LOAD_FILMLIST_SENDER_STARTDIALOG =
+            "Filme der markierten Sender werden beim Laden der Filmliste ausgeschlossen.\n" +
+                    "\n";
+
     public static final String LOAD_FILMLIST_SENDER =
-            "Filme der markierten Sender werden aus der Filmliste ausgeschlossen.\n" +
+            LOAD_FILMLIST_SENDER_STARTDIALOG +
                     "\n" +
                     "Wirksam erst nach dem Neuladen der kompletten Filmliste." +
                     "\n";
@@ -736,14 +749,15 @@ public class HelpText {
                     "\n";
 
     public static final String LOAD_FILMLIST_ONLY_MARK_DOUBLE =
-            "In der Filmliste sind gleiche Filme bei verschiedenen Sendern enthalten. Doppelte Filme " +
-                    "können markiert werden. Es gibt einen Filmfilter um sie nicht anzuzeigen. Sie können auch mit " +
-                    "der Blacklist ausgeschlossen werden. Es ist auch " +
-                    "möglich, sie bereits beim Laden der Filmliste auszuschließen." +
+            "In der Filmliste sind ~150.000 Filme doppelt enthalten (z.B. bei ARD und BR)." +
                     "\n\n" +
-                    "Hier kann vorgegeben werden, ob sie beim Laden einer Filmliste entfernt werden. Da die Filmliste " +
-                    "inzwischen sehr lang ist und über 150.000 Filme doppelt enthalten sind, wäre das eine " +
-                    "sehr gute Entscheidung. In den Einstellungen kann das auch wieder geändert werden.";
+                    "Doppelte können bereits beim Laden der Filmliste ausgefiltert werden. Da die Filmliste " +
+                    "inzwischen sehr lang ist, wäre das eine " +
+                    "sehr gute Entscheidung. In den Einstellungen kann das auch wieder geändert werden." +
+//                    "\n\n" +
+//                    "Sie können die doppelten Filme aber auch im Programm mit einem Filter " +
+//                    "oder mit der Blacklist ausblenden." +
+                    "\n";
 
     public static final String LOAD_FILMLIST_MARK_DOUBLE =
             "In der Filmliste sind gleiche Filme bei verschiedenen Sendern enthalten. Doppelte Filme " +

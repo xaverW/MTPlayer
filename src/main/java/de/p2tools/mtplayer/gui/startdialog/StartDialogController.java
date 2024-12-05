@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.gui.configpanes.PaneFilmSender;
 import de.p2tools.mtplayer.gui.configpanes.PaneGeo;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -38,25 +37,28 @@ public class StartDialogController extends P2DialogExtra {
 
     private boolean ok = false;
 
-    private TilePane tilePane = new TilePane();
-    private StackPane stackpane;
+    private final TilePane tilePane = new TilePane();
     private Button btnOk, btnCancel;
     private Button btnPrev, btnNext;
-    private Button btnStart1 = new Button(STR_START_1), btnStart2 = new Button(STR_START_2),
-            btnUpdate = new Button(STR_UPDATE), btnGeo = new Button(STR_GEO),
-            btnFilm = new Button(STR_FILM),
-            btnDown = new Button(STR_DOWN),
-            btnPath = new Button(STR_PATH);
+    private final Button btnStart1 = new Button(STR_START_1);
+    private final Button btnStart2 = new Button(STR_START_2);
+    private final Button btnUpdate = new Button(STR_UPDATE);
+    private final Button btnGeo = new Button(STR_GEO);
+    private final Button btnFilm = new Button(STR_FILM);
+    private final Button btnStation = new Button(STR_STATION);
+    private final Button btnDown = new Button(STR_DOWN);
+    private final Button btnPath = new Button(STR_PATH);
 
     private static final String STR_START_1 = "Infos";
     private static final String STR_START_2 = "Infos";
     private static final String STR_UPDATE = "Update";
     private static final String STR_GEO = "Geo";
     private static final String STR_FILM = "Filme";
+    private static final String STR_STATION = "Sender";
     private static final String STR_DOWN = "Ziel";
     private static final String STR_PATH = "Pfade";
 
-    private enum State {START_1, START_2, UPDATE, GEO, FILM, DOWN, PATH}
+    private enum State {START_1, START_2, UPDATE, GEO, FILM, STATION, DOWN, PATH}
 
     private State aktState = State.START_1;
 
@@ -65,6 +67,7 @@ public class StartDialogController extends P2DialogExtra {
     private TitledPane tUpdate;
     private TitledPane tGeo;
     private TitledPane tFilm;
+    private TitledPane tStation;
     private TitledPane tDown;
     private TitledPane tPath;
 
@@ -72,16 +75,15 @@ public class StartDialogController extends P2DialogExtra {
     private StartPane startPane2;
     private UpdatePane updatePane;
     private PaneGeo paneGeo;
-    private PaneFilmSender paneFilmSender;
+    private PaneFilm paneFilm;
+    private PaneStation paneStation;
     private DownPathPane downPathPane;
     private PathPane pathPane;
-
-    private final ProgData progData;
 
     public StartDialogController() {
         super(null, null, "Starteinstellungen", true, false);
 
-        this.progData = ProgData.getInstance();
+        ProgData progData = ProgData.getInstance();
         init(true);
     }
 
@@ -100,7 +102,8 @@ public class StartDialogController extends P2DialogExtra {
         startPane2.close();
         updatePane.close();
         paneGeo.close();
-        paneFilmSender.close();
+        paneFilm.close();
+        paneStation.close();
         downPathPane.close();
         pathPane.close();
         super.close();
@@ -112,7 +115,7 @@ public class StartDialogController extends P2DialogExtra {
 
     private void initTopButton() {
         getVBoxCont().getChildren().add(tilePane);
-        tilePane.getChildren().addAll(btnStart1, btnStart2, btnUpdate, btnGeo, btnFilm, btnDown, btnPath);
+        tilePane.getChildren().addAll(btnStart1, btnStart2, btnUpdate, btnGeo, btnFilm, btnStation, btnDown, btnPath);
         tilePane.setAlignment(Pos.CENTER);
         tilePane.setPadding(new Insets(10, 10, 20, 10));
         tilePane.setHgap(10);
@@ -123,6 +126,7 @@ public class StartDialogController extends P2DialogExtra {
         initTopButton(btnUpdate, State.UPDATE);
         initTopButton(btnGeo, State.GEO);
         initTopButton(btnFilm, State.FILM);
+        initTopButton(btnStation, State.STATION);
         initTopButton(btnDown, State.DOWN);
         initTopButton(btnPath, State.PATH);
     }
@@ -138,7 +142,7 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void initStack() {
-        stackpane = new StackPane();
+        StackPane stackpane = new StackPane();
         VBox.setVgrow(stackpane, Priority.ALWAYS);
         getVBoxCont().getChildren().add(stackpane);
 
@@ -167,10 +171,16 @@ public class StartDialogController extends P2DialogExtra {
         tGeo.setCollapsible(false);
 
         //filmPane
-        paneFilmSender = new PaneFilmSender(this.getStage(), true);
-        tFilm = paneFilmSender.make(null);
+        paneFilm = new PaneFilm(this.getStage());
+        tFilm = paneFilm.make(null);
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
+
+        //stationPane
+        paneStation = new PaneStation(this.getStage());
+        tStation = paneStation.make(null);
+        tStation.setMaxHeight(Double.MAX_VALUE);
+        tStation.setCollapsible(false);
 
         //downPane
         downPathPane = new DownPathPane(this.getStage());
@@ -184,7 +194,7 @@ public class StartDialogController extends P2DialogExtra {
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
 
-        stackpane.getChildren().addAll(tStart1, tStart2, tUpdate, tGeo, tFilm, tDown, tPath);
+        stackpane.getChildren().addAll(tStart1, tStart2, tUpdate, tGeo, tFilm, tStation, tDown, tPath);
     }
 
     private void initButton() {
@@ -213,6 +223,9 @@ public class StartDialogController extends P2DialogExtra {
                     aktState = State.FILM;
                     break;
                 case FILM:
+                    aktState = State.STATION;
+                    break;
+                case STATION:
                     aktState = State.DOWN;
                     break;
                 case DOWN:
@@ -240,8 +253,11 @@ public class StartDialogController extends P2DialogExtra {
                 case FILM:
                     aktState = State.GEO;
                     break;
-                case DOWN:
+                case STATION:
                     aktState = State.FILM;
+                    break;
+                case DOWN:
+                    aktState = State.STATION;
                     break;
                 case PATH:
                     aktState = State.DOWN;
@@ -290,6 +306,12 @@ public class StartDialogController extends P2DialogExtra {
                 tFilm.toFront();
                 setButtonStyle(btnFilm);
                 break;
+            case STATION:
+                btnPrev.setDisable(false);
+                btnNext.setDisable(false);
+                tStation.toFront();
+                setButtonStyle(btnStation);
+                break;
             case DOWN:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
@@ -314,6 +336,7 @@ public class StartDialogController extends P2DialogExtra {
         btnUpdate.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnGeo.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnFilm.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
+        btnStation.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnDown.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnPath.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnSel.getStyleClass().setAll("btnFunction", "btnFuncStartDialogSel");
@@ -326,6 +349,9 @@ public class StartDialogController extends P2DialogExtra {
         btnGeo.setTooltip(new Tooltip("Einstellung des eigenen Standorts\n" +
                 "und der Markierung geblockter Filme"));
         btnFilm.setTooltip(new Tooltip("Damit kann man die Größe der\n" +
+                "Filmliste reduzieren und damit die Geschwindigkeit\n" +
+                "des Programms auf langsamen Rechnern verbessern"));
+        btnStation.setTooltip(new Tooltip("Damit kann man die Größe der\n" +
                 "Filmliste reduzieren und damit die Geschwindigkeit\n" +
                 "des Programms auf langsamen Rechnern verbessern"));
         btnDown.setTooltip(new Tooltip("Auswahl des Verzeichniss zum Speichern der Filme"));
