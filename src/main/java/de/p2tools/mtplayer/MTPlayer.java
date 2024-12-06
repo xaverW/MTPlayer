@@ -31,7 +31,6 @@ public class MTPlayer extends Application {
 
     private Stage primaryStage;
     private ProgData progData;
-    private Scene scene = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -69,7 +68,7 @@ public class MTPlayer extends Application {
         try {
             progData.mtPlayerController = new MTPlayerController();
             // scene = new Scene(progData.mtPlayerController); //Größe der scene != Größe stage!!!
-            scene = new Scene(progData.mtPlayerController,
+            Scene scene = new Scene(progData.mtPlayerController,
                     P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, true),
                     P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, false)); //Größe der scene != Größe stage!!!
             primaryStage.setScene(scene);

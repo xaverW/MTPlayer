@@ -47,9 +47,12 @@ public class FilmGui {
         filmGuiController = new FilmGuiController();
 
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
+        BooleanProperty show = new SimpleBooleanProperty();
+        show.bind(ProgData.FILM_TAB_ON.and(ProgConfig.FAST_SEARCH_ON.not()));
+
         P2ClosePaneDto infoDto = new P2ClosePaneDto(filmFilterController,
                 ProgConfig.FILM__FILTER_IS_RIP,
-                ProgConfig.FILM__FILTER_DIALOG_SIZE, ProgData.FILM_TAB_ON,
+                ProgConfig.FILM__FILTER_DIALOG_SIZE, show,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
