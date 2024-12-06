@@ -553,21 +553,33 @@ public class HelpText {
                     "erstellt. Danach wird die Ersetzungstabelle abgearbeitet. " +
                     "Hier können dann noch unerwünschte Zeichen entfernt werden." +
                     "\n\n" +
+
                     "## Nur ASCII-Zeichen ##\n" +
                     "Es werden alle Zeichen über ASCII 127 ersetzt. Umlaute werden aufgelöst (z.B. 'ö' -> 'oe'). " +
-                    "Wenn die Ersetzungstabelle aktiv ist wird sie vorher abgearbeitet." +
-                    "\n" +
-                    "\n" +
+                    "Wenn die Ersetzungstabelle aktiv ist, wird sie vorher abgearbeitet." +
+
+                    "\n\n" +
                     "## Ersetzungstabelle ##\n" +
                     "Die Tabelle wird von oben nach unten abgearbeitet. Es ist also möglich, " +
                     "dass eine Ersetzung durch eine weitere ganz oder teilweise " +
-                    "rückgängig gemacht wird!\n\n" +
+                    "rückgängig gemacht wird!" +
+
+                    "\n\n" +
+                    "In der Ersetzungstabelle wird Groß- und Kleinschreibung beachtet.\n" +
+                    "Aktiv\n" +
+                    "Es werden nur Einträge verwendet, die \"Aktiv\" sind.\n" +
+                    "Abbrechen nach Treffer\n" +
+                    "Hat ein Eintrag \"Abbrechen nach Treffer\", wird beim Abarbeiten der Liste (von oben nach unten) hier " +
+                    "abgebrochen, die weiteren Einträge in der Liste werden also nicht mehr angewendet." +
+
+                    "\n\n" +
                     "RegEx: " +
                     "Im Feld \"Von\" sind auch RegEx erlaubt. Diese müssen mit \"#:\" eingeleitet werden. " +
                     "Z.B.:\n" +
                     "#:[+]\n" +
                     "ersetzt alle \"+\" Zeichen mit dem angegebenen \"Nach\" Zeichen." +
                     "\n";
+
 
     public static final String DOWNLOAD_SSL_ALWAYS_TRUE =
             "Bei Downloads mit \"https-URL\" wird die Verbindung über SSL " +

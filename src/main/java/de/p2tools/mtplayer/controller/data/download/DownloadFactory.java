@@ -172,15 +172,22 @@ public class DownloadFactory {
     /**
      * Entferne verbotene Zeichen aus Dateiname.
      *
-     * @param name        Dateiname
+     * @param name   Dateiname
      * @param isPath
-     * @param userReplace
-     * @param onlyAscii
      * @return Bereinigte Fassung
      */
-    public static String replaceEmptyFileName(String name, boolean isPath, boolean userReplace, boolean onlyAscii) {
+    public static String replaceEmptyFileName(String name, boolean isPath) {
+        // AboListFactory.addNewAbo
+        // AboListFactory.addNewAboFromFilterButton
+        // DownloadFactoryMakeParameter.buildFileNamePath
+        //                              buildFileNamePath
+        // DownloadFactoryMakeParameter.getField
+        // DownloadAddDialogFactory.getNextName
         String ret = name;
         boolean isWindowsPath = false;
+        boolean userReplace = ProgConfig.SYSTEM_USE_REPLACETABLE.getValue();
+        boolean onlyAscii = ProgConfig.SYSTEM_ONLY_ASCII.getValue();
+
         if (SystemUtils.IS_OS_WINDOWS && isPath && ret.length() > 1 && ret.charAt(1) == ':') {
             // damit auch "d:" und nicht nur "d:\" als Pfad geht
             isWindowsPath = true;

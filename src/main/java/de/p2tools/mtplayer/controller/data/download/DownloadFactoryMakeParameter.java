@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
@@ -129,10 +128,7 @@ public class DownloadFactoryMakeParameter {
                 }
             }
 
-            name = DownloadFactory.replaceEmptyFileName(name,
-                    false /* pfad */,
-                    ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
-                    ProgConfig.SYSTEM_ONLY_ASCII.getValue());
+            name = DownloadFactory.replaceEmptyFileName(name, false /* pfad */);
             name = name + suff;
 
             // prüfen ob das Suffix 2x vorkommt
@@ -180,10 +176,7 @@ public class DownloadFactoryMakeParameter {
                     // --> das wird aber nur beim ersten mal klappen, dann wird im
                     // DownloadDialog immer der letzte Pfad zuerst angeboten
                     path = P2FileUtils.addsPath(path,
-                            DownloadFactory.replaceEmptyFileName(download.getTheme(),
-                                    true /* pfad */,
-                                    ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
-                                    ProgConfig.SYSTEM_ONLY_ASCII.getValue()));
+                            DownloadFactory.replaceEmptyFileName(download.getTheme(), true /* pfad */));
                 }
             }
 
@@ -311,10 +304,7 @@ public class DownloadFactoryMakeParameter {
     }
 
     private static String getField(String name, int length) {
-        name = DownloadFactory.replaceEmptyFileName(name,
-                false /* pfad */,
-                ProgConfig.SYSTEM_USE_REPLACETABLE.getValue(),
-                ProgConfig.SYSTEM_ONLY_ASCII.getValue());
+        name = DownloadFactory.replaceEmptyFileName(name, false /* pfad */);
 
         if (length <= 0) {
             return name;
