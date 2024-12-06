@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2WindowIcon;
 
 public class MTPlayerFactory {
@@ -49,6 +50,7 @@ public class MTPlayerFactory {
 
     public static void minimizeGui() {
         ProgData.getInstance().primaryStage.setIconified(true);
+        P2DialogExtra.getDialogList().forEach(p2Dialog -> p2Dialog.getStage().setIconified(true));
     }
 
     public static void setFilter() {
