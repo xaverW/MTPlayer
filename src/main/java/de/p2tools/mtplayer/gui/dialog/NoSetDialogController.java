@@ -51,7 +51,7 @@ public class NoSetDialogController extends P2DialogExtra {
         btnCancel.setOnAction(a -> close());
         btnImport.setOnAction(event -> {
             Platform.runLater(() -> {
-                //dadurch schließt sich dieser Dialog schon mal
+                // dadurch schließt sich dieser Dialog schon mal
                 ImportSetDialogController importSetDialogController = new ImportSetDialogController(progData);
                 importSetDialogController.close();
             });
@@ -70,16 +70,19 @@ public class NoSetDialogController extends P2DialogExtra {
         textHeaderAbo.setFont(Font.font(null, FontWeight.BOLD, -1));
         textHeaderAbo.getStyleClass().add("downloadGuiMediaText");
 
-        final String txtAdd = "Im Menü Einstellungen unter" + P2LibConst.LINE_SEPARATOR +
-                "   ->Aufzeichnen und Abspielen" + P2LibConst.LINE_SEPARATOR +
-                "die Programme zum Abspielen von Filmen und " + P2LibConst.LINE_SEPARATOR +
-                "Aufzeichnen von Abos korrigieren." + P2LibConst.LINE_SEPARATORx3 +
-                "Oder die Einstellungen zurücksetzen und" + P2LibConst.LINE_SEPARATOR +
-                "die Standardsets wieder herstellen.";
+        final String txtAdd = "Im Programmmenü unter\n" +
+                " -> Einstellungen -> Aufzeichnen und Abspielen\n" +
+                "können die Einstellungen zum Abspielen und Aufzeichnen von Filmen " +
+                "korrigiert werden.\n" +
+                "\n" +
+                " -> Standardsets wieder herstellen\n" +
+                "Es werden die Einstellungen zurückgesetzt und\n" +
+                "die Standardsets wieder hergestellt.";
 
         final int prefRowCount = 14;
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
+        textArea.setWrapText(true);
         textArea.setMaxHeight(Double.MAX_VALUE);
         textArea.setPrefRowCount(prefRowCount);
         VBox.setVgrow(textArea, Priority.ALWAYS);
@@ -89,21 +92,21 @@ public class NoSetDialogController extends P2DialogExtra {
             case SAVE:
                 getVBoxCont().getChildren().addAll(textHeaderSave, textArea);
                 textArea.setText(
-                        "Es ist kein Set von Programmen zum" + P2LibConst.LINE_SEPARATOR +
+                        "Es ist kein Set von Programmen zum " +
                                 "Aufzeichnen der Filme angelegt." + P2LibConst.LINE_SEPARATORx2 +
                                 txtAdd);
                 break;
             case PLAY:
                 getVBoxCont().getChildren().addAll(textHeaderPlay, textArea);
                 textArea.setText(
-                        "Es ist kein Videoplayer zum Abspielen" + P2LibConst.LINE_SEPARATOR +
+                        "Es ist kein Videoplayer zum Abspielen " +
                                 "der Filme angelegt." + P2LibConst.LINE_SEPARATORx2 +
                                 txtAdd);
                 break;
             case ABO:
                 getVBoxCont().getChildren().addAll(textHeaderAbo, textArea);
                 textArea.setText(
-                        "Es ist kein Set von Programmen zum" + P2LibConst.LINE_SEPARATOR +
+                        "Es ist kein Set von Programmen zum " +
                                 "Aufzeichnen der Abos angelegt." + P2LibConst.LINE_SEPARATORx2 +
                                 txtAdd);
         }

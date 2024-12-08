@@ -151,7 +151,7 @@ public class PaneSetProgram {
             final ObservableList<ProgramData> sels = tableView.getSelectionModel().getSelectedItems();
 
             if (sels == null || sels.isEmpty()) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 setDataObjectProperty.getValue().getProgramList().addDataToUndoList(sels);
                 setDataObjectProperty.getValue().getProgramList().removeAll(sels);
@@ -253,7 +253,7 @@ public class PaneSetProgram {
     private int getSelectedLine() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
-            P2Alert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection(stage);
         }
         return sel;
     }

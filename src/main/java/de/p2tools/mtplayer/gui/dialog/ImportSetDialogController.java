@@ -18,11 +18,10 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
+import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
 import de.p2tools.mtplayer.gui.startdialog.DownPathPane;
 import de.p2tools.mtplayer.gui.startdialog.PathPane;
-import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -37,12 +36,12 @@ public class ImportSetDialogController extends P2DialogExtra {
     private final ProgData progData;
     Button btnCancel = new Button("_Abbrechen");
     Button btnImport = new Button("_Set importieren");
-    private boolean im = false;
-    private StackPane stackPane;
-    private VBox vBoxPath = new VBox();
+    private final VBox vBoxPath = new VBox();
     private ControllerSet controllerSet;
 
     public ImportSetDialogController(ProgData progData) {
+        // beim Anlegen von Abos, Downloads, ..... wenn kein Set vorhanden ist
+        // ResetDialog
         super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE,
                 "Set importieren", true, false, DECO.BORDER_SMALL);
 
@@ -59,19 +58,21 @@ public class ImportSetDialogController extends P2DialogExtra {
     @Override
     public void make() {
         btnCancel.setOnAction(a -> close());
-        final Button btnHelp = P2Button.helpButton("Set zurücksetzen",
-                "\"Bestehende Sets durch neue ersetzen\"" +
-                        P2LibConst.LINE_SEPARATORx2 +
-                        "Damit werden alle Sets (auch eigene), die zum Abspielen" + P2LibConst.LINE_SEPARATOR +
-                        "und Aufzeichnen der Filme gebraucht werden, gelöscht." + P2LibConst.LINE_SEPARATOR +
-                        "Anschließend werden die aktuellen Standardsets eingerichtet." + P2LibConst.LINE_SEPARATOR +
+        final Button btnHelp = P2Button.helpButton(getStage(), "Set zurücksetzen",
+                "Es werden die Standard-Sets eingerichtet, bestehende werden " +
+                        "durch neue ersetzen\n" +
+                        "\n" +
+                        "Damit werden die Sets die zum Abspielen " +
+                        "und Aufzeichnen der Filme gebraucht werden angelegt.\n" +
+                        "Eventuell noch bestehende Sets werden gelöscht. Es wird der " +
+                        "Standard-Zustand wie nach dem ersten Start wieder hergestellt. " +
                         "Damit kann dann direkt weitergearbeitet werden.");
 
         btnImport.setOnAction(event -> {
             importSet();
         });
 
-        // vor import
+        // vor Import
         TitledPane tpDownPath = new DownPathPane(this.getStage()).makePath();
         tpDownPath.setMaxHeight(Double.MAX_VALUE);
         tpDownPath.setCollapsible(false);
@@ -90,7 +91,7 @@ public class ImportSetDialogController extends P2DialogExtra {
         controllerSet.setMaxHeight(Double.MAX_VALUE);
         controllerSet.setStyle("-fx-background-color: -fx-background;");
 
-        stackPane = new StackPane();
+        StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(vBoxPath, controllerSet);
         vBoxPath.toFront();
         VBox.setVgrow(stackPane, Priority.ALWAYS);
@@ -102,15 +103,15 @@ public class ImportSetDialogController extends P2DialogExtra {
     }
 
     private void importSet() {
-        im = true;
         btnCancel.setText("Ok");
-        btnImport.setDisable(true);
+        btnImport.setVisible(false);
+        btnImport.setManaged(false);
 
         progData.setDataList.clear();
-        if (ImportStandardSet.getStandardSet()) {
-            P2Alert.showInfoAlert("Set", "Set importieren", "Sets wurden importiert!", false);
+        if (SetImportFactory.getStandardSet(getStage())) {
+            P2Alert.showInfoAlert(getStage(), "Set", "Set importieren", "Sets wurden importiert!", false);
         } else {
-            P2Alert.showErrorAlert("Set importieren", "Sets konnten nicht importiert werden!");
+            P2Alert.showErrorAlert(getStage(), "Set importieren", "Sets konnten nicht importiert werden!");
         }
 
         controllerSet.toFront();

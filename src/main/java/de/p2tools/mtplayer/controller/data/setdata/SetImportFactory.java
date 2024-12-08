@@ -14,25 +14,27 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.worker;
+package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
-import de.p2tools.mtplayer.controller.data.setdata.SetReplacePatternFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 
-public class ImportStandardSet extends LinkedList<String[]> {
+public class SetImportFactory extends LinkedList<String[]> {
 
-    public static boolean getStandardSet() {
+    public static boolean getStandardSet(Stage stage) {
+        // ProgStartBeforeGui.workBeforeGui
+        // PaneSetList -> Button
+        // ImportSetDialogController -> Anlegen von Abos, Downloads, .. , ResetDialog
         SetDataList setDataList = new SetDataList();
         try {
             //liefert das standard Programmset für das entsprechende BS
@@ -47,7 +49,7 @@ public class ImportStandardSet extends LinkedList<String[]> {
                     loadSetDataUrl(setDataList, ProgConst.PROGRAM_SET_URL_WINDOWS);
             }
 
-            if (setDataList.size() == 0) {
+            if (setDataList.isEmpty()) {
                 P2Log.sysLog("Sets laden hat nicht geklappt, dann aus dem jar");
                 //dann nehmen wir halt die im jar-File
                 switch (P2ToolsFactory.getOs()) {
@@ -62,9 +64,9 @@ public class ImportStandardSet extends LinkedList<String[]> {
                 }
             }
 
-            if (setDataList.size() > 0) {
+            if (!setDataList.isEmpty()) {
                 // damit die Variablen ersetzt werden
-                SetReplacePatternFactory.progReplacePattern(setDataList);
+                SetReplacePatternFactory.progReplacePattern(stage, setDataList);
             } else {
                 P2Log.sysLog("Sets laden hat nicht geklappt");
             }
@@ -76,18 +78,18 @@ public class ImportStandardSet extends LinkedList<String[]> {
         return !setDataList.isEmpty();
     }
 
-    private static boolean loadSetDataUrl(SetDataList setDataList, String url) {
+    private static void loadSetDataUrl(SetDataList setDataList, String url) {
         P2Log.sysLog("Sets laden von: " + url);
         ConfigFile configFile = new ConfigFile(url, false);
         configFile.addConfigs(setDataList);
-        return ConfigReadFile.readConfig(configFile);
+        ConfigReadFile.readConfig(configFile);
     }
 
-    private static boolean loadSetDataLocalFile(SetDataList setDataList, String file) throws IOException {
+    private static void loadSetDataLocalFile(SetDataList setDataList, String file) throws IOException {
         P2Log.sysLog("Sets laden von: " + file);
         InputStreamReader is = new InputStreamReader(ClassLoader.getSystemResource(file).openStream(), StandardCharsets.UTF_8);
         ConfigFile configFile = new ConfigFile(is, false);
         configFile.addConfigs(setDataList);
-        return ConfigReadFile.readConfig(configFile);
+        ConfigReadFile.readConfig(configFile);
     }
 }

@@ -17,40 +17,23 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.starter.RuntimeExecDownload;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class SetFactory {
     private static final ArrayList<String> winPath = new ArrayList<>();
 
-    private static void setWinProgPath() {
-        String pfad;
-        if (System.getenv("ProgramFiles") != null) {
-            pfad = System.getenv("ProgramFiles");
-            if (new File(pfad).exists() && !winPath.contains(pfad)) {
-                winPath.add(pfad);
-            }
-        }
-        if (System.getenv("ProgramFiles(x86)") != null) {
-            pfad = System.getenv("ProgramFiles(x86)");
-            if (new File(pfad).exists() && !winPath.contains(pfad)) {
-                winPath.add(pfad);
-            }
-        }
-        final String[] PATH = {"C:\\Program Files", "C:\\Programme", "C:\\Program Files (x86)"};
-        for (final String s : PATH) {
-            if (new File(s).exists() && !winPath.contains(s)) {
-                winPath.add(s);
-            }
-        }
-    }
-
     public static String getTemplatePathVlc() {
+        // Startdialog und ProgConfig als init
+
         // liefert den Standardpfad für das entsprechende BS
         // Programm muss auf dem Rechner instelliert sein
         final String PATH_LINUX_VLC = "/usr/bin/vlc";
@@ -67,7 +50,7 @@ public class SetFactory {
                     }
                     break;
                 default:
-                    setWinProgPath();
+                    setWinProgPathVLC();
                     for (final String s : winPath) {
                         path = s + PATH_WIN;
                         if (new File(path).exists()) {
@@ -87,8 +70,10 @@ public class SetFactory {
     }
 
     public static String getTemplatePathFFmpeg() {
+        // Startdialog und ProgConfig als init
+
         // liefert den Standardpfad für das entsprechende BS
-        // bei Win+Mac wird das Programm mitgeliefert und liegt
+        // bei Win wird das Programm mitgeliefert und liegt
         // im Ordner "bin" der mit dem Programm mitgeliefert wird
         // bei Linux muss das Programm auf dem Rechner installiert sein
         final String PATH_LINUX_FFMPEG = "/usr/bin/ffmpeg";
@@ -116,6 +101,28 @@ public class SetFactory {
         } catch (final Exception ignore) {
         }
         return path;
+    }
+
+    private static void setWinProgPathVLC() {
+        String pfad;
+        if (System.getenv("ProgramFiles") != null) {
+            pfad = System.getenv("ProgramFiles");
+            if (new File(pfad).exists() && !winPath.contains(pfad)) {
+                winPath.add(pfad);
+            }
+        }
+        if (System.getenv("ProgramFiles(x86)") != null) {
+            pfad = System.getenv("ProgramFiles(x86)");
+            if (new File(pfad).exists() && !winPath.contains(pfad)) {
+                winPath.add(pfad);
+            }
+        }
+        final String[] PATH = {"C:\\Program Files", "C:\\Programme", "C:\\Program Files (x86)"};
+        for (final String s : PATH) {
+            if (new File(s).exists() && !winPath.contains(s)) {
+                winPath.add(s);
+            }
+        }
     }
 
     public static boolean testPrefix(String str, String uurl, boolean prefix) {
@@ -169,69 +176,122 @@ public class SetFactory {
         return ret;
     }
 
-    public static boolean checkPrograms(ProgData data) {
-        // prüfen ob die eingestellten Programmsets passen
+    public static boolean checkPrograms(Stage stage, ProgData data) {
+        // prüfen, ob die eingestellten Programmsets passen
+        if (data.setDataList.isEmpty()) {
+            // dann gibts nix
+            P2Alert.showErrorAlert(stage, "Set", "Sets prüfen", "Es sind keine Sets vorhanden! " +
+                    "Bitte die Standardsets importieren.");
+            return false;
+        }
+
         final String PIPE = "| ";
         final String LEER = "      ";
         final String PFEIL = " -> ";
         boolean ret = true;
-        String text = "";
+        StringBuilder text = new StringBuilder();
 
         for (final SetData setData : data.setDataList) {
             ret = true;
             if (!setData.isFreeLine() && !setData.isLable()) {
                 // nur wenn kein Lable oder freeline
-                text += "++++++++++++++++++++++++++" + P2LibConst.LINE_SEPARATOR;
-                text += PIPE + "Programmgruppe: " + setData.getVisibleName() + P2LibConst.LINE_SEPARATOR;
+                text.append("+++++++++++++++++++++++++++++++").append(P2LibConst.LINE_SEPARATOR);
+                text.append(PIPE + "Programmgruppe: ").append(setData.getVisibleName()).append(P2LibConst.LINE_SEPARATOR);
                 final String destPath = setData.getDestPath();
                 if (setData.progsContainPath()) {
                     // beim nur Abspielen wird er nicht gebraucht
                     if (destPath.isEmpty()) {
                         ret = false;
-                        text += PIPE + LEER + "Zielpfad fehlt!" + P2LibConst.LINE_SEPARATOR;
+                        text.append(PIPE + LEER + "Zielpfad fehlt!").append(P2LibConst.LINE_SEPARATOR);
                     } else // Pfad beschreibbar?
                         if (!checkPathWritable(destPath)) {
                             //da Pfad-leer und "kein" Pfad schon abgeprüft
                             ret = false;
-                            text += PIPE + LEER + "Falscher Zielpfad!" + P2LibConst.LINE_SEPARATOR;
-                            text += PIPE + LEER + PFEIL + "Zielpfad \"" + destPath + "\" nicht beschreibbar!" + P2LibConst.LINE_SEPARATOR;
+                            text.append(PIPE + LEER + "Falscher Zielpfad!").append(P2LibConst.LINE_SEPARATOR);
+                            text.append(PIPE + LEER + PFEIL + "Zielpfad \"").append(destPath).append("\" nicht beschreibbar!").append(P2LibConst.LINE_SEPARATOR);
                         }
                 }
+
                 for (final ProgramData progData : setData.getProgramList()) {
                     // Programmpfad prüfen
                     if (progData.getProgPath().isEmpty()) {
                         ret = false;
-                        text += PIPE + LEER + "Kein Programm angegeben!" + P2LibConst.LINE_SEPARATOR;
-                        text += PIPE + LEER + PFEIL + "Programmname: " + progData.getName() + P2LibConst.LINE_SEPARATOR;
-                        text += PIPE + LEER + LEER + "Pfad: " + progData.getProgPath() + P2LibConst.LINE_SEPARATOR;
-                    } else if (!new File(progData.getProgPath()).canExecute()) {
-                        // dann noch mit RuntimeExec versuchen
-                        final RuntimeExecDownload r = new RuntimeExecDownload(progData.getProgPath());
-                        final Process pr = r.exec(false /*log*/);
-                        if (pr != null) {
-                            // dann passts ja
-                            pr.destroy();
-                        } else {
-                            // läßt sich nicht starten
-                            ret = false;
-                            text += PIPE + LEER + "Falscher Programmpfad!" + P2LibConst.LINE_SEPARATOR;
-                            text += PIPE + LEER + PFEIL + "Programmname: " + progData.getName() + P2LibConst.LINE_SEPARATOR;
-                            text += PIPE + LEER + LEER + "Pfad: " + progData.getProgPath() + P2LibConst.LINE_SEPARATOR;
-                            if (!progData.getProgPath().contains(File.separator)) {
-                                text += PIPE + LEER + PFEIL + "Wenn das Programm nicht im Systempfad liegt, " + P2LibConst.LINE_SEPARATOR;
-                                text += PIPE + LEER + LEER + "wird der Start nicht klappen!" + P2LibConst.LINE_SEPARATOR;
+                        text.append(PIPE + LEER + "Kein Programm angegeben!").append(P2LibConst.LINE_SEPARATOR);
+                        text.append(PIPE + LEER + PFEIL + "Programmname: ").append(progData.getName()).append(P2LibConst.LINE_SEPARATOR);
+                        text.append(PIPE + LEER + LEER + "Pfad: ").append(progData.getProgPath()).append(P2LibConst.LINE_SEPARATOR);
+
+                    } else {
+                        Path path = Paths.get(progData.getProgPath());
+                        if (!Files.exists(path)) {
+                            // Pfad passt nicht
+                            if (progData.getProgPath().contains(File.separator)) {
+                                // ist dann ein absoluter Pfad und muss stimmen
+                                ret = false;
+                                text.append(PIPE + LEER + "Falscher Programmpfad!").append(P2LibConst.LINE_SEPARATOR);
+                                text.append(PIPE + LEER + PFEIL + "Programmname: ").append(progData.getName()).append(P2LibConst.LINE_SEPARATOR);
+                                text.append(PIPE + LEER + LEER + "Pfad: ").append(progData.getProgPath()).append(P2LibConst.LINE_SEPARATOR);
+
+                            } else {
+                                // ist nur der Programmname
+                                if (!Files.isExecutable(path)) {
+                                    // und noch mit RuntimeExec versuchen
+                                    Process process = null;
+                                    try {
+                                        process = Runtime.getRuntime().exec(progData.getProgPath());
+                                    } catch (Exception ignored) {
+                                    }
+                                    if (process != null) {
+                                        // dann passts ja
+                                        try {
+                                            process.destroy();
+                                        } catch (Exception ignore) {
+                                        }
+
+                                    } else {
+                                        ret = false;
+                                        text.append(PIPE + LEER + "Falscher Programmpfad!").append(P2LibConst.LINE_SEPARATOR);
+                                        text.append(PIPE + LEER + PFEIL + "Programmname: ").append(progData.getName()).append(P2LibConst.LINE_SEPARATOR);
+                                        text.append(PIPE + LEER + LEER + "Pfad: ").append(progData.getProgPath()).append(P2LibConst.LINE_SEPARATOR);
+                                        text.append(PIPE + "Das Programm braucht einen Pfad").append(P2LibConst.LINE_SEPARATOR);
+                                        text.append(PIPE + "oder muss im Systempfad liegen,").append(P2LibConst.LINE_SEPARATOR);
+                                        text.append(PIPE + "damit der Start klappt!").append(P2LibConst.LINE_SEPARATOR);
+                                    }
+                                }
+                            }
+
+                        } else if (!Files.isExecutable(path)) {
+                            // dann noch mit RuntimeExec versuchen
+                            Process process = null;
+                            try {
+                                process = Runtime.getRuntime().exec(progData.getProgPath());
+                            } catch (Exception ignored) {
+                            }
+                            if (process != null) {
+                                // dann passts ja
+                                try {
+                                    process.destroy();
+                                } catch (Exception ignore) {
+                                }
+
+                            } else {
+                                // lässt sich nicht starten
+                                ret = false;
+                                text.append(PIPE + LEER + "Programm kann nicht gestartet werden").append(P2LibConst.LINE_SEPARATOR);
+                                text.append(PIPE + LEER + PFEIL + "Programmname: ").append(progData.getName()).append(P2LibConst.LINE_SEPARATOR);
+                                text.append(PIPE + LEER + LEER + "Pfad: ").append(progData.getProgPath()).append(P2LibConst.LINE_SEPARATOR);
                             }
                         }
                     }
                 }
+
                 if (ret) {
                     //sollte alles passen
-                    text += PIPE + PFEIL + "Ok!" + P2LibConst.LINE_SEPARATOR;
+                    text.append(PIPE + PFEIL + "Ok!").append(P2LibConst.LINE_SEPARATOR);
                 }
-                text += "++++++++++++++++++++++++++" + "" + P2LibConst.LINE_SEPARATORx3;
+                text.append("+++++++++++++++++++++++++++++++").append(P2LibConst.LINE_SEPARATORx3);
             }
         }
-        P2Alert.showInfoAlert("Set", "Sets prüfen", text);
+        P2Alert.showInfoAlert(stage, "Set", "Sets prüfen", text.toString(), true);
         return ret;
     }
 }

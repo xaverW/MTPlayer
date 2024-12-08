@@ -391,6 +391,7 @@ public class ProgConfig extends P2DataProgConfig {
     // ====== GUI Downloads ==========================================
     // ===============================================================
 
+    public static StringProperty DOWNLOAD_PATH = addStrProp("download-path" + TAGGER + "start-dialog-download-path", P2SystemUtils.getStandardDownloadPath());
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);
     public static List<String> DOWNLOAD_DIALOG_DOWNLOAD_PATH = addListProp("download-dialog-download-path"); // gesammelten Downloadpfade im Downloaddialog
@@ -572,9 +573,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty CONFIG_DIALOG_IMPORT_SET_SIZE = addStrProp("config-dialog-import-set-size", "800:700");
     public static DoubleProperty CONFIG_DIALOG_FILMLIST_FILTER_SPLITPANE = addDoubleProp("config-dialog-filmlist-filter-splitpane", 0.7);
     public static DoubleProperty CONFIG_DIALOG_BLACKLIST_SPLITPANE = addDoubleProp("config-dialog-blacklist-splitpane", 0.7);
-
-    // StartDialog
-    public static StringProperty START_DIALOG_DOWNLOAD_PATH = addStrProp("start-dialog-download-path", P2SystemUtils.getStandardDownloadPath());
 
     // FilmInfoDialog
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_URL = addBoolProp("film-info-dialog-show-url", Boolean.FALSE);

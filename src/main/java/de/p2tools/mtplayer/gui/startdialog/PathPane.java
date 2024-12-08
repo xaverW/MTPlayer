@@ -45,15 +45,15 @@ import java.util.List;
 public class PathPane {
     StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC;
     StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG;
-    private GridPane gridPane = new GridPane();
+    private final GridPane gridPane = new GridPane();
     private int row = 0;
     private final Stage stage;
 
     private enum PLAYER {VLC, FFMPEG}
 
-    private class UnBind {
-        private TextField txt;
-        private StringProperty property;
+    private static class UnBind {
+        private final TextField txt;
+        private final StringProperty property;
 
         UnBind(TextField txt, StringProperty property) {
             this.txt = txt;
@@ -65,14 +65,14 @@ public class PathPane {
         }
     }
 
-    private List<UnBind> unbindList = new ArrayList<>();
+    private final List<UnBind> unbindList = new ArrayList<>();
 
     public PathPane(Stage stage) {
         this.stage = stage;
     }
 
     public void close() {
-        unbindList.stream().forEach(unBind -> unBind.unbind());
+        unbindList.forEach(UnBind::unbind);
     }
 
     public TitledPane makePath() {
@@ -104,8 +104,7 @@ public class PathPane {
         gridPane.add(btnHelp, 2, ++row);
         GridPane.setHalignment(btnHelp, HPos.RIGHT);
 
-        TitledPane tpConfig = new TitledPane("Programmpfade", gridPane);
-        return tpConfig;
+        return new TitledPane("Programmpfade", gridPane);
     }
 
     private void addPlayer(PLAYER player) {
@@ -147,13 +146,17 @@ public class PathPane {
 
         txtPlayer.textProperty().addListener((observable, oldValue, newValue) -> {
             File file = new File(txtPlayer.getText());
-            if (!file.exists() || !file.isFile()) {
+            if (txtPlayer.getText().isEmpty() || !file.exists() || !file.isFile()) {
                 txtPlayer.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
             } else {
                 txtPlayer.setStyle("");
             }
         });
         txtPlayer.textProperty().bindBidirectional(property);
+        if (txtPlayer.getText().isEmpty()) {
+            txtPlayer.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
+        }
+
         unbindList.add(new UnBind(txtPlayer, property));
 
         final Button btnFile = new Button();

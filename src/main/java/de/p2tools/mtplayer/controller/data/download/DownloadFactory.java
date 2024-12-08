@@ -218,8 +218,8 @@ public class DownloadFactory {
     }
 
     public static String getDownloadPath() {
-        return ProgConfig.START_DIALOG_DOWNLOAD_PATH.get().isEmpty() ?
-                P2SystemUtils.getStandardDownloadPath() : ProgConfig.START_DIALOG_DOWNLOAD_PATH.get();
+        return ProgConfig.DOWNLOAD_PATH.get().isEmpty() ?
+                P2SystemUtils.getStandardDownloadPath() : ProgConfig.DOWNLOAD_PATH.get();
     }
 
     public static void setDownloadSize(DownloadData download) {

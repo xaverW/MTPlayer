@@ -32,10 +32,7 @@ import java.util.Optional;
 
 public class ControllerSet extends AnchorPane {
 
-    private final Accordion accordion = new Accordion();
     private final SplitPane splitPane = new SplitPane();
-    private final ScrollPane scrollPane = new ScrollPane();
-    private final ArrayList<TitledPane> titledPanes = new ArrayList<>();
 
     private final PaneSetName paneSetName;
     private final PaneSetFunction paneSetFunction;
@@ -44,29 +41,31 @@ public class ControllerSet extends AnchorPane {
     private final PaneSetProgram paneSetProgram;
     private final PaneSetList paneSetList;
 
-    private final ObjectProperty<SetData> setDataObjectProperty = new SimpleObjectProperty<>(null);
-
     public ControllerSet(Stage stage) {
         AnchorPane.setLeftAnchor(splitPane, 0.0);
         AnchorPane.setBottomAnchor(splitPane, 0.0);
         AnchorPane.setRightAnchor(splitPane, 0.0);
         AnchorPane.setTopAnchor(splitPane, 0.0);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
 
+        ObjectProperty<SetData> setDataObjectProperty = new SimpleObjectProperty<>(null);
         paneSetName = new PaneSetName(stage, setDataObjectProperty);
         paneSetFunction = new PaneSetFunction(stage, setDataObjectProperty);
         paneSetDestination = new PaneSetDestination(stage, setDataObjectProperty);
         paneSetDownload = new PaneSetDownload(stage, setDataObjectProperty);
         paneSetProgram = new PaneSetProgram(stage, setDataObjectProperty);
         paneSetList = new PaneSetList(stage, setDataObjectProperty);
+        ArrayList<TitledPane> titledPanes = new ArrayList<>();
         paneSetName.makePane(titledPanes);
         paneSetFunction.makePane(titledPanes);
         paneSetDestination.makePane(titledPanes);
         paneSetDownload.makePane(titledPanes);
         paneSetProgram.makePane(titledPanes);
 
+        Accordion accordion = new Accordion();
         accordion.getPanes().addAll(titledPanes);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
         scrollPane.setContent(accordion);
         splitPane.getItems().addAll(paneSetList, scrollPane);
         splitPane.getItems().get(0).autosize();

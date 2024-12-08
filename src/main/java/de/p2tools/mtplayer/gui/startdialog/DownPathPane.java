@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 
 public class DownPathPane {
     private final TextField txtPath = new TextField();
-    StringProperty pathProp = ProgConfig.START_DIALOG_DOWNLOAD_PATH;
+    StringProperty pathProp = ProgConfig.DOWNLOAD_PATH;
 
     private final Stage stage;
 

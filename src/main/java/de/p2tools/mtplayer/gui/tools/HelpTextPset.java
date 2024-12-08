@@ -189,33 +189,38 @@ public class HelpTextPset {
                     "Filmtabelle gestartet werden kann.";
 
     public static final String HELP_PSET =
-            "Ein Set ist ein Satz von Einstellungen (auch für ggf. genutzte Hilfsprogramme), der auf " +
-                    "die URL eines Films angewandt wird.\n" +
-                    "Hilfsprogramme können den Film weiter verarbeiten: Außerhalb von MTPlayer herunterladen, " +
+            "Ein Set ist ein Satz von Einstellungen mit dem ein Film angesehen oder gespeichert werden kann. " +
+                    "Im Set können Hilfsprogramme angegeben werden, die den Film weiter " +
+                    "verarbeiten können z.B. herunterladen, " +
                     "abspielen, konvertieren,…\n" +
                     "\n" +
-                    "MTPlayer benötigt mindestens je ein Set zum Abspielen und zum Aufzeichnen. Zwei Sets " +
-                    "dafür werden beim ersten Programmstart mit Standardeinstellungen angelegt; sie " +
-                    "können bearbeitet und umbenannt werden.\n" +
+                    "MTPlayer benötigt mindestens ein Set zum Abspielen und eins zum Aufzeichnen. Diese zwei Sets " +
+                    "werden beim ersten Programmstart mit Standardeinstellungen angelegt.\n" +
                     "\n" +
                     "-- Set-Funktionen --\n" +
-                    "Die Set-Funktionen können in der Tabelle mit dem Maus-Kontextmenü und in \"Funktionen\" " +
-                    "ein- und ausgeschaltet werden.\n" +
+                    "Die Funktion eines Sets kann im Kontextmenü der Tabelle oder in \"Funktionen\" " +
+                    "angegeben werden.\n" +
+
                     "\n" +
-                    "\"Abspielen\" ruft ein Programm zur Wiedergabe auf, wenn ein Film zum Abspielen gestartet wird. " +
+                    "\"Abspielen\" ruft ein Programm zum Ansehen der Filme auf. " +
                     "Es kann nur ein Set dafür zuständig sein. In der Tabelle erscheint das Set zum " +
                     "Abspielen in roter Schrift.\n" +
+
                     "\n" +
                     "\"Speichern\" ist für das Speichern eines Films zuständig. Wenn mehrere Sets zum Speichern angelegt " +
                     "sind, muss für jeden Film in einem Dialog das Set ausgewählt werden.\n" +
+
                     "\n" +
-                    "\"Abo\": Wenn Abos genutzt werden, muss dafür ein Set bereitstehen, bei dem dies eingeschaltet ist.\n" +
+                    "\"Abo\": Wenn Abos genutzt werden, muss dafür ein Set bereitstehen, bei dem dies eingeschaltet ist. " +
                     "In der Regel eignet sich das Set \"Speichern\" auch für die Abos, es muss also " +
-                    "meist für die Abos kein eigenes Set angelegt werden. Bei diesem Set (Speichern-Set) " +
-                    "wird dann also  \"Speichern\" und \"Abo\" eingeschaltet.\n" +
+                    "meist für die Abos kein eigenes Set angelegt werden. Beim Speichern-Set " +
+                    "wird dann \"Speichern\" und \"Abo\" eingeschaltet.\n" +
+
                     "\n" +
                     "\"Button\" stellt einen Button für dieses Set in der Ansicht \"Filme\" zur Verfügung (unter der " +
-                    "Tabelle, im Tab \"Startbutton\"), mit dem es direkt aus der Filmtabelle gestartet werden kann.\n" +
+                    "Tabelle, im Tab \"Startbutton\"). Mit dem Button kann dann direkt ein Film aus der Filmtabelle " +
+                    "mit diesem Set gestartet werden.\n" +
+
                     "\n" +
                     "Soll ein Film mit einem Set aufgezeichnet werden, müssen [Zielpfad] und [Zieldateiname] " +
                     "in \"Speicherziel\" ausgefüllt werden.";

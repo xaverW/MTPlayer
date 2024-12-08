@@ -51,7 +51,7 @@ public class RuntimeExecDownload {
     private final String strProgCall;
     private String[] arrProgCallArray = null;
     private String strProgCallArray = "";
-    private PlayerMessage playerMessage = new PlayerMessage();
+    private final PlayerMessage playerMessage = new PlayerMessage();
 
     public RuntimeExecDownload(DownloadData download) {
         this.download = download;
@@ -66,9 +66,9 @@ public class RuntimeExecDownload {
         }
     }
 
-    public RuntimeExecDownload(String p) {
-        strProgCall = p;
-    }
+//    public RuntimeExecDownload(String p) {
+//        strProgCall = p;
+//    }
 
     //===================================
     // Public
@@ -100,8 +100,9 @@ public class RuntimeExecDownload {
             Thread clearOut = new Thread(new ClearInOut(ERROR, process));
             clearOut.setName("exec-out");
             clearOut.start();
+
         } catch (final IOException ex) {
-            P2Log.errorLog(123658970, ex, "IOFehler beim Starten");
+            P2Log.errorLog(958454789, ex, "IOFehler beim Starten");
             String error = "Das Programm: [" + download.getProgramName() + "] konnte nicht gestartet werden.";
             download.getDownloadStartDto().addErrMsg(error);
 

@@ -20,12 +20,12 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
-import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
+import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -66,7 +66,7 @@ public class PaneSetList extends VBox {
             return Optional.of(tableView.getSelectionModel().getSelectedItem());
         }
         if (show) {
-            P2Alert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection(stage);
         }
         return Optional.empty();
     }
@@ -86,7 +86,12 @@ public class PaneSetList extends VBox {
     }
 
     private void initTable(VBox vBox) {
-        vBox.getChildren().addAll(tableView);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setContent(tableView);
+        vBox.getChildren().addAll(scrollPane);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
         final TableColumn<SetData, String> visibleNameColumn = new TableColumn<>("Name");
         visibleNameColumn.setCellValueFactory(new PropertyValueFactory<>("visibleName"));
@@ -165,15 +170,15 @@ public class PaneSetList extends VBox {
         Button btnNewSet = new Button("Standardsets _anfügen");
         btnNewSet.setTooltip(new Tooltip("Standardsets erstellen und der Liste anfügen"));
         btnNewSet.setOnAction(event -> {
-            if (!ImportStandardSet.getStandardSet()) {
-                P2Alert.showErrorAlert("Set importieren", "Set konnten nicht importiert werden!");
+            if (!SetImportFactory.getStandardSet(stage)) {
+                P2Alert.showErrorAlert(stage, "Set importieren", "Set konnten nicht importiert werden!");
             }
         });
         btnNewSet.setMaxWidth(Double.MAX_VALUE);
 
         Button btnCheck = new Button("_Prüfen");
         btnCheck.setTooltip(new Tooltip("Die angelegten Sets überprüfen"));
-        btnCheck.setOnAction(event -> SetFactory.checkPrograms(progData));
+        btnCheck.setOnAction(event -> SetFactory.checkPrograms(stage, progData));
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
         final Button btnHelp = P2Button.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
@@ -187,14 +192,13 @@ public class PaneSetList extends VBox {
 
         VBox vb = new VBox(P2LibConst.DIST_BUTTON);
         vb.getChildren().addAll(hBoxButton, btnDup, btnNewSet, btnCheck, P2GuiTools.getVBoxGrower(), hBoxHelp);
-        VBox.setVgrow(vb, Priority.ALWAYS);
         vBox.getChildren().addAll(vb);
     }
 
     private int getSelectedLine() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
-            P2Alert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection(stage);
         }
         return sel;
     }
@@ -202,7 +206,7 @@ public class PaneSetList extends VBox {
     private SetData getSelectedSelData() {
         final SetData sel = tableView.getSelectionModel().getSelectedItem();
         if (sel == null) {
-            P2Alert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection(stage);
         }
         return sel;
     }

@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.starter.RuntimeExecPlay;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -87,7 +88,7 @@ public class FilmPlayFactory {
     }
 
     private static void play(List<FilmDataMTP> filmList) {
-        // Film abspielen, Menü,Button
+        // Film abspielen, Menü, Button
         SetData setData = ProgData.getInstance().setDataList.getSetDataPlay();
         if (setData == null) {
             new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.PLAY);
@@ -104,9 +105,24 @@ public class FilmPlayFactory {
         if (process != null) {
             // dann läuft er
             list.add("Film wurde gestartet");
+
         } else {
             // nicht gestartet
             list.add("Film konnte nicht gestartet werden");
+            P2Alert.showErrorAlert("Film starten", "Kann den Film mit dem Aufruf nicht starten:" +
+                    "\n" +
+                    "\n" +
+                    "------------------------------------------------" +
+                    "\n" +
+                    downloadData.getProgramCall() +
+                    "\n" +
+                    "------------------------------------------------" +
+                    "\n" +
+                    "\n" +
+                    "Bitte im Programmmenü unter\n" +
+                    " -> Einstellungen -> Aufzeichnen und Abspielen \n" +
+                    "die Einstellungen zum Abspielen und Aufzeichnen von Filmen " +
+                    "prüfen.");
         }
         list.add(P2Log.LILNE3);
         P2Log.sysLog(list.toArray(new String[0]));

@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilterSamples;
 import de.p2tools.mtplayer.controller.update.ProgConfigUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
-import de.p2tools.mtplayer.controller.worker.ImportStandardSet;
 import de.p2tools.mtplayer.gui.startdialog.StartDialogController;
 import de.p2tools.p2lib.P2LibInit;
 import de.p2tools.p2lib.configfile.ConfigFile;
@@ -63,7 +63,7 @@ public class ProgStartBeforeGui {
             }
 
             P2Duration.onlyPing("Erster Start: PSet");
-            ImportStandardSet.getStandardSet();
+            SetImportFactory.getStandardSet(null);
             P2Duration.onlyPing("Erster Start: PSet geladen");
             FilterSamples.addStandardFilter();
             P2Duration.onlyPing("Erster Start: CleaningList init");
