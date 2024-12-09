@@ -15,7 +15,6 @@
  */
 package de.p2tools.mtplayer;
 
-import com.sun.javafx.PlatformUtil;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
@@ -26,12 +25,8 @@ import de.p2tools.p2lib.guitools.P2GuiSize;
 import de.p2tools.p2lib.tools.P2Lock;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class MTPlayer extends Application {
 
@@ -86,25 +81,26 @@ public class MTPlayer extends Application {
                 primaryStage.setScene(scene);
                 P2GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
                 primaryStage.setMaximized(true);
-                if (PlatformUtil.isLinux()) {
-                    // bug in Java
-                    // https://bugs.openjdk.org/browse/JDK-8325549
-                    primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<>() {
-                        @Override
-                        public void handle(WindowEvent windowEvent) {
-                            primaryStage.removeEventHandler(WindowEvent.WINDOW_SHOWN, this);
-                            Platform.runLater(() -> {
-                                var bounds = new Rectangle2D(primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight());
-                                primaryStage.setMaximized(false);
-                                primaryStage.setX(bounds.getMinX());
-                                primaryStage.setY(bounds.getMinY());
-                                primaryStage.setWidth(bounds.getWidth());
-                                primaryStage.setHeight(bounds.getHeight());
-                                primaryStage.setMaximized(true);
-                            });
-                        }
-                    });
-                }
+                // Das geht!! aber GNOME mag nicht!!!!!!
+//                if (PlatformUtil.isLinux()) {
+//                    // bug in Java
+//                    // https://bugs.openjdk.org/browse/JDK-8325549
+//                    primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<>() {
+//                        @Override
+//                        public void handle(WindowEvent windowEvent) {
+//                            primaryStage.removeEventHandler(WindowEvent.WINDOW_SHOWN, this);
+//                            Platform.runLater(() -> {
+//                                var bounds = new Rectangle2D(primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight());
+//                                primaryStage.setMaximized(false);
+//                                primaryStage.setX(bounds.getMinX());
+//                                primaryStage.setY(bounds.getMinY());
+//                                primaryStage.setWidth(bounds.getWidth());
+//                                primaryStage.setHeight(bounds.getHeight());
+//                                primaryStage.setMaximized(true);
+//                            });
+//                        }
+//                    });
+//                }
 
             } else {
                 //========= !MAXIMISED ===========
