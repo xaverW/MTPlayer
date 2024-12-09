@@ -81,11 +81,12 @@ public class MTPlayer extends Application {
                 primaryStage.setScene(scene);
                 P2GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
                 primaryStage.setMaximized(true);
-                // Das geht!! aber GNOME mag nicht!!!!!!
-//                if (PlatformUtil.isLinux()) {
-//                    // bug in Java
-//                    // https://bugs.openjdk.org/browse/JDK-8325549
-//                    primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<>() {
+//                 // Das geht!! aber GNOME mag nicht!!!!!!
+//                 if (PlatformUtil.isLinux()) {
+//                   // bug in Java
+//                   // https://bugs.openjdk.org/browse/JDK-8325549
+//                   // https://stackoverflow.com/questions/24519668/javafx-maximized-window-moves-if-dialog-shows-up
+//                   primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<>() {
 //                        @Override
 //                        public void handle(WindowEvent windowEvent) {
 //                            primaryStage.removeEventHandler(WindowEvent.WINDOW_SHOWN, this);
