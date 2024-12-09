@@ -15,17 +15,23 @@
  */
 package de.p2tools.mtplayer;
 
+import com.sun.javafx.PlatformUtil;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.p2lib.P2LibInit;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiSize;
 import de.p2tools.p2lib.tools.P2Lock;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class MTPlayer extends Application {
 
@@ -67,31 +73,70 @@ public class MTPlayer extends Application {
     private void initRootLayout() {
         try {
             progData.mtPlayerController = new MTPlayerController();
-            // scene = new Scene(progData.mtPlayerController); //Größe der scene != Größe stage!!!
-            Scene scene = new Scene(progData.mtPlayerController,
-                    P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, true),
-                    P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, false)); //Größe der scene != Größe stage!!!
-            primaryStage.setScene(scene);
-            // primaryStage.sizeToScene(); // macht Probleme
+            Scene scene;
 
+            if (!ProgData.startMinimized &&
+                    (ProgConfig.SYSTEM_GUI_MAXIMISED.get() || ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED.get())) {
+                //========= MAXIMISED ===========
+                // dann wars maximiert oder soll immer so gestartet werden
+                scene = new Scene(progData.mtPlayerController,
+                        P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, true),
+                        P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, false)); //Größe der scene != Größe stage!!!
+
+                primaryStage.setScene(scene);
+                P2GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
+                primaryStage.setMaximized(true);
+                if (PlatformUtil.isLinux()) {
+                    // bug in Java
+                    // https://bugs.openjdk.org/browse/JDK-8325549
+                    primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<>() {
+                        @Override
+                        public void handle(WindowEvent windowEvent) {
+                            primaryStage.removeEventHandler(WindowEvent.WINDOW_SHOWN, this);
+                            Platform.runLater(() -> {
+                                var bounds = new Rectangle2D(primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight());
+                                primaryStage.setMaximized(false);
+                                primaryStage.setX(bounds.getMinX());
+                                primaryStage.setY(bounds.getMinY());
+                                primaryStage.setWidth(bounds.getWidth());
+                                primaryStage.setHeight(bounds.getHeight());
+                                primaryStage.setMaximized(true);
+                            });
+                        }
+                    });
+                }
+
+            } else {
+                //========= !MAXIMISED ===========
+                scene = new Scene(progData.mtPlayerController,
+                        P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, true),
+                        P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, false)); //Größe der scene != Größe stage!!!
+
+                primaryStage.setScene(scene);
+                primaryStage.setOnShowing(e -> P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null));
+                primaryStage.setOnShown(e -> P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null));
+            }
+
+            // primaryStage.sizeToScene(); // macht Probleme
             primaryStage.setOnCloseRequest(e -> {
                 //beim Beenden
                 e.consume();
                 ProgQuit.quit(false);
             });
 
-            primaryStage.setOnShowing(e -> P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null));
-            primaryStage.setOnShown(e -> P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null));
             ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> ProgColorList.setColorTheme());
 
-            if (ProgConfig.SYSTEM_GUI_MAXIMISED.get() || ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED.get()) {
-                // dann wars maximiert oder soll immer so gestartet werden
-                primaryStage.setMaximized(true);
-            }
             PShortKeyFactory.addShortKey(scene);
             P2LibInit.addP2CssToScene(scene); // und jetzt noch CSS einstellen
 
-            primaryStage.setIconified(ProgData.startMinimized);
+            if (ProgData.startMinimized) {
+                primaryStage.setIconified(true);
+                P2DialogExtra.getDialogList().forEach(d -> d.getStage().setIconified(true));
+            }
+            primaryStage.iconifiedProperty().addListener((u, o, n) -> {
+                P2DialogExtra.getDialogList().forEach(d -> d.getStage().setIconified(n));
+            });
+
             primaryStage.show();
         } catch (final Exception e) {
             e.printStackTrace();
