@@ -2,8 +2,8 @@ Das Bauen des Programms ist mit diesen Schritten
 (unter Linux!) möglich:
 
 
-Die Programme: git und gradle müssen installiert sein.
-In einem leeren Verzeichis muss zuerst der
+Die Programme: git und gradle müssen in aktueller Version!!
+installiert sein. In einem leeren Verzeichis muss zuerst der
 Quellcode geladen werden. Der liegt hier:
 
 https://github.com/xaverW/MTPlayer
