@@ -39,13 +39,15 @@ public class WhatsNewFactory {
     }
 
     public static void checkUpdate() {
+        // nach dem Laden der Filmliste
         P2Log.sysLog("Programmstart, alte Programm-Release-Nr: " + ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe());
-        P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + P2ToolsFactory.getBuild());
-        if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(P2ToolsFactory.getBuild())) {
-            // dann hat sich die BUILD_NO geändert, neue Version: Dann checken
+        P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + P2ToolsFactory.getBuildNo());
+        if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(P2ToolsFactory.getBuildNo())) {
+            // dann hat sich die BUILD_NO geändert, ist eine neue Version: Anzeigen was neu ist
             showWhatsNew(false);
+
         } else {
-            // sonst ist ja eh eine neue Version
+            // sonst prüfen, obs eine neue Version gibt
             checkProgUpdate();
         }
     }
@@ -54,36 +56,28 @@ public class WhatsNewFactory {
         ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.setValue(P2LDateFactory.getNowStringR());
     }
 
-    public static boolean showWhatsNew(boolean showAlways) {
+    public static void showWhatsNew(boolean showAlways) {
         // zeigt die Infos "whatsNew" an, wenn "showAlways" oder wenn die letzte Anzeige vor "whatsNewDate"
         WhatsNewList whatsNewList = new WhatsNewList();
 
-        boolean ret = false;
         try {
             ArrayList<WhatsNewInfo> list = showAlways ? whatsNewList : whatsNewList.getOnlyNews();
-            if (list.isEmpty()) {
-                // dann gibts nix
-                ret = false;
-
-            } else {
+            if (!list.isEmpty()) {
                 Platform.runLater(() -> new WhatsNewDialog(ProgData.getInstance().primaryStage, ProgConst.PROGRAM_NAME,
                         ProgConst.URL_WEBSITE, ProgConfig.SYSTEM_PROG_OPEN_URL,
                         ProgConfig.SYSTEM_DARK_THEME.getValue(), list).make());
-                ret = true;
             }
         } catch (Exception ignore) {
-            ret = false;
         }
 
         whatsNewList.setLastShown();
-        return ret;
     }
 
     private static void checkProgUpdate() {
         // Prüfen obs ein Programmupdate gibt
         P2Duration.onlyPing("checkProgUpdate");
-        if (ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue() &&
-                !updateCheckTodayDone()) {
+        if (ProgConfig.SYSTEM_SEARCH_UPDATE.getValue() &&
+                !isUpdateCheckTodayDone()) {
             // nach Updates suchen
             runUpdateCheck();
 
@@ -91,22 +85,22 @@ public class WhatsNewFactory {
             // will der User nicht --oder-- wurde heute schon gemacht
             List<String> list = new ArrayList<>(5);
             list.add("Kein Update-Check:");
-            if (!ProgConfig.SYSTEM_UPDATE_SEARCH_ACT.getValue()) {
+            if (!ProgConfig.SYSTEM_SEARCH_UPDATE.getValue()) {
                 list.add("  der User will nicht");
             }
-            if (updateCheckTodayDone()) {
+            if (isUpdateCheckTodayDone()) {
                 list.add("  heute schon gemacht");
             }
             P2Log.sysLog(list);
         }
     }
 
-    private static boolean updateCheckTodayDone() {
-        return ProgConfig.SYSTEM_UPDATE_DATE.get().equals(P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date()));
+    private static boolean isUpdateCheckTodayDone() {
+        return ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.get().equals(P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date()));
     }
 
     private static void runUpdateCheck() {
-        ProgConfig.SYSTEM_UPDATE_DATE.setValue(P2LDateFactory.getNowStringR());
+        ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.setValue(P2LDateFactory.getNowStringR());
         new SearchProgramUpdate(ProgData.getInstance()).searchNewProgramVersion(false);
     }
 }

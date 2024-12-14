@@ -139,10 +139,24 @@ public class MTPlayerMenu extends MenuButton {
                 MTPTester mtpTester = new MTPTester(progData);
                 mtpTester.showDialog();
             });
+            final MenuItem miSearchAllUpdate = new MenuItem("Alle Programm-Downloads anzeigen");
+            miSearchAllUpdate.setOnAction(a -> new SearchProgramUpdate(progData)
+                    .searchNewProgramVersion(true, true));
+
+            final MenuItem miResetTodayDone = new MenuItem("Datum \"heute schon gemacht\" zurücksetzen");
+            miResetTodayDone.setOnAction(a -> {
+                ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.set("2020.01.01"); // heute noch nicht gemacht
+            });
+            final MenuItem miResetLastSearch = new MenuItem("Datum \"letzte Suche\" zurücksetzen");
+            miResetLastSearch.setOnAction(a -> {
+                ProgConfig.SYSTEM_SEARCH_UPDATE_LAST_DATE.set("2020.01.01"); // letztes Datum, bis zu dem geprüft wurde, wenn leer wird das buildDate genommen
+            });
+
             final MenuItem miSave = new MenuItem("Alles Speichern");
             miSave.setOnAction(a -> ProgSave.saveAll());
 
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSave);
+            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSearchAllUpdate,
+                    miResetTodayDone, miResetLastSearch, miSave);
         }
         return mHelp;
     }

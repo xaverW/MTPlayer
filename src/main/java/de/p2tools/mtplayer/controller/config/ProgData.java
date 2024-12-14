@@ -64,10 +64,11 @@ public class ProgData {
     // flags
     public static boolean debug = false; // DebugModus
     public static boolean autoMode = false; // Automodus: start, laden, beenden
-    public static Busy busy;
+    public static boolean raspberry = true; // läuft auf einem Raspberry
+    public static Busy busy; // zeigt Fortschritt (Abos suchen, ...) an
 
-    public static String gui = "";
-    public static String dialog = "";
+    public static String gui = ""; // zur Kontrolle/Debug
+    public static String dialog = ""; // zur Kontrolle/Debug
 
     public static boolean downloadSearchDone = false; // wird gesetzt, wenn das erste mal Downloads gesucht wurden
     public static boolean duration = false; // Duration ausgeben

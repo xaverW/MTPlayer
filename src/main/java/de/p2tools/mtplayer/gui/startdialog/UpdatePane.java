@@ -32,7 +32,7 @@ import javafx.scene.layout.GridPane;
 public class UpdatePane {
     private final P2Dialog pDialog;
     private final P2ToggleSwitch tglSearch = new P2ToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
-    BooleanProperty updateProp = ProgConfig.SYSTEM_UPDATE_SEARCH_ACT;
+    BooleanProperty updateProp = ProgConfig.SYSTEM_SEARCH_UPDATE;
 
     public UpdatePane(P2Dialog pDialog) {
         this.pDialog = pDialog;

@@ -41,6 +41,7 @@ public class ProgStartBeforeGui {
     }
 
     public static void workBeforeGui() {
+        MTPlayerFactory.setRaspberry();
         boolean load = loadAll();
         initLib();
 

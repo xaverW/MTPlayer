@@ -21,6 +21,13 @@ import de.p2tools.p2lib.mtfilter.Filter;
 public class ProgConst {
 
     public static final String PROGRAM_NAME = "MTPlayer";
+
+    // <td><a href="/download/mtplayer/act/MTPlayer-17__2024.06.01.zip"> MTPlayer-17__2024.06.01.zip</a></td>
+    // <td><a href="/download/mtplayer/daily/MTPlayer-17-15__2024.12.09.zip"> MTPlayer-17-15__2024.12.09.zip</a></td>
+    // <td><a href="/download/raspberry/daily/MTPlayerRaspi-17-16__2024.12.11.zip"> MTPlayerRaspi-17-16__2024.12.11.zip</a></td>
+    public static final String FILE_NAME_MTPLAYER = "MTPlayer";
+    public static final String FILE_NAME_RASPBERRY = "MTPRaspi";
+
     public static final String USER_AGENT_DEFAULT = "";
     public static final int MAX_USER_AGENT_SIZE = 100;
 
@@ -38,6 +45,9 @@ public class ProgConst {
     public static final String CSS_FILE_DARK_THEME = "de/p2tools/mtplayer/mtfx-dark.css";
 
     public static final String PROGRAM_ICON = "de/p2tools/mtplayer/res/p2_logo_32.png";
+//    public static final String MTPLAYER_DOWNLOAD_URL = "https://www.p2tools.de/download/";
+//    public static final String RASPBERRY_DOWNLOAD_URL = "https://www.p2tools.de/download/";
+
 
     public static final int SEARCH_FAST_THEME_TITLE = 0;
     public static final int SEARCH_FAST_THEME = 1;
