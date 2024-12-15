@@ -64,7 +64,7 @@ public class ProgData {
     // flags
     public static boolean debug = false; // DebugModus
     public static boolean autoMode = false; // Automodus: start, laden, beenden
-    public static boolean raspberry = true; // läuft auf einem Raspberry
+    public static boolean raspberry = false; // läuft auf einem Raspberry
     public static Busy busy; // zeigt Fortschritt (Abos suchen, ...) an
 
     public static String gui = ""; // zur Kontrolle/Debug

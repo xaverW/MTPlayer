@@ -68,13 +68,13 @@ public class SearchProgramUpdate {
                 ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY,
 
                 ProgConst.URL_WEBSITE,
-                ProgConst.URL_WEBSITE_DOWNLOAD,
-                (ProgData.raspberry ? ProgConst.FILE_NAME_RASPBERRY : ProgConst.FILE_NAME_MTPLAYER),
+                ProgData.raspberry ? ProgConst.URL_WEBSITE_DOWNLOAD_RASPI : ProgConst.URL_WEBSITE_DOWNLOAD,
+                ProgData.raspberry ? ProgConst.FILE_NAME_RASPBERRY : ProgConst.FILE_NAME_MTPLAYER,
 
                 P2ToolsFactory.getProgVersion(),
                 P2ToolsFactory.getBuildNo(),
                 P2ToolsFactory.getBuildDateR(),
-                // "2024.10.12",
+//                "2024.01.12",
 
                 ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
                 showAlways,
