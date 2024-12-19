@@ -45,15 +45,15 @@ public class PaneMediaConfig {
 
     private final RadioButton rbWithOutSuff = new RadioButton("keine Dateien mit diesem Suffix (z.B.: txt,xml,jpg)");
     private final RadioButton rbWithSuff = new RadioButton("nur Dateien mit diesem Suffix (z.B.: mp4, m4v)");
-    private TextField txtSuff = new TextField();
+    private final TextField txtSuff = new TextField();
     private final P2ToggleSwitch tglNoHiddenFiles = new P2ToggleSwitch("keine versteckten Dateien suchen:");
     private final Slider slFileSize = new Slider();
     private final Label lblFileSize = new Label();
     private final String TXT_ALL = "alle Dateien";
     private int intValue = 0;
-    private TextField txtExport = new TextField();
-    private Button btnExport = new Button("exportieren");
-    private Button btnExportFile = new Button("");
+    private final TextField txtExport = new TextField();
+    private final Button btnExport = new Button("exportieren");
+    private final Button btnExportFile = new Button("");
     private final RadioButton rbIntern = new RadioButton("interne");
     private final RadioButton rbExtern = new RadioButton("externe");
     private final RadioButton rbInternExtern = new RadioButton("beide");

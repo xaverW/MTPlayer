@@ -27,10 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.Collection;
@@ -100,6 +97,7 @@ public class PaneProxy {
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.getChildren().add(new Label("Änderungen in diesem Tab\n" +
                 "wirken sich erst nach dem Neustart des Programms aus"));
+        hBox.setMinHeight(Region.USE_PREF_SIZE);
 
         final VBox vBox = new VBox(P2LibConst.PADDING);
         vBox.setPadding(new Insets(P2LibConst.PADDING));

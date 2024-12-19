@@ -30,6 +30,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -112,6 +113,7 @@ public class PaneFilmLoad {
         hBox.getStyleClass().add("extra-pane");
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
+        hBox.setMinHeight(Region.USE_PREF_SIZE);
         hBox.getChildren().add(new Label("Änderungen in diesem Tab\n" +
                 "wirken sich erst nach dem Neuladen einer Filmliste aus"));
 

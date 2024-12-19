@@ -23,6 +23,7 @@ import de.p2tools.p2lib.checkforactinfos.FoundAll;
 import de.p2tools.p2lib.checkforactinfos.FoundSearchDataDTO;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.application.Platform;
+import javafx.stage.Stage;
 
 import static java.lang.Thread.sleep;
 
@@ -44,10 +45,14 @@ public class SearchProgramUpdate {
      */
 
     public void searchNewProgramVersion(final boolean showAlways) {
-        searchNewProgramVersion(showAlways, false);
+        searchNewProgramVersion(progData.primaryStage, showAlways, false);
     }
 
     public void searchNewProgramVersion(final boolean showAlways, boolean showAllDownloads) {
+        searchNewProgramVersion(progData.primaryStage, showAlways, showAllDownloads);
+    }
+
+    public void searchNewProgramVersion(Stage owner, final boolean showAlways, boolean showAllDownloads) {
         final String SEARCH_URL;
         final String SEARCH_URL_DOWNLOAD;
         SEARCH_URL = "https://www.p2tools.de";
@@ -58,7 +63,7 @@ public class SearchProgramUpdate {
 
         final FoundSearchDataDTO foundSearchDataDTO;
         foundSearchDataDTO = new FoundSearchDataDTO(
-                progData.primaryStage,
+                owner,
                 SEARCH_URL,
                 SEARCH_URL_DOWNLOAD,
 

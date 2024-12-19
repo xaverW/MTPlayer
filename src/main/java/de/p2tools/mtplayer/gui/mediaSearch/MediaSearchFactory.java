@@ -100,13 +100,13 @@ public class MediaSearchFactory {
         }
 
         Button btnChange = new Button();
-        btnChange.getStyleClass().add("buttonVerySmall");
+//        btnChange.getStyleClass().add("buttonVerySmall");
         if (buildSearchFrom) {
             btnChange.setTooltip(new Tooltip("Einstellung wie der Suchtext gebaut wird"));
         } else {
             btnChange.setTooltip(new Tooltip("Einstellung wo gesucht wird"));
         }
-        btnChange.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnChange.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
         btnChange.setOnAction(a -> {
             if (buildSearchFrom) {
                 if (mediaDataDto.buildSearchFrom.getValue() == ProgConst.MEDIA_SEARCH_THEME_OR_PATH) {

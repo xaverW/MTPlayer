@@ -39,7 +39,7 @@ public class FilmFilterEditDialog extends P2DialogExtra {
     private final RadioButton rbNothing = new RadioButton("Nichts neues auswählen");
 
     public FilmFilterEditDialog(ProgData progData) {
-        super(progData.primaryStage, null, "Filtereinstellungen", true, true, DECO.NO_BORDER);
+        super(progData.primaryStage, null, "Filtereinstellungen", true, false, DECO.NO_BORDER);
         this.progData = progData;
 
         init(true);
