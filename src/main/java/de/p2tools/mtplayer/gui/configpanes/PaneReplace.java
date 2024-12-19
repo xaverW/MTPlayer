@@ -55,8 +55,8 @@ public class PaneReplace {
     private final CheckBox chkActive = new CheckBox();
     private final GridPane gridPane = new GridPane();
 
-    private TableView<ReplaceData> tableView = new TableView<>();
-    private ObjectProperty<ReplaceData> replaceDateProp = new SimpleObjectProperty<>(null);
+    private final TableView<ReplaceData> tableView = new TableView<>();
+    private final ObjectProperty<ReplaceData> replaceDateProp = new SimpleObjectProperty<>(null);
     private final P2ToggleSwitch tglAscii = new P2ToggleSwitch("Nur ASCII-Zeichen erlauben");
     private final P2ToggleSwitch tglReplace = new P2ToggleSwitch("Ersetzungstabelle");
 
@@ -162,7 +162,7 @@ public class PaneReplace {
         btnDel.setOnAction(event -> {
             final ObservableList<ReplaceData> sels = tableView.getSelectionModel().getSelectedItems();
             if (sels == null || sels.isEmpty()) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 ProgData.getInstance().replaceList.addDataToUndoList(sels);
                 ProgData.getInstance().replaceList.removeAll(sels);
@@ -188,7 +188,7 @@ public class PaneReplace {
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 int res = ProgData.getInstance().replaceList.up(sel, true);
                 tableView.getSelectionModel().clearSelection();
@@ -203,7 +203,7 @@ public class PaneReplace {
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 int res = ProgData.getInstance().replaceList.up(sel, false);
                 tableView.getSelectionModel().clearSelection();
@@ -218,7 +218,7 @@ public class PaneReplace {
         btnTop.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 int res = ProgData.getInstance().replaceList.top(sel, true);
                 tableView.getSelectionModel().clearSelection();
@@ -233,7 +233,7 @@ public class PaneReplace {
         btnBottom.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 int res = ProgData.getInstance().replaceList.top(sel, false);
                 tableView.getSelectionModel().clearSelection();

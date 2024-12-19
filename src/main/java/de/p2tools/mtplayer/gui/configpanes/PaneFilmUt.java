@@ -181,7 +181,7 @@ public class PaneFilmUt {
         btnDel.setOnAction(event -> {
             final ObservableList<UtData> sels = tableView.getSelectionModel().getSelectedItems();
             if (sels == null || sels.isEmpty()) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 if (ut) {
                     ProgData.getInstance().utDataList.addDataToUndoList(sels);
@@ -215,7 +215,7 @@ public class PaneFilmUt {
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 int res;
                 if (ut) {
@@ -235,7 +235,7 @@ public class PaneFilmUt {
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
             } else {
                 int res;
                 if (ut) {
@@ -340,6 +340,7 @@ public class PaneFilmUt {
         utDateProp.setValue(utData);
 
         if (utDateProp.getValue() != null) {
+            cboSender.getSelectionModel().select(utDateProp.getValue().getChannel());
             cboSender.getEditor().textProperty().bindBidirectional(utDateProp.getValue().channelProperty());
             txtTitle.textProperty().bindBidirectional(utDateProp.getValue().titleProperty());
         }
