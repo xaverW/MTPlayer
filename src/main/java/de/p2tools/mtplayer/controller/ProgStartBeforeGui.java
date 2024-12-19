@@ -54,7 +54,8 @@ public class ProgStartBeforeGui {
             WhatsNewFactory.setLastShown(); // muss dann ja nicht angezeigt werden
 
             ProgData.getInstance().replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
-            ProgData.getInstance().utDataList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
+            ProgData.getInstance().utDataList.init(true); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
+            ProgData.getInstance().signLanguageDataList.init(false); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
 
             StartDialogController startDialogController = new StartDialogController();
             if (!startDialogController.isOk()) {
@@ -157,6 +158,7 @@ public class ProgStartBeforeGui {
         progData.setDataList.clear();
         progData.replaceList.clear();
         progData.utDataList.clear();
+        progData.signLanguageDataList.clear();
         progData.aboList.clear();
         progData.downloadList.clear();
         progData.blackList.clear();

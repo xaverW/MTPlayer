@@ -118,6 +118,7 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         setOnlyHd(false);
         setOnlyNew(false);
         setOnlyUt(false);
+        setOnlySignLanguage(false);
         setOnlyLive(false);
         setOnlyActHistory(false);
 
@@ -232,6 +233,7 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         onlyHdProperty().addListener(l -> setFilterChange(true));
         onlyNewProperty().addListener(l -> setFilterChange(true));
         onlyUtProperty().addListener(l -> setFilterChange(true));
+        onlySignLanguageProperty().addListener(l -> setFilterChange(true));
         onlyLiveProperty().addListener(l -> setFilterChange(true));
         onlyActHistoryProperty().addListener(l -> setFilterChange(true));
 

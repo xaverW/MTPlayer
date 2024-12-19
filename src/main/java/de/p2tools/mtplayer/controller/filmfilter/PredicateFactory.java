@@ -61,6 +61,7 @@ public class PredicateFactory {
         final boolean onlyBookmark = filmFilter.isOnlyVis() && filmFilter.isOnlyBookmark();
         final boolean onlyHd = filmFilter.isOnlyVis() && filmFilter.isOnlyHd();
         final boolean onlyUt = filmFilter.isOnlyVis() && filmFilter.isOnlyUt();
+        final boolean onlySignLanguage = filmFilter.isOnlyVis() && filmFilter.isOnlySignLanguage();
         final boolean onlyLive = filmFilter.isOnlyVis() && filmFilter.isOnlyLive();
         final boolean onlyNew = filmFilter.isOnlyVis() && filmFilter.isOnlyNew();
         final boolean onlyAktHist = filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory();
@@ -107,6 +108,9 @@ public class PredicateFactory {
         }
         if (onlyUt) {
             predicate = predicate.and(FilmDataProps::isUt);
+        }
+        if (onlySignLanguage) {
+            predicate = predicate.and(FilmDataProps::isSignLanguage);
         }
         if (onlyLive) {
             predicate = predicate.and(FilmDataProps::isLive);

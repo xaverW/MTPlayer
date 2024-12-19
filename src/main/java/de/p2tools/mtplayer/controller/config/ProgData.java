@@ -130,6 +130,7 @@ public class ProgData {
     public SetDataList setDataList;
     public ReplaceList replaceList;
     public UtDataList utDataList;
+    public UtDataList signLanguageDataList;
     public DownloadErrorList downloadErrorList;
 
     public MediaDataList mediaDataList;
@@ -145,7 +146,8 @@ public class ProgData {
         busy = new Busy();
         pShortcut = new PShortcut();
         replaceList = new ReplaceList();
-        utDataList = new UtDataList();
+        utDataList = new UtDataList(true);
+        signLanguageDataList = new UtDataList(false);
         downloadErrorList = new DownloadErrorList();
 
         textFilterList = new TextFilterList();

@@ -92,6 +92,7 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.proposeList);
         configFile.addConfigs(progData.replaceList);
         configFile.addConfigs(progData.utDataList);
+        configFile.addConfigs(progData.signLanguageDataList);
         if (save) {
             // dann nur die selbst angelegten Downloads
             configFile.addConfigs(progData.downloadList.getCopyForSaving());
@@ -247,6 +248,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_FILMLIST_REMOVE_DOUBLE = addBoolProp("system-filmlist-remove-double", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE = addBoolProp("system-filmlist-double-with-theme-title", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILMLIST_MARK_UT = addBoolProp("system-filmlist-mark-ut", Boolean.TRUE);
+    public static BooleanProperty SYSTEM_FILMLIST_MARK_SIGN_LANGUAGE = addBoolProp("system-filmlist-mark-sign-language", Boolean.TRUE);
     public static BooleanProperty SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY = addBoolProp("system-load-new-filmlist-immediately", Boolean.FALSE);
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addIntProp("system-load-filmlist-max-days", 0); //es werden nur die x letzten Tage geladen

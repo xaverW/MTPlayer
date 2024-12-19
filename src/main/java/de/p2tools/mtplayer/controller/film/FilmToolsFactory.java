@@ -199,6 +199,15 @@ public class FilmToolsFactory {
                 }
             });
         }
+        if (ProgConfig.SYSTEM_FILMLIST_MARK_SIGN_LANGUAGE.getValue()) {
+            // und dann auch nach Gebärdensprache suchen
+            ProgData.getInstance().signLanguageDataList.forEach(utData -> {
+                if ((utData.getChannel().isEmpty() || filmData.getChannel().contains(utData.getChannel()))
+                        && filmData.getTitle().contains(utData.getTitle())) {
+                    filmData.setSignLanguage(true);
+                }
+            });
+        }
     }
 
     private static void addSender(ListProperty<? extends FilmData> filmList,

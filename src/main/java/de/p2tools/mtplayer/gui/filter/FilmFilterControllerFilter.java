@@ -52,24 +52,6 @@ public class FilmFilterControllerFilter extends VBox {
     private final P2LDatePicker pDatePicker = new P2LDatePicker();
     private final Button btnClearDatePicker = new Button("");
 
-    P2CheckComboBox checkOnly = new P2CheckComboBox();
-    P2CheckComboBox checkNot = new P2CheckComboBox();
-    Label lblOnly = new Label("Anzeigen:");
-    Label lblNot = new Label("Ausschließen:");
-
-    private final String ONLY_BOOKMARK = "Bookmarks";
-    private final String ONLY_HD = "HD";
-    private final String ONLY_UT = "UT";
-    private final String ONLY_NEW = "Neue";
-    private final String ONLY_LIVE = "Livestreams";
-    private final String ONLY_AKT_HISTORY = "Aktuelle History";
-
-    private final String NOT_ABO = "Abos";
-    private final String NOT_HISTORY = "Gesehene";
-    private final String NOT_DOUBLE = "Doppelte";
-    private final String NOT_GEO = "Geo geblockt";
-    private final String NOT_FUTURE = "Zukunft";
-
     private final ProgData progData;
 
     public FilmFilterControllerFilter() {
@@ -215,10 +197,30 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void addCheckFilter() {
+        P2CheckComboBox checkOnly = new P2CheckComboBox();
+        P2CheckComboBox checkNot = new P2CheckComboBox();
+        Label lblOnly = new Label("Anzeigen:");
+        Label lblNot = new Label("Ausschließen:");
+
+        final String ONLY_BOOKMARK = "Bookmarks";
+        final String ONLY_HD = "HD";
+        final String ONLY_UT = "UT";
+        final String ONLY_SIGN_LANGUAGE = "Gebärdensprache";
+        final String ONLY_NEW = "Neue";
+        final String ONLY_LIVE = "Livestreams";
+        final String ONLY_AKT_HISTORY = "Aktuelle History";
+
+        final String NOT_ABO = "Abos";
+        final String NOT_HISTORY = "Gesehene";
+        final String NOT_DOUBLE = "Doppelte";
+        final String NOT_GEO = "Geo geblockt";
+        final String NOT_FUTURE = "Zukunft";
+
         checkOnly.setEmptyText("Alles");
         checkOnly.addItem(ONLY_BOOKMARK, "Nur Filme der Bookmarks anzeigen", progData.filterWorker.getActFilterSettings().onlyBookmarkProperty());
         checkOnly.addItem(ONLY_HD, "Nur HD-Filme anzeigen", progData.filterWorker.getActFilterSettings().onlyHdProperty());
         checkOnly.addItem(ONLY_UT, "Nur Filme mit Untertitel anzeigen", progData.filterWorker.getActFilterSettings().onlyUtProperty());
+        checkOnly.addItem(ONLY_SIGN_LANGUAGE, "Nur Filme mit Gebärdensprache anzeigen", progData.filterWorker.getActFilterSettings().onlySignLanguageProperty());
         checkOnly.addItem(ONLY_NEW, "Nur neue Filme anzeigen", progData.filterWorker.getActFilterSettings().onlyNewProperty());
         checkOnly.addItem(ONLY_LIVE, "Nur Livestreams anzeigen", progData.filterWorker.getActFilterSettings().onlyLiveProperty());
         checkOnly.addItem(ONLY_AKT_HISTORY, "Nur die aktuelle History anzeigen", progData.filterWorker.getActFilterSettings().onlyActHistoryProperty());

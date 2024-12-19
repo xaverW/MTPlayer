@@ -25,11 +25,12 @@ import java.util.List;
 
 public class UtDataList extends SimpleListProperty<UtData> implements P2DataList<UtData> {
 
-    public final String TAG = "UtDataList";
+    public final String TAG;
     private final ObservableList<UtData> undoList = FXCollections.observableArrayList();
 
-    public UtDataList() {
+    public UtDataList(boolean ut) {
         super(FXCollections.observableArrayList());
+        TAG = ut ? "UtDataList" : "SignLanguageList";
     }
 
     @Override
@@ -54,13 +55,17 @@ public class UtDataList extends SimpleListProperty<UtData> implements P2DataList
         }
     }
 
-    public void init() {
+    public void init(boolean ut) {
         addDataToUndoList(this);
         clear();
-        add(new UtData("ARTE", "(mit Untertitel)"));
-        add(new UtData("ARTE", "(Originalversion mit Untertitel)"));
-        add(new UtData("ZDF", "- OmU"));
-        add(new UtData("", "(OmU)"));
+        if (ut) {
+            add(new UtData("ARTE", "(mit Untertitel)"));
+            add(new UtData("ARTE", "(Originalversion mit Untertitel)"));
+            add(new UtData("ZDF", "- OmU"));
+            add(new UtData("", "(OmU)"));
+        } else {
+            add(new UtData("", "Gebärdensprache"));
+        }
     }
 
     public int up(int idx, boolean up) {

@@ -805,6 +805,17 @@ public class HelpText {
                     "\"ARTE.DE\" nur in ARTE.DE. Groß- und Kleinschreibung wird mit ausgewertet, muss also " +
                     "passen!";
 
+    public static final String LOAD_FILMLIST_MARK_SIGN_LANGUAGE =
+            "Hier kann vorgegeben werden, welche Filmtitel " +
+                    "als \"Mit Gebärdensprache\" markiert werden sollen. Mit dem Filmfilter \"Gebärdensprache\" " +
+                    "werden dann diese Filme gefunden." +
+                    "\n\n" +
+                    "Das Feld \"Sender\" darf leer sein, im \"Titel\" muss immer etwas " +
+                    "eingetragen sein. Der in den Feldern eingetragene Text muss dann im jeweiligen " +
+                    "Film (Sender, Titel) enthalten sein. \"ARTE\" sucht in allen ARTE-Sendern, " +
+                    "\"ARTE.DE\" nur in ARTE.DE. Groß- und Kleinschreibung wird mit ausgewertet, muss also " +
+                    "passen!";
+
     public static final String LOAD_FILMLIST_IMMEDIATELY =
             "Wenn es eine neue Filmliste gibt, wird sie automatisch sofort geladen. " +
                     "Die Filmliste wird also sofort aktualisiert wenn es ein Update gibt." +
