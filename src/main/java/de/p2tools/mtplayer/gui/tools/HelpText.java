@@ -805,10 +805,10 @@ public class HelpText {
                     "\"ARTE.DE\" nur in ARTE.DE. Groß- und Kleinschreibung wird mit ausgewertet, muss also " +
                     "passen!";
 
-    public static final String LOAD_FILMLIST_MARK_SIGN_LANGUAGE =
+    public static final String LOAD_FILMLIST_MARK =
             "Hier kann vorgegeben werden, welche Filmtitel " +
-                    "als \"Mit Gebärdensprache\" markiert werden sollen. Mit dem Filmfilter \"Gebärdensprache\" " +
-                    "werden dann diese Filme gefunden." +
+                    "markiert werden sollen. Z.B. mit dem Filmfilter \"Gebärdensprache\" " +
+                    "werden dann diese Filme markiert und gefunden." +
                     "\n\n" +
                     "Das Feld \"Sender\" darf leer sein, im \"Titel\" muss immer etwas " +
                     "eingetragen sein. Der in den Feldern eingetragene Text muss dann im jeweiligen " +

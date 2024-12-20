@@ -70,7 +70,7 @@ public class FilmFilterProps extends P2DataSample<FilmFilter> implements Compara
     private final BooleanProperty onlyHd = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyNew = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyUt = new SimpleBooleanProperty(false);
-    private final BooleanProperty onlySignLanguage = new SimpleBooleanProperty(false);
+    private final BooleanProperty onlyMark = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyLive = new SimpleBooleanProperty(false);
     private final BooleanProperty onlyActHistory = new SimpleBooleanProperty(false);
 
@@ -86,7 +86,7 @@ public class FilmFilterProps extends P2DataSample<FilmFilter> implements Compara
     public BooleanProperty[] sfBooleanPropArr = {channelVis, themeVis, themeIsExact, themeTitleVis,
             titleVis, somewhereVis, urlVis, timeRangeVis, minMaxDurVis,
             minMaxTimeVis, minMaxTimeInvert, showDateVis,
-            onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlySignLanguage, onlyLive, onlyActHistory, notVis,
+            onlyVis, onlyBookmark, onlyHd, onlyNew, onlyUt, onlyMark, onlyLive, onlyActHistory, notVis,
             notAbo, notHistory, notDouble, notGeo, notFuture};
 
     public StringProperty[] sfStringPropArr = {name, channel, theme, exactTheme, themeTitle, title, somewhere, url, showDate};
@@ -133,7 +133,7 @@ public class FilmFilterProps extends P2DataSample<FilmFilter> implements Compara
         list.add(new Config_boolProp("onlyHd", onlyHd));
         list.add(new Config_boolProp("onlyNew", onlyNew));
         list.add(new Config_boolProp("onlyUt", onlyUt));
-        list.add(new Config_boolProp("onlySignLanguage", onlySignLanguage));
+        list.add(new Config_boolProp("onlyMark", onlyMark));
         list.add(new Config_boolProp("onlyLive", onlyLive));
         list.add(new Config_boolProp("onlyAktHistory", onlyActHistory));
 
@@ -583,16 +583,16 @@ public class FilmFilterProps extends P2DataSample<FilmFilter> implements Compara
         this.onlyUt.set(onlyUt);
     }
 
-    public boolean isOnlySignLanguage() {
-        return onlySignLanguage.get();
+    public boolean isOnlyMark() {
+        return onlyMark.get();
     }
 
-    public BooleanProperty onlySignLanguageProperty() {
-        return onlySignLanguage;
+    public BooleanProperty onlyMarkProperty() {
+        return onlyMark;
     }
 
-    public void setOnlySignLanguage(boolean signLanguage) {
-        this.onlySignLanguage.set(signLanguage);
+    public void setOnlyMark(boolean mark) {
+        this.onlyMark.set(mark);
     }
 
     public boolean isOnlyLive() {

@@ -205,7 +205,7 @@ public class FilmFilterControllerFilter extends VBox {
         final String ONLY_BOOKMARK = "Bookmarks";
         final String ONLY_HD = "HD";
         final String ONLY_UT = "UT";
-        final String ONLY_SIGN_LANGUAGE = "Gebärdensprache";
+        final String ONLY_MARK = "Markiert";
         final String ONLY_NEW = "Neue";
         final String ONLY_LIVE = "Livestreams";
         final String ONLY_AKT_HISTORY = "Aktuelle History";
@@ -220,7 +220,7 @@ public class FilmFilterControllerFilter extends VBox {
         checkOnly.addItem(ONLY_BOOKMARK, "Nur Filme der Bookmarks anzeigen", progData.filterWorker.getActFilterSettings().onlyBookmarkProperty());
         checkOnly.addItem(ONLY_HD, "Nur HD-Filme anzeigen", progData.filterWorker.getActFilterSettings().onlyHdProperty());
         checkOnly.addItem(ONLY_UT, "Nur Filme mit Untertitel anzeigen", progData.filterWorker.getActFilterSettings().onlyUtProperty());
-        checkOnly.addItem(ONLY_SIGN_LANGUAGE, "Nur Filme mit Gebärdensprache anzeigen", progData.filterWorker.getActFilterSettings().onlySignLanguageProperty());
+        checkOnly.addItem(ONLY_MARK, "Nur markierte Filme anzeigen", progData.filterWorker.getActFilterSettings().onlyMarkProperty());
         checkOnly.addItem(ONLY_NEW, "Nur neue Filme anzeigen", progData.filterWorker.getActFilterSettings().onlyNewProperty());
         checkOnly.addItem(ONLY_LIVE, "Nur Livestreams anzeigen", progData.filterWorker.getActFilterSettings().onlyLiveProperty());
         checkOnly.addItem(ONLY_AKT_HISTORY, "Nur die aktuelle History anzeigen", progData.filterWorker.getActFilterSettings().onlyActHistoryProperty());

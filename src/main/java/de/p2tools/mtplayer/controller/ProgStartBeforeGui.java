@@ -55,7 +55,7 @@ public class ProgStartBeforeGui {
 
             ProgData.getInstance().replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             ProgData.getInstance().utDataList.init(true); // einmal ein Muster anlegen
-            ProgData.getInstance().signLanguageDataList.init(false); // einmal ein Muster anlegen
+            ProgData.getInstance().markDataList.init(false); // einmal ein Muster anlegen
 
             StartDialogController startDialogController = new StartDialogController();
             if (!startDialogController.isOk()) {
@@ -84,8 +84,8 @@ public class ProgStartBeforeGui {
         if (ProgData.getInstance().utDataList.isEmpty()) {
             ProgData.getInstance().utDataList.init(true); // einmal ein Muster anlegen
         }
-        if (ProgData.getInstance().signLanguageDataList.isEmpty()) {
-            ProgData.getInstance().signLanguageDataList.init(false); // einmal ein Muster anlegen
+        if (ProgData.getInstance().markDataList.isEmpty()) {
+            ProgData.getInstance().markDataList.init(false); // einmal ein Muster anlegen
         }
     }
 
@@ -165,7 +165,7 @@ public class ProgStartBeforeGui {
         progData.setDataList.clear();
         progData.replaceList.clear();
         progData.utDataList.clear();
-        progData.signLanguageDataList.clear();
+        progData.markDataList.clear();
         progData.aboList.clear();
         progData.downloadList.clear();
         progData.blackList.clear();

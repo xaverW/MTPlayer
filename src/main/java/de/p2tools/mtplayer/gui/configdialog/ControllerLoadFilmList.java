@@ -37,7 +37,7 @@ public class ControllerLoadFilmList extends P2AccordionPane {
     private PaneFilmLoad paneFilmLoad;
     private PaneFilmDouble paneFilmDouble;
     private PaneFilmUt paneFilmUt;
-    private PaneFilmUt paneFilmSignLanguage;
+    private PaneFilmUt paneFilmMark;
     private PaneBlackList paneBlackList;
     private PaneFilmSender paneFilmSender;
     private final BooleanProperty diacriticChanged;
@@ -59,7 +59,7 @@ public class ControllerLoadFilmList extends P2AccordionPane {
         paneFilmLoad.close();
         paneFilmDouble.close();
         paneFilmUt.close();
-        paneFilmSignLanguage.close();
+        paneFilmMark.close();
         paneBlackList.close();
         paneFilmSender.close();
         super.close();
@@ -77,8 +77,8 @@ public class ControllerLoadFilmList extends P2AccordionPane {
         paneFilmUt = new PaneFilmUt(stage, true);
         paneFilmUt.make(result);
 
-        paneFilmSignLanguage = new PaneFilmUt(stage, false);
-        paneFilmSignLanguage.make(result);
+        paneFilmMark = new PaneFilmUt(stage, false);
+        paneFilmMark.make(result);
 
         paneBlackList = new PaneBlackList(stage, progData, false, new SimpleBooleanProperty());
         paneBlackList.make(result);

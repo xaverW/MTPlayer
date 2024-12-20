@@ -67,7 +67,7 @@ public class PaneFilmUt {
         this.stage = stage;
         this.ut = ut;
         tglRemove = new P2ToggleSwitch(ut ? "Filme mit Untertitel markieren" :
-                "Filme mit Gebärdensprache markieren");
+                "Filme markieren");
         changeListener = (observableValue, s, t1) -> {
             if (utDateProp.getValue() != null) {
                 utDateProp.getValue().setChannel(cboSender.getValue());
@@ -80,11 +80,11 @@ public class PaneFilmUt {
         if (ut) {
             ProgData.getInstance().utDataList.getUndoList().clear();
         } else {
-            ProgData.getInstance().signLanguageDataList.getUndoList().clear();
+            ProgData.getInstance().markDataList.getUndoList().clear();
         }
         unbindText();
         tglRemove.selectedProperty().unbindBidirectional(ut ?
-                ProgConfig.SYSTEM_FILMLIST_MARK_UT : ProgConfig.SYSTEM_FILMLIST_MARK_SIGN_LANGUAGE);
+                ProgConfig.SYSTEM_FILMLIST_MARK_UT : ProgConfig.SYSTEM_FILMLIST_MARK);
         cleanList();
     }
 
@@ -99,7 +99,7 @@ public class PaneFilmUt {
         initConfigs(vBox);
         addLoadFilmList(vBox);
 
-        TitledPane tpReplace = new TitledPane(ut ? "Filme mit Untertitel markieren" : "Filme mit Gebärdensprache markieren", vBox);
+        TitledPane tpReplace = new TitledPane(ut ? "Filme mit Untertitel markieren" : "Filme markieren", vBox);
         result.add(tpReplace);
         tpReplace.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(tpReplace, Priority.ALWAYS);
@@ -109,7 +109,7 @@ public class PaneFilmUt {
         if (ut) {
             ProgData.getInstance().utDataList.removeIf(utData -> utData.getTitle().isEmpty());
         } else {
-            ProgData.getInstance().signLanguageDataList.removeIf(utData -> utData.getTitle().isEmpty());
+            ProgData.getInstance().markDataList.removeIf(utData -> utData.getTitle().isEmpty());
         }
     }
 
@@ -124,9 +124,9 @@ public class PaneFilmUt {
             btnHelpMark = P2Button.helpButton(stage, "Filme mit Untertitel markieren",
                     HelpText.LOAD_FILMLIST_MARK_UT);
         } else {
-            tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_MARK_SIGN_LANGUAGE);
-            btnHelpMark = P2Button.helpButton(stage, "Filme mit Gebärdensprache markieren",
-                    HelpText.LOAD_FILMLIST_MARK_SIGN_LANGUAGE);
+            tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_MARK);
+            btnHelpMark = P2Button.helpButton(stage, "Filme markieren",
+                    HelpText.LOAD_FILMLIST_MARK);
         }
 
         int row = 0;
@@ -154,7 +154,7 @@ public class PaneFilmUt {
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         tableView.getColumns().addAll(channelColumn, titleColumn);
-        tableView.setItems(ut ? ProgData.getInstance().utDataList : ProgData.getInstance().signLanguageDataList);
+        tableView.setItems(ut ? ProgData.getInstance().utDataList : ProgData.getInstance().markDataList);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActReplaceData));
         tableView.setOnMousePressed(m -> {
@@ -165,7 +165,7 @@ public class PaneFilmUt {
         });
 
         tableView.disableProperty().bind(ut ? ProgConfig.SYSTEM_FILMLIST_MARK_UT.not() :
-                ProgConfig.SYSTEM_FILMLIST_MARK_SIGN_LANGUAGE.not());
+                ProgConfig.SYSTEM_FILMLIST_MARK.not());
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
         scrollPane.setContent(tableView);
@@ -187,8 +187,8 @@ public class PaneFilmUt {
                     ProgData.getInstance().utDataList.addDataToUndoList(sels);
                     ProgData.getInstance().utDataList.removeAll(sels);
                 } else {
-                    ProgData.getInstance().signLanguageDataList.addDataToUndoList(sels);
-                    ProgData.getInstance().signLanguageDataList.removeAll(sels);
+                    ProgData.getInstance().markDataList.addDataToUndoList(sels);
+                    ProgData.getInstance().markDataList.removeAll(sels);
                 }
                 tableView.getSelectionModel().clearSelection();
             }
@@ -202,7 +202,7 @@ public class PaneFilmUt {
             if (ut) {
                 ProgData.getInstance().utDataList.add(utData);
             } else {
-                ProgData.getInstance().signLanguageDataList.add(utData);
+                ProgData.getInstance().markDataList.add(utData);
             }
             tableView.getSelectionModel().clearSelection();
             tableView.getSelectionModel().select(utData);
@@ -221,7 +221,7 @@ public class PaneFilmUt {
                 if (ut) {
                     res = ProgData.getInstance().utDataList.up(sel, true);
                 } else {
-                    res = ProgData.getInstance().signLanguageDataList.up(sel, true);
+                    res = ProgData.getInstance().markDataList.up(sel, true);
                 }
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(res);
@@ -241,7 +241,7 @@ public class PaneFilmUt {
                 if (ut) {
                     res = ProgData.getInstance().utDataList.up(sel, false);
                 } else {
-                    res = ProgData.getInstance().signLanguageDataList.up(sel, false);
+                    res = ProgData.getInstance().markDataList.up(sel, false);
                 }
                 tableView.getSelectionModel().clearSelection();
                 tableView.getSelectionModel().select(res);
@@ -259,7 +259,7 @@ public class PaneFilmUt {
             if (ut) {
                 ProgData.getInstance().utDataList.init(true);
             } else {
-                ProgData.getInstance().signLanguageDataList.init(false);
+                ProgData.getInstance().markDataList.init(false);
             }
         });
 
@@ -268,7 +268,7 @@ public class PaneFilmUt {
         if (ut) {
             hBox.disableProperty().bind(ProgConfig.SYSTEM_FILMLIST_MARK_UT.not());
         } else {
-            hBox.disableProperty().bind(ProgConfig.SYSTEM_FILMLIST_MARK_SIGN_LANGUAGE.not());
+            hBox.disableProperty().bind(ProgConfig.SYSTEM_FILMLIST_MARK.not());
         }
         hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
                 btnUp, btnDown, P2GuiTools.getHBoxGrower(), btnClean, btnReset);
@@ -282,8 +282,8 @@ public class PaneFilmUt {
             miUndo.setOnAction(a -> ProgData.getInstance().utDataList.undoData());
             miUndo.setDisable(ProgData.getInstance().utDataList.getUndoList().isEmpty());
         } else {
-            miUndo.setOnAction(a -> ProgData.getInstance().signLanguageDataList.undoData());
-            miUndo.setDisable(ProgData.getInstance().signLanguageDataList.getUndoList().isEmpty());
+            miUndo.setOnAction(a -> ProgData.getInstance().markDataList.undoData());
+            miUndo.setDisable(ProgData.getInstance().markDataList.getUndoList().isEmpty());
         }
         contextMenu.getItems().addAll(miUndo);
         return contextMenu;
@@ -313,7 +313,7 @@ public class PaneFilmUt {
                     .or(ProgConfig.SYSTEM_FILMLIST_MARK_UT.not()));
         } else {
             gridPane.disableProperty().bind(Bindings.createBooleanBinding(() -> utDateProp.getValue() == null, utDateProp)
-                    .or(ProgConfig.SYSTEM_FILMLIST_MARK_SIGN_LANGUAGE.not()));
+                    .or(ProgConfig.SYSTEM_FILMLIST_MARK.not()));
         }
     }
 

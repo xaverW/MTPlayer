@@ -30,7 +30,7 @@ public class UtDataList extends SimpleListProperty<UtData> implements P2DataList
 
     public UtDataList(boolean ut) {
         super(FXCollections.observableArrayList());
-        TAG = ut ? "UtDataList" : "SignLanguageList";
+        TAG = ut ? "UtDataList" : "MarkDataList";
     }
 
     @Override

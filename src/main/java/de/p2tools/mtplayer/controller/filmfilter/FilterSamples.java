@@ -57,7 +57,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -93,7 +93,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(true);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -131,7 +131,7 @@ public class FilterSamples {
         sf.setOnlyHd(true);
         sf.setOnlyNew(true);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -169,7 +169,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(true);
         sf.setOnlyActHistory(false);
 
@@ -216,7 +216,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(true);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -258,7 +258,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -298,7 +298,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -338,7 +338,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -376,7 +376,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -412,7 +412,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
@@ -448,7 +448,7 @@ public class FilterSamples {
         sf.setOnlyHd(false);
         sf.setOnlyNew(false);
         sf.setOnlyUt(false);
-        sf.setOnlySignLanguage(false);
+        sf.setOnlyMark(false);
         sf.setOnlyLive(false);
         sf.setOnlyActHistory(false);
 
