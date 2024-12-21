@@ -79,6 +79,7 @@ public class SearchProgramUpdate {
                 P2ToolsFactory.getProgVersion(),
                 P2ToolsFactory.getBuildNo(),
                 P2ToolsFactory.getBuildDateR(),
+//                "2024.12.20",
 //                "2024.01.12",
 
                 ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,

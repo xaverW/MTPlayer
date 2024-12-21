@@ -58,7 +58,7 @@ public class ProgConfig extends P2DataProgConfig {
         // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
         ProgConfig.SYSTEM_PROG_VERSION.set(P2ToolsFactory.getProgVersion());
         ProgConfig.SYSTEM_PROG_BUILD_NO.set(P2ToolsFactory.getBuildNo());
-        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(P2ToolsFactory.getBuildDate());
+        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(P2ToolsFactory.getBuildDateR());
 
         configFile.addConfigs(ProgConfig.getInstance()); // ProgConfig
         configFile.addConfigs(ProgColorList.getInstance()); // Color
@@ -136,10 +136,10 @@ public class ProgConfig extends P2DataProgConfig {
     // ====== SYSTEM =================================================
     // ===============================================================
 
-    // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
+    // Configs der Programmversion, nur damit sie (zur Update-Suche: Anzeige WhatsNew) im Config-File stehen
     public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", P2ToolsFactory.getProgVersion());
     public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", P2ToolsFactory.getBuildNo());
-    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", P2ToolsFactory.getBuildDate()); // 2024.08.12
+    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", P2ToolsFactory.getBuildDateR()); // 2024.08.12
 
     //Configs zur Anzeige der Diakritika in der Filmliste
     //TRUE: dann werden Diakritika nicht geändert und angezeigt --> das kommt weg
