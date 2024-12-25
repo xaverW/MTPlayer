@@ -23,14 +23,12 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.dialogs.WhatsNewDialog;
 import de.p2tools.p2lib.dialogs.WhatsNewInfo;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
-import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class WhatsNewFactory {
@@ -96,7 +94,7 @@ public class WhatsNewFactory {
     }
 
     private static boolean isUpdateCheckTodayDone() {
-        return ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.get().equals(P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date()));
+        return ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.get().equals(P2LDateFactory.getNowStringR());
     }
 
     private static void runUpdateCheck() {
