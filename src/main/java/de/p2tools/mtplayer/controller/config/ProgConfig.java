@@ -234,6 +234,8 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE);
     public static BooleanProperty SYSTEM_BLACK_WHITE_ICON = addBoolProp("system-black-white-icon", Boolean.FALSE);
     public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");
+    public static BooleanProperty SYSTEM_DARK_THEME_START = addBoolProp("system-dark-theme-start", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_BLACK_WHITE_ICON_START = addBoolProp("system-black-white-icon-start", Boolean.FALSE);
 
     // Fenstereinstellungen
     public static BooleanProperty SYSTEM_GUI_MAXIMISED = addBoolProp("system-gui-maximised", Boolean.FALSE);

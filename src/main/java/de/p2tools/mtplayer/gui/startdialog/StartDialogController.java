@@ -42,6 +42,7 @@ public class StartDialogController extends P2DialogExtra {
     private Button btnPrev, btnNext;
     private final Button btnStart1 = new Button(STR_START_1);
     private final Button btnStart2 = new Button(STR_START_2);
+    private final Button btnColorMode = new Button(STR_COLOR_MODE);
     private final Button btnUpdate = new Button(STR_UPDATE);
     private final Button btnGeo = new Button(STR_GEO);
     private final Button btnFilm = new Button(STR_FILM);
@@ -51,6 +52,7 @@ public class StartDialogController extends P2DialogExtra {
 
     private static final String STR_START_1 = "Infos";
     private static final String STR_START_2 = "Infos";
+    private static final String STR_COLOR_MODE = "Farbe";
     private static final String STR_UPDATE = "Update";
     private static final String STR_GEO = "Geo";
     private static final String STR_FILM = "Filme";
@@ -58,12 +60,13 @@ public class StartDialogController extends P2DialogExtra {
     private static final String STR_DOWN = "Ziel";
     private static final String STR_PATH = "Pfade";
 
-    private enum State {START_1, START_2, UPDATE, GEO, FILM, STATION, DOWN, PATH}
+    private enum State {START_1, START_2, COLOR_MODE, UPDATE, GEO, FILM, STATION, DOWN, PATH}
 
     private State aktState = State.START_1;
 
     private TitledPane tStart1;
     private TitledPane tStart2;
+    private TitledPane tColorMode;
     private TitledPane tUpdate;
     private TitledPane tGeo;
     private TitledPane tFilm;
@@ -73,6 +76,7 @@ public class StartDialogController extends P2DialogExtra {
 
     private StartPane startPane1;
     private StartPane startPane2;
+    private PaneColorMode paneColorMode;
     private UpdatePane updatePane;
     private PaneGeo paneGeo;
     private PaneFilm paneFilm;
@@ -100,6 +104,7 @@ public class StartDialogController extends P2DialogExtra {
         this.ok = ok;
         startPane1.close();
         startPane2.close();
+        paneColorMode.close();
         updatePane.close();
         paneGeo.close();
         paneFilm.close();
@@ -115,7 +120,7 @@ public class StartDialogController extends P2DialogExtra {
 
     private void initTopButton() {
         getVBoxCont().getChildren().add(tilePane);
-        tilePane.getChildren().addAll(btnStart1, btnStart2, btnUpdate, btnGeo, btnFilm, btnStation, btnDown, btnPath);
+        tilePane.getChildren().addAll(btnStart1, btnStart2, btnColorMode, btnUpdate, btnGeo, btnFilm, btnStation, btnDown, btnPath);
         tilePane.setAlignment(Pos.CENTER);
         tilePane.setPadding(new Insets(10, 10, 20, 10));
         tilePane.setHgap(10);
@@ -123,6 +128,7 @@ public class StartDialogController extends P2DialogExtra {
 
         initTopButton(btnStart1, State.START_1);
         initTopButton(btnStart2, State.START_2);
+        initTopButton(btnColorMode, State.COLOR_MODE);
         initTopButton(btnUpdate, State.UPDATE);
         initTopButton(btnGeo, State.GEO);
         initTopButton(btnFilm, State.FILM);
@@ -157,6 +163,12 @@ public class StartDialogController extends P2DialogExtra {
         tStart2 = startPane2.makeStart2();
         tStart2.setMaxHeight(Double.MAX_VALUE);
         tStart2.setCollapsible(false);
+
+        //colorModePane
+        paneColorMode = new PaneColorMode(this.getStage());
+        tColorMode = paneColorMode.make();
+        tColorMode.setMaxHeight(Double.MAX_VALUE);
+        tColorMode.setCollapsible(false);
 
         //updatePane
         updatePane = new UpdatePane(this);
@@ -194,7 +206,7 @@ public class StartDialogController extends P2DialogExtra {
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
 
-        stackpane.getChildren().addAll(tStart1, tStart2, tUpdate, tGeo, tFilm, tStation, tDown, tPath);
+        stackpane.getChildren().addAll(tStart1, tStart2, tColorMode, tUpdate, tGeo, tFilm, tStation, tDown, tPath);
     }
 
     private void initButton() {
@@ -214,6 +226,9 @@ public class StartDialogController extends P2DialogExtra {
                     aktState = State.START_2;
                     break;
                 case START_2:
+                    aktState = State.COLOR_MODE;
+                    break;
+                case COLOR_MODE:
                     aktState = State.UPDATE;
                     break;
                 case UPDATE:
@@ -244,8 +259,11 @@ public class StartDialogController extends P2DialogExtra {
                 case START_2:
                     aktState = State.START_1;
                     break;
-                case UPDATE:
+                case COLOR_MODE:
                     aktState = State.START_2;
+                    break;
+                case UPDATE:
+                    aktState = State.COLOR_MODE;
                     break;
                 case GEO:
                     aktState = State.UPDATE;
@@ -287,6 +305,12 @@ public class StartDialogController extends P2DialogExtra {
                 btnNext.setDisable(false);
                 tStart2.toFront();
                 setButtonStyle(btnStart2);
+                break;
+            case COLOR_MODE:
+                btnPrev.setDisable(false);
+                btnNext.setDisable(false);
+                tColorMode.toFront();
+                setButtonStyle(btnColorMode);
                 break;
             case UPDATE:
                 btnPrev.setDisable(false);
@@ -333,6 +357,7 @@ public class StartDialogController extends P2DialogExtra {
     private void setButtonStyle(Button btnSel) {
         btnStart1.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnStart2.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
+        btnColorMode.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnUpdate.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnGeo.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
         btnFilm.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
@@ -345,6 +370,7 @@ public class StartDialogController extends P2DialogExtra {
     private void initTooltip() {
         btnStart1.setTooltip(new Tooltip("Infos über das Programm"));
         btnStart2.setTooltip(new Tooltip("Infos über das Programm"));
+        btnColorMode.setTooltip(new Tooltip("Wie soll die Programmoberfläche aussehen?"));
         btnUpdate.setTooltip(new Tooltip("Soll das Programm nach Updates suchen?"));
         btnGeo.setTooltip(new Tooltip("Einstellung des eigenen Standorts\n" +
                 "und der Markierung geblockter Filme"));
