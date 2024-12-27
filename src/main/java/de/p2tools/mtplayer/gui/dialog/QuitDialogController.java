@@ -167,7 +167,7 @@ public class QuitDialogController extends P2DialogExtra {
 
         if (chkBlend.isSelected()) {
             if (ProgData.getInstance().progTray.getSystemTray() != null) {
-                ProgData.getInstance().progTray.closeDialog();
+                ProgData.getInstance().progTray.hideDialog();
             } else {
                 ProgData.getInstance().primaryStage.setIconified(true);
                 this.getStage().setIconified(true);

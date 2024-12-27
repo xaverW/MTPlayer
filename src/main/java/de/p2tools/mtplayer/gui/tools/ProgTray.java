@@ -213,17 +213,17 @@ public class ProgTray {
 
     private synchronized void maxMin() {
         if (progData.primaryStage.isShowing()) {
-            closeDialog();
+            hideDialog();
         } else {
             showDialog();
         }
     }
 
-    public void closeDialog() {
+    public void hideDialog() {
         Platform.runLater(() -> {
-            progData.primaryStage.close();
+            progData.primaryStage.hide();
         });
-        P2DialogExtra.closeAllDialog();
+        P2DialogExtra.hideAllDialog();
     }
 
     private void showDialog() {
