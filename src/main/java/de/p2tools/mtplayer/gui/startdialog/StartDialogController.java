@@ -18,10 +18,8 @@ package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.gui.configpanes.PaneGeo;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -37,7 +35,6 @@ public class StartDialogController extends P2DialogExtra {
 
     private boolean ok = false;
 
-    private final TilePane tilePane = new TilePane();
     private Button btnOk, btnCancel;
     private Button btnPrev, btnNext;
     private final Button btnStart1 = new Button(STR_START_1);
@@ -76,13 +73,13 @@ public class StartDialogController extends P2DialogExtra {
 
     private StartPane startPane1;
     private StartPane startPane2;
-    private PaneColorMode paneColorMode;
-    private UpdatePane updatePane;
-    private PaneGeo paneGeo;
-    private PaneFilm paneFilm;
-    private PaneStation paneStation;
-    private DownPathPane downPathPane;
-    private PathPane pathPane;
+    private StartPaneColorMode startPaneColorMode;
+    private StartPaneUpdate startPaneUpdate;
+    private StartPaneGeo paneGeo;
+    private StartPaneFilm startPaneFilm;
+    private StartPaneStation startPaneStation;
+    private StartPaneDownloadPath startPaneDownloadPath;
+    private StartPanePath startPanePath;
 
     public StartDialogController() {
         super(null, null, "Starteinstellungen", true, false);
@@ -104,13 +101,13 @@ public class StartDialogController extends P2DialogExtra {
         this.ok = ok;
         startPane1.close();
         startPane2.close();
-        paneColorMode.close();
-        updatePane.close();
+        startPaneColorMode.close();
+        startPaneUpdate.close();
         paneGeo.close();
-        paneFilm.close();
-        paneStation.close();
-        downPathPane.close();
-        pathPane.close();
+        startPaneFilm.close();
+        startPaneStation.close();
+        startPaneDownloadPath.close();
+        startPanePath.close();
         super.close();
     }
 
@@ -119,12 +116,20 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void initTopButton() {
-        getVBoxCont().getChildren().add(tilePane);
-        tilePane.getChildren().addAll(btnStart1, btnStart2, btnColorMode, btnUpdate, btnGeo, btnFilm, btnStation, btnDown, btnPath);
-        tilePane.setAlignment(Pos.CENTER);
-        tilePane.setPadding(new Insets(10, 10, 20, 10));
-        tilePane.setHgap(10);
-        tilePane.setVgap(10);
+        final TilePane tilePane1 = new TilePane();
+        tilePane1.setAlignment(Pos.CENTER);
+        tilePane1.setHgap(10);
+        tilePane1.setVgap(10);
+        getVBoxCont().getChildren().add(tilePane1);
+
+        final TilePane tilePane2 = new TilePane();
+        tilePane2.setAlignment(Pos.CENTER);
+        tilePane2.setHgap(10);
+        tilePane2.setVgap(10);
+        getVBoxCont().getChildren().add(tilePane2);
+
+        tilePane1.getChildren().addAll(btnStart1, btnStart2);
+        tilePane2.getChildren().addAll(btnColorMode, btnUpdate, btnGeo, btnFilm, btnStation, btnDown, btnPath);
 
         initTopButton(btnStart1, State.START_1);
         initTopButton(btnStart2, State.START_2);
@@ -165,44 +170,44 @@ public class StartDialogController extends P2DialogExtra {
         tStart2.setCollapsible(false);
 
         //colorModePane
-        paneColorMode = new PaneColorMode(this.getStage());
-        tColorMode = paneColorMode.make();
+        startPaneColorMode = new StartPaneColorMode(this.getStage());
+        tColorMode = startPaneColorMode.make();
         tColorMode.setMaxHeight(Double.MAX_VALUE);
         tColorMode.setCollapsible(false);
 
         //updatePane
-        updatePane = new UpdatePane(this);
-        tUpdate = updatePane.makeStart();
+        startPaneUpdate = new StartPaneUpdate(this);
+        tUpdate = startPaneUpdate.makeStart();
         tUpdate.setMaxHeight(Double.MAX_VALUE);
         tUpdate.setCollapsible(false);
 
         //geoPane
-        paneGeo = new PaneGeo(this.getStage());
+        paneGeo = new StartPaneGeo(this.getStage());
         tGeo = paneGeo.make();
         tGeo.setMaxHeight(Double.MAX_VALUE);
         tGeo.setCollapsible(false);
 
         //filmPane
-        paneFilm = new PaneFilm(this.getStage());
-        tFilm = paneFilm.make(null);
+        startPaneFilm = new StartPaneFilm(this.getStage());
+        tFilm = startPaneFilm.make();
         tFilm.setMaxHeight(Double.MAX_VALUE);
         tFilm.setCollapsible(false);
 
         //stationPane
-        paneStation = new PaneStation(this.getStage());
-        tStation = paneStation.make(null);
+        startPaneStation = new StartPaneStation(this.getStage());
+        tStation = startPaneStation.make();
         tStation.setMaxHeight(Double.MAX_VALUE);
         tStation.setCollapsible(false);
 
         //downPane
-        downPathPane = new DownPathPane(this.getStage());
-        tDown = downPathPane.makePath();
+        startPaneDownloadPath = new StartPaneDownloadPath(this.getStage());
+        tDown = startPaneDownloadPath.makePath();
         tDown.setMaxHeight(Double.MAX_VALUE);
         tDown.setCollapsible(false);
 
         //pathPane
-        pathPane = new PathPane(this.getStage());
-        tPath = pathPane.makePath();
+        startPanePath = new StartPanePath(this.getStage());
+        tPath = startPanePath.makePath();
         tPath.setMaxHeight(Double.MAX_VALUE);
         tPath.setCollapsible(false);
 

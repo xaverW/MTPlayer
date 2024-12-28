@@ -36,40 +36,48 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-public class PaneStation {
+public class StartPaneStation {
 
-    final Button btnClearAll = new Button("_Wieder alle Sender laden");
+    private final Button btnClearAll = new Button("_Wieder alle Sender laden");
     private final Stage stage;
 
-    public PaneStation(Stage stage) {
+    public StartPaneStation(Stage stage) {
         this.stage = stage;
     }
 
     public void close() {
     }
 
-    public TitledPane make(Collection<TitledPane> result) {
-        final VBox vBox = new VBox(20);
+    public TitledPane make() {
+        final VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(P2LibConst.PADDING));
         makeSender(vBox);
 
-        TitledPane tpConfig = new TitledPane("Filmliste bereits beim Laden filtern", vBox);
-        if (result != null) {
-            result.add(tpConfig);
-        }
-        return tpConfig;
+        return new TitledPane("Filmliste bereits beim Laden filtern", vBox);
     }
 
     private void makeSender(VBox vBox) {
+        HBox hBox = new HBox();
+        hBox.getStyleClass().add("extra-pane");
+        hBox.setPadding(new Insets(P2LibConst.PADDING));
+        hBox.setMaxWidth(Double.MAX_VALUE);
+        hBox.setMinHeight(Region.USE_PREF_SIZE);
+        Label lbl = new Label("Hier können Sender die nicht interessieren, beim Laden " +
+                "der Filmliste, ausgenommen werden.");
+        lbl.setWrapText(true);
+        lbl.setPrefWidth(500);
+        hBox.getChildren().add(lbl);
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+
+
         final Button btnHelpSender = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_SENDER_STARTDIALOG);
-        HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
-        hBox.setAlignment(Pos.CENTER_LEFT);
-        Label lbl = new Label("Diese Sender  *nicht*  laden:");
-        hBox.getChildren().addAll(lbl, P2GuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
-        vBox.getChildren().add(hBox);
+        HBox hBoxStation = new HBox(P2LibConst.DIST_BUTTON);
+        hBoxStation.setAlignment(Pos.CENTER_LEFT);
+        Label lblStation = new Label("Diese Sender  *nicht*  laden:");
+        hBoxStation.getChildren().addAll(lblStation, P2GuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
+        vBox.getChildren().add(hBoxStation);
 
         final TilePane tilePaneSender = getTilePaneSender();
         vBox.getChildren().addAll(tilePaneSender);

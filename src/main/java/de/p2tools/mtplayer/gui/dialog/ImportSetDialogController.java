@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
-import de.p2tools.mtplayer.gui.startdialog.DownPathPane;
-import de.p2tools.mtplayer.gui.startdialog.PathPane;
+import de.p2tools.mtplayer.gui.startdialog.StartPaneDownloadPath;
+import de.p2tools.mtplayer.gui.startdialog.StartPanePath;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -73,11 +73,11 @@ public class ImportSetDialogController extends P2DialogExtra {
         });
 
         // vor Import
-        TitledPane tpDownPath = new DownPathPane(this.getStage()).makePath();
+        TitledPane tpDownPath = new StartPaneDownloadPath(this.getStage()).makePath();
         tpDownPath.setMaxHeight(Double.MAX_VALUE);
         tpDownPath.setCollapsible(false);
 
-        TitledPane tpPath = new PathPane(this.getStage()).makePath();
+        TitledPane tpPath = new StartPanePath(this.getStage()).makePath();
         tpPath.setMaxHeight(Double.MAX_VALUE);
         tpPath.setCollapsible(false);
 

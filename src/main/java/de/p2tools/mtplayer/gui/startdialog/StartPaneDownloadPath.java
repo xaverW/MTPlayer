@@ -23,37 +23,50 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import javafx.beans.property.StringProperty;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class DownPathPane {
+public class StartPaneDownloadPath {
     private final TextField txtPath = new TextField();
-    StringProperty pathProp = ProgConfig.DOWNLOAD_PATH;
-
     private final Stage stage;
 
-    public DownPathPane(Stage stage) {
+    public StartPaneDownloadPath(Stage stage) {
         this.stage = stage;
     }
 
     public void close() {
-        txtPath.textProperty().unbindBidirectional(pathProp);
+        txtPath.textProperty().unbindBidirectional(ProgConfig.DOWNLOAD_PATH);
     }
 
     public TitledPane makePath() {
+        VBox vBox = new VBox(10);
+
+        HBox hBox = new HBox();
+        hBox.getStyleClass().add("extra-pane");
+        hBox.setPadding(new Insets(P2LibConst.PADDING));
+        hBox.setMaxWidth(Double.MAX_VALUE);
+        hBox.setMinHeight(Region.USE_PREF_SIZE);
+        Label lbl = new Label("Der Ordner, der beim Speichern vorgeschlagen wird, kann hier ausgewählt werden.");
+        lbl.setWrapText(true);
+        lbl.setPrefWidth(500);
+        hBox.getChildren().add(lbl);
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+
         GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         if (ProgData.debug) {
             //dann einen anderen Downloadpfad
-            pathProp.setValue("/tmp/Download");
+            ProgConfig.DOWNLOAD_PATH.setValue("/tmp/Download");
         }
-        txtPath.textProperty().bindBidirectional(pathProp);
+        txtPath.textProperty().bindBidirectional(ProgConfig.DOWNLOAD_PATH);
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> {
             P2DirFileChooser.DirChooser(stage, txtPath);
@@ -72,8 +85,8 @@ public class DownPathPane {
         gridPane.add(btnFile, 2, row);
         gridPane.add(btnHelp, 3, row);
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        vBox.getChildren().add(gridPane);
 
-        TitledPane tpConfig = new TitledPane("Pfad für die Downloads", gridPane);
-        return tpConfig;
+        return new TitledPane("Pfad für die Downloads", vBox);
     }
 }

@@ -21,22 +21,25 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class PaneColorMode {
+public class StartPaneColorMode {
     private final Stage stage;
     HBox hBoxColor = new HBox();
     private final P2ToggleSwitch tglDarkTheme = new P2ToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
@@ -46,7 +49,7 @@ public class PaneColorMode {
     private final HBox hBoxImage2 = new HBox(); // !weiß / dark
     private final HBox hBoxImage3 = new HBox(); // weiß / dark
 
-    public PaneColorMode(Stage stage) {
+    public StartPaneColorMode(Stage stage) {
         this.stage = stage;
     }
 
@@ -60,6 +63,17 @@ public class PaneColorMode {
         setHBox();
         VBox vBox = new VBox(10);
         hBoxColor.setAlignment(Pos.CENTER);
+
+        HBox hBox = new HBox();
+        hBox.getStyleClass().add("extra-pane");
+        hBox.setPadding(new Insets(P2LibConst.PADDING));
+        hBox.setMaxWidth(Double.MAX_VALUE);
+        hBox.setMinHeight(Region.USE_PREF_SIZE);
+        Label lbl = new Label("Wie soll die Programmoberfläche aussehen?");
+        lbl.setWrapText(true);
+        lbl.setPrefWidth(500);
+        hBox.getChildren().add(lbl);
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
 
         tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME_START);
         final Button btnHelpTheme = P2Button.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
@@ -79,7 +93,6 @@ public class PaneColorMode {
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-//        gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         gridPane.add(tglDarkTheme, 0, row);
         gridPane.add(btnHelpTheme, 1, row);
@@ -124,7 +137,6 @@ public class PaneColorMode {
         }
 
         final String colorSel = "#4682B4;";
-//        final String color = "#bdbdbd;";
         final String color = "transparent;";
 
         switch (i) {
@@ -156,10 +168,11 @@ public class PaneColorMode {
     }
 
     private void makeImage() {
+        final int size = 350;
         ImageView iv0 = new ImageView();
         hBoxImage0.getChildren().add(iv0);
         String path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 0 + ".png";
-        Image image = new Image(path, 400, 400, true, true);
+        Image image = new Image(path, size, size, true, true);
         iv0.setSmooth(true);
         iv0.setImage(image);
         iv0.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -175,7 +188,7 @@ public class PaneColorMode {
         ImageView iv1 = new ImageView();
         hBoxImage1.getChildren().add(iv1);
         path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 1 + ".png";
-        image = new Image(path, 400, 400, true, true);
+        image = new Image(path, size, size, true, true);
         iv1.setSmooth(true);
         iv1.setImage(image);
         iv1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -191,7 +204,7 @@ public class PaneColorMode {
         ImageView iv2 = new ImageView();
         hBoxImage2.getChildren().add(iv2);
         path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 2 + ".png";
-        image = new Image(path, 400, 400, true, true);
+        image = new Image(path, size, size, true, true);
         iv2.setSmooth(true);
         iv2.setImage(image);
         iv2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -207,7 +220,7 @@ public class PaneColorMode {
         ImageView iv3 = new ImageView();
         hBoxImage3.getChildren().add(iv3);
         path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 3 + ".png";
-        image = new Image(path, 400, 400, true, true);
+        image = new Image(path, size, size, true, true);
         iv3.setSmooth(true);
         iv3.setImage(image);
         iv3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {

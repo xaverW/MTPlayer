@@ -26,6 +26,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.beans.property.StringProperty;
@@ -35,6 +36,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -42,9 +45,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathPane {
-    StringProperty vlcProp = ProgConfig.SYSTEM_PATH_VLC;
-    StringProperty ffmpegProp = ProgConfig.SYSTEM_PATH_FFMPEG;
+public class StartPanePath {
     private final GridPane gridPane = new GridPane();
     private int row = 0;
     private final Stage stage;
@@ -67,7 +68,7 @@ public class PathPane {
 
     private final List<UnBind> unbindList = new ArrayList<>();
 
-    public PathPane(Stage stage) {
+    public StartPanePath(Stage stage) {
         this.stage = stage;
     }
 
@@ -76,14 +77,23 @@ public class PathPane {
     }
 
     public TitledPane makePath() {
+        VBox vBox = new VBox(10);
+
+        HBox hBox = new HBox();
+        hBox.getStyleClass().add("extra-pane");
+        hBox.setPadding(new Insets(P2LibConst.PADDING));
+        hBox.setMaxWidth(Double.MAX_VALUE);
+        hBox.setMinHeight(Region.USE_PREF_SIZE);
+        Label lbl = new Label("Diese Programme werde zum Abspielen der Filme und zum Download der Filme " +
+                "gebraucht. Wird der Pfad nicht automatisch erkannt, muss er hier ausgewählt werden.");
+        lbl.setWrapText(true);
+        lbl.setPrefWidth(500);
+        hBox.getChildren().add(lbl);
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.PADDING));
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
-
-        Button btnEmpty = new Button(" "); // ist nur für die Zeilenhöhe
-        btnEmpty.setVisible(false);
-        gridPane.add(btnEmpty, 2, row);
 
         switch (P2ToolsFactory.getOs()) {
             case WIN32:
@@ -103,8 +113,9 @@ public class PathPane {
                 "Videoplayer", HelpText.PROG_PATHS);
         gridPane.add(btnHelp, 2, ++row);
         GridPane.setHalignment(btnHelp, HPos.RIGHT);
+        vBox.getChildren().add(gridPane);
 
-        return new TitledPane("Programmpfade", gridPane);
+        return new TitledPane("Programmpfade", vBox);
     }
 
     private void addPlayer(PLAYER player) {
@@ -118,7 +129,7 @@ public class PathPane {
             case FFMPEG:
                 text = new Text("Pfad zum ffmpeg-Player auswählen");
                 text.getStyleClass().add("downloadGuiMediaText");
-                property = ffmpegProp;
+                property = ProgConfig.SYSTEM_PATH_FFMPEG;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FFMPEG.setValue("");
                     txtPlayer.setText(SetFactory.getTemplatePathFFmpeg());
@@ -131,7 +142,7 @@ public class PathPane {
             default:
                 text = new Text("Pfad zum VLC-Player auswählen");
                 text.getStyleClass().add("downloadGuiMediaText");
-                property = vlcProp;
+                property = ProgConfig.SYSTEM_PATH_VLC;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_VLC.setValue("");
                     txtPlayer.setText(SetFactory.getTemplatePathVlc());

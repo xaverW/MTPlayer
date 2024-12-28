@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -30,12 +31,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Collection;
-
-public class PaneFilm {
+public class StartPaneFilm {
 
     private final Slider slDays = new Slider();
     private final Slider slDuration = new Slider();
@@ -43,7 +44,7 @@ public class PaneFilm {
     private final Label lblDuration = new Label("");
     private final Stage stage;
 
-    public PaneFilm(Stage stage) {
+    public StartPaneFilm(Stage stage) {
         this.stage = stage;
     }
 
@@ -52,20 +53,30 @@ public class PaneFilm {
         slDuration.valueProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION);
     }
 
-    public TitledPane make(Collection<TitledPane> result) {
+    public TitledPane make() {
         initSlider();
-        final VBox vBox = new VBox(20);
+        final VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(P2LibConst.PADDING));
         makeOnly(vBox);
 
-        TitledPane tpConfig = new TitledPane("Filmliste bereits beim Laden filtern", vBox);
-        if (result != null) {
-            result.add(tpConfig);
-        }
-        return tpConfig;
+        return new TitledPane("Filmliste bereits beim Laden filtern", vBox);
     }
 
     private void makeOnly(VBox vBox) {
+        HBox hBox = new HBox();
+        hBox.getStyleClass().add("extra-pane");
+        hBox.setPadding(new Insets(P2LibConst.PADDING));
+        hBox.setMaxWidth(Double.MAX_VALUE);
+        hBox.setMinHeight(Region.USE_PREF_SIZE);
+        Label lbl = new Label("Die Filmliste enthält inzwischen ~ 800_000 Filme. Davon sind etwa " +
+                "150_000 doppelt (z.B. ARD und BR). Es ist also eine gute Idee, die doppelten nicht zu laden " +
+                "und eventuell auch alte Filme nicht mehr zu laden. Auf älteren Rechnern ist " +
+                "die Suche dann schneller.");
+        lbl.setWrapText(true);
+        lbl.setPrefWidth(500);
+        hBox.getChildren().add(lbl);
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+
         final Button btnHelpDouble = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_ONLY_MARK_DOUBLE);
         final Button btnHelpDays = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
