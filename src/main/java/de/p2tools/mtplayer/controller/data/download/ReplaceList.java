@@ -68,6 +68,7 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> implement
     public String replace(String strCheck, boolean path) {
         // hat der Nutzer als Suchbegriff "leer" eingegeben, dann weg damit
         this.removeIf(replaceData -> replaceData.getFrom().isEmpty()); // Liste putzen
+        String newString = strCheck;
 
         for (ReplaceData replaceData : this) {
             if (!replaceData.isActive()) {
@@ -78,22 +79,28 @@ public final class ReplaceList extends SimpleListProperty<ReplaceData> implement
                 // bei Pfaden darf / oder \ natürlich nicht entfernt werden
                 continue;
             } else {
+                String tmp = newString;
                 String replace = replaceData.getFrom();
                 if (replace.startsWith(ProgConst.REG_EX)) {
                     try {
                         replace = replace.substring(ProgConst.REG_EX.length());
-                        strCheck = strCheck.replaceAll(replace, replaceData.getTo());
+                        newString = newString.replaceAll(replace, replaceData.getTo());
                     } catch (PatternSyntaxException ex) {
                         P2Log.errorLog(201360457, "RegEx fehlerhaft: " + replace);
                     }
 
                 } else {
-                    strCheck = strCheck.replace(replace, replaceData.getTo());
+                    newString = newString.replace(replace, replaceData.getTo());
+                }
+
+                if (replaceData.isStop() && !tmp.equals(newString)) {
+                    // dann wars ein Treffer und soll gestoppt werden
+                    break;
                 }
             }
         }
 
-        return strCheck;
+        return newString;
     }
 
     public int top(int idx, boolean up) {

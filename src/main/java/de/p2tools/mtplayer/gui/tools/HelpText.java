@@ -552,8 +552,8 @@ public class HelpText {
             "Datei- und Pfadnamen werden für Downloads nach den Vorgaben des Sets oder Abos " +
                     "erstellt. Danach wird die Ersetzungstabelle abgearbeitet. " +
                     "Hier können dann noch unerwünschte Zeichen entfernt werden." +
-                    "\n\n" +
 
+                    "\n\n" +
                     "## Nur ASCII-Zeichen ##\n" +
                     "Es werden alle Zeichen über ASCII 127 ersetzt. Umlaute werden aufgelöst (z.B. 'ö' -> 'oe'). " +
                     "Wenn die Ersetzungstabelle aktiv ist, wird sie vorher abgearbeitet." +
@@ -565,11 +565,17 @@ public class HelpText {
                     "rückgängig gemacht wird!" +
 
                     "\n\n" +
-                    "In der Ersetzungstabelle wird Groß- und Kleinschreibung beachtet.\n" +
-                    "Aktiv\n" +
-                    "Es werden nur Einträge verwendet, die \"Aktiv\" sind.\n" +
-                    "Abbrechen nach Treffer\n" +
-                    "Hat ein Eintrag \"Abbrechen nach Treffer\", wird beim Abarbeiten der Liste (von oben nach unten) hier " +
+                    "In der Ersetzungstabelle wird Groß- und Kleinschreibung beachtet." +
+
+                    "\n\n" +
+                    "# Aktiv #\n" +
+                    "Es werden nur Einträge verwendet, die \"Aktiv\" sind." +
+
+                    "\n\n" +
+                    "# Abbrechen nach Treffer #\n" +
+                    "Hat ein Eintrag \"Abbrechen nach Treffer\", wird beim Abarbeiten der Liste " +
+                    "(von oben nach unten und wenn der " +
+                    "Eintrag ein Treffer ist) hier " +
                     "abgebrochen, die weiteren Einträge in der Liste werden also nicht mehr angewendet." +
 
                     "\n\n" +

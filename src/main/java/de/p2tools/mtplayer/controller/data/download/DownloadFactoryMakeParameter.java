@@ -85,7 +85,7 @@ public class DownloadFactoryMakeParameter {
     }
 
     private static void buildFileNamePath(DownloadData download, SetData setData,
-                                          AboData abo, String pNname, String pPath) {
+                                          AboData abo, String selName, String selPath) {
         // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
         String name;
@@ -94,9 +94,9 @@ public class DownloadFactoryMakeParameter {
         // ##############################################
         // Name
         // ##############################################
-        if (!pNname.isEmpty()) {
+        if (!selName.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
-            name = pNname;
+            name = selName;
 
         } else {
             if (abo != null && !abo.getAboFileName().isEmpty()) {
@@ -114,7 +114,7 @@ public class DownloadFactoryMakeParameter {
             }
 
             // Tags ersetzen
-            name = replaceString(download, name); // %D ... ersetzen
+//            name = replaceTags(download, name); // %D ... ersetzen
 
             String suff = "";
             if (name.contains(".")) {
@@ -127,8 +127,8 @@ public class DownloadFactoryMakeParameter {
                     suff = "";
                 }
             }
-
-            name = DownloadFactory.replaceEmptyFileName(name, false /* pfad */);
+            name = replaceName(download, name);
+//            name = DownloadFactory.replaceFileNameReplaceList(name, false /* pfad */);
             name = name + suff;
 
             // prüfen ob das Suffix 2x vorkommt
@@ -142,6 +142,9 @@ public class DownloadFactoryMakeParameter {
                 }
             }
 
+            // Tags ersetzen
+//            name = replaceTags(download, name); // %D ... ersetzen
+
             // Kürzen
             if (setData.getMaxSize() > 0) {
                 int length = setData.getMaxSize();
@@ -152,9 +155,9 @@ public class DownloadFactoryMakeParameter {
         // ##############################################
         // Pfad
         // ##############################################
-        if (!pPath.isEmpty()) {
+        if (!selPath.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
-            path = pPath;
+            path = selPath;
 
         } else {
             if (abo != null && !abo.getAboDir().isEmpty()) {
@@ -176,7 +179,7 @@ public class DownloadFactoryMakeParameter {
                     // --> das wird aber nur beim ersten mal klappen, dann wird im
                     // DownloadDialog immer der letzte Pfad zuerst angeboten
                     path = P2FileUtils.addsPath(path,
-                            DownloadFactory.replaceEmptyFileName(download.getTheme(), true /* pfad */));
+                            DownloadFactory.replaceFileNameReplaceList(download.getTheme(), true /* pfad */));
                 }
             }
 
@@ -224,7 +227,7 @@ public class DownloadFactoryMakeParameter {
                 }
             }
 
-            path = replaceString(download, path); // %D ... ersetzen
+            path = replaceTags(download, path); // %D ... ersetzen
         }
 
         if (path.endsWith(File.separator)) {
@@ -247,9 +250,48 @@ public class DownloadFactoryMakeParameter {
         download.setFile(Paths.get(path, name).toFile());
     }
 
-    private static String replaceString(DownloadData download, String replStr) {
+    private static String replaceName(DownloadData download, String name) {
+        StringBuilder ret = new StringBuilder();
+        String search = name;
+
+        while (!search.isEmpty()) {
+            String tag = getTag(search);
+            if (tag.isEmpty()) {
+                // dann ist keines drin
+                ret.append(DownloadFactory.replaceFileNameReplaceList(search, false /* pfad */));
+                search = "";
+            } else {
+                String check = search.substring(0, search.indexOf(tag));
+                ret.append(DownloadFactory.replaceFileNameReplaceList(check, false /* pfad */));
+                ret.append(replaceTags(download, tag));
+                search = search.substring(search.indexOf(tag) + tag.length());
+            }
+        }
+
+        return ret.toString();
+    }
+
+    private static String getTag(String search) {
+        final String[] tags = {"%t", "%T", "%s", "%N", "%D", "%d",
+                "%H", "%h", "%1", "%2", "%3", "%4", "%5", "%6",
+                "%i", "%q", "%S", "%Z", "%z"};
+        int i = -1;
+        String tag = "";
+
+        for (String s : tags) {
+            int ii = search.indexOf(s);
+            if (ii >= 0 && (i == -1 || i > ii)) {
+                i = ii;
+                tag = s;
+            }
+        }
+        return tag;
+    }
+
+    private static String replaceTags(DownloadData download, String replStr) {
         // hier wird nur ersetzt!
         // Felder mit variabler Länge, evtl. vorher kürzen
+        // und ReplaceList anwenden für jedes Tag (getField())
 
         int length = download.getSetData().getMaxField();
 
@@ -304,7 +346,7 @@ public class DownloadFactoryMakeParameter {
     }
 
     private static String getField(String name, int length) {
-        name = DownloadFactory.replaceEmptyFileName(name, false /* pfad */);
+        name = DownloadFactory.replaceFileNameReplaceList(name, false /* pfad */);
 
         if (length <= 0) {
             return name;
@@ -396,7 +438,7 @@ public class DownloadFactoryMakeParameter {
 
     private static String turnDate(String date) {
         String ret = "";
-        if (!date.equals("")) {
+        if (!date.isEmpty()) {
             try {
                 if (date.length() == 10) {
                     String tmp = date.substring(6); // Jahr
@@ -451,18 +493,11 @@ public class DownloadFactoryMakeParameter {
         // hier werden die Parameter beim Programmaufruf ersetzt
         execString = execString.replace("**", downloadData.getDestPathFile());
 
-        if (downloadData != null) {
-            //ist für Button z.B. "search in google"
-            execString = execString.replace("%w", downloadData.getUrlWebsite());
-            execString = execString.replace("%t", downloadData.getTheme());
-            execString = execString.replace("%T", downloadData.getTitle());
-            execString = execString.replace("%s", downloadData.getChannel());
-        } else {
-            execString = execString.replace("%w", "");
-            execString = execString.replace("%t", "");
-            execString = execString.replace("%T", "");
-            execString = execString.replace("%s", "");
-        }
+        //ist für Button z.B. "search in google"
+        execString = execString.replace("%w", downloadData.getUrlWebsite());
+        execString = execString.replace("%t", downloadData.getTheme());
+        execString = execString.replace("%T", downloadData.getTitle());
+        execString = execString.replace("%s", downloadData.getChannel());
 
         execString = execString.replace("%a", downloadData.getDestPath());
         execString = execString.replace("%b", downloadData.getDestFileName());

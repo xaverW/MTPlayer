@@ -176,7 +176,7 @@ public class DownloadFactory {
      * @param isPath
      * @return Bereinigte Fassung
      */
-    public static String replaceEmptyFileName(String name, boolean isPath) {
+    public static String replaceFileNameReplaceList(String name, boolean isPath) {
         // AboListFactory.addNewAbo
         // AboListFactory.addNewAboFromFilterButton
         // DownloadFactoryMakeParameter.buildFileNamePath
@@ -185,8 +185,6 @@ public class DownloadFactory {
         // DownloadAddDialogFactory.getNextName
         String ret = name;
         boolean isWindowsPath = false;
-        boolean userReplace = ProgConfig.SYSTEM_USE_REPLACETABLE.getValue();
-        boolean onlyAscii = ProgConfig.SYSTEM_ONLY_ASCII.getValue();
 
         if (SystemUtils.IS_OS_WINDOWS && isPath && ret.length() > 1 && ret.charAt(1) == ':') {
             // damit auch "d:" und nicht nur "d:\" als Pfad geht
@@ -195,12 +193,12 @@ public class DownloadFactory {
         }
 
         // zuerst die Ersetzungstabelle mit den Wünschen des Users
-        if (userReplace) {
+        if (ProgConfig.SYSTEM_USE_REPLACETABLE.getValue()) {
             ret = ProgData.getInstance().replaceList.replace(ret, isPath);
         }
 
         // und wenn gewünscht: "NUR Ascii-Zeichen"
-        if (onlyAscii) {
+        if (ProgConfig.SYSTEM_ONLY_ASCII.getValue()) {
             ret = FileNameUtils.convertToASCIIEncoding(ret, isPath);
         } else {
             ret = FileNameUtils.convertToNativeEncoding(ret, isPath);

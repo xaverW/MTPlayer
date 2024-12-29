@@ -36,6 +36,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -53,6 +54,9 @@ public class PaneReplace {
     private final TextField txtFrom = new TextField();
     private final TextField txtTo = new TextField();
     private final CheckBox chkActive = new CheckBox();
+    private final CheckBox chkStop = new CheckBox();
+    private final Label lblStop = new Label();
+    private final Label lblActive = new Label();
     private final GridPane gridPane = new GridPane();
 
     private final TableView<ReplaceData> tableView = new TableView<>();
@@ -95,10 +99,10 @@ public class PaneReplace {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
         final Button btnHelp = P2Button.helpButton(stage, "Ersetzungstabelle",
                 HelpText.DOWNLOAD_REPLACE_TABLE);
 
+        tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);
         tglReplace.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_REPLACETABLE);
 
         gridPane.add(tglAscii, 0, 0);
@@ -122,11 +126,15 @@ public class PaneReplace {
         activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
         activeColumn.setCellFactory(new P2CellCheckBox().cellFactory);
 
+        final TableColumn<ReplaceData, Boolean> stopColumn = new TableColumn<>("Abbrechen nach Treffer");
+        stopColumn.setCellValueFactory(new PropertyValueFactory<>("stop"));
+        stopColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        tableView.getColumns().addAll(fromColumn, toColumn, activeColumn);
+        tableView.getColumns().addAll(fromColumn, toColumn, activeColumn, stopColumn);
         tableView.setItems(ProgData.getInstance().replaceList);
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 Platform.runLater(this::setActReplaceData));
@@ -148,6 +156,9 @@ public class PaneReplace {
     }
 
     private void initBtn(VBox vBox) {
+        chkActive.selectedProperty().addListener((u, o, n) -> setLblText());
+        chkStop.selectedProperty().addListener((u, o, n) -> setLblText());
+
         FilterCheckRegEx regEx = new FilterCheckRegEx(txtFrom);
         txtFrom.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
@@ -271,12 +282,22 @@ public class PaneReplace {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
-        gridPane.add(new Label("Von: "), 0, 0);
-        gridPane.add(txtFrom, 1, 0);
-        gridPane.add(new Label("Nach: "), 0, 1);
-        gridPane.add(txtTo, 1, 1);
-        gridPane.add(new Label("Aktiv: "), 0, 2);
-        gridPane.add(chkActive, 1, 2);
+        int row = 0;
+        gridPane.add(new Label("Von: "), 0, row);
+        gridPane.add(txtFrom, 1, row);
+        gridPane.add(new Label("Nach: "), 0, ++row);
+        gridPane.add(txtTo, 1, row);
+        gridPane.setAlignment(Pos.CENTER_RIGHT);
+
+        gridPane.add(new Label("Aktiv:"), 0, ++row);
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(chkActive, lblActive);
+        gridPane.add(hBox, 1, row);
+
+        gridPane.add(new Label("Abbrechen:"), 0, ++row);
+        hBox = new HBox(10);
+        hBox.getChildren().addAll(chkStop, lblStop);
+        gridPane.add(hBox, 1, row);
 
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().add(gridPane);
@@ -299,7 +320,9 @@ public class PaneReplace {
             txtFrom.textProperty().bindBidirectional(replaceDateProp.getValue().fromProperty());
             txtTo.textProperty().bindBidirectional(replaceDateProp.getValue().toProperty());
             chkActive.selectedProperty().bindBidirectional(replaceDateProp.getValue().activeProperty());
+            chkStop.selectedProperty().bindBidirectional(replaceDateProp.getValue().stopProperty());
         }
+        setLblText();
     }
 
     private void unbindText() {
@@ -307,9 +330,21 @@ public class PaneReplace {
             txtFrom.textProperty().unbindBidirectional(replaceDateProp.getValue().fromProperty());
             txtTo.textProperty().unbindBidirectional(replaceDateProp.getValue().toProperty());
             chkActive.selectedProperty().unbindBidirectional(replaceDateProp.getValue().activeProperty());
+            chkStop.selectedProperty().unbindBidirectional(replaceDateProp.getValue().stopProperty());
         }
         txtFrom.setText("");
         txtTo.setText("");
         chkActive.setSelected(false);
+        chkStop.setSelected(false);
+    }
+
+    private void setLblText() {
+        if (replaceDateProp.getValue() != null) {
+            lblStop.setText(replaceDateProp.getValue().isStop() ? "Bei einem Treffer wird hier abgebrochen" : "");
+            lblActive.setText(replaceDateProp.getValue().isActive() ? "" : "Der Eintrag wird nicht verwendet");
+        } else {
+            lblStop.setText("");
+            lblActive.setText("");
+        }
     }
 }

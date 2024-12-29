@@ -34,6 +34,7 @@ public class ReplaceData extends P2DataSample<ReplaceData> {
     StringProperty from = new SimpleStringProperty();
     StringProperty to = new SimpleStringProperty();
     BooleanProperty active = new SimpleBooleanProperty(true);
+    BooleanProperty stop = new SimpleBooleanProperty(false);
 
     public ReplaceData() {
     }
@@ -60,6 +61,7 @@ public class ReplaceData extends P2DataSample<ReplaceData> {
         list.add(new Config_stringProp("from", from));
         list.add(new Config_stringProp("to", to));
         list.add(new Config_boolProp("active", active));
+        list.add(new Config_boolProp("stop", stop));
 
         return list.toArray(new Config[]{});
     }
@@ -98,5 +100,17 @@ public class ReplaceData extends P2DataSample<ReplaceData> {
 
     public void setActive(boolean active) {
         this.active.set(active);
+    }
+
+    public boolean isStop() {
+        return stop.get();
+    }
+
+    public BooleanProperty stopProperty() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop.set(stop);
     }
 }
