@@ -86,14 +86,30 @@ public class DownloadFactoryMakeParameter {
 
     private static void buildFileNamePath(DownloadData download, SetData setData,
                                           AboData abo, String selName, String selPath) {
-        // nname und ppfad sind nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
+        String name = buildFileName(download, setData, abo, selName);
+        String path = buildFilePath(download, setData, abo, selPath);
+
+        // ###########################################################
+        // zur Sicherheit bei Unsinn im Set
+        if (path.isEmpty()) {
+            path = P2SystemUtils.getStandardDownloadPath();
+        }
+        if (name.isEmpty()) {
+            name = getToday_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
+        }
+
+        // in Win dürfen die Pfade nicht länger als 255 Zeichen haben (für die Infodatei kommen noch
+        // ".txt" dazu)
+        final String[] pathName = {path, name};
+        P2FileUtils.checkLengthPath(pathName);
+        download.setFile(Paths.get(path, name).toFile());
+    }
+
+    private static String buildFileName(DownloadData download, SetData setData,
+                                        AboData abo, String selName) {
+        // selName ist nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
         // (aus TabFilme)
         String name;
-        String path;
-
-        // ##############################################
-        // Name
-        // ##############################################
         if (!selName.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
             name = selName;
@@ -114,7 +130,7 @@ public class DownloadFactoryMakeParameter {
             }
 
             // Tags ersetzen
-//            name = replaceTags(download, name); // %D ... ersetzen
+            // name = replaceTags(download, name); // %D ... ersetzen
 
             String suff = "";
             if (name.contains(".")) {
@@ -128,7 +144,7 @@ public class DownloadFactoryMakeParameter {
                 }
             }
             name = replaceName(download, name);
-//            name = DownloadFactory.replaceFileNameReplaceList(name, false /* pfad */);
+            // name = DownloadFactory.replaceFileNameReplaceList(name, false /* pfad */);
             name = name + suff;
 
             // prüfen ob das Suffix 2x vorkommt
@@ -142,19 +158,20 @@ public class DownloadFactoryMakeParameter {
                 }
             }
 
-            // Tags ersetzen
-//            name = replaceTags(download, name); // %D ... ersetzen
-
             // Kürzen
             if (setData.getMaxSize() > 0) {
                 int length = setData.getMaxSize();
                 name = P2FileUtils.cutName(name, length);
             }
         }
+        return name;
+    }
 
-        // ##############################################
-        // Pfad
-        // ##############################################
+    private static String buildFilePath(DownloadData download, SetData setData,
+                                        AboData abo, String selPath) {
+        // selPath ist nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
+        // (aus TabFilme)
+        String path;
         if (!selPath.isEmpty()) {
             // wenn vorgegeben, dann den nehmen
             path = selPath;
@@ -233,21 +250,7 @@ public class DownloadFactoryMakeParameter {
         if (path.endsWith(File.separator)) {
             path = path.substring(0, path.length() - 1);
         }
-
-        // ###########################################################
-        // zur Sicherheit bei Unsinn im Set
-        if (path.isEmpty()) {
-            path = P2SystemUtils.getStandardDownloadPath();
-        }
-        if (name.isEmpty()) {
-            name = getToday_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
-        }
-
-        // in Win dürfen die Pfade nicht länger als 255 Zeichen haben (für die Infodatei kommen noch
-        // ".txt" dazu)
-        final String[] pathName = {path, name};
-        P2FileUtils.checkLengthPath(pathName);
-        download.setFile(Paths.get(path, name).toFile());
+        return path;
     }
 
     private static String replaceName(DownloadData download, String name) {
