@@ -83,7 +83,7 @@ public class LiveFilmMenu {
             progData.filmGuiController.tableView.requestFocus();
         });
         btSave.setOnAction(a -> {
-            FilmSaveFactory.saveFilmList();
+            FilmSaveFactory.saveFilmList(ProgData.getInstance().liveFilmGuiController.getSelList(true), null);
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
