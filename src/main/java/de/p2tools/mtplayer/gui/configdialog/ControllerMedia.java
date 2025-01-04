@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui.configdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.gui.configpanes.PaneMediaConfig;
-import de.p2tools.mtplayer.gui.configpanes.PaneMediaDataPath;
+import de.p2tools.mtplayer.gui.configdialog.configpanes.PaneMediaConfig;
+import de.p2tools.mtplayer.gui.configdialog.configpanes.PaneMediaDataPath;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediadialog.PaneDialogMedia;
 import de.p2tools.p2lib.dialogs.accordion.P2AccordionPane;

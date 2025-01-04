@@ -194,6 +194,7 @@ public class LoadFilmFactory {
                 doneAtProgramStart = true;
                 MediaDataWorker.createMediaDb();
 
+
                 if (!ProgData.autoMode) {
                     // sonst macht es ja keinen Sinn
                     WhatsNewFactory.checkUpdate();

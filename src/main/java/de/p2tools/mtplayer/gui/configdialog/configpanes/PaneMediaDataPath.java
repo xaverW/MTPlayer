@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.gui.configpanes;
+package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
