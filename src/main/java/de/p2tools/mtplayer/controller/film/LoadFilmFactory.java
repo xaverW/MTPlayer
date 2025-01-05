@@ -198,11 +198,9 @@ public class LoadFilmFactory {
                     // sonst macht es ja keinen Sinn
                     WhatsNewFactory.checkUpdate();
                     Platform.runLater(() -> {
-                        if (!ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false)) {
-                            // entweder oder
-                            if (ProgConfig.CHECK_SET_PROGRAM_START.get()) {
-                                SetFactory.checkPrograms(ProgData.getInstance().primaryStage, ProgData.getInstance(), false);
-                            }
+                        ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false);
+                        if (ProgConfig.CHECK_SET_PROGRAM_START.get()) {
+                            SetFactory.checkPrograms(ProgData.getInstance().primaryStage, ProgData.getInstance(), false);
                         }
                     });
                 }

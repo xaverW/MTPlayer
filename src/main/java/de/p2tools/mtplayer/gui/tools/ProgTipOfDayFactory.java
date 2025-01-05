@@ -38,18 +38,18 @@ public class ProgTipOfDayFactory {
     private ProgTipOfDayFactory() {
     }
 
-    public static boolean showDialog(ProgData progData, boolean showAlways) {
+    public static void showDialog(ProgData progData, boolean showAlways) {
         if (!showAlways && !ProgConfig.TIP_OF_DAY_SHOW.getValue()) {
             //dann wills der User nicht :(
             P2Log.sysLog("TipOfDay: Will der User nicht");
-            return false;
+            return;
         }
 
         if (!showAlways &&
                 (ProgConfig.TIP_OF_DAY_DATE.get().equals(P2DateConst.F_FORMAT_yyyy_MM_dd.format(new Date())) ||
                         !P2TipOfDayFactory.containsToolTipNotShown(ProgConfig.TIP_OF_DAY_WAS_SHOWN.get(), listSize))) {
             P2Log.sysLog("TipOfDay: Heute schon gemacht oder keine neuen Tips");
-            return false;
+            return;
         }
 
         // "immer" / heute noch nicht und nicht angezeigte ToolTips enthalten sind
@@ -59,7 +59,6 @@ public class ProgTipOfDayFactory {
         addTips(p2TipOfDayArrayList);
         new P2TipOfDayDialog(progData.primaryStage, p2TipOfDayArrayList,
                 ProgConfig.TIP_OF_DAY_WAS_SHOWN, ProgConfig.TIP_OF_DAY_SHOW);
-        return true;
     }
 
     private static void addTips(List<P2TipOfDay> pToolTipList) {
