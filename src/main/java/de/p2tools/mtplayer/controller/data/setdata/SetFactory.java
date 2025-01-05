@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.gui.dialog.CheckSetDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
@@ -176,19 +177,20 @@ public class SetFactory {
         return ret;
     }
 
-    public static boolean checkPrograms(Stage stage, ProgData data) {
+    public static void checkPrograms(Stage stage, ProgData data, boolean showWhenOk) {
         // prüfen, ob die eingestellten Programmsets passen
         if (data.setDataList.isEmpty()) {
             // dann gibts nix
             P2Alert.showErrorAlert(stage, "Set", "Sets prüfen", "Es sind keine Sets vorhanden! " +
                     "Bitte die Standardsets importieren.");
-            return false;
+            return;
         }
 
         final String PIPE = "| ";
         final String LEER = "      ";
         final String PFEIL = " -> ";
-        boolean ret = true;
+        boolean ret;
+        boolean show = showWhenOk;
         StringBuilder text = new StringBuilder();
 
         for (final SetData setData : data.setDataList) {
@@ -287,11 +289,16 @@ public class SetFactory {
                 if (ret) {
                     //sollte alles passen
                     text.append(PIPE + PFEIL + "Ok!").append(P2LibConst.LINE_SEPARATOR);
+                } else {
+                    show = true;
                 }
                 text.append("+++++++++++++++++++++++++++++++").append(P2LibConst.LINE_SEPARATORx3);
             }
         }
-        P2Alert.showInfoAlert(stage, "Set", "Sets prüfen", text.toString(), true);
-        return ret;
+        if (show) {
+            // dann Fehler oder immer anzeigen
+            new CheckSetDialogController(text.toString());
+            // P2Alert.showInfoAlert(stage, "Set", "Sets prüfen", text.toString(), true);
+        }
     }
 }

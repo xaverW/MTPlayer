@@ -46,6 +46,7 @@ public class PaneSetList extends VBox {
     private final Stage stage;
     private final ProgData progData;
     private final ObjectProperty<SetData> setDataObjectProperty;
+//    private final P2ToggleSwitch tglCheckStart = new P2ToggleSwitch("Beim Programmstart prüfen:");
 
     public PaneSetList(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
@@ -58,6 +59,7 @@ public class PaneSetList extends VBox {
     public void close() {
         progData.setDataList.getUndoList().clear();
         progData.setDataList.forEach(setData -> setData.getProgramList().getUndoList().clear());
+//        tglCheckStart.selectedProperty().unbindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
     }
 
     public Optional<SetData> getSel(boolean show) {
@@ -178,8 +180,12 @@ public class PaneSetList extends VBox {
 
         Button btnCheck = new Button("_Prüfen");
         btnCheck.setTooltip(new Tooltip("Die angelegten Sets überprüfen"));
-        btnCheck.setOnAction(event -> SetFactory.checkPrograms(stage, progData));
+        btnCheck.setOnAction(event -> SetFactory.checkPrograms(stage, progData, true));
         btnCheck.setMaxWidth(Double.MAX_VALUE);
+
+//        tglCheckStart.selectedProperty().bindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
+//        tglCheckStart.setTooltip(new Tooltip("Beim Programmstart werden die Sets geprüft. Bei einem Fehler " +
+//                "wird eine Meldung angezeigt."));
 
         final Button btnHelp = P2Button.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
 
@@ -191,7 +197,7 @@ public class PaneSetList extends VBox {
         hBoxHelp.getChildren().add(btnHelp);
 
         VBox vb = new VBox(P2LibConst.DIST_BUTTON);
-        vb.getChildren().addAll(hBoxButton, btnDup, btnNewSet, btnCheck, P2GuiTools.getVBoxGrower(), hBoxHelp);
+        vb.getChildren().addAll(hBoxButton, btnDup, btnNewSet, btnCheck/*, tglCheckStart*/, P2GuiTools.getVBoxGrower(), hBoxHelp);
         vBox.getChildren().addAll(vb);
     }
 

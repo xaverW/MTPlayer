@@ -868,6 +868,22 @@ public class HelpText {
                     "kleinere Buttons gewählt werden, um die Zeilenhöhe zu verringern." +
                     "\n";
 
+    public static final String CHECK_SET_PROGRAM_START = "Beim Programmstart werden die Programmeinstellungen " +
+            "zum Ansehen und Aufzeichnen " +
+            "der Filme, geprüft. Bei einem Fehler " +
+            "wird eine Meldung angezeigt." +
+            "\n";
+
+    public static final String CHECK_SET_PROGRAM_DIALOG = "Die Programmeinstellungen zum Ansehen und Aufzeichnen " +
+            "von Filmen wurden überprüft. " +
+            "Es wird das Ergebnis der Prüfung angezeigt." +
+            "\n\n" +
+            "Die Prüfung kann in den Einstellungen manuell angestoßen werden. " +
+            "Sie kann auch automatisch beim " +
+            "Programmstart gemacht werden. Bei einem Fehler " +
+            "wird dann diese Meldung angezeigt." +
+            "\n";
+
     public static final String TRAY =
             "Im System Tray wird für das Programm ein Symbol angezeigt. " +
                     "Damit kann das Programm auf dem Desktop ausgeblendet werden." +

@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadListFactory;
+import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
@@ -185,7 +186,6 @@ public class LoadFilmFactory {
             //damit auf jeden Fall, aus
             ProgData.getInstance().maskerPane.switchOffMasker();
 
-
             if (ProgData.firstProgramStart) {
                 ProgData.firstProgramStart = false;
                 Platform.runLater(ProgSave::saveAll); // damit nichts verloren geht
@@ -194,11 +194,17 @@ public class LoadFilmFactory {
                 doneAtProgramStart = true;
                 MediaDataWorker.createMediaDb();
 
-
                 if (!ProgData.autoMode) {
                     // sonst macht es ja keinen Sinn
                     WhatsNewFactory.checkUpdate();
-                    Platform.runLater(() -> ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false));
+                    Platform.runLater(() -> {
+                        if (!ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false)) {
+                            // entweder oder
+                            if (ProgConfig.CHECK_SET_PROGRAM_START.get()) {
+                                SetFactory.checkPrograms(ProgData.getInstance().primaryStage, ProgData.getInstance(), false);
+                            }
+                        }
+                    });
                 }
             }
         }).start();
