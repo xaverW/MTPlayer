@@ -53,6 +53,7 @@ public class MediaDataWorker {
     // **************************************************************
     // Eine MediaCollection neu einlesen, vorher die vorhandenen löschen
     // vom User ausgelöst, Config
+    // oder wird beim Download-Ende aufgerufen, wenn in der Mediensammlung-Intern gespeichert
     public static synchronized void updateCollection(MediaCollectionData mediaCollectionData) {
         if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)

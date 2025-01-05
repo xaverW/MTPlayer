@@ -26,6 +26,8 @@ import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFi
 import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.mediadb.MediaCollectionData;
+import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.dialog.DownloadSubtitleDialog;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorDialogController;
@@ -138,6 +140,22 @@ public class StartDownloadFactory {
         startDownloadDto.setProcess(null);
         startDownloadDto.setInputStream(null);
         startDownloadDto.setStartTime(null);
+
+        checkMediaList(download);
+    }
+
+    static void checkMediaList(DownloadData download) {
+        // wenn der Download in die MediaList geschrieben wurde, aktualisieren
+        String path = download.getDestPath();
+        MediaCollectionData mediaCollectionData = ProgData.getInstance().mediaCollectionDataList.getMediaCollectionDataIntern(path);
+        if (mediaCollectionData != null) {
+            // dann gibts den Pfad in der Mediensammlung -> Mediensammlung aktualisieren
+            File fileMedia = new File(mediaCollectionData.getPath());
+            if (fileMedia.exists()) {
+                P2Log.sysLog(new String[]{"Mediensammlung aktualisieren: ", mediaCollectionData.getPath()});
+                Platform.runLater(() -> MediaDataWorker.updateCollection(mediaCollectionData));
+            }
+        }
     }
 
     static void cleanUpDestFile(DownloadData download) {

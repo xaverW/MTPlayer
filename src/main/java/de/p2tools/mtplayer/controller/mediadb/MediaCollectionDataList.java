@@ -25,6 +25,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -147,6 +149,17 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
         } else {
             return false;
         }
+    }
+
+    public MediaCollectionData getMediaCollectionDataIntern(String path) {
+        Path child = Paths.get(path).toAbsolutePath();
+        return this.stream()
+                .filter(m -> !m.isExternal())
+                .filter(m -> {
+                    Path parent = Paths.get(m.getPath()).toAbsolutePath();
+                    return child.startsWith(parent);
+                })
+                .findAny().orElse(null);
     }
 
     private MediaCollectionData getMediaCollectionData(String collectionName) {

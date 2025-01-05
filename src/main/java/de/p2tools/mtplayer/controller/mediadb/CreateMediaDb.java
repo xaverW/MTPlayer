@@ -59,6 +59,7 @@ public class CreateMediaDb {
         } else {
             // durchsucht einen Pfad und fügt ihn an die DB an
             // wird nur manuell vom User gestartet und löscht nicht die MediaDB
+            // oder wird beim Download-Ende aufgerufen, wenn in der Mediensammlung-Intern gespeichert
             create(mediaCollectionData);
         }
     }
@@ -118,6 +119,7 @@ public class CreateMediaDb {
     private void create(MediaCollectionData mediaCollectionData) {
         // durchsucht einen Pfad und fügt ihn an die DB an
         // wird nur manuell vom User gestartet und löscht nicht die MediaDB
+        // oder wird beim Download-Ende aufgerufen, wenn in der Mediensammlung-Intern gespeichert
         if (mediaCollectionData == null) {
             return;
         }
@@ -127,7 +129,7 @@ public class CreateMediaDb {
             // ===================================
             // dann nur einen Pfad hinzufügen
             final File f = new File(mediaCollectionData.getPath());
-            logs.add("externen Pfad absuchen: " + f.getAbsolutePath());
+            logs.add("Pfad absuchen: " + f.getAbsolutePath());
             if (!f.canRead()) {
                 if (!error.isEmpty()) {
                     error = error + P2LibConst.LINE_SEPARATOR;
