@@ -26,7 +26,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -53,15 +52,10 @@ public class CheckSetDialogController extends P2DialogExtra {
         vBoxCont.setPadding(new Insets(P2LibConst.PADDING));
         vBoxCont.setSpacing(P2LibConst.PADDING_VBOX);
 
-        ScrollPane scroll = new ScrollPane();
         TextArea ta = new TextArea(text);
-        ta.setMinHeight(500);
         ta.setEditable(false);
-        scroll.setContent(ta);
-        scroll.setFitToHeight(true);
-        scroll.setFitToWidth(true);
-        vBoxCont.getChildren().add(scroll);
-        VBox.setVgrow(scroll, Priority.ALWAYS);
+        vBoxCont.getChildren().add(ta);
+        VBox.setVgrow(ta, Priority.ALWAYS);
 
         getHBoxOverButtons().setAlignment(Pos.CENTER_RIGHT);
         getHBoxOverButtons().getChildren().addAll(chkAlways);
