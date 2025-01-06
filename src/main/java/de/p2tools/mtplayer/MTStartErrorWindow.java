@@ -35,7 +35,7 @@ public class MTStartErrorWindow extends Application {
     // toDo für weitere Startfehlermeldungen vorbereiten -> nach P2Tools
 
     private Stage primaryStage;
-    private final String url = "https://www.p2tools.de/mtplayer/manual/start.html";
+    private final String url = "https://www.p2tools.de/mtplayer/";
 
     @Override
     public void init() throws Exception {

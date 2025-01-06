@@ -67,8 +67,6 @@ public class Main {
 
     private void checkMemory(final String[] args) {
         final long maxMem = Runtime.getRuntime().maxMemory();
-
-        // todo muss abgestuft werden -> laden der Filmliste einschränken
         if (maxMem < 500 * FileUtils.ONE_MB) {
             if (GraphicsEnvironment.isHeadless()) {
                 System.err.println("Die VM hat nicht genügend Arbeitsspeicher zugewiesen bekommen.");
