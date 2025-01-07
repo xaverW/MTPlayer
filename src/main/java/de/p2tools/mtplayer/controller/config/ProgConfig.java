@@ -408,7 +408,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty DOWNLOAD_DIALOG_START_AT_TIME_SIZE = addStrProp("download-dialog-start-at-time-size", "800:400");
     public static StringProperty DOWNLOAD_DIALOG_ADD_SIZE = addStrProp("download-dialog-add-size", "700:700");
     public static StringProperty DOWNLOAD_DIALOG_ADD_MORE_SIZE = addStrProp("download-dialog-add-more-size", "800:700");
-    public static StringProperty DOWNLOAD_DIALOG_CONTINUE_SIZE = addStrProp("download-dialog-continue-size");
+    public static StringProperty DOWNLOAD_DIALOG_CONTINUE_SIZE = addStrProp("download-dialog-continue-size", "600:500");
     public static StringProperty DOWNLOAD_DIALOG_ERROR_STREAM_SIZE = addStrProp("download-dialog-error-steam-size", "600:500");
     public static StringProperty DOWNLOAD_GUI_TABLE_WIDTH = addStrProp("download-gui-table-width");
     public static StringProperty DOWNLOAD_GUI_TABLE_SORT = addStrProp("download-gui-table-sort");
