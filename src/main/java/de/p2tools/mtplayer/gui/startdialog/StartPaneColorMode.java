@@ -35,13 +35,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class StartPaneColorMode {
     private final Stage stage;
-    HBox hBoxColor = new HBox();
     private final P2ToggleSwitch tglDarkTheme = new P2ToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
     private final P2ToggleSwitch tglBlackWhiteIcon = new P2ToggleSwitch("Schwarz-Weiße Icons");
     private final HBox hBoxImage0 = new HBox(); // !weiß / !dark
@@ -62,18 +60,15 @@ public class StartPaneColorMode {
         makeImage();
         setHBox();
         VBox vBox = new VBox(10);
-        hBoxColor.setAlignment(Pos.CENTER);
 
         HBox hBox = new HBox();
         hBox.getStyleClass().add("extra-pane");
         hBox.setPadding(new Insets(P2LibConst.PADDING));
-        hBox.setMaxWidth(Double.MAX_VALUE);
-        hBox.setMinHeight(Region.USE_PREF_SIZE);
         Label lbl = new Label("Wie soll die Programmoberfläche aussehen?");
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox);
 
         tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME_START);
         final Button btnHelpTheme = P2Button.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
@@ -118,6 +113,9 @@ public class StartPaneColorMode {
 
         gridPaneGui.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcPrefSize());
+
+        HBox hBoxColor = new HBox();
+        hBoxColor.setAlignment(Pos.CENTER);
         hBoxColor.getChildren().add(gridPaneGui);
         vBox.getChildren().add(hBoxColor);
 
