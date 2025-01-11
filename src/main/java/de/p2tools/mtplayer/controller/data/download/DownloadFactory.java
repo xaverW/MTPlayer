@@ -176,7 +176,7 @@ public class DownloadFactory {
      * @param isPath
      * @return Bereinigte Fassung
      */
-    public static String replaceFileNameReplaceList(String name, boolean isPath) {
+    public static String replaceFileNameWithReplaceList(String name, boolean isPath) {
         // AboListFactory.addNewAbo
         // AboListFactory.addNewAboFromFilterButton
         // DownloadFactoryMakeParameter.buildFileNamePath

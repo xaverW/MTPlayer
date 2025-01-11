@@ -51,7 +51,7 @@ public class AboListFactory {
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilterCheck.FILTER_DURATION_MAX_MINUTE);
         }
 
-        String namePath = DownloadFactory.replaceFileNameReplaceList(aboName, false /* nur ein Ordner */);
+        String namePath = DownloadFactory.replaceFileNameWithReplaceList(aboName, false /* nur ein Ordner */);
 
         final AboData abo = new AboData(ProgData.getInstance(),
                 namePath /* name */,
@@ -106,7 +106,7 @@ public class AboListFactory {
         if (searchTitle.isEmpty()) {
             searchTitle = "Abo aus Filter";
         }
-        searchTitle = DownloadFactory.replaceFileNameReplaceList(searchTitle, false /* nur ein Ordner */);
+        searchTitle = DownloadFactory.replaceFileNameWithReplaceList(searchTitle, false /* nur ein Ordner */);
 
         final AboData abo = new AboData(ProgData.getInstance(),
                 searchTitle /* name */,

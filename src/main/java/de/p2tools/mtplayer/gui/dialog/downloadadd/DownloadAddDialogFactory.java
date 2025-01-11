@@ -109,7 +109,7 @@ public class DownloadAddDialogFactory {
     public static String getNextName(String stdPath, String actDownPath, String theme) {
         String ret = actDownPath;
 
-        theme = DownloadFactory.replaceFileNameReplaceList(theme, false /* pfad */);
+        theme = DownloadFactory.replaceFileNameWithReplaceList(theme, false /* pfad */);
 
         if (actDownPath.endsWith(File.separator)) {
             ret = actDownPath.substring(0, actDownPath.length() - File.separator.length());

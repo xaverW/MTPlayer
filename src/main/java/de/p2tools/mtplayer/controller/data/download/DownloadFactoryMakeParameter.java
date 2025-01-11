@@ -130,7 +130,7 @@ public class DownloadFactoryMakeParameter {
             }
 
             // Tags ersetzen
-            // name = replaceTags(download, name); // %D ... ersetzen
+            name = replaceTags(download, name, false);
 
             String suff = "";
             if (name.contains(".")) {
@@ -143,8 +143,8 @@ public class DownloadFactoryMakeParameter {
                     suff = "";
                 }
             }
-            name = replaceName(download, name);
-            // name = DownloadFactory.replaceFileNameReplaceList(name, false /* pfad */);
+
+            name = DownloadFactory.replaceFileNameWithReplaceList(name, false /* pfad */);
             name = name + suff;
 
             // prüfen ob das Suffix 2x vorkommt
@@ -166,6 +166,29 @@ public class DownloadFactoryMakeParameter {
         }
         return name;
     }
+
+//    private static String replaceName(DownloadData download, String name) {
+//        StringBuilder ret = new StringBuilder();
+//        String search = name;
+//
+//        while (!search.isEmpty()) {
+//            String tag = getTag(search);
+//            if (tag.isEmpty()) {
+//                // dann ist keines drin
+////                ret.append(DownloadFactory.replaceFileNameWithReplaceList(search, false /* pfad */));
+//                ret.append(search);
+//                search = "";
+//            } else {
+//                String check = search.substring(0, search.indexOf(tag));
+////                ret.append(DownloadFactory.replaceFileNameWithReplaceList(check, false /* pfad */));
+//                ret.append(check);
+//                ret.append(replaceTags(download, tag, false));
+//                search = search.substring(search.indexOf(tag) + tag.length());
+//            }
+//        }
+//
+//        return ret.toString();
+//    }
 
     private static String buildFilePath(DownloadData download, SetData setData,
                                         AboData abo, String selPath) {
@@ -196,7 +219,7 @@ public class DownloadFactoryMakeParameter {
                     // --> das wird aber nur beim ersten mal klappen, dann wird im
                     // DownloadDialog immer der letzte Pfad zuerst angeboten
                     path = P2FileUtils.addsPath(path,
-                            DownloadFactory.replaceFileNameReplaceList(download.getTheme(), true /* pfad */));
+                            DownloadFactory.replaceFileNameWithReplaceList(download.getTheme(), true /* pfad */));
                 }
             }
 
@@ -244,8 +267,11 @@ public class DownloadFactoryMakeParameter {
                 }
             }
 
-            path = replaceTags(download, path); // %D ... ersetzen
+//            path = replaceTags(download, path, true); // %D ... ersetzen und ReplaceList für die Tags!! anwenden
         }
+
+        // nicht nur für Abos ändern und ReplaceList für die Tags!! anwenden
+        path = replaceTags(download, path, true); // %D ... ersetzen
 
         if (path.endsWith(File.separator)) {
             path = path.substring(0, path.length() - 1);
@@ -253,55 +279,33 @@ public class DownloadFactoryMakeParameter {
         return path;
     }
 
-    private static String replaceName(DownloadData download, String name) {
-        StringBuilder ret = new StringBuilder();
-        String search = name;
+//    private static String getTag(String search) {
+//        final String[] tags = {"%t", "%T", "%s", "%N", "%D", "%d",
+//                "%H", "%h", "%1", "%2", "%3", "%4", "%5", "%6",
+//                "%i", "%q", "%S", "%Z", "%z"};
+//        int i = -1;
+//        String tag = "";
+//
+//        for (String s : tags) {
+//            int ii = search.indexOf(s);
+//            if (ii >= 0 && (i == -1 || i > ii)) {
+//                i = ii;
+//                tag = s;
+//            }
+//        }
+//        return tag;
+//    }
 
-        while (!search.isEmpty()) {
-            String tag = getTag(search);
-            if (tag.isEmpty()) {
-                // dann ist keines drin
-                ret.append(DownloadFactory.replaceFileNameReplaceList(search, false /* pfad */));
-                search = "";
-            } else {
-                String check = search.substring(0, search.indexOf(tag));
-                ret.append(DownloadFactory.replaceFileNameReplaceList(check, false /* pfad */));
-                ret.append(replaceTags(download, tag));
-                search = search.substring(search.indexOf(tag) + tag.length());
-            }
-        }
-
-        return ret.toString();
-    }
-
-    private static String getTag(String search) {
-        final String[] tags = {"%t", "%T", "%s", "%N", "%D", "%d",
-                "%H", "%h", "%1", "%2", "%3", "%4", "%5", "%6",
-                "%i", "%q", "%S", "%Z", "%z"};
-        int i = -1;
-        String tag = "";
-
-        for (String s : tags) {
-            int ii = search.indexOf(s);
-            if (ii >= 0 && (i == -1 || i > ii)) {
-                i = ii;
-                tag = s;
-            }
-        }
-        return tag;
-    }
-
-    private static String replaceTags(DownloadData download, String replStr) {
+    public static String replaceTags(DownloadData download, String replStr, boolean andReplace) {
         // hier wird nur ersetzt!
         // Felder mit variabler Länge, evtl. vorher kürzen
-        // und ReplaceList anwenden für jedes Tag (getField())
 
         int length = download.getSetData().getMaxField();
 
-        replStr = replStr.replace("%t", getField(download.getTheme(), length));
-        replStr = replStr.replace("%T", getField(download.getTitle(), length));
-        replStr = replStr.replace("%s", getField(download.getChannel(), length));
-        replStr = replStr.replace("%N", getField(PUrlTools.getFileName(download.getUrl()), length));
+        replStr = replStr.replace("%t", setMaxLength(download.getTheme(), length, andReplace));
+        replStr = replStr.replace("%T", setMaxLength(download.getTitle(), length, andReplace));
+        replStr = replStr.replace("%s", setMaxLength(download.getChannel(), length, andReplace));
+        replStr = replStr.replace("%N", setMaxLength(PUrlTools.getFileName(download.getUrl()), length, andReplace));
 
         // Felder mit fester Länge werden immer ganz geschrieben
         replStr = replStr.replace("%D",
@@ -348,8 +352,10 @@ public class DownloadFactoryMakeParameter {
         return replStr;
     }
 
-    private static String getField(String name, int length) {
-        name = DownloadFactory.replaceFileNameReplaceList(name, false /* pfad */);
+    private static String setMaxLength(String name, int length, boolean andReplace) {
+        if (andReplace) {
+            name = DownloadFactory.replaceFileNameWithReplaceList(name, false /* pfad */);
+        }
 
         if (length <= 0) {
             return name;
@@ -387,7 +393,7 @@ public class DownloadFactoryMakeParameter {
         // %2 - Monat
         // %3 - Jahr
         String ret = "";
-        if (!datum.equals("")) {
+        if (!datum.isEmpty()) {
             try {
                 if (datum.length() == 10) {
                     switch (s) {
@@ -416,7 +422,7 @@ public class DownloadFactoryMakeParameter {
         // %5 - Minute
         // %6 - Sekunde
         String ret = "";
-        if (!zeit.equals("")) {
+        if (!zeit.isEmpty()) {
             try {
                 if (zeit.length() == 8) {
                     switch (s) {

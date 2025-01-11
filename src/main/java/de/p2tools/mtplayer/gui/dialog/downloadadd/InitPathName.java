@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.dialog.downloadadd;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.P2SystemUtils;
 import javafx.collections.FXCollections;
@@ -166,7 +167,9 @@ public class InitPathName {
         if (addDownloadDto.getAct().download.getSetData().getDestPath().isEmpty()) {
             stdPath = P2SystemUtils.getStandardDownloadPath();
         } else {
-            stdPath = addDownloadDto.getAct().download.getSetData().getDestPath();
+            // stdPath = addDownloadDto.getAct().download.getSetData().getDestPath();
+            final String path = addDownloadDto.getAct().download.getSetData().getDestPath();
+            stdPath = DownloadFactoryMakeParameter.replaceTags(addDownloadDto.getAct().download, path, true); // %D ... ersetzen
         }
 
         actPath = DownloadAddDialogFactory.getNextName(stdPath, actPath, addDownloadDto.getAct().download.getTheme());
