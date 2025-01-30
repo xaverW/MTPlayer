@@ -339,19 +339,19 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty FILM__FILTER_IS_SHOWING = addBoolProp("film--filter-is-showing", Boolean.TRUE);
     public static DoubleProperty FILM__FILTER_DIVIDER = addDoubleProp("film--filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
     public static BooleanProperty FILM__FILTER_IS_RIP = addBoolProp("film--filter-is-rip", Boolean.FALSE);
-    public static StringProperty FILM__FILTER_DIALOG_SIZE = addStrProp("film--filter-dialog-size", "400:500");
+    public static StringProperty FILM__FILTER_DIALOG_SIZE = addStrProp("film--filter-dialog-size", "400:600");
 
     public static BooleanProperty FILM__INFO_IS_SHOWING = addBoolProp("film--info-is-showing", Boolean.TRUE);
     public static DoubleProperty FILM__INFO_DIVIDER = addDoubleProp("film--info-divider", ProgConst.GUI_DIVIDER_LOCATION);
 
     public static BooleanProperty FILM__INFO_PANE_IS_RIP = addBoolProp("film--info-pane-is-rip", false);
-    public static StringProperty FILM__INFO_DIALOG_SIZE = addStrProp("film--info-dialog-size");
+    public static StringProperty FILM__INFO_DIALOG_SIZE = addStrProp("film--info-dialog-size", "400:600");
 
     public static BooleanProperty FILM__BUTTON_PANE_IS_RIP = addBoolProp("film--button-pane-is-rip", false);
-    public static StringProperty FILM__BUTTON_DIALOG_SIZE = addStrProp("film--button-dialog-size");
+    public static StringProperty FILM__BUTTON_DIALOG_SIZE = addStrProp("film--button-dialog-size", "400:600");
 
     public static BooleanProperty FILM__MEDIA_PANE_IS_RIP = addBoolProp("film--media-pane-is-rip", false);
-    public static StringProperty FILM__MEDIA_DIALOG_SIZE = addStrProp("film--media-dialog-size");
+    public static StringProperty FILM__MEDIA_DIALOG_SIZE = addStrProp("film--media-dialog-size", "400:600");
 
 
     // ===============================================================
@@ -384,13 +384,13 @@ public class ProgConfig extends P2DataProgConfig {
     public static DoubleProperty LIVE_FILM__INFO_DIVIDER = addDoubleProp("live-film--info-divider", ProgConst.GUI_DIVIDER_LOCATION);
 
     public static BooleanProperty LIVE_FILM__INFO_PANE_IS_RIP = addBoolProp("live-film--info-pane-is-rip", false);
-    public static StringProperty LIVE_FILM__INFO_DIALOG_SIZE = addStrProp("live-film--info-dialog-size", "400:400");
+    public static StringProperty LIVE_FILM__INFO_DIALOG_SIZE = addStrProp("live-film--info-dialog-size", "400:600");
 
     public static BooleanProperty LIVE_FILM__BUTTON_PANE_IS_RIP = addBoolProp("live-film--button-pane-is-rip", false);
-    public static StringProperty LIVE_FILM__BUTTON_DIALOG_SIZE = addStrProp("live-film--button-dialog-size");
+    public static StringProperty LIVE_FILM__BUTTON_DIALOG_SIZE = addStrProp("live-film--button-dialog-size", "400:600");
 
     public static BooleanProperty LIVE_FILM__MEDIA_PANE_IS_RIP = addBoolProp("live-film--media-pane-is-rip");
-    public static StringProperty LIVE_FILM__MEDIA_DIALOG_SIZE = addStrProp("live-film--media-dialog-size");
+    public static StringProperty LIVE_FILM__MEDIA_DIALOG_SIZE = addStrProp("live-film--media-dialog-size", "400:600");
 
 
     // ===============================================================
@@ -444,19 +444,19 @@ public class ProgConfig extends P2DataProgConfig {
     public static DoubleProperty DOWNLOAD__INFO_DIVIDER = addDoubleProp("download--info-divider", ProgConst.GUI_DIVIDER_LOCATION);
 
     public static BooleanProperty DOWNLOAD__INFO_PANE_IS_RIP = addBoolProp("download--info-pane-is-rip");
-    public static StringProperty DOWNLOAD__INFO_DIALOG_SIZE = addStrProp("download--info-dialog-size", "400:400");
+    public static StringProperty DOWNLOAD__INFO_DIALOG_SIZE = addStrProp("download--info-dialog-size", "400:600");
 
     public static BooleanProperty DOWNLOAD__MEDIA_PANE__IS_RIP = addBoolProp("download--media-pane-is-rip");
-    public static StringProperty DOWNLOAD__MEDIA_DIALOG_SIZE = addStrProp("download--media-dialog-size");
+    public static StringProperty DOWNLOAD__MEDIA_DIALOG_SIZE = addStrProp("download--media-dialog-size", "400:600");
 
     public static BooleanProperty DOWNLOAD__CHART_PANE_IS_RIP = addBoolProp("download--chart-pane-is-rip");
-    public static StringProperty DOWNLOAD__CHART_DIALOG_SIZE = addStrProp("download--chart-dialog-size");
+    public static StringProperty DOWNLOAD__CHART_DIALOG_SIZE = addStrProp("download--chart-dialog-size", "400:600");
 
     public static BooleanProperty DOWNLOAD__ERROR_PANE_IS_RIP = addBoolProp("download--error-pane-is-rip");
-    public static StringProperty DOWNLOAD__ERROR_DIALOG_SIZE = addStrProp("download--error-dialog-size", "400:400");
+    public static StringProperty DOWNLOAD__ERROR_DIALOG_SIZE = addStrProp("download--error-dialog-size", "400:600");
 
     public static BooleanProperty DOWNLOAD__LIST_PANE_IS_RIP = addBoolProp("download--list-pane-is-rip");
-    public static StringProperty DOWNLOAD__LIST_DIALOG_SIZE = addStrProp("download--list-dialog-size", "400:400");
+    public static StringProperty DOWNLOAD__LIST_DIALOG_SIZE = addStrProp("download--list-dialog-size", "400:600");
 
 
     // ===============================================================
@@ -488,9 +488,9 @@ public class ProgConfig extends P2DataProgConfig {
     public static DoubleProperty ABO__INFO_DIVIDER = addDoubleProp("abo--info-divider", ProgConst.GUI_DIVIDER_LOCATION);
 
     public static BooleanProperty ABO__INFO_PANE_IS_RIP = addBoolProp("abo---info-pane-is-rip", Boolean.FALSE);
-    public static StringProperty ABO__INFO__DIALOG_SIZE = addStrProp("abo--info-dialog-size", "400:400");
+    public static StringProperty ABO__INFO__DIALOG_SIZE = addStrProp("abo--info-dialog-size", "400:600");
     public static BooleanProperty ABO__LIST_PANE_IS_RIP = addBoolProp("abo--list-pane-is-rip", Boolean.FALSE);
-    public static StringProperty ABO__LIST_DIALOG_SIZE = addStrProp("abo--list-dialog--size", "400:400");
+    public static StringProperty ABO__LIST_DIALOG_SIZE = addStrProp("abo--list-dialog--size", "400:600");
 
 
     // ===============================================================
