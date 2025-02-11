@@ -10,16 +10,15 @@ Das Programm MTPlayer ist der weiter entwickelte Nachfolger meines Programms Med
 
 ## Infos
 
-Das Programm nutzt den Ordner ".p2Mtplayer" unter Linux und den versteckten Ordner "p2Mtplayer" unter Windows als Konfig-Ordner. Man kann dem Programm auch einen Ordner für die Einstellungen mitgeben (und es z.B. auf einem USB-Stick verwenden):  
-```
-java -jar MTPlayer.jar ORDNER 
-```
-
 MTPlayer wurde ganz neu mit einem modernem GUI-Toolkit erstellt. Ein besonderes Augenmerk habe ich auf die Suche nach Filmen gelegt. Mit einem deutlich erweiterten Filter, auch mit der Möglichkeit einzelne Filtereinstellungen zu speichern und wieder abzurufen, wurden die Möglichkeiten des Suchens stark erweitert. Auch die angelegten Abos können die Filme nach vielen weiteren Kriterien auswählen. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen. Eine Mediensammlung für bereits geladene Filme kann mit dem Programm verwaltet werden. Damit ist es leicht möglich, doppelte Downloads zu vermeiden.  
 Weitere Infos über das Programm und was sich geändert hat, kann auf der Website nachgelesen werden.
 
 https://www.p2tools.de/mtplayer/
 
+Das Programm nutzt den Ordner ".p2Mtplayer" unter Linux und den versteckten Ordner "p2Mtplayer" unter Windows als Konfig-Ordner. Man kann dem Programm auch einen Ordner für die Einstellungen mitgeben (und es z.B. auf einem USB-Stick verwenden):  
+```
+java -jar MTPlayer.jar ORDNER 
+```
 
 <br />
 
