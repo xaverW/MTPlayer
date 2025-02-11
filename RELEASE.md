@@ -1,6 +1,34 @@
 # MTPlayer
 
-**Release 17**
+**Version 18**
+
+* Die Nummerierung der Abos wurde korrigiert
+* Das Suchen der Downloads läuft jetzt im Hintergrund ab und blockiert so das Programm nicht mehr.
+* Der Fortschritt beim Suchen (Downloads, Filtern der Blacklist) wird jetzt an verschiedenen Stellen im Programm angezeigt
+* Tabelle Blacklist: Die Spalten-Einstellungen werden gespeichert
+* Einstellungen Blacklist: Eingestellter Filter in der Tabelle wurde nicht zurückgesetzt
+* Einstellungen Blacklist: Doppelklick auf eine Blacklist-Tabellen-Zeile: Es wird dann das entsprechende Feld unter der Tabelle selektiert
+* Tabelle Filme: Anzeige der neuen Filme (Schriftfarbe) hatte gelegentlich Probleme, wurde überarbeitet
+* Schwarz-Weiß Anzeige der Programmoberfläche (Einstellungen->Farben)
+* Das Umschalten "Darkmode, Schwarz-Weiß Anzeige" klappt jetzt auch ohne Programm-Neustart
+* Der "Quitt-Dialog" wurde überarbeitet (-> Programm minimieren)
+* Filmfilter, Filterprofile wurde etwas überarbeitet: Die Standard-Filterprofile können jetzt auch angefügt werden (ohne die vorhandenen zu löschen)
+* Abofilter: Es gibt einen neuen Filter: "Filtertext", der in den Textfeldern sucht
+* Anzeige der Filter in externem Fenster möglich
+* Neues ShortCut: Alt+m -> GUI minimieren
+* Set: Das Neuanlegen oder Ändern wurde überarbeitet für Programme (vlc, ffmpeg) die nicht im Standardpfad liegen
+* Programm minimiert oder maximiert starten überarbeitet
+* Anpassungen für den Raspberry
+* Filme markieren: Damit können Filme nach eigenen Vorgaben markiert werden, so können z.B. Filme die "Gebärdensprache" im Titel haben, markiert werden. Im Filmfilter gibt es den neuen Punkt: "Anzeigen->Markiert" der dann die markierten (z.B. mit "Gebärdensprache") filtert.
+* Start-Dialog überarbeitet
+* Beim Programmstart werden verwendete Programme/Pfade in den Speichern-Sets überprüft
+* Nach einem Download wird er direkt in die Medien-Liste (wenn dort gespeichert) übernommen
+* Ersetzungstabelle: Die Einträge können ein- und ausgeschaltet werden
+* Ersetzungstabelle: Bei einem Treffer, kann das weitere Abarbeiten der Liste, abgebrochen werden
+* Fehler beim Ändern der Diacritics, behoben
+* ...
+
+**Version 17**
 
 * Neuer Tab: Live-Suche (kann über einen Menü-Button oder das Programm-Menü ein- und ausgeblendet werden). Hier kann in den Mediatheken von ARD und ZDF nach Filmen gesucht werden. Es kann auch mit einer URL einer Film-Seite aus der Mediathek ein Film angelegt werden.
 * Tabelle Filme: Es gibt eine neue Spalte für "Doppelte"
@@ -43,14 +71,14 @@
 * ...
 
 
-**Release 16**
+**Version 16**
 
 * Es gab einen Fehler wenn der Film bei gespeicherten Downloads nicht mehr in der Filmliste ist
 * Filmfiter Sendezeit: Gui überarbeitet
 * ...
 
 
-**Release 15**
+**Version 15**
 
 * Die Java-Version wurde auf mind. Java 17 angehoben
 * In den Tabellen (Filme, Downloads, Abos) gibt es einen Tooltip mit den Infos: Thema, Titel
@@ -90,7 +118,7 @@
 * ...
 
 
-**Release 14**
+**Version 14**
 * Markierung der gesehenen Filme korrigiert
 * In den Einstellungen kann eine Lock-Datei eingeschaltet werden: Es wird dann sichergestellt, dass nur eine Instanz vom Programm läuft
 * Es wurden neue ShortCuts und Programm-Schalter hinzugefügt -> Einstellungen
@@ -111,7 +139,7 @@
 * ...
 
 
-**Release 13**
+**Version 13**
 * Das GUI wurde überarbeitet
 * Es kann ein eigenes Programm-Icon verwendet werden -> Einstellungen
 * Shortcuts wurden hinzugefügt z.B. Ctrl+G "Film gesehen" und Ctrl+Shift+G "Film ungesehen"
@@ -132,7 +160,7 @@
 * ...
 
 
-**Release 12**
+**Version 12**
 *    Die interne Verarbeitung der Daten/Einstellungen wurde komplett überarbeitet
 *    Gelöschter Download: Der kann jetzt zurückgenommen werden (-> Menü)
 *    Im Filmfilter wurden fehlende Sender nachgetragen
@@ -151,7 +179,7 @@
 *    …
 
 
-**Release 11**
+**Version 11**
 *    Download-Chart und Download-Infos wurden überarbeitet
 *    Der Dialog: “Programm nach Downloads beenden” hat jetzt auch die Möglichkeit den Rechner anschließend herunterzufahren
 *    Tray: Das Programm kann ins Tray gelegt werden -> In den Einstellungen kann das Tray eingeschaltet werden
@@ -170,7 +198,7 @@
 *    …
 
 
-**Release 10**
+**Version 10**
 * Downloadchart: Daten bleiben auch beim Ändern der Anzeige erhalten
 * Filmfilter erhält eine “zurück” Funktion
 * Die interne Verarbeitung der Mediensammlung wurde verbessert, ist jetzt deutlich schneller bei sehr großen
@@ -198,7 +226,7 @@
 * ...
 
 
-**Release 9**
+**Version 9**
 * Anordnung der Buttons (OK, Abbrechen, ..) passend zum Betriebssystem
 * Beim Schließen des Config-Dialogs Filmliste nur neu laden, wenn Blacklist geändert wurde
 * Die Möglichkeiten zum Anlegen von Verzeichnissen bei Abos wurde deutlich erweitert
@@ -219,7 +247,7 @@
 * ...
 
 
-**Release 8**
+**Version 8**
 * Dark Theme, die Programmoberfläche kann jetzt auch in einem "dark theme" angezeigt werden: Einstellungen->Farben
 * Neuer Filter im Tab Abos: Suche eines Abos nach Abonamen
 * Bei Filmabos kann jetzt der Suchzeitraum eingeschränkt werden: Filter "Zeitraum", es werden nur die Filme der letzten
@@ -240,7 +268,7 @@
 * ...
 
 
-**Release 7**
+**Version 7**
 * Erkennung neuer Filme (wenn Filme nicht in jeder neuen Filmliste enthalten sind), wurde verbessert
 * Ändern von Abonamen (auch mehrere gleichzeitig) und Umbenennen von Sets jetzt möglich
 * Filmdownload löschen: Jetzt kann auch die Info- und Untertiteldatei mit gelöscht werden
@@ -259,7 +287,7 @@
 * ...
 
 
-**Release 6**
+**Version 6**
 * Tabelle Filme/Downloads/Abos: Die angezeigten Farben wurden überarbeitet
 * Tabelle Download: Neuer Button zum Öffnen des Speicherordners
 * Tabelle Download: Fehlerhafte Downloads können jetzt direkt aus der Tabelle neu gestartet werden
@@ -279,12 +307,12 @@
 * ...
 
 
-**Release 5**
+**Version 5**
 * In bestimmten Kon­s­tel­la­ti­onen kam es zu hoher Prozessorlast
 * ...
 
 
-**Release 4**
+**Version 4**
 * Das Programm prüft und zeigt an, wenn es eine neue Filmliste gibt (alle 1/2h, Button "Filmliste" wird dann blau
   umrandet)
 * Filminfo (unter dem Filmtab) ist beschreibbar (und damit kann die Infodatei die parallel zu einem Film gespeichert
@@ -299,7 +327,7 @@
 * ...
 
 
-**Release 3**
+**Version 3**
 * Das Programm ist nun unter Java >=8 (also Java8, Java9, Java10) lauffähig. Dazu musste einiges umgebaut werden und
   einige Gui-Elemente ausgetauscht werden. Die Optik hat sich desswegen etwas geändert, die Funktion ist aber erhalten
   geblieben.
@@ -314,7 +342,7 @@
 * ...
 
 
-**Release 2**
+**Version 2**
 * Mit dem Schalter "-h" lassen sich die möglichen Startparameter abfragen
 * Das Laden der Filmliste und die anschließenden Aktivitäten z.B. beim Suchen der Downloads wurde optimiert
 * Die History Liste speichert jetzt den ganzen Titel was das Suchen nach bereits gesehenen Beiträgen verbessert
@@ -329,7 +357,7 @@
 * ...
 
 
-**Release 1-81**
+**Version 1-81**
 * Zur Programmausgabe in der Konsole wird jetzt auch ein Logfile geschrieben (in den Einstellungen kann angegeben
   werden, ob und wo es geschrieben werden soll)
 * Das Format des Log (Konsole und Logfile) wurde übersichtlicher gestaltet
@@ -337,12 +365,12 @@
 * ...
 
 
-**Release 1-55**
+**Version 1-55**
 * Es gibt einen neuen Filter (in "nicht anzeigen"): "Zukunft", damit werden Filme in der Zukunft nicht angezeigt.
 * ...
 
 
-**Release 1-50**
+**Version 1-50**
 * Die Fehlermeldung "Windows: Fehlermeldung Softwareaktualisierung" beim Start durch fehlende Crypto-lib im System wird
   unterdrückt.  
   http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html  
@@ -350,7 +378,7 @@
 * ...
 
 
-**Release 1**
+**Version 1**
 * Im Filter ist jetzt neben "," für ODER auch ":" für UND möglich (z.B. "Auto,Schiff" für Filme die entweder "Auto"
   oder "Schiff" im entsprechenden Feld enthalten, "Auto:Schiff" findet nur Filme die sowohl "Auto" als auch "Schiff" im
   gesuchten Feld enthalten).

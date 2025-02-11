@@ -4,7 +4,7 @@
 
 Das Programm MTPlayer ist eine Art Suchmaschine für Filme der Mediatheken der Öffentlich-Rechtlichen Sender. Das Programm stellt eine Liste mit Links zu den Filmen zur Verfügung. Es ist möglich, diese URLs an externe Programme weiterzugeben. Mit diesen Programmen können dann diese Filme angesehen oder aufgezeichnet werden.
 
-Das Programm MTPlayer ist der Nachfolger meines früheren Programms MediathekView. 
+Das Programm MTPlayer ist der weiter entwickelte Nachfolger meines Programms MediathekView.
 
 <br />
 
@@ -15,7 +15,8 @@ Das Programm nutzt den Ordner ".p2Mtplayer" unter Linux und den versteckten Ordn
 java -jar MTPlayer.jar ORDNER 
 ```
 
-Ich habe einige Ideen die ich hatte oder bekam, damit umgesetzt. Die größten Änderungen haben die Filter und die interne Verarbeitung der Filme in der Filmliste und Blacklist erfahren. Die eigene Mediensammlung kann vor einem Download durchsucht werden, die Suche darin wurde ausgebaut. Für die Programmoberfläche wurde auf ein modernes GUI-ToolKit gewechselt. Weitere Infos über das Programm und was sich geändert hat, kann auf der Website nachgelesen werden.
+MTPlayer wurde ganz neu mit einem modernem GUI-Toolkit erstellt. Ein besonderes Augenmerk habe ich auf die Suche nach Filmen gelegt. Mit einem deutlich erweiterten Filter, auch mit der Möglichkeit einzelne Filtereinstellungen zu speichern und wieder abzurufen, wurden die Möglichkeiten des Suchens stark erweitert. Auch die angelegten Abos können die Filme nach vielen weiteren Kriterien auswählen. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen. Eine Mediensammlung für bereits geladene Filme kann mit dem Programm verwaltet werden. Damit ist es leicht möglich, doppelte Downloads zu vermeiden.  
+Weitere Infos über das Programm und was sich geändert hat, kann auf der Website nachgelesen werden.
 
 https://www.p2tools.de/mtplayer/
 
