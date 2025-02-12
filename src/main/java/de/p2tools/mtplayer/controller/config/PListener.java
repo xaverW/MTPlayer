@@ -38,6 +38,7 @@ public class PListener implements EventListener {
     public static final int EVENT_LIVE_FILTER_CHANGED = count++;
     public static final int EVENT_FILM_BUTTON_CHANGED = count++;
     public static final int EVENT_REFRESH_TABLE = ++count;
+    public static final int EVENT_ABO_HIT_CHANGED = ++count;
 
     public int[] event = {-1};
     public String eventClass = "";

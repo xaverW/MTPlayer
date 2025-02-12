@@ -16,13 +16,13 @@
 
 package de.p2tools.mtplayer.gui.infoPane;
 
+import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -55,11 +55,15 @@ public class PaneAboInfoList extends VBox {
         vBoxAll.setPadding(new Insets(10));
         vBoxAll.getChildren().addAll(vBoxHeader, gridPane);
         getChildren().add(vBoxAll);
+        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        progData.aboList.listChangedProperty().addListener((u, o, n) -> setInfoText());
+        PListener.addListener(new PListener(PListener.EVENT_ABO_HIT_CHANGED, PaneAboInfoList.class.getSimpleName()) {
+            @Override
+            public void pingFx() {
+                setInfoText();
+            }
+        });
 
-        AnchorPane.setLeftAnchor(gridPane, 0.0);
-        AnchorPane.setBottomAnchor(gridPane, 0.0);
-        AnchorPane.setRightAnchor(gridPane, 0.0);
-        AnchorPane.setTopAnchor(gridPane, 0.0);
         setInfoText();
     }
 
