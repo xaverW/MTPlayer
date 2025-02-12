@@ -24,7 +24,10 @@ import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 public class PaneDownloadError extends VBox {
 
@@ -46,11 +49,8 @@ public class PaneDownloadError extends VBox {
         scrollPane.setContent(vBoxCont);
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-        AnchorPane.setLeftAnchor(scrollPane, 0.0);
-        AnchorPane.setBottomAnchor(scrollPane, 0.0);
-        AnchorPane.setRightAnchor(scrollPane, 0.0);
-        AnchorPane.setTopAnchor(scrollPane, 0.0);
         getChildren().add(scrollPane);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
         progData.downloadErrorList.addListener((u, o, n) -> setInfoText());
         setInfoText();
@@ -120,8 +120,10 @@ public class PaneDownloadError extends VBox {
                 ++row;
                 gridPane.add(taError, 0, row, 2, 1);
                 GridPane.setHgrow(taError, Priority.ALWAYS);
+                GridPane.setVgrow(taError, Priority.ALWAYS);
 
                 vBoxCont.getChildren().add(gridPane);
+                VBox.setVgrow(gridPane, Priority.ALWAYS);
             });
 
             HBox hBox = new HBox();
