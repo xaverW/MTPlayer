@@ -72,7 +72,7 @@ public class ProgData {
 
     public static boolean downloadSearchDone = false; // wird gesetzt, wenn das erste mal Downloads gesucht wurden
     public static boolean duration = false; // Duration ausgeben
-    public static boolean startMinimized = false; // Minimiert starten
+    public static boolean startMinimized = false; // Minimiert starten, Startparameter -m
     public static boolean showUpdate = false; // immer ein ProgrammUpdate anzeigen
     public static boolean reset = false; // Programm auf Starteinstellungen zurücksetzen
     public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht

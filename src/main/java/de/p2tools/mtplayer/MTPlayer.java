@@ -71,7 +71,7 @@ public class MTPlayer extends Application {
             Scene scene;
 
             if (!ProgData.startMinimized &&
-                    (ProgConfig.SYSTEM_GUI_MAXIMISED.get() || ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED.get())) {
+                    (ProgConfig.SYSTEM_GUI_LAST_START_WAS_MAXIMISED.get() || ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED.get())) {
                 //========= MAXIMISED ===========
                 // dann wars maximiert oder soll immer so gestartet werden
                 scene = new Scene(progData.mtPlayerController,

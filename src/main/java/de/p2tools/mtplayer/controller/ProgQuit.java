@@ -132,7 +132,7 @@ public class ProgQuit {
         // Tabelleneinstellungen merken
         final ProgData progData = ProgData.getInstance();
 
-        ProgConfig.SYSTEM_GUI_MAXIMISED.set(progData.primaryStage.isMaximized());
+        ProgConfig.SYSTEM_GUI_LAST_START_WAS_MAXIMISED.set(progData.primaryStage.isMaximized());
         progData.filmGuiController.saveTable();
         progData.liveFilmGuiController.saveTable();
         progData.downloadGuiController.saveTable();

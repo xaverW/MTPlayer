@@ -18,8 +18,8 @@
 package de.p2tools.mtplayer.controller.config;
 
 
-import de.p2tools.p2lib.data.P2ColorData;
-import de.p2tools.p2lib.data.P2ColorList;
+import de.p2tools.p2lib.colordata.P2ColorData;
+import de.p2tools.p2lib.colordata.P2ColorList;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

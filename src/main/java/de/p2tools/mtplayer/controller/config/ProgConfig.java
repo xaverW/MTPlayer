@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.controller.filmfilter.LiveFilter;
 import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.pdata.P2Data;
-import de.p2tools.p2lib.data.P2DataProgConfig;
+import de.p2tools.p2lib.configfile.pdata.P2DataProgConfig;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.P2ShutDown;
@@ -56,9 +56,9 @@ public class ProgConfig extends P2DataProgConfig {
         ProgData progData = ProgData.getInstance();
 
         // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-        ProgConfig.SYSTEM_PROG_VERSION.set(P2ToolsFactory.getProgVersion());
-        ProgConfig.SYSTEM_PROG_BUILD_NO.set(P2ToolsFactory.getBuildNo());
-        ProgConfig.SYSTEM_PROG_BUILD_DATE.set(P2ToolsFactory.getBuildDateR());
+        SYSTEM_PROG_VERSION.set(P2ToolsFactory.getProgVersion());
+        SYSTEM_PROG_BUILD_NO.set(P2ToolsFactory.getBuildNo());
+        SYSTEM_PROG_BUILD_DATE.set(P2ToolsFactory.getBuildDateR());
 
         configFile.addConfigs(ProgConfig.getInstance()); // ProgConfig
         configFile.addConfigs(ProgColorList.getInstance()); // Color
@@ -137,9 +137,38 @@ public class ProgConfig extends P2DataProgConfig {
     // ===============================================================
 
     // Configs der Programmversion, nur damit sie (zur Update-Suche: Anzeige WhatsNew) im Config-File stehen
+    static {
+        addComment("Prog-Version");
+    }
+
     public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", P2ToolsFactory.getProgVersion());
     public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", P2ToolsFactory.getBuildNo());
     public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", P2ToolsFactory.getBuildDateR()); // 2024.08.12
+
+    // Fenstereinstellungen
+    static {
+        addComment("Fenstereinstellungen");
+    }
+
+    public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
+    public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "500:600");
+    public static BooleanProperty SYSTEM_GUI_LAST_START_WAS_MAXIMISED = addBoolProp("system-gui-last-start-was-maximised", Boolean.FALSE); // Programm wurde Maximised beendet
+    public static BooleanProperty SYSTEM_GUI_START_ALWAYS_MAXIMISED = addBoolProp("system-gui-start-always-maximised", Boolean.FALSE);
+
+    // Configs zur ProgrammUpdateSuche
+    static {
+        addComment("ProgrammUpdateSuche");
+    }
+
+    public static StringProperty SYSTEM_SEARCH_UPDATE_TODAY_DONE = addStrProp("system-search-update-today-done"); // Datum, wenn heute, dann heute schon mal gemacht
+    public static StringProperty SYSTEM_SEARCH_UPDATE_LAST_DATE = addStrProp("system-search-update-last-date"); // Datum der letzten Prüfung
+    public static BooleanProperty SYSTEM_SEARCH_UPDATE = addBoolProp("system-search-update" + P2Data.TAGGER + "system-update-search-act", Boolean.TRUE); // nach einem Update suchen
+    public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBoolProp("system-update-search-beta", Boolean.FALSE); //beta suchen
+    public static BooleanProperty SYSTEM_UPDATE_SEARCH_DAILY = addBoolProp("system-update-search-daily", Boolean.FALSE); //daily suchen
+
+    static {
+        addEmptyLine();
+    }
 
     //Configs zur Anzeige der Diakritika in der Filmliste
     //TRUE: dann werden Diakritika nicht geändert und angezeigt --> das kommt weg
@@ -158,18 +187,6 @@ public class ProgConfig extends P2DataProgConfig {
 
     // configs zum Anzeigen der WhatsNew
     public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
-
-    // Configs zur ProgrammUpdateSuche
-    public static StringProperty SYSTEM_SEARCH_UPDATE_TODAY_DONE = addStrProp("system-search-update-today-done"); // Datum, wenn heute, dann heute schon mal gemacht
-    public static StringProperty SYSTEM_SEARCH_UPDATE_LAST_DATE = addStrProp("system-search-update-last-date"); // Datum der letzten Prüfung
-    public static BooleanProperty SYSTEM_SEARCH_UPDATE = addBoolProp("system-search-update" + P2Data.TAGGER + "system-update-search-act", Boolean.TRUE); // nach einem Update suchen
-    public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBoolProp("system-update-search-beta", Boolean.FALSE); //beta suchen
-    public static BooleanProperty SYSTEM_UPDATE_SEARCH_DAILY = addBoolProp("system-update-search-daily", Boolean.FALSE); //daily suchen
-
-//    public static StringProperty SYSTEM_UPDATE_LAST_INFO = addStrProp("system-update-last-info");
-//    public static StringProperty SYSTEM_UPDATE_LAST_ACT = addStrProp("system-update-last-act");
-//    public static StringProperty SYSTEM_UPDATE_LAST_BETA = addStrProp("system-update-last-beta");
-//    public static StringProperty SYSTEM_UPDATE_LAST_DAILY = addStrProp("system-update-last-daily");
 
     // ConfigDialog, Dialog nach Start immer gleich öffnen
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_TAB = new SimpleIntegerProperty(0);
@@ -195,6 +212,10 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty CHECK_SET_DIALOG_SIZE = addStrProp("check-set-dialog-size", "400:500");
 
     //Configs Statusbar
+    static {
+        addComment("Statusbar");
+    }
+
     public static BooleanProperty SYSTEM_STATUS_BAR_ON = addBoolProp("system-status-bar-on", true);
     public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_SEL = addBoolProp("system-status-bar-field-sel", true);
     public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_LEFT = addBoolProp("system-status-bar-field-left", true);
@@ -202,11 +223,19 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_STATUS_BAR_FIELD_RIGHT = addBoolProp("system-status-bar-field-right", true);
 
     // Proxy
+    static {
+        addComment("Proxy");
+    }
+
     public static BooleanProperty SYSTEM_USE_PROXY = addBoolProp("system-use-proxy", Boolean.FALSE);
     public static StringProperty SYSTEM_PROXY_HOST = addStrProp("system-proxy-host", "");
     public static StringProperty SYSTEM_PROXY_PORT = addStrProp("system-proxy-port", "");
     public static StringProperty SYSTEM_PROXY_USER = addStrProp("system-proxy-user", "");
     public static StringProperty SYSTEM_PROXY_PWD = addStrProp("system-proxy-pwd", "");
+
+    static {
+        addEmptyLine();
+    }
 
     public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBoolProp("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
@@ -239,13 +268,11 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_DARK_THEME_START = addBoolProp("system-dark-theme-start", Boolean.FALSE);
     public static BooleanProperty SYSTEM_BLACK_WHITE_ICON_START = addBoolProp("system-black-white-icon-start", Boolean.FALSE);
 
-    // Fenstereinstellungen
-    public static BooleanProperty SYSTEM_GUI_MAXIMISED = addBoolProp("system-gui-maximised", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_GUI_START_ALWAYS_MAXIMISED = addBoolProp("system-gui-start-always-maximised", Boolean.FALSE);
-    public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
-    public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "500:600");
-
     // Einstellungen Filmliste
+    static {
+        addComment("Filmliste");
+    }
+
     public static StringProperty SYSTEM_FILMLIST_DATE = addStrProp("system-filmlist-date", "");
     public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
     public static StringProperty SYSTEM_MARK_DOUBLE_CHANNEL_LIST = addStrProp("system-mark-double-channel-list", "ARD,ZDF");
@@ -262,6 +289,10 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty SYSTEM_FILMLIST_COUNT_DOUBLE = addIntProp("system-filmlist-count-double", 0); // Anzahl der doppelten Filme
 
     // Download
+    static {
+        addComment("Download");
+    }
+
     public static BooleanProperty DOWNLOAD_START_NOW = addBoolProp("download-start-now", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_BEEP = addBoolProp("download-beep");
     public static IntegerProperty DOWNLOAD_ONLY_STOP = addIntProp("download-only-stop", ProgConfigAskBeforeDelete.DOWNLOAD_STOP__ASK); // das sind Downloads ohne Dateien
@@ -272,10 +303,13 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_SHOW = addBoolProp("download-dialog-error-show", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_TIME = addBoolProp("download-dialog-error-time", Boolean.TRUE);
 
-
     // ===============================================================
     // ====== Filter =================================================
     // ===============================================================
+
+    static {
+        addComment("Filter");
+    }
 
     // Blacklist
     public static BooleanProperty SYSTEM_BLACKLIST_SHOW_NO_FUTURE = addBoolProp("system-blacklist-show-no-future");
@@ -314,10 +348,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILTER_DOWNLOAD_ABO = addStrProp("filter-download-abo");
     public static StringProperty FILTER_DOWNLOAD_STATE = addStrProp("filter-download-state");
 
-
     // ===============================================================
     // ====== GUI Filme ===============================================
     // ===============================================================
+    static {
+        addComment("GUI Filme");
+    }
 
     public static BooleanProperty FILM_GUI_SHOW_MENU = addBoolProp("film-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("film-gui-show-table-tool-tip", Boolean.TRUE);
@@ -353,10 +389,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty FILM__MEDIA_PANE_IS_RIP = addBoolProp("film--media-pane-is-rip", false);
     public static StringProperty FILM__MEDIA_DIALOG_SIZE = addStrProp("film--media-dialog-size", "400:600");
 
-
     // ===============================================================
     // ====== GUI Live-Filme =========================================
     // ===============================================================
+    static {
+        addComment("GUI Live");
+    }
 
     public static BooleanProperty LIVE_FILM_IS_VISIBLE = addBoolProp("live-film-is-visible", Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_GUI_SHOW_MENU = addBoolProp("live-film-gui-show-menu", Boolean.TRUE);
@@ -392,10 +430,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty LIVE_FILM__MEDIA_PANE_IS_RIP = addBoolProp("live-film--media-pane-is-rip");
     public static StringProperty LIVE_FILM__MEDIA_DIALOG_SIZE = addStrProp("live-film--media-dialog-size", "400:600");
 
-
     // ===============================================================
     // ====== GUI Downloads ==========================================
     // ===============================================================
+    static {
+        addComment("GUI Download");
+    }
 
     public static StringProperty DOWNLOAD_PATH = addStrProp("download-path" + TAGGER + "start-dialog-download-path", P2SystemUtils.getStandardDownloadPath());
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
@@ -458,10 +498,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty DOWNLOAD__LIST_PANE_IS_RIP = addBoolProp("download--list-pane-is-rip");
     public static StringProperty DOWNLOAD__LIST_DIALOG_SIZE = addStrProp("download--list-dialog-size", "400:600");
 
-
     // ===============================================================
     // ====== GUI Abos ===============================================
     // ===============================================================
+    static {
+        addComment("GUI Abo");
+    }
 
     public static BooleanProperty ABO_GUI_SHOW_MENU = addBoolProp("abo-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty ABO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("abo-gui-show-table-tool-tip", Boolean.TRUE);
@@ -492,10 +534,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty ABO__LIST_PANE_IS_RIP = addBoolProp("abo--list-pane-is-rip", Boolean.FALSE);
     public static StringProperty ABO__LIST_DIALOG_SIZE = addStrProp("abo--list-dialog--size", "400:600");
 
-
     // ===============================================================
     // ====== MEDIA ==================================================
     // ===============================================================
+    static {
+        addComment("Media");
+    }
 
     // MediaDB
     public static StringProperty MEDIA_DIALOG_SIZE = addStrProp("media-dialog-size", "800:700");
@@ -564,10 +608,12 @@ public class ProgConfig extends P2DataProgConfig {
 
     public static StringProperty GUI_MEDIA_CONFIG_DIALOG_SIZE = addStrProp("gui-media-config-dialog-size", "800:700");
 
-
     // ===============================================================
     // ====== Dialoge ================================================
     // ===============================================================
+    static {
+        addComment("Dialoge");
+    }
 
     // ConfigDialog
     public static StringProperty DOWNLOAD_SUBTITLE_DIALOG_SIZE = addStrProp("download-subtitle-dialog-size", "");
@@ -585,9 +631,11 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_WEBSITE_URL = addBoolProp("film-info-dialog-show-website-url", Boolean.FALSE);
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_DESCRIPTION = addBoolProp("film-info-dialog-show-description", Boolean.TRUE);
 
-
     // ===============================================================
-    // ====== Shorcuts ===============================================
+    // ====== Shortcuts ===============================================
+    static {
+        addComment("Shortcuts");
+    }
 
     // Shortcuts, Programmweit
     public static String SHORTCUT_CENTER_INIT = "Ctrl+W";
