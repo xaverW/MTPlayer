@@ -151,7 +151,6 @@ public class ProgConfig extends P2DataProgConfig {
     }
 
     public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
-    public static StringProperty SYSTEM_SIZE_DIALOG_FILMINFO = addStrProp("system-size-dialog-filminfo", "500:600");
     public static BooleanProperty SYSTEM_GUI_LAST_START_WAS_MAXIMISED = addBoolProp("system-gui-last-start-was-maximised", Boolean.FALSE); // Programm wurde Maximised beendet
     public static BooleanProperty SYSTEM_GUI_START_ALWAYS_MAXIMISED = addBoolProp("system-gui-start-always-maximised", Boolean.FALSE);
 
@@ -627,6 +626,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static DoubleProperty CONFIG_DIALOG_BLACKLIST_SPLITPANE = addDoubleProp("config-dialog-blacklist-splitpane", 0.7);
 
     // FilmInfoDialog
+    public static StringProperty FILM_INFO_DIALOG_SIZE = addStrProp("film-info-dialog-size", "500:600");
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_URL = addBoolProp("film-info-dialog-show-url", Boolean.FALSE);
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_WEBSITE_URL = addBoolProp("film-info-dialog-show-website-url", Boolean.FALSE);
     public static BooleanProperty FILM_INFO_DIALOG_SHOW_DESCRIPTION = addBoolProp("film-info-dialog-show-description", Boolean.TRUE);
