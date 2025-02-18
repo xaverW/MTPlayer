@@ -23,8 +23,12 @@ import de.p2tools.p2lib.P2LibInit;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiSize;
 import de.p2tools.p2lib.tools.P2Lock;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
+import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -32,6 +36,7 @@ public class MTPlayer extends Application {
 
     private Stage primaryStage;
     private ProgData progData;
+    private boolean done = false;
 
     public static void main(String[] args) {
         launch(args);
@@ -73,12 +78,36 @@ public class MTPlayer extends Application {
                     P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, false)); //Größe der scene != Größe stage!!!
             primaryStage.setScene(scene);
 
+            if (P2ToolsFactory.getOs() == P2ToolsFactory.OperatingSystemType.LINUX) {
+                // braucht's bei aktuellem GNOME
+                if (ProgData.firstProgramStart) {
+                    P2Log.sysLog("FirstProgramStart & LINUX: Resizable: false");
+                    primaryStage.setResizable(false);
+                    scene.setOnMouseEntered(mouseEvent -> {
+                        Platform.runLater(() -> {
+                            if (!done) {
+                                done = true;
+                                P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null);
+                                primaryStage.setResizable(true);
+                                P2Log.sysLog("FirstProgramStart & LINUX: Resizable: true");
+                            }
+                        });
+                    });
+                }
+            }
+
             if (!ProgData.startMinimized &&
                     (ProgConfig.SYSTEM_GUI_LAST_START_WAS_MAXIMISED.get() || ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED.get())) {
                 //========= MAXIMISED ===========
                 // dann wars maximiert oder soll immer so gestartet werden
                 P2GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
                 primaryStage.setMaximized(true);
+
+                if (P2ToolsFactory.getOs() == P2ToolsFactory.OperatingSystemType.LINUX) {
+                    primaryStage.setOnShown(e -> {
+                        startMaximised();
+                    });
+                }
 
             } else {
                 //========= !MAXIMISED ===========
@@ -106,6 +135,7 @@ public class MTPlayer extends Application {
             });
 
             primaryStage.show();
+
             if (ProgData.firstProgramStart) {
                 // dann gabs den Startdialog
                 ProgConfig.SYSTEM_DARK_THEME.set(ProgConfig.SYSTEM_DARK_THEME_START.get());
@@ -117,15 +147,33 @@ public class MTPlayer extends Application {
     }
 
     private void startMaximised() {
-//        if (P2ToolsFactory.getOs() == P2ToolsFactory.OperatingSystemType.LINUX) {
+        // KDE braucht da ein EXTRA!
+        new Thread(new Task<Void>() {
+            @Override
+            protected Void call() {
+                try {
+                    wait(1_000);
+                } catch (Exception ignore) {
+                }
+                Platform.runLater(() -> {
+                    if (ProgData.getInstance().primaryStage.isShowing()) {
+                        P2GuiSize.getSize(ProgConfig.SYSTEM_SIZE_GUI, ProgData.getInstance().primaryStage);
+                        P2GuiSize.setSizePos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage, null);
+                        // primaryStage.setMaximized(false); // geht in GNOME wieder nicht
+                    }
+                });
+                return null;
+            }
+        }).start();
+
+
 //            // a workaround of a bug of modal dialogs shown on top of the stage
 //            primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, windowEvent -> {
 //                primaryStage.setMaximized(true);
 //            });
-//        }
 
 
-//                if (PlatformUtil.isLinux()) { // a workaround of a bug of modal dialogs shown on top of the stage
+// a workaround of a bug of modal dialogs shown on top of the stage
 //                    primaryStage.setAlwaysOnTop(true);
 //                    primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<>() {
 //                        @Override
@@ -164,11 +212,9 @@ public class MTPlayer extends Application {
 //                            }
 //                        }
 //                    });
-//                }
 
 
 //                 // Das geht!! aber GNOME mag nicht!!!!!!
-//                if (PlatformUtil.isLinux()) {
 //                    // bug in Java
 //                    // https://bugs.openjdk.org/browse/JDK-8325549
 //                    // https://stackoverflow.com/questions/24519668/javafx-maximized-window-moves-if-dialog-shows-up
@@ -187,7 +233,6 @@ public class MTPlayer extends Application {
 //                            });
 //                        }
 //                    });
-//                }
 
     }
 }
