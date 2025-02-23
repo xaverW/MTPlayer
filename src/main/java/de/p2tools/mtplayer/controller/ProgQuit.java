@@ -20,8 +20,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
+import de.p2tools.p2lib.checkforactinfos.FoundHttpDownload;
 import de.p2tools.p2lib.guitools.P2GuiSize;
-import de.p2tools.p2lib.mtdownload.HttpDownload;
 import de.p2tools.p2lib.tools.P2ShutDown;
 import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.log.P2LogMessage;
@@ -60,7 +60,7 @@ public class ProgQuit {
 
         // erst mal prüfen, ob noch Downloads (Filme) gestartet sind oder laufen
         if (progData.downloadList.countStartedAndRunningDownloads() > 0 ||
-                HttpDownload.downloadRunning > 0) {
+                FoundHttpDownload.downloadRunning > 0) {
             new QuitDialogController(startWithWaiting);
 
         } else {

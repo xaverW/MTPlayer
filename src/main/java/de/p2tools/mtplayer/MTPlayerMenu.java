@@ -141,7 +141,7 @@ public class MTPlayerMenu extends MenuButton {
             });
             final MenuItem miSearchAllUpdate = new MenuItem("Alle Programm-Downloads anzeigen");
             miSearchAllUpdate.setOnAction(a -> new SearchProgramUpdate(progData)
-                    .searchNewProgramVersion(true, true));
+                    .searchNewProgramVersion());
 
             final MenuItem miResetTodayDone = new MenuItem("Datum \"heute schon gemacht\" zurücksetzen");
             miResetTodayDone.setOnAction(a -> {

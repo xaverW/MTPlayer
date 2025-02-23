@@ -110,7 +110,7 @@ public class AppParameter {
             }
 
             if (hasOption(line, ProgParameter.SHOW_UPDATE)) {
-                ProgData.showUpdate = true;
+                ProgData.showUpdateAppParameter = true;
             }
 
             if (hasOption(line, ProgParameter.FILMLIST_URL)) {

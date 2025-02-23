@@ -23,12 +23,12 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.checkforactinfos.FoundHttpDownload;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2BigButton;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
-import de.p2tools.p2lib.mtdownload.HttpDownload;
 import de.p2tools.p2lib.tools.P2ShutDown;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -183,7 +183,7 @@ public class QuitDialogController extends P2DialogExtra {
         @Override
         protected Void call() throws Exception {
             while ((ProgData.getInstance().downloadList.countStartedAndRunningDownloads() > 0 ||
-                    HttpDownload.downloadRunning > 0) &&
+                    FoundHttpDownload.downloadRunning > 0) &&
                     !isCancelled()) {
 
                 try {

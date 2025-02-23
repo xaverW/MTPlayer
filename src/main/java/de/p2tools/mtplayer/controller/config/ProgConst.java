@@ -79,7 +79,7 @@ public class ProgConst {
 
     // Website MTPlayer
     public static final String URL_WEBSITE = "https://www.p2tools.de/mtplayer/";
-    public static final String URL_WEBSITE_DOWNLOAD = "https://www.p2tools.de/mtplayer/download/";
+    public static final String URL_WEBSITE_DOWNLOAD_MTPLAYER = "https://www.p2tools.de/mtplayer/download/";
     public static final String URL_WEBSITE_DOWNLOAD_RASPI = "https://www.p2tools.de/mtplayer/raspberry/raspiDownload/";
     public static final String URL_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
 
