@@ -143,12 +143,18 @@ public class MTPlayerMenu extends MenuButton {
             miSearchAllUpdate.setOnAction(a -> new SearchProgramUpdate(progData)
                     .searchNewProgramVersion());
 
-            final MenuItem miResetTodayDone = new MenuItem("Datum \"heute schon gemacht\" zurücksetzen");
+            final MenuItem miResetTodayDone = new MenuItem("<SYSTEM_SEARCH_UPDATE_TODAY_DONE> zurücksetzen");
             miResetTodayDone.setOnAction(a -> {
                 ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.set("2020.01.01"); // heute noch nicht gemacht
             });
-            final MenuItem miResetLastSearch = new MenuItem("Datum \"letzte Suche\" zurücksetzen");
+            final MenuItem miResetLastSearch = new MenuItem("<SYSTEM_SEARCH_UPDATE_LAST_DATE> zurücksetzen");
             miResetLastSearch.setOnAction(a -> {
+                ProgConfig.SYSTEM_SEARCH_UPDATE_LAST_DATE.set("2020.01.01"); // letztes Datum, bis zu dem geprüft wurde, wenn leer wird das buildDate genommen
+            });
+            final MenuItem miResetUpdate = new MenuItem("<SYSTEM_SEARCH_UPDATE_TODAY_DONE und \n" +
+                    "SYSTEM_SEARCH_UPDATE_LAST_DATE> zurücksetzen");
+            miResetUpdate.setOnAction(a -> {
+                ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.set("2020.01.01"); // heute noch nicht gemacht
                 ProgConfig.SYSTEM_SEARCH_UPDATE_LAST_DATE.set("2020.01.01"); // letztes Datum, bis zu dem geprüft wurde, wenn leer wird das buildDate genommen
             });
 
@@ -156,7 +162,7 @@ public class MTPlayerMenu extends MenuButton {
             miSave.setOnAction(a -> ProgSave.saveAll());
 
             mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSearchAllUpdate,
-                    miResetTodayDone, miResetLastSearch, miSave);
+                    miResetTodayDone, miResetLastSearch, miResetUpdate, miSave);
         }
         return mHelp;
     }

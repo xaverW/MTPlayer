@@ -24,9 +24,11 @@ public class ProgConst {
 
     // <td><a href="/download/mtplayer/act/MTPlayer-17__2024.06.01.zip"> MTPlayer-17__2024.06.01.zip</a></td>
     // <td><a href="/download/mtplayer/daily/MTPlayer-17-15__2024.12.09.zip"> MTPlayer-17-15__2024.12.09.zip</a></td>
-    // <td><a href="/download/raspberry/daily/MTPlayerRaspi-17-16__2024.12.11.zip"> MTPlayerRaspi-17-16__2024.12.11.zip</a></td>
+    // ACT:  MTPlayer-17__2024.06.01.zip
+    // BETA: MTPlayer-17-15__2024.12.09.zip
+    // ACT:  MTPlayer-18__Raspberry__2025.02.18
+    // BETA: MTPlayer-18-2__Raspberry__2025.02.18
     public static final String FILE_NAME_MTPLAYER = "MTPlayer";
-    public static final String FILE_NAME_RASPBERRY = "MTPRaspi";
 
     public static final String USER_AGENT_DEFAULT = "";
     public static final int MAX_USER_AGENT_SIZE = 100;
@@ -80,7 +82,6 @@ public class ProgConst {
     // Website MTPlayer
     public static final String URL_WEBSITE = "https://www.p2tools.de/mtplayer/";
     public static final String URL_WEBSITE_DOWNLOAD_MTPLAYER = "https://www.p2tools.de/mtplayer/download/";
-    public static final String URL_WEBSITE_DOWNLOAD_RASPI = "https://www.p2tools.de/mtplayer/raspberry/raspiDownload/";
     public static final String URL_WEBSITE_HELP = "https://www.p2tools.de/mtplayer/manual/";
 
     // die URL der Sets, nicht mehr mit jeder Programmversion hochzählen, nur noch wenn notwendig

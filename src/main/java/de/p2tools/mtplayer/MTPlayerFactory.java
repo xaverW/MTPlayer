@@ -23,36 +23,10 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2WindowIcon;
-import de.p2tools.p2lib.tools.log.P2Log;
 
 public class MTPlayerFactory {
-    public static final String RASPBERRY_OS_NAME = "Linux";
-    public static final String RASPBERRY_OS_ARCH = "aarch64";
 
     private MTPlayerFactory() {
-    }
-
-    public static void setRaspberry() {
-        // os.name = Linux
-        // os.arch = aarch64
-        // os.version = 6.6.62+rpt-rpi-2712
-        // sun.arch.data.model = 64
-
-        String osName = System.getProperty("os.name");
-        String osArch = System.getProperty("os.arch");
-        String osVersion = System.getProperty("os.version");
-
-        P2Log.sysLog("===================================");
-        P2Log.sysLog("osName:    " + osName);
-        P2Log.sysLog("osArch:    " + osArch);
-        P2Log.sysLog("osVersion: " + osVersion);
-        if (osName.equals(RASPBERRY_OS_NAME) && osArch.equals(RASPBERRY_OS_ARCH)) {
-            ProgData.raspberry = true;
-            P2Log.sysLog(" -> läuft auf einem Raspberry");
-        } else {
-            P2Log.sysLog(" -> kein Raspberry");
-        }
-        P2Log.sysLog("===================================");
     }
 
     public static String getOwnIconPath() {

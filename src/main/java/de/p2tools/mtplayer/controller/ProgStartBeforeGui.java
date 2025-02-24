@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.gui.startdialog.StartDialogController;
 import de.p2tools.p2lib.P2LibInit;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
+import de.p2tools.p2lib.tools.P2ToolsRaspberry;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.log.P2Logger;
@@ -41,7 +42,7 @@ public class ProgStartBeforeGui {
     }
 
     public static void workBeforeGui() {
-        MTPlayerFactory.setRaspberry();
+        ProgData.raspberry = P2ToolsRaspberry.isRaspberry();
         boolean load = loadAll();
         initLib();
 

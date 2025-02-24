@@ -145,15 +145,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", P2ToolsFactory.getBuildNo());
     public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", P2ToolsFactory.getBuildDateR()); // 2024.08.12
 
-    // Fenstereinstellungen
-    static {
-        addComment("Fenstereinstellungen");
-    }
-
-    public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
-    public static BooleanProperty SYSTEM_GUI_LAST_START_WAS_MAXIMISED = addBoolProp("system-gui-last-start-was-maximised", Boolean.FALSE); // Programm wurde Maximised beendet
-    public static BooleanProperty SYSTEM_GUI_START_ALWAYS_MAXIMISED = addBoolProp("system-gui-start-always-maximised", Boolean.FALSE);
-
     // Configs zur ProgrammUpdateSuche
     static {
         addComment("ProgrammUpdateSuche");
@@ -164,6 +155,15 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_SEARCH_UPDATE = addBoolProp("system-search-update" + P2Data.TAGGER + "system-update-search-act", Boolean.TRUE); // nach einem Update suchen
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBoolProp("system-update-search-beta", Boolean.FALSE); //beta suchen
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_DAILY = addBoolProp("system-update-search-daily", Boolean.FALSE); //daily suchen
+
+    // Fenstereinstellungen
+    static {
+        addComment("Fenstereinstellungen");
+    }
+
+    public static StringProperty SYSTEM_SIZE_GUI = addStrProp("system-size-gui", "1100:800");
+    public static BooleanProperty SYSTEM_GUI_LAST_START_WAS_MAXIMISED = addBoolProp("system-gui-last-start-was-maximised", Boolean.FALSE); // Programm wurde Maximised beendet
+    public static BooleanProperty SYSTEM_GUI_START_ALWAYS_MAXIMISED = addBoolProp("system-gui-start-always-maximised", Boolean.FALSE);
 
     static {
         addEmptyLine();

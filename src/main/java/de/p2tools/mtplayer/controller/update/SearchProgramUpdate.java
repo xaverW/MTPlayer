@@ -44,22 +44,25 @@ public class SearchProgramUpdate {
      * @return
      */
 
-    public void searchNewProgramVersion(final boolean showAlways) {
-        searchNewProgramVersion(progData.primaryStage, showAlways, false);
+    public void searchNewProgramVersion(final boolean showDialogAlways) {
+        // Menü: true, Programmstart: false
+        searchNewProgramVersion(progData.primaryStage, showDialogAlways, false);
     }
 
-    public void searchNewProgramVersion(final boolean showAlways, boolean showAllDownloads) {
-        searchNewProgramVersion(progData.primaryStage, showAlways, showAllDownloads);
+    public void searchNewProgramVersion() {
+        // DEBUG: immer alles anzeigen
+        searchNewProgramVersion(progData.primaryStage, true, true);
     }
 
-    public void searchNewProgramVersion(Stage owner, final boolean showAlways, boolean showAllDownloads) {
+    public void searchNewProgramVersion(Stage owner, final boolean showDialogAlways, boolean showAllDownloads) {
         final String SEARCH_URL;
         final String SEARCH_URL_DOWNLOAD;
+
         SEARCH_URL = "https://www.p2tools.de";
         SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
-
 //        SEARCH_URL = "http://localhost:1313";
 //        SEARCH_URL_DOWNLOAD = "http://localhost:1313/download/";
+//        ProgData.raspberry = true;
 
         final FoundSearchDataDTO foundSearchDataDTO;
         foundSearchDataDTO = new FoundSearchDataDTO(
@@ -67,24 +70,29 @@ public class SearchProgramUpdate {
                 SEARCH_URL,
                 SEARCH_URL_DOWNLOAD,
 
-                ProgConfig.SYSTEM_SEARCH_UPDATE_LAST_DATE,
-                ProgConfig.SYSTEM_SEARCH_UPDATE,
+                ProgConfig.SYSTEM_SEARCH_UPDATE_LAST_DATE, // ab dem Datum werden Infos/Downloads angezeigt
+//                new SimpleStringProperty("2024.01.12"),
+
+                ProgConfig.SYSTEM_SEARCH_UPDATE, // Update soll gesucht werden
                 ProgConfig.SYSTEM_UPDATE_SEARCH_BETA,
                 ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY,
 
                 ProgConst.URL_WEBSITE,
-                ProgData.raspberry ? ProgConst.URL_WEBSITE_DOWNLOAD_RASPI : ProgConst.URL_WEBSITE_DOWNLOAD,
-                ProgData.raspberry ? ProgConst.FILE_NAME_RASPBERRY : ProgConst.FILE_NAME_MTPLAYER,
+                ProgConst.URL_WEBSITE_DOWNLOAD_MTPLAYER,
+                ProgConst.FILE_NAME_MTPLAYER,
+
 
                 P2ToolsFactory.getProgVersion(),
                 P2ToolsFactory.getBuildNo(),
                 P2ToolsFactory.getBuildDateR(),
-//                "2024.12.20",
-//                "2024.01.12",
+//                "2024.02.18",
+
+//                new String[]{"windows"}, // bsSearch zur Anzeige der Downloads
+                ProgData.raspberry ? new String[]{"raspberry"} : new String[]{},
 
                 ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
-                showAlways,
-                (ProgData.showUpdate || showAllDownloads));
+                showDialogAlways, // DEBUG: immer alles anzeigen
+                (ProgData.showUpdateAppParameter || showAllDownloads));
 
         new Thread(() -> {
             FoundAll.foundAll(foundSearchDataDTO);
