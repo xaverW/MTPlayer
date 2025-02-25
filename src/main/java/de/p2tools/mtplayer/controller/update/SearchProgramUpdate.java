@@ -40,10 +40,6 @@ public class SearchProgramUpdate {
         this.progData = progData;
     }
 
-    /**
-     * @return
-     */
-
     public void searchNewProgramVersion(final boolean showDialogAlways) {
         // Menü: true, Programmstart: false
         searchNewProgramVersion(progData.primaryStage, showDialogAlways, false);
@@ -62,7 +58,6 @@ public class SearchProgramUpdate {
         SEARCH_URL_DOWNLOAD = "https://www.p2tools.de/download/";
 //        SEARCH_URL = "http://localhost:1313";
 //        SEARCH_URL_DOWNLOAD = "http://localhost:1313/download/";
-//        ProgData.raspberry = true;
 
         final FoundSearchDataDTO foundSearchDataDTO;
         foundSearchDataDTO = new FoundSearchDataDTO(
@@ -87,8 +82,9 @@ public class SearchProgramUpdate {
                 P2ToolsFactory.getBuildDateR(),
 //                "2024.02.18",
 
-//                new String[]{"windows"}, // bsSearch zur Anzeige der Downloads
-                ProgData.raspberry ? new String[]{"raspberry"} : new String[]{},
+//                new String[]{"windows"},
+//                new String[]{"raspberry"},
+                new String[]{}, // bsSearch zur Anzeige der Downloads
 
                 ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
                 showDialogAlways, // DEBUG: immer alles anzeigen
