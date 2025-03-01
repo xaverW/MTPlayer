@@ -35,12 +35,15 @@ Für Linux-Benutzer wird OpenJDK empfohlen. (FX-Runtime bringt das Programm bere
 
 Das Programm wird in drei Paketen angeboten. Diese unterscheiden sich nur im "Zubehör", das Programm selbst ist in allen Paketen identisch:
 
-- **MTPlayer-XX.zip**  
-Das Programmpaket bringt nur das Programm und die benötigten "Hilfsprogramme" aber kein Java mit. Auf dem Rechner muss eine Java-Laufzeitumgebung ab Java17 installiert sein. Dieses Programmpaket kann auf allen Betriebssystemen verwendet werden. Es bringt Startdateien für Linux und Windows mit.
+- **MTPlayer-XX__DATUM.zip**  
+Das Programmpaket bringt nur das Programm und die benötigten Hilfsprogramme aber kein Java mit. Auf dem Rechner muss eine Java-Laufzeitumgebung ab Java17 installiert sein. Dieses Programmpaket kann auf allen Betriebssystemen verwendet werden. Es bringt Startdateien für Linux und Windows mit.
 
-- **MTPlayer-XX__Linux+Java.zip**  
-**MTPlayer-XX__Win+Java.zip**  
-Diese Programmpakete bringen die Java-Laufzeitumgebung mit und sind nur für das angegebene Betriebssystem: Linux oder Windows. Es muss kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung liegt im Ordner "Java" und kommt von jdk.java.net).
+- **MTPlayer-XX__Linux=mit=Java__DATUM.zip**  
+**MTPlayer-XX__Windows=mit=Java__DATUM.zip**  
+Diese Programmpakete bringen die Java-Laufzeitumgebung mit und sind nur für das angegebene Betriebssystem: Linux oder Windows. Es muss kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung liegt im Ordner “Java” und kommt von jdk.java.net).
+
+- **MTPlayer-XX__Raspberry__DATUM.zip**  
+Das ist ein Programmpaket, das auf einem Raspberry verwendet werden kann. Es muss ein aktueller Raspberry mit mit einer 64Bit CPU mit AArch64 Architektur sein.
 
 zum Download: [github.com/xaverW/MTPlayer/releases](https://github.com/xaverW/MTPlayer/releases)
 
