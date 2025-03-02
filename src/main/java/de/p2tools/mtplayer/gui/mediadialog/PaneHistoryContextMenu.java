@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.history.HistoryData;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.tools.P2SystemUtils;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
@@ -67,7 +67,7 @@ public class PaneHistoryContextMenu {
             for (HistoryData historyData : historyDataArrayList) {
                 str += str.isEmpty() ? historyData.getUrl() : P2LibConst.LINE_SEPARATOR + historyData.getUrl();
             }
-            P2SystemUtils.copyToClipboard(str);
+            P2ToolsFactory.copyToClipboard(str);
         });
 
         MenuItem miShowFilm = new MenuItem("Infos zum Film anzeigen");

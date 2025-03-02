@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.dialogs.WhatsNewDialog;
 import de.p2tools.p2lib.dialogs.WhatsNewInfo;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -39,8 +39,8 @@ public class WhatsNewFactory {
     public static void checkUpdate() {
         // nach dem Laden der Filmliste
         P2Log.sysLog("Programmstart, alte Programm-Release-Nr: " + ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe());
-        P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + P2ToolsFactory.getBuildNo());
-        if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(P2ToolsFactory.getBuildNo())) {
+        P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + P2InfoFactory.getBuildNo());
+        if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(P2InfoFactory.getBuildNo())) {
             // dann hat sich die BUILD_NO geändert, ist eine neue Version: Anzeigen was neu ist
             showWhatsNew(false);
 

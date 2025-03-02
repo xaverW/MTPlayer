@@ -35,7 +35,7 @@ import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
-import de.p2tools.p2lib.tools.P2SystemUtils;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -163,7 +163,7 @@ public class LiveFilmGuiController extends AnchorPane {
 
     public void copyFilmThemeTitle(boolean theme) {
         final Optional<FilmDataMTP> filmSelection = getSel(false, false);
-        filmSelection.ifPresent(mtp -> P2SystemUtils.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
+        filmSelection.ifPresent(mtp -> P2ToolsFactory.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 
     public void searchFilmInMediaCollection() {

@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.p2lib.P2LibInit;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiSize;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.P2Lock;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Application;
@@ -78,7 +78,7 @@ public class MTPlayer extends Application {
                     P2GuiSize.getSceneSize(ProgConfig.SYSTEM_SIZE_GUI, false)); //Größe der scene != Größe stage!!!
             primaryStage.setScene(scene);
 
-            if (P2ToolsFactory.getOs() == P2ToolsFactory.OperatingSystemType.LINUX) {
+            if (P2InfoFactory.getOs() == P2InfoFactory.OperatingSystemType.LINUX) {
                 // braucht's bei aktuellem GNOME
                 if (ProgData.firstProgramStart) {
                     P2Log.sysLog("FirstProgramStart & LINUX: Resizable: false");
@@ -103,7 +103,7 @@ public class MTPlayer extends Application {
                 P2GuiSize.setPos(ProgConfig.SYSTEM_SIZE_GUI, primaryStage);
                 primaryStage.setMaximized(true);
 
-                if (P2ToolsFactory.getOs() == P2ToolsFactory.OperatingSystemType.LINUX) {
+                if (P2InfoFactory.getOs() == P2InfoFactory.OperatingSystemType.LINUX) {
                     primaryStage.setOnShown(e -> {
                         startMaximised();
                     });

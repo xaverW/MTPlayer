@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.checkforactinfos.FoundAll;
 import de.p2tools.p2lib.checkforactinfos.FoundSearchDataDTO;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -77,9 +77,9 @@ public class SearchProgramUpdate {
                 ProgConst.FILE_NAME_MTPLAYER,
 
 
-                P2ToolsFactory.getProgVersion(),
-                P2ToolsFactory.getBuildNo(),
-                P2ToolsFactory.getBuildDateR(),
+                P2InfoFactory.getProgVersion(),
+                P2InfoFactory.getBuildNo(),
+                P2InfoFactory.getBuildDateR(),
 //                "2024.02.18",
 
 //                new String[]{"windows"},

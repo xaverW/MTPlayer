@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.SizeTools;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
-import de.p2tools.p2lib.tools.P2SystemUtils;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import javafx.scene.control.Label;
@@ -217,7 +217,7 @@ public class DownloadFactory {
 
     public static String getDownloadPath() {
         return ProgConfig.DOWNLOAD_PATH.get().isEmpty() ?
-                P2SystemUtils.getStandardDownloadPath() : ProgConfig.DOWNLOAD_PATH.get();
+                P2ToolsFactory.getStandardDownloadPath() : ProgConfig.DOWNLOAD_PATH.get();
     }
 
     public static void setDownloadSize(DownloadData download) {

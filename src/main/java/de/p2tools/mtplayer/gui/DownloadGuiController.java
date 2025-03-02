@@ -44,7 +44,7 @@ import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
-import de.p2tools.p2lib.tools.P2SystemUtils;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -240,7 +240,7 @@ public class DownloadGuiController extends AnchorPane {
 
     public void copyFilmThemeTitle(boolean theme) {
         final Optional<DownloadData> downloadData = getSel(true);
-        downloadData.ifPresent(data -> P2SystemUtils.copyToClipboard(theme ? data.getTheme() : data.getTitle()));
+        downloadData.ifPresent(data -> P2ToolsFactory.copyToClipboard(theme ? data.getTheme() : data.getTitle()));
     }
 
     public void copyUrl() {
@@ -248,7 +248,7 @@ public class DownloadGuiController extends AnchorPane {
         if (download.isEmpty()) {
             return;
         }
-        P2SystemUtils.copyToClipboard(download.get().getUrl());
+        P2ToolsFactory.copyToClipboard(download.get().getUrl());
     }
 
     private void setFilmInfos(DownloadData download) {

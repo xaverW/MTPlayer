@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.stage.Stage;
 
@@ -38,7 +38,7 @@ public class SetImportFactory extends LinkedList<String[]> {
         SetDataList setDataList = new SetDataList();
         try {
             //liefert das standard Programmset für das entsprechende BS
-            switch (P2ToolsFactory.getOs()) {
+            switch (P2InfoFactory.getOs()) {
                 case LINUX:
                     loadSetDataUrl(setDataList, ProgConst.PROGRAM_SET_URL_LINUX);
                     break;
@@ -52,7 +52,7 @@ public class SetImportFactory extends LinkedList<String[]> {
             if (setDataList.isEmpty()) {
                 P2Log.sysLog("Sets laden hat nicht geklappt, dann aus dem jar");
                 //dann nehmen wir halt die im jar-File
-                switch (P2ToolsFactory.getOs()) {
+                switch (P2InfoFactory.getOs()) {
                     case LINUX:
                         loadSetDataLocalFile(setDataList, ProgConst.PSET_FILE_LINUX);
                         break;

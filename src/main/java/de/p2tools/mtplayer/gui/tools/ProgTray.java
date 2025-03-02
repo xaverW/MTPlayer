@@ -30,7 +30,7 @@ import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.application.Platform;
@@ -191,13 +191,13 @@ public class ProgTray {
         popupMenu.add(miMaxMin);
         popupMenu.add(miConfig);
         popupMenu.add(miLogfile);
-        if (!P2ToolsFactory.getOs().equals(P2ToolsFactory.OperatingSystemType.MAC)) {
+        if (!P2InfoFactory.getOs().equals(P2InfoFactory.OperatingSystemType.MAC)) {
             // machen unter MAC Probleme
             popupMenu.add(miTray);
         }
         popupMenu.addSeparator();
         popupMenu.add(miAbout);
-        if (!P2ToolsFactory.getOs().equals(P2ToolsFactory.OperatingSystemType.MAC)) {
+        if (!P2InfoFactory.getOs().equals(P2InfoFactory.OperatingSystemType.MAC)) {
             // machen unter MAC Probleme
             popupMenu.addSeparator();
             popupMenu.add(miQuit);

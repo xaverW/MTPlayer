@@ -30,8 +30,8 @@ import de.p2tools.p2lib.configfile.pdata.P2Data;
 import de.p2tools.p2lib.configfile.pdata.P2DataProgConfig;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.P2ShutDown;
-import de.p2tools.p2lib.tools.P2SystemUtils;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import javafx.beans.property.*;
@@ -56,9 +56,9 @@ public class ProgConfig extends P2DataProgConfig {
         ProgData progData = ProgData.getInstance();
 
         // Configs der Programmversion, nur damit sie (zur Update-Suche) im Config-File stehen
-        SYSTEM_PROG_VERSION.set(P2ToolsFactory.getProgVersion());
-        SYSTEM_PROG_BUILD_NO.set(P2ToolsFactory.getBuildNo());
-        SYSTEM_PROG_BUILD_DATE.set(P2ToolsFactory.getBuildDateR());
+        SYSTEM_PROG_VERSION.set(P2InfoFactory.getProgVersion());
+        SYSTEM_PROG_BUILD_NO.set(P2InfoFactory.getBuildNo());
+        SYSTEM_PROG_BUILD_DATE.set(P2InfoFactory.getBuildDateR());
 
         configFile.addConfigs(ProgConfig.getInstance()); // ProgConfig
         configFile.addConfigs(ProgColorList.getInstance()); // Color
@@ -141,9 +141,9 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("Prog-Version");
     }
 
-    public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", P2ToolsFactory.getProgVersion());
-    public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", P2ToolsFactory.getBuildNo());
-    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", P2ToolsFactory.getBuildDateR()); // 2024.08.12
+    public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", P2InfoFactory.getProgVersion());
+    public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", P2InfoFactory.getBuildNo());
+    public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", P2InfoFactory.getBuildDateR()); // 2024.08.12
 
     // Configs zur ProgrammUpdateSuche
     static {
@@ -436,7 +436,7 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("GUI Download");
     }
 
-    public static StringProperty DOWNLOAD_PATH = addStrProp("download-path" + TAGGER + "start-dialog-download-path", P2SystemUtils.getStandardDownloadPath());
+    public static StringProperty DOWNLOAD_PATH = addStrProp("download-path" + TAGGER + "start-dialog-download-path", P2ToolsFactory.getStandardDownloadPath());
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);
     public static List<String> DOWNLOAD_DIALOG_DOWNLOAD_PATH = addListProp("download-dialog-download-path"); // gesammelten Downloadpfade im Downloaddialog

@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.CheckSetDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -42,7 +42,7 @@ public class SetFactory {
         final String PATH_WIN = "\\VideoLAN\\VLC\\vlc.exe";
         String path = "";
         try {
-            switch (P2ToolsFactory.getOs()) {
+            switch (P2InfoFactory.getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
                         path = PATH_FREEBSD;
@@ -82,7 +82,7 @@ public class SetFactory {
         final String PATH_WINDOWS_FFMPEG = "bin\\ffmpeg.exe";
         String path = "";
         try {
-            switch (P2ToolsFactory.getOs()) {
+            switch (P2InfoFactory.getOs()) {
                 case LINUX:
                     if (System.getProperty("os.name").toLowerCase().contains("freebsd")) {
                         path = PATH_FREEBSD_FFMPEG;
