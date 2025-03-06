@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
 import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -92,7 +92,7 @@ public class DownloadFactoryMakeParameter {
         // ###########################################################
         // zur Sicherheit bei Unsinn im Set
         if (path.isEmpty()) {
-            path = P2ToolsFactory.getStandardDownloadPath();
+            path = P2InfoFactory.getStandardDownloadPath();
         }
         if (name.isEmpty()) {
             name = getToday_yyyyMMdd() + "_" + download.getTheme() + "-" + download.getTitle() + ".mp4";
@@ -207,7 +207,7 @@ public class DownloadFactoryMakeParameter {
             } else {
                 // Pfad aus dem Set
                 if (setData.getDestPath().isEmpty()) {
-                    path = P2ToolsFactory.getStandardDownloadPath();
+                    path = P2InfoFactory.getStandardDownloadPath();
                 } else {
                     path = setData.getDestPath();
                 }

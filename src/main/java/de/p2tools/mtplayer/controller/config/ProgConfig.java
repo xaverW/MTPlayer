@@ -32,7 +32,6 @@ import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.P2ShutDown;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import javafx.beans.property.*;
 import org.apache.commons.lang3.SystemUtils;
@@ -436,7 +435,7 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("GUI Download");
     }
 
-    public static StringProperty DOWNLOAD_PATH = addStrProp("download-path" + TAGGER + "start-dialog-download-path", P2ToolsFactory.getStandardDownloadPath());
+    public static StringProperty DOWNLOAD_PATH = addStrProp("download-path" + TAGGER + "start-dialog-download-path", P2InfoFactory.getStandardDownloadPath());
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);
     public static List<String> DOWNLOAD_DIALOG_DOWNLOAD_PATH = addListProp("download-dialog-download-path"); // gesammelten Downloadpfade im Downloaddialog
