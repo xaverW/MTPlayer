@@ -3,12 +3,10 @@ package de.p2tools.mtplayer.controller.livesearch;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearchzdf.ZdfFilmDetailDeserializer;
+import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.log.P2Log;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,26 +21,31 @@ public class LiveSearchZdf {
     public void loadLive(JsonInfoDto jsonInfoDto, boolean next) {
         LiveFactory.setProgressWait(LiveFactory.CHANNEL.ZDF);
 
-        if (!next) {
+        if (next) {
+            jsonInfoDto.getList().clear();
+        } else {
             jsonInfoDto.init();
             jsonInfoDto.setSearchString(ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.getValue());
-        } else {
-            jsonInfoDto.getList().clear();
-        }
 
-        try {
-            if (!next) {
+            try {
                 final Optional<Document> document = LiveFactory.loadPage(URL_BASE);
                 if (document.isPresent()) {
                     final Optional<String> searchBearer = ZdfBearerFactory.parseIndexPage(document.get());
                     searchBearer.ifPresent(jsonInfoDto::setApi);
-                    loadUrls(jsonInfoDto, false);
+                } else {
+                    P2Alert.showErrorAlert("Filme suchen", "Es konnten keine Filme " +
+                            "gefunden werden.");
+                    return;
                 }
-            } else {
-                loadUrls(jsonInfoDto, true);
+            } catch (final Exception ex) {
+                P2Log.errorLog(874587458, ex, "Url: " + URL_BASE);
             }
-        } catch (final Exception ex) {
-            P2Log.errorLog(898945124, ex, "Url: " + URL_BASE);
+        }
+
+        List<String> list = ZdfSearchFactory.getFilmList(jsonInfoDto, next);
+        for (String url : list) {
+            url = addApiUrlBase("content/documents/" + url + ".json");
+            new ZdfFilmDetailDeserializer(jsonInfoDto).deserialize(url);
         }
 
         LiveFactory.addToList(jsonInfoDto);
@@ -75,96 +78,17 @@ public class LiveSearchZdf {
         P2Log.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
 
-    private void loadUrls(JsonInfoDto jsonInfoDto, boolean next) {
-        int max;
-        List<String> urls = getFilms(jsonInfoDto, next);
-        int count = 0;
-        max = urls.size();
-        P2Log.sysLog("Filme suchen: " + max);
-        if (!urls.isEmpty()) {
-            LiveFactory.setProgress(LiveFactory.CHANNEL.ZDF, count, max);
-            for (String url : urls) {
-                workFilm(jsonInfoDto, url);
-                LiveFactory.setProgress(LiveFactory.CHANNEL.ZDF, ++count, max);
-            }
-        }
-    }
-
-    private List<String> getFilms(JsonInfoDto jsonInfoDto, boolean next) {
-        final String searchUrl;
-        if (next) {
-            searchUrl = jsonInfoDto.getNextUrl();
-        } else {
-            searchUrl = "https://www.zdf.de/suche?q=" + jsonInfoDto.getSearchString() +
-                    "&abName=ab-2024-03-25&abGroup=gruppe-b";
-        }
-
-        List<String> urlList = new ArrayList<>();
-        if (searchUrl.isEmpty()) {
-            return urlList;
-        }
-
-        final Optional<Document> document = LiveFactory.loadPage(searchUrl);
-        if (document.isPresent()) {
-            final Elements elements = document.get().select("div.box, div.m-tags");
-            for (final Element element : elements) {
-                Elements urlElement = element.select("a");
-                String url = addUrlBase(urlElement.attr(ATTRIBUTE_HREF));
-                urlList.add(url);
-            }
-            isMore(jsonInfoDto, document.get());
-        }
-
-        return urlList;
-    }
-
-    private void isMore(JsonInfoDto jsonInfoDto, Document document) {
-        final Element element = document.selectFirst("div.load-more-container");
-        if (element != null) {
-            Elements urlElement = element.select("a");
-            jsonInfoDto.setNextUrl(addUrlBase(urlElement.attr(ATTRIBUTE_HREF)));
-
-        } else {
-            jsonInfoDto.setNextUrl("");
-        }
-    }
-
     private void workFilm(JsonInfoDto jsonInfoDto, String url) {
         // jetzt jeden Film abarbeiten
-        final Optional<Document> document = LiveFactory.loadPage(url);
-        if (document.isEmpty()) {
-            P2Log.debugLog("document.isEmpty(): error");
-            return;
-        }
+        // https://www.zdf.de/play/magazine/volle-kanne-104  /volle-kanne-vom-14-maerz-2025-mit-michael-nast-100
+        // https://api.zdf.de/content/documents              /volle-kanne-vom-14-maerz-2025-mit-michael-nast-100.json
 
-        final Elements elements = document.get().select("div.b-playerbox.b-ratiobox.js-rb-live");
-        if (elements.isEmpty()) {
-            P2Log.debugLog("elements.isEmpty(): error");
-            return;
+        if (url.contains("?")) {
+            url = url.substring(0, url.indexOf("?"));
         }
-
-        Element element = elements.first();
-        if (element == null) {
-            P2Log.debugLog("elements.first()==null: error");
-            return;
-        }
-
-        String urlElement = element.attr("data-zdfplayer-id");
-        if (urlElement.isEmpty()) {
-            P2Log.debugLog("urlElement.isEmpty(): error");
-            return;
-        }
-
-        String filmUrl = addApiUrlBase("content/documents/" + urlElement + ".json");
-        new ZdfFilmDetailDeserializer().deserialize(jsonInfoDto, filmUrl);
-    }
-
-    private String addUrlBase(String url) {
-        if (!url.startsWith("/")) {
-            return URL_BASE + "/" + url;
-        } else {
-            return URL_BASE + url;
-        }
+        url = url.substring(url.lastIndexOf("/") + 1);
+        url = addApiUrlBase("content/documents/" + url + ".json");
+        new ZdfFilmDetailDeserializer(jsonInfoDto).deserialize(url);
     }
 
     private String addApiUrlBase(String url) {

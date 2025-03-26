@@ -63,7 +63,7 @@ public class StartPaneStation {
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
-        Label lbl = new Label("Hier können Sender die nicht interessieren, beim Laden " +
+        Label lbl = new Label("Hier können Sender die *nicht* interessieren, beim Laden " +
                 "der Filmliste, ausgenommen werden.");
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);

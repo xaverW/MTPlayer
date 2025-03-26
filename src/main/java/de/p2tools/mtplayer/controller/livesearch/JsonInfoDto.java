@@ -28,6 +28,7 @@ public class JsonInfoDto {
     private String searchString;
     private String startUrl = "";
     private final StringProperty nextUrl = new SimpleStringProperty("");
+    private final StringProperty zdfNextCursor = new SimpleStringProperty("");
 
     private String ardFilmId = "";
     private final LongProperty sizeOverAll = new SimpleLongProperty(0);
@@ -44,6 +45,7 @@ public class JsonInfoDto {
         api = "";
 
         startUrl = "";
+        zdfNextCursor.set("");
         nextUrl.set("");
         ardFilmId = "";
         sizeOverAll.set(0);
@@ -77,6 +79,18 @@ public class JsonInfoDto {
 
     public void setNextUrl(String nextUrl) {
         this.nextUrl.set(nextUrl);
+    }
+
+    public String getZdfNextCursor() {
+        return zdfNextCursor.get();
+    }
+
+    public void setZdfNextCursor(String set) {
+        zdfNextCursor.set(set);
+    }
+
+    public StringProperty zdfNextCursorProperty() {
+        return zdfNextCursor;
     }
 
     public String getArdFilmId() {

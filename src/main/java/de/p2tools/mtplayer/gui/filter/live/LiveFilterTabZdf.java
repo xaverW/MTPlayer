@@ -27,6 +27,8 @@ public class LiveFilterTabZdf extends Tab {
         super("ZDF");
         this.progData = ProgData.getInstance();
         setClosable(false);
+
+        ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.addListener((u, o, n) -> jsonInfoDto.init()); // damit "weiter" nicht mehr geht
         addTabZdf();
         addProgress();
     }
@@ -59,7 +61,7 @@ public class LiveFilterTabZdf extends Tab {
         btnKeepOnZdf.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
         btnKeepOnZdf.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnZdf.setOnAction(a -> searchZdf(true));
-        btnKeepOnZdf.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
+        btnKeepOnZdf.disableProperty().bind((jsonInfoDto.zdfNextCursorProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         VBox vBox = new VBox();

@@ -28,6 +28,8 @@ public class LiveFilterTabArd extends Tab {
         super("ARD");
         this.progData = ProgData.getInstance();
         setClosable(false);
+
+        ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.addListener((u, o, n) -> jsonInfoDto.init()); // damit "weiter" nicht mehr geht
         addTabArd();
         addProgress();
     }

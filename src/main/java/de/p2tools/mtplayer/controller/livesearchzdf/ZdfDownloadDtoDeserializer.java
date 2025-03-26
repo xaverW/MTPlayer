@@ -125,8 +125,9 @@ public class ZdfDownloadDtoDeserializer {
                 Iterator<JsonNode> qualityList = jn.elements();
                 while (qualityList.hasNext()) {
                     JsonNode quality = qualityList.next();
-
+                    // todo
                     final LiveConst.Qualities qualityValue = parseVideoQuality(quality);
+//                    final LiveConst.Qualities qualityValue = LiveConst.Qualities.NORMAL;
                     JsonNode jnQ = quality.get(JSON_ELEMENT_HIGHEST_VERTIVAL_RESOLUTION);
                     int verticalResolution = 0;
                     if (jnQ != null) {
@@ -152,6 +153,14 @@ public class ZdfDownloadDtoDeserializer {
                                 final AbstractMap.SimpleEntry<String, String> languageUri = extractTrack(track);
                                 downloads.add(new DownloadInfo(languageUri.getKey(), languageUri.getValue(),
                                         verticalResolution, qualityValue, fileSize));
+                                if (downloads.size() == 1) {
+                                    // dann ists der erste
+                                    if (!qualityValue.equals(LiveConst.Qualities.NORMAL)) {
+                                        // dann vorsichtshalber
+                                        downloads.add(new DownloadInfo(languageUri.getKey(), languageUri.getValue(),
+                                                verticalResolution, LiveConst.Qualities.NORMAL, fileSize));
+                                    }
+                                }
                             }
                         }
                     }

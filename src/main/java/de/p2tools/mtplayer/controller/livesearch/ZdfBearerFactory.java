@@ -10,8 +10,9 @@ public class ZdfBearerFactory {
     private ZdfBearerFactory() {
     }
 
-    private static final String JSON_API_TOKEN = "apiToken";
-    private static final String QUERY_SEARCH_BEARER = "head > script";
+    // ,\"appToken\":{\"apiToken\":\"aa3noh4ohz9eeboo8shiesheec9ciequ9Quah7el\"
+    private static final String QUERY_SEARCH_BEARER = "body > script";
+    private static final String JSON_API_TOKEN = "\\\"appToken\\\":{\\\"apiToken\\\":\\\"";
 
     public static Optional<String> parseIndexPage(final Document document) {
         final Elements scriptElements = document.select(QUERY_SEARCH_BEARER);
@@ -32,8 +33,8 @@ public class ZdfBearerFactory {
         final int indexToken = json.indexOf(JSON_API_TOKEN);
 
         if (indexToken > 0) {
-            final int indexStart = json.indexOf("'", indexToken + JSON_API_TOKEN.length() + 1) + 1;
-            final int indexEnd = json.indexOf("'", indexStart);
+            final int indexStart = indexToken + JSON_API_TOKEN.length();
+            final int indexEnd = json.indexOf("\\\"", indexStart);
 
             if (indexStart > 0) {
                 bearer = json.substring(indexStart, indexEnd);
