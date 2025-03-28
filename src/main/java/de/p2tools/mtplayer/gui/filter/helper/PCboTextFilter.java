@@ -1,11 +1,12 @@
 package de.p2tools.mtplayer.gui.filter.helper;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.TextFilter;
 import de.p2tools.mtplayer.controller.filmfilter.TextFilterList;
+import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -28,14 +29,20 @@ public class PCboTextFilter extends HBox {
         getChildren().add(cbo);
         HBox.setHgrow(cbo, Priority.ALWAYS);
 
-        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, PCboTextFilter.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, PCboTextFilter.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                // dann sel löschen und evtl. neuen Filter hinzufügen
+//                addNewToList(ProgData.getInstance().filterWorker.getActFilterSettings());
+//            }
+//        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_CHANGED) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 // dann sel löschen und evtl. neuen Filter hinzufügen
                 addNewToList(ProgData.getInstance().filterWorker.getActFilterSettings());
             }
         });
-
         cbo.valueProperty().addListener((u, o, n) -> {
             if (n != null) {
                 FilmFilter actFilmFilter = ProgData.getInstance().filterWorker.getActFilterSettings().getCopy();

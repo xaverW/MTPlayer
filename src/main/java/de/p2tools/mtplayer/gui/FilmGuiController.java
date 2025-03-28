@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
@@ -37,6 +37,7 @@ import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
+import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -260,16 +261,29 @@ public class FilmGuiController extends AnchorPane {
                 ProgConfig.FILM__INFO_IS_SHOWING.set(true);
             }
         });
-        PListener.addListener(new PListener(new int[]{PListener.EVENT_HISTORY_CHANGED},
-                FilmGuiController.class.getSimpleName()) {
+//        PListener.addListener(new PListener(new int[]{PListener.EVENT_HISTORY_CHANGED},
+//                FilmGuiController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                P2TableFactory.refreshTable(tableView);
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_HISTORY_CHANGED) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 P2TableFactory.refreshTable(tableView);
             }
         });
-        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, this.getClass().getSimpleName()) {
+
+//        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, this.getClass().getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                P2TableFactory.refreshTable(tableView);
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_BLACKLIST_CHANGED) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 P2TableFactory.refreshTable(tableView);
             }
         });

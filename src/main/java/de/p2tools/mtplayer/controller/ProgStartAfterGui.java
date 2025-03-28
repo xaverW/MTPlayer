@@ -43,7 +43,7 @@ public class ProgStartAfterGui {
         if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
             new FilmFilterDialog(ProgData.getInstance()).showDialog();
         }
-        ProgData.getInstance().startTimer();
+        ProgData.getInstance().pEventHandler.startTimer();
 
         //die gespeicherte Filmliste laden, vorher den FilmFilter einschalten
         ProgData.getInstance().filterWorker.getActFilterSettings().switchFilterOff(false);

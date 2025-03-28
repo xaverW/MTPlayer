@@ -111,7 +111,8 @@ public class SearchFast extends HBox {
             } else {
                 ProgConfig.FAST_SEARCH_WHERE.setValue(1 + ProgConfig.FAST_SEARCH_WHERE.getValue());
             }
-            PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
+//            PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
         });
         btnClear.setOnAction(a -> progData.filterWorker.getFastFilterSettings().clearFilter());
     }
@@ -127,7 +128,8 @@ public class SearchFast extends HBox {
             getStyleClass().add("fast-search-off");
         }
         if (andSearch) {
-            PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
+//            PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
         }
     }
 

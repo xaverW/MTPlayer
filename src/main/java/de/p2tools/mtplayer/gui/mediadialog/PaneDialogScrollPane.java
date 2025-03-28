@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui.mediadialog;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
@@ -28,6 +28,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
+import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
@@ -63,8 +64,8 @@ public class PaneDialogScrollPane extends ScrollPane {
     TextField txtTitleMedia = new TextField();
     TextField txtPathMedia = new TextField();
 
-    private final PListener listenerDbStart;
-    private final PListener listenerDbStop;
+    private final P2Listener listenerDbStart;
+    private final P2Listener listenerDbStop;
 
     private final boolean mediaDataExist;
     private final ProgData progData = ProgData.getInstance();
@@ -81,16 +82,31 @@ public class PaneDialogScrollPane extends ScrollPane {
         this.mediaDataDto = mediaDataDto;
         this.mediaDataExist = !mediaDataDto.searchTheme.isEmpty() || !mediaDataDto.searchTitle.isEmpty();
 
-        listenerDbStart = new PListener(PListener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
+//        listenerDbStart = new PListener(PListener.EVENT_MEDIA_DB_START, MediaDialogController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                // neue DB suchen
+//                txtSearch.setDisable(true);
+//            }
+//        };
+        listenerDbStart = new P2Listener(PEvents.EVENT_MEDIA_DB_START) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 // neue DB suchen
                 txtSearch.setDisable(true);
             }
         };
-        listenerDbStop = new PListener(PListener.EVENT_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
+//        listenerDbStop = new PListener(PListener.EVENT_MEDIA_DB_STOP, MediaDialogController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                // neue DB liegt vor
+//                txtSearch.setDisable(false);
+//                filter();
+//            }
+//        };
+        listenerDbStop = new P2Listener(PEvents.EVENT_MEDIA_DB_STOP) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 // neue DB liegt vor
                 txtSearch.setDisable(false);
                 filter();
@@ -116,8 +132,10 @@ public class PaneDialogScrollPane extends ScrollPane {
     }
 
     public void close() {
-        PListener.removeListener(listenerDbStart);
-        PListener.removeListener(listenerDbStop);
+//        PListener.removeListener(listenerDbStart);
+        progData.pEventHandler.removeListener(listenerDbStart);
+//        PListener.removeListener(listenerDbStop);
+        progData.pEventHandler.removeListener(listenerDbStop);
     }
 
     private void initPanel() {
@@ -247,8 +265,10 @@ public class PaneDialogScrollPane extends ScrollPane {
             }
         });
 
-        PListener.addListener(listenerDbStart);
-        PListener.addListener(listenerDbStop);
+//        PListener.addListener(listenerDbStart);
+        progData.pEventHandler.addListener(listenerDbStart);
+//        PListener.addListener(listenerDbStop);
+        progData.pEventHandler.addListener(listenerDbStop);
     }
 
     void filter(String searStr) {

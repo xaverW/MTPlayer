@@ -16,12 +16,14 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
 import de.p2tools.p2lib.mtfilter.Filter;
+import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
@@ -32,9 +34,15 @@ public final class LiveFilmFilterWorker {
     private final LiveFilter actFilterSettings = new LiveFilter();
     private final FilmListMTP liveFilmList; // Filmliste der Live-Filme
 
-    public LiveFilmFilterWorker() {
+    public LiveFilmFilterWorker(ProgData progData) {
         this.liveFilmList = new FilmListMTP();
-        PListener.addListener(new PListener(PListener.EVENT_LIVE_FILTER_CHANGED, LiveFilmFilterWorker.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_LIVE_FILTER_CHANGED, LiveFilmFilterWorker.class.getSimpleName()) {
+//            @Override
+//            public void ping() {
+//                filterList();
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_LIVE_FILTER_CHANGED) {
             @Override
             public void ping() {
                 filterList();

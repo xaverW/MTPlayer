@@ -16,11 +16,12 @@
 
 package de.p2tools.mtplayer.controller.worker;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
@@ -38,9 +39,19 @@ public class Worker {
     public Worker(ProgData progData) {
         this.progData = progData;
         getAboNames();
-        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, Worker.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, Worker.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                if (ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()
+//                        && ProgConfig.ABO_SEARCH_NOW.getValue()) {
+//                    // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
+//                    AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
+//                }
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_BLACKLIST_CHANGED) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 if (ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()
                         && ProgConfig.ABO_SEARCH_NOW.getValue()) {
                     // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet

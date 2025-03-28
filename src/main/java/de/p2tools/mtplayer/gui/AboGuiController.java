@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
@@ -37,6 +37,7 @@ import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
@@ -169,9 +170,15 @@ public class AboGuiController extends AnchorPane {
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             tableView.refresh();
         });
-        PListener.addListener(new PListener(PListener.EVENT_SET_DATA_CHANGED, AboGuiController.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_SET_DATA_CHANGED, AboGuiController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                tableView.refresh();
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_SET_DATA_CHANGED) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 tableView.refresh();
             }
         });

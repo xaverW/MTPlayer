@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.history;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
@@ -124,7 +124,8 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                     film.setActHist(false);
                 });
             }
-            PListener.notify(PListener.EVENT_HISTORY_CHANGED, HistoryList.class.getSimpleName());
+//            PListener.notify(PListener.EVENT_HISTORY_CHANGED, HistoryList.class.getSimpleName());
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED);
         }
     }
 

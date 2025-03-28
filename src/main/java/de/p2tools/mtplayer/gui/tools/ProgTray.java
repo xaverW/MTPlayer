@@ -18,18 +18,18 @@
 package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
-import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.gui.StatusBarController;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
+import de.p2tools.p2lib.p2event.P2Events;
+import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.log.P2Logger;
@@ -61,9 +61,24 @@ public class ProgTray {
         ProgConfig.SYSTEM_TRAY_ICON_PATH.addListener((observableValue, aBoolean, t1) -> {
             Platform.runLater(() -> setTray());
         });
-        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, StatusBarController.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, StatusBarController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                try {
+//                    if (!stopTimer) {
+//                        String toolTip = DownloadInfosFactory.getTrayInfo(); //da gibts eine max Größe vom Text!!
+//                        if (systemTray != null) {
+//                            Arrays.stream(systemTray.getTrayIcons()).sequential().forEach(e -> e.setToolTip(toolTip));
+//                        }
+//                    }
+//                } catch (final Exception ex) {
+//                    P2Log.errorLog(936251087, ex);
+//                }
+//            }
+//        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 try {
                     if (!stopTimer) {
                         String toolTip = DownloadInfosFactory.getTrayInfo(); //da gibts eine max Größe vom Text!!

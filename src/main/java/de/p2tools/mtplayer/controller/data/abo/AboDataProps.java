@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.abo;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
@@ -407,7 +407,8 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
 
     public void setCountedHits() {
         this.setHit(countHit);
-        PListener.notify(PListener.EVENT_ABO_HIT_CHANGED, AboDataProps.class.getSimpleName());
+//        PListener.notify(PListener.EVENT_ABO_HIT_CHANGED, AboDataProps.class.getSimpleName());
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_ABO_HIT_CHANGED);
     }
 
     public String getButtonDummy() {

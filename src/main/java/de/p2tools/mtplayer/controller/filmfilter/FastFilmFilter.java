@@ -16,8 +16,9 @@
 
 package de.p2tools.mtplayer.controller.filmfilter;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
@@ -43,11 +44,15 @@ public final class FastFilmFilter extends FastFilmFilterProps implements Filter 
         // sind die ComboBoxen wenn return gedrückt wird
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
-        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
+//        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
     }
 
     private void initFilter() {
-        pause.setOnFinished(event -> PListener.notify(PListener.EVENT_FILTER_CHANGED, FastFilmFilter.class.getSimpleName()));
+        pause.setOnFinished(event -> {
+//            PListener.notify(PListener.EVENT_FILTER_CHANGED, FastFilmFilter.class.getSimpleName());
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+        });
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         ProgConfig.SYSTEM_FILTER_WAIT_TIME.addListener((observable, oldValue, newValue) -> {
             P2Log.debugLog("SYSTEM_FILTER_WAIT_TIME: " + ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue());

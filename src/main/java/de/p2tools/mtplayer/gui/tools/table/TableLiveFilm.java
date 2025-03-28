@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -25,6 +25,7 @@ import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
 import de.p2tools.p2lib.mtfilm.film.FilmSize;
+import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -70,9 +71,15 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
-        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableLiveFilm.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableLiveFilm.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                refreshTable();
+//            }
+//        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_REFRESH_TABLE) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 refreshTable();
             }
         });

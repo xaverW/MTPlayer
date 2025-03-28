@@ -16,15 +16,18 @@
 
 package de.p2tools.mtplayer.gui.tools.table;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntMax;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
 import de.p2tools.p2lib.mtdownload.DownloadSizeData;
+import de.p2tools.p2lib.p2event.P2Events;
+import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.scene.control.SelectionMode;
@@ -74,9 +77,15 @@ public class TableDownload extends PTable<DownloadData> {
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
-        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableDownload.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableDownload.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                refreshTable();
+//            }
+//        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_REFRESH_TABLE) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 refreshTable();
             }
         });
@@ -210,9 +219,24 @@ public class TableDownload extends PTable<DownloadData> {
                 hdColumn, utColumn, geoColumn, artColumn, srcColumn, /*placedBackColumn,*/
                 programColumn, setColumn, fileNameColumn, pathColumn, urlColumn);
 
-        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                if (!getSortOrder().isEmpty() &&
+//                        (getSortOrder().get(0).equals(progressColumn) ||
+//                                getSortOrder().get(0).equals(remainingColumn) ||
+//                                getSortOrder().get(0).equals(speedColumn)
+//                        )) {
+//                    // dann sind es die Spalten die sich ändern
+//                    sort();
+//                    //todo ??
+////                    System.out.println("sort " + i++);
+//                }
+//            }
+//        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 if (!getSortOrder().isEmpty() &&
                         (getSortOrder().get(0).equals(progressColumn) ||
                                 getSortOrder().get(0).equals(remainingColumn) ||

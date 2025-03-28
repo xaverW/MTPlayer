@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.film;
 
 
 import de.p2tools.mtplayer.controller.ProgSave;
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
@@ -178,8 +178,8 @@ public class LoadFilmFactory {
 
             ProgData.getInstance().maskerPane.setMaskerText("Abos suchen");
             ProgData.getInstance().worker.workOnFilmListLoadFinished();
-            PListener.notify(PListener.EVENT_FILTER_CHANGED, LoadFilmFactory.class.getSimpleName());
-
+//            PListener.notify(PListener.EVENT_FILTER_CHANGED, LoadFilmFactory.class.getSimpleName());
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
             String filmDate = FilmlistFactory.getAgeAsStringDate(ProgData.getInstance().filmList.metaData);
             ProgConfig.SYSTEM_FILMLIST_DATE.setValue(ProgData.getInstance().filmList.isEmpty() ? "" : filmDate);
 

@@ -17,17 +17,17 @@
 package de.p2tools.mtplayer.controller.starter;
 
 
-import de.p2tools.mtplayer.controller.config.PListener;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.worker.CheckForNewFilmlist;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
+import de.p2tools.p2lib.p2event.P2Events;
+import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -44,9 +44,19 @@ public class StartDownload {
     public StartDownload(ProgData progData) {
         this.progData = progData;
         starterThread = new StarterThread2(progData, paused, searchFilms);
-        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, CheckForNewFilmlist.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, CheckForNewFilmlist.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                if (count >= 5) {
+//                    count = 0;
+//                    starterThread.run();
+//                }
+//                ++count;
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 if (count >= 5) {
                     count = 0;
                     starterThread.run();
@@ -54,7 +64,6 @@ public class StartDownload {
                 ++count;
             }
         });
-
         LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
             @Override
             public void start(P2LoadEvent event) {

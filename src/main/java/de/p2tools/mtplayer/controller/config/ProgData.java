@@ -48,14 +48,10 @@ import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
-import de.p2tools.p2lib.tools.duration.P2Duration;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import de.p2tools.p2lib.p2event.P2EventHandler;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class ProgData {
 
@@ -69,6 +65,8 @@ public class ProgData {
 
     public static String gui = ""; // zur Kontrolle/Debug
     public static String dialog = ""; // zur Kontrolle/Debug
+
+    public P2EventHandler pEventHandler;
 
     public static boolean downloadSearchDone = false; // wird gesetzt, wenn das erste mal Downloads gesucht wurden
     public static boolean duration = false; // Duration ausgeben
@@ -143,6 +141,7 @@ public class ProgData {
     public final BlackListFilter blackListFilterBlackList;
 
     private ProgData() {
+        pEventHandler = new P2EventHandler(false);
         busy = new Busy();
         pShortcut = new PShortcut();
         replaceList = new ReplaceList();
@@ -153,7 +152,7 @@ public class ProgData {
         textFilterList = new TextFilterList();
         stringFilterLists = new StringFilter();
         filterWorker = new FilterWorker();
-        liveFilmFilterWorker = new LiveFilmFilterWorker();
+        liveFilmFilterWorker = new LiveFilmFilterWorker(this);
 
         filmList = new FilmListMTP();
         filmListFiltered = new FilmListMTP();
@@ -188,48 +187,19 @@ public class ProgData {
         downloadInfos = new DownloadInfos(this);
         chartData = new ChartData();
         progTray = new ProgTray(this);
-        checkForNewFilmlist = new CheckForNewFilmlist();
+        checkForNewFilmlist = new CheckForNewFilmlist(this);
 
         worker = new Worker(this);
     }
 
-    boolean oneSecond = false;
+//    public synchronized static ProgData getInstance(String dir) {
+//        if (!dir.isEmpty()) {
+//            configDir = dir;
+//        }
+//        return getInstance();
+//    }
 
-    public void startTimer() {
-        // extra starten, damit er im Einrichtungsdialog nicht dazwischen funkt
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(500), ae -> {
-
-            oneSecond = !oneSecond;
-            if (oneSecond) {
-                doTimerWorkOneSecond();
-            }
-            doTimerWorkHalfSecond();
-
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.setDelay(Duration.seconds(5));
-        timeline.play();
-        P2Duration.onlyPing("Timer gestartet");
-    }
-
-    private void doTimerWorkOneSecond() {
-        ++countRunningTimeSeconds;
-        PListener.notify(PListener.EVENT_TIMER_SECOND, ProgData.class.getName());
-    }
-
-    private void doTimerWorkHalfSecond() {
-        PListener.notify(PListener.EVENT_TIMER_HALF_SECOND, ProgData.class.getName());
-    }
-
-    public synchronized static final ProgData getInstance(String dir) {
-        if (!dir.isEmpty()) {
-            configDir = dir;
-        }
-        return getInstance();
-    }
-
-    public synchronized static final ProgData getInstance() {
+    public synchronized static ProgData getInstance() {
         return instance == null ? instance = new ProgData() : instance;
     }
 }

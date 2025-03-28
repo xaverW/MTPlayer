@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
@@ -44,6 +44,8 @@ import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.p2event.P2Events;
+import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -341,9 +343,21 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
-        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                paneBandwidthChart.searchInfos(InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+//                        paneBandwidthChart)
+//                );
+//
+//                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD, paneDownloadInfoList)) {
+//                    paneDownloadInfoList.setInfoText();
+//                }
+//            }
+//        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 paneBandwidthChart.searchInfos(InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
                         paneBandwidthChart)
                 );
@@ -354,9 +368,19 @@ public class DownloadGuiController extends AnchorPane {
             }
         });
 
-        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
+//                    // dann den Filter aktualisieren
+//                    // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
+//                    setFilter();
+//                }
+//            }
+//        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
                     // dann den Filter aktualisieren
                     // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
@@ -364,6 +388,7 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
+
 //        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
 //            @Override
 //            public void pingFx() {
@@ -374,13 +399,18 @@ public class DownloadGuiController extends AnchorPane {
 //                }
 //            }
 //        });
-        PListener.addListener(new PListener(PListener.EVENT_SET_DATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
+//        PListener.addListener(new PListener(PListener.EVENT_SET_DATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
+//            @Override
+//            public void pingFx() {
+//                tableView.refresh();
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_SET_DATA_CHANGED) {
             @Override
-            public void pingFx() {
+            public void pingGui() {
                 tableView.refresh();
             }
         });
-
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 setFilter());
 

@@ -1,7 +1,8 @@
 package de.p2tools.mtplayer.controller.filmfilter;
 
-import de.p2tools.mtplayer.controller.config.PListener;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
@@ -17,7 +18,8 @@ public class LiveFilter extends LiveFilterProps implements Filter {
         // sind die ComboBoxen, wenn return gedrückt wird
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
-        PListener.notify(PListener.EVENT_LIVE_FILTER_CHANGED, FilmFilter.class.getSimpleName());
+//        PListener.notify(PListener.EVENT_LIVE_FILTER_CHANGED, FilmFilter.class.getSimpleName());
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_LIVE_FILTER_CHANGED);
     }
 
     public void clearFilter() {
@@ -45,7 +47,8 @@ public class LiveFilter extends LiveFilterProps implements Filter {
 
     private void reportFilterChange() {
         // sind die anderen Filter (ändern, ein-ausschalten), wenn Pause abgelaufen ist / gestoppt ist
-        PListener.notify(PListener.EVENT_LIVE_FILTER_CHANGED, FilmFilter.class.getSimpleName());
+//        PListener.notify(PListener.EVENT_LIVE_FILTER_CHANGED, FilmFilter.class.getSimpleName());
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_LIVE_FILTER_CHANGED);
     }
 
     private void setFilterChange(boolean startNow) {

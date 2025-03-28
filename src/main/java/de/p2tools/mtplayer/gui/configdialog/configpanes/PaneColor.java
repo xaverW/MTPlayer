@@ -16,10 +16,7 @@
 
 package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
-import de.p2tools.mtplayer.controller.config.PListener;
-import de.p2tools.mtplayer.controller.config.ProgColorList;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.colordata.P2ColorData;
@@ -82,7 +79,8 @@ public class PaneColor {
         Button button = new Button("Alle _Farben zurücksetzen");
         button.setOnAction(event -> {
             ProgColorList.resetAllColor();
-            PListener.notify(PListener.EVENT_REFRESH_TABLE, PaneColor.class.getSimpleName());
+//            PListener.notify(PListener.EVENT_REFRESH_TABLE, PaneColor.class.getSimpleName());
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_REFRESH_TABLE);
         });
 
         int row = 0;
@@ -176,7 +174,8 @@ public class PaneColor {
             colorPicker.setOnAction(a -> {
                 Color color = colorPicker.getValue();
                 pColorData.setColor(color);
-                PListener.notify(PListener.EVENT_REFRESH_TABLE, PaneColor.class.getSimpleName());
+//                PListener.notify(PListener.EVENT_REFRESH_TABLE, PaneColor.class.getSimpleName());
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_REFRESH_TABLE);
             });
             hbox.getChildren().addAll(colorPicker);
             setGraphic(hbox);
@@ -210,7 +209,8 @@ public class PaneColor {
             final Button button = new Button("Reset");
             button.setOnAction(a -> {
                 pColorData.resetColor();
-                PListener.notify(PListener.EVENT_REFRESH_TABLE, PaneColor.class.getSimpleName());
+//                PListener.notify(PListener.EVENT_REFRESH_TABLE, PaneColor.class.getSimpleName());
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_REFRESH_TABLE);
             });
 
             hbox.getChildren().add(button);

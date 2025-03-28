@@ -16,13 +16,18 @@
 
 package de.p2tools.mtplayer.controller.starter;
 
-import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.config.ProxyFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.mtdownload.MLInputStream;
+import de.p2tools.p2lib.p2event.P2Events;
+import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -53,12 +58,20 @@ public class DownloadDirectHttp extends Thread {
     private HttpURLConnection httpURLConn = null;
     private boolean updateDownloadInfos = false;
 
-    private final PListener listener = new PListener(PListener.EVENT_TIMER_HALF_SECOND, DownloadDirectHttp.class.getSimpleName()) {
+//    private final PListener listener = new PListener(PListener.EVENT_TIMER_HALF_SECOND, DownloadDirectHttp.class.getSimpleName()) {
+//        @Override
+//        public void pingFx() {
+//            updateDownloadInfos = true;
+//        }
+//    };
+
+    private final P2Listener listener = new P2Listener(P2Events.EVENT_TIMER_HALF_SECOND) {
         @Override
-        public void pingFx() {
+        public void pingGui() {
             updateDownloadInfos = true;
         }
     };
+
     private FileOutputStream fos = null;
 
     public DownloadDirectHttp(ProgData progData, DownloadData d, java.util.Timer bandwidthCalculationTimer) {
@@ -68,7 +81,8 @@ public class DownloadDirectHttp extends Thread {
         download = d;
         setName("DIRECT DL THREAD: " + d.getTitle());
         download.setStateStartedRun();
-        PListener.addListener(listener);
+//        PListener.addListener(listener);
+        ProgData.getInstance().pEventHandler.addListener(listener);
     }
 
     @Override
@@ -77,7 +91,8 @@ public class DownloadDirectHttp extends Thread {
         StartDownloadFactory.makeDirAndLoadInfoSubtitle(download);
         runWhile();
         StartDownloadFactory.finalizeDownload(download);
-        PListener.removeListener(listener);
+//        PListener.removeListener(listener);
+        ProgData.getInstance().pEventHandler.removeListener(listener);
     }
 
     private void runWhile() {
