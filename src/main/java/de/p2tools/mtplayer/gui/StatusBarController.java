@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
@@ -25,7 +26,6 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
 import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
-import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;
@@ -206,7 +206,8 @@ public class StatusBarController extends AnchorPane {
 //                }
 //            }
 //        });
-        ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
+
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_TIMER_SECOND) {
             @Override
             public void pingGui() {
                 halfSecond = !halfSecond;
@@ -294,7 +295,7 @@ public class StatusBarController extends AnchorPane {
         lblSelAbo.setText(selCount > 0 ? selCount + "" : " ");
     }
 
-    private boolean setCircleStyle() {
+    private void setCircleStyle() {
         if (halfSecond && blink) {
             //dann ausschalten
             circleFilm.setVisible(false);
@@ -311,19 +312,16 @@ public class StatusBarController extends AnchorPane {
             circleFilm.setFill(Paint.valueOf("red"));
             circleDownload.setFill(Paint.valueOf("red"));
             circleAbo.setFill(Paint.valueOf("red"));
-            return true;
 
         } else if (progData.downloadInfos.getLoading() > 0) {
             circleFilm.setFill(Paint.valueOf("green"));
             circleDownload.setFill(Paint.valueOf("green"));
             circleAbo.setFill(Paint.valueOf("green"));
-            return true;
 
         } else {
             circleFilm.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
             circleDownload.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
             circleAbo.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
-            return false;
         }
     }
 

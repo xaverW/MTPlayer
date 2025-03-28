@@ -65,7 +65,7 @@ public class LoadFilmFactory {
         loadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew/*, ProgInfos.getLocalFilmListFile()*/);
     }
 
-    public synchronized static final LoadFilmFactory getInstance() {
+    public synchronized static LoadFilmFactory getInstance() {
         return instance == null ? instance = new LoadFilmFactory(new FilmListMTP(), new FilmListMTP()) : instance;
     }
 
@@ -178,8 +178,10 @@ public class LoadFilmFactory {
 
             ProgData.getInstance().maskerPane.setMaskerText("Abos suchen");
             ProgData.getInstance().worker.workOnFilmListLoadFinished();
-//            PListener.notify(PListener.EVENT_FILTER_CHANGED, LoadFilmFactory.class.getSimpleName());
+
+            // PListener.notify(PListener.EVENT_FILTER_CHANGED, LoadFilmFactory.class.getSimpleName());
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+
             String filmDate = FilmlistFactory.getAgeAsStringDate(ProgData.getInstance().filmList.metaData);
             ProgConfig.SYSTEM_FILMLIST_DATE.setValue(ProgData.getInstance().filmList.isEmpty() ? "" : filmDate);
 
