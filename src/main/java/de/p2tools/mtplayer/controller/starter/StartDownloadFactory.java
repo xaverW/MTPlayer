@@ -53,7 +53,7 @@ public class StartDownloadFactory {
     private StartDownloadFactory() {
     }
 
-    public static void downloadSubtitle(FilmDataMTP filmData) {
+    public static void downloadSubtitle(FilmDataMTP filmData, boolean subtitel) {
         SetData setData = ProgData.getInstance().setDataList.getSetDataForDownloads("");
         if (setData == null) {
             // braucht's eigentlich nicht, aber DOWNLOAD klappt sonst nicht!!
@@ -64,12 +64,16 @@ public class StartDownloadFactory {
         ArrayList<FilmDataMTP> list = new ArrayList<>();
         list.add(filmData);
         DownloadData downloadData = new DownloadData(list, setData);
-        downloadData.setSubtitle(true);
+        if (subtitel) {
+            downloadData.setSubtitle(true);
+        } else {
+            downloadData.setInfoFile(true);
+        }
 
         final StringProperty pathProp = new SimpleStringProperty(downloadData.getDestPath());
         final StringProperty nameProp = new SimpleStringProperty(downloadData.getFileNameWithoutSuffix());
         final BooleanProperty okProp = new SimpleBooleanProperty(false);
-        DownloadSubtitleDialog downloadSubtitleDialog = new DownloadSubtitleDialog(ProgData.getInstance(),
+        DownloadSubtitleDialog downloadSubtitleDialog = new DownloadSubtitleDialog(ProgData.getInstance(), subtitel,
                 pathProp, nameProp, okProp);
         downloadSubtitleDialog.showDialog();
         if (!okProp.get()) {

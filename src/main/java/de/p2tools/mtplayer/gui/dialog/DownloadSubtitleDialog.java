@@ -44,12 +44,14 @@ public class DownloadSubtitleDialog extends P2DialogExtra {
     private final StringProperty pathProp;
     private final StringProperty nameProp;
     private final BooleanProperty okProp;
+    private final boolean subtitel;
 
-    public DownloadSubtitleDialog(ProgData progData,
+    public DownloadSubtitleDialog(ProgData progData, boolean subtitel,
                                   StringProperty pathProp, StringProperty nameProp, BooleanProperty okProp) {
 
         super(progData.primaryStage, ProgConfig.DOWNLOAD_SUBTITLE_DIALOG_SIZE,
-                "Untertitel laden", true, true, DECO.BORDER_SMALL, true);
+                "Untertitel laden", true, false, DECO.BORDER_SMALL, true);
+        this.subtitel = subtitel;
         this.progData = progData;
         this.pathProp = pathProp;
         this.nameProp = nameProp;
@@ -104,8 +106,11 @@ public class DownloadSubtitleDialog extends P2DialogExtra {
 
         gridPane.add(new Label("Dateiname"), 0, ++row);
         gridPane.add(txtFileName, 0, ++row);
-        gridPane.add(new Label(".srt  .ttml"), 1, row);
-
+        if (subtitel) {
+            gridPane.add(new Label(".srt  .ttml"), 1, row);
+        } else {
+            gridPane.add(new Label(".txt"), 1, row);
+        }
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSize());
     }

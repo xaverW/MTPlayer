@@ -72,7 +72,7 @@ public class FilmTableContextMenu {
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(mFilter, mAddAbo);
 
-        Menu mStartFilm = startFilmWithSet(film); // Film mit Set starten
+        Menu mStartFilm = startFilmWithSet(progData, film); // Film mit Set starten
         if (mStartFilm != null) {
             contextMenu.getItems().add(mStartFilm);
         }
@@ -82,41 +82,10 @@ public class FilmTableContextMenu {
         // Bookmark
         Menu mBookmark = addBookmark(film);
         // URL kopieren
-        Menu mCopyUrl = copyUrl(film);
-        contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl);
-
-        final MenuItem miLoadUt = new MenuItem("Untertitel speichern");
-        miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
-        miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film));
-
-        final MenuItem miFilmsSetShown;
-        if (film != null && film.isShown()) {
-            miFilmsSetShown = new MenuItem("Filme als ungesehen markieren");
-            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(false));
-        } else {
-            miFilmsSetShown = new MenuItem("Filme als gesehen markieren");
-            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(true));
-        }
-        miFilmsSetShown.setDisable(film == null);
-
-        MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
-        miFilmInfo.setDisable(film == null);
-        miFilmInfo.setOnAction(a -> filmGuiController.showFilmInfo());
-
-        MenuItem miMediaDb = new MenuItem("Film in der Mediensammlung suchen");
-        miMediaDb.setDisable(film == null);
-        miMediaDb.setOnAction(a -> filmGuiController.searchFilmInMediaCollection());
-
-        final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren");
-        miCopyTheme.setDisable(film == null);
-        miCopyTheme.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getTheme()));
-
-        final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
-        miCopyName.setDisable(film == null);
-        miCopyName.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getTitle()));
-
-        contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miLoadUt, miFilmsSetShown, miFilmInfo, miMediaDb, miCopyTheme, miCopyName);
+        Menu mCopyUrl = copyInfos(film);
+        // Film
+        Menu mFilm = addFilm(film);
+        contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl, mFilm);
 
         MenuItem toolTipTable = new MenuItem(ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue() ?
                 "Keine Infos beim Überfahren einer Zeile anzeigen" : "Infos beim Überfahren einer Zeile anzeigen");
@@ -200,7 +169,7 @@ public class FilmTableContextMenu {
         return submenuAbo;
     }
 
-    private Menu startFilmWithSet(FilmDataMTP film) {
+    public static Menu startFilmWithSet(ProgData progData, FilmDataMTP film) {
         final SetDataList list = progData.setDataList.getSetDataListButton();
         if (!list.isEmpty()) {
             Menu submenuSet = new Menu("Film mit Set starten");
@@ -264,9 +233,57 @@ public class FilmTableContextMenu {
         return submenuBookmark;
     }
 
-    private Menu copyUrl(FilmDataMTP film) {
-        final Menu subMenuURL = new Menu("Film-URL kopieren");
+    private Menu addFilm(FilmDataMTP film) {
+        Menu submenuFilm = new Menu("Film");
+
+        final MenuItem miLoadUt = new MenuItem("Untertitel speichern");
+        miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
+        miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film, true));
+
+        final MenuItem miLoadTxt = new MenuItem("Info-Datei speichern");
+        miLoadTxt.setDisable(film == null);
+        miLoadTxt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film, false));
+
+        final MenuItem miFilmsSetShown;
+        if (film != null && film.isShown()) {
+            miFilmsSetShown = new MenuItem("Filme als ungesehen markieren");
+            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(false));
+        } else {
+            miFilmsSetShown = new MenuItem("Filme als gesehen markieren");
+            miFilmsSetShown.setOnAction(a -> filmGuiController.setFilmShown(true));
+        }
+        miFilmsSetShown.setDisable(film == null);
+
+        MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
+        miFilmInfo.setDisable(film == null);
+        miFilmInfo.setOnAction(a -> filmGuiController.showFilmInfo());
+
+        MenuItem miMediaDb = new MenuItem("Film in der Mediensammlung suchen");
+        miMediaDb.setDisable(film == null);
+        miMediaDb.setOnAction(a -> filmGuiController.searchFilmInMediaCollection());
+
+        submenuFilm.getItems().addAll(miLoadUt, miLoadTxt, miFilmsSetShown, miFilmInfo, miMediaDb);
+        return submenuFilm;
+    }
+
+    public static Menu copyInfos(FilmDataMTP film) {
+        final Menu subMenuURL = new Menu("Film-Infos kopieren");
         subMenuURL.setDisable(film == null);
+
+        final MenuItem miCopyTheme = new MenuItem("Thema");
+        miCopyTheme.setDisable(film == null);
+        miCopyTheme.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getTheme()));
+
+        final MenuItem miCopyName = new MenuItem("Titel");
+        miCopyName.setDisable(film == null);
+        miCopyName.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getTitle()));
+
+        final MenuItem miCopyWeb = new MenuItem("Website-URL");
+        miCopyWeb.setDisable(film == null);
+        miCopyWeb.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getWebsite()));
+
+        subMenuURL.getItems().addAll(miCopyTheme, miCopyName, miCopyWeb);
+
 
         final String uNormal = film == null ? "" : film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL);
         String uHd = film == null ? "" : film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD);
@@ -282,34 +299,36 @@ public class FilmTableContextMenu {
 
         MenuItem item;
         if (!uHd.isEmpty() || !uLow.isEmpty() || !uSub.isEmpty()) {
+            subMenuURL.getItems().add(new SeparatorMenuItem());
             // HD
             if (!uHd.isEmpty()) {
-                item = new MenuItem("in HD-Auflösung");
+                item = new MenuItem("URL in HD-Auflösung");
                 item.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_HD)));
                 subMenuURL.getItems().add(item);
             }
 
             // normale Auflösung, gibts immer
-            item = new MenuItem("in hoher Auflösung");
+            item = new MenuItem("URL in hoher Auflösung");
             item.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
             subMenuURL.getItems().add(item);
 
             // kleine Auflösung
             if (!uLow.isEmpty()) {
-                item = new MenuItem("in geringer Auflösung");
+                item = new MenuItem("URL in kleiner Auflösung");
                 item.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL)));
                 subMenuURL.getItems().add(item);
             }
 
             // Untertitel
             if (!film.getUrlSubtitle().isEmpty()) {
-                item = new MenuItem("Untertitel-URL kopieren");
+                subMenuURL.getItems().add(new SeparatorMenuItem());
+                item = new MenuItem("Untertitel-URL");
                 item.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getUrlSubtitle()));
-                subMenuURL.getItems().addAll(new SeparatorMenuItem(), item);
+                subMenuURL.getItems().add(item);
             }
 
         } else {
-            item = new MenuItem("Film-URL kopieren");
+            item = new MenuItem("Film-URL");
             item.setDisable(film == null);
             item.setOnAction(a -> P2ToolsFactory.copyToClipboard(film.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL)));
             subMenuURL.getItems().add(item);
