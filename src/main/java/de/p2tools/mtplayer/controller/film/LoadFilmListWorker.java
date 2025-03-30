@@ -43,55 +43,18 @@ import javafx.application.Platform;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoadFilmFactory {
-    private static LoadFilmFactory instance;
-    public LoadFilmlist loadFilmlist; //erledigt das Update der Filmliste
+public class LoadFilmListWorker {
     private static boolean doneAtProgramStart = false;
+    public LoadFilmlist loadFilmlist; //erledigt das Update der Filmliste
     private final ProgData progData;
 
-    public LoadFilmFactory(ProgData progData) {
+    public LoadFilmListWorker(ProgData progData) {
         this.progData = progData;
 
-//        public synchronized static LoadFilmFactory getInstance() {
-//            return instance == null ? instance = new LoadFilmFactory(new FilmListMTP(), new FilmListMTP()) : instance;
-//        }
         Filmlist<FilmDataMTP> filmlistNew = new FilmListMTP();
         Filmlist<FilmDataMTP> filmlistDiff = new FilmListMTP();
 
         loadFilmlist = new LoadFilmlist(progData.pEventHandler, filmlistNew, filmlistDiff);
-//        loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
-//            @Override
-//            public synchronized void start(P2LoadEvent event) {
-//                ProgData.FILMLIST_IS_DOWNLOADING.setValue(true);
-//                progData.worker.workOnFilmListLoadStart();
-//                if (event.getAct() == PROGRESS_INDETERMINATE) {
-//                    // ist dann die gespeicherte Filmliste
-//                    progData.maskerPane.setMaskerVisible(true, true, false);
-//                } else {
-//                    progData.maskerPane.setMaskerVisible(true, true, true);
-//                }
-//                progData.maskerPane.setMaskerProgress(event.getAct(), event.getText());
-//            }
-//
-//            @Override
-//            public synchronized void progress(P2LoadEvent event) {
-//                progData.maskerPane.setMaskerProgress(event.getAct(), event.getText());
-//            }
-//
-//            @Override
-//            public void loaded(P2LoadEvent event) {
-//                // wird nach dem Laden mehrfach aufgerufen
-//                progData.maskerPane.setMaskerVisible(true, true, false);
-//                progData.maskerPane.setMaskerProgress(PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
-//                ProgData.FILMLIST_IS_DOWNLOADING.setValue(false);
-//            }
-//
-//            @Override
-//            public synchronized void finished(P2LoadEvent event) {
-//                P2Duration.onlyPing("Filme geladen: Nachbearbeiten");
-//                afterLoadingFilmList();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
             @Override
             public void pingGui(P2Event event) {
@@ -220,7 +183,6 @@ public class LoadFilmFactory {
             progData.maskerPane.setMaskerText("Abos suchen");
             progData.worker.workOnFilmListLoadFinished();
 
-            // PListener.notify(PListener.EVENT_FILTER_CHANGED, LoadFilmFactory.class.getSimpleName());
             progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
 
             String filmDate = FilmlistFactory.getAgeAsStringDate(progData.filmList.metaData);
@@ -241,7 +203,7 @@ public class LoadFilmFactory {
                     // sonst macht es ja keinen Sinn
                     WhatsNewFactory.checkUpdate();
                     Platform.runLater(() -> {
-                        ProgTipOfDayFactory.showDialog(progData, false);
+                        ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false);
                         if (ProgConfig.CHECK_SET_PROGRAM_START.get()) {
                             SetFactory.checkPrograms(progData.primaryStage, progData, false);
                         }

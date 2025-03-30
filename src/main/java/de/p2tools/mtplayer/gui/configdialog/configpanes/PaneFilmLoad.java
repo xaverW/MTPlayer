@@ -82,7 +82,7 @@ public class PaneFilmLoad {
         btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoad.setOnAction(event -> {
-            progData.loadFilmFactory.loadNewListFromWeb(true);
+            progData.loadFilmListWorker.loadNewListFromWeb(true);
         });
 
 

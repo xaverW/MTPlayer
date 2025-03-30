@@ -93,7 +93,7 @@ public class PanelMoveButton {
         btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoad.setOnAction(event -> {
-            progData.loadFilmFactory.loadNewListFromWeb(true);
+            progData.loadFilmListWorker.loadNewListFromWeb(true);
         });
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);

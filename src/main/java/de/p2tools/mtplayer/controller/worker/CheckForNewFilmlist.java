@@ -20,20 +20,12 @@ package de.p2tools.mtplayer.controller.worker;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.mtfilm.tools.SearchFilmlistUpdate;
-import de.p2tools.p2lib.p2event.P2Event;
 import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 
 public class CheckForNewFilmlist extends SearchFilmlistUpdate {
 
     public CheckForNewFilmlist(ProgData progData) {
-//        progData.loadFilmFactory.loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
-//            @Override
-//            public void finished(P2LoadEvent event) {
-//                //dann wird wieder gesucht
-//                setFoundNewList(false);
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_FINISHED) {
             @Override
             public void pingGui() {
@@ -42,13 +34,6 @@ public class CheckForNewFilmlist extends SearchFilmlistUpdate {
             }
         });
 
-//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, CheckForNewFilmlist.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                // kan dauern und hält dann das Programm beim Start auf
-//                new Thread(() -> hasNewFilmlist(ProgData.getInstance().filmList.getFilmlistId())).start();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
             public void pingGui() {

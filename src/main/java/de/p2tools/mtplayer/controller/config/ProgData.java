@@ -30,7 +30,7 @@ import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.film.LoadFilmListWorker;
 import de.p2tools.mtplayer.controller.filmfilter.*;
 import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
@@ -88,7 +88,7 @@ public class ProgData {
     public static String filmListUrl = ""; //URL von der die Filmliste geladen werden soll
 
     // zentrale Klassen
-    public LoadFilmFactory loadFilmFactory;
+    public LoadFilmListWorker loadFilmListWorker;
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public PShortcut pShortcut; // verwendete Shortcuts
     public FilterWorker filterWorker; // gespeicherte Filterprofile FILME
@@ -185,7 +185,7 @@ public class ProgData {
         blackListFilterFilmList = new BlackListFilter();
         blackListFilterBlackList = new BlackListFilter();
 
-        loadFilmFactory = new LoadFilmFactory(this);
+        loadFilmListWorker = new LoadFilmListWorker(this);
         startDownload = new StartDownload(this);
         downloadInfos = new DownloadInfos(this);
         chartData = new ChartData();

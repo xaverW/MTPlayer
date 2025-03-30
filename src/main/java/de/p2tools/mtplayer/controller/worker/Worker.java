@@ -38,16 +38,6 @@ public class Worker {
     public Worker(ProgData progData) {
         this.progData = progData;
         getAboNames();
-//        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, Worker.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                if (ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()
-//                        && ProgConfig.ABO_SEARCH_NOW.getValue()) {
-//                    // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-//                    AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
-//                }
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_BLACKLIST_CHANGED) {
             @Override
             public void pingGui() {
@@ -72,14 +62,6 @@ public class Worker {
             });
         });
 
-//        progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) -> {
-////            Platform.runLater(this::getAboNames);
-//        });
-//
-//        progData.downloadList.sizeProperty().addListener((observable, oldValue, newValue) -> {
-////            Platform.runLater(this::getAboNames);
-//        });
-
         progData.checkForNewFilmlist.foundNewListProperty().addListener((u, o, n) -> {
             if (!ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY.getValue()) {
                 //dann soll gar keine geladen werden
@@ -89,14 +71,14 @@ public class Worker {
                 //dann gibts auch keine
                 return;
             }
-            if (progData.loadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
+            if (progData.loadFilmListWorker.loadFilmlist.getPropLoadFilmlist()) {
                 //wird eh grad gemacht
                 return;
             }
 
             //dann soll sofort eine neue Liste geladen werden
             P2Log.sysLog("Es gibt eine neue Filmliste und die soll sofort geladen werden");
-            progData.loadFilmFactory.loadNewListFromWeb(false);
+            progData.loadFilmListWorker.loadNewListFromWeb(false);
         });
     }
 

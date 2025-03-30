@@ -118,7 +118,7 @@ public class PaneFilmSender {
         btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoad.setOnAction(event -> {
-            ProgData.getInstance().loadFilmFactory.loadNewListFromWeb(true);
+            ProgData.getInstance().loadFilmListWorker.loadNewListFromWeb(true);
         });
 
         hBox = new HBox();

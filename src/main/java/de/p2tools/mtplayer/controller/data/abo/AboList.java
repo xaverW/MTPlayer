@@ -115,7 +115,7 @@ public class AboList extends SimpleListProperty<AboData> implements P2DataList<A
 //    }
 
     public synchronized void notifyChanges() {
-        if (!progData.loadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
+        if (!progData.loadFilmListWorker.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             AboFactory.setAboForFilmlist();
         }
