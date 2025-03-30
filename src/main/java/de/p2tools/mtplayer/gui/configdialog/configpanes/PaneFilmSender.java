@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -118,7 +118,7 @@ public class PaneFilmSender {
         btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoad.setOnAction(event -> {
-            LoadFilmFactory.getInstance().loadNewListFromWeb(true);
+            ProgData.getInstance().loadFilmFactory.loadNewListFromWeb(true);
         });
 
         hBox = new HBox();

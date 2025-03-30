@@ -16,15 +16,15 @@
 
 package de.p2tools.mtplayer;
 
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.SearchFast;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
+import de.p2tools.p2lib.p2event.P2Event;
+import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -129,7 +129,7 @@ public class MTPlayerController extends StackPane {
         Button btnStop = progData.maskerPane.getButton();
         progData.maskerPane.setButtonText("");
         btnStop.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
-        btnStop.setOnAction(a -> LoadFilmFactory.getInstance().loadFilmlist.setStop(true));
+        btnStop.setOnAction(a -> progData.loadFilmFactory.loadFilmlist.setStop(true));
     }
 
     private void initButton() {
@@ -139,11 +139,11 @@ public class MTPlayerController extends StackPane {
                 "Wenn die Filmliste nicht zu alt ist, wird nur ein Update geladen.\n" +
                 "Mit der rechten Maustaste wird immer die komplette Filmliste geladen."));
         btnFilmlist.setOnAction(e -> {
-            LoadFilmFactory.getInstance().loadNewListFromWeb(false);
+            progData.loadFilmFactory.loadNewListFromWeb(false);
         });
         btnFilmlist.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                LoadFilmFactory.getInstance().loadNewListFromWeb(true);
+                progData.loadFilmFactory.loadNewListFromWeb(true);
 
             } else if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
                 progData.checkForNewFilmlist.check();
@@ -156,16 +156,24 @@ public class MTPlayerController extends StackPane {
                 btnFilmlist.getStyleClass().remove("buttonLoadFilmlistNewList");
             }
         });
-        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
+//        progData.loadFilmFactory.loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
+//            @Override
+//            public void finished(P2LoadEvent event) {
+//                if (stackPaneCont.getChildren().isEmpty()) {
+//                    return;
+//                }
+//                setFocus();
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_FINISHED) {
             @Override
-            public void finished(P2LoadEvent event) {
+            public void pingGui() {
                 if (stackPaneCont.getChildren().isEmpty()) {
                     return;
                 }
                 setFocus();
             }
         });
-
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
         btnFilm.setOnAction(e -> selPanelFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);

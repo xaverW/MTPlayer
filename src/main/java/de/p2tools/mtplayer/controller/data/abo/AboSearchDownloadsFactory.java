@@ -25,7 +25,6 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.tools.date.P2Date;
@@ -74,7 +73,7 @@ public class AboSearchDownloadsFactory {
         // workOnFilmListLoadFinished und "Abo suchen" ist ein oder AUTOMODE
         ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Downloads suchen:", -1.0, false);
 
-        if (LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
+        if (ProgData.getInstance().loadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
             // wird danach eh gemacht
             alreadyRunning.set(false);
             ProgData.busy.busyOffFx();

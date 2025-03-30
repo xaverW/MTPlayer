@@ -17,13 +17,13 @@
 
 package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -31,8 +31,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2TableFactory;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
+import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -45,13 +44,16 @@ import javafx.stage.Stage;
 
 public class PanelButton {
 
-    P2LoadListener listenerLoadFilmlist;
+    P2Listener listenerLoadFilmlistStart;
+    P2Listener listenerLoadFilmlistFinished;
 
     public PanelButton() {
     }
 
     void close() {
-        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.removeListenerLoadFilmlist(listenerLoadFilmlist);
+//        ProgData.getInstance().loadFilmFactory.loadFilmlist.p2LoadNotifier.removeListenerLoadFilmlist(listenerLoadFilmlist);
+        ProgData.getInstance().pEventHandler.removeListener(listenerLoadFilmlistStart);
+        ProgData.getInstance().pEventHandler.removeListener(listenerLoadFilmlistFinished);
     }
 
     void addButton(Stage stage, VBox vBox, TableView<BlackData> tableView,
@@ -125,18 +127,33 @@ public class PanelButton {
             blackDataChanged.set(true);
             list.clearList();
         });
-        listenerLoadFilmlist = new P2LoadListener() {
+//        listenerLoadFilmlist = new P2LoadListener() {
+//            @Override
+//            public void start(P2LoadEvent event) {
+//                btnCountHits.setDisable(true);
+//            }
+//
+//            @Override
+//            public void finished(P2LoadEvent event) {
+//                btnCountHits.setDisable(false);
+//            }
+//        };
+        listenerLoadFilmlistStart = new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
             @Override
-            public void start(P2LoadEvent event) {
+            public void pingGui() {
                 btnCountHits.setDisable(true);
             }
-
+        };
+        listenerLoadFilmlistFinished = new P2Listener(PEvents.EVENT_FILMLIST_LOAD_FINISHED) {
             @Override
-            public void finished(P2LoadEvent event) {
+            public void pingGui() {
                 btnCountHits.setDisable(false);
             }
         };
-        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(listenerLoadFilmlist);
+
+//        ProgData.getInstance().loadFilmFactory.loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(listenerLoadFilmlist);
+        ProgData.getInstance().pEventHandler.addListener(listenerLoadFilmlistStart);
+        ProgData.getInstance().pEventHandler.addListener(listenerLoadFilmlistFinished);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, btnClear);

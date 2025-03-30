@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
@@ -105,7 +104,7 @@ public class ConfigDialogController extends P2DialogExtra {
     }
 
     private void onlyApply() {
-        if (!LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
+        if (!progData.loadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
             //dann wird die Blacklist immer neu gemacht, sonst wirds dann eh gemacht
             new Thread(() -> {
                 BlacklistFilterFactory.markFilmBlack(true);
@@ -121,7 +120,7 @@ public class ConfigDialogController extends P2DialogExtra {
             progData.filmList.markGeoBlocked();
         }
 
-        if (blackChanged.get() && !LoadFilmFactory.getInstance().loadFilmlist.getPropLoadFilmlist()) {
+        if (blackChanged.get() && !progData.loadFilmFactory.loadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
             new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
         }

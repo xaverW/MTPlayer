@@ -17,24 +17,31 @@
 
 package de.p2tools.mtplayer.controller.worker;
 
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.mtfilm.tools.SearchFilmlistUpdate;
+import de.p2tools.p2lib.p2event.P2Event;
 import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 
 public class CheckForNewFilmlist extends SearchFilmlistUpdate {
 
     public CheckForNewFilmlist(ProgData progData) {
-        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
+//        progData.loadFilmFactory.loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
+//            @Override
+//            public void finished(P2LoadEvent event) {
+//                //dann wird wieder gesucht
+//                setFoundNewList(false);
+//            }
+//        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_FINISHED) {
             @Override
-            public void finished(P2LoadEvent event) {
+            public void pingGui() {
                 //dann wird wieder gesucht
                 setFoundNewList(false);
             }
         });
+
 //        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, CheckForNewFilmlist.class.getSimpleName()) {
 //            @Override
 //            public void pingFx() {

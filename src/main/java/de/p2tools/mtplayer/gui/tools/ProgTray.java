@@ -18,16 +18,14 @@
 package de.p2tools.mtplayer.gui.tools;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.P2InfoFactory;
@@ -91,17 +89,31 @@ public class ProgTray {
                 }
             }
         });
-        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
+
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
             @Override
-            public void start(P2LoadEvent event) {
+            public void ping() {
                 stopTimer = true;
             }
-
+        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_FINISHED) {
             @Override
-            public void finished(P2LoadEvent event) {
+            public void ping() {
                 stopTimer = false;
             }
         });
+
+//        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
+//            @Override
+//            public void start(P2LoadEvent event) {
+//                stopTimer = true;
+//            }
+//
+//            @Override
+//            public void finished(P2LoadEvent event) {
+//                stopTimer = false;
+//            }
+//        });
         setTray();
     }
 

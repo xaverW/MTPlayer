@@ -17,15 +17,13 @@
 package de.p2tools.mtplayer.controller.starter;
 
 
+import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadEvent;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadListener;
 import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.property.BooleanProperty;
@@ -64,17 +62,32 @@ public class StartDownload {
                 ++count;
             }
         });
-        LoadFilmFactory.getInstance().loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
+//        progData.loadFilmFactory.loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
+//            @Override
+//            public void start(P2LoadEvent event) {
+//                searchFilms.setValue(true);
+//            }
+//
+//            @Override
+//            public void finished(P2LoadEvent event) {
+//                searchFilms.setValue(false);
+//            }
+//        });
+
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
             @Override
-            public void start(P2LoadEvent event) {
+            public void pingGui() {
                 searchFilms.setValue(true);
             }
-
+        });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_FINISHED) {
             @Override
-            public void finished(P2LoadEvent event) {
+            public void pingGui() {
                 searchFilms.setValue(false);
             }
         });
+
+
     }
 
     public synchronized void startUrlWithProgram(FilmDataMTP film, SetData pSet, String resolution) {
