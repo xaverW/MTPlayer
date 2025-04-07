@@ -1,5 +1,16 @@
 # MTPlayer
 
+**Version 20**
+
+* Live-Suche ZDF wurde an die geänderte Mediathek vom ZDF angepasst
+* Die Film-Info Datei kann auch ohne Download erstellt werden: Tabelle Filme->Maus-Kontextmenü->Film
+* Die Abläufe beim Laden der Filmliste wurden überarbeitet
+* ...
+
+**Version 19**
+
+* Eine neue Programmversion wurde nicht in jedem Fall gemeldet
+
 **Version 18**
 
 * Die Nummerierung der Abos wurde korrigiert
