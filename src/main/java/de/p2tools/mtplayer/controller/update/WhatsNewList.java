@@ -39,31 +39,10 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
     }
 
     private void addWhatsNew() {
-        WhatsNewInfo whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 7, 13),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_01.png",
-
-                "Fortschrittsanzeige",
-                "Es gab einige Optimierungen beim Suchen von Downloads. Das läuft jetzt im Hintergrund ab " +
-                        "und blockiert so das Programm nicht mehr. " +
-                        "Es wird jetzt auch der Fortschritt beim Suchen (Downloads, Filter der Blacklist) " +
-                        "an verschiedenen Stellen im Programm " +
-                        "angezeigt.", 110);
-        add(whatsNewInfo);
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 8, 27),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_02.png",
-
-                "Anzeige Programm",
-                "In den Einstellungen->Farben kann die Programmoberfläche " +
-                        "auf \"Schwarz-Weiß\" umgestellt werden. (Das Programm " +
-                        "muss zur Übernahme neu gestartet werden).", 110);
-        add(whatsNewInfo);
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2024, 10, 13),
-                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_03.png",
-
-                "Filter im externen Fenster",
-                "Die Filter neben den Tabellen können " +
-                        "jetzt in einem eigenem Fenster " +
-                        "angezeigt werden", 70);
+        WhatsNewInfo whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 4, 7),
+                "",
+                "Live-Suche ZDF",
+                "Die Live-Suche für das ZDF wurde an die geänderte Mediathek angepasst.", 50);
         add(whatsNewInfo);
     }
 }
