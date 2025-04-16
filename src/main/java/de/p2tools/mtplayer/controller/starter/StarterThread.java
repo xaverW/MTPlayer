@@ -28,7 +28,7 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
-public class StarterThread extends Thread {
+public class StarterThread {
     // ********************************************
     // Hier wird dann gestartet
     // ewige Schleife, die die Downloads startet
@@ -48,48 +48,31 @@ public class StarterThread extends Thread {
         this.paused = paused;
         this.searchFilms = searchFilms;
 
-        setName("DownloadStarter Daemon Thread");
-        setDaemon(true);
         bandwidthCalculationTimer = new java.util.Timer("BandwidthCalculationTimer");
     }
 
-    @Override
     public synchronized void run() {
-        while (!isInterrupted()) {
-            try {
-                if (searchFilms.getValue()) {
-                    // vorher und während des Suchens der Filmliste machmer nix
-                    Thread.sleep(5_000);
-                    continue;
-                }
-                while ((download = getNextStart()) != null) {
-                    if (searchFilms.getValue()) {
-                        break;
-                    }
-
-                    startDownload(download);
-                    // alle 5 Sekunden einen Download starten
-                    Thread.sleep(5_000);
-                }
-
-                if (searchFilms.getValue()) {
-                    // wenn nochmal die Filmliste geholt wird, dann gibts auf jeden Fall noch eine Runde
-                    continue;
-                }
-
-                if (ProgData.autoMode &&
-                        ProgData.downloadSearchDone &&
-                        !checkQuitAfterDownload.getValue()) {
-                    // dann haben wir den "Automodus"
-                    // Downloads wurden gesucht, gestartet und jetzt das Beenden prüfen
-                    checkQuitAfterDownload.setValue(true);
-                    quitProgramAfterDownload();
-                }
-
-                Thread.sleep(3_000);
-            } catch (final Exception ex) {
-                P2Log.errorLog(613822015, ex);
+        try {
+            if (searchFilms.getValue()) {
+                // vorher und während des Suchens der Filmliste machmer nix
+                return;
             }
+
+            if ((download = getNextStart()) != null) {
+                startDownload(download);
+            }
+
+            if (ProgData.autoMode &&
+                    ProgData.downloadSearchDone &&
+                    !checkQuitAfterDownload.getValue()) {
+                // dann haben wir den "Automodus"
+                // Downloads wurden gesucht, gestartet und jetzt das Beenden prüfen
+                checkQuitAfterDownload.setValue(true);
+                quitProgramAfterDownload();
+            }
+
+        } catch (final Exception ex) {
+            P2Log.errorLog(613822015, ex);
         }
     }
 
@@ -121,11 +104,10 @@ public class StarterThread extends Thread {
         if (paused.getValue()) {
             //beim Löschen der Downloads kann das Starten etwas "pausiert" werden
             //damit ein zu löschender Download nicht noch schnell gestartet wird
-            sleep(5_000);
             paused.setValue(false);
+            return null;
         }
         return DownloadFactoryStarts.getNextStart(progData.downloadList);
-//        return progData.downloadList.getNextStart();
     }
 
     /**

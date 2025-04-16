@@ -58,13 +58,6 @@ public class DownloadDirectHttp extends Thread {
     private HttpURLConnection httpURLConn = null;
     private boolean updateDownloadInfos = false;
 
-//    private final PListener listener = new PListener(PListener.EVENT_TIMER_HALF_SECOND, DownloadDirectHttp.class.getSimpleName()) {
-//        @Override
-//        public void pingFx() {
-//            updateDownloadInfos = true;
-//        }
-//    };
-
     private final P2Listener listener = new P2Listener(P2Events.EVENT_TIMER_HALF_SECOND) {
         @Override
         public void pingGui() {
@@ -81,7 +74,6 @@ public class DownloadDirectHttp extends Thread {
         download = d;
         setName("DIRECT DL THREAD: " + d.getTitle());
         download.setStateStartedRun();
-//        PListener.addListener(listener);
         ProgData.getInstance().pEventHandler.addListener(listener);
     }
 
@@ -91,7 +83,6 @@ public class DownloadDirectHttp extends Thread {
         StartDownloadFactory.makeDirAndLoadInfoSubtitle(download);
         runWhile();
         StartDownloadFactory.finalizeDownload(download);
-//        PListener.removeListener(listener);
         ProgData.getInstance().pEventHandler.removeListener(listener);
     }
 

@@ -31,7 +31,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class StartDownload {
     private final ProgData progData;
-    private final StarterThread2 starterThread;
+    private final StarterThread starterThread;
     private int count = 0;
     private final BooleanProperty paused = new SimpleBooleanProperty(false);
     private final BooleanProperty searchFilms = new SimpleBooleanProperty(true); // beim Programmstart muss zuerst die Filmliste geladen werden
@@ -41,17 +41,7 @@ public class StartDownload {
     // ===================================
     public StartDownload(ProgData progData) {
         this.progData = progData;
-        starterThread = new StarterThread2(progData, paused, searchFilms);
-//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, CheckForNewFilmlist.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                if (count >= 5) {
-//                    count = 0;
-//                    starterThread.run();
-//                }
-//                ++count;
-//            }
-//        });
+        starterThread = new StarterThread(progData, paused, searchFilms);
         progData.pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
             public void pingGui() {
@@ -62,18 +52,6 @@ public class StartDownload {
                 ++count;
             }
         });
-//        progData.loadFilmFactory.loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(new P2LoadListener() {
-//            @Override
-//            public void start(P2LoadEvent event) {
-//                searchFilms.setValue(true);
-//            }
-//
-//            @Override
-//            public void finished(P2LoadEvent event) {
-//                searchFilms.setValue(false);
-//            }
-//        });
-
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
             @Override
             public void pingGui() {
@@ -86,8 +64,6 @@ public class StartDownload {
                 searchFilms.setValue(false);
             }
         });
-
-
     }
 
     public synchronized void startUrlWithProgram(FilmDataMTP film, SetData pSet, String resolution) {
