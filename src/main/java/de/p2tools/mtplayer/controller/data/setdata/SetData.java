@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.setdata;
 
+import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.tools.P2Index;
 
@@ -52,9 +53,9 @@ public class SetData extends SetDataProps {
         boolean ret = false;
 
         for (ProgramData progData : programList) {
-            if (progData.getProgSwitch().contains("**")
-                    || progData.getProgSwitch().contains("%a")
-                    || progData.getProgSwitch().contains("%b")) {
+            if (progData.getProgSwitch().contains(DownloadFactoryMakeParameter.PARAMETER_PATH_FILE)
+                    || progData.getProgSwitch().contains(DownloadFactoryMakeParameter.PARAMETER_DEST_PATH)
+                    || progData.getProgSwitch().contains(DownloadFactoryMakeParameter.PARAMETER_DEST_FILE_NAME)) {
                 ret = true;
                 break;
             }

@@ -34,6 +34,38 @@ import java.util.Date;
 
 
 public class DownloadFactoryMakeParameter {
+    public final static String PARAMETER_URL = "%f";
+    public final static String PARAMETER_PATH_FILE = "**";
+    public final static String PARAMETER_WEBSITE = "%w";
+
+    public final static String PARAMETER_CHANNEL = "%s";
+    public final static String PARAMETER_THEME = "%t";
+    public final static String PARAMETER_TITLE = "%T";
+    public final static String PARAMETER_DURATION_MINUTE = "%m";
+    public final static String PARAMETER_DURATION_MINUTE_000 = "%M";
+
+    public final static String PARAMETER_DEST_PATH = "%a";
+    public final static String PARAMETER_DEST_FILE_NAME = "%b";
+
+    public final static String PARAMETER_ORG_FILM_NAME = "%N";
+    public final static String PARAMETER_FILM_DATE = "%D";
+    public final static String PARAMETER_FILM_TIME = "%d";
+
+    public final static String PARAMETER_TODAY = "%H";
+    public final static String PARAMETER_TIME_NOW = "%h";
+    public final static String PARAMETER_DAY = "%1";
+    public final static String PARAMETER_MONTH = "%2";
+    public final static String PARAMETER_YEAR = "%3";
+    public final static String PARAMETER_HOUR = "%4";
+    public final static String PARAMETER_MINUTE = "%5";
+    public final static String PARAMETER_SECOND = "%6";
+
+    public final static String PARAMETER_FILM_NO = "%i";
+    public final static String PARAMETER_QUALITY = "%q";
+    public final static String PARAMETER_SUFFIX = "%S";
+    public final static String PARAMETER_HASH = "%Z";
+    public final static String PARAMETER_HASH_SUFFIX = "%z";
+
 
     private DownloadFactoryMakeParameter() {
     }
@@ -167,29 +199,6 @@ public class DownloadFactoryMakeParameter {
         return name;
     }
 
-//    private static String replaceName(DownloadData download, String name) {
-//        StringBuilder ret = new StringBuilder();
-//        String search = name;
-//
-//        while (!search.isEmpty()) {
-//            String tag = getTag(search);
-//            if (tag.isEmpty()) {
-//                // dann ist keines drin
-////                ret.append(DownloadFactory.replaceFileNameWithReplaceList(search, false /* pfad */));
-//                ret.append(search);
-//                search = "";
-//            } else {
-//                String check = search.substring(0, search.indexOf(tag));
-////                ret.append(DownloadFactory.replaceFileNameWithReplaceList(check, false /* pfad */));
-//                ret.append(check);
-//                ret.append(replaceTags(download, tag, false));
-//                search = search.substring(search.indexOf(tag) + tag.length());
-//            }
-//        }
-//
-//        return ret.toString();
-//    }
-
     private static String buildFilePath(DownloadData download, SetData setData,
                                         AboData abo, String selPath) {
         // selPath ist nur belegt, wenn der Download über den DialogAddDownload gestartet wurde
@@ -279,59 +288,49 @@ public class DownloadFactoryMakeParameter {
         return path;
     }
 
-//    private static String getTag(String search) {
-//        final String[] tags = {"%t", "%T", "%s", "%N", "%D", "%d",
-//                "%H", "%h", "%1", "%2", "%3", "%4", "%5", "%6",
-//                "%i", "%q", "%S", "%Z", "%z"};
-//        int i = -1;
-//        String tag = "";
-//
-//        for (String s : tags) {
-//            int ii = search.indexOf(s);
-//            if (ii >= 0 && (i == -1 || i > ii)) {
-//                i = ii;
-//                tag = s;
-//            }
-//        }
-//        return tag;
-//    }
-
     public static String replaceTags(DownloadData download, String replStr, boolean andReplace) {
         // hier wird nur ersetzt!
         // Felder mit variabler Länge, evtl. vorher kürzen
 
         int length = download.getSetData().getMaxField();
 
-        replStr = replStr.replace("%t", setMaxLength(download.getTheme(), length, andReplace));
-        replStr = replStr.replace("%T", setMaxLength(download.getTitle(), length, andReplace));
-        replStr = replStr.replace("%s", setMaxLength(download.getChannel(), length, andReplace));
-        replStr = replStr.replace("%N", setMaxLength(PUrlTools.getFileName(download.getUrl()), length, andReplace));
+        replStr = replStr.replace(PARAMETER_THEME, setMaxLength(download.getTheme(), length, andReplace));
+        replStr = replStr.replace(PARAMETER_TITLE, setMaxLength(download.getTitle(), length, andReplace));
+        replStr = replStr.replace(PARAMETER_CHANNEL, setMaxLength(download.getChannel(), length, andReplace));
+        replStr = replStr.replace(PARAMETER_ORG_FILM_NAME, setMaxLength(PUrlTools.getFileName(download.getUrl()), length, andReplace));
+
+        StringBuilder duration = new StringBuilder(download.getDurationMinute() + "");
+        replStr = replStr.replace(PARAMETER_DURATION_MINUTE, duration.toString());
+        while (duration.length() < 3) {
+            duration.insert(0, "0");
+        }
+        replStr = replStr.replace(PARAMETER_DURATION_MINUTE_000, duration.toString());
 
         // Felder mit fester Länge werden immer ganz geschrieben
-        replStr = replStr.replace("%D",
+        replStr = replStr.replace(PARAMETER_FILM_DATE,
                 download.getFilmDate().isEmpty() ? getToday_yyyyMMdd()
                         : cleanDate(turnDate(download.getFilmDateStr())));
-        replStr = replStr.replace("%d",
+        replStr = replStr.replace(PARAMETER_FILM_TIME,
                 download.getFilmTime().isEmpty() ? getNow_HHMMSS()
                         : cleanDate(download.getFilmTime()));
-        replStr = replStr.replace("%H", getToday_yyyyMMdd());
-        replStr = replStr.replace("%h", getNow_HHMMSS());
+        replStr = replStr.replace(PARAMETER_TODAY, getToday_yyyyMMdd());
+        replStr = replStr.replace(PARAMETER_TIME_NOW, getNow_HHMMSS());
 
-        replStr = replStr.replace("%1",
-                getDMY("%1", download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
-        replStr = replStr.replace("%2",
-                getDMY("%2", download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
-        replStr = replStr.replace("%3",
-                getDMY("%3", download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
+        replStr = replStr.replace(PARAMETER_DAY,
+                getDMY(PARAMETER_DAY, download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
+        replStr = replStr.replace(PARAMETER_MONTH,
+                getDMY(PARAMETER_MONTH, download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
+        replStr = replStr.replace(PARAMETER_YEAR,
+                getDMY(PARAMETER_YEAR, download.getFilmDateStr().isEmpty() ? getToday__yyyy_o_MM_o_dd() : download.getFilmDateStr()));
 
-        replStr = replStr.replace("%4",
-                getHMS("%4", download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
-        replStr = replStr.replace("%5",
-                getHMS("%5", download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
-        replStr = replStr.replace("%6",
-                getHMS("%6", download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
+        replStr = replStr.replace(PARAMETER_HOUR,
+                getHMS(PARAMETER_HOUR, download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
+        replStr = replStr.replace(PARAMETER_MINUTE,
+                getHMS(PARAMETER_MINUTE, download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
+        replStr = replStr.replace(PARAMETER_SECOND,
+                getHMS(PARAMETER_SECOND, download.getFilmTime().isEmpty() ? getNow_HH_MM_SS() : download.getFilmTime()));
 
-        replStr = replStr.replace("%i", String.valueOf(download.getFilmNo()));
+        replStr = replStr.replace(PARAMETER_FILM_NO, String.valueOf(download.getFilmNo()));
 
         String res = "";
         if (download.getUrl().equals(download.getUrlForResolution(FilmDataMTP.RESOLUTION_NORMAL))) {
@@ -341,11 +340,11 @@ public class DownloadFactoryMakeParameter {
         } else if (download.getUrl().equals(download.getUrlForResolution(FilmDataMTP.RESOLUTION_SMALL))) {
             res = "L";
         }
-        replStr = replStr.replace("%q", res); // %q Qualität des Films ("HD", "H", "L")
+        replStr = replStr.replace(PARAMETER_QUALITY, res); // %q Qualität des Films ("HD", "H", "L")
 
-        replStr = replStr.replace("%S", PUrlTools.getSuffixFromUrl(download.getUrl()));
-        replStr = replStr.replace("%Z", P2FileUtils.getHash(download.getUrl()));
-        replStr = replStr.replace("%z",
+        replStr = replStr.replace(PARAMETER_SUFFIX, PUrlTools.getSuffixFromUrl(download.getUrl()));
+        replStr = replStr.replace(PARAMETER_HASH, P2FileUtils.getHash(download.getUrl()));
+        replStr = replStr.replace(PARAMETER_HASH_SUFFIX,
                 P2FileUtils.getHash(download.getUrl()) + "."
                         + PUrlTools.getSuffixFromUrl(download.getUrl()));
 
@@ -397,13 +396,13 @@ public class DownloadFactoryMakeParameter {
             try {
                 if (datum.length() == 10) {
                     switch (s) {
-                        case "%1":
+                        case PARAMETER_DAY:
                             ret = datum.substring(0, 2); // Tag
                             break;
-                        case "%2":
+                        case PARAMETER_MONTH:
                             ret = datum.substring(3, 5); // Monat
                             break;
-                        case "%3":
+                        case PARAMETER_YEAR:
                             ret = datum.substring(6); // Jahr
                             break;
 
@@ -426,13 +425,13 @@ public class DownloadFactoryMakeParameter {
             try {
                 if (zeit.length() == 8) {
                     switch (s) {
-                        case "%4":
+                        case PARAMETER_HOUR:
                             ret = zeit.substring(0, 2); // Stunde
                             break;
-                        case "%5":
+                        case PARAMETER_MINUTE:
                             ret = zeit.substring(3, 5); // Minute
                             break;
-                        case "%6":
+                        case PARAMETER_SECOND:
                             ret = zeit.substring(6); // Sekunde
                             break;
 
@@ -473,7 +472,7 @@ public class DownloadFactoryMakeParameter {
     private static String buildUrl(DownloadData downloadData, String execString) {
         // die URL bauen
         if (downloadData.getUrlList().size() <= 1) {
-            return execString.replace("%f", downloadData.getUrl());
+            return execString.replace(PARAMETER_URL, downloadData.getUrl());
         }
 
         final String TRENNER;
@@ -495,21 +494,21 @@ public class DownloadFactoryMakeParameter {
             }
             url.append(u);
         }
-        return execString.replace("%f", url);
+        return execString.replace(PARAMETER_URL, url);
     }
 
     private static String replaceExec(DownloadData downloadData, String execString) {
         // hier werden die Parameter beim Programmaufruf ersetzt
-        execString = execString.replace("**", downloadData.getDestPathFile());
+        execString = execString.replace(PARAMETER_PATH_FILE, downloadData.getDestPathFile());
 
         //ist für Button z.B. "search in google"
-        execString = execString.replace("%w", downloadData.getUrlWebsite());
-        execString = execString.replace("%t", downloadData.getTheme());
-        execString = execString.replace("%T", downloadData.getTitle());
-        execString = execString.replace("%s", downloadData.getChannel());
+        execString = execString.replace(PARAMETER_WEBSITE, downloadData.getUrlWebsite());
+        execString = execString.replace(PARAMETER_THEME, downloadData.getTheme());
+        execString = execString.replace(PARAMETER_TITLE, downloadData.getTitle());
+        execString = execString.replace(PARAMETER_CHANNEL, downloadData.getChannel());
 
-        execString = execString.replace("%a", downloadData.getDestPath());
-        execString = execString.replace("%b", downloadData.getDestFileName());
+        execString = execString.replace(PARAMETER_DEST_PATH, downloadData.getDestPath());
+        execString = execString.replace(PARAMETER_DEST_FILE_NAME, downloadData.getDestFileName());
 
         return execString;
     }
