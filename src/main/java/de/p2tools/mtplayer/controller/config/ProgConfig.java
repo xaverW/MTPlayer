@@ -439,7 +439,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);
     public static List<String> DOWNLOAD_DIALOG_DOWNLOAD_PATH = addListProp("download-dialog-download-path"); // gesammelten Downloadpfade im Downloaddialog
-    public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStrProp("download-dialog-hd-height-low", FilmDataMTP.RESOLUTION_NORMAL);
+    public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStrProp("download-dialog-hd-height-low", FilmDataMTP.RESOLUTION_NORMAL); // letzte verwendete Auflösung
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addBoolProp("download-dialog-start-download-now", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOT = addBoolProp("download-dialog-start-download-not", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_TIME = addBoolProp("download-dialog-start-download-time", Boolean.FALSE);

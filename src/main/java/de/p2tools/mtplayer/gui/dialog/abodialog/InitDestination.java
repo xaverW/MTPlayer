@@ -205,8 +205,7 @@ public class InitDestination {
 
         final SetData setData = addAboDto.getAct().abo.getSetData();
         final AboData abo = addAboDto.getAct().abo;
-        DownloadData downloadData = new DownloadData(DownloadConstants.SRC_DOWNLOAD, setData, filmData, abo,
-                "", false);
+        DownloadData downloadData = new DownloadData(DownloadConstants.SRC_DOWNLOAD, setData, filmData, abo, "", "", false);
         addAboDto.lblResPath.setText(downloadData.getDestPath());
         addAboDto.lblResFileName.setText(downloadData.getDestFileName());
     }

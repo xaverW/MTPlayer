@@ -43,17 +43,38 @@ public class InitDownloadAddArray {
         // DownloadArr anlegen
         AddDownloadData[] addDownloadData = new AddDownloadData[filmsToDownloadList.size()];
         for (int i = 0; i < filmsToDownloadList.size(); ++i) {
+            FilmDataMTP film = filmsToDownloadList.get(i);
             addDownloadData[i] = new AddDownloadData();
+
+
+            // Auflösung: Erst mal schauen, was es gibt
+            String resolution;
+            if (ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(FilmDataMTP.RESOLUTION_HD) &&
+                    film.isHd()) {
+                resolution = FilmDataMTP.RESOLUTION_HD;
+
+            } else if (ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(FilmDataMTP.RESOLUTION_SMALL) &&
+                    film.isSmall()) {
+                resolution = FilmDataMTP.RESOLUTION_SMALL;
+
+            } else {
+                resolution = FilmDataMTP.RESOLUTION_NORMAL;
+            }
+            // Downloads anlegen
             if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
                 addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
-                        addDownloadDto.setDataStart, filmsToDownloadList.get(i),
-                        null, aktPath, true);
+                        addDownloadDto.setDataStart, film, null,
+                        aktPath, resolution, true);
             } else {
                 addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
-                        addDownloadDto.setDataStart, filmsToDownloadList.get(i),
-                        null, aktPath, false);
+                        addDownloadDto.setDataStart, film, null,
+                        aktPath, resolution, false);
             }
+            // für den Fall, dass sie sich geändert hat
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.set(addDownloadData[i].download.getResolution());
 
+
+            // Start festlegen
             if (ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW.getValue()) {
                 // dann sofort starten
                 addDownloadData[i].startNow = true;
@@ -68,23 +89,6 @@ public class InitDownloadAddArray {
             // Dateigröße
             addSize(addDownloadData, i);
 
-            // Auflösung: Die Werte passend zum Film setzen
-            if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(FilmDataMTP.RESOLUTION_HD) ||
-                    addDownloadDto.filterResolution.equals(FilmDataMTP.RESOLUTION_HD) ||
-                    addDownloadData[i].download.getSetData().getResolution().equals(FilmDataMTP.RESOLUTION_HD))
-                    && addDownloadData[i].download.isHd()) {
-                //Dann wurde im Filter oder Set HD ausgewählt und wird voreingestellt
-                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_HD);
-
-            } else if ((ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.get().equals(FilmDataMTP.RESOLUTION_SMALL) ||
-                    addDownloadData[i].download.getSetData().getResolution().equals(FilmDataMTP.RESOLUTION_SMALL))
-                    && addDownloadData[i].download.isSmall()) {
-                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_SMALL);
-
-            } else {
-                addDownloadData[i].download.setResolution(FilmDataMTP.RESOLUTION_NORMAL);
-            }
-
             // Infofile
             addDownloadData[i].download.setInfoFile(addDownloadData[i].download.getSetData().isInfoFile());
 
@@ -95,7 +99,8 @@ public class InitDownloadAddArray {
             } else {
                 addDownloadData[i].download.setSubtitle(addDownloadData[i].download.getSetData().isSubtitle());
             }
-        }
+        } // for...
+
         return addDownloadData;
     }
 

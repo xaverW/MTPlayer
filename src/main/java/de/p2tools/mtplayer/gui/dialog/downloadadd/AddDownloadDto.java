@@ -52,7 +52,7 @@ public class AddDownloadDto {
     public AddDownloadData[] addDownloadData;
 
     public IntegerProperty actFilmIsShown = new SimpleIntegerProperty(0);
-    public final String filterResolution;
+//    public final String filterResolution = "";
 
     public final Label lblFree = new Label("4M noch frei");
     public final Label lblFilm = new Label("Film:");
@@ -111,12 +111,10 @@ public class AddDownloadDto {
     public final RadioButton rbStartNow = new RadioButton("sofort");
     public final RadioButton rbStartAtTime = new RadioButton("um: ");
 
-    public AddDownloadDto(ProgData progData, SetData setDataStart,
-                          ArrayList<FilmDataMTP> filmsToDownloadList, String filterResolution) {
+    public AddDownloadDto(ProgData progData, SetData setDataStart, ArrayList<FilmDataMTP> filmsToDownloadList) {
         // einen neuen Download anlegen
         this.progData = progData;
         this.setDataStart = setDataStart;
-        this.filterResolution = filterResolution;
 
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayFilm(filmsToDownloadList, this);
         initSetDataDownload = new InitSetDataDownload(this);
@@ -132,7 +130,6 @@ public class AddDownloadDto {
         // bestehende Downloads ändern
         this.progData = progData;
         this.setDataStart = null;
-        this.filterResolution = "";
         this.addNewDownloads = false;
 
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayDownload(downloadDataArrayList, this);

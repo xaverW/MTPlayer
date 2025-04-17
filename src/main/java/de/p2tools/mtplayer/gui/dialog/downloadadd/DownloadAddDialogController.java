@@ -45,11 +45,12 @@ public class DownloadAddDialogController extends P2DialogExtra {
     private final ArrayList filmsToDownloadList;
     private final AddDownloadDto addDownloadDto;
 
-    public DownloadAddDialogController(ProgData progData, ArrayList<FilmDataMTP> filmsToDownloadList,
-                                       SetData setDataStart, String filterResolution) {
+    public DownloadAddDialogController(ProgData progData,
+                                       ArrayList<FilmDataMTP> filmsToDownloadList,
+                                       SetData setDataStart) {
         super(progData.primaryStage,
-                filmsToDownloadList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE :
-                        ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
+                filmsToDownloadList.size() > 1 ?
+                        ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE : ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
                 "Download anlegen", true, false, DECO.BORDER_SMALL);
 
         // neue Downloads anlegen
@@ -61,7 +62,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
         }
 
         setAll = true;
-        this.addDownloadDto = new AddDownloadDto(progData, setDataStart, filmsToDownloadList, filterResolution);
+        this.addDownloadDto = new AddDownloadDto(progData, setDataStart, filmsToDownloadList);
         initAll();
 
         init(true);
@@ -69,8 +70,8 @@ public class DownloadAddDialogController extends P2DialogExtra {
 
     public DownloadAddDialogController(ProgData progData, ArrayList<DownloadData> downloadDataArrayList) {
         super(progData.primaryStage,
-                downloadDataArrayList.size() > 1 ? ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE :
-                        ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
+                downloadDataArrayList.size() > 1 ?
+                        ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE : ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
                 "Download ändern", true, false, DECO.BORDER_SMALL);
 
         // bestehende Downloads ändern

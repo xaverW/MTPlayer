@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DialogFileChooser;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.stage.Stage;
 
 import java.nio.file.Files;
@@ -44,7 +44,10 @@ public class SetReplacePatternFactory {
     }
 
     private static boolean progReplacePattern(Stage stage, SetData pSet) {
-        pSet.setDestPath(pSet.getDestPath().replace(PATTERN_PATH_DEST, DownloadFactory.getDownloadPath()));
+        pSet.setDestPath(pSet.getDestPath().replace(PATTERN_PATH_DEST,
+                ProgConfig.DOWNLOAD_PATH.get().isEmpty() ?
+                        P2InfoFactory.getStandardDownloadPath() : ProgConfig.DOWNLOAD_PATH.get()));
+
         String vlc = "";
         String ffmpeg = "";
 

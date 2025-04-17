@@ -77,8 +77,8 @@ public final class DownloadData extends DownloadDataProps {
         DownloadFactoryMakeParameter.makeProgParameter(this, null, "", "");
     }
 
-    public DownloadData(String source, SetData setData, FilmDataMTP film, AboData abo,
-                        String path, boolean setSize) {
+    public DownloadData(String source, SetData setData, FilmDataMTP film,
+                        AboData abo, String path, String resolution, boolean setSize) {
         // das sind "normale" Downloads (Abos, manuell), die auch in der DownloadListe/Tabelle erscheinen
         setFilm(film);
         setSetData(setData, true);
@@ -92,7 +92,9 @@ public final class DownloadData extends DownloadDataProps {
             DownloadFactory.setDownloadSize(this);
         }
 
-        String resolution = abo != null ? abo.getResolution() : setData.getResolution();
+        if (resolution.isEmpty()) {
+            resolution = abo != null ? abo.getResolution() : setData.getResolution();
+        }
         initResolution(resolution);
 
         // und endlich Aufruf bauen :)

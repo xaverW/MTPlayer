@@ -179,11 +179,9 @@ public class AboSearchDownloadsFactory {
             DownloadData downloadData;
 
             if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
-                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData,
-                        "", true);
+                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData, "", "", true);
             } else {
-                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData,
-                        "", false);
+                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData, "", "", false);
             }
 
             syncDownloadArrayList.add(downloadData);

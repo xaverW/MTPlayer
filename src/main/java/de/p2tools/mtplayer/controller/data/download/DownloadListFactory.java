@@ -17,27 +17,24 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.tools.duration.P2Duration;
-
 public class DownloadListFactory {
     public DownloadListFactory() {
     }
 
-    public static synchronized void addFilmInDownloads() {
-        // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
-        // den Film wieder eintragen
-        P2Duration.counterStart("addFilmInList");
-        ProgData progData = ProgData.getInstance();
-        int counter = 50; //todo das dauert sonst viel zu lang
-        for (DownloadData d : progData.downloadList) {
-            --counter;
-            if (counter < 0) {
-                break;
-            }
-            d.setFilm(progData.filmList.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
-            d.initResolution();
-        }
-        P2Duration.counterStop("addFilmInList");
-    }
+//    public static synchronized void addFilmInDownloads() {
+//        // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
+//        // den Film wieder eintragen
+//        P2Duration.counterStart("addFilmInList");
+//        ProgData progData = ProgData.getInstance();
+//        int counter = 50; //todo das dauert sonst viel zu lang
+//        for (DownloadData d : progData.downloadList) {
+//            --counter;
+//            if (counter < 0) {
+//                break;
+//            }
+//            d.setFilm(progData.filmList.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+//            d.initResolution();
+//        }
+//        P2Duration.counterStop("addFilmInList");
+//    }
 }

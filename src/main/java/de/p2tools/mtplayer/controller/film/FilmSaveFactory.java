@@ -40,38 +40,35 @@ public class FilmSaveFactory {
     }
 
     public static void saveFilmList() {
+        // Menü: Sel Filme speichern
         saveFilmList(ProgData.getInstance().filmGuiController.getSelList(true), null);
     }
 
     public static void saveFilmList(List<FilmDataMTP> list, SetData setData) {
+        // Filme speichern, Menü
         if (list.isEmpty()) {
             return;
         }
 
         ProgData progData = ProgData.getInstance();
-        ArrayList<FilmDataMTP> filmsAddDownloadList = new ArrayList<>();
-
         if (progData.setDataList.getSetDataListSave().isEmpty()) {
             new NoSetDialogController(progData, NoSetDialogController.TEXT.SAVE);
             return;
         }
+
         if (setData == null) {
             setData = progData.setDataList.getSetDataListSave().get(0);
         }
 
-        String resolution = "";
-        if (progData.filterWorker.getActFilterSettings().isOnlyHd()) {
-            resolution = FilmDataMTP.RESOLUTION_HD;
-        }
-
+        ArrayList<FilmDataMTP> filmsAddDownloadList = new ArrayList<>();
         for (final FilmDataMTP film : list) {
             // erst mal schauen obs den schon gibt
             DownloadData download = progData.downloadList.getDownloadWithFilmUrl(film.arr[FilmDataMTP.FILM_URL]);
             if (download == null) {
                 filmsAddDownloadList.add(film);
+
             } else {
                 // dann ist der Film schon in der Downloadliste
-
                 if (list.size() <= 1) {
                     P2Alert.BUTTON answer = P2Alert.showAlert_yes_no("Anlegen?", "Nochmal anlegen?",
                             "Download für den Film existiert bereits:" + P2LibConst.LINE_SEPARATORx2 +
@@ -105,8 +102,9 @@ public class FilmSaveFactory {
                 }
             }
         }
+
         if (!filmsAddDownloadList.isEmpty()) {
-            new DownloadAddDialogController(progData, filmsAddDownloadList, setData, resolution);
+            new DownloadAddDialogController(progData, filmsAddDownloadList, setData);
         }
     }
 }

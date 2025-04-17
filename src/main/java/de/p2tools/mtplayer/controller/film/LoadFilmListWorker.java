@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.mtplayer.controller.data.download.DownloadListFactory;
+import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
@@ -175,7 +175,7 @@ public class LoadFilmListWorker {
 
             logList.add("Filme in Downloads eingetragen");
             progData.maskerPane.setMaskerText("Downloads eingetragen");
-            DownloadListFactory.addFilmInDownloads();
+            addFilmInDownloads();
 
             P2Log.sysLog(logList);
             P2Duration.onlyPing("Filme nachbearbeiten: Ende");
@@ -212,4 +212,22 @@ public class LoadFilmListWorker {
             }
         }).start();
     }
+
+    private static synchronized void addFilmInDownloads() {
+        // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
+        // den Film wieder eintragen
+        P2Duration.counterStart("addFilmInList");
+        ProgData progData = ProgData.getInstance();
+        int counter = 50; //todo das dauert sonst viel zu lang
+        for (DownloadData d : progData.downloadList) {
+            --counter;
+            if (counter < 0) {
+                break;
+            }
+            d.setFilm(progData.filmList.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+            d.initResolution();
+        }
+        P2Duration.counterStop("addFilmInList");
+    }
+
 }
