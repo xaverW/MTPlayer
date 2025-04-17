@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.chart;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.p2lib.p2event.P2EventHandler;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
@@ -57,7 +58,7 @@ public class ChartDataFactory {
         }
 
         final int maxTimeToShowSeconds;
-        long timeToShowSeconds = ProgData.countRunningTimeSeconds - oldest;
+        long timeToShowSeconds = P2EventHandler.countRunningTimeSeconds - oldest;
         final int maxTimeSelectedSeconds = ProgConfig.DOWNLOAD_CHART_MAX_TIME_TO_SHOW_MIN.get() * 60;
 
         if (maxTimeSelectedSeconds < timeToShowSeconds) {

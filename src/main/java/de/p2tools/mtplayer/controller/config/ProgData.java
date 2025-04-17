@@ -81,7 +81,7 @@ public class ProgData {
     public static BooleanProperty LIVE_FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty ABO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
-    public static long countRunningTimeSeconds = 0; // Gesamtzeit die das Programm läuft
+//    public static long countRunningTimeSeconds = P2EventHandler.countRunningTimeSeconds;
 
     // Infos
     public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen

@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.chart;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.p2lib.p2event.P2EventHandler;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
@@ -134,7 +135,7 @@ public class ChartGenerateFactory {
     }
 
     private static double getActTime(double secondsPerPixel, int chartPos) {
-        return (ProgData.countRunningTimeSeconds - secondsPerPixel * chartPos - BandwidthDataFactory.GET_DATA_COUNT) /
+        return (P2EventHandler.countRunningTimeSeconds - secondsPerPixel * chartPos - BandwidthDataFactory.GET_DATA_COUNT) /
                 (BandwidthDataFactory.SHOW_MINUTES.getValue() ? 60.0 : 1.0);
     }
 

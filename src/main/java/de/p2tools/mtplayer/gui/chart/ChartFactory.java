@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.gui.chart;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.p2lib.p2event.P2EventHandler;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -56,10 +56,10 @@ public class ChartFactory {
 
     public static synchronized void zoomXAxis(LineChart<Number, Number> lineChart, ChartData chartData) {
         final NumberAxis xAxis = (NumberAxis) lineChart.getXAxis();
-        xAxis.setUpperBound(ProgData.countRunningTimeSeconds / (BandwidthDataFactory.SHOW_MINUTES.getValue() ? 60.0 : 1.0));
+        xAxis.setUpperBound(P2EventHandler.countRunningTimeSeconds / (BandwidthDataFactory.SHOW_MINUTES.getValue() ? 60.0 : 1.0));
 
         final double secondsPerPixel = chartData.getSecondsPerPixel();
-        final double MIN = ProgData.countRunningTimeSeconds - BandwidthDataFactory.CHART_SUM_PIXEL * secondsPerPixel;
+        final double MIN = P2EventHandler.countRunningTimeSeconds - BandwidthDataFactory.CHART_SUM_PIXEL * secondsPerPixel;
         final double lower = Math.max(MIN, 0);
         xAxis.setLowerBound(lower / (BandwidthDataFactory.SHOW_MINUTES.getValue() ? 60.0 : 1.0));
     }

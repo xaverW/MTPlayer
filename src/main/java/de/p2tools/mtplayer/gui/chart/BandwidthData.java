@@ -18,9 +18,9 @@
 package de.p2tools.mtplayer.gui.chart;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.p2lib.p2event.P2EventHandler;
 
 import java.util.Arrays;
 
@@ -59,7 +59,7 @@ public class BandwidthData {
     }
 
     public void setStartTimeNow() {
-        this.startTimeSec = ProgData.countRunningTimeSeconds;
+        this.startTimeSec = P2EventHandler.countRunningTimeSeconds;
         cleanUpData();
     }
 
