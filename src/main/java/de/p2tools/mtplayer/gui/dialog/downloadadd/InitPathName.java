@@ -167,7 +167,6 @@ public class InitPathName {
         if (addDownloadDto.getAct().download.getSetData().getDestPath().isEmpty()) {
             stdPath = P2InfoFactory.getStandardDownloadPath();
         } else {
-            // stdPath = addDownloadDto.getAct().download.getSetData().getDestPath();
             final String path = addDownloadDto.getAct().download.getSetData().getDestPath();
             stdPath = DownloadFactoryMakeParameter.replaceTags(addDownloadDto.getAct().download, path, true); // %D ... ersetzen
         }

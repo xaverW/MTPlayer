@@ -50,13 +50,6 @@ public final class DownloadData extends DownloadDataProps {
     public DownloadData(List<FilmDataMTP> filmList, SetData setData) {
         // das ist ein Download der über den Button/Menü "Abspielen" gestartet wurde
         // und der wird nicht in die DownloadListe einsortiert, muss also sofort gestartet werden
-
-        String resolution;
-        if (ProgData.getInstance().filterWorker.getActFilterSettings().isOnlyHd()) {
-            resolution = FilmDataMTP.RESOLUTION_HD;
-        } else {
-            resolution = setData.getResolution();
-        }
         setFilm(filmList.get(0));
         setSetData(setData, true);
         setSource(DownloadConstants.SRC_BUTTON);
@@ -65,7 +58,14 @@ public final class DownloadData extends DownloadDataProps {
         setInfoFile(setData.isInfoFile());
         setSubtitle(setData.isSubtitle());
 
+        String resolution;
+        if (ProgData.getInstance().filterWorker.getActFilterSettings().isOnlyHd()) {
+            resolution = FilmDataMTP.RESOLUTION_HD;
+        } else {
+            resolution = setData.getResolution();
+        }
         initResolution(resolution);
+
         if (filmList.size() > 1) {
             // dass müssen die URLs aller Filme gesetzt werden, dass alle drin sind
             getUrlList().clear();
@@ -78,12 +78,8 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public DownloadData(String source, SetData setData, FilmDataMTP film, AboData abo,
-                        String name, String path, String resolution, boolean setSize) {
-        // da sind "normale" Downloads (Abos, manuell), die auch in der DownloadListe/Tabelle erscheinen
-        if (resolution.isEmpty()) {
-            resolution = abo != null ? abo.getResolution() : setData.getResolution();
-        }
-
+                        String path, boolean setSize) {
+        // das sind "normale" Downloads (Abos, manuell), die auch in der DownloadListe/Tabelle erscheinen
         setFilm(film);
         setSetData(setData, true);
         setAbo(abo);
@@ -95,10 +91,12 @@ public final class DownloadData extends DownloadDataProps {
         if (setSize) {
             DownloadFactory.setDownloadSize(this);
         }
+
+        String resolution = abo != null ? abo.getResolution() : setData.getResolution();
         initResolution(resolution);
 
         // und endlich Aufruf bauen :)
-        DownloadFactoryMakeParameter.makeProgParameter(this, abo, name, path);
+        DownloadFactoryMakeParameter.makeProgParameter(this, abo, "", path);
     }
 
     //==============================================
@@ -170,7 +168,7 @@ public final class DownloadData extends DownloadDataProps {
         initResolution(super.getResolution());
     }
 
-    public void initResolution(String resolution) {
+    private void initResolution(String resolution) {
         if (film != null) {
             setHd(film.isHd());
             setSmall(film.isSmall());
@@ -188,7 +186,6 @@ public final class DownloadData extends DownloadDataProps {
                     break;
             }
 
-            super.setResolution(resolution);
             if (isHd()) {
                 setFilmUrlHd(film.getUrlForResolution(FilmData.RESOLUTION_HD));
             } else {
@@ -207,33 +204,16 @@ public final class DownloadData extends DownloadDataProps {
         } else {
             // dann gibts keinen Film mehr dazu
             resolution = FilmDataMTP.RESOLUTION_NORMAL;
-            super.setResolution(resolution);
             setHd(false);
             setSmall(false);
         }
 
-        switch (resolution) {
-            case FilmDataMTP.RESOLUTION_HD:
-                setUrl(getFilmUrlHd());
-                getDownloadSize().setTargetSize(getFilmSizeHd());
-                break;
-
-            case FilmDataMTP.RESOLUTION_SMALL:
-                setUrl(getFilmUrlSmall());
-                getDownloadSize().setTargetSize(getFilmSizeSmall());
-                break;
-
-            case FilmDataMTP.RESOLUTION_NORMAL:
-            default:
-                setUrl(getFilmUrlNormal());
-                getDownloadSize().setTargetSize(getFilmSizeNormal());
-                break;
-        }
+        setResolution(resolution);
     }
 
-    public void setResolution() {
-        setResolution(super.getResolution());
-    }
+//    public void setResolution() {
+//        setResolution(super.getResolution());
+//    }
 
     public void setResolution(String resolution) {
         super.setResolution(resolution);
@@ -303,10 +283,6 @@ public final class DownloadData extends DownloadDataProps {
         setNo(P2LibConst.NUMBER_NOT_STARTED);
     }
 
-    public void makeProgParameter() {
-        DownloadFactoryMakeParameter.makeProgParameter(this, abo, getDestFileName(), getDestPath());
-    }
-
     //==============================================
     // Get/Set
     //==============================================
@@ -336,15 +312,6 @@ public final class DownloadData extends DownloadDataProps {
         setTheme(film.arr[FilmDataXml.FILM_THEME]);
         setTitle(film.arr[FilmDataXml.FILM_TITLE]);
         setDescription(film.arr[FilmDataXml.FILM_DESCRIPTION]);
-
-//        setFilmSizeNormal(film.arr[FilmDataXml.FILM_SIZE]);
-//        if (getUrl().equals(film.getUrlForResolution(FilmData.RESOLUTION_HD))) {
-//            getDownloadSize().setTargetSize(getFilmSizeHd());
-//        } else if (getUrl().equals(film.getUrlForResolution(FilmData.RESOLUTION_SMALL))) {
-//            getDownloadSize().setTargetSize(getFilmSizeSmall());
-//        } else {
-//            getDownloadSize().setTargetSize(getFilmSizeNormal());
-//        }
 
         setFilmUrlNormal(film.arr[FilmDataXml.FILM_URL]);
         setFilmUrlHd(film.isHd() ? film.getUrlForResolution(FilmData.RESOLUTION_HD) : "");

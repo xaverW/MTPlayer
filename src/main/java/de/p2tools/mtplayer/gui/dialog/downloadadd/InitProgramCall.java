@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.p2lib.guitools.P2ClipBoardContext;
 
@@ -66,7 +67,8 @@ public class InitProgramCall {
 
     public static void setProgrammCall(AddDownloadDto addDownloadDto, AddDownloadData addDownloadData) {
         // muss noch der Programmaufruf neu gebaut werden
-        addDownloadData.download.makeProgParameter();
+//        addDownloadData.download.makeProgParameter();
+        DownloadFactoryMakeParameter.makeProgParameter(addDownloadData.download);
 
         addDownloadDto.textAreaProg.setText(addDownloadDto.getAct().download.getProgramCall());
         addDownloadDto.textAreaCallArray.setText(addDownloadDto.getAct().download.getProgramCallArray());

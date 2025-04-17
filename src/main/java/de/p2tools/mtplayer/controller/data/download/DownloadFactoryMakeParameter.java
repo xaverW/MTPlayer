@@ -70,6 +70,10 @@ public class DownloadFactoryMakeParameter {
     private DownloadFactoryMakeParameter() {
     }
 
+    public static boolean makeProgParameter(DownloadData download) {
+        return makeProgParameter(download, download.getAbo(), download.getDestFileName(), download.getDestPath());
+    }
+
     public static boolean makeProgParameter(DownloadData download, AboData abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
         try {

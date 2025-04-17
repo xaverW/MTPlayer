@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadContinueDialogController;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -125,7 +126,8 @@ public class CheckDownloadFileExists {
                 if (isNewName) {
                     if (!httpDownload) {
                         // wenn Name geändert den Programmaufruf nochmal mit dem geänderten Dateinamen bauen
-                        download.makeProgParameter();
+//                        download.makeProgParameter();
+                        DownloadFactoryMakeParameter.makeProgParameter(download);
                     }
                     try {
                         Files.createDirectories(Paths.get(download.getDestPath()));

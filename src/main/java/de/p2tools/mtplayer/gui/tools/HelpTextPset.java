@@ -130,6 +130,9 @@ public class HelpTextPset {
                     "%T Titel des Films\n" +
                     "%t Thema des Films\n" +
                     "\n" +
+                    "%m Dauer des Films in Minuten, z.B.: 25\n" +
+                    "%M Dauer des Films in Minuten, z.B.: 025\n" +
+                    "\n" +
                     "%N Originaldateiname des Films (der kann sehr kryptisch und lang sein)\n" +
                     "%S Suffix des Originaldateinamens des Films (z.B. 'mp4')\n" +
                     "\n" +

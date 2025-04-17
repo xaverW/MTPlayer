@@ -47,11 +47,11 @@ public class InitDownloadAddArray {
             if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
                 addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
                         addDownloadDto.setDataStart, filmsToDownloadList.get(i),
-                        null, "", aktPath, "", true);
+                        null, aktPath, true);
             } else {
                 addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
                         addDownloadDto.setDataStart, filmsToDownloadList.get(i),
-                        null, "", aktPath, "", false);
+                        null, aktPath, false);
             }
 
             if (ProgConfig.DOWNLOAD_DIALOG_START_DOWNLOAD_NOW.getValue()) {

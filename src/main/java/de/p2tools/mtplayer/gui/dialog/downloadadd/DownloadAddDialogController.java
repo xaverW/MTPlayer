@@ -151,7 +151,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
         });
 
         addDownloadDto.btnPropose.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
-        addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen lassen."));
+        addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen"));
         addDownloadDto.btnPropose.setOnAction(event ->
                 addDownloadDto.initPathName.proposeDestination());
 

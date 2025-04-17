@@ -67,7 +67,7 @@ public class FilmPlayFactory {
 //        filmDataMTP.ifPresent(dataMTP -> ProgData.getInstance().startDownload.startUrlWithProgram(dataMTP, psetData, ""));
 
         // todo aus filmGui oder liveFilmGui??
-        ProgData.getInstance().startDownload.startUrlWithProgram(list.get(0), psetData, "");
+        ProgData.getInstance().startDownload.startUrlWithProgram(list.get(0), psetData);
     }
 
     public static synchronized void playFilmList(ArrayList<FilmDataMTP> list) {
