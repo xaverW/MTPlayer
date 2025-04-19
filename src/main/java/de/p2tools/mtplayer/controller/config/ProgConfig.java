@@ -364,6 +364,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILM_GUI_TABLE_ORDER = addStrProp("film-gui-table-order");
     public static StringProperty ADD_BLACK_DIALOG_SIZE = addStrProp("add-black-dialog-size", "600:400");
     public static DoubleProperty FILM_PANE_INFO_DIVIDER = addDoubleProp("film-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+    public static StringProperty BOOKMARK_DIALOG_SIZE = addStrProp("bookmark-dialog-size", "600:400");
 
     // Gui Film -> fast search
     public static BooleanProperty FAST_SEARCH_ON = addBoolProp("fast-search-on", Boolean.FALSE);

@@ -78,6 +78,7 @@ public class ProgIcons {
     public static P2Image ICON_TOOLBAR_REC = new P2Image(ICON_PATH_LONG, "toolbar-rec.png", 26, 26);
     public static P2Image ICON_TOOLBAR_BOOKMARK = new P2Image(ICON_PATH_LONG, "toolbar-bookmark.png", 26, 26);
     public static P2Image ICON_TOOLBAR_BOOKMARK_FILTER = new P2Image(ICON_PATH_LONG, "toolbar-bookmark-filter.png", 26, 26);
+    public static P2Image ICON_TOOLBAR_BOOKMARK_DIALOG = new P2Image(ICON_PATH_LONG, "toolbar-bookmark-dialog.png", 26, 26);
     public static P2Image ICON_TOOLBAR_DEL_BOOKMARK = new P2Image(ICON_PATH_LONG, "toolbar-del-bookmark.png", 26, 26);
     public static P2Image ICON_TOOLBAR_DEL_ALL_BOOKMARK = new P2Image(ICON_PATH_LONG, "toolbar-del-all-bookmark.png", 26, 26);
     public static P2Image ICON_TOOLBAR_LIVE = new P2Image(ICON_PATH_LONG, "toolbar-live.png", 26, 26);

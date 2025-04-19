@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilterSamples;
+import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
@@ -40,6 +41,7 @@ public class FilmMenu {
     private static final String FILM_FILTER_BOOKMARK_TEXT = "Alle angelegte Bookmarks anzeigen\n" +
             "der zweite Klick stellt den\n" +
             "eingestellten Filter wieder her";
+    private static final String FILM_SHOW_BOOKMARK_TEXT = "Alle Bookmarks in einem Dialog anzeigen";
 
     public FilmMenu(VBox vBox) {
         this.vBox = vBox;
@@ -99,6 +101,8 @@ public class FilmMenu {
                 "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.ICON_TOOLBAR_DEL_ALL_BOOKMARK.getImageView());
         final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
                 "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_FILTER.getImageView());
+        final ToolBarButton btShowBookmark = new ToolBarButton(vBox,
+                "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_DIALOG.getImageView());
 
         btBookmark.setOnAction(a -> {
             progData.filmGuiController.bookmarkFilm(true);
@@ -143,6 +147,7 @@ public class FilmMenu {
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
+        btShowBookmark.setOnAction(a -> new BookmarkDialogController());
 
         vBox.getChildren().add(P2GuiTools.getVBoxGrower());
         final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
