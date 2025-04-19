@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.propose.ProposeFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
-import de.p2tools.mtplayer.gui.tools.table.CellFilmButton;
+import de.p2tools.mtplayer.gui.tools.table.TableFilmFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -88,7 +88,7 @@ public class PanePropFilmList {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         final TableColumn<FilmDataMTP, String> startColumn = new TableColumn<>("");
-        startColumn.setCellFactory(new CellFilmButton().cellFactory);
+        TableFilmFactory.columnFactoryButton(startColumn);
         startColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<FilmDataMTP, P2Date> dateColumn = new TableColumn<>("Datum");
