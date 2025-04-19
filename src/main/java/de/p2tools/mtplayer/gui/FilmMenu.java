@@ -125,17 +125,21 @@ public class FilmMenu {
                 // dann ist der BlackFilter aktiv, dann zurückschalten
                 if (storedActFilterSettings != null) {
                     // dann haben wir einen gespeicherten Filter
+                    storedActFilterSettings.setOnlyBookmark(false); // falls der eingeschaltet war
                     progData.filterWorker.setActFilterSettings(storedActFilterSettings);
                     storedActFilterSettings = null;
+
                 } else {
                     // dann gibts keinen gespeicherten, dann einfach löschen
                     progData.filterWorker.getActFilterSettings().clearFilter();
                 }
+
             } else {
                 // dann ist es ein anderer Filter, Black einschalten und ActFilter merken
                 storedActFilterSettings = progData.filterWorker.getActFilterSettings().getCopy();
                 progData.filterWorker.setActFilterSettings(bookmarkFilter);
             }
+
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
