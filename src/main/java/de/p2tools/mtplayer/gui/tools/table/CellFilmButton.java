@@ -69,7 +69,7 @@ public class CellFilmButton<S, T> extends TableCell<S, T> {
 
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("btnFunction", "btnFuncTable");
-                btnBookmark.setGraphic(ProgIcons.IMAGE_TABLE_FILM_BOOKMARK.getImageView());
+                btnBookmark.setGraphic(ProgIcons.IMAGE_TABLE_BOOKMARK.getImageView());
 
                 if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.get()) {
                     btnPlay.setMaxHeight(18);
