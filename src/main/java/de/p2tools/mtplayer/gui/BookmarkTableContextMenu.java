@@ -16,9 +16,11 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.mtplayer.gui.tools.table.TableBookmark;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -35,9 +37,16 @@ public class BookmarkTableContextMenu {
 
     public ContextMenu getContextMenu(BookmarkData bookmarkData) {
         final ContextMenu contextMenu = new ContextMenu();
+
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        CheckMenuItem smallTableRow = new CheckMenuItem("Nur kleine Button anzeigen");
+        smallTableRow.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_SMALL_TABLE_ROW);
+        contextMenu.getItems().addAll(smallTableRow);
+        CheckMenuItem toolTipTable = new CheckMenuItem("Infos beim Überfahren einer Zeile anzeigen");
+        toolTipTable.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_SHOW_TABLE_TOOL_TIP);
+        contextMenu.getItems().addAll(toolTipTable);
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> tableView.resetTable());
-        contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(resetTable);
         return contextMenu;
     }

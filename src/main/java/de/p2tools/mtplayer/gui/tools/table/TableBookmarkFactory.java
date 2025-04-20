@@ -55,7 +55,7 @@ public class TableBookmarkFactory {
                 btnBookmark.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnBookmark.setGraphic(ProgIcons.IMAGE_TABLE_BOOKMARK_DEL.getImageView());
 
-                if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.get()) { //todo
+                if (ProgConfig.BOOKMARK_DIALOG_SMALL_TABLE_ROW.get()) {
                     btnPlay.setMaxHeight(18);
                     btnPlay.setMinHeight(18);
                     btnSave.setMaxHeight(18);

@@ -25,10 +25,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 
 public class DownloadTableContextMenu {
 
@@ -123,13 +120,14 @@ public class DownloadTableContextMenu {
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(miSelectAll, miSelection);
 
-        MenuItem toolTipTable = new MenuItem(ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.getValue() ?
-                "Keine Infos beim Überfahren einer Zeile anzeigen" : "Infos beim Überfahren einer Zeile anzeigen");
-        toolTipTable.setOnAction(a -> ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.setValue(!ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.getValue()));
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        CheckMenuItem smallTableRow = new CheckMenuItem("Nur kleine Button anzeigen");
+        smallTableRow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
+        CheckMenuItem toolTipTable = new CheckMenuItem("Infos beim Überfahren einer Zeile anzeigen");
+        toolTipTable.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP);
         final MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> tableView.resetTable());
-        contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(toolTipTable, resetTable);
+        contextMenu.getItems().addAll(smallTableRow, toolTipTable, resetTable);
     }
 
     private Menu addBlacklist(DownloadData downloadData) {

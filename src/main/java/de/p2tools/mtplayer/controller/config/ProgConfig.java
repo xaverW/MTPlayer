@@ -245,9 +245,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_LOG_DIR = addStrProp("system-log-dir", "");
     public static BooleanProperty SYSTEM_LOG_ON = addBoolProp("system-log-on", Boolean.TRUE);
     public static BooleanProperty SYSTEM_ONLY_ONE_INSTANCE = addBoolProp("system-only-one-instance", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_FILM = addBoolProp("system-small-row-table-film", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addBoolProp("system-small-row-table-download", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_ABO = addBoolProp("system-small-row-table-abo", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SSL_ALWAYS_TRUE = addBoolProp("system-ssl-always-true");
     public static BooleanProperty TIP_OF_DAY_SHOW = addBoolProp("tip-of-day-show", Boolean.TRUE); //Tips anzeigen
     public static StringProperty TIP_OF_DAY_WAS_SHOWN = addStrProp("tip-of-day-was-shown"); //bereits angezeigte Tips
@@ -359,7 +356,8 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty BOOKMARK_TABLE_ORDER = addStrProp("bookmark-table-order");
     public static DoubleProperty BOOKMARK_PANE_INFO_DIVIDER = addDoubleProp("bookmark-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
     public static DoubleProperty BOOKMARK_DIALOG_INFO_DIVIDER = addDoubleProp("bookmark-dialog-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
-
+    public static BooleanProperty BOOKMARK_DIALOG_SHOW_TABLE_TOOL_TIP = addBoolProp("bookmark-dialog-show-table-tool-tip", Boolean.TRUE);
+    public static BooleanProperty BOOKMARK_DIALOG_SMALL_TABLE_ROW = addBoolProp("bookmark-dialog-small-table-row", Boolean.FALSE);
 
     // ===============================================================
     // ====== GUI Filme ===============================================
@@ -368,6 +366,7 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("GUI Filme");
     }
 
+    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_FILM = addBoolProp("system-small-row-table-film", Boolean.FALSE);
     public static BooleanProperty FILM_GUI_SHOW_MENU = addBoolProp("film-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("film-gui-show-table-tool-tip", Boolean.TRUE);
     public static BooleanProperty FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBoolProp("film-gui-filter-dialog-is-showing", Boolean.FALSE);
@@ -409,6 +408,7 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("GUI Live");
     }
 
+    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_LIVE = addBoolProp("system-small-row-table-live", Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_IS_VISIBLE = addBoolProp("live-film-is-visible", Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_GUI_SHOW_MENU = addBoolProp("live-film-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.TRUE);
@@ -450,6 +450,7 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("GUI Download");
     }
 
+    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addBoolProp("system-small-row-table-download", Boolean.FALSE);
     public static StringProperty DOWNLOAD_PATH = addStrProp("download-path" + TAGGER + "start-dialog-download-path", P2InfoFactory.getStandardDownloadPath());
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);
@@ -518,6 +519,7 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("GUI Abo");
     }
 
+    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_ABO = addBoolProp("system-small-row-table-abo", Boolean.FALSE);
     public static BooleanProperty ABO_GUI_SHOW_MENU = addBoolProp("abo-gui-show-menu", Boolean.TRUE);
     public static BooleanProperty ABO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("abo-gui-show-table-tool-tip", Boolean.TRUE);
     public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);

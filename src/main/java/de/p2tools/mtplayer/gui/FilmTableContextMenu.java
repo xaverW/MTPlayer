@@ -30,10 +30,7 @@ import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.starter.StartDownloadFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 
 import java.util.Optional;
 
@@ -87,13 +84,14 @@ public class FilmTableContextMenu {
         Menu mFilm = addFilm(film);
         contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl, mFilm);
 
-        MenuItem toolTipTable = new MenuItem(ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue() ?
-                "Keine Infos beim Überfahren einer Zeile anzeigen" : "Infos beim Überfahren einer Zeile anzeigen");
-        toolTipTable.setOnAction(a -> ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.setValue(!ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue()));
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        CheckMenuItem smallTableRow = new CheckMenuItem("Nur kleine Button anzeigen");
+        smallTableRow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
+        CheckMenuItem toolTipTable = new CheckMenuItem("Infos beim Überfahren einer Zeile anzeigen");
+        toolTipTable.selectedProperty().bindBidirectional(ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP);
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");
         resetTable.setOnAction(a -> tableView.resetTable());
-        contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(toolTipTable, resetTable);
+        contextMenu.getItems().addAll(smallTableRow, toolTipTable, resetTable);
 
         return contextMenu;
     }

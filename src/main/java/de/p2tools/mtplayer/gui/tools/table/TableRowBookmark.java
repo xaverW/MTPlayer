@@ -39,7 +39,7 @@ public class TableRowBookmark<T> extends TableRow<T> {
 
         } else {
             BookmarkData bookmarkData = (BookmarkData) item;
-            if (ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
+            if (ProgConfig.BOOKMARK_DIALOG_SHOW_TABLE_TOOL_TIP.getValue()) {
                 setTooltip(new Tooltip(bookmarkData.getTheme() + "\n" + bookmarkData.getTitle()));
             }
 
