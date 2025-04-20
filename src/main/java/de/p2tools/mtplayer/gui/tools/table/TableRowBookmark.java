@@ -19,14 +19,14 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 
 
-public class TableRowFilm<T> extends TableRow<T> {
+public class TableRowBookmark<T> extends TableRow<T> {
 
-    public TableRowFilm() {
+    public TableRowBookmark() {
     }
 
     @Override
@@ -38,16 +38,13 @@ public class TableRowFilm<T> extends TableRow<T> {
             setTooltip(null);
 
         } else {
-            FilmDataMTP film = (FilmDataMTP) item;
+            BookmarkData bookmarkData = (BookmarkData) item;
             if (ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
-                setTooltip(new Tooltip(film.getTheme() + "\n" + film.getTitle()));
+                setTooltip(new Tooltip(bookmarkData.getTheme() + "\n" + bookmarkData.getTitle()));
             }
 
-            if (film.isBookmark()) {
-                setStyle(ProgColorList.BOOKMARK.getCssBackground());
-
-            } else if (film.isShown()) {
-                setStyle(ProgColorList.FILM_HISTORY.getCssBackground());
+            if (bookmarkData.getFilmDataMTP() == null) {
+                setStyle(ProgColorList.BOOKMARK_NO_FILM.getCssBackground());
 
             } else {
                 setStyle("");

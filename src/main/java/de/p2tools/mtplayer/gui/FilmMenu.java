@@ -116,7 +116,7 @@ public class FilmMenu {
             progData.filmGuiController.tableView.requestFocus();
         });
         btDelAllBookmark.setOnAction(a -> {
-            progData.historyListBookmarks.clearAll(progData.primaryStage);
+            progData.bookmarkList.clearAll(progData.primaryStage);
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
@@ -147,7 +147,11 @@ public class FilmMenu {
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
-        btShowBookmark.setOnAction(a -> new BookmarkDialogController());
+        btShowBookmark.setOnAction(a -> {
+            if (!BookmarkDialogController.isRunning) {
+                new BookmarkDialogController(progData);
+            }
+        });
 
         vBox.getChildren().add(P2GuiTools.getVBoxGrower());
         final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
@@ -254,7 +258,7 @@ public class FilmMenu {
         final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
         miBookmarkDel.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
         final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
-        miBookmarkDelAll.setOnAction(a -> progData.historyListBookmarks.clearAll(progData.primaryStage));
+        miBookmarkDelAll.setOnAction(a -> progData.bookmarkList.clearAll(progData.primaryStage));
 
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);
         mb.getItems().add(submenuBookmark);

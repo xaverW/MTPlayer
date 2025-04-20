@@ -72,7 +72,7 @@ public class TableRowLiveFilm<T> extends TableRow<T> {
             }
 
             if (film.isBookmark()) {
-                setStyle(ProgColorList.FILM_BOOKMARK.getCssBackground());
+                setStyle(ProgColorList.BOOKMARK.getCssBackground());
 
             } else if (film.isShown()) {
                 setStyle(ProgColorList.FILM_HISTORY.getCssBackground());

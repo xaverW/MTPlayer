@@ -186,7 +186,6 @@ public class TableFilmFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-//                    FilmDataMTP film = getTableView().getItems().get(getIndex());
                     FilmPlayFactory.playFilm(film);
 
                     getTableView().refresh();
@@ -196,7 +195,6 @@ public class TableFilmFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-//                    FilmDataMTP film = getTableView().getItems().get(getIndex());
                     FilmSaveFactory.saveFilm(film);
 
                     getTableView().refresh();
@@ -206,8 +204,7 @@ public class TableFilmFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-//                    FilmDataMTP film = getTableView().getItems().get(getIndex());
-                    FilmToolsFactory.changeBookmarkFilm(film);
+                    FilmToolsFactory.changeBookmark(film);
 
                     getTableView().refresh();
                     getTableView().requestFocus();
@@ -215,7 +212,6 @@ public class TableFilmFactory {
                 hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);
                 setGraphic(hbox);
 
-//                FilmDataMTP film = getTableView().getItems().get(getIndex());
                 set(film, this);
             }
         });

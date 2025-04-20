@@ -18,7 +18,8 @@ package de.p2tools.mtplayer.controller.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.history.HistoryList;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkList;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
@@ -30,10 +31,7 @@ import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 
 public class FilmToolsFactory {
     private static int countDouble = 0;
@@ -50,7 +48,18 @@ public class FilmToolsFactory {
         }
     }
 
-    public static void changeBookmarkFilm(FilmDataMTP film) {
+    public static void removeBookmark(BookmarkData bookmarkData) {
+        // Button in der Tabelle BookmarkDialog
+        if (bookmarkData.getFilmDataMTP() == null) {
+            final HashSet<String> hash = new HashSet<>(1, 0.75F);
+            hash.add(bookmarkData.getUrl());
+            ProgData.getInstance().bookmarkList.removeFromBookmark(hash);
+        } else {
+            bookmarkFilm(bookmarkData.getFilmDataMTP(), false);
+        }
+    }
+
+    public static void changeBookmark(FilmDataMTP film) {
         // Button in der Tabelle
         bookmarkFilm(film, !film.isBookmark());
     }
@@ -65,30 +74,40 @@ public class FilmToolsFactory {
     public static void bookmarkFilmList(ArrayList<FilmDataMTP> filmArrayList, boolean bookmark) {
         // Button Tabelle oder Menü
         if (bookmark) {
-            ProgData.getInstance().historyListBookmarks.addFilmDataListToHistory(filmArrayList);
+            ProgData.getInstance().bookmarkList.addFilmDataToBookmark(filmArrayList);
         } else {
-            ProgData.getInstance().historyListBookmarks.removeFilmDataFromHistory(filmArrayList);
+            ProgData.getInstance().bookmarkList.removeFilmDataFromBookmark(filmArrayList);
         }
     }
 
-    public static void clearAllBookmarks() {
-        FilmListMTP filmlist = ProgData.getInstance().filmList;
-        filmlist.stream().forEach(film -> film.setBookmark(false));
-    }
-
     public static void markBookmarks() {
-        if (ProgData.getInstance().historyListBookmarks.isEmpty()) {
+        if (ProgData.getInstance().bookmarkList.isEmpty()) {
             return;
         }
 
         FilmListMTP filmlist = ProgData.getInstance().filmList;
-        HistoryList bookmarks = ProgData.getInstance().historyListBookmarks;
+        BookmarkList bookmarkList = ProgData.getInstance().bookmarkList;
 
-        filmlist.stream().forEach(film -> {
-            if (bookmarks.checkIfUrlAlreadyIn(film.getUrlHistory())) {
+//        P2Duration.counterStart("markBookmarks1");
+//        filmlist.forEach(film -> {
+//            if (bookmarks.checkIfUrlAlreadyIn(film.getUrlHistory())) {
+//                film.setBookmark(true);
+//            }
+//        });
+//        P2Duration.counterStop("markBookmarks1");
+
+        HashMap<String, BookmarkData> hash = new HashMap<>();
+        bookmarkList.forEach(b -> hash.put(b.getUrl(), b));
+
+        P2Duration.counterStart("markBookmarks2");
+        filmlist.forEach(film -> {
+            BookmarkData bookmarkData = hash.get(film.getUrlHistory());
+            if (bookmarkData != null) {
                 film.setBookmark(true);
+                bookmarkData.setFilmDataMTP(film);
             }
         });
+        P2Duration.counterStop("markBookmarks2");
     }
 
     /**

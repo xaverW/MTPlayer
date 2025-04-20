@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.history.HistoryData;
-import de.p2tools.mtplayer.controller.history.HistoryList;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
+import de.p2tools.mtplayer.controller.data.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.alert.P2Alert;

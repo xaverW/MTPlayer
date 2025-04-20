@@ -346,6 +346,21 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILTER_DOWNLOAD_ABO = addStrProp("filter-download-abo");
     public static StringProperty FILTER_DOWNLOAD_STATE = addStrProp("filter-download-state");
 
+    // Bookmark
+    static {
+        addComment("Bookmark");
+    }
+
+    public static StringProperty BOOKMARK_DIALOG_SIZE = addStrProp("bookmark-dialog-size", "600:800");
+    public static StringProperty BOOKMARK_TABLE_WIDTH = addStrProp("bookmark-table-width");
+    public static StringProperty BOOKMARK_TABLE_SORT = addStrProp("bookmark-table-sort");
+    public static StringProperty BOOKMARK_TABLE_UP_DOWN = addStrProp("bookmark-table-up-down");
+    public static StringProperty BOOKMARK_TABLE_VIS = addStrProp("bookmark-table-vis");
+    public static StringProperty BOOKMARK_TABLE_ORDER = addStrProp("bookmark-table-order");
+    public static DoubleProperty BOOKMARK_PANE_INFO_DIVIDER = addDoubleProp("bookmark-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+    public static DoubleProperty BOOKMARK_DIALOG_INFO_DIVIDER = addDoubleProp("bookmark-dialog-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+
+
     // ===============================================================
     // ====== GUI Filme ===============================================
     // ===============================================================
@@ -364,7 +379,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILM_GUI_TABLE_ORDER = addStrProp("film-gui-table-order");
     public static StringProperty ADD_BLACK_DIALOG_SIZE = addStrProp("add-black-dialog-size", "600:400");
     public static DoubleProperty FILM_PANE_INFO_DIVIDER = addDoubleProp("film-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
-    public static StringProperty BOOKMARK_DIALOG_SIZE = addStrProp("bookmark-dialog-size", "600:400");
 
     // Gui Film -> fast search
     public static BooleanProperty FAST_SEARCH_ON = addBoolProp("fast-search-on", Boolean.FALSE);

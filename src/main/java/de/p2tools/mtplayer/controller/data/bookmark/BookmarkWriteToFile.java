@@ -15,10 +15,11 @@
  */
 
 
-package de.p2tools.mtplayer.controller.history;
+package de.p2tools.mtplayer.controller.data.bookmark;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
@@ -30,17 +31,17 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
-public class HistoryWriteToFile implements Runnable {
+public class BookmarkWriteToFile implements Runnable {
 
 
-    private final List<HistoryData> list;
+    private final List<BookmarkData> list;
     private final boolean append;
     private final BooleanProperty isWorking;
     private final String settingsDir;
     private final String fileName;
 
-    public HistoryWriteToFile(String settingsDir, String fileName, List<HistoryData> list,
-                              boolean append, BooleanProperty isWorking) {
+    public BookmarkWriteToFile(String settingsDir, String fileName, List<BookmarkData> list,
+                               boolean append, BooleanProperty isWorking) {
         this.settingsDir = settingsDir;
         this.fileName = fileName;
         this.list = list;
@@ -55,42 +56,37 @@ public class HistoryWriteToFile implements Runnable {
     }
 
     private void doWork() {
-        final Path urlPath = HistoryFactory.getUrlFilePath(settingsDir, fileName);
+        final Path urlPath = FileFactory.getUrlFilePath(settingsDir, fileName);
         if (Files.notExists(urlPath)) {
             return;
         }
 
         P2Duration.counterStart("doWork");
         if (append) {
-            P2Log.sysLog("An Historyliste anfügen: " + list.size() + ", Datei: " + fileName);
+            P2Log.sysLog("Bookmarks: An Liste anfügen: " + list.size() + ", Datei: " + fileName);
         } else {
-            P2Log.sysLog("Ganze Historyliste schreiben: " + list.size() + ", Datei: " + fileName);
+            P2Log.sysLog("Ganze Bookmark-Liste schreiben: " + list.size() + ", Datei: " + fileName);
         }
 
         // und jetzt schreiben
-        writeHistoryDataToFile(list, append);
+        writeDataToFile(list, append);
         list.clear(); // wird nicht mehr gebraucht
 
-//        PListener.notify(PListener.EVENT_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED);
         P2Duration.counterStop("doWork");
     }
 
-    private boolean writeHistoryDataToFile(List<HistoryData> list, boolean append) {
-        boolean ret = false;
+    private void writeDataToFile(List<BookmarkData> list, boolean append) {
         try (BufferedWriter bufferedWriter = (append ?
-                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(HistoryFactory.getUrlFilePath(settingsDir, fileName), StandardOpenOption.APPEND))) :
-                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(HistoryFactory.getUrlFilePath(settingsDir, fileName)))))
+                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(FileFactory.getUrlFilePath(settingsDir, fileName), StandardOpenOption.APPEND))) :
+                new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(FileFactory.getUrlFilePath(settingsDir, fileName)))))
         ) {
-            for (final HistoryData historyData : list) {
-                final String line = HistoryFactory.getLine(historyData);
+            for (final BookmarkData bookmarkData : list) {
+                final String line = BookmarkFactory.getLine(bookmarkData);
                 bufferedWriter.write(line);
             }
-            ret = true;
         } catch (final Exception ex) {
             P2Log.errorLog(420312459, ex);
         }
-
-        return ret;
     }
 }

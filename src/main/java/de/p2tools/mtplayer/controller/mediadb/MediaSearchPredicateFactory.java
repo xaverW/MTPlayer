@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.mediadb;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.history.HistoryData;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.p2lib.mtfilter.Filter;
 import de.p2tools.p2lib.mtfilter.FilterCheck;
 import javafx.beans.property.IntegerProperty;

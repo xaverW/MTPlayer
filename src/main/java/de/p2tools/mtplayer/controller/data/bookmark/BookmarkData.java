@@ -14,23 +14,37 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.history;
+package de.p2tools.mtplayer.controller.data.bookmark;
 
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.mtfilm.tools.FilmDate;
 import de.p2tools.p2lib.tools.GermanStringSorter;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-public class HistoryData implements Comparable<HistoryData> {
+public class BookmarkData extends P2DataSample<BookmarkData> {
 
     private final static FastDateFormat sdf_datum = FastDateFormat.getInstance("dd.MM.yyyy");
     private final static GermanStringSorter sorter = GermanStringSorter.getInstance();
 
-    public final String title;
-    public final String theme;
-    public final String url;
-    public FilmDate date;
+    private final String title;
+    private final String theme;
+    private final String url;
+    private FilmDate date;
+    private FilmDataMTP filmDataMTP = null;
+    private String buttonDummy = "";
 
-    public HistoryData(String date, String theme, String title, String url) {
+    public BookmarkData(FilmDataMTP filmDataMTP) {
+        // beim Neuanlegen eines Bookmarks
+        this.title = filmDataMTP.getTitle();
+        this.theme = filmDataMTP.getTheme();
+        this.url = filmDataMTP.getUrlHistory();
+        this.date = new FilmDate();
+        this.filmDataMTP = filmDataMTP;
+    }
+
+    public BookmarkData(String date, String theme, String title, String url) {
+        // beim Einlesen der Datei
         this.title = title;
         this.theme = theme;
         this.url = url;
@@ -57,8 +71,20 @@ public class HistoryData implements Comparable<HistoryData> {
         return date;
     }
 
+    public FilmDataMTP getFilmDataMTP() {
+        return filmDataMTP;
+    }
+
+    public void setFilmDataMTP(FilmDataMTP filmDataMTP) {
+        this.filmDataMTP = filmDataMTP;
+    }
+
+    public String getButtonDummy() {
+        return buttonDummy;
+    }
+
     @Override
-    public int compareTo(HistoryData arg0) {
-        return sorter.compare(getTitle(), arg0.getTitle());
+    public int compareTo(BookmarkData arg0) {
+        return sorter.compare(getUrl(), arg0.getUrl());
     }
 }

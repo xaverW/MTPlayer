@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.controller.data.cleaningdata;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.history.HistoryData;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 
 import java.util.Hashtable;
 

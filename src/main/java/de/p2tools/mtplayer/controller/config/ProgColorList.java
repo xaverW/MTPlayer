@@ -41,10 +41,13 @@ public class ProgColorList extends P2ColorList {
             Color.rgb(223, 223, 223), Color.rgb(70, 70, 70), "Tabelle Filme, gesehen");
     public static final P2ColorData FILM_NEW = addNewKey("COLOR_FILM_NEW",
             Color.rgb(0, 0, 240), Color.rgb(0, 0, 240), "Tabelle Filme, neue");
-    public static final P2ColorData FILM_BOOKMARK = addNewKey("COLOR_FILM_BOKMARK",
-            Color.rgb(255, 236, 151), Color.rgb(177, 164, 105), "Tabelle Filme, Bookmarks");
     public static final P2ColorData FILM_GEOBLOCK = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND",
             Color.rgb(255, 168, 0), Color.rgb(236, 153, 0), "Tabelle Filme, geogeblockt");
+
+    public static final P2ColorData BOOKMARK = addNewKey("COLOR_FILM_BOOKMARK",
+            Color.rgb(255, 236, 151), Color.rgb(177, 164, 105), "Tabelle Filme, Bookmarks");
+    public static final P2ColorData BOOKMARK_NO_FILM = addNewKey("COLOR_FILM_BOOKMARK_NO_FILM",
+            Color.rgb(255, 212, 206), Color.rgb(163, 82, 82), "Dialog Bookmarks, Bookmark ohne Film");
 
     // Tabelle Downloads
     public static final P2ColorData DOWNLOAD_WAIT = addNewKey("COLOR_DOWNLOAD_WAIT",
@@ -53,7 +56,8 @@ public class ProgColorList extends P2ColorList {
             Color.rgb(255, 245, 176), Color.rgb(174, 150, 85), "Tabelle Download, läuft");
     public static final P2ColorData DOWNLOAD_FINISHED = addNewKey("COLOR_DOWNLOAD_FINISHED",
             Color.rgb(206, 255, 202), Color.rgb(79, 129, 74), "Tabelle Download, fertig");
-    public static final P2ColorData DOWNLOAD_ERROR = addNewKey("COLOR_DOWNLOAD_ERROR", Color.rgb(255, 233, 233), Color.rgb(163, 82, 82), "Tabelle Download, fehlerhaft");
+    public static final P2ColorData DOWNLOAD_ERROR = addNewKey("COLOR_DOWNLOAD_ERROR",
+            Color.rgb(255, 233, 233), Color.rgb(163, 82, 82), "Tabelle Download, fehlerhaft");
 
     // Tabelle Abos
     public static final P2ColorData ABO_SWITCHED_OFF = addNewKey("COLOR_ABO_SWITCHED_OFF",

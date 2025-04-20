@@ -21,18 +21,19 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.data.abo.AboList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackListFilter;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkList;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.download.ReplaceList;
 import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorList;
+import de.p2tools.mtplayer.controller.data.history.HistoryList;
 import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmListWorker;
 import de.p2tools.mtplayer.controller.filmfilter.*;
-import de.p2tools.mtplayer.controller.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
 import de.p2tools.mtplayer.controller.starter.StartDownload;
@@ -137,7 +138,7 @@ public class ProgData {
     public MediaCollectionDataList mediaCollectionDataList = null;
     public HistoryList historyList; // alle angesehenen Filme
     public HistoryList historyListAbos; // erfolgreich geladenen Abos
-    public HistoryList historyListBookmarks; // markierte Filme
+    public BookmarkList bookmarkList; // markierte Filme
     public ProposeList proposeList;
     public final BlackListFilter blackListFilterFilmList;
     public final BlackListFilter blackListFilterBlackList;
@@ -170,12 +171,9 @@ public class ProgData {
 
         filmFilterRunner = new FilmFilterRunner(this);
 
-        historyList = new HistoryList(ProgConst.FILE_HISTORY,
-                ProgInfos.getSettingsDirectory_String(), HistoryList.HISTORY_LIST.HISTORY);
-        historyListAbos = new HistoryList(ProgConst.FILE_FINISHED_ABOS,
-                ProgInfos.getSettingsDirectory_String(), HistoryList.HISTORY_LIST.ABO);
-        historyListBookmarks = new HistoryList(ProgConst.FILE_BOOKMARKS,
-                ProgInfos.getSettingsDirectory_String(), HistoryList.HISTORY_LIST.BOOKMARK);
+        historyList = new HistoryList(ProgConst.FILE_HISTORY, HistoryList.HISTORY_LIST.HISTORY);
+        historyListAbos = new HistoryList(ProgConst.FILE_FINISHED_ABOS, HistoryList.HISTORY_LIST.ABO);
+        bookmarkList = new BookmarkList(ProgConst.FILE_BOOKMARKS);
 
         mediaDataList = new MediaDataList();
         mediaCollectionDataList = new MediaCollectionDataList();
@@ -194,13 +192,6 @@ public class ProgData {
 
         worker = new Worker(this);
     }
-
-//    public synchronized static ProgData getInstance(String dir) {
-//        if (!dir.isEmpty()) {
-//            configDir = dir;
-//        }
-//        return getInstance();
-//    }
 
     public synchronized static ProgData getInstance() {
         return instance == null ? instance = new ProgData() : instance;
