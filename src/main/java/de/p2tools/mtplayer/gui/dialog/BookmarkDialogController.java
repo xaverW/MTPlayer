@@ -28,16 +28,17 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -52,8 +53,11 @@ public class BookmarkDialogController extends P2DialogExtra {
     private final TableBookmark tableView;
     private final ProgData progData;
     private final PaneBookmarkInfo paneBookmarkInfo;
-    private final SplitPane splitPane = new SplitPane();
     private final Label lblSize = new Label();
+    private final Button btnDelAll = new Button("Alle löschen");
+    private final Button btnDelNoFilm = new Button("Löschen ohne Film");
+    private final P2ToggleSwitch tglShow = new P2ToggleSwitch("Infos");
+
 
     public BookmarkDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
@@ -68,25 +72,34 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     @Override
     public void make() {
-        // getHBoxTitle().getChildren().add(new Label("Bookmarks"));
-        getVBoxCont().getChildren().add(splitPane);
-        getVBoxCont().setPadding(new Insets(P2LibConst.PADDING));
-        getVBoxCont().setSpacing(P2LibConst.PADDING_VBOX);
+        getHBoxTitle().getChildren().add(new Label("Bookmarks"));
+
+        tglShow.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
+        paneBookmarkInfo.visibleProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
+        paneBookmarkInfo.managedProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
+
+        btnDelAll.setTooltip(new Tooltip("Alle Bookmarks löschen"));
+        btnDelNoFilm.setTooltip(new Tooltip("Alle Bookmarks die keinen Film in der Filmliste haben, löschen"));
+        btnDelAll.setOnAction(a -> progData.bookmarkList.clearAll(this.getStage()));
+        btnDelNoFilm.setOnAction(a -> progData.bookmarkList.clearAllWithoutFilm(this.getStage()));
 
         HBox hBoxSize = new HBox(P2LibConst.SPACING_HBOX);
         hBoxSize.setPadding(new Insets(P2LibConst.PADDING_HBOX));
-        hBoxSize.getChildren().addAll(new Label("Anzahl: "), lblSize);
+        hBoxSize.getChildren().addAll(btnDelAll, btnDelNoFilm, tglShow,
+                P2GuiTools.getHBoxGrower(),
+                new Label("Anzahl: "), lblSize);
         hBoxSize.setAlignment(Pos.CENTER_RIGHT);
 
         VBox vboxCont = new VBox();
         vboxCont.getChildren().addAll(tableView, hBoxSize);
         VBox.setVgrow(tableView, Priority.ALWAYS);
 
-        splitPane.getItems().addAll(vboxCont, paneBookmarkInfo);
-        splitPane.setOrientation(Orientation.VERTICAL);
-        SplitPane.setResizableWithParent(paneBookmarkInfo, Boolean.FALSE);
-        splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_INFO_DIVIDER);
-        VBox.setVgrow(splitPane, Priority.ALWAYS);
+        vboxCont.getChildren().add(paneBookmarkInfo);
+        getVBoxCont().getChildren().add(vboxCont);
+        VBox.setVgrow(vboxCont, Priority.ALWAYS);
+
+        getVBoxCont().setPadding(new Insets(P2LibConst.PADDING));
+        getVBoxCont().setSpacing(P2LibConst.PADDING_VBOX);
 
         Button btnOk = new Button("Ok");
         btnOk.setOnAction(a -> {

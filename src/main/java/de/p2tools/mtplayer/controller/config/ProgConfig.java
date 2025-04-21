@@ -358,6 +358,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static DoubleProperty BOOKMARK_DIALOG_INFO_DIVIDER = addDoubleProp("bookmark-dialog-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
     public static BooleanProperty BOOKMARK_DIALOG_SHOW_TABLE_TOOL_TIP = addBoolProp("bookmark-dialog-show-table-tool-tip", Boolean.TRUE);
     public static BooleanProperty BOOKMARK_DIALOG_SMALL_TABLE_ROW = addBoolProp("bookmark-dialog-small-table-row", Boolean.FALSE);
+    public static BooleanProperty BOOKMARK_DIALOG_SHOW_INFO = addBoolProp("bookmark-dialog-show-info", Boolean.TRUE);
 
     // ===============================================================
     // ====== GUI Filme ===============================================

@@ -90,7 +90,7 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> {
 
     //===============
     public synchronized void clearAll(Stage stage) {
-        // aus dem Menü (Bookmark löschen), Dialog Mediensammlung: Alles löschen (Abo, History)
+        // aus dem Menü (Bookmark löschen), Dialog Mediensammlung: Alles löschen (Abo, History), Dialog Bookmark
         final int size = this.size();
 
         if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
@@ -100,6 +100,31 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> {
             clearList();
             FileFactory.deleteHistoryFile(settingsDir, fileName);
             ProgData.getInstance().filmList.forEach(film -> film.setBookmark(false));
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED); //todo
+        }
+    }
+
+    public synchronized void clearAllWithoutFilm(Stage stage) {
+        // Dialog Bookmark
+        int size = 0;
+        List<BookmarkData> delList = new ArrayList<>();
+        for (BookmarkData b : this) {
+            if (b.getFilmDataMTP() == null) {
+                ++size;
+                delList.add(b);
+            }
+        }
+        if (size == 0) {
+            return;
+        }
+
+        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
+                "Soll die " + size + " Bookmarks" +
+                        " gelöscht werden?")) {
+
+            final HashSet<String> hash = new HashSet<>(1, 0.75F);
+            delList.forEach(bookmarkData -> hash.add(bookmarkData.getUrl()));
+            ProgData.getInstance().bookmarkList.removeFromBookmark(hash);
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED); //todo
         }
     }

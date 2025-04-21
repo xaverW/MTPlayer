@@ -16,70 +16,65 @@
 
 package de.p2tools.mtplayer.gui.infoPane;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
-public class PaneBookmarkInfo extends VBox {
+public class PaneBookmarkInfo extends GridPane {
 
-    private final Label lblTitle = new Label("");
-    private final Label lblTheme = new Label("");
-    private final Label lblUrl = new Label("");
-    private final Label lblDate = new Label();
-    private final Label lblFilm = new Label("Kein Film in der Liste");
+    private final Label lblTitleS = new Label("");
+    private final Label lblThemeS = new Label("");
+    private final Label lblUrlS = new Label("");
+    private final Label lblDateS = new Label();
 
-    private BookmarkData bookmarkData = null;
+    private final Text text = new Text("Kein Film in der Liste");
 
     public PaneBookmarkInfo() {
-        VBox.setVgrow(this, Priority.ALWAYS);
-        final GridPane gridPane = new GridPane();
+        final GridPane gridPane = this;
         gridPane.getStyleClass().add("extra-pane-info");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
 
         int row = 0;
-        gridPane.add(new Label("Titel: "), 0, row);
-        gridPane.add(lblTitle, 1, row, 2, 1);
-        gridPane.add(new Label("Thema: "), 0, ++row);
-        gridPane.add(lblTheme, 1, row, 2, 1);
-        gridPane.add(new Label("URL: "), 0, ++row);
-        gridPane.add(lblUrl, 1, row, 2, 1);
-        gridPane.add(new Label("Datum: "), 0, ++row);
-        gridPane.add(lblDate, 1, row);
-        gridPane.add(lblFilm, 2, row);
-        VBox.setVgrow(gridPane, Priority.ALWAYS);
+        gridPane.add(new Label("Titel:"), 0, row);
+        gridPane.add(lblTitleS, 1, row, 2, 1);
+        gridPane.add(new Label("Thema:"), 0, ++row);
+        gridPane.add(lblThemeS, 1, row, 2, 1);
+        gridPane.add(new Label("URL:"), 0, ++row);
+        gridPane.add(lblUrlS, 1, row, 2, 1);
+        gridPane.add(new Label("Datum:"), 0, ++row);
+        gridPane.add(lblDateS, 1, row);
+        gridPane.add(text, 2, row);
 
-        lblFilm.setVisible(false);
-
-        setSpacing(0);
-        setPadding(new Insets(0));
-        getChildren().add(gridPane);
+        text.setVisible(false);
+        text.setFont(Font.font(null, FontWeight.BOLD, -1));
     }
 
     public void setBookmarkData(BookmarkData bookmarkData) {
-        this.bookmarkData = bookmarkData;
-
         if (bookmarkData == null) {
-            lblTheme.setText("");
-            lblTitle.setText("");
-            lblUrl.setText("");
-            lblDate.setText("");
-            lblFilm.setVisible(false);
+            lblTitleS.setText("");
+            lblThemeS.setText("");
+            lblUrlS.setText("");
+            lblDateS.setText("");
+            text.setVisible(false);
             return;
         }
 
-        lblTheme.setText(bookmarkData.getTheme());
-        lblTitle.setText(bookmarkData.getTitle());
-        lblUrl.setText(bookmarkData.getUrl());
-        lblDate.setText(bookmarkData.getDate().get_dd_MM_yyyy());
-        lblFilm.setVisible(bookmarkData.getFilmDataMTP() == null);
+        lblTitleS.setText(bookmarkData.getTitle());
+        lblThemeS.setText(bookmarkData.getTheme());
+        lblUrlS.setText(bookmarkData.getUrl());
+        lblDateS.setText(bookmarkData.getDate().get_dd_MM_yyyy());
+        text.setVisible(bookmarkData.getFilmDataMTP() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
     }
 }
 
