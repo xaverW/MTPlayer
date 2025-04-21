@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 
@@ -39,12 +40,17 @@ public class TableRowBookmark<T> extends TableRow<T> {
 
         } else {
             BookmarkData bookmarkData = (BookmarkData) item;
+            FilmDataMTP film = bookmarkData.getFilmData();
+
             if (ProgConfig.BOOKMARK_DIALOG_SHOW_TABLE_TOOL_TIP.getValue()) {
                 setTooltip(new Tooltip(bookmarkData.getTheme() + "\n" + bookmarkData.getTitle()));
             }
 
             if (bookmarkData.getFilmData() == null) {
                 setStyle(ProgColorList.BOOKMARK_NO_FILM.getCssBackground());
+
+            } else if (film != null && film.isShown()) {
+                setStyle(ProgColorList.FILM_HISTORY.getCssBackground());
 
             } else {
                 setStyle("");
