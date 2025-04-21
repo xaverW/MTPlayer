@@ -31,7 +31,7 @@ public class BookmarkData extends P2DataSample<BookmarkData> {
     private final String theme;
     private final String url;
     private FilmDate date;
-    private FilmDataMTP filmDataMTP = null;
+    private FilmDataMTP filmData = null;
     private String buttonDummy = "";
 
     public BookmarkData(FilmDataMTP filmDataMTP) {
@@ -40,7 +40,7 @@ public class BookmarkData extends P2DataSample<BookmarkData> {
         this.theme = filmDataMTP.getTheme();
         this.url = filmDataMTP.getUrlHistory();
         this.date = new FilmDate();
-        this.filmDataMTP = filmDataMTP;
+        this.filmData = filmDataMTP;
     }
 
     public BookmarkData(String date, String theme, String title, String url) {
@@ -71,12 +71,12 @@ public class BookmarkData extends P2DataSample<BookmarkData> {
         return date;
     }
 
-    public FilmDataMTP getFilmDataMTP() {
-        return filmDataMTP;
+    public FilmDataMTP getFilmData() {
+        return filmData;
     }
 
-    public void setFilmDataMTP(FilmDataMTP filmDataMTP) {
-        this.filmDataMTP = filmDataMTP;
+    public void setFilmData(FilmDataMTP filmData) {
+        this.filmData = filmData;
     }
 
     public String getButtonDummy() {

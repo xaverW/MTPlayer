@@ -113,7 +113,7 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> {
 
     public boolean withNoFilmIsPresent() {
         // prüfen, ob welche ohne Film enthalten sind
-        Optional<BookmarkData> opt = this.stream().filter(p -> p.getFilmDataMTP() == null).findAny();
+        Optional<BookmarkData> opt = this.stream().filter(p -> p.getFilmData() == null).findAny();
         return opt.isPresent();
     }
 

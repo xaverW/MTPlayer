@@ -57,7 +57,7 @@ public class BookmarkFactory {
         int size = 0;
         List<BookmarkData> delList = new ArrayList<>();
         for (BookmarkData b : ProgData.getInstance().bookmarkList) {
-            if (b.getFilmDataMTP() == null) {
+            if (b.getFilmData() == null) {
                 ++size;
                 delList.add(b);
             }
@@ -81,12 +81,12 @@ public class BookmarkFactory {
 
     public static void removeBookmark(BookmarkData bookmarkData) {
         // Button in der Tabelle BookmarkDialog
-        if (bookmarkData.getFilmDataMTP() == null) {
+        if (bookmarkData.getFilmData() == null) {
             final HashSet<String> hash = new HashSet<>(1, 0.75F);
             hash.add(bookmarkData.getUrl());
             ProgData.getInstance().bookmarkList.removeUrlHashSet(hash);
         } else {
-            removeBookmark(bookmarkData.getFilmDataMTP());
+            removeBookmark(bookmarkData.getFilmData());
         }
     }
 
@@ -167,7 +167,7 @@ public class BookmarkFactory {
             BookmarkData bookmarkData = hash.get(film.getUrlHistory());
             if (bookmarkData != null) {
                 film.setBookmark(true);
-                bookmarkData.setFilmDataMTP(film);
+                bookmarkData.setFilmData(film);
             }
         });
         P2Duration.counterStop("markBookmarks2");

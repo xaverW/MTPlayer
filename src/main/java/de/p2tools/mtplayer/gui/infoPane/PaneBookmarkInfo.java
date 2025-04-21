@@ -74,7 +74,7 @@ public class PaneBookmarkInfo extends GridPane {
         lblThemeS.setText(bookmarkData.getTheme());
         lblUrlS.setText(bookmarkData.getUrl());
         lblDateS.setText(bookmarkData.getDate().get_dd_MM_yyyy());
-        text.setVisible(bookmarkData.getFilmDataMTP() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
+        text.setVisible(bookmarkData.getFilmData() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
     }
 }
 

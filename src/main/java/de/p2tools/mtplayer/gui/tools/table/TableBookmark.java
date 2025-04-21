@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.mtfilm.tools.FilmDate;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -88,6 +89,11 @@ public class TableBookmark extends PTable<BookmarkData> {
         startColumn.getStyleClass().add("alignCenter");
         TableBookmarkFactory.columnFactoryButton(startColumn);
 
+        final TableColumn<BookmarkData, FilmDataMTP> filmColumn = new TableColumn<>("Film");
+        filmColumn.setCellValueFactory(new PropertyValueFactory<>("filmData"));
+        filmColumn.getStyleClass().add("special-column-style");
+        TableBookmarkFactory.columnFactoryFilmData(filmColumn);
+
         final TableColumn<BookmarkData, String> urlColumn = new TableColumn<>("Url");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         urlColumn.getStyleClass().add("special-column-style");
@@ -96,6 +102,6 @@ public class TableBookmark extends PTable<BookmarkData> {
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.getStyleClass().add("special-column-style");
 
-        getColumns().addAll(titleColumn, themeColumn, startColumn, urlColumn, dateColumn);
+        getColumns().addAll(titleColumn, themeColumn, startColumn, filmColumn, urlColumn, dateColumn);
     }
 }

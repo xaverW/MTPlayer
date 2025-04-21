@@ -43,7 +43,7 @@ public class TableRowBookmark<T> extends TableRow<T> {
                 setTooltip(new Tooltip(bookmarkData.getTheme() + "\n" + bookmarkData.getTitle()));
             }
 
-            if (bookmarkData.getFilmDataMTP() == null) {
+            if (bookmarkData.getFilmData() == null) {
                 setStyle(ProgColorList.BOOKMARK_NO_FILM.getCssBackground());
 
             } else {

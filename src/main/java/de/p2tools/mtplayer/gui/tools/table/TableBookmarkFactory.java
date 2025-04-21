@@ -11,12 +11,38 @@ import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
 
 public class TableBookmarkFactory {
     private TableBookmarkFactory() {
+    }
+
+    public static void columnFactoryFilmData(TableColumn<BookmarkData, FilmDataMTP> column) {
+        column.setCellFactory(c -> new TableCell<>() {
+            @Override
+            protected void updateItem(FilmDataMTP item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+
+                setAlignment(Pos.CENTER);
+                CheckBox box = new CheckBox();
+                box.setMaxHeight(6);
+                box.setMinHeight(6);
+                box.setPrefSize(6, 6);
+                box.setDisable(true);
+                box.getStyleClass().add("checkbox-table");
+                box.setSelected(true);
+                setGraphic(box);
+            }
+        });
     }
 
     public static void columnFactoryButton(TableColumn<BookmarkData, String> column) {
@@ -32,7 +58,7 @@ public class TableBookmarkFactory {
                 }
 
                 final BookmarkData bookmarkData = getTableView().getItems().get(getIndex());
-                final FilmDataMTP filmDataMTP = bookmarkData.getFilmDataMTP();
+                final FilmDataMTP filmDataMTP = bookmarkData.getFilmData();
                 final HBox hbox = new HBox();
                 hbox.setSpacing(4);
                 hbox.setAlignment(Pos.CENTER);
@@ -102,7 +128,7 @@ public class TableBookmarkFactory {
     }
 
     public static void set(BookmarkData bookmarkData, TableCell tableCell) {
-        if (bookmarkData.getFilmDataMTP() == null) {
+        if (bookmarkData.getFilmData() == null) {
             tableCell.setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
 
         } else {
