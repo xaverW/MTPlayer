@@ -8,6 +8,7 @@ import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
+import de.p2tools.p2lib.mtfilm.film.FilmData;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -90,26 +91,44 @@ public class TableBookmarkFactory {
                     btnBookmark.setMinHeight(18);
                 }
 
-                btnPlay.setDisable(filmDataMTP == null);
+//                btnPlay.setDisable(filmDataMTP == null); // todo?
                 btnPlay.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-                    FilmPlayFactory.playFilm(filmDataMTP);
+                    if (bookmarkData.getFilmData() == null) {
+                        FilmDataMTP filmData = new FilmDataMTP();
+                        filmData.arr[FilmData.FILM_TITLE] = bookmarkData.getTitle();
+                        filmData.arr[FilmData.FILM_THEME] = bookmarkData.getTheme();
+                        filmData.arr[FilmData.FILM_URL] = bookmarkData.getUrl();
+                        FilmPlayFactory.playFilm(filmData);
+                    } else {
+                        FilmPlayFactory.playFilm(filmDataMTP);
+                    }
 
                     getTableView().refresh();
                     getTableView().requestFocus();
                 });
-                btnSave.setDisable(filmDataMTP == null);
+
+//                btnSave.setDisable(filmDataMTP == null); // todo?
                 btnSave.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-                    FilmSaveFactory.saveFilm(filmDataMTP);
+                    if (bookmarkData.getFilmData() == null) {
+                        FilmDataMTP filmData = new FilmDataMTP();
+                        filmData.arr[FilmData.FILM_TITLE] = bookmarkData.getTitle();
+                        filmData.arr[FilmData.FILM_THEME] = bookmarkData.getTheme();
+                        filmData.arr[FilmData.FILM_URL] = bookmarkData.getUrl();
+                        FilmSaveFactory.saveFilm(filmData);
+                    } else {
+                        FilmSaveFactory.saveFilm(filmDataMTP);
+                    }
 
                     getTableView().refresh();
                     getTableView().requestFocus();
                 });
+
                 btnBookmark.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
