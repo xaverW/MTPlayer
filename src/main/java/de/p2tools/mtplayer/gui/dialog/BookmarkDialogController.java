@@ -60,7 +60,7 @@ public class BookmarkDialogController extends P2DialogExtra {
     private final P2ToggleSwitch tglShow = new P2ToggleSwitch("Infos");
 
     public BookmarkDialogController(ProgData progData) {
-        super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
+        super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "",
                 false, false, DECO.BORDER_SMALL);
         isRunning = true;
         this.progData = progData;

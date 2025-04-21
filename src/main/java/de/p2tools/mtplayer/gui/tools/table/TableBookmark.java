@@ -76,6 +76,10 @@ public class TableBookmark extends PTable<BookmarkData> {
             }
         });
 
+        final TableColumn<BookmarkData, FilmDate> dateColumn = new TableColumn<>("Datum");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateColumn.getStyleClass().add("special-column-style");
+
         final TableColumn<BookmarkData, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("special-column-style");
@@ -98,10 +102,6 @@ public class TableBookmark extends PTable<BookmarkData> {
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         urlColumn.getStyleClass().add("special-column-style");
 
-        final TableColumn<BookmarkData, FilmDate> dateColumn = new TableColumn<>("Datum");
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        dateColumn.getStyleClass().add("special-column-style");
-
-        getColumns().addAll(titleColumn, themeColumn, startColumn, filmColumn, urlColumn, dateColumn);
+        getColumns().addAll(dateColumn, titleColumn, themeColumn, startColumn, filmColumn, urlColumn);
     }
 }
