@@ -1,6 +1,6 @@
 package de.p2tools.mtplayer.controller.tools;
 
-import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.io.IOException;
@@ -10,11 +10,6 @@ import java.nio.file.Paths;
 
 public class FileFactory {
     private FileFactory() {
-    }
-
-    public static boolean checkIfLiveStream(String theme) {
-        // live ist nie alt
-        return theme.equals(ProgConst.THEME_LIVE);
     }
 
     public static synchronized Path getUrlFilePath(String settingsDir, String fileName) {
@@ -30,9 +25,9 @@ public class FileFactory {
         return urlPath;
     }
 
-    public static synchronized void deleteHistoryFile(String settingsDir, String fileName) {
+    public static synchronized void deleteHistoryFile(String fileName) {
         try {
-            final Path urlPath = getUrlFilePath(settingsDir, fileName);
+            final Path urlPath = getUrlFilePath(ProgInfos.getSettingsDirectory_String(), fileName);
             Files.deleteIfExists(urlPath);
         } catch (final IOException ignored) {
         }

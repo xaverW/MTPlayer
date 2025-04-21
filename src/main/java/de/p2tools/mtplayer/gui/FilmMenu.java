@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
@@ -105,18 +106,18 @@ public class FilmMenu {
                 "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_DIALOG.getImageView());
 
         btBookmark.setOnAction(a -> {
-            progData.filmGuiController.bookmarkFilm(true);
+            BookmarkFactory.addBookmarkList(progData.filmGuiController.getSelList(true));
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
             ;
         });
         btDelBookmark.setOnAction(a -> {
-            progData.filmGuiController.bookmarkFilm(false);
+            BookmarkFactory.removeBookmarkList(progData.filmGuiController.getSelList(true));
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
         btDelAllBookmark.setOnAction(a -> {
-            progData.bookmarkList.clearAll(progData.primaryStage);
+            BookmarkFactory.clearAll(progData.primaryStage);
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
@@ -254,11 +255,13 @@ public class FilmMenu {
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
         final MenuItem miBookmarkAdd = new MenuItem("Neue Bookmarks anlegen");
-        miBookmarkAdd.setOnAction(a -> progData.filmGuiController.bookmarkFilm(true));
+        miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmarkList(progData.filmGuiController.getSelList(true)));
+
         final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
-        miBookmarkDel.setOnAction(a -> progData.filmGuiController.bookmarkFilm(false));
+        miBookmarkDel.setOnAction(a -> BookmarkFactory.removeBookmarkList(progData.filmGuiController.getSelList(true)));
+
         final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
-        miBookmarkDelAll.setOnAction(a -> progData.bookmarkList.clearAll(progData.primaryStage));
+        miBookmarkDelAll.setOnAction(a -> BookmarkFactory.clearAll(progData.primaryStage));
 
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);
         mb.getItems().add(submenuBookmark);

@@ -16,47 +16,34 @@
 
 package de.p2tools.mtplayer.controller.data.bookmark;
 
-import de.p2tools.mtplayer.controller.config.PEvents;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.tools.FileFactory;
-import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class BookmarkList extends SimpleListProperty<BookmarkData> {
 
     private final HashSet<String> urlHash = new HashSet<>();
-    private final String settingsDir;
-    private final String fileName;
     private FilteredList<BookmarkData> filteredList = null;
     private SortedList<BookmarkData> sortedList = null;
-    private final BooleanProperty isWorking = new SimpleBooleanProperty(false);
     private boolean found = false;
 
-    public BookmarkList(String fileName) {
+    public BookmarkList() {
         super(FXCollections.observableArrayList());
-        this.settingsDir = ProgInfos.getSettingsDirectory_String();
-        this.fileName = fileName;
     }
 
     public void loadList() {
         // beim Programmstart laden
         P2Duration.counterStart("loadList");
-        BookmarkFactory.readBookmarkDataFromFile(settingsDir, fileName, this);
+        BookmarkFileFactory.readBookmarkDataFromFile(ProgConst.FILE_BOOKMARKS, this);
         fillUrlHash();
         P2Duration.counterStop("loadList");
     }
@@ -88,112 +75,13 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> {
         filteredList.setPredicate(p -> true);
     }
 
-    //===============
-    public synchronized void clearAll(Stage stage) {
-        // aus dem Menü (Bookmark löschen), Dialog Mediensammlung: Alles löschen (Abo, History), Dialog Bookmark
-        final int size = this.size();
-
-        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
-                "Soll die gesamte Liste " +
-                        "(" + size + " " + "Bookmarks" + ")" +
-                        " gelöscht werden?")) {
-            clearList();
-            FileFactory.deleteHistoryFile(settingsDir, fileName);
-            ProgData.getInstance().filmList.forEach(film -> film.setBookmark(false));
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED); //todo
-        }
-    }
-
-    public synchronized void clearAllWithoutFilm(Stage stage) {
-        // Dialog Bookmark
-        int size = 0;
-        List<BookmarkData> delList = new ArrayList<>();
-        for (BookmarkData b : this) {
-            if (b.getFilmDataMTP() == null) {
-                ++size;
-                delList.add(b);
-            }
-        }
-        if (size == 0) {
-            return;
-        }
-
-        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
-                "Soll die " + size + " Bookmarks" +
-                        " gelöscht werden?")) {
-
-            final HashSet<String> hash = new HashSet<>(1, 0.75F);
-            delList.forEach(bookmarkData -> hash.add(bookmarkData.getUrl()));
-            ProgData.getInstance().bookmarkList.removeFromBookmark(hash);
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED); //todo
-        }
-    }
-
-    //===============
-    public synchronized boolean checkIfUrlAlreadyIn(String urlFilm) {
-        // wenn url gefunden, dann true zurück
-        return urlHash.contains(urlFilm);
-    }
-
-    //===============
-    //ADD
-    //===============
-    public synchronized void addFilmDataToBookmark(List<FilmDataMTP> filmList) {
-        // Button oder Menü
-        // eine Liste Filme in die History schreiben
-        if (filmList == null || filmList.isEmpty()) {
-            return;
-        }
-
-        P2Duration.counterStart("addFilmDataToBookmark");
-        final ArrayList<BookmarkData> list = new ArrayList<>(filmList.size());
-        for (final FilmDataMTP film : filmList) {
-            if (film.isLive()) {
-                continue;
-            }
-
-            film.setBookmark(true);
-            if (checkIfUrlAlreadyIn(film.getUrlHistory())) {
-                continue;
-            }
-            BookmarkData bookmarkData = new BookmarkData(film);
-            addToThisList(bookmarkData);
-            list.add(bookmarkData);
-        }
-
-        writeToFile(list, true);
-        P2Duration.counterStop("addFilmDataToBookmark");
-    }
-
-    //===============
-    //remove
-    //===============
-    public synchronized void removeFilmDataFromBookmark(ArrayList<FilmDataMTP> filmList) {
-        // eine Liste Filme aus der History löschen und File wieder schreiben
-        if (filmList == null || filmList.isEmpty()) {
-            return;
-        }
-
-        P2Duration.counterStart("Bookmark: removeDataFromBookmark");
-        // urls zum Entfernen, sammeln
-        final HashSet<String> hash = new HashSet<>(filmList.size() + 1, 0.75F);
-        filmList.forEach(film -> {
-            film.setBookmark(false);
-            hash.add(film.getUrlHistory());
-        });
-
-        removeFromBookmark(hash);
-        hash.clear();
-        P2Duration.counterStop("Bookmark: removeDataFromBookmark");
-    }
-
-    public void removeFromBookmark(HashSet<String> removeUrlHash) {
+    public void removeUrlHashSet(HashSet<String> removeUrlHash) {
         final ArrayList<BookmarkData> newList = new ArrayList<>();
         found = false;
         P2Duration.counterStart("Bookmark: removeFromBookmark");
-        P2Log.sysLog("Aus Bookmarks löschen: " + removeUrlHash.size() + ", löschen aus: " + fileName);
+        P2Log.sysLog("Aus Bookmarks löschen: " + removeUrlHash.size() + ", löschen aus: " + ProgConst.FILE_BOOKMARKS);
 
-        waitWhileWorking(); // wird diese Liste abgesucht
+        BookmarkWriteToFile.waitWhileWorking(); // wird diese Liste abgesucht
 
         this.forEach(bookmarkData -> {
             if (removeUrlHash.contains(bookmarkData.getUrl())) {
@@ -207,57 +95,36 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> {
 
         if (found) {
             // und nur dann wurde was gelöscht und muss geschrieben werden
-            replaceAndWrite(newList);
+            clearList();
+            this.addAll(newList);
+            fillUrlHash();
+            BookmarkFileFactory.writeToFile(newList, false);
         }
 
         P2Duration.counterStop("Bookmark: removeFromBookmark");
     }
 
     //===============
-    private void writeToFile(List<BookmarkData> list, boolean append) {
-        waitWhileWorking();
-        isWorking.setValue(true);
-
-        try {
-            Thread th = new Thread(new BookmarkWriteToFile(settingsDir, fileName, list, append, isWorking));
-            th.setName("writeToFile");
-            th.start();
-        } catch (Exception ex) {
-            P2Log.errorLog(959623657, ex, "writeToFile");
-            isWorking.setValue(false);
-        }
-    }
-
-    private void waitWhileWorking() {
-        while (isWorking.get()) {
-            // sollte nicht passieren, aber wenn ..
-            P2Log.errorLog(745845895, "waitWhileWorking: write to bookmark file");
-
-            try {
-                wait(100);
-            } catch (final Exception ex) {
-                P2Log.errorLog(402154895, ex, "waitWhileWorking");
-                isWorking.setValue(false);
-            }
-        }
-    }
-
     //===============
+    public boolean checkIfUrlAlreadyIn(String urlFilm) {
+        // wenn url gefunden, dann true zurück
+        return urlHash.contains(urlFilm);
+    }
+
+    public boolean withNoFilmIsPresent() {
+        // prüfen, ob welche ohne Film enthalten sind
+        Optional<BookmarkData> opt = this.stream().filter(p -> p.getFilmDataMTP() == null).findAny();
+        return opt.isPresent();
+    }
+
     public void clearList() {
         urlHash.clear();
         super.clear();
     }
 
-    private void addToThisList(BookmarkData bookmarkData) {
+    public void addToThisList(BookmarkData bookmarkData) {
         this.add(bookmarkData);
         urlHash.add(bookmarkData.getUrl());
-    }
-
-    private void replaceAndWrite(List<BookmarkData> bookmarkData) {
-        clearList();
-        this.addAll(bookmarkData);
-        fillUrlHash();
-        writeToFile(bookmarkData, false);
     }
 
     private void fillUrlHash() {

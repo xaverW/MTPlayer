@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
@@ -110,7 +111,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
                         "(" + size + " " + title + ")" +
                         " gelöscht werden?")) {
             clearList();
-            FileFactory.deleteHistoryFile(settingsDir, fileName);
+            FileFactory.deleteHistoryFile(fileName);
             if (historyEnum.equals(HISTORY_LIST.HISTORY)) {
                 // dann auch History in den Filmen löschen
                 ProgData.getInstance().filmList.forEach(film -> {
@@ -134,7 +135,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     //===============
     public synchronized void addHistoryDataToHistory(String theme, String title, String url) {
         // wenn Abo: Fertigen Film in die Abo-History schreiben
-        if (checkIfUrlAlreadyIn(url) || FileFactory.checkIfLiveStream(theme)) {
+        if (checkIfUrlAlreadyIn(url) || FilmToolsFactory.checkIfLiveStream(theme)) {
             return;
         }
 
@@ -196,7 +197,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
         P2Duration.counterStart("addDownloadDataListToHistory");
         for (final DownloadData download : downloadList) {
-            if (FileFactory.checkIfLiveStream(download.getTheme())) {
+            if (FilmToolsFactory.checkIfLiveStream(download.getTheme())) {
                 continue;
             }
             if (!download.getSetData().isPlay() && !download.getSetData().isSave()) {

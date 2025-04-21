@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.gui.BookmarkTableContextMenu;
 import de.p2tools.mtplayer.gui.infoPane.PaneBookmarkInfo;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -58,7 +59,6 @@ public class BookmarkDialogController extends P2DialogExtra {
     private final Button btnDelNoFilm = new Button("Löschen ohne Film");
     private final P2ToggleSwitch tglShow = new P2ToggleSwitch("Infos");
 
-
     public BookmarkDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
                 false, false, DECO.BORDER_SMALL);
@@ -79,9 +79,19 @@ public class BookmarkDialogController extends P2DialogExtra {
         paneBookmarkInfo.managedProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
 
         btnDelAll.setTooltip(new Tooltip("Alle Bookmarks löschen"));
+        btnDelAll.setOnAction(a -> {
+            BookmarkFactory.clearAll(this.getStage());
+            btnDelAll.setDisable(progData.bookmarkList.isEmpty());
+            btnDelNoFilm.setDisable(!progData.bookmarkList.withNoFilmIsPresent());
+        });
+        btnDelAll.setDisable(progData.bookmarkList.isEmpty());
+
         btnDelNoFilm.setTooltip(new Tooltip("Alle Bookmarks die keinen Film in der Filmliste haben, löschen"));
-        btnDelAll.setOnAction(a -> progData.bookmarkList.clearAll(this.getStage()));
-        btnDelNoFilm.setOnAction(a -> progData.bookmarkList.clearAllWithoutFilm(this.getStage()));
+        btnDelNoFilm.setOnAction(a -> {
+            BookmarkFactory.clearAllWithoutFilm(this.getStage());
+            btnDelNoFilm.setDisable(!progData.bookmarkList.withNoFilmIsPresent());
+        });
+        btnDelNoFilm.setDisable(!progData.bookmarkList.withNoFilmIsPresent());
 
         HBox hBoxSize = new HBox(P2LibConst.SPACING_HBOX);
         hBoxSize.setPadding(new Insets(P2LibConst.PADDING_HBOX));

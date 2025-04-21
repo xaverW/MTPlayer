@@ -17,84 +17,159 @@
 
 package de.p2tools.mtplayer.controller.data.bookmark;
 
+import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
-import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.tools.log.P2Log;
+import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.tools.duration.P2Duration;
+import javafx.stage.Stage;
 
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class BookmarkFactory {
-    private final static String SEPARATOR_1 = " |#| ";
-    private final static String SEPARATOR_2 = "  |###|  ";
 
     private BookmarkFactory() {
     }
 
-    public static synchronized void readBookmarkDataFromFile(String settingsDir, String fileName, List<BookmarkData> dataList) {
-        // neue Liste mit den URLs aus dem Logfile bauen
-        final Path urlPath = FileFactory.getUrlFilePath(settingsDir, fileName);
-        try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {
-            String line;
-            while ((line = in.readLine()) != null) {
-                final BookmarkData bookmarkData = BookmarkFactory.getDataFromLine(line);
-                dataList.add(bookmarkData);
+    public static void clearAll(Stage stage) {
+        // aus dem Menü (Bookmark löschen), Dialog Mediensammlung: Alles löschen (Abo, History), Dialog Bookmark
+        final int size = ProgData.getInstance().bookmarkList.size();
+
+        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
+                "Soll die gesamte Liste " +
+                        "(" + size + " " + "Bookmarks" + ")" +
+                        " gelöscht werden?")) {
+            ProgData.getInstance().bookmarkList.clearList();
+            FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS);
+            ProgData.getInstance().filmList.forEach(film -> film.setBookmark(false));
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED); //todo
+        }
+    }
+
+    public static void clearAllWithoutFilm(Stage stage) {
+        // Dialog Bookmark
+        int size = 0;
+        List<BookmarkData> delList = new ArrayList<>();
+        for (BookmarkData b : ProgData.getInstance().bookmarkList) {
+            if (b.getFilmDataMTP() == null) {
+                ++size;
+                delList.add(b);
             }
-        } catch (final Exception ex) {
-            P2Log.errorLog(926362547, ex);
+        }
+        if (size == 0) {
+            P2Alert.showInfoAlert(stage, "Löschen", "Bookmarks löschen",
+                    "Es sind keine Bookmarks ohne einen Film, in der Liste.");
+            return;
+        }
+
+        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
+                "Sollen die " + size + " Bookmarks" +
+                        " gelöscht werden?")) {
+
+            final HashSet<String> hash = new HashSet<>(size, 0.75F);
+            delList.forEach(bookmarkData -> hash.add(bookmarkData.getUrl()));
+            ProgData.getInstance().bookmarkList.removeUrlHashSet(hash);
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED); //todo
         }
     }
 
-    public static String getLine(BookmarkData bookmarkData) {
-        String dateStr = bookmarkData.getDate().toString();
-        String theme = bookmarkData.getTheme();
-        String title = bookmarkData.getTitle();
-        String url = bookmarkData.getUrl();
+    public static void removeBookmark(BookmarkData bookmarkData) {
+        // Button in der Tabelle BookmarkDialog
+        if (bookmarkData.getFilmDataMTP() == null) {
+            final HashSet<String> hash = new HashSet<>(1, 0.75F);
+            hash.add(bookmarkData.getUrl());
+            ProgData.getInstance().bookmarkList.removeUrlHashSet(hash);
+        } else {
+            removeBookmark(bookmarkData.getFilmDataMTP());
+        }
+    }
 
-        if (dateStr.isEmpty() && theme.isEmpty() && title.isEmpty()) {
-            // dann das alte Format
-            return url + P2LibConst.LINE_SEPARATOR;
+    public static void removeBookmark(FilmDataMTP film) {
+        // Button in der Tabelle / Kontextmenü Tabelle
+        ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>(1);
+        filmArrayList.add(film);
+        removeBookmarkList(filmArrayList);
+    }
+
+    public static void removeBookmarkList(ArrayList<FilmDataMTP> removeList) {
+        // eine Liste Filme aus der History löschen und File wieder schreiben
+        if (removeList == null || removeList.isEmpty()) {
+            return;
         }
 
-        return dateStr + SEPARATOR_1
-                + cleanUp(theme) + SEPARATOR_1
-                + cleanUp(title) + SEPARATOR_2
-                + url + P2LibConst.LINE_SEPARATOR;
+        P2Duration.counterStart("Bookmark: removeDataFromBookmark");
+        // urls zum Entfernen, sammeln
+        final HashSet<String> hash = new HashSet<>(removeList.size() + 1, 0.75F);
+        removeList.forEach(film -> {
+            film.setBookmark(false);
+            hash.add(film.getUrlHistory());
+        });
+
+        ProgData.getInstance().bookmarkList.removeUrlHashSet(hash);
+        hash.clear();
+        P2Duration.counterStop("Bookmark: removeDataFromBookmark");
     }
 
-    private static String cleanUp(String s) {
-        s = s.replace("\n", ""); // zur Vorsicht bei Win
-        s = s.replace("\r\n", ""); // zur Vorsicht bei Ux
-        s = s.replace(P2LibConst.LINE_SEPARATOR, "");
-        s = s.replace("|", "");
-        s = s.replace(SEPARATOR_1, "");
-        s = s.replace(SEPARATOR_2, "");
-        return s;
+    public static void addBookmark(FilmDataMTP film) {
+        // Button in der Tabelle / Kontextmenü Tabelle
+        ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>(1);
+        filmArrayList.add(film);
+        addBookmarkList(filmArrayList);
     }
 
-    private static BookmarkData getDataFromLine(String line) {
-        // 20.04.2025 |#| 37 Grad |#| 37°: Wechseljahre: heißkalt erwischt (S2025/E08) (Audiodeskription)  |###|  https://nrodlzdyxvcf-a.akamaihd.net/none/zdf/25/03/250318_2215_sendung_37g/1/250318_2215_sendung_37g_a3a4_3360k_p36v17.mp4
-        String url = "", theme = "", title = "", date = "";
-        int a1;
-        try {
-            if (line.contains(SEPARATOR_2)) {
-                //neues Logfile-Format
-                a1 = line.lastIndexOf(SEPARATOR_2);
-                a1 += SEPARATOR_2.length();
-                url = line.substring(a1).trim();
-                // titel
-                title = line.substring(line.lastIndexOf(SEPARATOR_1) + SEPARATOR_1.length(), line.lastIndexOf(SEPARATOR_2)).trim();
-                date = line.substring(0, line.indexOf(SEPARATOR_1)).trim();
-                theme = line.substring(line.indexOf(SEPARATOR_1) + SEPARATOR_1.length(), line.lastIndexOf(SEPARATOR_1)).trim();
-            } else {
-                url = line;
+    public static void addBookmarkList(ArrayList<FilmDataMTP> filmArrayList) {
+        // Button Tabelle oder Menü
+        if (filmArrayList == null || filmArrayList.isEmpty()) {
+            return;
+        }
+
+        P2Duration.counterStart("addFilmDataToBookmark");
+        final ArrayList<BookmarkData> addList = new ArrayList<>(filmArrayList.size());
+        for (final FilmDataMTP film : filmArrayList) {
+            if (film.isLive()) {
+                continue;
             }
-        } catch (final Exception ex) {
-            P2Log.errorLog(398853224, ex);
+
+            film.setBookmark(true);
+            if (ProgData.getInstance().bookmarkList.checkIfUrlAlreadyIn(film.getUrlHistory())) {
+                continue;
+            }
+
+            BookmarkData bookmarkData = new BookmarkData(film);
+            ProgData.getInstance().bookmarkList.addToThisList(bookmarkData);
+            addList.add(bookmarkData);
         }
-        return new BookmarkData(date, theme, title, url);
+
+        BookmarkFileFactory.writeToFile(addList, true);
+        P2Duration.counterStop("addFilmDataToBookmark");
+    }
+
+    public static void markBookmarks() {
+        // beim Programmstart die Filme markieren
+        if (ProgData.getInstance().bookmarkList.isEmpty()) {
+            return;
+        }
+
+        FilmListMTP filmlist = ProgData.getInstance().filmList;
+        BookmarkList bookmarkList = ProgData.getInstance().bookmarkList;
+
+        HashMap<String, BookmarkData> hash = new HashMap<>();
+        bookmarkList.forEach(b -> hash.put(b.getUrl(), b));
+
+        P2Duration.counterStart("markBookmarks2");
+        filmlist.forEach(film -> {
+            BookmarkData bookmarkData = hash.get(film.getUrlHistory());
+            if (bookmarkData != null) {
+                film.setBookmark(true);
+                bookmarkData.setFilmDataMTP(film);
+            }
+        });
+        P2Duration.counterStop("markBookmarks2");
     }
 }

@@ -173,7 +173,7 @@ public class ProgData {
 
         historyList = new HistoryList(ProgConst.FILE_HISTORY, HistoryList.HISTORY_LIST.HISTORY);
         historyListAbos = new HistoryList(ProgConst.FILE_FINISHED_ABOS, HistoryList.HISTORY_LIST.ABO);
-        bookmarkList = new BookmarkList(ProgConst.FILE_BOOKMARKS);
+        bookmarkList = new BookmarkList();
 
         mediaDataList = new MediaDataList();
         mediaCollectionDataList = new MediaCollectionDataList();

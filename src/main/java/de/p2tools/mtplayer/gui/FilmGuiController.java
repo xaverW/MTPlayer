@@ -210,13 +210,17 @@ public class FilmGuiController extends AnchorPane {
 
     }
 
-    public void bookmarkFilm(boolean bookmark) {
-        // Filmmenü
-        final ArrayList<FilmDataMTP> list = getSelList(true);
-        if (!list.isEmpty()) {
-            FilmToolsFactory.bookmarkFilmList(list, bookmark);
-        }
-    }
+//    public void bookmarkFilm(boolean bookmark) {
+//        // Filmmenü
+//        final ArrayList<FilmDataMTP> list = getSelList(true);
+//        if (!list.isEmpty()) {
+//            if (bookmark) {
+//                BookmarkFactory.addBookmarkList(list);
+//            } else {
+//                BookmarkFactory.removeBookmarkList(list);
+//            }
+//        }
+//    }
 
     public void searchFilmInMediaCollection() {
         // aus dem Menü

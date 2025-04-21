@@ -18,11 +18,14 @@
 package de.p2tools.mtplayer.controller.data.bookmark;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -33,26 +36,38 @@ import java.util.List;
 
 public class BookmarkWriteToFile implements Runnable {
 
+    public static final BooleanProperty isWorking = new SimpleBooleanProperty(false);
 
     private final List<BookmarkData> list;
     private final boolean append;
-    private final BooleanProperty isWorking;
     private final String settingsDir;
     private final String fileName;
 
-    public BookmarkWriteToFile(String settingsDir, String fileName, List<BookmarkData> list,
-                               boolean append, BooleanProperty isWorking) {
-        this.settingsDir = settingsDir;
-        this.fileName = fileName;
+    public BookmarkWriteToFile(List<BookmarkData> list, boolean append) {
+        this.settingsDir = ProgInfos.getSettingsDirectory_String();
+        this.fileName = ProgConst.FILE_BOOKMARKS;
         this.list = list;
         this.append = append;
-        this.isWorking = isWorking;
     }
 
     @Override
     public void run() {
         doWork();
         isWorking.setValue(false);
+    }
+
+    public static void waitWhileWorking() {
+        while (isWorking.get()) {
+            // sollte nicht passieren, aber wenn ..
+            P2Log.errorLog(745845895, "waitWhileWorking: write to bookmark file");
+
+            try {
+                Thread.sleep(100);
+            } catch (final Exception ex) {
+                P2Log.errorLog(402154895, ex, "waitWhileWorking");
+                isWorking.setValue(false);
+            }
+        }
     }
 
     private void doWork() {
@@ -76,13 +91,14 @@ public class BookmarkWriteToFile implements Runnable {
         P2Duration.counterStop("doWork");
     }
 
+
     private void writeDataToFile(List<BookmarkData> list, boolean append) {
         try (BufferedWriter bufferedWriter = (append ?
                 new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(FileFactory.getUrlFilePath(settingsDir, fileName), StandardOpenOption.APPEND))) :
                 new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(FileFactory.getUrlFilePath(settingsDir, fileName)))))
         ) {
             for (final BookmarkData bookmarkData : list) {
-                final String line = BookmarkFactory.getLine(bookmarkData);
+                final String line = BookmarkFileFactory.getLine(bookmarkData);
                 bufferedWriter.write(line);
             }
         } catch (final Exception ex) {

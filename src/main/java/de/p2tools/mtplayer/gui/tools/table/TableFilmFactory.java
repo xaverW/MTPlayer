@@ -3,10 +3,10 @@ package de.p2tools.mtplayer.gui.tools.table;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
-import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.p2lib.mtfilm.film.FilmSize;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.geometry.Insets;
@@ -159,11 +159,28 @@ public class TableFilmFactory {
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnPlay.setGraphic(ProgIcons.IMAGE_TABLE_FILM_PLAY.getImageView());
+                btnPlay.setOnAction(e -> {
+                    getTableView().getSelectionModel().clearSelection();
+                    getTableView().getSelectionModel().select(getIndex());
+
+                    FilmPlayFactory.playFilm(film);
+
+                    getTableView().refresh();
+                    getTableView().requestFocus();
+                });
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnSave.setGraphic(ProgIcons.IMAGE_TABLE_FILM_SAVE.getImageView());
+                btnSave.setOnAction(e -> {
+                    getTableView().getSelectionModel().clearSelection();
+                    getTableView().getSelectionModel().select(getIndex());
 
+                    FilmSaveFactory.saveFilm(film);
+
+                    getTableView().refresh();
+                    getTableView().requestFocus();
+                });
 
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("btnFunction", "btnFuncTable");
@@ -172,6 +189,19 @@ public class TableFilmFactory {
                 } else {
                     btnBookmark.setGraphic(ProgIcons.IMAGE_TABLE_BOOKMARK.getImageView());
                 }
+                btnBookmark.setOnAction(e -> {
+                    getTableView().getSelectionModel().clearSelection();
+                    getTableView().getSelectionModel().select(getIndex());
+
+                    if (film.isBookmark()) {
+                        BookmarkFactory.removeBookmark(film);
+                    } else {
+                        BookmarkFactory.addBookmark(film);
+                    }
+
+                    getTableView().refresh();
+                    getTableView().requestFocus();
+                });
 
                 if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.get()) {
                     btnPlay.setMaxHeight(18);
@@ -182,33 +212,6 @@ public class TableFilmFactory {
                     btnBookmark.setMinHeight(18);
                 }
 
-                btnPlay.setOnAction(e -> {
-                    getTableView().getSelectionModel().clearSelection();
-                    getTableView().getSelectionModel().select(getIndex());
-
-                    FilmPlayFactory.playFilm(film);
-
-                    getTableView().refresh();
-                    getTableView().requestFocus();
-                });
-                btnSave.setOnAction(e -> {
-                    getTableView().getSelectionModel().clearSelection();
-                    getTableView().getSelectionModel().select(getIndex());
-
-                    FilmSaveFactory.saveFilm(film);
-
-                    getTableView().refresh();
-                    getTableView().requestFocus();
-                });
-                btnBookmark.setOnAction(e -> {
-                    getTableView().getSelectionModel().clearSelection();
-                    getTableView().getSelectionModel().select(getIndex());
-
-                    FilmToolsFactory.changeBookmark(film);
-
-                    getTableView().refresh();
-                    getTableView().requestFocus();
-                });
                 hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);
                 setGraphic(hbox);
 

@@ -4,10 +4,10 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
-import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -88,7 +88,7 @@ public class TableBookmarkFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-                    FilmToolsFactory.removeBookmark(bookmarkData);
+                    BookmarkFactory.removeBookmark(bookmarkData);
 
                     getTableView().refresh();
                     getTableView().requestFocus();
