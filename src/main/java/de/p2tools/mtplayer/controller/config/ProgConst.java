@@ -38,7 +38,8 @@ public class ProgConst {
     public static final String STYLE_FILE = "style.css";
     public static final String CONFIG_DIRECTORY = "p2Mtplayer"; // im Homeverzeichnis
 
-    public static final String FILE_BOOKMARKS = "bookmarks.txt";
+    public static final String FILE_BOOKMARKS_TXT = "bookmarks.txt";
+    public static final String FILE_BOOKMARKS_XML = "bookmarks.xml";
     public static final String FILE_FINISHED_ABOS = "downloads.txt";
     public static final String FILE_HISTORY = "history.txt";
     public static final String FILE_MEDIA_DB = "mediadb.txt";

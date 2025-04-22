@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.data.bookmark;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.SimpleListProperty;
@@ -29,8 +30,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class BookmarkList extends SimpleListProperty<BookmarkData> {
+public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2DataList<BookmarkData> {
 
+    public static final String TAG = "BookmarkList";
     private final HashSet<String> urlHash = new HashSet<>();
     private FilteredList<BookmarkData> filteredList = null;
     private SortedList<BookmarkData> sortedList = null;
@@ -40,12 +42,27 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> {
         super(FXCollections.observableArrayList());
     }
 
-    public void loadList() {
-        // beim Programmstart laden
-        P2Duration.counterStart("loadList");
-        BookmarkFileFactory.readBookmarkDataFromFile(ProgConst.FILE_BOOKMARKS, this);
-        fillUrlHash();
-        P2Duration.counterStop("loadList");
+    @Override
+    public String getTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getComment() {
+        return "Liste aller Bookmarks";
+    }
+
+    @Override
+    public BookmarkData getNewItem() {
+        return new BookmarkData();
+    }
+
+    @Override
+    public void addNewItem(Object obj) {
+        if (obj.getClass().equals(BookmarkData.class)) {
+            BookmarkData d = (BookmarkData) obj;
+            addToThisList(d);
+        }
     }
 
     public SortedList<BookmarkData> getSortedList() {
@@ -79,7 +96,7 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> {
         final ArrayList<BookmarkData> newList = new ArrayList<>();
         found = false;
         P2Duration.counterStart("Bookmark: removeFromBookmark");
-        P2Log.sysLog("Aus Bookmarks löschen: " + removeUrlHash.size() + ", löschen aus: " + ProgConst.FILE_BOOKMARKS);
+        P2Log.sysLog("Aus Bookmarks löschen: " + removeUrlHash.size() + ", löschen aus: " + ProgConst.FILE_BOOKMARKS_TXT);
 
         BookmarkWriteToFile.waitWhileWorking(); // wird diese Liste abgesucht
 
@@ -127,7 +144,7 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> {
         urlHash.add(bookmarkData.getUrl());
     }
 
-    private void fillUrlHash() {
+    public void fillUrlHash() {
         urlHash.clear();
         this.forEach(h -> urlHash.add(h.getUrl()));
     }

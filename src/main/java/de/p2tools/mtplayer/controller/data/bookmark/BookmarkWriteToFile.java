@@ -45,7 +45,7 @@ public class BookmarkWriteToFile implements Runnable {
 
     public BookmarkWriteToFile(List<BookmarkData> list, boolean append) {
         this.settingsDir = ProgInfos.getSettingsDirectory_String();
-        this.fileName = ProgConst.FILE_BOOKMARKS;
+        this.fileName = ProgConst.FILE_BOOKMARKS_TXT;
         this.list = list;
         this.append = append;
     }

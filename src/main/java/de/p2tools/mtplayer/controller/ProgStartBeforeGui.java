@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.controller;
 
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSave;
 import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilterSamples;
 import de.p2tools.mtplayer.controller.update.ProgConfigUpdate;
@@ -80,7 +81,8 @@ public class ProgStartBeforeGui {
         P2Log.sysLog("History-Listen laden");
         ProgData.getInstance().historyList.loadList();
         ProgData.getInstance().historyListAbos.loadList();
-        ProgData.getInstance().bookmarkList.loadList();
+//        ProgData.getInstance().bookmarkList.loadList();
+        BookmarkLoadSave.loadList();
 
         if (ProgData.getInstance().utDataList.isEmpty()) {
             ProgData.getInstance().utDataList.init(true); // einmal ein Muster anlegen

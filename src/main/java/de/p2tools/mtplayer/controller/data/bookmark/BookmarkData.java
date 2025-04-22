@@ -17,58 +17,37 @@
 package de.p2tools.mtplayer.controller.data.bookmark;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.mtfilm.tools.FilmDate;
-import de.p2tools.p2lib.tools.GermanStringSorter;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-public class BookmarkData extends P2DataSample<BookmarkData> {
+public class BookmarkData extends BookmarkDataProps {
 
     private final static FastDateFormat sdf_datum = FastDateFormat.getInstance("dd.MM.yyyy");
-    private final static GermanStringSorter sorter = GermanStringSorter.getInstance();
-
-    private final String title;
-    private final String theme;
-    private final String url;
-    private FilmDate date;
     private FilmDataMTP filmData = null;
-    private String buttonDummy = "";
+
+    public BookmarkData() {
+    }
 
     public BookmarkData(FilmDataMTP filmDataMTP) {
         // beim Neuanlegen eines Bookmarks
-        this.title = filmDataMTP.getTitle();
-        this.theme = filmDataMTP.getTheme();
-        this.url = filmDataMTP.getUrlHistory();
-        this.date = new FilmDate();
+        setTitle(filmDataMTP.getTitle());
+        setTheme(filmDataMTP.getTheme());
+        setUrl(filmDataMTP.getUrlHistory());
+        setDate(new FilmDate());
         this.filmData = filmDataMTP;
     }
 
     public BookmarkData(String date, String theme, String title, String url) {
         // beim Einlesen der Datei
-        this.title = title;
-        this.theme = theme;
-        this.url = url;
+        setTitle(title);
+        setTheme(theme);
+        setUrl(url);
         try {
-            this.date = new FilmDate(sdf_datum.parse(date).getTime());
+            FilmDate d = new FilmDate(sdf_datum.parse(date).getTime());
+            setDate(d);
         } catch (final Exception ignore) {
-            this.date = new FilmDate(0);
+            setDate(new FilmDate(0));
         }
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getTheme() {
-        return theme;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public FilmDate getDate() {
-        return date;
     }
 
     public FilmDataMTP getFilmData() {
@@ -77,14 +56,5 @@ public class BookmarkData extends P2DataSample<BookmarkData> {
 
     public void setFilmData(FilmDataMTP filmData) {
         this.filmData = filmData;
-    }
-
-    public String getButtonDummy() {
-        return buttonDummy;
-    }
-
-    @Override
-    public int compareTo(BookmarkData arg0) {
-        return sorter.compare(getUrl(), arg0.getUrl());
     }
 }

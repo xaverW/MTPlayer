@@ -1,5 +1,7 @@
 package de.p2tools.mtplayer.controller.data.bookmark;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.P2LibConst;
@@ -19,6 +21,10 @@ public class BookmarkFileFactory {
     }
 
     public static void writeToFile(List<BookmarkData> list, boolean append) {
+        BookmarkLoadSave.saveBookmark();
+    }
+
+    public static void writeToFile_(List<BookmarkData> list, boolean append) {
         BookmarkWriteToFile.waitWhileWorking();
         BookmarkWriteToFile.isWorking.setValue(true);
 
@@ -32,8 +38,11 @@ public class BookmarkFileFactory {
         }
     }
 
-    public static synchronized void readBookmarkDataFromFile(String fileName, List<BookmarkData> dataList) {
+    public static synchronized void readBookmarkDataFromFileOld() {
         // neue Liste mit den URLs aus dem Logfile bauen
+        String fileName = ProgConst.FILE_BOOKMARKS_TXT;
+        BookmarkList dataList = ProgData.getInstance().bookmarkList;
+
         String settingsDir = ProgInfos.getSettingsDirectory_String();
         final Path urlPath = FileFactory.getUrlFilePath(settingsDir, fileName);
         try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {

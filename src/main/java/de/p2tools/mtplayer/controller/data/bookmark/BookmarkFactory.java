@@ -46,7 +46,7 @@ public class BookmarkFactory {
                         "(" + size + " " + "Bookmarks" + ")" +
                         " gelöscht werden?")) {
             ProgData.getInstance().bookmarkList.clearList();
-            FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS);
+            FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS_TXT);
             ProgData.getInstance().filmList.forEach(film -> film.setBookmark(false));
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED); //todo
         }
