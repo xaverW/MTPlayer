@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSave;
 import de.p2tools.mtplayer.gui.BookmarkTableContextMenu;
 import de.p2tools.mtplayer.gui.infoPane.PaneBookmarkInfo;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -55,12 +56,11 @@ public class BookmarkDialogController extends P2DialogExtra {
     private final ProgData progData;
     private final PaneBookmarkInfo paneBookmarkInfo;
     private final Label lblSize = new Label();
-    private final Button btnDelAll = new Button("Alle löschen");
-    private final Button btnDelNoFilm = new Button("Löschen ohne Film");
+    private final Button btnDel = new Button("Löschen");
     private final P2ToggleSwitch tglShow = new P2ToggleSwitch("Infos");
 
     public BookmarkDialogController(ProgData progData) {
-        super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "",
+        super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
                 false, false, DECO.BORDER_SMALL);
         isRunning = true;
         this.progData = progData;
@@ -72,44 +72,40 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     @Override
     public void make() {
-        getHBoxTitle().getChildren().add(new Label("Bookmarks"));
-
         tglShow.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
         paneBookmarkInfo.visibleProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
         paneBookmarkInfo.managedProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
 
-        btnDelAll.setTooltip(new Tooltip("Alle Bookmarks löschen"));
-        btnDelAll.setOnAction(a -> {
-            BookmarkFactory.clearAll(this.getStage());
-            btnDelAll.setDisable(progData.bookmarkList.isEmpty());
-            btnDelNoFilm.setDisable(!progData.bookmarkList.withNoFilmIsPresent());
+        // Del-Button
+        progData.bookmarkList.addListener((u, o, n) -> {
+            btnDel.setDisable(progData.bookmarkList.isEmpty());
         });
-        btnDelAll.setDisable(progData.bookmarkList.isEmpty());
+        btnDel.setDisable(progData.bookmarkList.isEmpty());
 
-        btnDelNoFilm.setTooltip(new Tooltip("Alle Bookmarks die keinen Film in der Filmliste haben, löschen"));
-        btnDelNoFilm.setOnAction(a -> {
-            BookmarkFactory.clearAllWithoutFilm(this.getStage());
-            btnDelNoFilm.setDisable(!progData.bookmarkList.withNoFilmIsPresent());
+        btnDel.setTooltip(new Tooltip("Bookmarks (in einem Dialog " +
+                "wird abgefragt, welche), werden gelöscht."));
+        btnDel.setOnAction(a -> {
+            BookmarkDelDialog b = new BookmarkDelDialog(progData, this.getStage());
+            if (b.isOk()) {
+                // dann löschen
+                BookmarkFactory.del(this.getStage());
+            }
         });
-        btnDelNoFilm.setDisable(!progData.bookmarkList.withNoFilmIsPresent());
 
         HBox hBoxSize = new HBox(P2LibConst.SPACING_HBOX);
-        hBoxSize.setPadding(new Insets(P2LibConst.PADDING_HBOX));
-        hBoxSize.getChildren().addAll(btnDelAll, btnDelNoFilm, tglShow,
+        hBoxSize.getChildren().addAll(btnDel, tglShow,
                 P2GuiTools.getHBoxGrower(),
                 new Label("Anzahl: "), lblSize);
         hBoxSize.setAlignment(Pos.CENTER_RIGHT);
 
-        VBox vboxCont = new VBox();
-        vboxCont.getChildren().addAll(tableView, hBoxSize);
+        VBox vbox = new VBox(P2LibConst.SPACING_VBOX);
+        vbox.getChildren().addAll(tableView, paneBookmarkInfo, hBoxSize);
         VBox.setVgrow(tableView, Priority.ALWAYS);
 
-        vboxCont.getChildren().add(paneBookmarkInfo);
-        getVBoxCont().getChildren().add(vboxCont);
-        VBox.setVgrow(vboxCont, Priority.ALWAYS);
-
+        getVBoxCont().getChildren().add(vbox);
         getVBoxCont().setPadding(new Insets(P2LibConst.PADDING));
         getVBoxCont().setSpacing(P2LibConst.PADDING_VBOX);
+        VBox.setVgrow(vbox, Priority.ALWAYS);
 
         Button btnOk = new Button("Ok");
         btnOk.setOnAction(a -> {
@@ -193,6 +189,9 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     private void quit() {
         Table.saveTable(tableView, Table.TABLE_ENUM.BOOKMARK);
+        if (paneBookmarkInfo.isChanged()) {
+            BookmarkLoadSave.saveBookmark();
+        }
         isRunning = false;
         close();
     }

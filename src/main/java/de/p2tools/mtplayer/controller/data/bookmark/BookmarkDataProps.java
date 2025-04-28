@@ -30,13 +30,15 @@ import java.util.ArrayList;
 
 public class BookmarkDataProps extends P2DataSample<BookmarkData> {
 
-    private final StringProperty title = new SimpleStringProperty("");
+    private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
+    private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty url = new SimpleStringProperty("");
+    private final StringProperty info = new SimpleStringProperty("");
     private final P2DateProperty date = new P2DateProperty(new P2Date(0));
     private String buttonDummy = "";
 
-    public final Property[] properties = {title, theme, url, date};
+    public final Property[] properties = {title, theme, url, info, date};
 
     public static final String TAG = "BookmarkData";
 
@@ -56,23 +58,25 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_stringProp("title", title));
+        list.add(new Config_stringProp("channel", channel));
         list.add(new Config_stringProp("theme", theme));
+        list.add(new Config_stringProp("title", title));
         list.add(new Config_stringProp("url", url));
+        list.add(new Config_stringProp("info", info));
         list.add(new Config_pDateProp("date", date));
         return list.toArray(new Config[]{});
     }
 
-    public String getTitle() {
-        return title.get();
+    public String getChannel() {
+        return channel.get();
     }
 
-    public void setTitle(String title) {
-        this.title.set(title);
+    public void setChannel(String channel) {
+        this.channel.set(channel);
     }
 
-    public StringProperty titleProperty() {
-        return title;
+    public StringProperty channelProperty() {
+        return channel;
     }
 
     public String getTheme() {
@@ -87,6 +91,18 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
         return theme;
     }
 
+    public String getTitle() {
+        return title.get();
+    }
+
+    public void setTitle(String title) {
+        this.title.set(title);
+    }
+
+    public StringProperty titleProperty() {
+        return title;
+    }
+
     public String getUrl() {
         return url.get();
     }
@@ -97,6 +113,18 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
 
     public StringProperty urlProperty() {
         return url;
+    }
+
+    public String getInfo() {
+        return info.get();
+    }
+
+    public void setInfo(String info) {
+        this.info.set(info);
+    }
+
+    public StringProperty infoProperty() {
+        return info;
     }
 
     public P2Date getDate() {

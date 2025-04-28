@@ -30,8 +30,9 @@ public class BookmarkData extends BookmarkDataProps {
 
     public BookmarkData(FilmDataMTP filmDataMTP) {
         // beim Neuanlegen eines Bookmarks
-        setTitle(filmDataMTP.getTitle());
+        setChannel(filmDataMTP.getChannel());
         setTheme(filmDataMTP.getTheme());
+        setTitle(filmDataMTP.getTitle());
         setUrl(filmDataMTP.getUrlHistory());
         setDate(new FilmDate());
         this.filmData = filmDataMTP;

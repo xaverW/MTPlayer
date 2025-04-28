@@ -23,8 +23,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.guitools.P2TableFactory;
-import de.p2tools.p2lib.mtfilm.tools.FilmDate;
 import de.p2tools.p2lib.p2event.P2Listener;
+import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -76,17 +76,25 @@ public class TableBookmark extends PTable<BookmarkData> {
             }
         });
 
-        final TableColumn<BookmarkData, FilmDate> dateColumn = new TableColumn<>("Datum");
+        final TableColumn<BookmarkData, P2Date> dateColumn = new TableColumn<>("Angelegt");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateColumn.getStyleClass().add("special-column-style");
+        TableBookmarkFactory.columnFactoryP2Date(dateColumn);
 
-        final TableColumn<BookmarkData, String> titleColumn = new TableColumn<>("Titel");
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        titleColumn.getStyleClass().add("special-column-style");
+        final TableColumn<BookmarkData, String> channelColumn = new TableColumn<>("Sender");
+        channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
+        channelColumn.getStyleClass().add("special-column-style");
+        TableBookmarkFactory.columnFactoryString(channelColumn);
 
         final TableColumn<BookmarkData, String> themeColumn = new TableColumn<>("Thema");
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("special-column-style");
+        TableBookmarkFactory.columnFactoryString(themeColumn);
+
+        final TableColumn<BookmarkData, String> titleColumn = new TableColumn<>("Titel");
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.getStyleClass().add("special-column-style");
+        TableBookmarkFactory.columnFactoryString(titleColumn);
 
         final TableColumn<BookmarkData, String> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("buttonDummy"));
@@ -101,7 +109,10 @@ public class TableBookmark extends PTable<BookmarkData> {
         final TableColumn<BookmarkData, String> urlColumn = new TableColumn<>("Url");
         urlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         urlColumn.getStyleClass().add("special-column-style");
+        TableBookmarkFactory.columnFactoryString(urlColumn);
 
-        getColumns().addAll(dateColumn, titleColumn, themeColumn, startColumn, filmColumn, urlColumn);
+        startColumn.setPrefWidth(160);
+
+        getColumns().addAll(dateColumn, channelColumn, themeColumn, titleColumn, startColumn, filmColumn, urlColumn);
     }
 }

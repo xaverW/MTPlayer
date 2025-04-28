@@ -27,7 +27,6 @@ import javafx.collections.transformation.SortedList;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2DataList<BookmarkData> {
@@ -126,12 +125,6 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2
     public boolean checkIfUrlAlreadyIn(String urlFilm) {
         // wenn url gefunden, dann true zurück
         return urlHash.contains(urlFilm);
-    }
-
-    public boolean withNoFilmIsPresent() {
-        // prüfen, ob welche ohne Film enthalten sind
-        Optional<BookmarkData> opt = this.stream().filter(p -> p.getFilmData() == null).findAny();
-        return opt.isPresent();
     }
 
     public void clearList() {

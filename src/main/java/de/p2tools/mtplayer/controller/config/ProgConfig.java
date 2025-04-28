@@ -350,16 +350,22 @@ public class ProgConfig extends P2DataProgConfig {
     }
 
     public static StringProperty BOOKMARK_DIALOG_SIZE = addStrProp("bookmark-dialog-size", "600:800");
+    public static StringProperty BOOKMARK_DIALOG_DEL_SIZE = addStrProp("bookmark-dialog-del-size", "450:350");
     public static StringProperty BOOKMARK_TABLE_WIDTH = addStrProp("bookmark-table-width");
     public static StringProperty BOOKMARK_TABLE_SORT = addStrProp("bookmark-table-sort");
     public static StringProperty BOOKMARK_TABLE_UP_DOWN = addStrProp("bookmark-table-up-down");
     public static StringProperty BOOKMARK_TABLE_VIS = addStrProp("bookmark-table-vis");
     public static StringProperty BOOKMARK_TABLE_ORDER = addStrProp("bookmark-table-order");
-    public static DoubleProperty BOOKMARK_PANE_INFO_DIVIDER = addDoubleProp("bookmark-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
-    public static DoubleProperty BOOKMARK_DIALOG_INFO_DIVIDER = addDoubleProp("bookmark-dialog-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+    public static DoubleProperty BOOKMARK_DIALOG_INFO_DIVIDER = addDoubleProp("bookmark-dialog-info-divider", 0.5);
     public static BooleanProperty BOOKMARK_DIALOG_SHOW_TABLE_TOOL_TIP = addBoolProp("bookmark-dialog-show-table-tool-tip", Boolean.TRUE);
     public static BooleanProperty BOOKMARK_DIALOG_SMALL_TABLE_ROW = addBoolProp("bookmark-dialog-small-table-row", Boolean.FALSE);
     public static BooleanProperty BOOKMARK_DIALOG_SHOW_INFO = addBoolProp("bookmark-dialog-show-info", Boolean.TRUE);
+
+    public static BooleanProperty BOOKMARK_DEL_ALL = addBoolProp("bookmark-del-all", Boolean.FALSE);
+    public static BooleanProperty BOOKMARK_DEL_SHOWN = addBoolProp("bookmark-del-shown", Boolean.FALSE);
+    public static BooleanProperty BOOKMARK_DEL_WITHOUT_FILM = addBoolProp("bookmark-del-without-film", Boolean.FALSE);
+    public static BooleanProperty BOOKMARK_DEL_OLD = addBoolProp("bookmark-del-old", Boolean.FALSE);
+    public static IntegerProperty BOOKMARK_DEL_OLD_COUNT_DAYS = addIntProp("bookmark-del-count-old-days", 10);
 
     // ===============================================================
     // ====== GUI Filme ===============================================

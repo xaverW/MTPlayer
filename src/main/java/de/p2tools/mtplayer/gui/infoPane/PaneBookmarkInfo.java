@@ -22,59 +22,91 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class PaneBookmarkInfo extends GridPane {
+public class PaneBookmarkInfo extends SplitPane {
 
-    private final Label lblTitleS = new Label("");
+    private final Label lblChannelS = new Label("");
     private final Label lblThemeS = new Label("");
-    private final Label lblUrlS = new Label("");
+    private final Label lblTitleS = new Label("");
     private final Label lblDateS = new Label();
+    private final TextArea txtInfo = new TextArea();
 
     private final Text text = new Text("Kein Film in der Liste");
+    private BookmarkData bookmarkData = null;
+    private boolean changed = false;
 
     public PaneBookmarkInfo() {
-        final GridPane gridPane = this;
+        final GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("extra-pane-info");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
 
         int row = 0;
-        gridPane.add(new Label("Titel:"), 0, row);
-        gridPane.add(lblTitleS, 1, row, 2, 1);
+        gridPane.add(new Label("Sender:"), 0, row);
+        gridPane.add(lblChannelS, 1, row, 2, 1);
         gridPane.add(new Label("Thema:"), 0, ++row);
         gridPane.add(lblThemeS, 1, row, 2, 1);
-        gridPane.add(new Label("URL:"), 0, ++row);
-        gridPane.add(lblUrlS, 1, row, 2, 1);
+        gridPane.add(new Label("Titel:"), 0, ++row);
+        gridPane.add(lblTitleS, 1, row, 2, 1);
         gridPane.add(new Label("Datum:"), 0, ++row);
         gridPane.add(lblDateS, 1, row);
         gridPane.add(text, 2, row);
 
         text.setVisible(false);
         text.setFont(Font.font(null, FontWeight.BOLD, -1));
+
+        txtInfo.setWrapText(true);
+        txtInfo.setPrefRowCount(2);
+        txtInfo.textProperty().addListener((u, o, n) -> {
+            if (bookmarkData != null) {
+                changed = true;
+                bookmarkData.setInfo(txtInfo.getText());
+            }
+        });
+
+        SplitPane splitPane = this;
+        splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        SplitPane.setResizableWithParent(gridPane, Boolean.FALSE);
+        splitPane.getItems().addAll(txtInfo, gridPane);
+        splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_INFO_DIVIDER);
     }
 
-    public void setBookmarkData(BookmarkData bookmarkData) {
-        if (bookmarkData == null) {
-            lblTitleS.setText("");
+    public void setBookmarkData(BookmarkData bd) {
+        this.bookmarkData = null;
+
+        if (bd == null) {
+            lblChannelS.setText("");
             lblThemeS.setText("");
-            lblUrlS.setText("");
+            lblTitleS.setText("");
             lblDateS.setText("");
             text.setVisible(false);
+            txtInfo.setText("");
+            txtInfo.setDisable(true);
             return;
         }
 
-        lblTitleS.setText(bookmarkData.getTitle());
-        lblThemeS.setText(bookmarkData.getTheme());
-        lblUrlS.setText(bookmarkData.getUrl());
-        lblDateS.setText(bookmarkData.getDate().get_dd_MM_yyyy());
-        text.setVisible(bookmarkData.getFilmData() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
+        lblChannelS.setText(bd.getChannel());
+        lblThemeS.setText(bd.getTheme());
+        lblTitleS.setText(bd.getTitle());
+        lblDateS.setText(bd.getDate().get_dd_MM_yyyy());
+        text.setVisible(bd.getFilmData() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
+        txtInfo.setText(bd.getInfo());
+        txtInfo.setDisable(false);
+
+        this.bookmarkData = bd;
+    }
+
+    public boolean isChanged() {
+        return changed;
     }
 }
 
