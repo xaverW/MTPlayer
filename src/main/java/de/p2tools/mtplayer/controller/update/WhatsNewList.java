@@ -44,5 +44,14 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                 "Live-Suche ZDF",
                 "Die Live-Suche für das ZDF wurde an die geänderte Mediathek angepasst.", 50);
         add(whatsNewInfo);
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 4, 28),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_bookmark.png",
+
+                "Bookmarks",
+                "Die Bookmarks können in einem eigenen Dialog " +
+                        "angezeigt werden. Dort können die Filme auch " +
+                        "angesehen und gespeichert werden. Es können auch Kommentare " +
+                        "zu den Bookmarks hinzugefügt werden.", 100);
+        add(whatsNewInfo);
     }
 }
