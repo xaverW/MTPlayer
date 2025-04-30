@@ -31,6 +31,7 @@ import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableAbo;
 import de.p2tools.mtplayer.gui.tools.table.TableRowAbo;
 import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.guitools.P2RowFactory;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
@@ -189,7 +190,7 @@ public class AboGuiController extends AnchorPane {
         tableView.setItems(sortedAbos);
         sortedAbos.comparatorProperty().bind(tableView.comparatorProperty());
 
-        tableView.setRowFactory(tv -> {
+        tableView.setRowFactory(new P2RowFactory<>(tv -> {
             TableRowAbo<AboData> row = new TableRowAbo<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
@@ -211,7 +212,8 @@ public class AboGuiController extends AnchorPane {
                 }
             });
             return row;
-        });
+        }));
+        
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
                 paneAboInfo.setAbo(tableView.getSelectionModel().getSelectedItem());

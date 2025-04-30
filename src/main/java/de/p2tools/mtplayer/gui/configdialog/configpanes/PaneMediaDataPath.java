@@ -29,6 +29,7 @@ import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2RowFactory;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -120,6 +121,7 @@ public class PaneMediaDataPath {
         txtPath.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
         btnPath.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
 
+        tableView.setRowFactory(new P2RowFactory<>());
         tableView.getSelectionModel().selectedItemProperty().addListener((v, o, n) -> {
             if (collectionDataOld != null) {
                 txtCollectionName.textProperty().unbindBidirectional(collectionDataOld.collectionNameProperty());

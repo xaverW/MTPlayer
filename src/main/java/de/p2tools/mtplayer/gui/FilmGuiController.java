@@ -33,6 +33,7 @@ import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.guitools.P2RowFactory;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
@@ -298,7 +299,7 @@ public class FilmGuiController extends AnchorPane {
         tableView.setItems(sortedList);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 
-        tableView.setRowFactory(tableView -> {
+        tableView.setRowFactory(new P2RowFactory<>(tableView -> {
             TableRowFilm<FilmDataMTP> row = new TableRowFilm<>();
 
             row.setOnMouseClicked(event -> {
@@ -316,7 +317,8 @@ public class FilmGuiController extends AnchorPane {
                 }
             });
             return row;
-        });
+        }));
+
         tableView.hoverProperty().addListener((o) -> {
             if (!tableView.isHover()) {
                 setFilmInfos(tableView.getSelectionModel().getSelectedItem());

@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.history.HistoryList;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.guitools.P2RowFactory;
 import javafx.application.Platform;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -131,7 +132,7 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
                 }
             }
         });
-        tableAboOrHistory.setRowFactory(tv -> {
+        tableAboOrHistory.setRowFactory(new P2RowFactory<>(tv -> {
             TableRow<HistoryData> row = new TableRow<>();
             row.hoverProperty().addListener((observable) -> {
                 final HistoryData historyData = row.getItem();
@@ -142,7 +143,7 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
                 }
             });
             return row;
-        });
+        }));
 
         sortedList.comparatorProperty().bind(tableAboOrHistory.comparatorProperty());
         tableAboOrHistory.setItems(sortedList);

@@ -31,6 +31,7 @@ import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableLiveFilm;
 import de.p2tools.mtplayer.gui.tools.table.TableRowLiveFilm;
 import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.guitools.P2RowFactory;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
@@ -190,24 +191,26 @@ public class LiveFilmGuiController extends AnchorPane {
         tableView.setItems(progData.liveFilmFilterWorker.getSortedList());
         progData.liveFilmFilterWorker.getSortedList().comparatorProperty().bind(tableView.comparatorProperty());
 
-        tableView.setRowFactory(tableView -> {
-            TableRowLiveFilm<FilmDataMTP> row = new TableRowLiveFilm<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
-                        !row.isEmpty()) {
-                    FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
-                }
-            });
-            row.hoverProperty().addListener((observable) -> {
-                final FilmDataMTP filmDataMTP = row.getItem();
-                if (row.isHover() && filmDataMTP != null) { // null bei den leeren Zeilen unterhalb
-                    setFilmInfos(filmDataMTP);
-                } else if (filmDataMTP == null) {
-                    setFilmInfos(tableView.getSelectionModel().getSelectedItem());
-                }
-            });
-            return row;
-        });
+        tableView.setRowFactory(new P2RowFactory<>(
+                tableView -> {
+                    TableRowLiveFilm<FilmDataMTP> row = new TableRowLiveFilm<>();
+                    row.setOnMouseClicked(event -> {
+                        if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
+                                !row.isEmpty()) {
+                            FilmInfoDialogController.getInstanceAndShow().showFilmInfo();
+                        }
+                    });
+                    row.hoverProperty().addListener((observable) -> {
+                        final FilmDataMTP filmDataMTP = row.getItem();
+                        if (row.isHover() && filmDataMTP != null) { // null bei den leeren Zeilen unterhalb
+                            setFilmInfos(filmDataMTP);
+                        } else if (filmDataMTP == null) {
+                            setFilmInfos(tableView.getSelectionModel().getSelectedItem());
+                        }
+                    });
+                    return row;
+                }));
+        
         tableView.hoverProperty().addListener((o) -> {
             if (!tableView.isHover()) {
                 setFilmInfos(tableView.getSelectionModel().getSelectedItem());

@@ -38,6 +38,7 @@ import de.p2tools.mtplayer.gui.tools.table.TableDownload;
 import de.p2tools.mtplayer.gui.tools.table.TableRowDownload;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Open;
+import de.p2tools.p2lib.guitools.P2RowFactory;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
@@ -431,7 +432,7 @@ public class DownloadGuiController extends AnchorPane {
         tableView.setItems(sortedListDownloads);
         sortedListDownloads.comparatorProperty().bind(tableView.comparatorProperty());
 
-        tableView.setRowFactory(tv -> {
+        tableView.setRowFactory(new P2RowFactory<>(tv -> {
             TableRowDownload<DownloadData> row = new TableRowDownload<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 &&
@@ -450,7 +451,8 @@ public class DownloadGuiController extends AnchorPane {
             });
 
             return row;
-        });
+        }));
+
         tableView.hoverProperty().addListener((o) -> {
             if (!tableView.isHover()) {
                 setFilmInfos(tableView.getSelectionModel().getSelectedItem());
