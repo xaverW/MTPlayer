@@ -25,6 +25,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -72,11 +74,15 @@ public class PaneBookmarkInfo extends SplitPane {
                 bookmarkData.setInfo(txtInfo.getText());
             }
         });
+        VBox vBox = new VBox(1);
+        Label lbl = new Label("Info:");
+        vBox.getChildren().addAll(lbl, txtInfo);
+        VBox.setVgrow(txtInfo, Priority.ALWAYS);
 
         SplitPane splitPane = this;
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         SplitPane.setResizableWithParent(gridPane, Boolean.FALSE);
-        splitPane.getItems().addAll(txtInfo, gridPane);
+        splitPane.getItems().addAll(vBox, gridPane);
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_INFO_DIVIDER);
     }
 
@@ -89,6 +95,7 @@ public class PaneBookmarkInfo extends SplitPane {
             lblTitleS.setText("");
             lblDateS.setText("");
             text.setVisible(false);
+            text.setManaged(false);
             txtInfo.setText("");
             txtInfo.setDisable(true);
             return;
@@ -99,6 +106,7 @@ public class PaneBookmarkInfo extends SplitPane {
         lblTitleS.setText(bd.getTitle());
         lblDateS.setText(bd.getDate().get_dd_MM_yyyy());
         text.setVisible(bd.getFilmData() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
+        text.setManaged(bd.getFilmData() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
         txtInfo.setText(bd.getInfo());
         txtInfo.setDisable(false);
 

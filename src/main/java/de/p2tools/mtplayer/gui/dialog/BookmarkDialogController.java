@@ -37,10 +37,7 @@ import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
@@ -137,6 +134,7 @@ public class BookmarkDialogController extends P2DialogExtra {
         tableView.setItems(progData.bookmarkList.getSortedList());
         progData.bookmarkList.getSortedList().comparatorProperty().bind(tableView.comparatorProperty());
 
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         tableView.setRowFactory(tableView -> {
             TableRowBookmark<BookmarkData> row = new TableRowBookmark<>();
             row.hoverProperty().addListener((observable) -> {
