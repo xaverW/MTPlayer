@@ -134,9 +134,13 @@ public class MTPlayerController extends StackPane {
     private void initButton() {
         btnFilmlist.setMinWidth(Region.USE_PREF_SIZE);
         btnFilmlist.getStyleClass().addAll("btnFunction", "btnFunc-4");
+
         btnFilmlist.setTooltip(new Tooltip("Eine neue Filmliste laden.\n" +
-                "Wenn die Filmliste nicht zu alt ist, wird nur ein Update geladen.\n" +
-                "Mit der rechten Maustaste wird immer die komplette Filmliste geladen."));
+                "Wenn die Filmliste nicht zu alt ist, wird nur ein Update geladen. [" +
+                ProgConfig.SHORTCUT_UPDATE_FILMLIST.getValueSafe() + "]\n" +
+                "Mit der rechten Maustaste wird immer die komplette Filmliste geladen. [" +
+                ProgConfig.SHORTCUT_LOAD_FILMLIST.getValueSafe() + "]"));
+
         btnFilmlist.setOnAction(e -> {
             progData.loadFilmListWorker.loadNewListFromWeb(false);
         });

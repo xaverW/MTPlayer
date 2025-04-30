@@ -25,6 +25,16 @@ import java.util.HashSet;
 
 public class PShortcut {
 
+    public static final P2ShortcutKey SHORTCUT_LOAD_FILMLIST =
+            new P2ShortcutKey(ProgConfig.SHORTCUT_LOAD_FILMLIST, ProgConfig.SHORTCUT_LOAD_FILMLIST_INIT,
+                    "Filmliste laden",
+                    "Es wird eine neue komplette Filmliste geladen.");
+
+    public static final P2ShortcutKey SHORTCUT_UPDATE_FILMLIST =
+            new P2ShortcutKey(ProgConfig.SHORTCUT_UPDATE_FILMLIST, ProgConfig.SHORTCUT_UPDATE_FILMLIST_INIT,
+                    "Filmliste aktualisieren",
+                    "Die Filmliste wird aktualisiert (je nach Alter komplett oder nur ein Update)");
+
     public static final P2ShortcutKey SHORTCUT_CENTER_GUI =
             new P2ShortcutKey(ProgConfig.SHORTCUT_CENTER_GUI, ProgConfig.SHORTCUT_CENTER_INIT,
                     "Center Programm",
@@ -162,6 +172,9 @@ public class PShortcut {
     private static final ObservableList<P2ShortcutKey> shortcutList = FXCollections.observableArrayList();
 
     public PShortcut() {
+        shortcutList.add(SHORTCUT_LOAD_FILMLIST);
+        shortcutList.add(SHORTCUT_UPDATE_FILMLIST);
+
         shortcutList.add(SHORTCUT_CENTER_GUI);
         shortcutList.add(SHORTCUT_MINIMIZE_GUI);
 

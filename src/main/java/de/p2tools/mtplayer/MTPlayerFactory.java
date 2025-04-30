@@ -49,6 +49,14 @@ public class MTPlayerFactory {
         ProgData.getInstance().primaryStage.centerOnScreen();
     }
 
+    public static void loadFilmlist() {
+        ProgData.getInstance().loadFilmListWorker.loadNewListFromWeb(true);
+    }
+
+    public static void updateFilmlist() {
+        ProgData.getInstance().loadFilmListWorker.loadNewListFromWeb(false);
+    }
+
     public static void minimizeGui() {
         ProgData.getInstance().primaryStage.setIconified(true);
         P2DialogExtra.getDialogList().forEach(p2Dialog -> p2Dialog.getStage().setIconified(true));

@@ -42,6 +42,18 @@ public class PShortKeyFactory {
         rn = () -> ProgQuit.quit(true);
         scene.getAccelerators().put(kc, rn);
 
+        // Filmliste komplett laden
+        pShortcut = PShortcut.SHORTCUT_LOAD_FILMLIST;
+        kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
+        rn = MTPlayerFactory::loadFilmlist;
+        scene.getAccelerators().put(kc, rn);
+
+        // Filmliste aktualisieren
+        pShortcut = PShortcut.SHORTCUT_UPDATE_FILMLIST;
+        kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());
+        rn = MTPlayerFactory::updateFilmlist;
+        scene.getAccelerators().put(kc, rn);
+
         // Center GUI
         pShortcut = PShortcut.SHORTCUT_CENTER_GUI;
         kc = KeyCodeCombination.keyCombination(pShortcut.getActShortcut());

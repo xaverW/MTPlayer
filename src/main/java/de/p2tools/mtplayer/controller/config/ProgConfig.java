@@ -662,6 +662,12 @@ public class ProgConfig extends P2DataProgConfig {
     }
 
     // Shortcuts, Programmweit
+    public static String SHORTCUT_LOAD_FILMLIST_INIT = "Ctrl+L";
+    public static StringProperty SHORTCUT_LOAD_FILMLIST = addStrProp("SHORTCUT_LOAD_FILMLIST", SHORTCUT_LOAD_FILMLIST_INIT);
+
+    public static String SHORTCUT_UPDATE_FILMLIST_INIT = "Alt+L";
+    public static StringProperty SHORTCUT_UPDATE_FILMLIST = addStrProp("SHORTCUT_UPDATE_FILMLIST", SHORTCUT_UPDATE_FILMLIST_INIT);
+
     public static String SHORTCUT_CENTER_INIT = "Ctrl+W";
     public static StringProperty SHORTCUT_CENTER_GUI = addStrProp("SHORTCUT_CENTER_GUI", SHORTCUT_CENTER_INIT);
 
