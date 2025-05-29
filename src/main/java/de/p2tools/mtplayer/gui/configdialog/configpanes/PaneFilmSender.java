@@ -133,8 +133,13 @@ public class PaneFilmSender {
         tilePaneSender.setVgap(5);
         ArrayList<String> aListChannel = FilmToolsFactory.getSenderListNotToLoad();
         ArrayList<CheckBox> aListCb = new ArrayList<>();
-        for (String s : LoadFactoryConst.SENDER) {
+
+        for (int i = 0; i < LoadFactoryConst.SENDER.length; ++i) {
+            String s = LoadFactoryConst.SENDER[i];
+            String s_ = LoadFactoryConst.SENDER_[i];
+
             final CheckBox cb = new CheckBox(s);
+            cb.setTooltip(new Tooltip(s_));
             aListCb.add(cb);
             cb.setSelected(aListChannel.contains(s));
             cb.setOnAction(a -> {

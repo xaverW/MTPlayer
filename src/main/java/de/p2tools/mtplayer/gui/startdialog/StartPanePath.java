@@ -84,7 +84,7 @@ public class StartPanePath {
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
-        Label lbl = new Label("Diese Programme werde zum Abspielen der Filme und zum Download der Filme " +
+        Label lbl = new Label("Diese Programme werden zum Abspielen der Filme und zum Download der Filme " +
                 "gebraucht. Wird der Pfad nicht automatisch erkannt, muss er hier ausgewählt werden.");
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
