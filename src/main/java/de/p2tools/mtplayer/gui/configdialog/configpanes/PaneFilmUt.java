@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.utdata.UtData;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -321,7 +322,7 @@ public class PaneFilmUt {
         btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoad.setOnAction(event -> {
-            ProgData.getInstance().loadFilmListWorker.loadNewListFromWeb(true);
+            LoadFilmFactory.loadNewListFromWeb(true);
         });
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);

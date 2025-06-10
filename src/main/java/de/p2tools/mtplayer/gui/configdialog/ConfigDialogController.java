@@ -19,11 +19,13 @@ package de.p2tools.mtplayer.gui.configdialog;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.mtfilm.film.FilmFactory;
-import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadConst;
+import de.p2tools.p2lib.mtfilm.readwritefilmlist.P2WriteFilmlistJson;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -104,7 +106,7 @@ public class ConfigDialogController extends P2DialogExtra {
     }
 
     private void onlyApply() {
-        if (!progData.loadFilmListWorker.loadFilmlist.getPropLoadFilmlist()) {
+        if (!progData.loadFilmListWorker.p2LoadFilmlist.getPropLoadFilmlist()) {
             //dann wird die Blacklist immer neu gemacht, sonst wirds dann eh gemacht
             new Thread(() -> {
                 BlacklistFilterFactory.markFilmBlack(true);
@@ -116,11 +118,11 @@ public class ConfigDialogController extends P2DialogExtra {
     private void onlyClose() {
         if (!geo.equals(ProgConfig.SYSTEM_GEO_HOME_PLACE.get())) {
             //dann hat sich der Geo-Standort geändert
-            LoadFactoryConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
+            P2LoadConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
             progData.filmList.markGeoBlocked();
         }
 
-        if (blackChanged.get() && !progData.loadFilmListWorker.loadFilmlist.getPropLoadFilmlist()) {
+        if (blackChanged.get() && !progData.loadFilmListWorker.p2LoadFilmlist.getPropLoadFilmlist()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
             new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
         }
@@ -132,6 +134,8 @@ public class ConfigDialogController extends P2DialogExtra {
                 ProgData.getInstance().maskerPane.setMaskerText("Diakritika entfernen");
                 ProgData.getInstance().maskerPane.setMaskerVisible(true, true, false);
                 FilmFactory.flattenDiacritic(progData.filmList);
+                new P2WriteFilmlistJson().write(ProgInfos.getLocalFilmListFile(), progData.filmList);
+
 //                PListener.notify(PListener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
                 progData.pEventHandler.notifyListener(PEvents.EVENT_DIACRITIC_CHANGED);
                 ProgData.getInstance().maskerPane.switchOffMasker();

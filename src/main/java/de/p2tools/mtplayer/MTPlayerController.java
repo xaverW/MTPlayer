@@ -20,9 +20,11 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.SearchFast;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadConst;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;
@@ -128,7 +130,7 @@ public class MTPlayerController extends StackPane {
         Button btnStop = progData.maskerPane.getButton();
         progData.maskerPane.setButtonText("");
         btnStop.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
-        btnStop.setOnAction(a -> progData.loadFilmListWorker.loadFilmlist.setStop(true));
+        btnStop.setOnAction(a -> P2LoadConst.stop.set(true));
     }
 
     private void initButton() {
@@ -142,11 +144,11 @@ public class MTPlayerController extends StackPane {
                 ProgConfig.SHORTCUT_LOAD_FILMLIST.getValueSafe() + "]"));
 
         btnFilmlist.setOnAction(e -> {
-            progData.loadFilmListWorker.loadNewListFromWeb(false);
+            LoadFilmFactory.loadNewListFromWeb(false);
         });
         btnFilmlist.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                progData.loadFilmListWorker.loadNewListFromWeb(true);
+                LoadFilmFactory.loadNewListFromWeb(true);
 
             } else if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
                 progData.checkForNewFilmlist.check();

@@ -385,7 +385,7 @@ public class StartDialogController extends P2DialogExtra {
         btnStation.setTooltip(new Tooltip("Damit kann man die Größe der\n" +
                 "Filmliste reduzieren und damit die Geschwindigkeit\n" +
                 "des Programms auf langsamen Rechnern verbessern"));
-        btnDown.setTooltip(new Tooltip("Auswahl des Verzeichniss zum Speichern der Filme"));
+        btnDown.setTooltip(new Tooltip("Auswahl des Verzeichnis zum Speichern der Filme"));
         btnPath.setTooltip(new Tooltip("Angabe von Programmen zum Ansehen\n" +
                 "und Speichern der Filme"));
 

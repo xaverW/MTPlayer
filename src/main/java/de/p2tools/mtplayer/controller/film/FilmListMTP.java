@@ -138,7 +138,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
     public synchronized String genDate() {
         // Tag, Zeit in lokaler Zeit wann die Filmliste erstellt wurde
         // in der Form "dd.MM.yyyy, HH:mm"
-        return FilmlistFactory.genDate(metaData);
+        return P2FilmlistFactory.genDate(metaData);
     }
 
     /**
@@ -148,7 +148,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
      */
     @Override
     public int getAge() {
-        return FilmlistFactory.getAge(metaData);
+        return P2FilmlistFactory.getAge(metaData);
     }
 
     /**
@@ -157,7 +157,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
      * @return Age as a {@link java.util.Date} object.
      */
     public Date getAgeAsDate() {
-        return FilmlistFactory.getAgeAsDate(metaData);
+        return P2FilmlistFactory.getAgeAsDate(metaData);
     }
 
     /**
@@ -167,7 +167,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
      */
     @Override
     public synchronized boolean isTooOldOrEmpty() {
-        return FilmlistFactory.isTooOldOrEmpty(this, metaData);
+        return P2FilmlistFactory.isTooOldOrEmpty(this, metaData);
     }
 
     /**
@@ -177,7 +177,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
      */
     @Override
     public synchronized boolean isTooOldForDiffOrEmpty() {
-        return FilmlistFactory.isTooOldForDiffOrEmpty(this, metaData);
+        return P2FilmlistFactory.isTooOldForDiffOrEmpty(this, metaData);
     }
 
     /**
@@ -188,7 +188,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
      */
     @Override
     public boolean isOlderThan(int second) {
-        return FilmlistFactory.isOlderThan(metaData, second);
+        return P2FilmlistFactory.isOlderThan(metaData, second);
     }
 
     @Override

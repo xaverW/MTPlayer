@@ -18,14 +18,14 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadConst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -118,7 +118,7 @@ public class PaneFilmSender {
         btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoad.setOnAction(event -> {
-            ProgData.getInstance().loadFilmListWorker.loadNewListFromWeb(true);
+            LoadFilmFactory.loadNewListFromWeb(true);
         });
 
         hBox = new HBox();
@@ -134,9 +134,9 @@ public class PaneFilmSender {
         ArrayList<String> aListChannel = FilmToolsFactory.getSenderListNotToLoad();
         ArrayList<CheckBox> aListCb = new ArrayList<>();
 
-        for (int i = 0; i < LoadFactoryConst.SENDER.length; ++i) {
-            String s = LoadFactoryConst.SENDER[i];
-            String s_ = LoadFactoryConst.SENDER_[i];
+        for (int i = 0; i < P2LoadConst.SENDER.length; ++i) {
+            String s = P2LoadConst.SENDER[i];
+            String s_ = P2LoadConst.SENDER_[i];
 
             final CheckBox cb = new CheckBox(s);
             cb.setTooltip(new Tooltip(s_));

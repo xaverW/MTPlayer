@@ -96,8 +96,8 @@ public class ProgConst {
     public static final String PSET_FILE_MAC = "de/p2tools/mtplayer/res/file/pset_mac.xml";
 
     // ProgrammUrls
-    public static final String ADRESSE_WEBSITE_VLC = "http://www.videolan.org";
-    public static final String ADRESSE_WEBSITE_FFMPEG = "http://ffmpeg.org";
+    public static final String ADRESSE_WEBSITE_VLC = "https://www.videolan.org";
+    public static final String ADRESSE_WEBSITE_FFMPEG = "https://ffmpeg.org";
 
 //    public static final String FILE_PROG_ICON = "/de/p2tools/mtplayer/res/P2.png";
 

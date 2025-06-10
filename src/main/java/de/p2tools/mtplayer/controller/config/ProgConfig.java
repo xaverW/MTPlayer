@@ -135,20 +135,20 @@ public class ProgConfig extends P2DataProgConfig {
     // ====== SYSTEM =================================================
     // ===============================================================
 
-    // Configs der Programmversion, nur damit sie (zur Update-Suche: Anzeige WhatsNew) im Config-File stehen
     static {
         addComment("Prog-Version");
     }
 
+    // Configs der Programmversion, nur damit sie (zur Update-Suche: Anzeige WhatsNew) im Config-File stehen
     public static StringProperty SYSTEM_PROG_VERSION = addStrProp("system-prog-version", P2InfoFactory.getProgVersion());
     public static StringProperty SYSTEM_PROG_BUILD_NO = addStrProp("system-prog-build-no", P2InfoFactory.getBuildNo());
     public static StringProperty SYSTEM_PROG_BUILD_DATE = addStrProp("system-prog-build-date", P2InfoFactory.getBuildDateR()); // 2024.08.12
 
-    // Configs zur ProgrammUpdateSuche
     static {
         addComment("ProgrammUpdateSuche");
     }
 
+    // Configs zur ProgrammUpdateSuche
     public static StringProperty SYSTEM_SEARCH_UPDATE_TODAY_DONE = addStrProp("system-search-update-today-done"); // Datum, wenn heute, dann heute schon mal gemacht
     public static StringProperty SYSTEM_SEARCH_UPDATE_LAST_DATE = addStrProp("system-search-update-last-date"); // Datum der letzten Prüfung
     public static BooleanProperty SYSTEM_SEARCH_UPDATE = addBoolProp("system-search-update" + P2Data.TAGGER + "system-update-search-act", Boolean.TRUE); // nach einem Update suchen

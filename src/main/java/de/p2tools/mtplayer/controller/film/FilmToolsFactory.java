@@ -23,7 +23,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mtfilm.film.FilmData;
 import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
 import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.mtfilm.tools.LoadFactoryConst;
+import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadConst;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -45,7 +45,7 @@ public class FilmToolsFactory {
         // live ist nie alt
         return theme.equals(ProgConst.THEME_LIVE);
     }
-    
+
     public static void setFilmShown(ArrayList<FilmDataMTP> filmArrayList, boolean setShown) {
         // Menü: Film als .. setzen
         if (setShown) {
@@ -64,12 +64,12 @@ public class FilmToolsFactory {
         return new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue().split(",")));
     }
 
-    public static void checkAllSenderSelectedNotToLoad(Stage stage) {
+    public static void checkAllSenderSelectedNotToLoad(Stage stage) { // todo -> p2lib
         // die Einstellung _alle Sender nicht laden_,  wird ja sonst nix geladen, ist ein Fehler des Nutzers
         // und das ist nur ein Hinweis darauf!
         ArrayList<String> aListSenderNotToLoad = getSenderListNotToLoad();
         boolean allSender = true;
-        for (String sender : LoadFactoryConst.SENDER) {
+        for (String sender : P2LoadConst.SENDER) {
             Optional<String> optional = aListSenderNotToLoad.stream().filter(aktSender -> aktSender.equals(sender)).findAny();
             if (optional.isEmpty()) {
                 // mindestens einer fehlt :)

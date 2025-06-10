@@ -20,12 +20,12 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Worker {
 
@@ -71,20 +71,15 @@ public class Worker {
                 //dann gibts auch keine
                 return;
             }
-            if (progData.loadFilmListWorker.loadFilmlist.getPropLoadFilmlist()) {
+            if (progData.loadFilmListWorker.p2LoadFilmlist.getPropLoadFilmlist()) {
                 //wird eh grad gemacht
                 return;
             }
 
             //dann soll sofort eine neue Liste geladen werden
             P2Log.sysLog("Es gibt eine neue Filmliste und die soll sofort geladen werden");
-            progData.loadFilmListWorker.loadNewListFromWeb(false);
+            LoadFilmFactory.loadNewListFromWeb(false);
         });
-    }
-
-    public void workOnFilmListLoadStart() {
-        // the channel combo will be reset, therefore save the filter
-        saveFilter();
     }
 
     public void workOnConfigLoaded() {
@@ -93,24 +88,6 @@ public class Worker {
 
     public void workOnConfigSaved() {
         getAboNames();
-    }
-
-    public void workOnFilmListLoadFinished() {
-        Platform.runLater(() -> {
-            // alle Sender laden
-            ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.filmList.sender));
-
-            // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            ThemeListFactory.createThemeList(progData, progData.filterWorker.getActFilterSettings().getChannel());
-
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                // wenn gewollt oder im AutoMode immer suchen
-                AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
-            }
-
-            // activate the saved filter
-            resetFilter();
-        });
     }
 
     public void saveFilter() {
@@ -140,7 +117,7 @@ public class Worker {
         }
     }
 
-    public void getAboNames() {
+    private void getAboNames() {
         final ArrayList<String> listAboChannel = progData.aboList.getAboChannelList();
         final ArrayList<String> listAboName = progData.aboList.getAboNameList();
         saveFilter();

@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -76,7 +77,7 @@ public class PaneFilmDouble {
         btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoad.setOnAction(event -> {
-            progData.loadFilmListWorker.loadNewListFromWeb(true);
+            LoadFilmFactory.loadNewListFromWeb(true);
         });
 
         Separator sp2 = new Separator();

@@ -32,7 +32,7 @@ import java.util.ArrayList;
 public class SetFactory {
     private static final ArrayList<String> winPath = new ArrayList<>();
 
-    public static String getTemplatePathVlc() {
+    public static String getTemplatePathVlc() { // todo -> p2lib
         // Startdialog und ProgConfig als init
 
         // liefert den Standardpfad für das entsprechende BS
@@ -70,7 +70,7 @@ public class SetFactory {
         return path;
     }
 
-    public static String getTemplatePathFFmpeg() {
+    public static String getTemplatePathFFmpeg() { //todo -> p2lib
         // Startdialog und ProgConfig als init
 
         // liefert den Standardpfad für das entsprechende BS
@@ -104,7 +104,7 @@ public class SetFactory {
         return path;
     }
 
-    private static void setWinProgPathVLC() {
+    private static void setWinProgPathVLC() { // todo -> p2lib
         String pfad;
         if (System.getenv("ProgramFiles") != null) {
             pfad = System.getenv("ProgramFiles");
