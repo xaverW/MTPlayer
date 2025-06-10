@@ -26,7 +26,7 @@ import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2MenuButton;
-import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
+import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

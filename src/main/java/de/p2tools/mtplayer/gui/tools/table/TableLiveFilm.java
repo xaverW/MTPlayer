@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
-import de.p2tools.p2lib.mtfilm.film.FilmSize;
+import de.p2tools.p2lib.mediathek.film.FilmSize;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.scene.control.SelectionMode;

@@ -16,7 +16,11 @@
 
 package de.p2tools.mtplayer.controller.film;
 
-import de.p2tools.p2lib.mtfilm.film.*;
+import de.p2tools.p2lib.mediathek.film.P2FilmlistFactory;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
+import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
+import de.p2tools.p2lib.mediathek.filmdata.Filmlist;
+import de.p2tools.p2lib.mediathek.filmdata.FilmlistXml;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;

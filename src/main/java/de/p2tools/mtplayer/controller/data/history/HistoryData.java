@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.history;
 
-import de.p2tools.p2lib.mtfilm.tools.FilmDate;
+import de.p2tools.p2lib.mediathek.film.FilmDate;
 import de.p2tools.p2lib.tools.GermanStringSorter;
 import org.apache.commons.lang3.time.FastDateFormat;
 

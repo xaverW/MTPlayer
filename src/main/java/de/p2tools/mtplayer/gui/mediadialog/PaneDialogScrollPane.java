@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.gui.mediaSearch.MediaSearchFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
+import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;

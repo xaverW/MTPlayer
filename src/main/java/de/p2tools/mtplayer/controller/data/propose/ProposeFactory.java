@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.data.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningProposeFactory;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 
 import java.util.Hashtable;
 

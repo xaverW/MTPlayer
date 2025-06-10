@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.SearchFast;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadConst;
+import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;

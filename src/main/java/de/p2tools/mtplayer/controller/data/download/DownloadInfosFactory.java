@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.mtdownload.MLBandwidthTokenBucket;
+import de.p2tools.p2lib.mediathek.download.MLBandwidthTokenBucket;
 import de.p2tools.p2lib.tools.file.P2FileSize;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;

@@ -23,7 +23,7 @@ import de.p2tools.p2lib.configfile.config.Config_intProp;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.P2Data;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import javafx.beans.property.*;
 
 import java.util.ArrayList;

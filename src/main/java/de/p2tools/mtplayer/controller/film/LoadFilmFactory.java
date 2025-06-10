@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.p2lib.mtfilm.film.Filmlist;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadConst;
-import de.p2tools.p2lib.mtfilm.loadfilmlist.P2LoadFilmlist;
+import de.p2tools.p2lib.mediathek.filmdata.Filmlist;
+import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
+import de.p2tools.p2lib.mediathek.filmlistload.P2LoadFilmlist;
 
 public class LoadFilmFactory {
     private static P2LoadFilmlist p2LoadFilmlist; // erledigt das Update der Filmliste

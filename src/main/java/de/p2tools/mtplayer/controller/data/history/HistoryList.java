@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;

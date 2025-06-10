@@ -9,7 +9,7 @@ import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.UrlUtils;
 import de.p2tools.mtplayer.controller.livesearchzdf.ZdfDatenFilm;
-import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.time.Duration;

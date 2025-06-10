@@ -25,7 +25,7 @@ import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntMax;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
-import de.p2tools.p2lib.mtdownload.DownloadSizeData;
+import de.p2tools.p2lib.mediathek.download.DownloadSizeData;
 import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;

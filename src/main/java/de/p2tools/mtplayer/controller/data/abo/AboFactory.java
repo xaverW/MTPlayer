@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.mtfilm.film.FilmData;
-import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.mtfilm.film.Filmlist;
-import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
+import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
+import de.p2tools.p2lib.mediathek.filmdata.Filmlist;
+import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 
 public class AboFactory {

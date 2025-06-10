@@ -27,7 +27,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;

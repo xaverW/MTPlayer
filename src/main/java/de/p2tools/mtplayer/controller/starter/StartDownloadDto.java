@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.starter;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.p2lib.mtdownload.MLInputStream;
+import de.p2tools.p2lib.mediathek.download.MLInputStream;
 import de.p2tools.p2lib.tools.date.P2Date;
 
 import java.io.File;

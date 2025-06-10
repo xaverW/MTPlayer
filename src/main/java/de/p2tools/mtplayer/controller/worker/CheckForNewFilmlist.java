@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.worker;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.mtfilm.tools.SearchFilmlistUpdate;
+import de.p2tools.p2lib.mediathek.film.SearchFilmlistUpdate;
 import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 

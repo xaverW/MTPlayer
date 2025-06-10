@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.SizeTools;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
+import de.p2tools.p2lib.mediathek.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import javafx.scene.control.Label;
@@ -226,14 +226,14 @@ public class DownloadFactory {
                 !download.getFilmUrlHd().endsWith(M3U8)) {
 
             download.setFilmSizeHd(download.getFilmUrlHd().isEmpty() ?
-                    "" : de.p2tools.p2lib.mtdownload.DownloadFactory.getContentLengthMB(download.getFilmUrlHd()));
+                    "" : de.p2tools.p2lib.mediathek.download.DownloadFactory.getContentLengthMB(download.getFilmUrlHd()));
         }
 
         if (download.getFilmSizeSmall().isEmpty() &&
                 !download.getFilmUrlSmall().endsWith(M3U8)) {
 
             download.setFilmSizeSmall(download.getFilmUrlSmall().isEmpty() ?
-                    "" : de.p2tools.p2lib.mtdownload.DownloadFactory.getContentLengthMB(download.getFilmUrlSmall()));
+                    "" : de.p2tools.p2lib.mediathek.download.DownloadFactory.getContentLengthMB(download.getFilmUrlSmall()));
         }
     }
 }

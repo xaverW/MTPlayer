@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.data.bookmark;
 
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.p2lib.mtfilm.tools.FilmDate;
+import de.p2tools.p2lib.mediathek.film.FilmDate;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 public class BookmarkData extends BookmarkDataProps {

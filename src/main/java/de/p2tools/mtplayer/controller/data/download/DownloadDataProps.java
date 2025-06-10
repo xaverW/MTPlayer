@@ -21,7 +21,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
-import de.p2tools.p2lib.mtdownload.DownloadSize;
+import de.p2tools.p2lib.mediathek.download.DownloadSize;
 import de.p2tools.p2lib.tools.date.*;
 import javafx.application.Platform;
 import javafx.beans.property.*;

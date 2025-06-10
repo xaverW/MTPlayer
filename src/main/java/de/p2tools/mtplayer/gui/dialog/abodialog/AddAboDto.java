@@ -27,7 +27,7 @@ import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.guitools.P2TextAreaIgnoreTab;
 import de.p2tools.p2lib.guitools.P2TimePicker;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.gui.tools;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.config.ProxyFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.p2lib.mtdownload.TimedTextMarkupLanguageParser;
+import de.p2tools.p2lib.mediathek.download.TimedTextMarkupLanguageParser;
 import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.net.PUrlTools;
 

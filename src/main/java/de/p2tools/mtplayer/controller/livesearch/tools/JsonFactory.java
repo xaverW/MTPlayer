@@ -2,7 +2,7 @@ package de.p2tools.mtplayer.controller.livesearch.tools;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.p2tools.p2lib.mtdownload.MLHttpClient;
+import de.p2tools.p2lib.mediathek.download.MLHttpClient;
 import de.p2tools.p2lib.tools.log.P2Log;
 import okhttp3.Request;
 import okhttp3.Response;

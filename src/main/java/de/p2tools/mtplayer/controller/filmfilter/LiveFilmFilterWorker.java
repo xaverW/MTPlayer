@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
-import de.p2tools.p2lib.mtfilm.film.FilmData;
-import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
-import de.p2tools.p2lib.mtfilter.Filter;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
+import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
+import de.p2tools.p2lib.mediathek.filter.Filter;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -78,18 +78,18 @@ public final class LiveFilmFilterWorker {
         final String theme = getActFilterSettings().themeProperty().getValueSafe();
         final String title = getActFilterSettings().titleProperty().getValueSafe();
 
-        Filter fChannel = new Filter(channel, true);
+        de.p2tools.p2lib.mediathek.filter.Filter fChannel = new de.p2tools.p2lib.mediathek.filter.Filter(channel, true);
         if (!fChannel.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchChannelSmart(fChannel, f));
         }
 
-        Filter fTheme = new Filter(theme, false, true);
+        de.p2tools.p2lib.mediathek.filter.Filter fTheme = new de.p2tools.p2lib.mediathek.filter.Filter(theme, false, true);
         if (!fTheme.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeExact(fTheme, f));
         }
 
         // Titel
-        Filter fTitle = new Filter(title, true);
+        de.p2tools.p2lib.mediathek.filter.Filter fTitle = new Filter(title, true);
         if (!fTitle.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fTitle, f));
         }

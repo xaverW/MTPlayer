@@ -18,7 +18,7 @@
 package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
+import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ComboBox;

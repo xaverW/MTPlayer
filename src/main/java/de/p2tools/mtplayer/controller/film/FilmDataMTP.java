@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.film;
 
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.p2lib.mtfilm.film.FilmData;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 
 public class FilmDataMTP extends FilmData {
 

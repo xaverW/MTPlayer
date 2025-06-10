@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
-import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
+import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;

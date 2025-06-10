@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
-import de.p2tools.p2lib.mtfilm.tools.FileNameUtils;
+import de.p2tools.p2lib.mediathek.tools.FileNameUtils;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

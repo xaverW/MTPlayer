@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.gui.dialog.abodialog;
 
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import javafx.util.StringConverter;
 
 import java.util.Arrays;

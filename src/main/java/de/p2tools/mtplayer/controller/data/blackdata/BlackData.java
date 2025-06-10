@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.blackdata;
 
-import de.p2tools.p2lib.mtfilter.Filter;
+import de.p2tools.p2lib.mediathek.filter.Filter;
 
 public class BlackData extends BlackDataProps {
 

@@ -29,7 +29,7 @@ import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
-import de.p2tools.p2lib.mtfilter.FilterCheckRegEx;
+import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;

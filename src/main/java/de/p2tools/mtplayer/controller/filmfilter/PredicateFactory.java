@@ -21,12 +21,11 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.p2lib.mtfilm.film.FilmData;
-import de.p2tools.p2lib.mtfilm.film.FilmDataProps;
-import de.p2tools.p2lib.mtfilm.film.FilmDataXml;
-import de.p2tools.p2lib.mtfilter.FilmFilterCheck;
-import de.p2tools.p2lib.mtfilter.Filter;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
+import de.p2tools.p2lib.mediathek.filmdata.FilmDataProps;
+import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
+import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 
 import java.util.function.Predicate;
 
@@ -39,10 +38,10 @@ public class PredicateFactory {
         FilmFilter filmFilter = progData.filterWorker.getActFilterSettings();
         FastFilmFilter fastFilmFilter = progData.filterWorker.getFastFilterSettings();
 
-        Filter fChannel;
-        Filter fSomewhere;
-        Filter fUrl;
-        Filter fShowDate;
+        de.p2tools.p2lib.mediathek.filter.Filter fChannel;
+        de.p2tools.p2lib.mediathek.filter.Filter fSomewhere;
+        de.p2tools.p2lib.mediathek.filter.Filter fUrl;
+        de.p2tools.p2lib.mediathek.filter.Filter fShowDate;
 
         String filterChannel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
         String filterSomewhere = filmFilter.isSomewhereVis() ? filmFilter.getSomewhere() : "";
@@ -50,13 +49,13 @@ public class PredicateFactory {
         String filterShowDate = filmFilter.isShowDateVis() ? filmFilter.getShowDate() : "";
 
         // Sender
-        fChannel = new Filter(filterChannel, true);
+        fChannel = new de.p2tools.p2lib.mediathek.filter.Filter(filterChannel, true);
         // Irgendwo
-        fSomewhere = new Filter(filterSomewhere, true);
+        fSomewhere = new de.p2tools.p2lib.mediathek.filter.Filter(filterSomewhere, true);
         // URL
-        fUrl = new Filter(filterUrl, false); // gibt URLs mit ",", das also nicht trennen
+        fUrl = new de.p2tools.p2lib.mediathek.filter.Filter(filterUrl, false); // gibt URLs mit ",", das also nicht trennen
         //ShowDate
-        fShowDate = new Filter(filterShowDate, false);
+        fShowDate = new de.p2tools.p2lib.mediathek.filter.Filter(filterShowDate, false);
 
         final boolean onlyBookmark = filmFilter.isOnlyVis() && filmFilter.isOnlyBookmark();
         final boolean onlyHd = filmFilter.isOnlyVis() && filmFilter.isOnlyHd();
@@ -193,20 +192,20 @@ public class PredicateFactory {
 
     private static Predicate<FilmData> addFastFilter(FilmFilter filmFilter, FastFilmFilter fastFilmFilter,
                                                      Predicate<FilmData> predicate) {
-        Filter fastFilter = new Filter(fastFilmFilter.getFilterTerm(), true);
+        de.p2tools.p2lib.mediathek.filter.Filter fastFilter = new de.p2tools.p2lib.mediathek.filter.Filter(fastFilmFilter.getFilterTerm(), true);
 
         // Thema
         final boolean themeIsExact = filmFilter.isThemeIsExact();
         String filterTheme = filmFilter.isThemeVis() ? filmFilter.getResTheme() : "";
-        Filter fTheme = new Filter(filterTheme, themeIsExact, true);
+        de.p2tools.p2lib.mediathek.filter.Filter fTheme = new de.p2tools.p2lib.mediathek.filter.Filter(filterTheme, themeIsExact, true);
 
         // ThemaTitel
         String filterThemeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
-        Filter fThemeTitle = new Filter(filterThemeTitle, true);
+        de.p2tools.p2lib.mediathek.filter.Filter fThemeTitle = new de.p2tools.p2lib.mediathek.filter.Filter(filterThemeTitle, true);
 
         // Titel
         String filterTitle = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
-        Filter fTitle = new Filter(filterTitle, true);
+        de.p2tools.p2lib.mediathek.filter.Filter fTitle = new de.p2tools.p2lib.mediathek.filter.Filter(filterTitle, true);
 
         if (ProgConfig.FAST_SEARCH_ON.getValue() &&
                 ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME_TITLE) {

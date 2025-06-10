@@ -36,8 +36,8 @@ import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
-import de.p2tools.p2lib.mtfilter.Filter;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filter.Filter;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -213,7 +213,7 @@ public class AboGuiController extends AnchorPane {
             });
             return row;
         }));
-        
+
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
                 paneAboInfo.setAbo(tableView.getSelectionModel().getSelectedItem());

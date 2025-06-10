@@ -22,7 +22,7 @@ import de.p2tools.p2lib.guitools.P2LDatePicker;
 import de.p2tools.p2lib.guitools.pcheckcombobox.P2CheckComboBox;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
-import de.p2tools.p2lib.mtfilter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
