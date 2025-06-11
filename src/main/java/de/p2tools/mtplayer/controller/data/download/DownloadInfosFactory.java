@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.mediathek.download.MLBandwidthTokenBucket;
+import de.p2tools.p2lib.mediathek.download.MtBandwidthTokenBucket;
 import de.p2tools.p2lib.tools.file.P2FileSize;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -172,7 +172,7 @@ public class DownloadInfosFactory {
             textLinks += getRunningDownloadsInfos();
         }
 
-        if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE.getValue() > MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
+        if (ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE.getValue() > MtBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
             textLinks += SEPARATOR;
             textLinks += "Max. Bandbreite: " + getTextBandwidth();
         }
@@ -327,8 +327,8 @@ public class DownloadInfosFactory {
     }
 
     public static void initBandwidth(Slider slider, Label lbl) {
-        slider.setMin(MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
-        slider.setMax(MLBandwidthTokenBucket.BANDWIDTH_MAX_BYTE);
+        slider.setMin(MtBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
+        slider.setMax(MtBandwidthTokenBucket.BANDWIDTH_MAX_BYTE);
         slider.setShowTickLabels(true);
         slider.setMinorTickCount(19);
         slider.setMajorTickUnit(2_000_000);
@@ -338,7 +338,7 @@ public class DownloadInfosFactory {
         slider.setLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Double x) {
-                if (x == MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
+                if (x == MtBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
                     return "alles";
                 }
                 return f1.format(x / 1_000_000);
@@ -363,7 +363,7 @@ public class DownloadInfosFactory {
         double bandwidthByte;
         String ret;
         bandwidthByte = ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE.getValue();
-        if (bandwidthByte == MLBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
+        if (bandwidthByte == MtBandwidthTokenBucket.BANDWIDTH_RUN_FREE) {
             ret = "alles";
 
         } else {

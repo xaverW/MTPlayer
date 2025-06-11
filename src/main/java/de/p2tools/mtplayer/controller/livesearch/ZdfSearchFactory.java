@@ -2,7 +2,7 @@ package de.p2tools.mtplayer.controller.livesearch;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.p2tools.p2lib.mediathek.download.MLHttpClient;
+import de.p2tools.p2lib.mediathek.download.MtHttpClient;
 import de.p2tools.p2lib.tools.log.P2Log;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -55,7 +55,7 @@ public class ZdfSearchFactory {
             builder.addHeader("api-auth", "Bearer " + jsonInfoDto.getApi());
             builder.addHeader("Origin", "https://www.zdf.de");
 
-            Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
+            Response response = MtHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
             ResponseBody body = response.body();
 
             if (body != null && response.isSuccessful()) {

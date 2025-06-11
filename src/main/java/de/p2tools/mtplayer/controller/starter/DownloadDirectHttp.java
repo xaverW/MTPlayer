@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.mediathek.download.MLBandwidthTokenBucket;
-import de.p2tools.p2lib.mediathek.download.MLInputStream;
+import de.p2tools.p2lib.mediathek.download.MtBandwidthTokenBucket;
+import de.p2tools.p2lib.mediathek.download.MtInputStream;
 import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -254,14 +254,14 @@ public class DownloadDirectHttp extends Thread {
      * @throws Exception
      */
     private void downloadContent() throws Exception {
-        download.getDownloadStartDto().setInputStream(new MLInputStream(httpURLConn.getInputStream(),
+        download.getDownloadStartDto().setInputStream(new MtInputStream(httpURLConn.getInputStream(),
                 bandwidthCalculationTimer,
                 ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE,
                 ProgData.FILMLIST_IS_DOWNLOADING));
 
         fos = new FileOutputStream(download.getDownloadStartDto().getFile(), (download.getDownloadStartDto().getDownloaded() != 0));
         download.getDownloadSize().setActuallySize(download.getDownloadStartDto().getDownloaded());
-        final byte[] buffer = new byte[MLBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
+        final byte[] buffer = new byte[MtBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
         int len;
 
         while ((len = download.getDownloadStartDto().getInputStream().read(buffer)) != -1 && (!download.isStateStopped())) {

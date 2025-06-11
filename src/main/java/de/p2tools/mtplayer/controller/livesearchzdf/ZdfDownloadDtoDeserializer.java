@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
-import de.p2tools.p2lib.mediathek.download.MLHttpClient;
+import de.p2tools.p2lib.mediathek.download.MtHttpClient;
 import de.p2tools.p2lib.tools.log.P2Log;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -55,7 +55,7 @@ public class ZdfDownloadDtoDeserializer {
             final Request.Builder builder = new Request.Builder().url(videoUrl);
             String api = "Bearer " + jsonInfoDto.getApi();
             builder.addHeader("Api-Auth", api);
-            Response response = MLHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
+            Response response = MtHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
             ResponseBody body = response.body();
 
             final DownloadDto downloadDto = new DownloadDto();

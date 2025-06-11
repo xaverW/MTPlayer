@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
-import de.p2tools.p2lib.mediathek.tools.FileNameUtils;
+import de.p2tools.p2lib.mediathek.tools.P2FileNameUtils;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
@@ -275,7 +275,7 @@ public class DownloadFactoryMakeParameter {
                     }
                     addPpath = addPpath.trim();
                     if (!addPpath.isEmpty()) {
-                        path = P2FileUtils.addsPath(path, FileNameUtils.removeIllegalCharacters(addPpath, true));
+                        path = P2FileUtils.addsPath(path, P2FileNameUtils.removeIllegalCharacters(addPpath, true));
                     }
                 }
             }

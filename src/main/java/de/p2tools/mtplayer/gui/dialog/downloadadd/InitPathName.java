@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
-import de.p2tools.p2lib.mediathek.tools.FileNameUtils;
+import de.p2tools.p2lib.mediathek.tools.P2FileNameUtils;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -101,7 +101,7 @@ public class InitPathName {
 
     private void nameChanged() {
         addDownloadDto.getAct().download.setFile(addDownloadDto.cboPath.getEditor().getText(), addDownloadDto.txtName.getText());
-        if (!addDownloadDto.txtName.getText().equals(FileNameUtils.checkFileName(addDownloadDto.txtName.getText(), false /* pfad */))) {
+        if (!addDownloadDto.txtName.getText().equals(P2FileNameUtils.checkFileName(addDownloadDto.txtName.getText(), false /* pfad */))) {
             addDownloadDto.txtName.setStyle(ProgColorList.DOWNLOAD_NAME_ERROR.getCssBackground());
         } else {
             addDownloadDto.txtName.setStyle("");

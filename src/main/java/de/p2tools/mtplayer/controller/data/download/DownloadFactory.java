@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.SizeTools;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.mediathek.tools.FileNameUtils;
+import de.p2tools.p2lib.mediathek.tools.P2FileNameUtils;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import javafx.scene.control.Label;
@@ -198,9 +198,9 @@ public class DownloadFactory {
 
         // und wenn gewünscht: "NUR Ascii-Zeichen"
         if (ProgConfig.SYSTEM_ONLY_ASCII.getValue()) {
-            ret = FileNameUtils.convertToASCIIEncoding(ret, isPath);
+            ret = P2FileNameUtils.convertToASCIIEncoding(ret, isPath);
         } else {
-            ret = FileNameUtils.convertToNativeEncoding(ret, isPath);
+            ret = P2FileNameUtils.convertToNativeEncoding(ret, isPath);
         }
 
         if (isWindowsPath) {
