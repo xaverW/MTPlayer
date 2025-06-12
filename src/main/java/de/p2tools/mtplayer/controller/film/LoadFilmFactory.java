@@ -32,17 +32,19 @@ public class LoadFilmFactory {
     }
 
     public static void loadFilmlistProgStart() {
+        initLoadFactoryConst();
+
         Filmlist<FilmDataMTP> filmlistNew = new FilmListMTP();
         Filmlist<FilmDataMTP> filmlistDiff = new FilmListMTP();
         p2LoadFilmlist = new P2LoadFilmlist(ProgData.getInstance().pEventHandler, filmlistNew, filmlistDiff);
-        initLoadFactoryConst();
         p2LoadFilmlist.loadFilmlistProgStart();
     }
 
     public static void loadNewListFromWeb(boolean alwaysLoadNew) {
-        //es wird immer eine neue Filmliste aus dem Web geladen
-        initLoadFactoryConst();
+        // es wird immer eine neue Filmliste aus dem Web geladen
+        // Button oder automatisch wenns eine neue gibt
 
+        initLoadFactoryConst();
         if (!alwaysLoadNew && ProgData.getInstance().filmGuiController != null /*mal vorsichtshalber*/) {
             // sonst machts keinen Sinn, sind dann ja alle neu
             ProgData.getInstance().filmGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird

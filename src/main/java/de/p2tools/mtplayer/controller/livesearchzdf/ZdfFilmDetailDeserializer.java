@@ -1,3 +1,8 @@
+/*
+angepasste Version aus:
+https://github.com/mediathekview/MLib
+*/
+
 package de.p2tools.mtplayer.controller.livesearchzdf;
 
 import com.fasterxml.jackson.databind.JsonNode;
