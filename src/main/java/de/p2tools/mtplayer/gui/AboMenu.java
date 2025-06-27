@@ -125,7 +125,6 @@ public class AboMenu {
             }
             progData.aboList.undoAbos();
         });
-//        PShortcutWorker.addShortCut(miUndo, ProgShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
         miUndo.disableProperty().bind(Bindings.isEmpty(progData.aboList.getUndoList()));
 
         mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew, miAboAddFilter, miUndo);
@@ -134,9 +133,12 @@ public class AboMenu {
         miSelectAll.setOnAction(a -> progData.aboGuiController.selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> progData.aboGuiController.invertSelection());
+        final MenuItem miSort = new MenuItem("Abos alphabetisch sortieren");
+        miSort.setOnAction(a -> progData.aboList.sortAlphabetically());
+
 
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miSelectAll, miSelection);
+        mb.getItems().addAll(miSelectAll, miSelection, miSort);
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());

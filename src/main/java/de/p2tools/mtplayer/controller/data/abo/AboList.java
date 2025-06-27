@@ -27,9 +27,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class AboList extends SimpleListProperty<AboData> implements P2DataList<AboData> {
     private final ProgData progData;
@@ -72,6 +70,10 @@ public class AboList extends SimpleListProperty<AboData> implements P2DataList<A
 
     public synchronized void initAboList() {
         this.forEach(abo -> abo.initAbo(progData, ++no));
+    }
+
+    public synchronized void sortAlphabetically() {
+        sort(Comparator.comparing(o -> o.getName().toLowerCase(Locale.ROOT)));
     }
 
     public synchronized void addAbo(AboData abo) {

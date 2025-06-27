@@ -81,10 +81,11 @@ public class AboTableContextMenu {
         miSelectAll.setOnAction(a -> tableView.getSelectionModel().selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> aboGuiController.invertSelection());
-        miSelectAll.setDisable(abo == null);
-        miSelection.setDisable(abo == null);
+        final MenuItem miSort = new MenuItem("Abos alphabetisch sortieren");
+        miSort.setOnAction(a -> progData.aboList.sortAlphabetically());
+
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miSelectAll, miSelection);
+        contextMenu.getItems().addAll(miSelectAll, miSelection, miSort);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         CheckMenuItem smallTableRow = new CheckMenuItem("Nur kleine Button anzeigen");
