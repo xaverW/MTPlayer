@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
-import javafx.beans.property.BooleanProperty;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -30,18 +29,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HistoryWriteToFile implements Runnable {
 
 
     private final List<HistoryData> list;
     private final boolean append;
-    private final BooleanProperty isWorking;
+    private final AtomicBoolean isWorking;
     private final String settingsDir;
     private final String fileName;
 
     public HistoryWriteToFile(String settingsDir, String fileName, List<HistoryData> list,
-                              boolean append, BooleanProperty isWorking) {
+                              boolean append, AtomicBoolean isWorking) {
         this.settingsDir = settingsDir;
         this.fileName = fileName;
         this.list = list;
@@ -51,8 +51,11 @@ public class HistoryWriteToFile implements Runnable {
 
     @Override
     public void run() {
-        doWork();
-        isWorking.setValue(false);
+        try {
+            doWork();
+        } catch (Exception ignore) {
+        }
+        isWorking.set(false);
     }
 
     private void doWork() {
@@ -72,13 +75,11 @@ public class HistoryWriteToFile implements Runnable {
         writeHistoryDataToFile(list, append);
         list.clear(); // wird nicht mehr gebraucht
 
-//        PListener.notify(PListener.EVENT_HISTORY_CHANGED, HistoryWriteToFile.class.getSimpleName());
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED);
         P2Duration.counterStop("doWork");
     }
 
-    private boolean writeHistoryDataToFile(List<HistoryData> list, boolean append) {
-        boolean ret = false;
+    private void writeHistoryDataToFile(List<HistoryData> list, boolean append) {
         try (BufferedWriter bufferedWriter = (append ?
                 new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(FileFactory.getUrlFilePath(settingsDir, fileName), StandardOpenOption.APPEND))) :
                 new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(FileFactory.getUrlFilePath(settingsDir, fileName)))))
@@ -87,11 +88,8 @@ public class HistoryWriteToFile implements Runnable {
                 final String line = HistoryFactory.getLine(historyData);
                 bufferedWriter.write(line);
             }
-            ret = true;
         } catch (final Exception ex) {
             P2Log.errorLog(420312459, ex);
         }
-
-        return ret;
     }
 }

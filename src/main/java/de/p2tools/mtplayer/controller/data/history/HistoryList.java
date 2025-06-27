@@ -28,8 +28,6 @@ import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -40,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
 public class HistoryList extends SimpleListProperty<HistoryData> {
@@ -48,13 +47,13 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         HISTORY, ABO
     }
 
+    private static final AtomicBoolean isWorking = new AtomicBoolean(false);
     private final HISTORY_LIST historyEnum;
     private final HashSet<String> urlHash = new HashSet<>();
     private final String settingsDir;
     private final String fileName;
     private FilteredList<HistoryData> filteredList = null;
     private SortedList<HistoryData> sortedList = null;
-    private final BooleanProperty isWorking = new SimpleBooleanProperty(false);
     private boolean found = false;
 
     public HistoryList(String fileName, HISTORY_LIST historyEnum) {
@@ -89,14 +88,6 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     public synchronized void filteredListSetPredicate(Predicate<HistoryData> predicate) {
         filteredList.setPredicate(predicate);
-    }
-
-    public synchronized void filteredListSetPredFalse() {
-        filteredList.setPredicate(p -> false);
-    }
-
-    public synchronized void filteredListSetPredTrue() {
-        filteredList.setPredicate(p -> true);
     }
 
     //===============
@@ -242,7 +233,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
         }
 
         // in den Filmen für die zu löschenden URLs history löschen
-        ProgData.getInstance().filmList.stream().forEach(film -> {
+        ProgData.getInstance().filmList.forEach(film -> {
             if (hash.contains(film.getUrlForHash())) {
                 film.setShown(false);
                 film.setActHist(false);
@@ -333,31 +324,33 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             Thread th = new Thread(new HistoryWriteToFile(settingsDir, fileName, list, append, isWorking));
             th.setName("HistoryWriteToFile");
             th.start();
-            // th.run();
         } catch (Exception ex) {
             P2Log.errorLog(912030254, ex, "writeToFile");
-            isWorking.setValue(false);
+            isWorking.set(false);
         }
     }
 
     private void waitWhileWorking() {
+        int counter = 25;
         while (isWorking.get()) {
-            // sollte nicht passieren, aber wenn ..
-            P2Log.errorLog(741025896, "waitWhileWorking: write to history file");
+            --counter;
+            if (counter < 0) {
+                break;
+            }
 
+            P2Log.errorLog(741025896, "waitWhileWorking: write to history file");
             try {
-                wait(100);
+                wait(200);
             } catch (final Exception ex) {
                 P2Log.errorLog(915236547, ex, "waitWhileWorking");
-                isWorking.setValue(false);
             }
         }
-
+        isWorking.set(false);
     }
 
     private void waitWhileWorkingAndSetWorking() {
         waitWhileWorking();
-        isWorking.setValue(true);
+        isWorking.set(true);
     }
 
     //===============
