@@ -126,33 +126,13 @@ public class DownloadMenu {
         mb.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-0");
 
-        final MenuItem miDownloadStart = new MenuItem("Downloads starten");
-        miDownloadStart.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
-                return;
-            }
-            progData.downloadGuiController.startDownload(false);
-        });
-        P2ShortcutWorker.addShortCut(miDownloadStart, PShortcut.SHORTCUT_DOWNLOAD_START);
+        // Submenü "Downloads"
+        addSubMenuDownload(mb);
 
-        final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
-        miDownloadStop.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
-                return;
-            }
-            progData.downloadGuiController.stopDownload(false);
-        });
-        P2ShortcutWorker.addShortCut(miDownloadStop, PShortcut.SHORTCUT_DOWNLOAD_STOP);
+        // Submenü "alle Downloads"
+        addSubMenuAllDownloads(mb);
 
-        final MenuItem miChange = new MenuItem("Download ändern");
-        miChange.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
-                return;
-            }
-            progData.downloadGuiController.changeDownload();
-        });
-        P2ShortcutWorker.addShortCut(miChange, PShortcut.SHORTCUT_DOWNLOAD_CHANGE);
-
+        //==========================
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
         miUndo.setOnAction(a -> {
@@ -161,85 +141,35 @@ public class DownloadMenu {
             }
             progData.downloadList.undoDownloads();
         });
-//        PShortcutWorker.addShortCut(miUndo, ProgShortcut.SHORTCUT_DOWNLOAD_UNDO_DELETE);
         miUndo.disableProperty().bind(Bindings.isEmpty(progData.downloadList.getUndoList()));
-
-        mb.getItems().addAll(miDownloadStart, miDownloadStop, miChange, miUndo);
-
-        // Submenü "Download"
-        final MenuItem miPrefer = new MenuItem("Downloads vorziehen");
-        miPrefer.setOnAction(a -> progData.downloadGuiController.preferDownload());
-        final MenuItem miPutBack = new MenuItem("Downloads zurückstellen");
-        miPutBack.setOnAction(a -> progData.downloadGuiController.moveDownloadBack());
-        final MenuItem miRemove = new MenuItem("Downloads aus Liste entfernen");
-        miRemove.setOnAction(a -> progData.downloadGuiController.deleteDownloads());
-
-        Menu submenuDownload = new Menu("Downloads");
-        submenuDownload.getItems().addAll(miPrefer, miPutBack, miRemove);
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(submenuDownload);
+        mb.getItems().add(miUndo);
 
-        // Submenü "alle Downloads"
-        final MenuItem mbStartAll = new MenuItem("Alle Downloads starten");
-        mbStartAll.setOnAction(a -> progData.downloadGuiController.startDownload(true /* alle */));
-        final MenuItem mbStartTimeAll = new MenuItem("Alle Downloads mit Startzeit starten");
-        mbStartTimeAll.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
-        final MenuItem mbStopAll = new MenuItem("Alle Downloads stoppen");
-        mbStopAll.setOnAction(a -> progData.downloadGuiController.stopDownload(true /* alle */));
-        final MenuItem mbStopWait = new MenuItem("Alle wartenden Downloads stoppen");
-        mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
-        final MenuItem mbUpdateList = new MenuItem("Liste der Downloads aktualisieren");
-        mbUpdateList.setOnAction(e -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
-                return;
-            }
-            AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
-        });
-        P2ShortcutWorker.addShortCut(mbUpdateList, PShortcut.SHORTCUT_DOWNLOADS_UPDATE);
 
-        final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
-        mbClean.setOnAction(e -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
-                return;
-            }
-            DownloadFactory.cleanUpList(progData.downloadList);
-        });
-        P2ShortcutWorker.addShortCut(mbClean, PShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
-
-        Menu submenuAllDownloads = new Menu("Alle Downloads");
-        submenuAllDownloads.getItems().addAll(mbStartAll, mbStartTimeAll, mbStopAll, mbStopWait, mbUpdateList, mbClean);
-        mb.getItems().addAll(submenuAllDownloads);
+        // Submenü Blacklist
+        mb.getItems().add(new SeparatorMenuItem());
+        addSubMenuBlacklist(mb);
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_INFO_FILM.getActShortcut());
         miFilmInfo.setOnAction(a -> {
             progData.downloadGuiController.showFilmInfo();
         });
+        MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
+        miPlayUrl.setOnAction(a -> progData.downloadGuiController.playUrl());
 
-        final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD.getActShortcut());
-        miCopyTheme.setOnAction(a -> MTPlayerFactory.copyTheme());
+        mb.getItems().add(new SeparatorMenuItem());
+        mb.getItems().addAll(miFilmInfo, miPlayUrl);
+
 
         final MenuItem miCopyTitle = new MenuItem("Titel in die Zwischenablage kopieren" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD.getActShortcut());
         miCopyTitle.setOnAction(a -> MTPlayerFactory.copyTitle());
 
-        //Blacklist
-        Menu submenuBlacklist = new Menu("Blacklist");
-        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
-        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(false));
+        final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren" +
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD.getActShortcut());
+        miCopyTheme.setOnAction(a -> MTPlayerFactory.copyTheme());
 
-        final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut());
-        miBlackTheme.setOnAction(event -> {
-            BlacklistFactory.addBlackThemeDownload();
-        });
-        submenuBlacklist.getItems().addAll(miBlack, miBlackTheme);
-
-
-        MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
-        miPlayUrl.setOnAction(a -> progData.downloadGuiController.playUrl());
         MenuItem miCopyUrl = new MenuItem("Download (URL) kopieren");
         miCopyUrl.setOnAction(a -> progData.downloadGuiController.copyUrl());
 
@@ -250,7 +180,8 @@ public class DownloadMenu {
         });
 
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmInfo, miCopyTheme, miCopyTitle, submenuBlacklist, miPlayUrl, miCopyUrl, miMediaDb);
+        mb.getItems().addAll(miCopyTitle, miCopyTheme, miCopyUrl, miMediaDb);
+
 
         final MenuItem miSelectAll = new MenuItem("Alles auswählen");
         miSelectAll.setOnAction(a -> progData.downloadGuiController.selectAll());
@@ -278,5 +209,104 @@ public class DownloadMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
         vBox.getChildren().add(mb);
+    }
+
+    private void addSubMenuDownload(MenuButton mb) {
+        Menu submenuDownload = new Menu("Downloads");
+
+        final MenuItem miDownloadStart = new MenuItem("Downloads starten");
+        miDownloadStart.setOnAction(a -> {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+                return;
+            }
+            progData.downloadGuiController.startDownload(false);
+        });
+        P2ShortcutWorker.addShortCut(miDownloadStart, PShortcut.SHORTCUT_DOWNLOAD_START);
+
+        final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
+        miDownloadStop.setOnAction(a -> {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+                return;
+            }
+            progData.downloadGuiController.stopDownload(false);
+        });
+        P2ShortcutWorker.addShortCut(miDownloadStop, PShortcut.SHORTCUT_DOWNLOAD_STOP);
+
+        final MenuItem miChange = new MenuItem("Downloads ändern");
+        miChange.setOnAction(a -> {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+                return;
+            }
+            progData.downloadGuiController.changeDownload();
+        });
+        P2ShortcutWorker.addShortCut(miChange, PShortcut.SHORTCUT_DOWNLOAD_CHANGE);
+
+        final MenuItem miPrefer = new MenuItem("Downloads vorziehen");
+        miPrefer.setOnAction(a -> progData.downloadGuiController.preferDownload());
+        final MenuItem miPutBack = new MenuItem("Downloads zurückstellen");
+        miPutBack.setOnAction(a -> progData.downloadGuiController.moveDownloadBack());
+        final MenuItem miRemove = new MenuItem("Downloads aus Liste entfernen");
+        miRemove.setOnAction(a -> progData.downloadGuiController.deleteDownloads());
+
+        submenuDownload.getItems().addAll(miDownloadStart, miDownloadStop, miChange,
+                new SeparatorMenuItem(),
+                miPrefer, miPutBack, miRemove);
+        mb.getItems().addAll(submenuDownload);
+    }
+
+    private void addSubMenuAllDownloads(MenuButton mb) {
+        Menu submenuAllDownloads = new Menu("Alle Downloads");
+
+        final MenuItem mbStartAll = new MenuItem("Alle Downloads starten");
+        mbStartAll.setOnAction(a -> progData.downloadGuiController.startDownload(true /* alle */));
+        final MenuItem mbStartTimeAll = new MenuItem("Alle Downloads mit Startzeit starten");
+        mbStartTimeAll.setOnAction(a -> progData.downloadGuiController.startDownloadTime());
+        final MenuItem mbStopAll = new MenuItem("Alle Downloads stoppen");
+        mbStopAll.setOnAction(a -> progData.downloadGuiController.stopDownload(true /* alle */));
+        final MenuItem mbStopWait = new MenuItem("Alle wartenden Downloads stoppen");
+        mbStopWait.setOnAction(a -> progData.downloadGuiController.stopWaitingDownloads());
+
+        final MenuItem mbUpdateList = new MenuItem("Liste der Downloads aktualisieren");
+        mbUpdateList.setOnAction(e -> {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+                return;
+            }
+            AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
+        });
+        P2ShortcutWorker.addShortCut(mbUpdateList, PShortcut.SHORTCUT_DOWNLOADS_UPDATE);
+        final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
+        mbClean.setOnAction(e -> {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+                return;
+            }
+            DownloadFactory.cleanUpList(progData.downloadList);
+        });
+        P2ShortcutWorker.addShortCut(mbClean, PShortcut.SHORTCUT_DOWNLOADS_CLEAN_UP);
+
+        submenuAllDownloads.getItems().addAll(mbStartAll, mbStartTimeAll, mbStopAll, mbStopWait,
+                new SeparatorMenuItem(),
+                mbUpdateList, mbClean);
+        mb.getItems().addAll(submenuAllDownloads);
+    }
+
+    private void addSubMenuBlacklist(MenuButton mb) {
+        Menu submenuBlacklist = new Menu("Blacklist");
+
+        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen" +
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(false));
+
+        final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
+        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlackSenderThemeDownload());
+
+        final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen" +
+                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut());
+        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlackThemeDownload());
+
+        final MenuItem miBlackTitle = new MenuItem("Titel direkt in die Blacklist einfügen");
+        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlackTitleDownload());
+
+        submenuBlacklist.getItems().addAll(miBlack, miBlackSenderTheme, miBlackTheme, miBlackTitle);
+        mb.getItems().addAll(submenuBlacklist);
     }
 }

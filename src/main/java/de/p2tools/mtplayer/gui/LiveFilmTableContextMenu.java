@@ -30,12 +30,12 @@ import java.util.Optional;
 public class LiveFilmTableContextMenu {
 
     private final ProgData progData;
-    private final LiveFilmGuiController filmGuiController;
+    private final LiveFilmGuiController liveFilmGuiController;
     private final TableLiveFilm tableView;
 
-    public LiveFilmTableContextMenu(ProgData progData, LiveFilmGuiController filmGuiController, TableLiveFilm tableView) {
+    public LiveFilmTableContextMenu(ProgData progData, LiveFilmGuiController liveFilmGuiController, TableLiveFilm tableView) {
         this.progData = progData;
-        this.filmGuiController = filmGuiController;
+        this.liveFilmGuiController = liveFilmGuiController;
         this.tableView = tableView;
     }
 
@@ -60,10 +60,6 @@ public class LiveFilmTableContextMenu {
             contextMenu.getItems().add(mStartFilm);
         }
 
-        // URL kopieren
-        Menu mCopyUrl = FilmTableContextMenu.copyInfos(film);
-        contextMenu.getItems().addAll(mCopyUrl);
-
         final MenuItem miLoadUt = new MenuItem("Untertitel speichern");
         miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
         miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film, true));
@@ -74,14 +70,16 @@ public class LiveFilmTableContextMenu {
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setDisable(film == null);
-        miFilmInfo.setOnAction(a -> filmGuiController.showFilmInfo());
+        miFilmInfo.setOnAction(a -> liveFilmGuiController.showFilmInfo());
+
+        Menu mCopyUrl = FilmTableContextMenu.copyInfos(film);
 
         MenuItem miMediaDb = new MenuItem("Film in der Mediensammlung suchen");
         miMediaDb.setDisable(film == null);
-        miMediaDb.setOnAction(a -> filmGuiController.searchFilmInMediaCollection());
+        miMediaDb.setOnAction(a -> liveFilmGuiController.searchFilmInMediaCollection());
 
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miLoadUt, miLoadTxt, miFilmInfo, miMediaDb);
+        contextMenu.getItems().addAll(miLoadUt, miLoadTxt, miFilmInfo, mCopyUrl, miMediaDb);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         CheckMenuItem smallTableRow = new CheckMenuItem("Nur kleine Button anzeigen");

@@ -46,28 +46,18 @@ public class DownloadTableContextMenu {
     }
 
     private void getMenu(final ContextMenu contextMenu, final DownloadData download) {
-        final MenuItem miStart = new MenuItem("Download starten");
-        miStart.setOnAction(a -> downloadGuiController.startDownload(false));
-        final MenuItem miStop = new MenuItem("Download stoppen");
-        miStop.setOnAction(a -> downloadGuiController.stopDownload(false));
-        final MenuItem miChange = new MenuItem("Download ändern");
-        miChange.setOnAction(a -> downloadGuiController.changeDownload());
-        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
-        miUndo.setOnAction(a -> progData.downloadList.undoDownloads());
-
-        miUndo.setDisable(progData.downloadList.getUndoList().isEmpty());
-        miStart.setDisable(download == null);
-        miStop.setDisable(download == null);
-        miChange.setDisable(download == null);
-
-        contextMenu.getItems().addAll(miStart, miStop, miChange, miUndo);
-
-        // Submenü "Download"
-        contextMenu.getItems().add(new SeparatorMenuItem());
+        // Submenü "Downloads"
         contextMenu.getItems().addAll(addSubMenuDownload(download));
-
         // Submenü "alle Downloads"
         contextMenu.getItems().addAll(addSubMenuAllDownload(download));
+
+
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
+        miUndo.setDisable(progData.downloadList.getUndoList().isEmpty());
+        miUndo.setOnAction(a -> progData.downloadList.undoDownloads());
+        contextMenu.getItems().addAll(miUndo);
+
 
         // Submenü "gespeicherte Filme"
         contextMenu.getItems().add(new SeparatorMenuItem());
@@ -85,12 +75,6 @@ public class DownloadTableContextMenu {
         miFilmInfo.setOnAction(a -> downloadGuiController.showFilmInfo());
         final MenuItem miPlayUrl = new MenuItem("Film (URL) abspielen");
         miPlayUrl.setOnAction(a -> downloadGuiController.playUrl());
-        final MenuItem miCopyUrl = new MenuItem("Download (URL) kopieren");
-        miCopyUrl.setOnAction(a -> downloadGuiController.copyUrl());
-
-        final MenuItem miMediaDb = new MenuItem("Download in der Mediensammlung suchen");
-        miMediaDb.setOnAction(a -> downloadGuiController.searchFilmInMediaCollection());
-
         final MenuItem miCopyName = new MenuItem("Titel in die Zwischenablage kopieren");
         miCopyName.setOnAction(a -> {
             P2ToolsFactory.copyToClipboard(download.getTitle());
@@ -100,6 +84,12 @@ public class DownloadTableContextMenu {
             P2ToolsFactory.copyToClipboard(download.getTheme());
         });
 
+        final MenuItem miCopyUrl = new MenuItem("Download (URL) kopieren");
+        miCopyUrl.setOnAction(a -> downloadGuiController.copyUrl());
+
+        final MenuItem miMediaDb = new MenuItem("Download in der Mediensammlung suchen");
+        miMediaDb.setOnAction(a -> downloadGuiController.searchFilmInMediaCollection());
+
         miFilmInfo.setDisable(download == null);
         miPlayUrl.setDisable(download == null);
         miCopyUrl.setDisable(download == null);
@@ -108,7 +98,10 @@ public class DownloadTableContextMenu {
         miCopyTheme.setDisable(download == null);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(miFilmInfo, miPlayUrl, miCopyUrl, miMediaDb, miCopyName, miCopyTheme);
+        contextMenu.getItems().addAll(miFilmInfo, miPlayUrl,
+                new SeparatorMenuItem(),
+                miCopyName, miCopyTheme,
+                miCopyUrl, miMediaDb);
 
 
         final MenuItem miSelectAll = new MenuItem("Alles auswählen");
@@ -153,6 +146,8 @@ public class DownloadTableContextMenu {
     }
 
     private Menu addSubMenuFilm(DownloadData download) {
+        final Menu submenuFilm = new Menu("Gespeicherten Film");
+
         final MenuItem miDownloadShown = new MenuItem("Filme als gesehen markieren");
         miDownloadShown.setOnAction(a -> downloadGuiController.setFilmShown());
         final MenuItem miDownloadNotShown = new MenuItem("Filme als ungesehen markieren");
@@ -164,14 +159,15 @@ public class DownloadTableContextMenu {
         final MenuItem miOpenDir = new MenuItem("Zielordner öffnen");
         miOpenDir.setOnAction(e -> downloadGuiController.openDestinationDir());
 
-        final Menu submenuFilm = new Menu("Gespeicherten Film");
-
         miDownloadShown.setDisable(download == null);
         miDownloadNotShown.setDisable(download == null);
         miPlayerDownload.setDisable(download == null);
         miDeleteDownload.setDisable(download == null);
         miOpenDir.setDisable(download == null);
-        submenuFilm.getItems().addAll(miDownloadShown, miDownloadNotShown, miPlayerDownload, miDeleteDownload, miOpenDir);
+
+        submenuFilm.getItems().addAll(miDownloadShown, miDownloadNotShown,
+                new SeparatorMenuItem(),
+                miPlayerDownload, miDeleteDownload, miOpenDir);
         return submenuFilm;
     }
 
@@ -200,6 +196,20 @@ public class DownloadTableContextMenu {
     }
 
     private Menu addSubMenuDownload(DownloadData download) {
+        final Menu submenuDownload = new Menu("Downloads");
+
+        final MenuItem miStart = new MenuItem("Downloads starten");
+        miStart.setOnAction(a -> downloadGuiController.startDownload(false));
+        final MenuItem miStop = new MenuItem("Downloads stoppen");
+        miStop.setOnAction(a -> downloadGuiController.stopDownload(false));
+        final MenuItem miChange = new MenuItem("Downloads ändern");
+        miChange.setOnAction(a -> downloadGuiController.changeDownload());
+
+        miStart.setDisable(download == null);
+        miStop.setDisable(download == null);
+        miChange.setDisable(download == null);
+        submenuDownload.getItems().addAll(miStart, miStop, miChange);
+
         final MenuItem miPrefer = new MenuItem("Downloads vorziehen");
         miPrefer.setOnAction(a -> downloadGuiController.preferDownload());
         final MenuItem miPutBack = new MenuItem("Downloads zurückstellen");
@@ -207,10 +217,10 @@ public class DownloadTableContextMenu {
         final MenuItem miRemove = new MenuItem("Downloads aus Liste entfernen");
         miRemove.setOnAction(a -> downloadGuiController.deleteDownloads());
 
-        final Menu submenuDownload = new Menu("Downloads");
         miPrefer.setDisable(download == null || !download.isStateStartedWaiting()); // macht nur dann Sinn
         miPutBack.setDisable(download == null);
         miRemove.setDisable(download == null);
+        submenuDownload.getItems().add(new SeparatorMenuItem());
         submenuDownload.getItems().addAll(miPrefer, miPutBack, miRemove);
         return submenuDownload;
     }
@@ -226,6 +236,7 @@ public class DownloadTableContextMenu {
         miStopAll.setOnAction(a -> downloadGuiController.stopDownload(true /* alle */));
         final MenuItem miStopWaiting = new MenuItem("Alle wartenden Downloads stoppen");
         miStopWaiting.setOnAction(a -> downloadGuiController.stopWaitingDownloads());
+
         final MenuItem miUpdate = new MenuItem("Liste der Downloads aktualisieren");
         miUpdate.setOnAction(e -> AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart());
         final MenuItem miCleanUp = new MenuItem("Liste der Downloads aufräumen");
@@ -237,7 +248,9 @@ public class DownloadTableContextMenu {
         miStopWaiting.setDisable(download == null);
 
         final Menu submenuAllDownloads = new Menu("Alle Downloads");
-        submenuAllDownloads.getItems().addAll(miStartAll, miStartTimeAll, miStopAll, miStopWaiting, miUpdate, miCleanUp);
+        submenuAllDownloads.getItems().addAll(miStartAll, miStartTimeAll, miStopAll, miStopWaiting,
+                new SeparatorMenuItem(),
+                miUpdate, miCleanUp);
         return submenuAllDownloads;
     }
 }

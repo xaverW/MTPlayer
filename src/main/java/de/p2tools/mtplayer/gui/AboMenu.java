@@ -21,10 +21,7 @@ import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import javafx.beans.binding.Bindings;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 public class AboMenu {
@@ -106,16 +103,15 @@ public class AboMenu {
         mbOn.setOnAction(a -> AboListFactory.setAboActive(true));
         final MenuItem mbOff = new MenuItem("Abos ausschalten");
         mbOff.setOnAction(e -> AboListFactory.setAboActive(false));
+        mb.getItems().addAll(mbOn, mbOff);
+
+
         final MenuItem miDel = new MenuItem("Abos löschen");
         miDel.setOnAction(a -> AboListFactory.deleteAbo());
         final MenuItem miChange = new MenuItem("Abos ändern");
         miChange.setOnAction(a -> AboListFactory.editAbo());
         final MenuItem miNew = new MenuItem("Neues Abo anlegen");
         miNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
-        final MenuItem miAboAddFilter = new MenuItem("Aus dem Film-Filter ein Abo erstellen");
-        miAboAddFilter.setOnAction(a -> {
-            AboListFactory.addNewAboFromFilterButton();
-        });
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
@@ -127,7 +123,15 @@ public class AboMenu {
         });
         miUndo.disableProperty().bind(Bindings.isEmpty(progData.aboList.getUndoList()));
 
-        mb.getItems().addAll(mbOn, mbOff, miDel, miChange, miNew, miAboAddFilter, miUndo);
+        mb.getItems().addAll(new SeparatorMenuItem());
+        mb.getItems().addAll(miDel, miChange, miNew);
+
+        mb.getItems().addAll(new SeparatorMenuItem());
+        mb.getItems().addAll(miUndo);
+
+        mb.getItems().addAll(new SeparatorMenuItem());
+        getSubMenuFilter(mb);
+
 
         final MenuItem miSelectAll = new MenuItem("Alles auswählen");
         miSelectAll.setOnAction(a -> progData.aboGuiController.selectAll());
@@ -136,13 +140,12 @@ public class AboMenu {
         final MenuItem miSort = new MenuItem("Abos alphabetisch sortieren");
         miSort.setOnAction(a -> progData.aboList.sortAlphabetically());
 
-
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miSelectAll, miSelection, miSort);
 
+
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
-        //ausgeführt wird aber der Button im Tab Filme!!
         miShowFilter.disableProperty().bind(ProgConfig.ABO__FILTER_IS_RIP);
         miShowFilter.setOnAction(a -> MTPlayerFactory.setFilter());
 
@@ -154,5 +157,18 @@ public class AboMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
         vBox.getChildren().add(mb);
+    }
+
+    private void getSubMenuFilter(MenuButton mb) {
+        final MenuItem miAboAddFilter = new MenuItem("Neues Abo aus dem Film-Filter erstellen");
+        miAboAddFilter.setOnAction(a -> AboListFactory.addNewAboFromFilterButton());
+        final MenuItem miAboToFilter = new MenuItem("Filmfilter aus dem Abo setzen");
+        miAboToFilter.setOnAction(a -> AboListFactory.setFilmFilterFromAbo());
+        final MenuItem miFilterToAbo = new MenuItem("Abo aus dem Filmfilter setzen");
+        miFilterToAbo.setOnAction(a -> AboListFactory.changeAboFromFilterButton());
+
+        Menu mFilter = new Menu("Filmfilter - Abo");
+        mFilter.getItems().addAll(miAboAddFilter, miAboToFilter, miFilterToAbo);
+        mb.getItems().add(mFilter);
     }
 }

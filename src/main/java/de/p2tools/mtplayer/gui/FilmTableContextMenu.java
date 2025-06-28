@@ -65,25 +65,28 @@ public class FilmTableContextMenu {
 
         // Filter
         Menu mFilter = addFilter(film);
-        // Abo
-        Menu mAddAbo = addAbo(film);
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(mFilter, mAddAbo);
+        contextMenu.getItems().addAll(mFilter);
 
         Menu mStartFilm = startFilmWithSet(progData, film); // Film mit Set starten
         if (mStartFilm != null) {
             contextMenu.getItems().add(mStartFilm);
         }
 
-        // Blacklist
-        Menu mBlacklist = addBlacklist(film);
-        // Bookmark
-        Menu mBookmark = addBookmark(film);
         // URL kopieren
         Menu mCopyUrl = copyInfos(film);
         // Film
         Menu mFilm = addFilm(film);
-        contextMenu.getItems().addAll(mBlacklist, mBookmark, mCopyUrl, mFilm);
+        contextMenu.getItems().addAll(mCopyUrl, mFilm);
+
+
+        // Abo
+        Menu mAddAbo = addAbo(film);
+        // Blacklist
+        Menu mBlacklist = addBlacklist(film);
+        // Bookmark
+        Menu mBookmark = addBookmark(film);
+        contextMenu.getItems().addAll(new SeparatorMenuItem(), mAddAbo, mBlacklist, mBookmark);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         CheckMenuItem smallTableRow = new CheckMenuItem("Nur kleine Button anzeigen");

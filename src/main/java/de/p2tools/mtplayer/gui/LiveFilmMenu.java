@@ -24,11 +24,9 @@ import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.util.Optional;
@@ -128,7 +126,6 @@ public class LiveFilmMenu {
             FilmSaveFactory.saveFilmList();
         });
         P2ShortcutWorker.addShortCut(mbSave, PShortcut.SHORTCUT_SAVE_FILM);
-
         mb.getItems().addAll(mbPlay, mbPlayAll, mbSave);
 
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen" +
@@ -136,24 +133,17 @@ public class LiveFilmMenu {
         miFilmInfo.setOnAction(a -> {
             progData.filmGuiController.showFilmInfo();
         });
+        mb.getItems().add(new SeparatorMenuItem());
+        mb.getItems().addAll(miFilmInfo, copyInfos(progData));
+
 
         final MenuItem miFilmMediaCollection = new MenuItem("Film in der Mediensammlung suchen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION.getActShortcut());
         miFilmMediaCollection.setOnAction(a -> {
             progData.filmGuiController.searchFilmInMediaCollection();
         });
+        mb.getItems().addAll(miFilmMediaCollection);
 
-        final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD.getActShortcut());
-        miCopyTheme.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(true));
-
-        final MenuItem miCopyTitle = new MenuItem("Titel in die Zwischenablage kopieren" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD.getActShortcut());
-        miCopyTitle.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(false));
-
-        mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmInfo,
-                miFilmMediaCollection, miCopyTheme, miCopyTitle);
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
@@ -170,5 +160,45 @@ public class LiveFilmMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
         vBox.getChildren().add(mb);
+    }
+
+    public static Menu copyInfos(ProgData progData) {
+        final Menu subMenuURL = new Menu("Film-Infos kopieren");
+
+        final MenuItem miCopyTheme = new MenuItem("Thema");
+        miCopyTheme.setOnAction(a -> {
+            progData.liveFilmGuiController.copyFilmThemeTitle(true);
+        });
+
+        final MenuItem miCopyName = new MenuItem("Titel");
+        miCopyName.setOnAction(a -> {
+            progData.liveFilmGuiController.copyFilmThemeTitle(false);
+        });
+
+        final MenuItem miCopyWeb = new MenuItem("Website-URL");
+        miCopyWeb.setOnAction(a -> {
+            progData.liveFilmGuiController.copyWebsite();
+        });
+
+        final MenuItem miCopyHd = new MenuItem("URL in HD-Auflösung");
+        miCopyHd.setOnAction(a -> {
+            progData.liveFilmGuiController.copyUrl(FilmData.RESOLUTION_HD);
+        });
+
+        final MenuItem miCopyUrl = new MenuItem("URL in hoher Auflösung");
+        miCopyUrl.setOnAction(a -> {
+            progData.liveFilmGuiController.copyUrl(FilmData.RESOLUTION_NORMAL);
+        });
+
+        final MenuItem miCopyLow = new MenuItem("URL in kleiner Auflösung");
+        miCopyLow.setOnAction(a -> {
+            progData.liveFilmGuiController.copyUrl(FilmData.RESOLUTION_SMALL);
+        });
+
+        subMenuURL.getItems().addAll(miCopyTheme, miCopyName, miCopyWeb);
+        subMenuURL.getItems().add(new SeparatorMenuItem());
+        subMenuURL.getItems().addAll(miCopyHd, miCopyUrl, miCopyLow);
+
+        return subMenuURL;
     }
 }

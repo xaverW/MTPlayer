@@ -152,8 +152,18 @@ public class FilmGuiController extends AnchorPane {
     }
 
     public void copyFilmThemeTitle(boolean theme) {
-        final Optional<FilmDataMTP> filmSelection = getSel(false, false);
+        final Optional<FilmDataMTP> filmSelection = getSel(false, true);
         filmSelection.ifPresent(mtp -> P2ToolsFactory.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
+    }
+
+    public void copyUrl(String resolution) {
+        final Optional<FilmDataMTP> filmSelection = getSel(false, true);
+        filmSelection.ifPresent(mtp -> P2ToolsFactory.copyToClipboard(mtp.getUrlForResolution(resolution)));
+    }
+
+    public void copyWebsite() {
+        final Optional<FilmDataMTP> filmSelection = getSel(false, true);
+        filmSelection.ifPresent(mtp -> P2ToolsFactory.copyToClipboard(mtp.getWebsite()));
     }
 
     public ArrayList<FilmDataMTP> getSelList(boolean markSel/*markieren was vor dem SEL ist*/) {

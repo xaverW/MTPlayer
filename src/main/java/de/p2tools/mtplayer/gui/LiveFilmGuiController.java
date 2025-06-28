@@ -167,6 +167,16 @@ public class LiveFilmGuiController extends AnchorPane {
         filmSelection.ifPresent(mtp -> P2ToolsFactory.copyToClipboard(theme ? mtp.getTheme() : mtp.getTitle()));
     }
 
+    public void copyUrl(String resolution) {
+        final Optional<FilmDataMTP> filmSelection = getSel(false, true);
+        filmSelection.ifPresent(mtp -> P2ToolsFactory.copyToClipboard(mtp.getUrlForResolution(resolution)));
+    }
+
+    public void copyWebsite() {
+        final Optional<FilmDataMTP> filmSelection = getSel(false, true);
+        filmSelection.ifPresent(mtp -> P2ToolsFactory.copyToClipboard(mtp.getWebsite()));
+    }
+
     public void searchFilmInMediaCollection() {
         // aus dem Menü
         final Optional<FilmDataMTP> film = getSel(false, true);
@@ -210,7 +220,7 @@ public class LiveFilmGuiController extends AnchorPane {
                     });
                     return row;
                 }));
-        
+
         tableView.hoverProperty().addListener((o) -> {
             if (!tableView.isHover()) {
                 setFilmInfos(tableView.getSelectionModel().getSelectedItem());

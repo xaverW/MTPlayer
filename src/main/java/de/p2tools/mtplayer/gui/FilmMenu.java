@@ -29,6 +29,7 @@ import de.p2tools.mtplayer.controller.filmfilter.FilterSamples;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDelDialog;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -202,6 +203,8 @@ public class FilmMenu {
 
         mb.getItems().addAll(mbPlay, mbPlayAll, mbSave);
 
+
+        mb.getItems().add(new SeparatorMenuItem());
         final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
         miFilmShown.setOnAction(a -> {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
@@ -219,26 +222,26 @@ public class FilmMenu {
             progData.filmGuiController.setFilmShown(false);
         });
         P2ShortcutWorker.addShortCut(miFilmNotShown, PShortcut.SHORTCUT_FILM_NOT_SHOWN);
+        mb.getItems().addAll(miFilmShown, miFilmNotShown);
+
 
         final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_INFO_FILM.getActShortcut());
         miFilmInfo.setOnAction(a -> {
             progData.filmGuiController.showFilmInfo();
         });
+        mb.getItems().addAll(miFilmInfo);
+        mb.getItems().addAll(copyInfos(progData));
 
+
+        mb.getItems().add(new SeparatorMenuItem());
         final MenuItem miFilmMediaCollection = new MenuItem("Film in der Mediensammlung suchen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION.getActShortcut());
         miFilmMediaCollection.setOnAction(a -> {
             progData.filmGuiController.searchFilmInMediaCollection();
         });
+        mb.getItems().addAll(miFilmMediaCollection);
 
-        final MenuItem miCopyTheme = new MenuItem("Thema in die Zwischenablage kopieren" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_THEME_TO_CLIPBOARD.getActShortcut());
-        miCopyTheme.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(true));
-
-        final MenuItem miCopyTitle = new MenuItem("Titel in die Zwischenablage kopieren" +
-                PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_COPY_FILM_TITLE_TO_CLIPBOARD.getActShortcut());
-        miCopyTitle.setOnAction(a -> progData.filmGuiController.copyFilmThemeTitle(false));
 
         //Blacklist
         Menu submenuBlacklist = new Menu("Blacklist");
@@ -252,10 +255,8 @@ public class FilmMenu {
             BlacklistFactory.addBlackThemeFilm();
         });
         submenuBlacklist.getItems().addAll(miBlack, miBlackTheme);
+        mb.getItems().addAll(submenuBlacklist);
 
-        mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miFilmShown, miFilmNotShown, miFilmInfo,
-                miFilmMediaCollection, miCopyTheme, miCopyTitle, submenuBlacklist);
 
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
@@ -293,5 +294,46 @@ public class FilmMenu {
         mb.getItems().add(new SeparatorMenuItem());
         mb.getItems().addAll(miShowFilter, miShowInfo);
         vBox.getChildren().add(mb);
+    }
+
+
+    public static Menu copyInfos(ProgData progData) {
+        final Menu subMenuURL = new Menu("Film-Infos kopieren");
+
+        final MenuItem miCopyTheme = new MenuItem("Thema");
+        miCopyTheme.setOnAction(a -> {
+            progData.filmGuiController.copyFilmThemeTitle(true);
+        });
+
+        final MenuItem miCopyName = new MenuItem("Titel");
+        miCopyName.setOnAction(a -> {
+            progData.filmGuiController.copyFilmThemeTitle(false);
+        });
+
+        final MenuItem miCopyWeb = new MenuItem("Website-URL");
+        miCopyWeb.setOnAction(a -> {
+            progData.filmGuiController.copyWebsite();
+        });
+
+        final MenuItem miCopyHd = new MenuItem("URL in HD-Auflösung");
+        miCopyHd.setOnAction(a -> {
+            progData.filmGuiController.copyUrl(FilmData.RESOLUTION_HD);
+        });
+
+        final MenuItem miCopyUrl = new MenuItem("URL in hoher Auflösung");
+        miCopyUrl.setOnAction(a -> {
+            progData.filmGuiController.copyUrl(FilmData.RESOLUTION_NORMAL);
+        });
+
+        final MenuItem miCopyLow = new MenuItem("URL in kleiner Auflösung");
+        miCopyLow.setOnAction(a -> {
+            progData.filmGuiController.copyUrl(FilmData.RESOLUTION_SMALL);
+        });
+
+        subMenuURL.getItems().addAll(miCopyTheme, miCopyName, miCopyWeb);
+        subMenuURL.getItems().add(new SeparatorMenuItem());
+        subMenuURL.getItems().addAll(miCopyHd, miCopyUrl, miCopyLow);
+
+        return subMenuURL;
     }
 }

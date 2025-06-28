@@ -69,6 +69,26 @@ public class BlacklistFactory {
         addBlack("", filmSelection.get().getTheme(), "");
     }
 
+    public static void addBlackTitleDownload() {
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+        if (downloadData.isEmpty()) {
+            return;
+        }
+        addBlack("", "", downloadData.get().getTitle());
+    }
+
+    public static void addBlackSenderThemeDownload() {
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+        if (downloadData.isEmpty()) {
+            return;
+        }
+        addBlack(downloadData.get().getChannel(), downloadData.get().getTheme(), "");
+    }
+
     public static void addBlackThemeDownload() {
         // aus dem Menü: mit markiertem Film ein Black erstellen
         // Dialog anzeigen
