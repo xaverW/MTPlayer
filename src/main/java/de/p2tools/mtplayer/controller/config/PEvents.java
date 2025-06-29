@@ -27,6 +27,7 @@ public class PEvents extends P2Events {
     public static final int EVENT_MEDIA_DB_START = count++;
     public static final int EVENT_MEDIA_DB_STOP = count++;
     public static final int EVENT_HISTORY_CHANGED = count++;
+    public static final int EVENT_BOOKMARK_CHANGED = count++;
     public static final int EVENT_SET_DATA_CHANGED = count++;
     public static final int EVENT_FILTER_CHANGED = count++;
     public static final int EVENT_LIVE_FILTER_CHANGED = count++;

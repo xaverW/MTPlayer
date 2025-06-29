@@ -4,38 +4,18 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
-import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
-public class BookmarkFileFactory {
+public class BookmarkFileFactoryOld {
     private final static String SEPARATOR_1 = " |#| ";
     private final static String SEPARATOR_2 = "  |###|  ";
 
-    private BookmarkFileFactory() {
-    }
-
-    public static void writeToFile(List<BookmarkData> list, boolean append) {
-        BookmarkLoadSave.saveBookmark();
-    }
-
-    public static void writeToFile_(List<BookmarkData> list, boolean append) {
-        BookmarkWriteToFile.waitWhileWorking();
-        BookmarkWriteToFile.isWorking.setValue(true);
-
-        try {
-            Thread th = new Thread(new BookmarkWriteToFile(list, append));
-            th.setName("writeToFile");
-            th.start();
-        } catch (Exception ex) {
-            P2Log.errorLog(959623657, ex, "writeToFile");
-            BookmarkWriteToFile.isWorking.setValue(false);
-        }
+    private BookmarkFileFactoryOld() {
     }
 
     public static synchronized void readBookmarkDataFromFileOld() {
@@ -54,33 +34,6 @@ public class BookmarkFileFactory {
         } catch (final Exception ex) {
             P2Log.errorLog(926362547, ex);
         }
-    }
-
-    public static String getLine(BookmarkData bookmarkData) {
-        String dateStr = bookmarkData.getDate().toString();
-        String theme = bookmarkData.getTheme();
-        String title = bookmarkData.getTitle();
-        String url = bookmarkData.getUrl();
-
-        if (dateStr.isEmpty() && theme.isEmpty() && title.isEmpty()) {
-            // dann das alte Format
-            return url + P2LibConst.LINE_SEPARATOR;
-        }
-
-        return dateStr + SEPARATOR_1
-                + cleanUp(theme) + SEPARATOR_1
-                + cleanUp(title) + SEPARATOR_2
-                + url + P2LibConst.LINE_SEPARATOR;
-    }
-
-    private static String cleanUp(String s) {
-        s = s.replace("\n", ""); // zur Vorsicht bei Win
-        s = s.replace("\r\n", ""); // zur Vorsicht bei Ux
-        s = s.replace(P2LibConst.LINE_SEPARATOR, "");
-        s = s.replace("|", "");
-        s = s.replace(SEPARATOR_1, "");
-        s = s.replace(SEPARATOR_2, "");
-        return s;
     }
 
     private static BookmarkData getDataFromLine(String line) {

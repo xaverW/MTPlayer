@@ -43,7 +43,6 @@ public class BookmarkDelDialog extends P2DialogExtra {
     private final Slider slAge = new Slider();
     private final P2ToggleSwitch tglAll = new P2ToggleSwitch("Alle löschen:");
     private final P2ToggleSwitch tglShown = new P2ToggleSwitch("Gesehene:");
-    private final P2ToggleSwitch tglFilm = new P2ToggleSwitch("Ohne Film in der Liste:");
     private final P2ToggleSwitch tglAge = new P2ToggleSwitch("Mit Alter:");
     private final Label lblCount = new Label("");
     private final ChangeListener<Boolean> tglChangeListener;
@@ -97,8 +96,6 @@ public class BookmarkDelDialog extends P2DialogExtra {
         int row2 = 0;
         gridPane2.add(tglShown, 0, row2, 3, 1);
         ++row2;
-        gridPane2.add(tglFilm, 0, row2, 3, 1);
-        ++row2;
         gridPane2.add(tglAge, 0, row2, 3, 1);
         gridPane2.add(new Label(""), 0, ++row2);
         gridPane2.add(slAge, 1, row2);
@@ -125,13 +122,11 @@ public class BookmarkDelDialog extends P2DialogExtra {
 
         tglAll.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DEL_ALL);
         tglShown.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DEL_SHOWN);
-        tglFilm.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DEL_WITHOUT_FILM);
         tglAge.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DEL_OLD);
         slAge.valueProperty().bindBidirectional(ProgConfig.BOOKMARK_DEL_OLD_COUNT_DAYS);
 
         tglAll.selectedProperty().addListener(tglChangeListener);
         tglShown.selectedProperty().addListener(tglChangeListener);
-        tglFilm.selectedProperty().addListener(tglChangeListener);
         tglAge.selectedProperty().addListener(tglChangeListener);
         slAge.valueProperty().addListener(slChangeListener);
 
@@ -147,7 +142,6 @@ public class BookmarkDelDialog extends P2DialogExtra {
         btnOk.disableProperty().bind(
                 (tglAll.selectedProperty().not())
                         .and(tglShown.selectedProperty().not())
-                        .and(tglFilm.selectedProperty().not())
                         .and(tglAge.selectedProperty().not())
         );
 
@@ -173,7 +167,7 @@ public class BookmarkDelDialog extends P2DialogExtra {
     }
 
     private void setCount() {
-        int count = BookmarkFactory.del(getStage(), true);
+        int count = BookmarkFactory.deleteFromDialog(getStage(), true);
         lblCount.setText("Anzahl zum Löschen: " + count);
     }
 
@@ -184,13 +178,11 @@ public class BookmarkDelDialog extends P2DialogExtra {
     private void quit(boolean ok) {
         tglAll.selectedProperty().removeListener(tglChangeListener);
         tglShown.selectedProperty().removeListener(tglChangeListener);
-        tglFilm.selectedProperty().removeListener(tglChangeListener);
         tglAge.selectedProperty().removeListener(tglChangeListener);
         slAge.valueProperty().removeListener(slChangeListener);
 
         tglAll.selectedProperty().unbindBidirectional(ProgConfig.BOOKMARK_DEL_ALL);
         tglShown.selectedProperty().unbindBidirectional(ProgConfig.BOOKMARK_DEL_SHOWN);
-        tglFilm.selectedProperty().unbindBidirectional(ProgConfig.BOOKMARK_DEL_WITHOUT_FILM);
         tglAge.selectedProperty().unbindBidirectional(ProgConfig.BOOKMARK_DEL_OLD);
         slAge.valueProperty().unbindBidirectional(ProgConfig.BOOKMARK_DEL_OLD_COUNT_DAYS);
 

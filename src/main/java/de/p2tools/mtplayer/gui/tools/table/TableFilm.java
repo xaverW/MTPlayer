@@ -67,19 +67,28 @@ public class TableFilm extends PTable<FilmDataMTP> {
         ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.BOOKMARK.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
 
-        // ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
-
-        // ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
-//        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableFilm.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                refreshTable();
-//            }
-//        });
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_REFRESH_TABLE) {
+            @Override
+            public void pingGui() {
+                refreshTable();
+            }
+        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_HISTORY_CHANGED) {
+            @Override
+            public void pingGui() {
+                refreshTable();
+            }
+        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_BLACKLIST_CHANGED) {
+            @Override
+            public void pingGui() {
+                refreshTable();
+            }
+        });
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_BOOKMARK_CHANGED) {
             @Override
             public void pingGui() {
                 refreshTable();
@@ -108,7 +117,6 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, String> startColumn = new TableColumn<>("");
         startColumn.setCellValueFactory(new PropertyValueFactory<>("buttonDummy"));
-//        startColumn.setCellFactory(new CellFilmButton().cellFactory);
         startColumn.getStyleClass().add("alignCenter");
         TableFilmFactory.columnFactoryButton(startColumn);
 
@@ -123,7 +131,6 @@ public class TableFilm extends PTable<FilmDataMTP> {
         TableFilmFactory.columnFactoryString(timeColumn);
 
         final TableColumn<FilmDataMTP, Integer> durationColumn = new TableColumn<>("Dauer [min]");
-//        durationColumn.setCellFactory(new P2CellIntNull().cellFactory);
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinute"));
         durationColumn.getStyleClass().add("alignCenterRightPadding_25");
         TableFilmFactory.columnFactoryInteger(durationColumn);
@@ -135,13 +142,11 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
-//        hdColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         hdColumn.getStyleClass().add("alignCenter");
         TableFilmFactory.columnFactoryBoolean(hdColumn);
 
         final TableColumn<FilmDataMTP, Boolean> utColumn = new TableColumn<>("UT");
         utColumn.setCellValueFactory(new PropertyValueFactory<>("ut"));
-//        utColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         utColumn.getStyleClass().add("alignCenter");
         TableFilmFactory.columnFactoryBoolean(utColumn);
 
@@ -152,7 +157,6 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, Boolean> doubleColumn = new TableColumn<>("Doppelt");
         doubleColumn.setCellValueFactory(new PropertyValueFactory<>("doubleUrl"));
-//        doubleColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         doubleColumn.getStyleClass().add("alignCenter");
         TableFilmFactory.columnFactoryBoolean(doubleColumn);
 
@@ -168,7 +172,6 @@ public class TableFilm extends PTable<FilmDataMTP> {
 
         final TableColumn<FilmDataMTP, Boolean> bookmarkColumn = new TableColumn<>("Bookmark");
         bookmarkColumn.setCellValueFactory(new PropertyValueFactory<>("bookmark"));
-//        bookmarkColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         bookmarkColumn.getStyleClass().add("alignCenter");
         TableFilmFactory.columnFactoryBoolean(bookmarkColumn);
 

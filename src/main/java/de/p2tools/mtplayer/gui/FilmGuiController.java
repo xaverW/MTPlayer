@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
@@ -38,7 +37,6 @@ import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
-import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -203,35 +201,7 @@ public class FilmGuiController extends AnchorPane {
             }
             filmDataMTP.setWasHere(set);
         }
-
-//        System.out.println("setLastShown");
-//        selPos = Double.MAX_VALUE;
-//        int selected = tableView.getSelectionModel().getSelectedIndex();
-//        if (selected == -1) return;
-//        TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
-//        skin.getChildren().stream()
-//                .filter(VirtualFlow.class::isInstance)
-//                .map(VirtualFlow.class::cast)
-//                .findAny()
-//                .ifPresent(vf -> {
-//                    Cell<?> cell = vf.getCell(selected);
-//                    selPos = cell.getLayoutY();
-//                    System.out.println("get SelPos: " + selPos);
-//                });
-
     }
-
-//    public void bookmarkFilm(boolean bookmark) {
-//        // Filmmenü
-//        final ArrayList<FilmDataMTP> list = getSelList(true);
-//        if (!list.isEmpty()) {
-//            if (bookmark) {
-//                BookmarkFactory.addBookmarkList(list);
-//            } else {
-//                BookmarkFactory.removeBookmarkList(list);
-//            }
-//        }
-//    }
 
     public void searchFilmInMediaCollection() {
         // aus dem Menü
@@ -264,42 +234,10 @@ public class FilmGuiController extends AnchorPane {
 
     private void initListener() {
         ProgConfig.FILM__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
-//        sortedList.addListener((ListChangeListener<FilmDataMTP>) c -> {
-//            selectLastShown();
-//        });
-//        tableView.getItems().addListener((ListChangeListener<FilmDataMTP>) c -> {
-//            selectLastShown();
-//        });
 
         progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
             if (progData.setDataList.getSetDataListButton().size() > 2) {
                 ProgConfig.FILM__INFO_IS_SHOWING.set(true);
-            }
-        });
-//        PListener.addListener(new PListener(new int[]{PListener.EVENT_HISTORY_CHANGED},
-//                FilmGuiController.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                P2TableFactory.refreshTable(tableView);
-//            }
-//        });
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_HISTORY_CHANGED) {
-            @Override
-            public void pingGui() {
-                P2TableFactory.refreshTable(tableView);
-            }
-        });
-
-//        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, this.getClass().getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                P2TableFactory.refreshTable(tableView);
-//            }
-//        });
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_BLACKLIST_CHANGED) {
-            @Override
-            public void pingGui() {
-                P2TableFactory.refreshTable(tableView);
             }
         });
     }

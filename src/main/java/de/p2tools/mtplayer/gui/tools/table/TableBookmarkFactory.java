@@ -149,7 +149,6 @@ public class TableBookmarkFactory {
                     getTableView().requestFocus();
                 });
 
-                // btnSave.setDisable(filmDataMTP == null); // todo?
                 btnSave.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
@@ -175,7 +174,7 @@ public class TableBookmarkFactory {
                     BookmarkFactory.removeBookmark(bookmarkData);
                     getTableView().refresh();
                     getTableView().requestFocus();
-                    ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED); //todo
+                    ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BOOKMARK_CHANGED);
                 });
                 hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);
                 setGraphic(hbox);

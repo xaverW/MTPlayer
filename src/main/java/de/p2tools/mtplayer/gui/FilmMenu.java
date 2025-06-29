@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
 import de.p2tools.mtplayer.controller.filmfilter.FilterSamples;
-import de.p2tools.mtplayer.gui.dialog.BookmarkDelDialog;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
@@ -119,11 +118,7 @@ public class FilmMenu {
             progData.filmGuiController.tableView.requestFocus();
         });
         btDelAllBookmark.setOnAction(a -> {
-            BookmarkDelDialog b = new BookmarkDelDialog(progData, progData.primaryStage);
-            if (b.isOk()) {
-                // dann löschen
-                BookmarkFactory.del(progData.primaryStage);
-            }
+            BookmarkFactory.deleteAll(progData.primaryStage);
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
@@ -268,11 +263,7 @@ public class FilmMenu {
 
         final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
         miBookmarkDelAll.setOnAction(a -> {
-            BookmarkDelDialog b = new BookmarkDelDialog(progData, progData.primaryStage);
-            if (b.isOk()) {
-                // dann löschen
-                BookmarkFactory.del(progData.primaryStage);
-            }
+            BookmarkFactory.deleteAll(progData.primaryStage);
         });
 
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);

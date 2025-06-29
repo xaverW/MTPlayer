@@ -22,7 +22,6 @@ import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.date.P2DateProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -36,9 +35,7 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
     private final StringProperty url = new SimpleStringProperty("");
     private final StringProperty info = new SimpleStringProperty("");
     private final P2DateProperty date = new P2DateProperty(new P2Date(0));
-    private String buttonDummy = "";
-
-    public final Property[] properties = {title, theme, url, info, date};
+    private String buttonDummy = ""; // Tabellenspalte mit den Buttons
 
     public static final String TAG = "BookmarkData";
 

@@ -27,7 +27,6 @@ import javafx.collections.transformation.SortedList;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.function.Predicate;
 
 public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2DataList<BookmarkData> {
 
@@ -79,25 +78,11 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2
         return filteredList;
     }
 
-    public synchronized void filteredListSetPredicate(Predicate<BookmarkData> predicate) {
-        filteredList.setPredicate(predicate);
-    }
-
-    public synchronized void filteredListSetPredFalse() {
-        filteredList.setPredicate(p -> false);
-    }
-
-    public synchronized void filteredListSetPredTrue() {
-        filteredList.setPredicate(p -> true);
-    }
-
-    public void removeUrlHashSet(HashSet<String> removeUrlHash) {
+    public void removeUrlHash(HashSet<String> removeUrlHash) {
         final ArrayList<BookmarkData> newList = new ArrayList<>();
         found = false;
         P2Duration.counterStart("Bookmark: removeFromBookmark");
-        P2Log.sysLog("Aus Bookmarks löschen: " + removeUrlHash.size() + ", löschen aus: " + ProgConst.FILE_BOOKMARKS_TXT);
-
-        BookmarkWriteToFile.waitWhileWorking(); // wird diese Liste abgesucht
+        P2Log.sysLog("Aus Bookmarks löschen: " + removeUrlHash.size() + ", löschen aus: " + ProgConst.FILE_BOOKMARKS_XML);
 
         this.forEach(bookmarkData -> {
             if (removeUrlHash.contains(bookmarkData.getUrl())) {
@@ -114,7 +99,7 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2
             clearList();
             this.addAll(newList);
             fillUrlHash();
-            BookmarkFileFactory.writeToFile(newList, false);
+            BookmarkLoadSaveFactory.saveBookmark();
         }
 
         P2Duration.counterStop("Bookmark: removeFromBookmark");
@@ -139,6 +124,6 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2
 
     public void fillUrlHash() {
         urlHash.clear();
-        this.forEach(h -> urlHash.add(h.getUrl()));
+        this.forEach(bookmarkData -> urlHash.add(bookmarkData.getUrl()));
     }
 }

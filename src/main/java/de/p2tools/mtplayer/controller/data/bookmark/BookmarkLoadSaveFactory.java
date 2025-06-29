@@ -1,6 +1,5 @@
 package de.p2tools.mtplayer.controller.data.bookmark;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -12,13 +11,11 @@ import de.p2tools.p2lib.configfile.ConfigWriteFile;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class BookmarkLoadSave {
-    private BookmarkLoadSave() {
+public class BookmarkLoadSaveFactory {
+    private BookmarkLoadSaveFactory() {
     }
 
     public static void loadList() {
@@ -28,7 +25,7 @@ public class BookmarkLoadSave {
         if (!ProgConfig.SYSTEM_USE_NEW_BOOKMARK_FILE.get()) {
             // dann noch mit dem alten File versuchen
             ProgConfig.SYSTEM_USE_NEW_BOOKMARK_FILE.set(true);
-            BookmarkFileFactory.readBookmarkDataFromFileOld();
+            BookmarkFileFactoryOld.readBookmarkDataFromFileOld();
             saveBookmark();
             FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS_TXT);
 
@@ -41,7 +38,7 @@ public class BookmarkLoadSave {
         P2Duration.counterStop("loadList");
     }
 
-    private static boolean loadBookmarks() {
+    private static void loadBookmarks() {
         String settingsDir = ProgInfos.getSettingsDirectory_String();
         String fileName = ProgConst.FILE_BOOKMARKS_XML;
         final Path xmlFilePath = FileFactory.getUrlFilePath(settingsDir, fileName);
@@ -49,50 +46,28 @@ public class BookmarkLoadSave {
         try {
             if (!Files.exists(xmlFilePath)) {
                 //dann gibts das File gar nicht
-                return false;
+                return;
             }
 
-            ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true);
+            ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), false);
             configFile.addConfigs(ProgData.getInstance().bookmarkList);
-            boolean ok = ConfigReadFile.readConfig(configFile);
-
-            if (ok) {
-                return true;
-
-            } else {
-                // dann hat das Laden nicht geklappt
-                return false;
+            if (!ConfigReadFile.readConfig(configFile)) {
+                P2Log.errorLog(959874512, "Bookmarks konnten nicht geladen werden");
             }
-        } catch (final Exception ex) {
+
+        } catch (final Exception ignore) {
         }
-        return false;
     }
 
     public static void saveBookmark() {
-//        saveBookmarkJson();
-
         P2Log.sysLog("Bookmarks sichern");
 
         String settingsDir = ProgInfos.getSettingsDirectory_String();
         String fileName = ProgConst.FILE_BOOKMARKS_XML;
         final Path xmlFilePath = FileFactory.getUrlFilePath(settingsDir, fileName);
 
-        ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), true);
+        ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), false);
         configFile.addConfigs(ProgData.getInstance().bookmarkList);
         ConfigWriteFile.writeConfigFile(configFile);
-    }
-
-    public static void saveBookmarkJson() {
-        ObjectMapper om = new ObjectMapper();
-        try {
-            // create a file object
-            String settingsDir = ProgInfos.getSettingsDirectory_String();
-            String fileName = ProgConst.FILE_BOOKMARKS_XML;
-
-            File file = FileFactory.getUrlFilePath(settingsDir, fileName + ".json").toFile();
-            om.writeValue(file, new BookmarkData());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -28,7 +28,6 @@ import de.p2tools.mtplayer.controller.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.starter.StartDownloadFactory;
-import de.p2tools.mtplayer.gui.dialog.BookmarkDelDialog;
 import de.p2tools.mtplayer.gui.tools.table.TableFilm;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.scene.control.*;
@@ -227,11 +226,7 @@ public class FilmTableContextMenu {
             miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmark(film));
         }
         miBookmarkDelAll.setOnAction(a -> {
-            BookmarkDelDialog b = new BookmarkDelDialog(progData, progData.primaryStage);
-            if (b.isOk()) {
-                // dann löschen
-                BookmarkFactory.del(progData.primaryStage);
-            }
+            BookmarkFactory.deleteAll(progData.primaryStage);
         });
 
         miBookmarkAdd.setDisable(film == null);

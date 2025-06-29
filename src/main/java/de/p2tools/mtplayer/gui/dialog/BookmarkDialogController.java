@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
-import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSave;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
 import de.p2tools.mtplayer.gui.BookmarkTableContextMenu;
 import de.p2tools.mtplayer.gui.infoPane.PaneBookmarkInfo;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -79,13 +79,13 @@ public class BookmarkDialogController extends P2DialogExtra {
         });
         btnDel.setDisable(progData.bookmarkList.isEmpty());
 
-        btnDel.setTooltip(new Tooltip("Bookmarks (in einem Dialog " +
-                "wird abgefragt, welche), werden gelöscht."));
+        btnDel.setTooltip(new Tooltip("Bookmarks werden gelöscht und in einem Dialog " +
+                "wird vorher abgefragt, welche."));
         btnDel.setOnAction(a -> {
             BookmarkDelDialog b = new BookmarkDelDialog(progData, this.getStage());
             if (b.isOk()) {
                 // dann löschen
-                BookmarkFactory.del(this.getStage());
+                BookmarkFactory.deleteFromDialog(this.getStage(), false);
             }
         });
 
@@ -188,7 +188,7 @@ public class BookmarkDialogController extends P2DialogExtra {
     private void quit() {
         Table.saveTable(tableView, Table.TABLE_ENUM.BOOKMARK);
         if (paneBookmarkInfo.isChanged()) {
-            BookmarkLoadSave.saveBookmark();
+            BookmarkLoadSaveFactory.saveBookmark();
         }
         isRunning = false;
         close();

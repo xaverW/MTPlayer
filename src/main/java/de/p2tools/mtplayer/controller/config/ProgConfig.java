@@ -357,13 +357,12 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty BOOKMARK_TABLE_VIS = addStrProp("bookmark-table-vis");
     public static StringProperty BOOKMARK_TABLE_ORDER = addStrProp("bookmark-table-order");
     public static DoubleProperty BOOKMARK_DIALOG_INFO_DIVIDER = addDoubleProp("bookmark-dialog-info-divider", 0.5);
-    public static BooleanProperty BOOKMARK_DIALOG_SHOW_TABLE_TOOL_TIP = addBoolProp("bookmark-dialog-show-table-tool-tip", Boolean.TRUE);
+    public static BooleanProperty BOOKMARK_DIALOG_SHOW_TABLE_TOOL_TIP = addBoolProp("bookmark-dialog-show-table-tool-tip", Boolean.FALSE);
     public static BooleanProperty BOOKMARK_DIALOG_SMALL_TABLE_ROW = addBoolProp("bookmark-dialog-small-table-row", Boolean.FALSE);
     public static BooleanProperty BOOKMARK_DIALOG_SHOW_INFO = addBoolProp("bookmark-dialog-show-info", Boolean.TRUE);
 
     public static BooleanProperty BOOKMARK_DEL_ALL = addBoolProp("bookmark-del-all", Boolean.FALSE);
     public static BooleanProperty BOOKMARK_DEL_SHOWN = addBoolProp("bookmark-del-shown", Boolean.FALSE);
-    public static BooleanProperty BOOKMARK_DEL_WITHOUT_FILM = addBoolProp("bookmark-del-without-film", Boolean.FALSE);
     public static BooleanProperty BOOKMARK_DEL_OLD = addBoolProp("bookmark-del-old", Boolean.FALSE);
     public static IntegerProperty BOOKMARK_DEL_OLD_COUNT_DAYS = addIntProp("bookmark-del-count-old-days", 10);
 
@@ -376,9 +375,8 @@ public class ProgConfig extends P2DataProgConfig {
 
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_FILM = addBoolProp("system-small-row-table-film", Boolean.FALSE);
     public static BooleanProperty FILM_GUI_SHOW_MENU = addBoolProp("film-gui-show-menu", Boolean.TRUE);
-    public static BooleanProperty FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("film-gui-show-table-tool-tip", Boolean.TRUE);
+    public static BooleanProperty FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("film-gui-show-table-tool-tip", Boolean.FALSE);
     public static BooleanProperty FILM_GUI_FILTER_DIALOG_IS_SHOWING = addBoolProp("film-gui-filter-dialog-is-showing", Boolean.FALSE);
-    //    public static StringProperty FILM_GUI_FILTER_DIALOG_SIZE = addStrProp("film-gui-filter-dialog-size", "400:600");
     public static StringProperty FILM_GUI_TABLE_WIDTH = addStrProp("film-gui-table-width");
     public static StringProperty FILM_GUI_TABLE_SORT = addStrProp("film-gui-table-sort");
     public static StringProperty FILM_GUI_TABLE_UP_DOWN = addStrProp("film-gui-table-up-down");
@@ -419,7 +417,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_LIVE = addBoolProp("system-small-row-table-live", Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_IS_VISIBLE = addBoolProp("live-film-is-visible", Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_GUI_SHOW_MENU = addBoolProp("live-film-gui-show-menu", Boolean.TRUE);
-    public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.TRUE);
+    public static BooleanProperty LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("live-film-gui-show-table-tool-tip", Boolean.FALSE);
 
     public static StringProperty LIVE_FILM_GUI_TABLE_WIDTH = addStrProp("live-film-gui-table-width");
     public static StringProperty LIVE_FILM_GUI_TABLE_SORT = addStrProp("live-film-gui-table-sort");
@@ -461,7 +459,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_DOWNLOAD = addBoolProp("system-small-row-table-download", Boolean.FALSE);
     public static StringProperty DOWNLOAD_PATH = addStrProp("download-path" + TAGGER + "start-dialog-download-path", P2InfoFactory.getStandardDownloadPath());
     public static BooleanProperty DOWNLOAD_GUI_SHOW_MENU = addBoolProp("download-gui-show-menu", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("download-gui-show-table-tool-tip", Boolean.FALSE);
     public static List<String> DOWNLOAD_DIALOG_DOWNLOAD_PATH = addListProp("download-dialog-download-path"); // gesammelten Downloadpfade im Downloaddialog
     public static StringProperty DOWNLOAD_DIALOG_HD_HEIGHT_LOW = addStrProp("download-dialog-hd-height-low", FilmDataMTP.RESOLUTION_NORMAL); // letzte verwendete Auflösung
     public static BooleanProperty DOWNLOAD_DIALOG_START_DOWNLOAD_NOW = addBoolProp("download-dialog-start-download-now", Boolean.TRUE);
@@ -529,7 +527,7 @@ public class ProgConfig extends P2DataProgConfig {
 
     public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_ABO = addBoolProp("system-small-row-table-abo", Boolean.FALSE);
     public static BooleanProperty ABO_GUI_SHOW_MENU = addBoolProp("abo-gui-show-menu", Boolean.TRUE);
-    public static BooleanProperty ABO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("abo-gui-show-table-tool-tip", Boolean.TRUE);
+    public static BooleanProperty ABO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("abo-gui-show-table-tool-tip", Boolean.FALSE);
     public static BooleanProperty ABO_SEARCH_NOW = addBoolProp("abo-search-now", Boolean.TRUE);
     public static IntegerProperty ABO_MINUTE_MIN_SIZE = addIntProp("abo-minute-min-size", FilterCheck.FILTER_ALL_OR_MIN); //Vorgabe beim Anlegen eines Abos
     public static IntegerProperty ABO_MINUTE_MAX_SIZE = addIntProp("abo-minute-max-size", FilterCheck.FILTER_DURATION_MAX_MINUTE); //Vorgabe beim Anlegen eines Abos

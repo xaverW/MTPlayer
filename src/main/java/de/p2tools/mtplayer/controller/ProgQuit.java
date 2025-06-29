@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.checkforactinfos.FoundHttpDownload;
 import de.p2tools.p2lib.guitools.P2GuiSize;
 import de.p2tools.p2lib.tools.P2ShutDown;
-import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.log.P2LogMessage;
 import javafx.application.Platform;
 
@@ -83,27 +82,6 @@ public class ProgQuit {
             writeTabSettings();
             ProgSave.saveAll();
             P2LogMessage.endMsg();
-
-
-            // ============
-            if (ProgConfig.SYSTEM_SIZE_GUI.getValue().equals(ProgData.gui)) {
-                P2Log.sysLog("GUI ist gleich");
-                P2Log.sysLog("GUI: " + ProgConfig.SYSTEM_SIZE_GUI.getValue());
-            } else {
-                P2Log.sysLog("GUI: " + ProgData.gui);
-                P2Log.sysLog("GUI: " + ProgConfig.SYSTEM_SIZE_GUI.getValue());
-            }
-
-            P2Log.sysLog("");
-            if (ProgConfig.FILM__FILTER_DIALOG_SIZE.getValue().equals(ProgData.dialog)) {
-                P2Log.sysLog("DIALOG ist gleich");
-                P2Log.sysLog("DIALOG: " + ProgConfig.FILM__FILTER_DIALOG_SIZE.getValue());
-            } else {
-                P2Log.sysLog("DIALOG: " + ProgData.dialog);
-                P2Log.sysLog("DIALOG: " + ProgConfig.FILM__FILTER_DIALOG_SIZE.getValue());
-            }
-            // ============
-
 
             if (shutDown) {
                 P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
