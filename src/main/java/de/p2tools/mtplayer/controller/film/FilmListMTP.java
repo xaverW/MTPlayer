@@ -86,7 +86,7 @@ public class FilmListMTP extends Filmlist<FilmDataMTP> {
 //    }
 
     @Override
-    public synchronized int markFilms() {
+    public synchronized int markFilms(List<String> logList) {
         // läuft direkt nach dem Laden der Filmliste!
         // doppelte Filme (URL), Geo, InFuture markieren
         // viele Filme sind bei mehreren Sendern vorhanden
