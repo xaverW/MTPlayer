@@ -122,10 +122,29 @@ public class PaneSetList extends VBox {
         btnDel.setTooltip(new Tooltip("Markiertes Set löschen"));
         btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
         btnDel.setOnAction(event -> {
-            SetData setData = getSelectedSelData();
+            final SetData setData = getSelectedSelData();
             if (setData != null) {
                 progData.setDataList.addDataToUndoList(setData);
                 progData.setDataList.removeSetData(setData);
+
+                if (setData.isPlay()) {
+                    // dann war das Set zum Abspielen
+                    final SetData set = ProgData.getInstance().setDataList.getSetDataPlay();
+                    if (set == null) {
+                        P2Alert.showErrorAlert(stage, "Kein Videoplayer!",
+                                "Es ist kein Videoplayer zum Abspielen " +
+                                        "der Filme angelegt.");
+                    }
+
+                } else if (setData.isSave()) {
+                    // dann wars ein Set zum Speichern
+                    final boolean setEmpty = ProgData.getInstance().setDataList.getSetDataListSave().isEmpty();
+                    if (setEmpty) {
+                        P2Alert.showErrorAlert(stage, "Kein Set zum Speichern!",
+                                "Es ist kein Set zum Speichern " +
+                                        "der Filme angelegt.");
+                    }
+                }
             }
         });
 
