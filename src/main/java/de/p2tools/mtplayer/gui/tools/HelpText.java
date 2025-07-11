@@ -882,7 +882,9 @@ public class HelpText {
             "Sie kann auch automatisch beim " +
             "Programmstart gemacht werden. Bei einem Fehler " +
             "wird dann diese Meldung angezeigt." +
-            "\n";
+            "\n\n" +
+            "In den Einstellungen->Aufzeichnen/Abspielen können diese Einstellungen " +
+            "geändert werden.";
 
     public static final String TRAY =
             "Im System Tray wird für das Programm ein Symbol angezeigt. " +

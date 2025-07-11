@@ -193,6 +193,28 @@ public class SetFactory {
         boolean show = showWhenOk;
         StringBuilder text = new StringBuilder();
 
+        final SetData set = ProgData.getInstance().setDataList.getSetDataPlay();
+        if (set == null) {
+            text.append("+++++++++++++++++++++++++++++++").append(P2LibConst.LINE_SEPARATOR);
+            text.append("Kein Videoplayer!").append(P2LibConst.LINE_SEPARATOR);
+            text.append("Es ist kein Videoplayer zum Abspielen ").append(P2LibConst.LINE_SEPARATOR);
+            text.append("der Filme angelegt.").append(P2LibConst.LINE_SEPARATOR);
+            text.append("+++++++++++++++++++++++++++++++").append(P2LibConst.LINE_SEPARATOR);
+            text.append(P2LibConst.LINE_SEPARATOR);
+            show = true;
+        }
+
+        final boolean setEmpty = ProgData.getInstance().setDataList.getSetDataListSave().isEmpty();
+        if (setEmpty) {
+            text.append("+++++++++++++++++++++++++++++++").append(P2LibConst.LINE_SEPARATOR);
+            text.append("Kein Set zum Speichern!").append(P2LibConst.LINE_SEPARATOR);
+            text.append("Es ist kein Set zum Speichern ").append(P2LibConst.LINE_SEPARATOR);
+            text.append("der Filme angelegt.").append(P2LibConst.LINE_SEPARATOR);
+            text.append("+++++++++++++++++++++++++++++++").append(P2LibConst.LINE_SEPARATOR);
+            text.append(P2LibConst.LINE_SEPARATOR);
+            show = true;
+        }
+
         for (final SetData setData : data.setDataList) {
             ret = true;
             if (!setData.isFreeLine() && !setData.isLable()) {
