@@ -58,6 +58,26 @@ public class TableBookmarkFactory {
         });
     }
 
+    public static void columnFactoryAge(TableColumn<BookmarkData, P2Date> column) {
+        column.setCellFactory(c -> new TableCell<>() {
+            @Override
+            protected void updateItem(P2Date item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                    return;
+                }
+
+                int age = item.diffInDays();
+                setText(age + "");
+                BookmarkData bookmarkData = getTableView().getItems().get(getIndex());
+                set(bookmarkData, this);
+            }
+        });
+    }
+
     public static void columnFactoryFilmData(TableColumn<BookmarkData, FilmDataMTP> column) {
         column.setCellFactory(c -> new TableCell<>() {
             @Override

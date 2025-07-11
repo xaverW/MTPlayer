@@ -37,6 +37,7 @@ public class PaneBookmarkInfo extends SplitPane {
     private final Label lblThemeS = new Label("");
     private final Label lblTitleS = new Label("");
     private final Label lblDateS = new Label();
+    private final Label lblAge = new Label();
     private final TextArea txtInfo = new TextArea();
 
     private final Text text = new Text("Kein Film in der Liste");
@@ -61,6 +62,8 @@ public class PaneBookmarkInfo extends SplitPane {
         gridPane.add(lblTitleS, 1, row, 2, 1);
         gridPane.add(new Label("Datum:"), 0, ++row);
         gridPane.add(lblDateS, 1, row);
+        gridPane.add(new Label("Alter:"), 0, ++row);
+        gridPane.add(lblAge, 1, row);
         gridPane.add(text, 2, row);
 
         text.setVisible(false);
@@ -94,6 +97,7 @@ public class PaneBookmarkInfo extends SplitPane {
             lblThemeS.setText("");
             lblTitleS.setText("");
             lblDateS.setText("");
+            lblAge.setText("");
             text.setVisible(false);
             text.setManaged(false);
             txtInfo.setText("");
@@ -105,6 +109,7 @@ public class PaneBookmarkInfo extends SplitPane {
         lblThemeS.setText(bd.getTheme());
         lblTitleS.setText(bd.getTitle());
         lblDateS.setText(bd.getDate().get_dd_MM_yyyy());
+        lblAge.setText(bd.getDate().diffInDays() + "");
         text.setVisible(bd.getFilmData() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
         text.setManaged(bd.getFilmData() == null && ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get());
         txtInfo.setText(bd.getInfo());

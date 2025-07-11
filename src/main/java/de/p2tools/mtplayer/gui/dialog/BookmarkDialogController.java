@@ -67,6 +67,11 @@ public class BookmarkDialogController extends P2DialogExtra {
         init(true);
     }
 
+    public void close() {
+        Table.saveTable(tableView, Table.TABLE_ENUM.BOOKMARK);
+        super.close();
+    }
+
     @Override
     public void make() {
         tglShow.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);

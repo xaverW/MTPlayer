@@ -80,6 +80,11 @@ public class TableBookmark extends PTable<BookmarkData> {
         dateColumn.getStyleClass().add("special-column-style");
         TableBookmarkFactory.columnFactoryP2Date(dateColumn);
 
+        final TableColumn<BookmarkData, P2Date> ageColumn = new TableColumn<>("Alter");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        ageColumn.getStyleClass().add("special-column-style");
+        TableBookmarkFactory.columnFactoryAge(ageColumn);
+
         final TableColumn<BookmarkData, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         channelColumn.getStyleClass().add("special-column-style");
@@ -107,6 +112,6 @@ public class TableBookmark extends PTable<BookmarkData> {
 
         startColumn.setPrefWidth(160);
 
-        getColumns().addAll(dateColumn, channelColumn, themeColumn, titleColumn, startColumn, urlColumn);
+        getColumns().addAll(dateColumn, ageColumn, channelColumn, themeColumn, titleColumn, startColumn, urlColumn);
     }
 }
