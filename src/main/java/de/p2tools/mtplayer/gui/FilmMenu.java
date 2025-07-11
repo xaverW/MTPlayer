@@ -150,7 +150,10 @@ public class FilmMenu {
             progData.filmGuiController.tableView.requestFocus();
         });
         btShowBookmark.setOnAction(a -> {
-            if (!BookmarkDialogController.isRunning) {
+            if (progData.bookmarkDialogController != null) {
+                // dann läuft er schon
+                progData.bookmarkDialogController.showDialog();
+            } else {
                 new BookmarkDialogController(progData);
             }
         });

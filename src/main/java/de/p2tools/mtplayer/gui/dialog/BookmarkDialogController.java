@@ -48,7 +48,6 @@ import java.util.Optional;
 
 public class BookmarkDialogController extends P2DialogExtra {
 
-    public static boolean isRunning = false;
     private final TableBookmark tableView;
     private final ProgData progData;
     private final PaneBookmarkInfo paneBookmarkInfo;
@@ -59,8 +58,9 @@ public class BookmarkDialogController extends P2DialogExtra {
     public BookmarkDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
                 false, false, DECO.BORDER_SMALL);
-        isRunning = true;
         this.progData = progData;
+        this.progData.bookmarkDialogController = this;
+
         this.tableView = new TableBookmark(Table.TABLE_ENUM.BOOKMARK, progData);
         this.paneBookmarkInfo = new PaneBookmarkInfo();
         initTable();
@@ -69,6 +69,10 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     public void close() {
         Table.saveTable(tableView, Table.TABLE_ENUM.BOOKMARK);
+        if (paneBookmarkInfo.isChanged()) {
+            BookmarkLoadSaveFactory.saveBookmark();
+        }
+        this.progData.bookmarkDialogController = null;
         super.close();
     }
 
@@ -111,7 +115,7 @@ public class BookmarkDialogController extends P2DialogExtra {
 
         Button btnOk = new Button("Ok");
         btnOk.setOnAction(a -> {
-            quit();
+            close();
         });
         Button btnHelp = P2Button.helpButton(getStage(), "Bookmarks", "Hier werden alle Bookmarks angezeigt. " +
                 "Sie können gelöscht werden, es können die Filme angesehen oder gespeichert werden. Für rot markierte Bookmarks " +
@@ -188,14 +192,5 @@ public class BookmarkDialogController extends P2DialogExtra {
         tableView.getItems().addListener((ListChangeListener<BookmarkData>)
                 change -> lblSize.setText("" + tableView.getItems().size()));
         lblSize.setText("" + tableView.getItems().size());
-    }
-
-    private void quit() {
-        Table.saveTable(tableView, Table.TABLE_ENUM.BOOKMARK);
-        if (paneBookmarkInfo.isChanged()) {
-            BookmarkLoadSaveFactory.saveBookmark();
-        }
-        isRunning = false;
-        close();
     }
 }

@@ -45,6 +45,7 @@ import de.p2tools.mtplayer.gui.DownloadGuiController;
 import de.p2tools.mtplayer.gui.FilmGuiController;
 import de.p2tools.mtplayer.gui.LiveFilmGuiController;
 import de.p2tools.mtplayer.gui.chart.ChartData;
+import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.filter.FilmFilterControllerClearFilter;
@@ -113,6 +114,7 @@ public class ProgData {
     public CheckForNewFilmlist checkForNewFilmlist;
     public final ChartData chartData;
     public final ProgTray progTray;
+    public BookmarkDialogController bookmarkDialogController = null;
 
     // Worker
     public Worker worker; // Liste aller Sender, Themen, ...
