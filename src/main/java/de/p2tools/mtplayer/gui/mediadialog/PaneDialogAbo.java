@@ -177,7 +177,7 @@ public class PaneDialogAbo extends PaneDialogScrollPane {
             ArrayList<HistoryData> historyDataArrayList =
                     new ArrayList<>(tableAboOrHistory.getSelectionModel().getSelectedItems());
             if (historyDataArrayList.isEmpty()) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(stage);
 
             } else {
                 if (mediaDataDto.whatToShow == MediaDataDto.SHOW_WHAT.SHOW_HISTORY) {

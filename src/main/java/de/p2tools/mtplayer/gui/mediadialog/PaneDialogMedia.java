@@ -101,7 +101,7 @@ public class PaneDialogMedia extends PaneDialogScrollPane {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
                 MediaData mediaData = tableMedia.getSelectionModel().getSelectedItem();
                 if (mediaData == null) {
-                    P2Alert.showInfoNoSelection();
+                    P2Alert.showInfoNoSelection(stage);
 
                 } else {
                     ContextMenu contextMenu = new PaneMediaContextMenu(stage, mediaData).getContextMenu();
