@@ -87,8 +87,8 @@
 }
 .extra-pane-filter {
     -fx-background-color: -style-extra-pane-color;
-    -fx-border-width: 1 0 0 0; /* makes really one-pixel-border */
-    -fx-border-color: #939a9f;
+   /* -fx-border-width: 1 0 0 0; *//* makes really one-pixel-border *//*
+    -fx-border-color: #939a9f;*/
 }
 
 .special-column-style .label {

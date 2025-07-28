@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
-import de.p2tools.p2lib.P2LibConst;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -26,16 +25,16 @@ import javafx.scene.layout.VBox;
 
 public class FilterController extends VBox {
 
-    public static final int FILTER_SPACING_TEXTFILTER = 10;
+    public static final int FILTER_SPACING_TEXTFILTER = 5;
 
     public FilterController() {
-        setSpacing(P2LibConst.SPACING_VBOX);
+        setSpacing(5);
         VBox.setVgrow(this, Priority.ALWAYS);
     }
 
     public VBox getVBoxFilter() {
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(P2LibConst.PADDING));
+        vbox.setPadding(new Insets(5, 10, 5, 10));
         vbox.setSpacing(FILTER_SPACING_TEXTFILTER);
         VBox.setVgrow(vbox, Priority.ALWAYS);
         getChildren().addAll(vbox);
@@ -45,8 +44,8 @@ public class FilterController extends VBox {
     public VBox getVBoxBlack() {
         VBox vBox = new VBox();
         vBox.getStyleClass().add("extra-pane-filter");
-        vBox.setPadding(new Insets(P2LibConst.PADDING));
-        vBox.setSpacing(FILTER_SPACING_TEXTFILTER);
+        vBox.setPadding(new Insets(5, 10, 5, 10));
+        vBox.setSpacing(5);
         getChildren().addAll(vBox);
         return vBox;
     }
