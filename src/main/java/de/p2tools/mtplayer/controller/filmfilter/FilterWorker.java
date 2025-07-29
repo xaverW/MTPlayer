@@ -28,8 +28,10 @@ public final class FilterWorker {
 
     // ist der aktuell angezeigte Filter
     public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
+    public static final String STORED_SELECTED_FILTER_NAME = "gespeicherte aktuelle Einstellung"; // dient nur der Info im Config-File
     // ist der "aktuelle" Filter im Programm
     private final FilmFilter actFilterSettings = new FilmFilter(SELECTED_FILTER_NAME);
+    private final FilmFilter storedActFilterSettings = new FilmFilter(STORED_SELECTED_FILTER_NAME);
 
     // ist die Liste der gespeicherten Filter
     private final FilmFilterList filmFilterList = new FilmFilterList();
@@ -52,6 +54,11 @@ public final class FilterWorker {
     public FilmFilter getActFilterSettings() {
         // liefert den aktuell angezeigten Filter
         return actFilterSettings;
+    }
+
+    public FilmFilter getStoredActFilterSettings() {
+        // liefert den gespeicherten Filter vom SmallFilterWechsel
+        return storedActFilterSettings;
     }
 
     public FilmFilterList getFilmFilterList() {

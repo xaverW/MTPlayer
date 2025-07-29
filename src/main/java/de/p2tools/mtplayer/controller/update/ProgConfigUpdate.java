@@ -35,6 +35,7 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_AFTER_UPDATE_RBTV.setValue(true);
         ProgConfig.SYSTEM_ABO_START_TIME.setValue(true); // für Version 17
         ProgConfig.SYSTEM_CHANGE_LOG_DIR.setValue(true); // für Version 17
+        ProgConfig.SYSTEM_SMALL_FILTER.setValue(true); // für Version 20
     }
 
     public static void update() {
@@ -117,6 +118,11 @@ public class ProgConfigUpdate {
                 // wenn eh der StandardPfad drin steht, dann löschen
                 ProgConfig.SYSTEM_LOG_DIR.setValue("");
             }
+        }
+
+        if (!ProgConfig.SYSTEM_SMALL_FILTER.getValue()) {
+            ProgData.getInstance().filterWorker.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorker.getStoredActFilterSettings());
         }
 
         setUpdateDone();

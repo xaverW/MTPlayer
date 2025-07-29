@@ -272,6 +272,9 @@ public class FilmMenu {
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);
         mb.getItems().add(submenuBookmark);
 
+        final CheckMenuItem miSmallFilter = new CheckMenuItem("Einfachen Filter anzeigen");
+        miSmallFilter.selectedProperty().bindBidirectional(ProgConfig.FILMFILTER_SMALL_FILTER);
+
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
         miShowFilter.disableProperty().bind(ProgConfig.FILM__FILTER_IS_RIP);
@@ -286,7 +289,7 @@ public class FilmMenu {
         miShowInfo.setOnAction(a -> MTPlayerFactory.setInfos());
 
         mb.getItems().add(new SeparatorMenuItem());
-        mb.getItems().addAll(miShowFilter, miShowInfo);
+        mb.getItems().addAll(miSmallFilter, miShowFilter, miShowInfo);
         vBox.getChildren().add(mb);
     }
 

@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter;
+package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
@@ -45,8 +45,6 @@ public class FilmFilterDialog extends P2DialogExtra {
 
     @Override
     public void make() {
-//        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
-
         setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
             setMaskerPane();
@@ -88,7 +86,6 @@ public class FilmFilterDialog extends P2DialogExtra {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnFactoryString(nameColumn);
 
-//        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> columnFactoryString(nameColumn));
         tableView.getColumns().add(nameColumn);
         tableView.setItems(progData.filterWorker.getFilmFilterList());
     }

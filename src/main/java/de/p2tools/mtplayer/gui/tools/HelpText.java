@@ -340,6 +340,34 @@ public class HelpText {
                     FILTER_FIELD +
                     "\n";
 
+    public static final String FILTER_SMALL_INFO =
+            """
+                    "Sender" und "Thema"
+                    Hier kann man auswählen, welche Sender und welches Thema angezeigt werden soll.
+
+                    Das Textfeld [Thema oder Titel] durchsucht THEMA und TITEL der Filmliste. \
+                    Der Suchtext muss im Thema ODER Titel vorkommen.
+
+                    "Zeitraum" und "Filmlänge" finden Filme die in dem vorgegebenem Zeitraum liefen und die vorgegebene \
+                    Länge haben.
+
+                    ==================================================
+                    Groß- und Kleinschreibung wird bei der Suche nicht unterschieden.
+
+                    Um mehrere Begriffe zu suchen müssen diese durch Komma oder Doppelpunkt \
+                    getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe \
+                    muss vorkommen), der Doppelpunkt mit UND (=> alle Begriffe müssen vorkommen).
+
+                    'Tagesschau' findet u.a. 'Tagesschau, 12:00 Uhr', 'ARD Tagesschau Livestream', 'Bei Logo und der Tagesschau'.
+                                        
+                    'Sport,Fussball' (Komma-getrennt) findet Filme bei denen 'Sport' oder 'Fussball' \
+                    oder beides vorkommt, u.a. 'Wintersport im Mumintal' und 'Wie wird man Fussballprofi?'.
+
+                    'Sport:Fussball' (Doppelpunkt-getrennt) findet nur Dateien bei denen \
+                    beides ('Sport' und 'Fussball') vorkommt, z.B. 'Wintersport, Fussball und Formel 1'.
+
+                    """;
+
     public static final String SEARCH_SPECIAL =
             "-- Besonderheiten --" +
                     "\n" +

@@ -14,10 +14,11 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter;
+package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
+import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.mtplayer.gui.filter.helper.PCboThemeExact;
 import de.p2tools.p2lib.guitools.P2MenuButton;
@@ -25,7 +26,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 
 import java.util.function.BooleanSupplier;
@@ -89,12 +89,6 @@ public class FilmFilterControllerTextFilter extends VBox {
         addTxt("Irgendwo", cboSomewhere, this, progData.filterWorker.getActFilterSettings().somewhereVisProperty());
         addTxt("URL", cboUrl, this, progData.filterWorker.getActFilterSettings().urlVisProperty());
 
-        Separator sp = new Separator();
-        sp.getStyleClass().add("pseperator1");
-        sp.setMinHeight(0);
-        sp.setMaxHeight(1);
-        this.getChildren().add(sp);
-
         this.visibleProperty().bind(progData.filterWorker.getActFilterSettings().channelVisProperty()
                 .or(progData.filterWorker.getActFilterSettings().themeVisProperty()
                         .or(progData.filterWorker.getActFilterSettings().themeTitleVisProperty()
@@ -106,8 +100,6 @@ public class FilmFilterControllerTextFilter extends VBox {
                         )
                 ));
         this.managedProperty().bind(this.visibleProperty());
-        sp.visibleProperty().bind(this.visibleProperty());
-        sp.managedProperty().bind(this.visibleProperty());
     }
 
     private void addTxt(String txt, Node control, VBox vBoxComplete, BooleanProperty booleanProperty) {

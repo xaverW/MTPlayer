@@ -14,10 +14,11 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter;
+package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.p2lib.guitools.P2LDatePicker;
 import de.p2tools.p2lib.guitools.pcheckcombobox.P2CheckComboBox;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
@@ -45,7 +46,6 @@ public class FilmFilterControllerFilter extends VBox {
     private final P2RangeBox slDur = new P2RangeBox("Filmlänge:", true, 0, FilterCheck.FILTER_DURATION_MAX_MINUTE);
 
     private final P2RangeBox slTime = new P2RangeBox("Sendezeit:", true, 0, (FilterCheck.FILTER_TIME_MAX_SEC));
-    //    private final P2TimePeriodBox slFilmTime = new P2TimePeriodBox();
     private final P2ToggleSwitch tglFilmTime = new P2ToggleSwitch("Zeitraum ausschließen");
 
     private final Label lblShowDate = new Label("Sendedatum:");

@@ -72,6 +72,11 @@ public class ProgConfig extends P2DataProgConfig {
         akt_sf.setName(FilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
 
+        final FilmFilter sakt_sf = progData.filterWorker.getStoredActFilterSettings(); // akt-Filter
+        sakt_sf.TAG = "StoredActFilter";
+        sakt_sf.setName(FilterWorker.STORED_SELECTED_FILTER_NAME); // nur zur Info im Config-File
+        configFile.addConfigs(sakt_sf);
+
         configFile.addConfigs(progData.filterWorker.getFilmFilterList()); // Filterprofile
         configFile.addConfigs(progData.filterWorker.getBackwardFilterList()); // Filterprofile
         configFile.addConfigs(progData.filterWorker.getForwardFilterList()); // Filterprofile
@@ -183,6 +188,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_ABO_START_TIME = addBoolProp("system-abo-start-time", Boolean.FALSE);
     public static BooleanProperty SYSTEM_CHANGE_LOG_DIR = addBoolProp("system-change-log-dir", Boolean.FALSE);
     public static BooleanProperty SYSTEM_USE_NEW_BOOKMARK_FILE = addBoolProp("system-use-new-bookmark-file", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_SMALL_FILTER = addBoolProp("system-small-filter", Boolean.FALSE);
 
     // configs zum Anzeigen der WhatsNew
     public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
@@ -328,6 +334,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILMFILTER_TABLE_ORDER = addStrProp("filmfilter-table-order");
 
     // Filter Filme
+    public static BooleanProperty FILMFILTER_SMALL_FILTER = addBoolProp("filmfilter-small-filter", Boolean.TRUE);
     public static IntegerProperty FILTER_FILM_SEL_FILTER = addIntProp("filter-film-sel-filter");
 
     // Filter Abo
