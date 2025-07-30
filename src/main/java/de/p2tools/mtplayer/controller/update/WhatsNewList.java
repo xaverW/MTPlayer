@@ -44,6 +44,7 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                 "Live-Suche ZDF",
                 "Die Live-Suche für das ZDF wurde an die geänderte Mediathek angepasst.", 50);
         add(whatsNewInfo);
+
         whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 4, 28),
                 "/de/p2tools/mtplayer/res/whatsnew/whatsNew_bookmark.png",
 
@@ -52,6 +53,16 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "angezeigt werden. Dort können die Filme auch " +
                         "angesehen und gespeichert werden. Es können auch Kommentare " +
                         "zu den Bookmarks hinzugefügt werden.", 100);
+        add(whatsNewInfo);
+
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 7, 29),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_small-filter.png",
+
+                "Einfacher Filter",
+                "Im Tab Filme kann ein einfacher Filter " +
+                        "angezeigt werden. Er enthält nur das nötigste und ist " +
+                        "übersichtlicher. Umschalten lässt sich das " +
+                        "im Film-Menü->Einfacher Filter.", 100);
         add(whatsNewInfo);
     }
 }
