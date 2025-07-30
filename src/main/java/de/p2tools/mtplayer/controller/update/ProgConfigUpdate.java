@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import de.p2tools.mtplayer.controller.filmfilter.FilterWorker;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 
 public class ProgConfigUpdate {
@@ -122,7 +123,10 @@ public class ProgConfigUpdate {
 
         if (!ProgConfig.SYSTEM_SMALL_FILTER.getValue()) {
             ProgData.getInstance().filterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().filterWorker.getStoredActFilterSettings());
+                    .copyTo(ProgData.getInstance().filterWorker.getStoredFilterSettings());
+            // ist dann ein smallFilter
+            ProgData.getInstance().filterWorker.getActFilterSettings().clearFilter();
+            FilterWorker.setSmallFilter(ProgData.getInstance().filterWorker.getActFilterSettings());
         }
 
         setUpdateDone();

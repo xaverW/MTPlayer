@@ -352,7 +352,7 @@ public class HelpText {
                     Länge haben.
 
                     ==================================================
-                    Groß- und Kleinschreibung wird bei der Suche nicht unterschieden.
+                    Groß- und Kleinschreibung wird beim Suchen nicht unterschieden.
 
                     Um mehrere Begriffe zu suchen müssen diese durch Komma oder Doppelpunkt \
                     getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe \

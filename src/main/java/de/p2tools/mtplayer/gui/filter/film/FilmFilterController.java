@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filmfilter.FilmFilter;
+import de.p2tools.mtplayer.controller.filmfilter.FilterWorker;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.scene.control.Separator;
@@ -44,48 +44,50 @@ public class FilmFilterController extends FilterController {
         filmFilterControllerBlacklist = new FilmFilterControllerBlacklist();
 
         filmSmallFilterControllerFilter = new FilmSmallFilterControllerFilter();
-        ProgConfig.FILMFILTER_SMALL_FILTER.addListener((u, o, n) -> setFilter());
+        ProgConfig.FILMFILTER_SMALL_FILTER.addListener((u, o, n) -> {
+            setFilter();
+            setGui();
+        });
 
-        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
-            ProgData.getInstance().filterWorker.getStoredActFilterSettings()
-                    .copyTo(ProgData.getInstance().filterWorker.getActFilterSettings());
-        } else {
-            ProgData.getInstance().filterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().filterWorker.getStoredActFilterSettings());
-        }
-
-        setFilter();
+        setFilterStart();
+        setGui();
     }
 
-    public void setFilter() {
+    private void setFilterStart() {
+        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+            // actFilterSettings sind die Einstellungen des Filters beim Beenden
+            ProgData.getInstance().filterWorker.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorker.getStoredSmallFilterSettings());
+            // vis setzen
+            FilterWorker.setSmallFilter(ProgData.getInstance().filterWorker.getStoredSmallFilterSettings());
+
+        } else {
+            ProgData.getInstance().filterWorker.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorker.getStoredFilterSettings());
+        }
+    }
+
+    private void setFilter() {
         if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
             // dann den kleinen Filter
             ProgData.getInstance().filterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().filterWorker.getStoredActFilterSettings());
+                    .copyTo(ProgData.getInstance().filterWorker.getStoredFilterSettings());
 
-            FilmFilter filmFilter = new FilmFilter();
+            FilterWorker.setSmallFilter(ProgData.getInstance().filterWorker.getStoredSmallFilterSettings());
+            ProgData.getInstance().filterWorker.setActFilterSettings(ProgData.getInstance().filterWorker.getStoredSmallFilterSettings());
 
-            filmFilter.setChannelVis(true);
-            filmFilter.setThemeTitleVis(true);
+        } else {
+            // dann alle Filter
+            ProgData.getInstance().filterWorker.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorker.getStoredSmallFilterSettings());
 
-            filmFilter.setThemeVis(true);
-            filmFilter.setThemeIsExact(true);
-            filmFilter.setTitleVis(false);
-            filmFilter.setSomewhereVis(false);
-            filmFilter.setUrlVis(false);
+            ProgData.getInstance().filterWorker.setActFilterSettings(
+                    ProgData.getInstance().filterWorker.getStoredFilterSettings());
+        }
+    }
 
-            filmFilter.setTimeRangeVis(true);
-            filmFilter.setMinMaxDurVis(true);
-            filmFilter.setMinMaxTimeVis(false);
-            filmFilter.setMinMaxTimeInvert(false);
-
-            filmFilter.setShowDateVis(false);
-
-            filmFilter.setNotVis(false);
-            filmFilter.setOnlyVis(false);
-
-            ProgData.getInstance().filterWorker.setActFilterSettings(filmFilter);
-
+    private void setGui() {
+        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
             getChildren().clear();
             final VBox vBox = getVBoxFilter();
             vBox.getChildren().addAll(filmFilterControllerTextFilter);
@@ -96,9 +98,6 @@ public class FilmFilterController extends FilterController {
 
         } else {
             // dann alle Filter
-            ProgData.getInstance().filterWorker.setActFilterSettings(
-                    ProgData.getInstance().filterWorker.getStoredActFilterSettings());
-
             getChildren().clear();
             final VBox vBox = getVBoxFilter();
             vBox.getChildren().addAll(filmFilterControllerTextFilter);

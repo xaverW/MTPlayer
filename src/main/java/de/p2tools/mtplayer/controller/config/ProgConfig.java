@@ -72,10 +72,15 @@ public class ProgConfig extends P2DataProgConfig {
         akt_sf.setName(FilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(akt_sf);
 
-        final FilmFilter sakt_sf = progData.filterWorker.getStoredActFilterSettings(); // akt-Filter
-        sakt_sf.TAG = "StoredActFilter";
-        sakt_sf.setName(FilterWorker.STORED_SELECTED_FILTER_NAME); // nur zur Info im Config-File
-        configFile.addConfigs(sakt_sf);
+        final FilmFilter sSkt_sf = progData.filterWorker.getStoredFilterSettings(); // akt-Filter
+        sSkt_sf.TAG = "StoredFilter";
+        sSkt_sf.setName(FilterWorker.STORED_FILTER_NAME); // nur zur Info im Config-File
+        configFile.addConfigs(sSkt_sf);
+
+        final FilmFilter sSmallAkt_sf = progData.filterWorker.getStoredSmallFilterSettings(); // akt-Filter
+        sSmallAkt_sf.TAG = "StoredSmallFilter";
+        sSmallAkt_sf.setName(FilterWorker.STORED_SMALL_FILTER_NAME); // nur zur Info im Config-File
+        configFile.addConfigs(sSmallAkt_sf);
 
         configFile.addConfigs(progData.filterWorker.getFilmFilterList()); // Filterprofile
         configFile.addConfigs(progData.filterWorker.getBackwardFilterList()); // Filterprofile

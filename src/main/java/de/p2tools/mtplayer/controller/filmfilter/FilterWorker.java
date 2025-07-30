@@ -28,10 +28,12 @@ public final class FilterWorker {
 
     // ist der aktuell angezeigte Filter
     public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
-    public static final String STORED_SELECTED_FILTER_NAME = "gespeicherte aktuelle Einstellung"; // dient nur der Info im Config-File
+    public static final String STORED_FILTER_NAME = "gespeicherte aktuelle Einstellung"; // dient nur der Info im Config-File
+    public static final String STORED_SMALL_FILTER_NAME = "gespeicherte aktuelle Einstellung, kleiner Filter"; // dient nur der Info im Config-File
     // ist der "aktuelle" Filter im Programm
     private final FilmFilter actFilterSettings = new FilmFilter(SELECTED_FILTER_NAME);
-    private final FilmFilter storedActFilterSettings = new FilmFilter(STORED_SELECTED_FILTER_NAME);
+    private final FilmFilter storedFilterSettings = new FilmFilter(STORED_FILTER_NAME);
+    private final FilmFilter storedSmallFilterSettings = new FilmFilter(STORED_SMALL_FILTER_NAME);
 
     // ist die Liste der gespeicherten Filter
     private final FilmFilterList filmFilterList = new FilmFilterList();
@@ -56,9 +58,14 @@ public final class FilterWorker {
         return actFilterSettings;
     }
 
-    public FilmFilter getStoredActFilterSettings() {
+    public FilmFilter getStoredFilterSettings() {
         // liefert den gespeicherten Filter vom SmallFilterWechsel
-        return storedActFilterSettings;
+        return storedFilterSettings;
+    }
+
+    public FilmFilter getStoredSmallFilterSettings() {
+        // liefert den gespeicherten Filter vom SmallFilterWechsel
+        return storedSmallFilterSettings;
     }
 
     public FilmFilterList getFilmFilterList() {
@@ -156,5 +163,23 @@ public final class FilterWorker {
         BlacklistFilterFactory.makeBlackFilteredFilmlist();
 //        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilterWorker.class.getSimpleName());
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+    }
+
+    public static void setSmallFilter(FilmFilter filmFilter) {
+        filmFilter.setChannelVis(true);
+        filmFilter.setThemeTitleVis(true);
+        filmFilter.setThemeVis(true);
+        filmFilter.setThemeIsExact(true);
+        filmFilter.setTimeRangeVis(true);
+        filmFilter.setMinMaxDurVis(true);
+
+        filmFilter.setTitleVis(false);
+        filmFilter.setSomewhereVis(false);
+        filmFilter.setUrlVis(false);
+        filmFilter.setMinMaxTimeVis(false);
+        filmFilter.setMinMaxTimeInvert(false);
+        filmFilter.setShowDateVis(false);
+        filmFilter.setNotVis(false);
+        filmFilter.setOnlyVis(false);
     }
 }
