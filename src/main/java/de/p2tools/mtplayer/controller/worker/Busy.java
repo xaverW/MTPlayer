@@ -3,6 +3,8 @@ package de.p2tools.mtplayer.controller.worker;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -56,6 +58,11 @@ public class Busy {
 
     public HBox getBusyHbox(BUSY_SRC busySrc) {
         final HBox busyHBox = new HBox(10);
+        busyHBox.setPadding(new Insets(0, 10, 0, 10));
+        busyHBox.setAlignment(Pos.CENTER);
+        busyHBox.setVisible(false);
+        busyHBox.setManaged(false);
+
         final Label busyLbl = new Label("");
         final ProgressBar busyProgressBar = new ProgressBar();
         final Button busyBtnStop = new Button();
@@ -70,8 +77,6 @@ public class Busy {
         busyProgressBar.progressProperty().bind(progressProperty());
         busyProgressBar.setMaxWidth(Double.MAX_VALUE);
         busyLbl.textProperty().bind(text);
-        busyHBox.setVisible(false);
-        busyHBox.setManaged(false);
 
         busyProperty().addListener((u, o, n) -> {
             if (!n || enumBusy.equals(busySrc)) {

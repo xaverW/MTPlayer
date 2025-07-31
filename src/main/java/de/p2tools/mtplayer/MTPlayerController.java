@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.SearchFast;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
@@ -94,9 +93,10 @@ public class MTPlayerController extends StackPane {
             splitPaneAbo = aboGui.pack();
             stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneLiveFilm, splitPaneDownload, splitPaneAbo);
 
-            VBox vBox = new VBox();
-            vBox.getChildren().addAll(stackPaneCont, ProgData.busy.getBusyHbox(Busy.BUSY_SRC.GUI));
-            VBox.setVgrow(stackPaneCont, Priority.ALWAYS);
+//            VBox vBox = new VBox();
+////            vBox.getChildren().addAll(stackPaneCont, ProgData.busy.getBusyHbox(Busy.BUSY_SRC.GUI));
+//            vBox.getChildren().addAll(stackPaneCont);
+//            VBox.setVgrow(stackPaneCont, Priority.ALWAYS);
 
             // Statusbar
             statusBarController = new StatusBarController(progData);
@@ -105,7 +105,7 @@ public class MTPlayerController extends StackPane {
 
             // Gui zusammenbauen
             borderPane.setTop(hBoxTop);
-            borderPane.setCenter(vBox);
+            borderPane.setCenter(stackPaneCont);
             borderPane.setBottom(statusBarController);
             this.setPadding(new Insets(0));
             this.getChildren().addAll(borderPane, progData.maskerPane);

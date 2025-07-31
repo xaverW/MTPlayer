@@ -20,6 +20,7 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
@@ -27,6 +28,7 @@ import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
 import de.p2tools.p2lib.mediathek.filter.Filter;
+import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -92,6 +94,21 @@ public class MTPTester {
                 new QuitDialogController(false);
             });
             gridPane.add(btnQuitt, 0, ++row);
+
+            Button btnBusy = new Button("Busy");
+            btnBusy.setOnAction(a -> {
+                Thread busy = new Thread(() -> {
+                    ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Test:", -1.0, false);
+                    for (int i = 1; i < 100; ++i) {
+                        double d = (double) i / 100;
+                        ProgData.busy.setProgress(d);
+                        P2ToolsFactory.pause(20);
+                    }
+                    ProgData.busy.busyOffFx();
+                });
+                busy.start();
+            });
+            gridPane.add(btnBusy, 0, ++row);
         }
     }
 
