@@ -68,6 +68,9 @@ public class MTPlayerFactory {
             case FILM:
                 ProgConfig.FILM__FILTER_IS_SHOWING.setValue(!ProgConfig.FILM__FILTER_IS_SHOWING.getValue());
                 break;
+            case AUDIO:
+                ProgConfig.AUDIO__FILTER_IS_SHOWING.setValue(!ProgConfig.AUDIO__FILTER_IS_SHOWING.getValue());
+                break;
             case LIVE_FILM:
                 ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.getValue());
                 break;
@@ -84,6 +87,9 @@ public class MTPlayerFactory {
         switch (MTPlayerController.paneShown) {
             case FILM:
                 ProgConfig.FILM__INFO_IS_SHOWING.setValue(!ProgConfig.FILM__INFO_IS_SHOWING.getValue());
+                break;
+            case AUDIO:
+                ProgConfig.AUDIO__INFO_IS_SHOWING.setValue(!ProgConfig.AUDIO__INFO_IS_SHOWING.getValue());
                 break;
             case LIVE_FILM:
                 ProgConfig.LIVE_FILM__INFO_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM__INFO_IS_SHOWING.getValue());
@@ -102,6 +108,9 @@ public class MTPlayerFactory {
             case FILM:
                 ProgData.getInstance().filmGuiController.showFilmInfo();
                 break;
+            case AUDIO:
+                ProgData.getInstance().audioGuiController.showFilmInfo();
+                break;
             case LIVE_FILM:
                 ProgData.getInstance().liveFilmGuiController.showFilmInfo();
                 break;
@@ -117,6 +126,9 @@ public class MTPlayerFactory {
         switch (MTPlayerController.paneShown) {
             case FILM:
                 ProgData.getInstance().filmGuiController.copyFilmThemeTitle(true);
+                break;
+            case AUDIO:
+                ProgData.getInstance().audioGuiController.copyFilmThemeTitle(true);
                 break;
             case LIVE_FILM:
                 ProgData.getInstance().liveFilmGuiController.copyFilmThemeTitle(true);
@@ -134,6 +146,9 @@ public class MTPlayerFactory {
             case FILM:
                 ProgData.getInstance().filmGuiController.copyFilmThemeTitle(false);
                 break;
+            case AUDIO:
+                ProgData.getInstance().audioGuiController.copyFilmThemeTitle(false);
+                break;
             case LIVE_FILM:
                 ProgData.getInstance().liveFilmGuiController.copyFilmThemeTitle(false);
                 break;
@@ -150,6 +165,9 @@ public class MTPlayerFactory {
             case FILM:
                 BlacklistFactory.addBlackFilm(true);
                 break;
+            case AUDIO:
+                BlacklistFactory.addBlackFilm(true); // todo audio
+                break;
             case LIVE_FILM:
                 break;
             case DOWNLOAD:
@@ -164,6 +182,9 @@ public class MTPlayerFactory {
         switch (MTPlayerController.paneShown) {
             case FILM:
                 BlacklistFactory.addBlackThemeFilm();
+                break;
+            case AUDIO:
+                BlacklistFactory.addBlackThemeFilm(); // todo audio
                 break;
             case LIVE_FILM:
                 break;
@@ -184,6 +205,9 @@ public class MTPlayerFactory {
             case FILM:
                 ProgData.getInstance().filmGuiController.searchFilmInMediaCollection();
                 break;
+            case AUDIO:
+                ProgData.getInstance().audioGuiController.searchFilmInMediaCollection();
+                break;
             case LIVE_FILM:
                 ProgData.getInstance().liveFilmGuiController.searchFilmInMediaCollection();
                 break;
@@ -198,6 +222,7 @@ public class MTPlayerFactory {
     public static void undoDels() {
         switch (MTPlayerController.paneShown) {
             case FILM:
+            case AUDIO:
             case LIVE_FILM:
                 break;
             case DOWNLOAD:

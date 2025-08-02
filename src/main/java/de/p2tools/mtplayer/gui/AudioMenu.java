@@ -36,7 +36,7 @@ import javafx.scene.layout.VBox;
 import java.util.Optional;
 
 
-public class FilmMenu {
+public class AudioMenu {
     final private VBox vBox;
     final private ProgData progData;
     private FilmFilter storedActFilterSettings = null;
@@ -45,7 +45,7 @@ public class FilmMenu {
             "eingestellten Filter wieder her";
     private static final String FILM_SHOW_BOOKMARK_TEXT = "Alle Bookmarks in einem Dialog anzeigen";
 
-    public FilmMenu(VBox vBox) {
+    public AudioMenu(VBox vBox) {
         this.vBox = vBox;
         progData = ProgData.getInstance();
     }
@@ -65,29 +65,29 @@ public class FilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markierten Film abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
+                "Abspielen", "Markiertes Audio abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
-                "Alle Abspielen", "Alle markierten Filme abspielen", ProgIcons.ICON_TOOLBAR_START_ALL.getImageView());
+                "Alle Abspielen", "Alle markierten Audios abspielen", ProgIcons.ICON_TOOLBAR_START_ALL.getImageView());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_REC.getImageView());
+                "Speichern", "Markiertes Audio speichern", ProgIcons.ICON_TOOLBAR_REC.getImageView());
 
         btPlay.setOnAction(a -> {
-            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
+            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
             if (filmSelection.isPresent()) {
                 FilmPlayFactory.playFilm(filmSelection.get());
-                progData.filmGuiController.tableView.refresh();
-                progData.filmGuiController.tableView.requestFocus();
+                progData.audioGuiController.tableView.refresh();
+                progData.audioGuiController.tableView.requestFocus();
             }
         });
         btPlayAll.setOnAction(a -> {
-            FilmPlayFactory.playFilmList(ProgData.getInstance().filmGuiController.getSelList(true));
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
+            FilmPlayFactory.playFilmList(ProgData.getInstance().audioGuiController.getSelList(true));
+            progData.audioGuiController.tableView.refresh();
+            progData.audioGuiController.tableView.requestFocus();
         });
         btSave.setOnAction(a -> {
-            FilmSaveFactory.saveFilmList();
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
+            FilmSaveFactory.saveAudioList();
+            progData.audioGuiController.tableView.refresh();
+            progData.audioGuiController.tableView.requestFocus();
         });
 
         vBoxSpace = new VBox();
@@ -107,20 +107,20 @@ public class FilmMenu {
                 "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_DIALOG.getImageView());
 
         btBookmark.setOnAction(a -> {
-            BookmarkFactory.addBookmarkList(progData.filmGuiController.getSelList(true));
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
+            BookmarkFactory.addBookmarkList(progData.audioGuiController.getSelList(true));
+            progData.audioGuiController.tableView.refresh();
+            progData.audioGuiController.tableView.requestFocus();
             ;
         });
         btDelBookmark.setOnAction(a -> {
-            BookmarkFactory.removeBookmarkList(progData.filmGuiController.getSelList(true));
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
+            BookmarkFactory.removeBookmarkList(progData.audioGuiController.getSelList(true));
+            progData.audioGuiController.tableView.refresh();
+            progData.audioGuiController.tableView.requestFocus();
         });
         btDelAllBookmark.setOnAction(a -> {
             BookmarkFactory.deleteAll(progData.primaryStage);
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
+            progData.audioGuiController.tableView.refresh();
+            progData.audioGuiController.tableView.requestFocus();
         });
 
         btFilterBookmark.setOnAction(a -> {
@@ -146,8 +146,8 @@ public class FilmMenu {
                 progData.filterWorker.setActFilterSettings(bookmarkFilter);
             }
 
-            progData.filmGuiController.tableView.refresh();
-            progData.filmGuiController.tableView.requestFocus();
+            progData.audioGuiController.tableView.refresh();
+            progData.audioGuiController.tableView.requestFocus();
         });
         btShowBookmark.setOnAction(a -> {
             if (progData.bookmarkDialogController != null) {
@@ -167,35 +167,35 @@ public class FilmMenu {
 
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
-        mb.setTooltip(new Tooltip("Filmmenü anzeigen"));
+        mb.setTooltip(new Tooltip("Audiomenü anzeigen"));
         mb.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-0");
 
-        final MenuItem mbPlay = new MenuItem("Film abspielen");
+        final MenuItem mbPlay = new MenuItem("Audio abspielen");
         mbPlay.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
                 return;
             }
-            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
+            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
             filmSelection.ifPresent(FilmPlayFactory::playFilm);
         });
         P2ShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
 
-        final MenuItem mbPlayAll = new MenuItem("Alle markierten Film abspielen");
+        final MenuItem mbPlayAll = new MenuItem("Alle markierten Audios abspielen");
         mbPlayAll.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
                 return;
             }
-            FilmPlayFactory.playFilmList(ProgData.getInstance().filmGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(ProgData.getInstance().audioGuiController.getSelList(true));
         });
         P2ShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
 
-        final MenuItem mbSave = new MenuItem("Film speichern");
+        final MenuItem mbSave = new MenuItem("Audios speichern");
         mbSave.setOnAction(e -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
                 return;
             }
-            FilmSaveFactory.saveFilmList();
+            FilmSaveFactory.saveAudioList();
         });
         P2ShortcutWorker.addShortCut(mbSave, PShortcut.SHORTCUT_SAVE_FILM);
 
@@ -203,40 +203,40 @@ public class FilmMenu {
 
 
         mb.getItems().add(new SeparatorMenuItem());
-        final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
+        final MenuItem miFilmShown = new MenuItem("Audio als gesehen markieren");
         miFilmShown.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
                 return;
             }
-            progData.filmGuiController.setFilmShown(true);
+            progData.audioGuiController.setFilmShown(true);
         });
         P2ShortcutWorker.addShortCut(miFilmShown, PShortcut.SHORTCUT_FILM_SHOWN);
 
-        final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
+        final MenuItem miFilmNotShown = new MenuItem("Audio als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
                 return;
             }
-            progData.filmGuiController.setFilmShown(false);
+            progData.audioGuiController.setFilmShown(false);
         });
         P2ShortcutWorker.addShortCut(miFilmNotShown, PShortcut.SHORTCUT_FILM_NOT_SHOWN);
         mb.getItems().addAll(miFilmShown, miFilmNotShown);
 
 
-        final MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen" +
+        final MenuItem miFilmInfo = new MenuItem("Audioinformation anzeigen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_INFO_FILM.getActShortcut());
         miFilmInfo.setOnAction(a -> {
-            progData.filmGuiController.showFilmInfo();
+            progData.audioGuiController.showFilmInfo();
         });
         mb.getItems().addAll(miFilmInfo);
         mb.getItems().addAll(copyInfos(progData));
 
 
         mb.getItems().add(new SeparatorMenuItem());
-        final MenuItem miFilmMediaCollection = new MenuItem("Film in der Mediensammlung suchen" +
+        final MenuItem miFilmMediaCollection = new MenuItem("Audio in der Mediensammlung suchen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SEARCH_FILM_IN_MEDIACOLLECTION.getActShortcut());
         miFilmMediaCollection.setOnAction(a -> {
-            progData.filmGuiController.searchFilmInMediaCollection();
+            progData.audioGuiController.searchFilmInMediaCollection();
         });
         mb.getItems().addAll(miFilmMediaCollection);
 
@@ -259,10 +259,10 @@ public class FilmMenu {
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
         final MenuItem miBookmarkAdd = new MenuItem("Neue Bookmarks anlegen");
-        miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmarkList(progData.filmGuiController.getSelList(true)));
+        miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmarkList(progData.audioGuiController.getSelList(true)));
 
         final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
-        miBookmarkDel.setOnAction(a -> BookmarkFactory.removeBookmarkList(progData.filmGuiController.getSelList(true)));
+        miBookmarkDel.setOnAction(a -> BookmarkFactory.removeBookmarkList(progData.audioGuiController.getSelList(true)));
 
         final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
         miBookmarkDelAll.setOnAction(a -> {
@@ -277,15 +277,15 @@ public class FilmMenu {
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());
-        miShowFilter.disableProperty().bind(ProgConfig.FILM__FILTER_IS_RIP);
+        miShowFilter.disableProperty().bind(ProgConfig.AUDIO__FILTER_IS_RIP);
         miShowFilter.setOnAction(a -> MTPlayerFactory.setFilter());
 
         final MenuItem miShowInfo = new MenuItem("Infos ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_INFOS.getActShortcut());
 
-        miShowInfo.disableProperty().bind(ProgConfig.FILM__INFO_PANE_IS_RIP
-                .and(ProgConfig.FILM__BUTTON_PANE_IS_RIP)
-                .and(ProgConfig.FILM__MEDIA_PANE_IS_RIP));
+        miShowInfo.disableProperty().bind(ProgConfig.AUDIO__INFO_PANE_IS_RIP
+                .and(ProgConfig.AUDIO__BUTTON_PANE_IS_RIP)
+                .and(ProgConfig.AUDIO__MEDIA_PANE_IS_RIP));
         miShowInfo.setOnAction(a -> MTPlayerFactory.setInfos());
 
         mb.getItems().add(new SeparatorMenuItem());
@@ -299,37 +299,27 @@ public class FilmMenu {
 
         final MenuItem miCopyTheme = new MenuItem("Thema");
         miCopyTheme.setOnAction(a -> {
-            progData.filmGuiController.copyFilmThemeTitle(true);
+            progData.audioGuiController.copyFilmThemeTitle(true);
         });
 
         final MenuItem miCopyName = new MenuItem("Titel");
         miCopyName.setOnAction(a -> {
-            progData.filmGuiController.copyFilmThemeTitle(false);
+            progData.audioGuiController.copyFilmThemeTitle(false);
         });
 
         final MenuItem miCopyWeb = new MenuItem("Website-URL");
         miCopyWeb.setOnAction(a -> {
-            progData.filmGuiController.copyWebsite();
+            progData.audioGuiController.copyWebsite();
         });
 
-        final MenuItem miCopyHd = new MenuItem("URL in HD-Auflösung");
-        miCopyHd.setOnAction(a -> {
-            progData.filmGuiController.copyUrl(FilmData.RESOLUTION_HD);
-        });
-
-        final MenuItem miCopyUrl = new MenuItem("URL in hoher Auflösung");
+        final MenuItem miCopyUrl = new MenuItem("URL");
         miCopyUrl.setOnAction(a -> {
-            progData.filmGuiController.copyUrl(FilmData.RESOLUTION_NORMAL);
-        });
-
-        final MenuItem miCopyLow = new MenuItem("URL in kleiner Auflösung");
-        miCopyLow.setOnAction(a -> {
-            progData.filmGuiController.copyUrl(FilmData.RESOLUTION_SMALL);
+            progData.audioGuiController.copyUrl(FilmData.RESOLUTION_NORMAL);
         });
 
         subMenuURL.getItems().addAll(miCopyTheme, miCopyName, miCopyWeb);
         subMenuURL.getItems().add(new SeparatorMenuItem());
-        subMenuURL.getItems().addAll(miCopyHd, miCopyUrl, miCopyLow);
+        subMenuURL.getItems().addAll(miCopyUrl);
 
         return subMenuURL;
     }

@@ -26,7 +26,7 @@ import javafx.scene.control.TableView;
 
 public class Table {
     public enum TABLE_ENUM {
-        FILM, LIVE_FILM, DOWNLOAD, ABO, BLACKLIST, FILMFILTER, BOOKMARK
+        FILM, AUDIO, LIVE_FILM, DOWNLOAD, ABO, BLACKLIST, FILMFILTER, BOOKMARK
     }
 
     private static final String SORT_ASCENDING = "ASCENDING";
@@ -152,7 +152,13 @@ public class Table {
                 confVis = ProgConfig.FILM_GUI_TABLE_VIS;
                 confOrder = ProgConfig.FILM_GUI_TABLE_ORDER;
                 break;
-
+            case AUDIO:
+                confWidth = ProgConfig.AUDIO_GUI_TABLE_WIDTH;
+                confSort = ProgConfig.AUDIO_GUI_TABLE_SORT;
+                confUpDown = ProgConfig.AUDIO_GUI_TABLE_UP_DOWN;
+                confVis = ProgConfig.AUDIO_GUI_TABLE_VIS;
+                confOrder = ProgConfig.AUDIO_GUI_TABLE_ORDER;
+                break;
             case LIVE_FILM:
                 confWidth = ProgConfig.LIVE_FILM_GUI_TABLE_WIDTH;
                 confSort = ProgConfig.LIVE_FILM_GUI_TABLE_SORT;
@@ -160,7 +166,6 @@ public class Table {
                 confVis = ProgConfig.LIVE_FILM_GUI_TABLE_VIS;
                 confOrder = ProgConfig.LIVE_FILM_GUI_TABLE_ORDER;
                 break;
-
             case DOWNLOAD:
                 confWidth = ProgConfig.DOWNLOAD_GUI_TABLE_WIDTH;
                 confSort = ProgConfig.DOWNLOAD_GUI_TABLE_SORT;
@@ -168,7 +173,6 @@ public class Table {
                 confVis = ProgConfig.DOWNLOAD_GUI_TABLE_VIS;
                 confOrder = ProgConfig.DOWNLOAD_GUI_TABLE_ORDER;
                 break;
-
             case ABO:
                 confWidth = ProgConfig.ABO_GUI_TABLE_WIDTH;
                 confSort = ProgConfig.ABO_GUI_TABLE_SORT;

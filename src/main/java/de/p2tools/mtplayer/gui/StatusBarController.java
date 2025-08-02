@@ -49,6 +49,13 @@ public class StatusBarController extends AnchorPane {
     private final Circle circleFilm = new Circle(6);
     private final HBox hBoxCircleFilm = new HBox(0);
 
+    // Audio
+    private final Label lblSelAudio = new Label();
+    private final Label lblLeftAudio = new Label();
+    private final Label lblRightAudio = new Label();
+    private final Circle circleAudio = new Circle(6);
+    private final HBox hBoxCircleAudio = new HBox(0);
+
     //LiveFilm
     private final Label lblSelLiveFilm = new Label();
     private final Label lblLeftLiveFilm = new Label();
@@ -72,6 +79,7 @@ public class StatusBarController extends AnchorPane {
 
     private final StackPane stackPane = new StackPane();
     private final Pane filmPane;
+    private final Pane audioPane;
     private final Pane liveFilmPane;
     private final Pane downloadPane;
     private final Pane aboPane;
@@ -101,6 +109,7 @@ public class StatusBarController extends AnchorPane {
         hBoxCircleAbo.getChildren().add(circleAbo);
 
         filmPane = getHBox(lblSelFilm, lblLeftFilm, hBoxCircleFilm, lblRightFilm);
+        audioPane = getHBox(lblSelAudio, lblLeftAudio, hBoxCircleAudio, lblRightAudio);
         liveFilmPane = getHBox(lblSelLiveFilm, lblLeftLiveFilm, hBoxCircleLiveFilm, lblRightLiveFilm);
         downloadPane = getHBox(lblSelDownload, lblLeftDownload, hBoxCircleDownload, lblRightDownload);
         aboPane = getHBox(lblSelAbo, lblLeftAbo, hBoxCircleAbo, lblRightAbo);
@@ -241,6 +250,11 @@ public class StatusBarController extends AnchorPane {
     public void setStatusbarIndex() {
         switch (MTPlayerController.paneShown) {
             case FILM:
+                filmPane.toFront();
+                setInfoFilm();
+                setTextForRightDisplay();
+                break;
+            case AUDIO:
                 filmPane.toFront();
                 setInfoFilm();
                 setTextForRightDisplay();

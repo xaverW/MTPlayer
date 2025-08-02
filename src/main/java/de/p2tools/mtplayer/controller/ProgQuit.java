@@ -112,6 +112,7 @@ public class ProgQuit {
 
         ProgConfig.SYSTEM_GUI_LAST_START_WAS_MAXIMISED.set(progData.primaryStage.isMaximized());
         progData.filmGuiController.saveTable();
+        progData.audioGuiController.saveTable();
         progData.liveFilmGuiController.saveTable();
         progData.downloadGuiController.saveTable();
         progData.aboGuiController.saveTable();

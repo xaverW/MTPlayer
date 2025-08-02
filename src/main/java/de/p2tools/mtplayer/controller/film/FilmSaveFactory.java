@@ -44,6 +44,11 @@ public class FilmSaveFactory {
         saveFilmList(ProgData.getInstance().filmGuiController.getSelList(true), null);
     }
 
+    public static void saveAudioList() {
+        // Menü: Sel Filme speichern
+        saveFilmList(ProgData.getInstance().audioGuiController.getSelList(true), null);
+    }
+
     public static void saveFilmList(List<FilmDataMTP> list, SetData setData) {
         // Filme speichern, Menü
         if (list.isEmpty()) {

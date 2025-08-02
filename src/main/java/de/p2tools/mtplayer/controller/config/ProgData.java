@@ -40,10 +40,7 @@ import de.p2tools.mtplayer.controller.starter.StartDownload;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.controller.worker.CheckForNewFilmlist;
 import de.p2tools.mtplayer.controller.worker.Worker;
-import de.p2tools.mtplayer.gui.AboGuiController;
-import de.p2tools.mtplayer.gui.DownloadGuiController;
-import de.p2tools.mtplayer.gui.FilmGuiController;
-import de.p2tools.mtplayer.gui.LiveFilmGuiController;
+import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.chart.ChartData;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
@@ -80,6 +77,7 @@ public class ProgData {
     public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
 
     public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
+    public static BooleanProperty AUDIO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty ABO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
@@ -105,6 +103,7 @@ public class ProgData {
     public P2MaskerPane maskerPane = new P2MaskerPane();
     public MTPlayerController mtPlayerController = null;
     public FilmGuiController filmGuiController = null; // Tab mit den Filmen
+    public AudioGuiController audioGuiController = null; // Tab mit den Filmen
     public LiveFilmGuiController liveFilmGuiController = null; // Tab mit den Filmen
     public DownloadGuiController downloadGuiController = null; // Tab mit den Downloads
     public DownloadFilterController downloadFilterController = null;

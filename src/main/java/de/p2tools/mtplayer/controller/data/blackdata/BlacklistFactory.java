@@ -32,6 +32,7 @@ public class BlacklistFactory {
     public static void addBlackFilm(boolean film) {
         // aus dem Menü: mit markiertem Film ein Black erstellen
         // Dialog anzeigen
+        // todo audio
         BlackData blackData;
         if (film) {
             final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(true, true);

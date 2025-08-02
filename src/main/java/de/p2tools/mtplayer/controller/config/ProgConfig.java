@@ -420,6 +420,41 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILM__MEDIA_DIALOG_SIZE = addStrProp("film--media-dialog-size", "400:600");
 
     // ===============================================================
+    // ====== GUI Filme ===============================================
+    // ===============================================================
+    static {
+        addComment("GUI Audio");
+    }
+
+    public static BooleanProperty SYSTEM_SMALL_ROW_TABLE_AUDIO = addBoolProp("system-small-row-table-audio", Boolean.FALSE);
+    public static BooleanProperty AUDIO_GUI_SHOW_TABLE_TOOL_TIP = addBoolProp("audio-gui-show-table-tool-tip", Boolean.FALSE);
+    public static DoubleProperty AUDIO_PANE_INFO_DIVIDER = addDoubleProp("audio-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
+    public static BooleanProperty AUDIO_GUI_SHOW_MENU = addBoolProp("audio-gui-show-menu", Boolean.TRUE);
+    public static StringProperty AUDIO_GUI_TABLE_WIDTH = addStrProp("audio-gui-table-width");
+    public static StringProperty AUDIO_GUI_TABLE_SORT = addStrProp("audio-gui-table-sort");
+    public static StringProperty AUDIO_GUI_TABLE_UP_DOWN = addStrProp("audio-gui-table-up-down");
+    public static StringProperty AUDIO_GUI_TABLE_VIS = addStrProp("audio-gui-table-vis");
+    public static StringProperty AUDIO_GUI_TABLE_ORDER = addStrProp("audio-gui-table-order");
+
+    // Audio Info Pane
+    public static BooleanProperty AUDIO__FILTER_IS_SHOWING = addBoolProp("audio--filter-is-showing", Boolean.TRUE);
+    public static DoubleProperty AUDIO__FILTER_DIVIDER = addDoubleProp("audio--filter-divider", ProgConst.GUI_FILTER_DIVIDER_LOCATION);
+    public static BooleanProperty AUDIO__FILTER_IS_RIP = addBoolProp("audio--filter-is-rip", Boolean.FALSE);
+    public static StringProperty AUDIO__FILTER_DIALOG_SIZE = addStrProp("audio--filter-dialog-size", "400:600");
+
+    public static BooleanProperty AUDIO__INFO_IS_SHOWING = addBoolProp("audio--info-is-showing", Boolean.TRUE);
+    public static DoubleProperty AUDIO__INFO_DIVIDER = addDoubleProp("audio--info-divider", ProgConst.GUI_DIVIDER_LOCATION);
+
+    public static BooleanProperty AUDIO__INFO_PANE_IS_RIP = addBoolProp("audio--info-pane-is-rip", false);
+    public static StringProperty AUDIO__INFO_DIALOG_SIZE = addStrProp("audio--info-dialog-size", "400:600");
+
+    public static BooleanProperty AUDIO__BUTTON_PANE_IS_RIP = addBoolProp("audio--button-pane-is-rip", false);
+    public static StringProperty AUDIO__BUTTON_DIALOG_SIZE = addStrProp("audio--button-dialog-size", "400:600");
+
+    public static BooleanProperty AUDIO__MEDIA_PANE_IS_RIP = addBoolProp("audio--media-pane-is-rip", false);
+    public static StringProperty AUDIO__MEDIA_DIALOG_SIZE = addStrProp("audio--media-dialog-size", "400:600");
+
+    // ===============================================================
     // ====== GUI Live-Filme =========================================
     // ===============================================================
     static {
@@ -599,6 +634,21 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty INFO_FILM_CLEAN_EXACT_ABO = addBoolProp("info-film-clean-exact-abo", Boolean.FALSE);
     public static BooleanProperty INFO_FILM_CLEAN_AND_OR_ABO = addBoolProp("info-film-clean-and-or-abo", Boolean.FALSE);
     public static BooleanProperty INFO_FILM_CLEAN_LIST_ABO = addBoolProp("info-film-clean-list-abo", Boolean.TRUE);
+
+    // Gui Media Search -> Infobereich Audio
+    public static IntegerProperty INFO_AUDIO_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("info-audio-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty INFO_AUDIO_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("info-audio-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static BooleanProperty INFO_AUDIO_CLEAN_MEDIA = addBoolProp("info-audio-clean-media", Boolean.TRUE);
+    public static BooleanProperty INFO_AUDIO_CLEAN_EXACT_MEDIA = addBoolProp("info-audio-clean-exact-media", Boolean.FALSE);
+    public static BooleanProperty INFO_AUDIO_CLEAN_AND_OR_MEDIA = addBoolProp("info-audio-clean-and-or-media", Boolean.FALSE);
+    public static BooleanProperty INFO_AUDIO_CLEAN_LIST_MEDIA = addBoolProp("info-audio-clean-list-media", Boolean.TRUE);
+
+    public static IntegerProperty INFO_AUDIO_BUILD_SEARCH_FROM_FOR_ABO = addIntProp("info-audio-build-search-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT
+    public static IntegerProperty INFO_AUDIO_SEARCH_IN_WHAT_FOR_ABO = addIntProp("info-audio-search-in-what-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static BooleanProperty INFO_AUDIO_CLEAN_ABO = addBoolProp("info-audio-clean-abo", Boolean.TRUE);
+    public static BooleanProperty INFO_AUDIO_CLEAN_EXACT_ABO = addBoolProp("info-audio-clean-exact-abo", Boolean.FALSE);
+    public static BooleanProperty INFO_AUDIO_CLEAN_AND_OR_ABO = addBoolProp("info-audio-clean-and-or-abo", Boolean.FALSE);
+    public static BooleanProperty INFO_AUDIO_CLEAN_LIST_ABO = addBoolProp("info-audio-clean-list-abo", Boolean.TRUE);
 
     // Gui Media Search -> Infobereich Live-Film
     public static IntegerProperty INFO_LIVE_FILM_BUILD_SEARCH_FROM_FOR_MEDIA = addIntProp("info-live-film-build-search-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //aus was der Suchbegriff gebaut wird: T/Th/TT

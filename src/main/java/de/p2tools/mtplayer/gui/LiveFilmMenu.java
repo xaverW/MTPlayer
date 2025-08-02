@@ -62,7 +62,7 @@ public class LiveFilmMenu {
         final ToolBarButton btPlay = new ToolBarButton(vBox,
                 "Abspielen", "Markierten Film abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
-                "Alle Abspielen", "Alle Markierten Filme abspielen", ProgIcons.ICON_TOOLBAR_START_ALL.getImageView());
+                "Alle Abspielen", "Alle markierten Filme abspielen", ProgIcons.ICON_TOOLBAR_START_ALL.getImageView());
         final ToolBarButton btSave = new ToolBarButton(vBox,
                 "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_REC.getImageView());
 

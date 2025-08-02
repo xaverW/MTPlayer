@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 public class MenuController extends ScrollPane {
 
     public enum StartupMode {
-        Film, LIVE_FILM, DOWNLOAD, ABO
+        Film, AUDIO, LIVE_FILM, DOWNLOAD, ABO
     }
 
     public MenuController(StartupMode sm) {
@@ -52,6 +52,16 @@ public class MenuController extends ScrollPane {
                 setOnMouseClicked(mouseEvent -> {
                     if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
                         ProgConfig.FILM_GUI_SHOW_MENU.set(!ProgConfig.FILM_GUI_SHOW_MENU.get());
+                    }
+                });
+                break;
+            case AUDIO:
+                new AudioMenu(vb).init();
+                visibleProperty().bind(ProgConfig.AUDIO_GUI_SHOW_MENU);
+                managedProperty().bind(ProgConfig.AUDIO_GUI_SHOW_MENU);
+                setOnMouseClicked(mouseEvent -> {
+                    if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                        ProgConfig.AUDIO_GUI_SHOW_MENU.set(!ProgConfig.AUDIO_GUI_SHOW_MENU.get());
                     }
                 });
                 break;

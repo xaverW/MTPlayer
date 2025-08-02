@@ -36,12 +36,13 @@ import javafx.scene.layout.*;
 
 public class MTPlayerController extends StackPane {
 
-    public enum PANE_SHOWN {FILM, LIVE_FILM, DOWNLOAD, ABO}
+    public enum PANE_SHOWN {FILM, AUDIO, LIVE_FILM, DOWNLOAD, ABO}
 
     public static PANE_SHOWN paneShown = null;
 
     private final Button btnFilmlist = new Button("Filmliste");
     private final Button btnFilm = new Button("Filme");
+    private final Button btnAudio = new Button("Audios");
     private final Button btnLive = new Button("Live");
     private final Button btnDownload = new Button("Downloads");
     private final Button btnAbo = new Button("Abos");
@@ -53,12 +54,14 @@ public class MTPlayerController extends StackPane {
     private StatusBarController statusBarController;
 
     private SplitPane splitPaneFilm;
+    private SplitPane splitPaneAudio;
     private SplitPane splitPaneLiveFilm;
     private SplitPane splitPaneDownload;
     private SplitPane splitPaneAbo;
 
     private final ProgData progData;
     private final FilmGui filmGui = new FilmGui();
+    private final AudioGui audioGui = new AudioGui();
     private final LiveFilmGui liveFilmGui = new LiveFilmGui();
     private final DownloadGui downloadGui = new DownloadGui();
     private final AboGui aboGui = new AboGui();
@@ -76,7 +79,7 @@ public class MTPlayerController extends StackPane {
             tilePane.setHgap(15);
             tilePane.setPadding(new Insets(0));
             tilePane.setAlignment(Pos.CENTER);
-            tilePane.getChildren().addAll(btnFilm, btnLive, btnDownload, btnAbo);
+            tilePane.getChildren().addAll(btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
 
             HBox hBoxTop = new HBox();
             hBoxTop.setPadding(new Insets(2, 10, 2, 10));
@@ -88,15 +91,11 @@ public class MTPlayerController extends StackPane {
 
             // Center
             splitPaneFilm = filmGui.pack();
+            splitPaneAudio = audioGui.pack();
             splitPaneLiveFilm = liveFilmGui.pack();
             splitPaneDownload = downloadGui.pack();
             splitPaneAbo = aboGui.pack();
-            stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneLiveFilm, splitPaneDownload, splitPaneAbo);
-
-//            VBox vBox = new VBox();
-////            vBox.getChildren().addAll(stackPaneCont, ProgData.busy.getBusyHbox(Busy.BUSY_SRC.GUI));
-//            vBox.getChildren().addAll(stackPaneCont);
-//            VBox.setVgrow(stackPaneCont, Priority.ALWAYS);
+            stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneAudio, splitPaneLiveFilm, splitPaneDownload, splitPaneAbo);
 
             // Statusbar
             statusBarController = new StatusBarController(progData);
@@ -136,13 +135,11 @@ public class MTPlayerController extends StackPane {
     private void initButton() {
         btnFilmlist.setMinWidth(Region.USE_PREF_SIZE);
         btnFilmlist.getStyleClass().addAll("btnFunction", "btnFunc-4");
-
         btnFilmlist.setTooltip(new Tooltip("Eine neue Filmliste laden.\n" +
                 "Wenn die Filmliste nicht zu alt ist, wird nur ein Update geladen. [" +
                 ProgConfig.SHORTCUT_UPDATE_FILMLIST.getValueSafe() + "]\n" +
                 "Mit der rechten Maustaste wird immer die komplette Filmliste geladen. [" +
                 ProgConfig.SHORTCUT_LOAD_FILMLIST.getValueSafe() + "]"));
-
         btnFilmlist.setOnAction(e -> {
             LoadFilmFactory.loadNewListFromWeb(false);
         });
@@ -170,9 +167,14 @@ public class MTPlayerController extends StackPane {
                 setFocus();
             }
         });
+
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
         btnFilm.setOnAction(e -> selPanelFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);
+
+        btnAudio.setTooltip(new Tooltip("Audios anzeigen"));
+        btnAudio.setOnAction(e -> selPanelAudio());
+        btnAudio.setMaxWidth(Double.MAX_VALUE);
 
         btnLive.setTooltip(new Tooltip("Live-Filme suchen"));
         btnLive.setOnAction(e -> selPanelLiveFilm());
@@ -199,6 +201,14 @@ public class MTPlayerController extends StackPane {
 
         btnFilm.setOnMouseClicked(mouseEvent -> {
             if (progData.maskerPane.isVisible() || paneShown != PANE_SHOWN.FILM) {
+                return;
+            }
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                MTPlayerFactory.setInfos();
+            }
+        });
+        btnAudio.setOnMouseClicked(mouseEvent -> {
+            if (progData.maskerPane.isVisible() || paneShown != PANE_SHOWN.AUDIO) {
                 return;
             }
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
@@ -244,6 +254,26 @@ public class MTPlayerController extends StackPane {
         progData.filmGuiController.isShown();
         statusBarController.setStatusbarIndex();
         ProgData.FILM_TAB_ON.setValue(Boolean.TRUE);
+        ProgData.AUDIO_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
+    }
+
+    private void selPanelAudio() {
+        if (paneShown == PANE_SHOWN.AUDIO) {
+            // dann ist der 2. Klick
+            MTPlayerFactory.setFilter();
+            return;
+        }
+
+        paneShown = PANE_SHOWN.AUDIO;
+        setButtonStyle();
+        splitPaneAudio.toFront();
+        progData.audioGuiController.isShown();
+        statusBarController.setStatusbarIndex();
+        ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.AUDIO_TAB_ON.setValue(Boolean.TRUE);
         ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.FALSE);
         ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
         ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
@@ -262,6 +292,7 @@ public class MTPlayerController extends StackPane {
         progData.liveFilmGuiController.isShown();
         statusBarController.setStatusbarIndex();
         ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.AUDIO_TAB_ON.setValue(Boolean.FALSE);
         ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.TRUE);
         ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
         ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
@@ -280,6 +311,7 @@ public class MTPlayerController extends StackPane {
         progData.downloadGuiController.isShown();
         statusBarController.setStatusbarIndex();
         ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.AUDIO_TAB_ON.setValue(Boolean.FALSE);
         ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.FALSE);
         ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.TRUE);
         ProgData.ABO_TAB_ON.setValue(Boolean.FALSE);
@@ -298,6 +330,7 @@ public class MTPlayerController extends StackPane {
         progData.aboGuiController.isShown();
         statusBarController.setStatusbarIndex();
         ProgData.FILM_TAB_ON.setValue(Boolean.FALSE);
+        ProgData.AUDIO_TAB_ON.setValue(Boolean.FALSE);
         ProgData.LIVE_FILM_TAB_ON.setValue(Boolean.FALSE);
         ProgData.DOWNLOAD_TAB_ON.setValue(Boolean.FALSE);
         ProgData.ABO_TAB_ON.setValue(Boolean.TRUE);
@@ -313,6 +346,7 @@ public class MTPlayerController extends StackPane {
 
     private void setButtonStyleBig() {
         btnFilm.getStyleClass().clear();
+        btnAudio.getStyleClass().clear();
         btnLive.getStyleClass().clear();
         btnDownload.getStyleClass().clear();
         btnAbo.getStyleClass().clear();
@@ -323,6 +357,12 @@ public class MTPlayerController extends StackPane {
         } else {
             searchFast.setVisible(false);
             btnFilm.getStyleClass().add("btnTabTop");
+        }
+
+        if (paneShown == PANE_SHOWN.AUDIO) {
+            btnAudio.getStyleClass().add("btnTabTop-sel");
+        } else {
+            btnAudio.getStyleClass().add("btnTabTop");
         }
 
         if (paneShown == PANE_SHOWN.LIVE_FILM) {
@@ -346,6 +386,7 @@ public class MTPlayerController extends StackPane {
 
     private void setButtonStyleSmall() {
         btnFilm.getStyleClass().clear();
+        btnAudio.getStyleClass().clear();
         btnLive.getStyleClass().clear();
         btnDownload.getStyleClass().clear();
         btnAbo.getStyleClass().clear();
@@ -356,6 +397,12 @@ public class MTPlayerController extends StackPane {
         } else {
             searchFast.setVisible(false);
             btnFilm.getStyleClass().add("btnTabTopSmall");
+        }
+
+        if (paneShown == PANE_SHOWN.AUDIO) {
+            btnAudio.getStyleClass().add("btnTabTopSmall-sel");
+        } else {
+            btnAudio.getStyleClass().add("btnTabTopSmall");
         }
 
         if (paneShown == PANE_SHOWN.LIVE_FILM) {
@@ -380,6 +427,9 @@ public class MTPlayerController extends StackPane {
     public void setFocus() {
         if (paneShown == PANE_SHOWN.FILM) {
             progData.filmGuiController.isShown();
+        }
+        if (paneShown == PANE_SHOWN.AUDIO) {
+            progData.audioGuiController.isShown();
         }
         if (paneShown == PANE_SHOWN.LIVE_FILM) {
             progData.filmGuiController.isShown();
