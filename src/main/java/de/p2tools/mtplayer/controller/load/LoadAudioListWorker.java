@@ -101,7 +101,7 @@ public class LoadAudioListWorker {
 
             workOnFilmListLoadFinished();
 
-            progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+            progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
 
             //damit auf jeden Fall, aus
             progData.maskerPane.switchOffMasker();
@@ -114,7 +114,7 @@ public class LoadAudioListWorker {
             // alle Sender laden
             ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.audioList.sender));
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            ThemeListFactory.createThemeList(progData, progData.filterWorker.getActFilterSettings().getChannel());
+            ThemeListFactory.createThemeList(progData, progData.audioFilterWorker.getActFilterSettings().getChannel());
 
             // activate the saved filter
             progData.worker.resetFilter();

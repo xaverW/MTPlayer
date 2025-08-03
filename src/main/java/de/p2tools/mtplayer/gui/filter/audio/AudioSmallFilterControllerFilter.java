@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -27,11 +27,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
-public class FilmSmallFilterControllerFilter extends HBox {
+public class AudioSmallFilterControllerFilter extends HBox {
 
     private final ProgData progData;
 
-    public FilmSmallFilterControllerFilter() {
+    public AudioSmallFilterControllerFilter() {
         progData = ProgData.getInstance();
 
         Button btnSmall = new Button("Alle Filter anzeigen");
@@ -50,6 +50,6 @@ public class FilmSmallFilterControllerFilter extends HBox {
 
     private void clearFilter() {
         P2Duration.onlyPing("Filter löschen");
-        progData.filmFilterWorker.clearFilter();
+        progData.audioFilterWorker.clearFilter();
     }
 }

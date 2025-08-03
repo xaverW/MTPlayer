@@ -20,10 +20,10 @@ import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-public final class TextFilterList extends SimpleListProperty<TextFilter> implements P2DataList<TextFilter> {
+public final class FilmFilterTextList extends SimpleListProperty<FilmFilterText> implements P2DataList<FilmFilterText> {
     public final String TAG = "TextFilterList";
 
-    public TextFilterList() {
+    public FilmFilterTextList() {
         super(FXCollections.observableArrayList());
     }
 
@@ -38,14 +38,14 @@ public final class TextFilterList extends SimpleListProperty<TextFilter> impleme
     }
 
     @Override
-    public TextFilter getNewItem() {
-        return new TextFilter();
+    public FilmFilterText getNewItem() {
+        return new FilmFilterText();
     }
 
     @Override
     public void addNewItem(Object obj) {
-        if (obj.getClass().equals(TextFilter.class)) {
-            add((TextFilter) obj);
+        if (obj.getClass().equals(FilmFilterText.class)) {
+            add((FilmFilterText) obj);
         }
     }
 }

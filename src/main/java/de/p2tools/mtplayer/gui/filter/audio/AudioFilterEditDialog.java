@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
@@ -31,14 +31,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 
-public class FilmFilterEditDialog extends P2DialogExtra {
+public class AudioFilterEditDialog extends P2DialogExtra {
 
     private final ProgData progData;
     private final RadioButton rbLast = new RadioButton("Die letzte vorhandene Zeile auswählen");
     private final RadioButton rbFirst = new RadioButton("Die erste Tabellenzeile auswählen");
     private final RadioButton rbNothing = new RadioButton("Nichts neues auswählen");
 
-    public FilmFilterEditDialog(ProgData progData) {
+    public AudioFilterEditDialog(ProgData progData) {
         super(progData.primaryStage, null, "Filtereinstellungen", true, false, DECO.NO_BORDER);
         this.progData = progData;
 
@@ -85,20 +85,20 @@ public class FilmFilterEditDialog extends P2DialogExtra {
 
         P2ToggleSwitch tglChannel = new P2ToggleSwitch("Sender");
         tglChannel.setMaxWidth(Double.MAX_VALUE);
-        tglChannel.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().channelVisProperty());
+        tglChannel.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().channelVisProperty());
         vBox.getChildren().add(tglChannel);
 
         // Thema
         P2ToggleSwitch tglTheme = new P2ToggleSwitch("Thema");
         tglTheme.setMaxWidth(Double.MAX_VALUE);
-        tglTheme.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().themeVisProperty());
+        tglTheme.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().themeVisProperty());
 
         P2ToggleSwitch tglThemeExact = new P2ToggleSwitch("  -> Freie Suche mit Eingabefeld");
-        tglThemeExact.disableProperty().bind(progData.filmFilterWorker.getActFilterSettings().themeVisProperty().not());
+        tglThemeExact.disableProperty().bind(progData.audioFilterWorker.getActFilterSettings().themeVisProperty().not());
         tglThemeExact.setMaxWidth(Double.MAX_VALUE);
-        tglThemeExact.setSelected(!progData.filmFilterWorker.getActFilterSettings().isThemeIsExact());
+        tglThemeExact.setSelected(!progData.audioFilterWorker.getActFilterSettings().isThemeIsExact());
         tglThemeExact.selectedProperty().addListener((observable, oldValue, newValue) ->
-                progData.filmFilterWorker.getActFilterSettings().themeIsExactProperty().setValue(!newValue));
+                progData.audioFilterWorker.getActFilterSettings().themeIsExactProperty().setValue(!newValue));
 
         VBox v = new VBox(5);
         HBox h = new HBox(0);
@@ -110,52 +110,52 @@ public class FilmFilterEditDialog extends P2DialogExtra {
 
         P2ToggleSwitch tglThemeTitle = new P2ToggleSwitch("Thema oder Titel");
         tglThemeTitle.setMaxWidth(Double.MAX_VALUE);
-        tglThemeTitle.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().themeTitleVisProperty());
+        tglThemeTitle.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().themeTitleVisProperty());
         vBox.getChildren().add(tglThemeTitle);
 
         P2ToggleSwitch tglTitle = new P2ToggleSwitch("Titel");
         tglTitle.setMaxWidth(Double.MAX_VALUE);
-        tglTitle.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().titleVisProperty());
+        tglTitle.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().titleVisProperty());
         vBox.getChildren().add(tglTitle);
 
         P2ToggleSwitch tglSomewhere = new P2ToggleSwitch("Irgendwo");
         tglSomewhere.setMaxWidth(Double.MAX_VALUE);
-        tglSomewhere.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().somewhereVisProperty());
+        tglSomewhere.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().somewhereVisProperty());
         vBox.getChildren().add(tglSomewhere);
 
         P2ToggleSwitch tglUrl = new P2ToggleSwitch("Url");
         tglUrl.setMaxWidth(Double.MAX_VALUE);
-        tglUrl.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().urlVisProperty());
+        tglUrl.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().urlVisProperty());
         vBox.getChildren().add(tglUrl);
 
         P2ToggleSwitch tglTimeRange = new P2ToggleSwitch("Zeitraum [Tage]");
         tglTimeRange.setMaxWidth(Double.MAX_VALUE);
-        tglTimeRange.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().timeRangeVisProperty());
+        tglTimeRange.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().timeRangeVisProperty());
         vBox.getChildren().add(tglTimeRange);
 
         P2ToggleSwitch tglMinMax = new P2ToggleSwitch("Filmlänge Min/Max");
         tglMinMax.setMaxWidth(Double.MAX_VALUE);
-        tglMinMax.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
+        tglMinMax.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().minMaxDurVisProperty());
         vBox.getChildren().add(tglMinMax);
 
         P2ToggleSwitch tglMinMaxTime = new P2ToggleSwitch("Sendezeit");
         tglMinMaxTime.setMaxWidth(Double.MAX_VALUE);
-        tglMinMaxTime.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
+        tglMinMaxTime.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
         vBox.getChildren().add(tglMinMaxTime);
 
         P2ToggleSwitch tglShowDate = new P2ToggleSwitch("Sendedatum");
         tglShowDate.setMaxWidth(Double.MAX_VALUE);
-        tglShowDate.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().showDateVisProperty());
+        tglShowDate.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().showDateVisProperty());
         vBox.getChildren().add(tglShowDate);
 
         P2ToggleSwitch tglOnly = new P2ToggleSwitch("\"Anzeigen\"");
         tglOnly.setMaxWidth(Double.MAX_VALUE);
-        tglOnly.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().onlyVisProperty());
+        tglOnly.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().onlyVisProperty());
         vBox.getChildren().add(tglOnly);
 
         P2ToggleSwitch tglNot = new P2ToggleSwitch("\"Ausschließen\"");
         tglNot.setMaxWidth(Double.MAX_VALUE);
-        tglNot.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().notVisProperty());
+        tglNot.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().notVisProperty());
         vBox.getChildren().add(tglNot);
     }
 

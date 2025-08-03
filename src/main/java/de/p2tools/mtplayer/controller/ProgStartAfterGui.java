@@ -47,7 +47,7 @@ public class ProgStartAfterGui {
         ProgData.getInstance().pEventHandler.startTimer();
 
         //die gespeicherte Filmliste laden, vorher den FilmFilter einschalten
-        ProgData.getInstance().filterWorker.getActFilterSettings().switchFilterOff(false);
+        ProgData.getInstance().filmFilterWorker.getActFilterSettings().switchFilterOff(false);
         LoadFilmFactory.loadFilmListProgStart();
         LoadAudioFactory.loadAudioListProgStart();
     }

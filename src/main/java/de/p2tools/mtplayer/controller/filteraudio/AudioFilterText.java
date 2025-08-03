@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filteraudio;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class TextFilter extends P2DataSample<TextFilter> implements Comparable<TextFilter> {
+public class AudioFilterText extends P2DataSample<AudioFilterText> implements Comparable<AudioFilterText> {
     public static String TAG = "TextFilter";
 
     private final StringProperty channel = new SimpleStringProperty("");
@@ -17,7 +17,7 @@ public class TextFilter extends P2DataSample<TextFilter> implements Comparable<T
     private final StringProperty title = new SimpleStringProperty("");
     private final StringProperty somewhere = new SimpleStringProperty("");
 
-    public TextFilter() {
+    public AudioFilterText() {
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TextFilter extends P2DataSample<TextFilter> implements Comparable<T
         return TAG;
     }
 
-    public TextFilter(FilmFilter filmFilter) {
+    public AudioFilterText(AudioFilter filmFilter) {
         if (filmFilter.isChannelVis()) {
             channel.set(filmFilter.getChannel());
         }
@@ -81,7 +81,7 @@ public class TextFilter extends P2DataSample<TextFilter> implements Comparable<T
         return true;
     }
 
-    public boolean filterIsSame(TextFilter tf) {
+    public boolean filterIsSame(AudioFilterText tf) {
         if (!getChannel().equals(tf.getChannel())) {
             return false;
         }

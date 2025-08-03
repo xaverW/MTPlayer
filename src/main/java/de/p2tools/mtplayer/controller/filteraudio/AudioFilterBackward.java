@@ -1,49 +1,49 @@
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filteraudio;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import javafx.beans.property.StringProperty;
 
-public class BackwardFilmFilter {
+public class AudioFilterBackward {
 
     private boolean thema = false, themaTitle = false, title = false, somewhere = false, url = false;
 
     public void goBackward() {
         // Button back
-        if (ProgData.getInstance().filterWorker.getBackwardFilterList().size() <= 1) {
+        if (ProgData.getInstance().audioFilterWorker.getBackwardFilterList().size() <= 1) {
             // dann gibts noch keine oder ist nur die aktuelle Einstellung drin
             return;
         }
 
-        FilmFilter sf = ProgData.getInstance().filterWorker.getBackwardFilterList()
-                .remove(ProgData.getInstance().filterWorker.getBackwardFilterList().size() - 1); // ist die aktuelle Einstellung
+        AudioFilter sf = ProgData.getInstance().audioFilterWorker.getBackwardFilterList()
+                .remove(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().size() - 1); // ist die aktuelle Einstellung
 
-        ProgData.getInstance().filterWorker.getForwardFilterList().addToList(sf);
-        sf = ProgData.getInstance().filterWorker.getBackwardFilterList()
-                .remove(ProgData.getInstance().filterWorker.getBackwardFilterList().size() - 1); // ist die davor
-        ProgData.getInstance().filterWorker.setActFilterSettings(sf);
+        ProgData.getInstance().audioFilterWorker.getForwardFilterList().addToList(sf);
+        sf = ProgData.getInstance().audioFilterWorker.getBackwardFilterList()
+                .remove(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().size() - 1); // ist die davor
+        ProgData.getInstance().audioFilterWorker.setActFilterSettings(sf);
     }
 
     public void goForward() {
         // Button forward
-        if (ProgData.getInstance().filterWorker.getForwardFilterList().isEmpty()) {
+        if (ProgData.getInstance().audioFilterWorker.getForwardFilterList().isEmpty()) {
             // dann gibts keine
             return;
         }
 
-        final FilmFilter sf = ProgData.getInstance().filterWorker.getForwardFilterList()
-                .remove(ProgData.getInstance().filterWorker.getForwardFilterList().size() - 1);
-        ProgData.getInstance().filterWorker.setActFilterSettings(sf);
+        final AudioFilter sf = ProgData.getInstance().audioFilterWorker.getForwardFilterList()
+                .remove(ProgData.getInstance().audioFilterWorker.getForwardFilterList().size() - 1);
+        ProgData.getInstance().audioFilterWorker.setActFilterSettings(sf);
     }
 
     public void addBackward() {
-        final FilmFilter actFilter = new FilmFilter();
-        ProgData.getInstance().filterWorker.getActFilterSettings().copyTo(actFilter);
-        if (ProgData.getInstance().filterWorker.getBackwardFilterList().isEmpty()) {
-            ProgData.getInstance().filterWorker.getBackwardFilterList().addToList(actFilter);
+        final AudioFilter actFilter = new AudioFilter();
+        ProgData.getInstance().audioFilterWorker.getActFilterSettings().copyTo(actFilter);
+        if (ProgData.getInstance().audioFilterWorker.getBackwardFilterList().isEmpty()) {
+            ProgData.getInstance().audioFilterWorker.getBackwardFilterList().addToList(actFilter);
             return;
         }
 
-        FilmFilter backwardFilter = ProgData.getInstance().filterWorker.getBackwardFilterList().get(ProgData.getInstance().filterWorker.getBackwardFilterList().size() - 1);
+        AudioFilter backwardFilter = ProgData.getInstance().audioFilterWorker.getBackwardFilterList().get(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().size() - 1);
         if (actFilter.isSame(backwardFilter)) {
             // dann hat sich nichts geändert (z.B. mehrmals gelöscht)
             return;
@@ -77,10 +77,10 @@ public class BackwardFilmFilter {
         }
 
         // dann wars kein Textfilter
-        ProgData.getInstance().filterWorker.getBackwardFilterList().addToList(actFilter);
+        ProgData.getInstance().audioFilterWorker.getBackwardFilterList().addToList(actFilter);
     }
 
-    private boolean checkText(StringProperty old, StringProperty nnew, FilmFilter oldSf, FilmFilter newSf,
+    private boolean checkText(StringProperty old, StringProperty nnew, AudioFilter oldSf, AudioFilter newSf,
                               boolean check) {
         // wenn sich nur ein Teil im Suchtext geändert hat, wird nur das aktualisiert, nicht ein neuer Back angelegt
         if (old.get().equals(nnew.get())) {
@@ -91,7 +91,7 @@ public class BackwardFilmFilter {
             // dann hat sich nur ein Teil geändert und wird ersetzt
             old.setValue(nnew.getValue());
         } else {
-            ProgData.getInstance().filterWorker.getBackwardFilterList().add(newSf);
+            ProgData.getInstance().audioFilterWorker.getBackwardFilterList().add(newSf);
         }
         return true;
     }

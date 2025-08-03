@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filteraudio;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -23,14 +23,14 @@ import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-public final class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2DataList<FilmFilter> {
+public final class AudioFilterList extends SimpleListProperty<AudioFilter> implements P2DataList<AudioFilter> {
     public String TAG = "SelectedFilterList";
 
-    public FilmFilterList() {
+    public AudioFilterList() {
         super(FXCollections.observableArrayList());
     }
 
-    public FilmFilterList(String tag) {
+    public AudioFilterList(String tag) {
         super(FXCollections.observableArrayList());
         TAG = tag;
     }
@@ -46,19 +46,19 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
     }
 
     @Override
-    public FilmFilter getNewItem() {
-        return new FilmFilter();
+    public AudioFilter getNewItem() {
+        return new AudioFilter();
     }
 
     @Override
     public void addNewItem(Object obj) {
-        if (obj.getClass().equals(FilmFilter.class)) {
-            add((FilmFilter) obj);
+        if (obj.getClass().equals(AudioFilter.class)) {
+            add((AudioFilter) obj);
         }
     }
 
-    public FilmFilter getSameFilter(FilmFilter filmFilter) {
-        for (FilmFilter f : this) {
+    public AudioFilter getSameFilter(AudioFilter filmFilter) {
+        for (AudioFilter f : this) {
             if (f.isSame(filmFilter)) {
                 return f;
             }
@@ -66,7 +66,7 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
         return null;
     }
 
-    public void addToList(FilmFilter e) {
+    public void addToList(AudioFilter e) {
         cleanBackForward();
         super.add(e);
     }
@@ -78,7 +78,7 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
     }
 
     public int top(int idx, boolean up) {
-        FilmFilter filmFilter = remove(idx);
+        AudioFilter filmFilter = remove(idx);
         int ret;
         if (up) {
             add(0, filmFilter);
@@ -91,7 +91,7 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
     }
 
     public int up(int idx, boolean up) {
-        FilmFilter filmFilter = remove(idx);
+        AudioFilter filmFilter = remove(idx);
         int neu = idx;
         if (up) {
             if (neu > 0) {
@@ -106,8 +106,8 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
 
     public void addNewStoredFilter(String name) {
         // einen neuen Filter zu den gespeicherten hinzufügen
-        final FilmFilter sf = new FilmFilter();
-        ProgData.getInstance().filmFilterWorker.getActFilterSettings().copyTo(sf);
+        final AudioFilter sf = new AudioFilter();
+        ProgData.getInstance().audioFilterWorker.getActFilterSettings().copyTo(sf);
         sf.setName(name.isEmpty() ? getNextName() : name);
         add(sf);
     }
@@ -127,7 +127,7 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
         return ret;
     }
 
-    public boolean removeStoredFilter(FilmFilter sf) {
+    public boolean removeStoredFilter(AudioFilter sf) {
         // delete stored filter
         if (sf == null) {
             return false;
@@ -151,14 +151,14 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
         }
     }
 
-    public void saveStoredFilter(FilmFilter sf) {
+    public void saveStoredFilter(AudioFilter sf) {
         // gesicherten Filter mit den aktuellen Einstellungen überschreiben
         if (sf == null) {
             return;
         }
 
         final String name = sf.getName();
-        ProgData.getInstance().filmFilterWorker.getActFilterSettings().copyTo(sf);
+        ProgData.getInstance().audioFilterWorker.getActFilterSettings().copyTo(sf);
         sf.setName(name);
     }
 }

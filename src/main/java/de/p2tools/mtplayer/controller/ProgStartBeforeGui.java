@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
-import de.p2tools.mtplayer.controller.filterfilm.FilterSamples;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilterSamples;
 import de.p2tools.mtplayer.controller.update.ProgConfigUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.gui.startdialog.StartDialogController;
@@ -69,7 +69,7 @@ public class ProgStartBeforeGui {
             P2Duration.onlyPing("Erster Start: PSet");
             SetImportFactory.getStandardSet(null);
             P2Duration.onlyPing("Erster Start: PSet geladen");
-            FilterSamples.addStandardFilter();
+            FilmFilterSamples.addStandardFilter();
             P2Duration.onlyPing("Erster Start: CleaningList init");
             ProgData.getInstance().cleaningDataListMedia.initList();
             ProgData.getInstance().cleaningDataListPropose.initList();
@@ -182,8 +182,8 @@ public class ProgStartBeforeGui {
         ProgData.getInstance().cleaningDataListPropose.initList();
 
         //Filter einrichten
-        if (ProgData.getInstance().filterWorker.getFilmFilterList().isEmpty()) {
-            FilterSamples.addStandardFilter();
+        if (ProgData.getInstance().filmFilterWorker.getFilmFilterList().isEmpty()) {
+            FilmFilterSamples.addStandardFilter();
         }
 
         ProgConfigUpdate.update(); // falls es ein Programmupdate gab, Configs anpassen

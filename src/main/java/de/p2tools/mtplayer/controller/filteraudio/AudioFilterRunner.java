@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filteraudio;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -27,7 +27,7 @@ import javafx.application.Platform;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class FilmFilterRunner {
+public class AudioFilterRunner {
     private final ProgData progData;
     private static final AtomicBoolean search = new AtomicBoolean(false);
     private static final AtomicBoolean research = new AtomicBoolean(false);
@@ -38,38 +38,21 @@ public class FilmFilterRunner {
      *
      * @param progData
      */
-    public FilmFilterRunner(ProgData progData) {
+    public AudioFilterRunner(ProgData progData) {
         this.progData = progData;
 
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
-//        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                filterList();
-//            }
-//        });
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_AUDIO_CHANGED) {
             @Override
             public void ping() {
                 filterList();
             }
         });
 
-//        PListener.addListener(new PListener(PListener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                FilmFilter filmFilter = progData.filterWorker.getActFilterSettings();
-//                if (filmFilter.isNotVis() && filmFilter.isNotHistory() ||
-//                        filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory()) {
-//                    //nur dann wird History gefiltert
-//                    filterList();
-//                }
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_HISTORY_CHANGED) {
             @Override
             public void ping() {
-                FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
+                AudioFilter filmFilter = progData.audioFilterWorker.getActFilterSettings();
                 if (filmFilter.isNotVis() && filmFilter.isNotHistory() ||
                         filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory()) {
                     //nur dann wird History gefiltert
@@ -78,24 +61,12 @@ public class FilmFilterRunner {
             }
         });
 
-//        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                filterList();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_BLACKLIST_CHANGED) {
             @Override
             public void ping() {
                 filterList();
             }
         });
-//        PListener.addListener(new PListener(PListener.EVENT_DIACRITIC_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                filterList();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_DIACRITIC_CHANGED) {
             @Override
             public void ping() {
@@ -117,21 +88,21 @@ public class FilmFilterRunner {
                             "=======================================";
                     P2Log.debugLog(text);
 
-                    if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().isThemeVis() &&
-                            ProgData.getInstance().filmFilterWorker.getActFilterSettings().isThemeIsExact() &&
+                    if (ProgData.getInstance().audioFilterWorker.getActFilterSettings().isThemeVis() &&
+                            ProgData.getInstance().audioFilterWorker.getActFilterSettings().isThemeIsExact() &&
                             !ThemeListFactory.themeForChannelList
-                                    .contains(ProgData.getInstance().filmFilterWorker.getActFilterSettings().getExactTheme())) {
+                                    .contains(ProgData.getInstance().audioFilterWorker.getActFilterSettings().getExactTheme())) {
                         // Filter ExactTheme kontrollieren
                         P2Log.debugLog("Clear filter");
 
-                        progData.filmFilterWorker.getActFilterSettings().switchFilterOff(true);
-                        ProgData.getInstance().filmFilterWorker.getActFilterSettings().setExactTheme("");
-                        progData.filmFilterWorker.getActFilterSettings().switchFilterOff(false);
+                        progData.audioFilterWorker.getActFilterSettings().switchFilterOff(true);
+                        ProgData.getInstance().audioFilterWorker.getActFilterSettings().setExactTheme("");
+                        progData.audioFilterWorker.getActFilterSettings().switchFilterOff(false);
                     }
 
-                    progData.filmGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird
-                    progData.filmListFiltered.filteredListSetPred(FilmFilterPredicateFactory.getPredicate(progData));
-                    progData.filmGuiController.selectLastShown(); // und jetzt wieder setzen
+                    progData.audioGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird
+                    progData.audioListFiltered.filteredListSetPred(AudioFilterPredicateFactory.getPredicate(progData));
+                    progData.audioGuiController.selectLastShown(); // und jetzt wieder setzen
 
                     search.set(false);
                     if (research.get()) {

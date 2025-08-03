@@ -123,7 +123,7 @@ public class LoadFilmListWorker {
             progData.maskerPane.setMaskerText("Abos suchen");
             workOnFilmListLoadFinished();
 
-            progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+            progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
 
             String filmDate = P2FilmlistFactory.getAgeAsStringDate(progData.filmList.metaData);
             ProgConfig.SYSTEM_FILMLIST_DATE.setValue(progData.filmList.isEmpty() ? "" : filmDate);
@@ -159,7 +159,7 @@ public class LoadFilmListWorker {
             ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.filmList.sender));
 
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            ThemeListFactory.createThemeList(progData, progData.filterWorker.getActFilterSettings().getChannel());
+            ThemeListFactory.createThemeList(progData, progData.filmFilterWorker.getActFilterSettings().getChannel());
 
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 // wenn gewollt oder im AutoMode immer suchen

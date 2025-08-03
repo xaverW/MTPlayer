@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -29,13 +29,13 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
-public class FilmFilterControllerBlacklist extends HBox {
+public class AudioFilterControllerBlacklist extends HBox {
 
     private final ProgData progData;
 
     private final P2ToggleSwitch tglBlacklist = new P2ToggleSwitch("Blacklist:");
 
-    public FilmFilterControllerBlacklist() {
+    public AudioFilterControllerBlacklist() {
         progData = ProgData.getInstance();
 
         Button btnBlack = new Button("");
@@ -54,14 +54,14 @@ public class FilmFilterControllerBlacklist extends HBox {
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
 
         setTglBlacklist();
-        progData.filmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> setTglBlacklist());
+        progData.audioFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> setTglBlacklist());
         tglBlacklist.getCheckBox().setOnAction((mouseEvent) -> {
             if (tglBlacklist.isIndeterminate()) {
-                progData.filmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+                progData.audioFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
             } else if (tglBlacklist.isSelected()) {
-                progData.filmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+                progData.audioFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
             } else {
-                progData.filmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+                progData.audioFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
             }
         });
 
@@ -72,7 +72,7 @@ public class FilmFilterControllerBlacklist extends HBox {
     }
 
     private void setTglBlacklist() {
-        switch (progData.filmFilterWorker.getActFilterSettings().blacklistOnOffProperty().getValue()) {
+        switch (progData.audioFilterWorker.getActFilterSettings().blacklistOnOffProperty().getValue()) {
             case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
                 tglBlacklist.setIndeterminate(false);
                 tglBlacklist.setSelected(false);

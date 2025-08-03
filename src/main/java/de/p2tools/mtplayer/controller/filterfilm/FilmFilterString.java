@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-public class StringFilter extends P2DataSample<StringFilter> implements Comparable<StringFilter> {
+public class FilmFilterString extends P2DataSample<FilmFilterString> implements Comparable<FilmFilterString> {
 
     public static String TAG = "StringFilter";
 
@@ -30,7 +30,7 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
     private final ObservableList<String> filterListLiveTitel = FXCollections.observableArrayList();
 
 
-    public StringFilter() {
+    public FilmFilterString() {
     }
 
     @Override

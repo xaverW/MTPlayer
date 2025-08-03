@@ -42,11 +42,11 @@ public class SearchFast extends HBox {
     public SearchFast() {
         this.progData = ProgData.getInstance();
         final BooleanSupplier booleanSupplier = () -> {
-            progData.filterWorker.getFastFilterSettings().reportFilterReturn();
+            progData.filmFilterWorker.getFastFilterSettings().reportFilterReturn();
             return true;
         };
-        this.cboSearch = new PCboString(progData.stringFilterLists.getFilterListFastFilter(),
-                progData.filterWorker.getFastFilterSettings().filterTermProperty(), booleanSupplier);
+        this.cboSearch = new PCboString(progData.filmFilterStringLists.getFilterListFastFilter(),
+                progData.filmFilterWorker.getFastFilterSettings().filterTermProperty(), booleanSupplier);
         make();
     }
 
@@ -112,9 +112,9 @@ public class SearchFast extends HBox {
                 ProgConfig.FAST_SEARCH_WHERE.setValue(1 + ProgConfig.FAST_SEARCH_WHERE.getValue());
             }
 //            PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
         });
-        btnClear.setOnAction(a -> progData.filterWorker.getFastFilterSettings().clearFilter());
+        btnClear.setOnAction(a -> progData.filmFilterWorker.getFastFilterSettings().clearFilter());
     }
 
     private void setFastSearchOnOff(boolean andSearch) {
@@ -129,7 +129,7 @@ public class SearchFast extends HBox {
         }
         if (andSearch) {
 //            PListener.notify(PListener.EVENT_FILTER_CHANGED, SearchFast.class.getSimpleName());
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
         }
     }
 

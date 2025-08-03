@@ -44,15 +44,15 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         // sind die ComboBoxen wenn return gedrückt wird
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
-        ProgData.getInstance().filterWorker.getBackwardFilmFilter().addBackward();
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+        ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
     }
 
     private void reportFilterChange() {
         // sind die anderen Filter (ändern, ein-ausschalten), wenn Pause abgelaufen ist / gestoppt ist
         if (!filterIsOff) {
-            ProgData.getInstance().filterWorker.getBackwardFilmFilter().addBackward();
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+            ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
         }
     }
 
@@ -250,7 +250,7 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
     private void reportBlacklistChange() {
         if (!filterIsOff) { // todo ??
             BlacklistFilterFactory.makeBlackFilteredFilmlist();
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
         }
     }
 

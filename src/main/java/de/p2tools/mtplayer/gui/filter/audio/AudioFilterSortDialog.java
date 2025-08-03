@@ -14,12 +14,12 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filteraudio.AudioFilter;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
@@ -30,7 +30,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class FilmFilterSortDialog extends P2DialogExtra {
+public class AudioFilterSortDialog extends P2DialogExtra {
 
     private final Button btnOk = new Button("_Ok");
     private final Button btnUp = new Button();
@@ -40,10 +40,10 @@ public class FilmFilterSortDialog extends P2DialogExtra {
     private final Button btnDel = new Button();
     private final Button btnAddSeparator = new Button();
 
-    private final TableView<FilmFilter> tableView = new TableView<>();
+    private final TableView<AudioFilter> tableView = new TableView<>();
     private final ProgData progData;
 
-    public FilmFilterSortDialog(ProgData progData) {
+    public AudioFilterSortDialog(ProgData progData) {
         super(ProgData.getInstance().primaryStage, null, "Filmfilter", true, true, DECO.NO_BORDER);
         this.progData = progData;
 
@@ -70,12 +70,12 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        final TableColumn<FilmFilter, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<AudioFilter, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnFactoryString(nameColumn);
 
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.filmFilterWorker.getFilmFilterList());
+        tableView.setItems(progData.audioFilterWorker.getFilmFilterList());
 
         // Button
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
@@ -94,7 +94,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filmFilterWorker.getFilmFilterList().top(sel, true);
+                int res = progData.audioFilterWorker.getFilmFilterList().top(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -107,7 +107,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filmFilterWorker.getFilmFilterList().top(sel, false);
+                int res = progData.audioFilterWorker.getFilmFilterList().top(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -120,7 +120,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filmFilterWorker.getFilmFilterList().up(sel, true);
+                int res = progData.audioFilterWorker.getFilmFilterList().up(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -133,35 +133,35 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filmFilterWorker.getFilmFilterList().up(sel, false);
+                int res = progData.audioFilterWorker.getFilmFilterList().up(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
     }
 
     private void delFilter() {
-        FilmFilter sf = tableView.getSelectionModel().getSelectedItem();
+        AudioFilter sf = tableView.getSelectionModel().getSelectedItem();
         if (sf == null) {
             P2Alert.showInfoNoSelection();
             return;
         }
 
-        if (progData.filmFilterWorker.getFilmFilterList().removeStoredFilter(sf)) {
+        if (progData.audioFilterWorker.getFilmFilterList().removeStoredFilter(sf)) {
             tableView.getSelectionModel().selectFirst();
         }
     }
 
     private void addSeparator() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
-        FilmFilter sf = new FilmFilter(P2SeparatorComboBox.SEPARATOR);
+        AudioFilter sf = new AudioFilter(P2SeparatorComboBox.SEPARATOR);
         if (sel < 0) {
-            progData.filmFilterWorker.getFilmFilterList().add(sf);
+            progData.audioFilterWorker.getFilmFilterList().add(sf);
         } else {
-            progData.filmFilterWorker.getFilmFilterList().add(sel + 1, sf);
+            progData.audioFilterWorker.getFilmFilterList().add(sel + 1, sf);
         }
     }
 
-    private void columnFactoryString(TableColumn<FilmFilter, String> column) {
+    private void columnFactoryString(TableColumn<AudioFilter, String> column) {
         column.setCellFactory(c -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {

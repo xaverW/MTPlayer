@@ -23,10 +23,10 @@ import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
-import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
+import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.starter.StartDownloadFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableAudio;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
@@ -103,19 +103,19 @@ public class AudioTableContextMenu {
         Menu submenuFilter = new Menu("Filter");
 
         final MenuItem miFilterChannel = new MenuItem("nach Sender filtern");
-        miFilterChannel.setOnAction(event -> progData.filterWorker.getActFilterSettings().setChannelAndVis(film.getChannel()));
+        miFilterChannel.setOnAction(event -> progData.audioFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel()));
         final MenuItem miFilterTheme = new MenuItem("nach Thema filtern");
-        miFilterTheme.setOnAction(event -> progData.filterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false));
+        miFilterTheme.setOnAction(event -> progData.audioFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false));
         final MenuItem miFilterChannelTheme = new MenuItem("nach Sender und Thema filtern");
         miFilterChannelTheme.setOnAction(event -> {
-            progData.filterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.filterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
+            progData.audioFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.audioFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
         });
         final MenuItem miFilterChannelThemeTitle = new MenuItem("nach Sender, Thema und Titel filtern");
         miFilterChannelThemeTitle.setOnAction(event -> {
-            progData.filterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.filterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
-            progData.filterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
+            progData.audioFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.audioFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
+            progData.audioFilterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
         });
 
         miFilterChannel.setDisable(film == null);

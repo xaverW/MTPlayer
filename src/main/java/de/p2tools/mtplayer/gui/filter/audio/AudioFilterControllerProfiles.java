@@ -14,14 +14,14 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filteraudio.AudioFilter;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -40,9 +40,9 @@ import javafx.util.Callback;
 
 import java.util.Optional;
 
-public class FilmFilterControllerProfiles extends VBox {
+public class AudioFilterControllerProfiles extends VBox {
 
-    private final ComboBox<FilmFilter> cboFilterProfiles = new P2SeparatorComboBox<>();
+    private final ComboBox<AudioFilter> cboFilterProfiles = new P2SeparatorComboBox<>();
     private final MenuButton mbFilterTools = new MenuButton("");
     private final Button btnLoadFilter = new Button("");
     private final Button btnSaveFilter = new Button("");
@@ -50,7 +50,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private final ProgData progData;
 
-    public FilmFilterControllerProfiles() {
+    public AudioFilterControllerProfiles() {
         super();
         progData = ProgData.getInstance();
 
@@ -66,7 +66,7 @@ public class FilmFilterControllerProfiles extends VBox {
 //                checkCboFilter();
 //            }
 //        });
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_AUDIO_CHANGED) {
             @Override
             public void pingGui() {
                 checkCboFilter();
@@ -107,7 +107,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private void filterProfiles() {
         // Filterprofile einrichten
-        cboFilterProfiles.setItems(progData.filmFilterWorker.getFilmFilterList());
+        cboFilterProfiles.setItems(progData.audioFilterWorker.getFilmFilterList());
         cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
@@ -139,10 +139,10 @@ public class FilmFilterControllerProfiles extends VBox {
         miAbo.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
         final MenuItem miResort = new MenuItem("Filterprofile sortieren");
-        miResort.setOnAction(e -> new FilmFilterSortDialog(progData).showDialog());
+        miResort.setOnAction(e -> new AudioFilterSortDialog(progData).showDialog());
 
         final MenuItem miFilterDialog = new MenuItem("Filterprofile in eigenem Fenster anzeigen");
-        miFilterDialog.setOnAction(e -> new FilmFilterDialog(progData).showDialog());
+        miFilterDialog.setOnAction(e -> new AudioFilterDialog(progData).showDialog());
 
         final MenuItem miAddStandard = new MenuItem("Standard-Filterprofile anhängen");
         miAddStandard.setOnAction(e -> resetFilter(false));
@@ -193,33 +193,33 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void loadFilter() {
-        progData.filmFilterWorker.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
+        progData.audioFilterWorker.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
     }
 
     private void saveFilter() {
-        final FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        final AudioFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             newFilter();
         } else {
-            progData.filmFilterWorker.getFilmFilterList().saveStoredFilter(sf);
+            progData.audioFilterWorker.getFilmFilterList().saveStoredFilter(sf);
             checkCboFilter();
         }
     }
 
     private void delFilter() {
-        FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        AudioFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             P2Alert.showInfoNoSelection();
             return;
         }
 
-        if (progData.filmFilterWorker.getFilmFilterList().removeStoredFilter(sf)) {
+        if (progData.audioFilterWorker.getFilmFilterList().removeStoredFilter(sf)) {
             cboFilterProfiles.getSelectionModel().clearSelection();
         }
     }
 
     private void delAllFilter() {
-        progData.filmFilterWorker.getFilmFilterList().removeAllStoredFilter();
+        progData.audioFilterWorker.getFilmFilterList().removeAllStoredFilter();
         cboFilterProfiles.getSelectionModel().clearSelection();
     }
 
@@ -231,12 +231,12 @@ public class FilmFilterControllerProfiles extends VBox {
                             "ersetzt werden?")) {
                 return;
             }
-            progData.filmFilterWorker.getFilmFilterList().clear();
+            progData.audioFilterWorker.getFilmFilterList().clear();
 
-        } else if (!progData.filmFilterWorker.getFilmFilterList().isEmpty()) {
+        } else if (!progData.audioFilterWorker.getFilmFilterList().isEmpty()) {
             // dann eine Markierung
-            progData.filmFilterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
-            progData.filmFilterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+            progData.audioFilterWorker.getFilmFilterList().add(new AudioFilter(P2SeparatorComboBox.SEPARATOR));
+            progData.audioFilterWorker.getFilmFilterList().add(new AudioFilter(P2SeparatorComboBox.SEPARATOR));
         }
 
         FilmFilterSamples.addStandardFilter();
@@ -244,7 +244,7 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void newFilter() {
-        final TextInputDialog dialog = new TextInputDialog(progData.filmFilterWorker.getFilmFilterList().getNextName());
+        final TextInputDialog dialog = new TextInputDialog(progData.audioFilterWorker.getFilmFilterList().getNextName());
         dialog.setTitle("Filterprofilname");
         dialog.setHeaderText("Den Namen des Filterprofils vorgeben");
         dialog.setContentText("Name:");
@@ -253,13 +253,13 @@ public class FilmFilterControllerProfiles extends VBox {
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            progData.filmFilterWorker.getFilmFilterList().addNewStoredFilter(result.get());
+            progData.audioFilterWorker.getFilmFilterList().addNewStoredFilter(result.get());
             cboFilterProfiles.getSelectionModel().selectLast();
         }
     }
 
     private void renameFilter() {
-        final FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        final AudioFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             return;
         }
@@ -280,8 +280,8 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void checkCboFilter() {
-        FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
-        FilmFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        AudioFilter sf = progData.audioFilterWorker.getActFilterSettings();
+        AudioFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf.isSame(sfCbo)) {
             //if (SelectedFilmFilterFactory.compareFilterWithoutNameOfFilter(sf, sfCbo)) {
             markFilterOk(true);
@@ -290,12 +290,12 @@ public class FilmFilterControllerProfiles extends VBox {
         }
     }
 
-    private static class ListViewListCellCallback implements Callback<ListView<FilmFilter>, ListCell<FilmFilter>> {
+    private static class ListViewListCellCallback implements Callback<ListView<AudioFilter>, ListCell<AudioFilter>> {
         @Override
-        public ListCell<FilmFilter> call(ListView<FilmFilter> param) {
+        public ListCell<AudioFilter> call(ListView<AudioFilter> param) {
             return new ListCell<>() {
                 @Override
-                public void updateItem(FilmFilter item, boolean empty) {
+                public void updateItem(AudioFilter item, boolean empty) {
                     super.updateItem(item, empty);
 
                     if (item == null || empty) {

@@ -24,7 +24,7 @@ import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class FastFilmFilterProps extends P2DataSample<FastFilmFilter> implements Comparable<FastFilmFilter> {
+public class FilmFastFilterProps extends P2DataSample<FilmFastFilter> implements Comparable<FilmFastFilter> {
 
     public static String TAG = "FastFilmFilterProps";
 
@@ -73,7 +73,7 @@ public class FastFilmFilterProps extends P2DataSample<FastFilmFilter> implements
     }
 
     @Override
-    public int compareTo(FastFilmFilter o) {
+    public int compareTo(FilmFastFilter o) {
         return filterTerm.getValue().compareTo(o.getFilterTerm());
     }
 }

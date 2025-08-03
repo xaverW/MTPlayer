@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 
 import java.util.Optional;
 
-public final class FilterWorker {
+public final class FilmFilterWorker {
 
     // ist der aktuell angezeigte Filter
     public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
@@ -43,11 +43,11 @@ public final class FilterWorker {
     private final FilmFilterList forwardFilterList = new FilmFilterList("ForwardFilterList");
 
     // ist der FastFilter
-    private final FastFilmFilter fastFilter = new FastFilmFilter();
+    private final FilmFastFilter fastFilter = new FilmFastFilter();
     // da werden die Forward/Backward Filter verwaltet
-    private final BackwardFilmFilter backwardFilmFilter = new BackwardFilmFilter();
+    private final FilmFilterBackward filmFilterBackward = new FilmFilterBackward();
 
-    public FilterWorker() {
+    public FilmFilterWorker() {
         getActFilterSettings().channelProperty().addListener(l -> {
             ThemeListFactory.createThemeList(ProgData.getInstance(), getActFilterSettings().channelProperty().getValueSafe());
         });
@@ -81,12 +81,12 @@ public final class FilterWorker {
         return forwardFilterList;
     }
 
-    public FastFilmFilter getFastFilterSettings() {
+    public FilmFastFilter getFastFilterSettings() {
         return fastFilter;
     }
 
-    public BackwardFilmFilter getBackwardFilmFilter() {
-        return backwardFilmFilter;
+    public FilmFilterBackward getBackwardFilmFilter() {
+        return filmFilterBackward;
     }
 
     public synchronized void setActFilterSettings(FilmFilter sf) {
@@ -153,16 +153,16 @@ public final class FilterWorker {
     }
 
     private void postFilterChange() {
-        backwardFilmFilter.addBackward();
+        filmFilterBackward.addBackward();
 //        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilterWorker.class.getSimpleName());
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
     }
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
         BlacklistFilterFactory.makeBlackFilteredFilmlist();
 //        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilterWorker.class.getSimpleName());
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
     }
 
     public static void setSmallFilter(FilmFilter filmFilter) {

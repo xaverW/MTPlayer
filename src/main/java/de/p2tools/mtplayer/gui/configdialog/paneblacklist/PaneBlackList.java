@@ -142,7 +142,7 @@ public class PaneBlackList {
         rbOff.setToggleGroup(toggleGroup);
         toggleGroup.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
         setRb();
-        progData.filterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
+        progData.filmFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
             setRb();
         });
 
@@ -257,7 +257,7 @@ public class PaneBlackList {
     private void setRb() {
         if (controlBlackListNotFilmFilter) {
             //dann wird die BlackList gesteuert
-            switch (progData.filterWorker.getActFilterSettings().getBlacklistOnOff()) {
+            switch (progData.filmFilterWorker.getActFilterSettings().getBlacklistOnOff()) {
                 case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
                     //OFF
                     rbOff.setSelected(true);
@@ -295,13 +295,13 @@ public class PaneBlackList {
             //dann wird die BlackList gesteuert
             if (rbBlack.isSelected()) {
                 //BLACK
-                progData.filterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+                progData.filmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
             } else if (rbWhite.isSelected()) {
                 //WHITE, also invers
-                progData.filterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+                progData.filmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
             } else {
                 //OFF
-                progData.filterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+                progData.filmFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
             }
 
         } else {

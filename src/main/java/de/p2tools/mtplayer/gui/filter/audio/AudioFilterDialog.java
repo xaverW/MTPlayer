@@ -14,13 +14,13 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filteraudio.AudioFilter;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 import javafx.scene.control.*;
@@ -28,15 +28,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class FilmFilterDialog extends P2DialogExtra {
+public class AudioFilterDialog extends P2DialogExtra {
 
     private final Button btnOk = new Button("_Ok");
     private final Button btnClearFilter = new Button("Filter löschen");
 
-    private final TableView<FilmFilter> tableView = new TableView<>();
+    private final TableView<AudioFilter> tableView = new TableView<>();
     private final ProgData progData;
 
-    public FilmFilterDialog(ProgData progData) {
+    public AudioFilterDialog(ProgData progData) {
         super(ProgData.getInstance().primaryStage, ProgConfig.FILM__FILTER_DIALOG_SIZE, "Filmfilter",
                 false, false, DECO.NO_BORDER, true);
         this.progData = progData;
@@ -69,12 +69,12 @@ public class FilmFilterDialog extends P2DialogExtra {
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
             if (n != null) {
-                progData.filmFilterWorker.setActFilterSettings(n);
+                progData.audioFilterWorker.setActFilterSettings(n);
             }
         });
         tableView.setRowFactory(param -> new TableRow<>() {
             @Override
-            protected void updateItem(FilmFilter item, boolean empty) {
+            protected void updateItem(AudioFilter item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
                     this.setDisable(P2SeparatorComboBox.isSeparator(item.toString()));
@@ -82,12 +82,12 @@ public class FilmFilterDialog extends P2DialogExtra {
             }
         });
 
-        final TableColumn<FilmFilter, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<AudioFilter, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnFactoryString(nameColumn);
 
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.filmFilterWorker.getFilmFilterList());
+        tableView.setItems(progData.audioFilterWorker.getFilmFilterList());
     }
 
     @Override
@@ -110,7 +110,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         }
     }
 
-    private void columnFactoryString(TableColumn<FilmFilter, String> column) {
+    private void columnFactoryString(TableColumn<AudioFilter, String> column) {
         column.setCellFactory(c -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {

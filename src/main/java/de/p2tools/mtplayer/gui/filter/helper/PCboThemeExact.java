@@ -15,7 +15,7 @@ public class PCboThemeExact extends SearchableComboBox<String> {
         });
 
         getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!progData.filterWorker.getActFilterSettings().isThemeIsExact()) {
+                    if (!progData.filmFilterWorker.getActFilterSettings().isThemeIsExact()) {
                         // dann betrifft es das nicht
                         return;
                     }

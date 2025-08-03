@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.starter.StartDownloadDto;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -59,7 +59,7 @@ public final class DownloadData extends DownloadDataProps {
         setSubtitle(setData.isSubtitle());
 
         String resolution;
-        if (ProgData.getInstance().filterWorker.getActFilterSettings().isOnlyHd()) {
+        if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().isOnlyHd()) {
             resolution = FilmDataMTP.RESOLUTION_HD;
         } else {
             resolution = setData.getResolution();

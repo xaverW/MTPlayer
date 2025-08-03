@@ -32,11 +32,12 @@ import de.p2tools.mtplayer.controller.data.history.HistoryList;
 import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
+import de.p2tools.mtplayer.controller.filteraudio.AudioFilterRunner;
 import de.p2tools.mtplayer.controller.filteraudio.AudioFilterWorker;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilterRunner;
-import de.p2tools.mtplayer.controller.filterfilm.FilterWorker;
-import de.p2tools.mtplayer.controller.filterfilm.StringFilter;
-import de.p2tools.mtplayer.controller.filterfilm.TextFilterList;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilterString;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilterTextList;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.filterlive.LiveFilmFilterWorker;
 import de.p2tools.mtplayer.controller.load.LoadAudioListWorker;
 import de.p2tools.mtplayer.controller.load.LoadFilmListWorker;
@@ -51,6 +52,7 @@ import de.p2tools.mtplayer.gui.chart.ChartData;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
+import de.p2tools.mtplayer.gui.filter.audio.AudioFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.filter.film.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
@@ -100,13 +102,14 @@ public class ProgData {
 
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public PShortcut pShortcut; // verwendete Shortcuts
-    public FilterWorker filterWorker; // gespeicherte Filterprofile FILME
-    public TextFilterList textFilterList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
-    public StringFilter stringFilterLists; // sind die Text-Filter in den CBO's
+    public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile FILME
+    public AudioFilterWorker audioFilterWorker; // gespeicherte Filterprofile Audios
+    public FilmFilterTextList filmFilterTextList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
+    public FilmFilterString filmFilterStringLists; // sind die Text-Filter in den CBO's
 
     public LiveFilmFilterWorker liveFilmFilterWorker; // Live
-    public AudioFilterWorker audioFilterWorker; // Audio
     public FilmFilterRunner filmFilterRunner; // Filme
+    public AudioFilterRunner audioFilterRunner; // Audios
 
     // Gui
     public Stage primaryStage = null;
@@ -120,6 +123,7 @@ public class ProgData {
     public AboGuiController aboGuiController = null; // Tab mit den Abos
     public AboFilterController aboFilterController = null;
     public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
+    public AudioFilterControllerClearFilter audioFilterControllerClearFilter = null;
     public CheckForNewFilmlist checkForNewFilmlist;
     public final ChartData chartData;
     public final ProgTray progTray;
@@ -172,11 +176,11 @@ public class ProgData {
         audioList = new FilmListMTP();
         audioListFiltered = new FilmListMTP();
 
-        textFilterList = new TextFilterList();
-        stringFilterLists = new StringFilter();
-        filterWorker = new FilterWorker();
+        filmFilterTextList = new FilmFilterTextList();
+        filmFilterStringLists = new FilmFilterString();
+        filmFilterWorker = new FilmFilterWorker();
         liveFilmFilterWorker = new LiveFilmFilterWorker(this);
-        audioFilterWorker = new AudioFilterWorker(this);
+        audioFilterWorker = new AudioFilterWorker();
 
 
         filmListFilter = new BlackList(this, "FilmListFilter");
@@ -189,6 +193,7 @@ public class ProgData {
 //        downloadListButton = new DownloadList(this);
 
         filmFilterRunner = new FilmFilterRunner(this);
+        audioFilterRunner = new AudioFilterRunner(this);
 
         historyList = new HistoryList(ProgConst.FILE_HISTORY, HistoryList.HISTORY_LIST.HISTORY);
         historyListAbos = new HistoryList(ProgConst.FILE_FINISHED_ABOS, HistoryList.HISTORY_LIST.ABO);

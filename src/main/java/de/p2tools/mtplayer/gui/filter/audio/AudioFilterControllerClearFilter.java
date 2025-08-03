@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
@@ -32,7 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class FilmFilterControllerClearFilter extends VBox {
+public class AudioFilterControllerClearFilter extends VBox {
 
     private final Button btnClearFilter = P2ButtonClearFilterFactory.getPButtonClearFilter();
     private final Button btnEditFilter = new Button("");
@@ -42,10 +42,10 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private final ProgData progData;
 
-    public FilmFilterControllerClearFilter() {
+    public AudioFilterControllerClearFilter() {
         super();
         progData = ProgData.getInstance();
-        progData.filmFilterControllerClearFilter = this;
+        progData.audioFilterControllerClearFilter = this;
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addButton();
@@ -53,20 +53,20 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void addButton() {
         btnGoBack.setGraphic(ProgIcons.ICON_BUTTON_BACKWARD.getImageView());
-        btnGoBack.setOnAction(a -> progData.filmFilterWorker.getBackwardFilmFilter().goBackward());
-        btnGoBack.disableProperty().bind(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().emptyProperty()
-                .or(ProgData.getInstance().filmFilterWorker.getBackwardFilterList().sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
+        btnGoBack.setOnAction(a -> progData.audioFilterWorker.getBackwardFilmFilter().goBackward());
+        btnGoBack.disableProperty().bind(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().emptyProperty()
+                .or(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnGoForward.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
-        btnGoForward.setOnAction(a -> progData.filmFilterWorker.getBackwardFilmFilter().goForward());
-        btnGoForward.disableProperty().bind(ProgData.getInstance().filmFilterWorker.getForwardFilterList().emptyProperty());
+        btnGoForward.setOnAction(a -> progData.audioFilterWorker.getBackwardFilmFilter().goForward());
+        btnGoForward.disableProperty().bind(ProgData.getInstance().audioFilterWorker.getForwardFilterList().emptyProperty());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnClearFilter.setOnAction(a -> clearFilter());
 
         btnEditFilter.setGraphic(ProgIcons.ICON_BUTTON_EDIT.getImageView());
-        btnEditFilter.setOnAction(a -> new FilmFilterEditDialog(progData));
+        btnEditFilter.setOnAction(a -> new AudioFilterEditDialog(progData));
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
         HBox hBox1 = new HBox(P2LibConst.DIST_BUTTON);
@@ -84,6 +84,6 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void clearFilter() {
         P2Duration.onlyPing("Filter löschen");
-        progData.filmFilterWorker.clearFilter();
+        progData.audioFilterWorker.clearFilter();
     }
 }

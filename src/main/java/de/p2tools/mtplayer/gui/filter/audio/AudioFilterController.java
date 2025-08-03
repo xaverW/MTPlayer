@@ -16,35 +16,106 @@
 
 package de.p2tools.mtplayer.gui.filter.audio;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filteraudio.AudioFilterWorker;
 import de.p2tools.mtplayer.gui.filter.FilterController;
-import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 
 public class AudioFilterController extends FilterController {
 
-    private final VBox vBoxFilter;
-    private final ProgData progData;
-    private final AudioFilterText audioFilterText;
+    final AudioFilterControllerTextFilter filmFilterControllerTextFilter;
+    final AudioFilterControllerFilter filmFilterControllerFilter;
+    final AudioFilterControllerClearFilter filmFilterControllerClearFilter;
+
+    final AudioFilterControllerProfiles filmFilterControllerProfiles;
+    final AudioFilterControllerBlacklist filmFilterControllerBlacklist;
+
+    final AudioSmallFilterControllerFilter filmSmallFilterControllerFilter;
 
     public AudioFilterController() {
-        this.progData = ProgData.getInstance();
-        this.audioFilterText = new AudioFilterText();
-        vBoxFilter = getVBoxFilter();
-        init();
+        filmFilterControllerTextFilter = new AudioFilterControllerTextFilter();
+        filmFilterControllerFilter = new AudioFilterControllerFilter();
+        filmFilterControllerClearFilter = new AudioFilterControllerClearFilter();
+
+        filmFilterControllerProfiles = new AudioFilterControllerProfiles();
+        filmFilterControllerBlacklist = new AudioFilterControllerBlacklist();
+
+        filmSmallFilterControllerFilter = new AudioSmallFilterControllerFilter();
+        ProgConfig.FILMFILTER_SMALL_FILTER.addListener((u, o, n) -> {
+            setFilter();
+            setGui();
+        });
+
+        setFilterStart();
+        setGui();
     }
 
-    private void init() {
-        final Button btnHelp = P2Button.helpButton(progData.primaryStage, "Live-Suche",
-                HelpText.LIVE_SEARCH);
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnHelp);
-        vBoxFilter.getChildren().addAll(audioFilterText, P2GuiTools.getVBoxGrower(), hBox);
+    private void setFilterStart() {
+        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+            // actFilterSettings sind die Einstellungen des Filters beim Beenden
+            ProgData.getInstance().audioFilterWorker.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+            // vis setzen
+            AudioFilterWorker.setSmallFilter(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+
+        } else {
+            ProgData.getInstance().audioFilterWorker.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().audioFilterWorker.getStoredFilterSettings());
+        }
+    }
+
+    private void setFilter() {
+        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+            // dann den kleinen Filter
+            ProgData.getInstance().audioFilterWorker.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().audioFilterWorker.getStoredFilterSettings());
+
+            AudioFilterWorker.setSmallFilter(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+            ProgData.getInstance().audioFilterWorker.setActFilterSettings(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+
+        } else {
+            // dann alle Filter
+            ProgData.getInstance().audioFilterWorker.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+
+            ProgData.getInstance().audioFilterWorker.setActFilterSettings(
+                    ProgData.getInstance().audioFilterWorker.getStoredFilterSettings());
+        }
+    }
+
+    private void setGui() {
+        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+            getChildren().clear();
+            final VBox vBox = getVBoxFilter();
+            vBox.getChildren().addAll(filmFilterControllerTextFilter);
+            vBox.getChildren().add(P2GuiTools.getHDistance(20));
+            vBox.getChildren().addAll(filmFilterControllerFilter);
+            vBox.getChildren().add(P2GuiTools.getVBoxGrower());
+            vBox.getChildren().addAll(filmSmallFilterControllerFilter);
+
+        } else {
+            // dann alle Filter
+            getChildren().clear();
+            final VBox vBox = getVBoxFilter();
+            vBox.getChildren().addAll(filmFilterControllerTextFilter);
+
+            Separator sp = new Separator();
+            sp.getStyleClass().add("pseperator1");
+            sp.setMinHeight(0);
+            sp.setMaxHeight(1);
+            sp.visibleProperty().bind(filmFilterControllerTextFilter.visibleProperty());
+            sp.managedProperty().bind(filmFilterControllerTextFilter.visibleProperty());
+            vBox.getChildren().add(sp);
+
+            vBox.getChildren().addAll(filmFilterControllerFilter,
+                    P2GuiTools.getVBoxGrower(),
+                    filmFilterControllerClearFilter);
+
+            getVBoxBlack().getChildren().add(filmFilterControllerProfiles);
+            getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
+        }
     }
 }
