@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.film.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.SearchFast;
@@ -146,9 +147,11 @@ public class MTPlayerController extends StackPane {
         btnFilmlist.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
                 LoadFilmFactory.loadNewListFromWeb(true);
+                LoadAudioFactory.loadAudioListButton();
 
             } else if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
                 progData.checkForNewFilmlist.check();
+                LoadAudioFactory.loadAudioListButton();
             }
         });
         progData.checkForNewFilmlist.foundNewListProperty().addListener((u, o, n) -> {

@@ -14,13 +14,13 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filmfilter;
+package de.p2tools.mtplayer.controller.audiofilter;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
+import de.p2tools.p2lib.mediathek.filmdata.Filmlist;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
 import de.p2tools.p2lib.mediathek.filter.Filter;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -29,14 +29,14 @@ import javafx.collections.transformation.SortedList;
 
 import java.util.function.Predicate;
 
-public final class LiveFilmFilterWorker {
+public final class AudioFilterWorker {
 
-    private final LiveFilter actFilterSettings = new LiveFilter();
-    private final FilmListMTP liveFilmList; // Filmliste der Live-Filme
+    private final AudioFilter actFilterSettings = new AudioFilter();
+    private final Filmlist audioList;
 
-    public LiveFilmFilterWorker(ProgData progData) {
-        this.liveFilmList = new FilmListMTP();
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_LIVE_FILTER_CHANGED) {
+    public AudioFilterWorker(ProgData progData) {
+        this.audioList = progData.audioListFiltered;
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_AUDIO_FILTER_CHANGED) {
             @Override
             public void ping() {
                 filterList();
@@ -45,18 +45,18 @@ public final class LiveFilmFilterWorker {
     }
 
     public FilteredList<FilmDataMTP> getFilteredList() {
-        return liveFilmList.getFilteredList();
+        return audioList.getFilteredList();
     }
 
     public SortedList<FilmDataMTP> getSortedList() {
-        return liveFilmList.getSortedList();
+        return audioList.getSortedList();
     }
 
-    public FilmListMTP getLiveFilmList() {
-        return liveFilmList;
+    public Filmlist getAudioList() {
+        return audioList;
     }
 
-    public LiveFilter getActFilterSettings() {
+    public AudioFilter getActFilterSettings() {
         return actFilterSettings;
     }
 
@@ -72,22 +72,22 @@ public final class LiveFilmFilterWorker {
         final String theme = getActFilterSettings().themeProperty().getValueSafe();
         final String title = getActFilterSettings().titleProperty().getValueSafe();
 
-        de.p2tools.p2lib.mediathek.filter.Filter fChannel = new de.p2tools.p2lib.mediathek.filter.Filter(channel, true);
+        Filter fChannel = new Filter(channel, true);
         if (!fChannel.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchChannelSmart(fChannel, f));
         }
 
-        de.p2tools.p2lib.mediathek.filter.Filter fTheme = new de.p2tools.p2lib.mediathek.filter.Filter(theme, false, true);
+        Filter fTheme = new Filter(theme, false, true);
         if (!fTheme.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeExact(fTheme, f));
         }
 
         // Titel
-        de.p2tools.p2lib.mediathek.filter.Filter fTitle = new Filter(title, true);
+        Filter fTitle = new Filter(title, true);
         if (!fTitle.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fTitle, f));
         }
 
-        liveFilmList.getFilteredList().setPredicate(predicate);
+        audioList.getFilteredList().setPredicate(predicate);
     }
 }

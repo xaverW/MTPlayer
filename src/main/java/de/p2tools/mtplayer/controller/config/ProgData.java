@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.MTPlayerController;
+import de.p2tools.mtplayer.controller.audiofilter.AudioFilterWorker;
 import de.p2tools.mtplayer.controller.data.abo.AboList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackListFilter;
@@ -75,13 +76,13 @@ public class ProgData {
     public static boolean reset = false; // Programm auf Starteinstellungen zurücksetzen
     public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
     public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
+    public static BooleanProperty AUDIOLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Audioliste geladen
 
     public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty AUDIO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty LIVE_FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
     public static BooleanProperty ABO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
-//    public static long countRunningTimeSeconds = P2EventHandler.countRunningTimeSeconds;
 
     // Infos
     public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen
@@ -95,8 +96,9 @@ public class ProgData {
     public TextFilterList textFilterList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
     public StringFilter stringFilterLists; // sind die Text-Filter in den CBO's
 
-    public LiveFilmFilterWorker liveFilmFilterWorker; // gespeicherte Filterprofile LIVE
-    public FilmFilterRunner filmFilterRunner;
+    public LiveFilmFilterWorker liveFilmFilterWorker; // Live
+    public AudioFilterWorker audioFilterWorker; // Audio
+    public FilmFilterRunner filmFilterRunner; // Filme
 
     // Gui
     public Stage primaryStage = null;
@@ -122,6 +124,9 @@ public class ProgData {
     // Programmdaten
     public FilmListMTP filmList; // ist die komplette Filmliste
     public FilmListMTP filmListFiltered; // Filmliste, wie im TabFilme angezeigt
+
+    public FilmListMTP audioList; // ist die komplette Audioliste
+    public FilmListMTP audioListFiltered; // Audioliste, wie im TabAudio angezeigt
 
     public DownloadList downloadList; // Filme die als "Download" geladen werden sollen
     public AboList aboList;
@@ -157,9 +162,13 @@ public class ProgData {
         stringFilterLists = new StringFilter();
         filterWorker = new FilterWorker();
         liveFilmFilterWorker = new LiveFilmFilterWorker(this);
+        audioFilterWorker = new AudioFilterWorker(this);
 
         filmList = new FilmListMTP();
         filmListFiltered = new FilmListMTP();
+
+        audioList = new FilmListMTP();
+        audioListFiltered = new FilmListMTP();
 
         filmListFilter = new BlackList(this, "FilmListFilter");
         blackList = new BlackList(this, "BlackList");

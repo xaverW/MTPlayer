@@ -17,10 +17,7 @@
 
 package de.p2tools.mtplayer.controller.film;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.p2lib.mediathek.filmdata.Filmlist;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadFilmlist;
@@ -32,7 +29,7 @@ public class LoadFilmFactory {
     }
 
     public static void loadFilmlistProgStart() {
-        initLoadFactoryConst();
+        LoadFactory.initLoadFactoryConst();
 
         Filmlist<FilmDataMTP> filmlistNew = new FilmListMTP();
         Filmlist<FilmDataMTP> filmlistDiff = new FilmListMTP();
@@ -44,7 +41,7 @@ public class LoadFilmFactory {
         // es wird immer eine neue Filmliste aus dem Web geladen
         // Button oder automatisch wenns eine neue gibt
 
-        initLoadFactoryConst();
+        LoadFactory.initLoadFactoryConst();
         if (!alwaysLoadNew && ProgData.getInstance().filmGuiController != null /*mal vorsichtshalber*/) {
             // sonst machts keinen Sinn, sind dann ja alle neu
             ProgData.getInstance().filmGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird
@@ -59,47 +56,6 @@ public class LoadFilmFactory {
     public static void setLoadStop() {
         if (p2LoadFilmlist != null) {
             P2LoadConst.stop.set(true);
-        }
-    }
-
-    public static void initLoadFactoryConst() {
-        P2LoadConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
-        P2LoadConst.SYSTEM_LOAD_NOT_SENDER = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue();
-        P2LoadConst.SYSTEM_LOAD_FILMLIST_MAX_DAYS = ProgConfig.SYSTEM_LOAD_FILMLIST_MAX_DAYS.getValue();
-        P2LoadConst.SYSTEM_LOAD_FILMLIST_MIN_DURATION = ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION.getValue();
-        P2LoadConst.removeDiacritic = ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue();
-        P2LoadConst.userAgent = ProgConfig.SYSTEM_USERAGENT.getValue();
-        P2LoadConst.firstProgramStart = ProgData.firstProgramStart;
-        P2LoadConst.debug = ProgData.debug;
-        P2LoadConst.primaryStage = ProgData.getInstance().primaryStage;
-        P2LoadConst.p2EventHandler = ProgData.getInstance().pEventHandler;
-
-        P2LoadConst.loadNewFilmlistOnProgramStart = ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue()
-                || ProgData.autoMode; // wenn gewollt oder im AutoMode immer laden
-        P2LoadConst.dateStoredFilmlist = ProgConfig.SYSTEM_FILMLIST_DATE;
-
-
-        P2LoadConst.localFilmListFile = ProgInfos.getLocalFilmListFile();
-        P2LoadConst.filmlistLocal = ProgData.getInstance().filmList;
-        P2LoadConst.filmListUrl = ProgData.filmListUrl;
-
-
-        // ProgData.getInstance().filmListFilter.clearCounter(); //todo evtl. nur beim Neuladen einer kompletten Liste??
-        if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
-            //ist sonst evtl. noch von "vorher" gesetzt
-            P2LoadConst.checker = null;
-
-        } else if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
-            //dann sollen Filme geprüft werden
-            ProgData.getInstance().filmListFilter.clearCounter();
-            P2LoadConst.checker = filmData -> BlacklistFilterFactory.checkFilmAndCountHits(filmData,
-                    ProgData.getInstance().filmListFilter, true);
-
-        } else {
-            //dann ist er inverse
-            ProgData.getInstance().filmListFilter.clearCounter();
-            P2LoadConst.checker = filmData -> !BlacklistFilterFactory.checkFilmAndCountHits(filmData,
-                    ProgData.getInstance().filmListFilter, true);
         }
     }
 }

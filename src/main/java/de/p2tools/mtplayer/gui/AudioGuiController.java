@@ -75,7 +75,7 @@ public class AudioGuiController extends AnchorPane {
 
     public AudioGuiController() {
         progData = ProgData.getInstance();
-        sortedList = progData.filmListFiltered.getSortedList();
+        sortedList = progData.audioListFiltered.getSortedList();
         tableView = new TableAudio(Table.TABLE_ENUM.AUDIO, progData);
 
         AnchorPane.setLeftAnchor(splitPane, 0.0);

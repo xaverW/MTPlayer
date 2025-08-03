@@ -45,7 +45,6 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
         ProgData.getInstance().filterWorker.getBackwardFilmFilter().addBackward();
-//        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
     }
 
@@ -53,7 +52,6 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         // sind die anderen Filter (ändern, ein-ausschalten), wenn Pause abgelaufen ist / gestoppt ist
         if (!filterIsOff) {
             ProgData.getInstance().filterWorker.getBackwardFilmFilter().addBackward();
-//            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
         }
     }
@@ -252,7 +250,6 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
     private void reportBlacklistChange() {
         if (!filterIsOff) { // todo ??
             BlacklistFilterFactory.makeBlackFilteredFilmlist();
-//            PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
         }
     }

@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 
 
-public class TableRowAudio<T> extends TableRow<T> {
+public class TableRowAudio<T extends FilmData> extends TableRow<T> {
 
     public TableRowAudio() {
     }
@@ -38,15 +38,14 @@ public class TableRowAudio<T> extends TableRow<T> {
             setTooltip(null);
 
         } else {
-            FilmDataMTP film = (FilmDataMTP) item;
             if (ProgConfig.AUDIO_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
-                setTooltip(new Tooltip(film.getTheme() + "\n" + film.getTitle()));
+                setTooltip(new Tooltip(item.getTheme() + "\n" + item.getTitle()));
             }
 
-            if (film.isBookmark()) {
+            if (item.isBookmark()) {
                 setStyle(ProgColorList.BOOKMARK.getCssBackground());
 
-            } else if (film.isShown()) {
+            } else if (item.isShown()) {
                 setStyle(ProgColorList.FILM_HISTORY.getCssBackground());
 
             } else {

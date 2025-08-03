@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.filter.film.FilmFilterController;
+import de.p2tools.mtplayer.gui.filter.audio.AudioFilterController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
@@ -36,14 +36,14 @@ public class AudioGui {
     ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
-    private final FilmFilterController filmFilterController;
+    private final AudioFilterController filmFilterController;
     private final AudioGuiController audioGuiController;
     private final BooleanProperty boundFilter = new SimpleBooleanProperty(false);
     private final P2ClosePaneController infoControllerFilter;
 
     public AudioGui() {
         progData = ProgData.getInstance();
-        filmFilterController = new FilmFilterController();
+        filmFilterController = new AudioFilterController();
         audioGuiController = new AudioGuiController();
 
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();

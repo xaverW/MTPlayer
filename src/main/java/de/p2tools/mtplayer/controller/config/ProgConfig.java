@@ -280,9 +280,11 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("Filmliste");
     }
 
+    public static StringProperty SYSTEM_AUDIOLIST_DATE_TIME = addStrProp("system-audiolist-date", ""); // DateTimeFormatter DT_FORMATTER_dd_MM_yyyy___HH__mm
     public static StringProperty SYSTEM_FILMLIST_DATE = addStrProp("system-filmlist-date", "");
     public static BooleanProperty SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART = addBoolProp("system-load-filmlist-on-programstart", Boolean.TRUE);
     public static StringProperty SYSTEM_MARK_DOUBLE_CHANNEL_LIST = addStrProp("system-mark-double-channel-list", "ARD,ZDF");
+    public static IntegerProperty SYSTEM_AUDIOLIST_COUNT_DOUBLE = addIntProp("system-audiolist-count-double", 0); // Anzahl der doppelten Filme
     public static BooleanProperty SYSTEM_FILMLIST_REMOVE_DOUBLE = addBoolProp("system-filmlist-remove-double", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE = addBoolProp("system-filmlist-double-with-theme-title", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILMLIST_MARK_UT = addBoolProp("system-filmlist-mark-ut", Boolean.TRUE);

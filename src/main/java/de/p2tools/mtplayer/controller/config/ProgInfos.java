@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.Main;
 import de.p2tools.p2lib.configfile.SettingsDirectory;
+import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import de.p2tools.p2lib.tools.P2Exception;
 
 import java.io.File;
@@ -57,6 +58,9 @@ public class ProgInfos {
         return s;
     }
 
+    public static String getAudioListFile() {
+        return getSettingsDirectory_String() + File.separator + P2LoadConst.AUDIO_LIST_FILE_JSON;
+    }
 
     /**
      * Liefert den Pfad zur Filmliste
