@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
-import de.p2tools.mtplayer.controller.filmfilter.FilterSamples;
+import de.p2tools.mtplayer.controller.filterfilm.FilterSamples;
 import de.p2tools.mtplayer.controller.update.ProgConfigUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.gui.startdialog.StartDialogController;

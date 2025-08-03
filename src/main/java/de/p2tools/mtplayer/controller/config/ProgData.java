@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.MTPlayerController;
-import de.p2tools.mtplayer.controller.audiofilter.AudioFilterWorker;
 import de.p2tools.mtplayer.controller.data.abo.AboList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackListFilter;
@@ -34,7 +33,12 @@ import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.film.LoadFilmListWorker;
-import de.p2tools.mtplayer.controller.filmfilter.*;
+import de.p2tools.mtplayer.controller.filteraudio.AudioFilterWorker;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilterRunner;
+import de.p2tools.mtplayer.controller.filterfilm.FilterWorker;
+import de.p2tools.mtplayer.controller.filterfilm.StringFilter;
+import de.p2tools.mtplayer.controller.filterfilm.TextFilterList;
+import de.p2tools.mtplayer.controller.filterlive.LiveFilmFilterWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
 import de.p2tools.mtplayer.controller.starter.StartDownload;

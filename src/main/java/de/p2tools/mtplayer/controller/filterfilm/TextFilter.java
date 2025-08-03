@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.filmfilter;
+package de.p2tools.mtplayer.controller.filterfilm;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;

@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filmfilter;
+package de.p2tools.mtplayer.controller.filterfilm;
 
 public interface Filter {
 

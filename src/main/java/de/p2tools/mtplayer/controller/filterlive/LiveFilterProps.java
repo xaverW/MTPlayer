@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.audiofilter;
+package de.p2tools.mtplayer.controller.filterlive;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
@@ -8,8 +8,8 @@ import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class AudioFilterProps extends P2DataSample<AudioFilter> implements Comparable<AudioFilter> {
-    public static String TAG = "AudioFilter";
+public class LiveFilterProps extends P2DataSample<LiveFilter> implements Comparable<LiveFilter> {
+    public static String TAG = "LiveFilter";
 
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
@@ -29,7 +29,7 @@ public class AudioFilterProps extends P2DataSample<AudioFilter> implements Compa
         return TAG;
     }
 
-    public boolean isSame(AudioFilter tf) {
+    public boolean isSame(LiveFilter tf) {
         return getChannel().equals(tf.getChannel()) &&
                 getTheme().equals(tf.getTheme()) &&
                 getTitle().equals(tf.getTitle());
@@ -41,13 +41,13 @@ public class AudioFilterProps extends P2DataSample<AudioFilter> implements Compa
                 getTitle().isEmpty();
     }
 
-    public AudioFilter getCopy() {
-        AudioFilter sf = new AudioFilter();
+    public LiveFilter getCopy() {
+        LiveFilter sf = new LiveFilter();
         this.copyTo(sf);
         return sf;
     }
 
-    public void copyTo(AudioFilter sf) {
+    public void copyTo(LiveFilter sf) {
         setChannel(sf.getChannel());
         setTheme(sf.getTheme());
         setTitle(sf.getTitle());
@@ -95,7 +95,7 @@ public class AudioFilterProps extends P2DataSample<AudioFilter> implements Compa
     }
 
     @Override
-    public int compareTo(AudioFilter o) {
+    public int compareTo(LiveFilter o) {
         if (o == null) {
             return -1;
         }

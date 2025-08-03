@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.controller.filmfilter;
+package de.p2tools.mtplayer.controller.filterfilm;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
