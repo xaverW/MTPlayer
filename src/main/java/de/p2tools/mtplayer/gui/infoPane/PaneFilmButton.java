@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
-import de.p2tools.mtplayer.controller.film.FilmPlayFactory;
+import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Color;
 import de.p2tools.p2lib.p2event.P2Listener;

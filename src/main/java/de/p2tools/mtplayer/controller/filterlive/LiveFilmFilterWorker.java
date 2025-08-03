@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.controller.filterlive;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmListMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
 import de.p2tools.p2lib.mediathek.filter.Filter;

@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import javafx.collections.FXCollections;
 

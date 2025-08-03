@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.controller.film;
+package de.p2tools.mtplayer.controller.data.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;

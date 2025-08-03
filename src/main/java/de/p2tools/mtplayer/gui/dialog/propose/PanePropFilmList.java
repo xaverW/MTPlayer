@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog.propose;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.propose.ProposeFactory;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.tools.table.TableFilmFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;

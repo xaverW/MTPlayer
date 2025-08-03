@@ -106,7 +106,7 @@ public class ConfigDialogController extends P2DialogExtra {
     }
 
     private void onlyApply() {
-        if (!progData.loadFilmListWorker.p2LoadFilmlist.getPropLoadFilmlist()) {
+        if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
             //dann wird die Blacklist immer neu gemacht, sonst wirds dann eh gemacht
             new Thread(() -> {
                 BlacklistFilterFactory.markFilmBlack(true);
@@ -122,7 +122,7 @@ public class ConfigDialogController extends P2DialogExtra {
             progData.filmList.markGeoBlocked();
         }
 
-        if (blackChanged.get() && !progData.loadFilmListWorker.p2LoadFilmlist.getPropLoadFilmlist()) {
+        if (blackChanged.get() && !ProgData.FILMLIST_IS_DOWNLOADING.get()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
             new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
         }

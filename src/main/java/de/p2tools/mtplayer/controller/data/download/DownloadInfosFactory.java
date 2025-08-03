@@ -46,7 +46,6 @@ public class DownloadInfosFactory {
         String textLinks;
         final int sumFilmlist = progData.filmList.size();
         final int sumFilmShown = progData.filmGuiController.getFilmCount();
-//        final int runs = progData.downloadListButton.getListOfStartsNotFinished(DownloadConstants.SRC_BUTTON).size();
 
         String sumFilmlistStr = numberFormat.format(sumFilmShown);
         String sumFilmShownStr = numberFormat.format(sumFilmlist);
@@ -60,14 +59,42 @@ public class DownloadInfosFactory {
         if (sumFilmlist != sumFilmShown) {
             textLinks += " (Insgesamt: " + sumFilmShownStr + " )";
         }
-        // laufende Programme
-//        if (runs == 1) {
-//            textLinks += SEPARATOR;
-//            textLinks += (runs + " laufender Film");
-//        } else if (runs > 1) {
-//            textLinks += SEPARATOR;
-//            textLinks += (runs + " laufende Filme");
-//        }
+
+        // auch die Downloads anzeigen
+        if (progData.downloadInfos.getAmount() > 0) {
+            textLinks += SEPARATOR;
+
+            // Anzahl der Downloads
+            if (progData.downloadInfos.getAmount() == 1) {
+                textLinks += "1 Download";
+            } else {
+                textLinks += progData.downloadInfos.getAmount() + " Downloads";
+            }
+            textLinks += ": ";
+            textLinks += getRunningDownloadsInfos();
+        }
+
+        return textLinks;
+    }
+
+    public static synchronized String getStatusInfosAudio() {
+        String textLinks;
+        final int sumFilmlist = progData.audioList.size();
+        final int sumFilmShown = progData.audioGuiController.getFilmCount();
+
+        String sumFilmlistStr = numberFormat.format(sumFilmShown);
+        String sumFilmShownStr = numberFormat.format(sumFilmlist);
+
+        // Anzahl der Filme
+        if (sumFilmShown == 1) {
+            textLinks = "1 Audio";
+        } else {
+            textLinks = sumFilmlistStr + " Audios";
+        }
+        if (sumFilmlist != sumFilmShown) {
+            textLinks += " (Insgesamt: " + sumFilmShownStr + " )";
+        }
+
         // auch die Downloads anzeigen
         if (progData.downloadInfos.getAmount() > 0) {
             textLinks += SEPARATOR;

@@ -16,7 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.setdata;
 
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 
 public class SetDataXml extends P2DataSample<SetData> {

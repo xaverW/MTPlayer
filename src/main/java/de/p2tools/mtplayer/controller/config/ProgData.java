@@ -27,18 +27,19 @@ import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.download.ReplaceList;
 import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorList;
+import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.data.history.HistoryList;
 import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
-import de.p2tools.mtplayer.controller.film.FilmListMTP;
-import de.p2tools.mtplayer.controller.film.LoadFilmListWorker;
 import de.p2tools.mtplayer.controller.filteraudio.AudioFilterWorker;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilterRunner;
 import de.p2tools.mtplayer.controller.filterfilm.FilterWorker;
 import de.p2tools.mtplayer.controller.filterfilm.StringFilter;
 import de.p2tools.mtplayer.controller.filterfilm.TextFilterList;
 import de.p2tools.mtplayer.controller.filterlive.LiveFilmFilterWorker;
+import de.p2tools.mtplayer.controller.load.LoadAudioListWorker;
+import de.p2tools.mtplayer.controller.load.LoadFilmListWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
 import de.p2tools.mtplayer.controller.starter.StartDownload;
@@ -79,6 +80,7 @@ public class ProgData {
     public static boolean showUpdateAppParameter = false; // immer ein ProgrammUpdate anzeigen, Startparameter -s
     public static boolean reset = false; // Programm auf Starteinstellungen zurücksetzen
     public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
+
     public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
     public static BooleanProperty AUDIOLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Audioliste geladen
 
@@ -94,6 +96,8 @@ public class ProgData {
 
     // zentrale Klassen
     public LoadFilmListWorker loadFilmListWorker;
+    public LoadAudioListWorker loadAudioListWorker;
+
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public PShortcut pShortcut; // verwendete Shortcuts
     public FilterWorker filterWorker; // gespeicherte Filterprofile FILME
@@ -162,17 +166,18 @@ public class ProgData {
         markDataList = new UtDataList(false);
         downloadErrorList = new DownloadErrorList();
 
+        filmList = new FilmListMTP();
+        filmListFiltered = new FilmListMTP();
+
+        audioList = new FilmListMTP();
+        audioListFiltered = new FilmListMTP();
+
         textFilterList = new TextFilterList();
         stringFilterLists = new StringFilter();
         filterWorker = new FilterWorker();
         liveFilmFilterWorker = new LiveFilmFilterWorker(this);
         audioFilterWorker = new AudioFilterWorker(this);
 
-        filmList = new FilmListMTP();
-        filmListFiltered = new FilmListMTP();
-
-        audioList = new FilmListMTP();
-        audioListFiltered = new FilmListMTP();
 
         filmListFilter = new BlackList(this, "FilmListFilter");
         blackList = new BlackList(this, "BlackList");
@@ -198,6 +203,8 @@ public class ProgData {
         blackListFilterBlackList = new BlackListFilter();
 
         loadFilmListWorker = new LoadFilmListWorker(this);
+        loadAudioListWorker = new LoadAudioListWorker(this);
+
         startDownload = new StartDownload(this);
         downloadInfos = new DownloadInfos(this);
         chartData = new ChartData();

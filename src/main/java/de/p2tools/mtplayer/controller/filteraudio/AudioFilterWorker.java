@@ -18,21 +18,18 @@ package de.p2tools.mtplayer.controller.filteraudio;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
-import de.p2tools.p2lib.mediathek.filmdata.Filmlist;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
 import de.p2tools.p2lib.mediathek.filter.Filter;
 import de.p2tools.p2lib.p2event.P2Listener;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 
 import java.util.function.Predicate;
 
 public final class AudioFilterWorker {
 
     private final AudioFilter actFilterSettings = new AudioFilter();
-    private final Filmlist audioList;
+    private final FilmListMTP audioList;
 
     public AudioFilterWorker(ProgData progData) {
         this.audioList = progData.audioListFiltered;
@@ -42,18 +39,6 @@ public final class AudioFilterWorker {
                 filterList();
             }
         });
-    }
-
-    public FilteredList<FilmDataMTP> getFilteredList() {
-        return audioList.getFilteredList();
-    }
-
-    public SortedList<FilmDataMTP> getSortedList() {
-        return audioList.getSortedList();
-    }
-
-    public Filmlist getAudioList() {
-        return audioList;
     }
 
     public AudioFilter getActFilterSettings() {

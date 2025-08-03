@@ -19,8 +19,7 @@ public class AudioFilter extends AudioFilterProps implements Filter {
         // sind die ComboBoxen, wenn return gedrückt wird
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
-//        PListener.notify(PListener.EVENT_LIVE_FILTER_CHANGED, FilmFilter.class.getSimpleName());
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_LIVE_FILTER_CHANGED);
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_AUDIO_FILTER_CHANGED);
     }
 
     public void clearFilter() {
@@ -48,8 +47,7 @@ public class AudioFilter extends AudioFilterProps implements Filter {
 
     private void reportFilterChange() {
         // sind die anderen Filter (ändern, ein-ausschalten), wenn Pause abgelaufen ist / gestoppt ist
-//        PListener.notify(PListener.EVENT_LIVE_FILTER_CHANGED, FilmFilter.class.getSimpleName());
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_LIVE_FILTER_CHANGED);
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_AUDIO_FILTER_CHANGED);
     }
 
     private void setFilterChange(boolean startNow) {

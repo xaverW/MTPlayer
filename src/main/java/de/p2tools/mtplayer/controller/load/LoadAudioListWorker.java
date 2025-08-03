@@ -15,24 +15,14 @@
  */
 
 
-package de.p2tools.mtplayer.controller.film;
+package de.p2tools.mtplayer.controller.load;
 
 
-import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.PEvents;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.abo.AboFactory;
-import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
-import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
-import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
-import de.p2tools.p2lib.mediathek.film.P2FilmlistFactory;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadFilmlist;
 import de.p2tools.p2lib.p2event.P2Event;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -44,77 +34,63 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LoadFilmListWorker {
+public class LoadAudioListWorker {
     private static boolean doneAtProgramStart = false;
-    public P2LoadFilmlist p2LoadFilmlist; //erledigt das Update der Filmliste
     private final ProgData progData;
 
-    public LoadFilmListWorker(ProgData progData) {
+    public LoadAudioListWorker(ProgData progData) {
         this.progData = progData;
 
-        p2LoadFilmlist = new P2LoadFilmlist(progData.pEventHandler);
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_AUDIO_LIST_LOAD_START) {
             @Override
             public void pingGui(P2Event event) {
-                ProgData.FILMLIST_IS_DOWNLOADING.setValue(true);
-                workOnFilmListLoadStart();
+                ProgData.AUDIOLIST_IS_DOWNLOADING.setValue(true);
                 if (event.getAct() == P2LoadFilmlist.PROGRESS_INDETERMINATE) {
                     progData.maskerPane.setMaskerVisible(true, true, true);
                 }
                 progData.maskerPane.setMaskerProgress(event.getAct(), event.getText());
             }
         });
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_PROGRESS) {
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_AUDIO_LIST_LOAD_PROGRESS) {
             @Override
             public void pingGui(P2Event event) {
                 progData.maskerPane.setMaskerProgress(event.getAct(), event.getText());
             }
         });
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_LOADED) {
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_AUDIO_LIST_LOAD_LOADED) {
             @Override
             public void pingGui() {
                 // wird nach dem Laden mehrfach aufgerufen
                 progData.maskerPane.setMaskerVisible(true, true, false);
                 progData.maskerPane.setMaskerProgress(P2LoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
-                ProgData.FILMLIST_IS_DOWNLOADING.setValue(false);
             }
         });
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_FINISHED) {
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_AUDIO_LIST_LOAD_FINISHED) {
             @Override
             public void pingGui() {
                 P2Duration.onlyPing("Filme geladen: Nachbearbeiten");
-                afterLoadingFilmList();
+                afterLoading();
+                ProgData.AUDIOLIST_IS_DOWNLOADING.setValue(false);
             }
         });
-    }
-
-    public void workOnFilmListLoadStart() {
-        // the channel combo will be reset, therefore save the filter
-        progData.worker.saveFilter();
     }
 
     /**
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
-    private void afterLoadingFilmList() {
+    private void afterLoading() {
         new Thread(() -> {
             List<String> logList = new ArrayList<>();
 
             logList.add("Themen suchen");
-            progData.filmList.loadTheme();
-
-            logList.add("Abos eintragen");
-            AboFactory.setAboForFilmlist();
+            progData.audioList.loadTheme();
 
             logList.add("Bookmarks eintragen");
             BookmarkFactory.markBookmarks();
 
             logList.add("Blacklist filtern");
             progData.maskerPane.setMaskerText("Blacklist filtern");
-            BlacklistFilterFactory.markFilmBlack(false);
-
-            progData.blackList.sortAndCleanTheList();
-            progData.filmListFilter.sortAndCleanTheList();
+            progData.audioListFiltered.setAll(progData.audioList);
 
             logList.add("Filme in Downloads eingetragen");
             progData.maskerPane.setMaskerText("Downloads eingetragen");
@@ -123,51 +99,22 @@ public class LoadFilmListWorker {
             P2Log.sysLog(logList);
             P2Duration.onlyPing("Filme nachbearbeiten: Ende");
 
-            progData.maskerPane.setMaskerText("Abos suchen");
             workOnFilmListLoadFinished();
 
             progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_CHANGED);
 
-            String filmDate = P2FilmlistFactory.getAgeAsStringDate(progData.filmList.metaData);
-            ProgConfig.SYSTEM_FILMLIST_DATE.setValue(progData.filmList.isEmpty() ? "" : filmDate);
-
             //damit auf jeden Fall, aus
             progData.maskerPane.switchOffMasker();
 
-            if (ProgData.firstProgramStart) {
-                ProgData.firstProgramStart = false;
-                Platform.runLater(ProgSave::saveAll); // damit nichts verloren geht
-            }
-            if (!doneAtProgramStart) {
-                doneAtProgramStart = true;
-                MediaDataWorker.createMediaDb();
-
-                if (!ProgData.autoMode) {
-                    // sonst macht es ja keinen Sinn
-                    WhatsNewFactory.checkUpdate();
-                    Platform.runLater(() -> {
-                        ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false);
-                        if (ProgConfig.CHECK_SET_PROGRAM_START.get()) {
-                            SetFactory.checkPrograms(progData.primaryStage, progData, false);
-                        }
-                    });
-                }
-            }
         }).start();
     }
 
     public void workOnFilmListLoadFinished() {
         Platform.runLater(() -> {
             // alle Sender laden
-            ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.filmList.sender));
-
+            ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.audioList.sender));
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
             ThemeListFactory.createThemeList(progData, progData.filterWorker.getActFilterSettings().getChannel());
-
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-                // wenn gewollt oder im AutoMode immer suchen
-                AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
-            }
 
             // activate the saved filter
             progData.worker.resetFilter();

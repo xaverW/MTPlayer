@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import de.p2tools.p2lib.tools.GermanStringSorter;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -117,7 +117,7 @@ public class AboList extends SimpleListProperty<AboData> implements P2DataList<A
 //    }
 
     public synchronized void notifyChanges() {
-        if (!progData.loadFilmListWorker.p2LoadFilmlist.getPropLoadFilmlist()) {
+        if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
             // wird danach eh gemacht
             AboFactory.setAboForFilmlist();
         }

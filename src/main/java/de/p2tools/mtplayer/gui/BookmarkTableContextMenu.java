@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.tools.table.TableBookmark;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
 import javafx.scene.control.*;

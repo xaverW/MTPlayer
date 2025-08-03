@@ -5,7 +5,7 @@ https://github.com/mediathekview/MLib
 
 package de.p2tools.mtplayer.controller.livesearchzdf;
 
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.tools.log.P2Log;
 

@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.controller.livesearch;
 
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import javafx.beans.property.*;
 
 import java.util.ArrayList;

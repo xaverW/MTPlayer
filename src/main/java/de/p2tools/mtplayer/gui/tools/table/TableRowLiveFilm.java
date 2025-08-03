@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;

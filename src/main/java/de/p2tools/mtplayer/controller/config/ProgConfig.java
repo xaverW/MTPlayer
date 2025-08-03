@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.filterfilm.FastFilmFilter;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import de.p2tools.mtplayer.controller.filterfilm.FilterWorker;

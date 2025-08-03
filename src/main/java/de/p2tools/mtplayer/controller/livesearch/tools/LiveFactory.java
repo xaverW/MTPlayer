@@ -4,7 +4,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.config.ProxyFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;

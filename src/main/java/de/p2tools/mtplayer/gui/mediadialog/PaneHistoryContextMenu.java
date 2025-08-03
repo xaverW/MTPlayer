@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.history.HistoryData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmSaveFactory;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.tools.P2ToolsFactory;

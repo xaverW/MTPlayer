@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -71,14 +71,14 @@ public class Worker {
                 //dann gibts auch keine
                 return;
             }
-            if (progData.loadFilmListWorker.p2LoadFilmlist.getPropLoadFilmlist()) {
+            if (ProgData.FILMLIST_IS_DOWNLOADING.get()) {
                 //wird eh grad gemacht
                 return;
             }
 
             //dann soll sofort eine neue Liste geladen werden
             P2Log.sysLog("Es gibt eine neue Filmliste und die soll sofort geladen werden");
-            LoadFilmFactory.loadNewListFromWeb(false);
+            LoadFilmFactory.loadFilmListFromWeb(false);
         });
     }
 

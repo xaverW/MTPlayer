@@ -100,11 +100,13 @@ public class StatusBarController extends AnchorPane {
         AnchorPane.setTopAnchor(stackPaneBusy, 0.0);
 
         lblSelFilm.setTooltip(new Tooltip("Anzahl markierter Filme"));
+        lblSelAudio.setTooltip(new Tooltip("Anzahl markierter Audios"));
         lblSelLiveFilm.setTooltip(new Tooltip("Anzahl markierter Filme"));
         lblSelDownload.setTooltip(new Tooltip("Anzahl markierter Downloads"));
         lblSelAbo.setTooltip(new Tooltip("Anzahl markierter Abos"));
 
         hBoxCircleFilm.getChildren().add(circleFilm);
+        hBoxCircleAudio.getChildren().add(circleAudio);
         hBoxCircleDownload.getChildren().add(circleDownload);
         hBoxCircleAbo.getChildren().add(circleAbo);
 
@@ -160,6 +162,15 @@ public class StatusBarController extends AnchorPane {
         hBoxCircleFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
         hBoxCircleFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
 
+        lblSelAudio.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
+        lblSelAudio.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
+        lblLeftAudio.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
+        lblLeftAudio.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
+        lblRightAudio.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
+        lblRightAudio.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
+        hBoxCircleAudio.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
+        hBoxCircleAudio.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
+
         lblSelLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
         lblSelLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
         lblLeftLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
@@ -197,7 +208,7 @@ public class StatusBarController extends AnchorPane {
             }
         });
 
-        stackPane.getChildren().addAll(filmPane, downloadPane, aboPane);
+        stackPane.getChildren().addAll(filmPane, audioPane, downloadPane, aboPane);
         stackPane.setPadding(new Insets(0));
         filmPane.toFront();
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
@@ -252,27 +263,27 @@ public class StatusBarController extends AnchorPane {
             case FILM:
                 filmPane.toFront();
                 setInfoFilm();
-                setTextForRightDisplay();
+                setTextForRightDisplayFilm();
                 break;
             case AUDIO:
-                filmPane.toFront();
-                setInfoFilm();
-                setTextForRightDisplay();
+                audioPane.toFront();
+                setInfoAudio();
+                setTextForRightDisplayAudio();
                 break;
             case LIVE_FILM:
                 liveFilmPane.toFront();
                 setInfoLiveFilm();
-                setTextForRightDisplay();
+                setTextForRightDisplayFilm();
                 break;
             case DOWNLOAD:
                 downloadPane.toFront();
                 setInfoDownload();
-                setTextForRightDisplay();
+                setTextForRightDisplayFilm();
                 break;
             case ABO:
                 aboPane.toFront();
                 setInfoAbo();
-                setTextForRightDisplay();
+                setTextForRightDisplayFilm();
                 break;
         }
     }
@@ -282,6 +293,13 @@ public class StatusBarController extends AnchorPane {
         lblLeftFilm.setText(DownloadInfosFactory.getStatusInfosFilm());
         final int selCount = progData.filmGuiController.getSelCount();
         lblSelFilm.setText(selCount > 0 ? selCount + "" : " ");
+    }
+
+    private void setInfoAudio() {
+        setCircleStyle();
+        lblLeftAudio.setText(DownloadInfosFactory.getStatusInfosAudio());
+        final int selCount = progData.audioGuiController.getSelCount();
+        lblSelAudio.setText(selCount > 0 ? selCount + "" : " ");
     }
 
     private void setInfoLiveFilm() {
@@ -310,10 +328,12 @@ public class StatusBarController extends AnchorPane {
         if (halfSecond && blink) {
             //dann ausschalten
             circleFilm.setVisible(false);
+            circleAudio.setVisible(false);
             circleDownload.setVisible(false);
             circleAbo.setVisible(false);
         } else {
             circleFilm.setVisible(true);
+            circleAudio.setVisible(true);
             circleDownload.setVisible(true);
             circleAbo.setVisible(true);
         }
@@ -321,28 +341,61 @@ public class StatusBarController extends AnchorPane {
 
         if (progData.downloadInfos.getFinishedError() > 0) {
             circleFilm.setFill(Paint.valueOf("red"));
+            circleAudio.setFill(Paint.valueOf("red"));
             circleDownload.setFill(Paint.valueOf("red"));
             circleAbo.setFill(Paint.valueOf("red"));
 
         } else if (progData.downloadInfos.getLoading() > 0) {
             circleFilm.setFill(Paint.valueOf("green"));
+            circleAudio.setFill(Paint.valueOf("green"));
             circleDownload.setFill(Paint.valueOf("green"));
             circleAbo.setFill(Paint.valueOf("green"));
 
         } else {
             circleFilm.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
+            circleAudio.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
             circleDownload.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
             circleAbo.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
         }
     }
 
-    private void setTextForRightDisplay() {
+    private void setTextForRightDisplayFilm() {
         // Text rechts: alter anzeigen
         String strText = "Filmliste erstellt: ";
         strText += progData.filmList.genDate();
         strText += " Uhr  ";
 
         final int second = progData.filmList.getAge();
+        if (second != 0) {
+            strText += "||  Alter: ";
+            final int minute = second / 60;
+            String strSecond = String.valueOf(second % 60);
+            String strMinute = String.valueOf(minute % 60);
+            String strHour = String.valueOf(minute / 60);
+            if (strSecond.length() < 2) {
+                strSecond = '0' + strSecond;
+            }
+            if (strMinute.length() < 2) {
+                strMinute = '0' + strMinute;
+            }
+            if (strHour.length() < 2) {
+                strHour = '0' + strHour;
+            }
+            strText += strHour + ':' + strMinute + ':' + strSecond + ' ';
+        }
+        // Infopanel setzen
+        lblRightFilm.setText(strText);
+        lblRightDownload.setText(strText);
+        lblRightAbo.setText(strText);
+    }
+
+    private void setTextForRightDisplayAudio() {
+        // Text rechts: alter anzeigen
+        String strText = "Audioliste erstellt: ";
+        strText += progData.audioList.genDate();
+        strText += " Uhr  ";
+
+        final int second = progData.audioList.getAge();
         if (second != 0) {
             strText += "||  Alter: ";
             final int minute = second / 60;

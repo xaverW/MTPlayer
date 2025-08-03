@@ -44,16 +44,16 @@ public class AudioFilterText extends VBox {
         progData = ProgData.getInstance();
 
         final BooleanSupplier booleanSupplier = () -> {
-            progData.liveFilmFilterWorker.getActFilterSettings().reportFilterReturn();
+            progData.audioFilterWorker.getActFilterSettings().reportFilterReturn();
             return true;
         };
 
-        mbChannel = new P2MenuButton(progData.liveFilmFilterWorker.getActFilterSettings().channelProperty(),
+        mbChannel = new P2MenuButton(progData.audioFilterWorker.getActFilterSettings().channelProperty(),
                 ThemeListFactory.allChannelList);
         cboThema = new PCboString(progData.stringFilterLists.getFilterListLiveThema(),
-                progData.liveFilmFilterWorker.getActFilterSettings().themeProperty(), booleanSupplier);
+                progData.audioFilterWorker.getActFilterSettings().themeProperty(), booleanSupplier);
         cboTitle = new PCboString(progData.stringFilterLists.getFilterListLiveTitel(),
-                progData.liveFilmFilterWorker.getActFilterSettings().titleProperty(), booleanSupplier);
+                progData.audioFilterWorker.getActFilterSettings().titleProperty(), booleanSupplier);
 
         addFilter();
     }
@@ -66,7 +66,7 @@ public class AudioFilterText extends VBox {
         addTxt("Titel", cboTitle, this);
 
         Button btnClear = P2ButtonClearFilterFactory.getPButtonClear();
-        btnClear.setOnAction(a -> progData.liveFilmFilterWorker.clearFilter());
+        btnClear.setOnAction(a -> progData.audioFilterWorker.clearFilter());
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(10, 0, 0, 0));

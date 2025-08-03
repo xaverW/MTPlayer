@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.film;
+package de.p2tools.mtplayer.controller.load;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -32,8 +32,9 @@ public class LoadFactory {
 
         P2LoadConst.localAudioListFile = ProgInfos.getAudioListFile();
         P2LoadConst.localFilmListFile = ProgInfos.getLocalFilmListFile();
+
         P2LoadConst.filmlistLocal = ProgData.getInstance().filmList;
-        P2LoadConst.audioListLocal = ProgData.getInstance().audioListFiltered;
+        P2LoadConst.audioListLocal = ProgData.getInstance().audioList;
 
         P2LoadConst.filmListUrl = ProgData.filmListUrl;
 

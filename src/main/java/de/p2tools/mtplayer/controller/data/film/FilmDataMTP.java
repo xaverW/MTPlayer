@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.film;
+package de.p2tools.mtplayer.controller.data.film;
 
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;

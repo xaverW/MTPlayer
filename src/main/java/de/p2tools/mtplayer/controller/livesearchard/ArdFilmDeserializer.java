@@ -7,7 +7,7 @@ package de.p2tools.mtplayer.controller.livesearchard;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;

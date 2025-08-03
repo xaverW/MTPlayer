@@ -20,7 +20,7 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
-import de.p2tools.mtplayer.controller.film.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2WindowIcon;
@@ -51,11 +51,11 @@ public class MTPlayerFactory {
     }
 
     public static void loadFilmlist() {
-        LoadFilmFactory.loadNewListFromWeb(true);
+        LoadFilmFactory.loadFilmListFromWeb(true);
     }
 
     public static void updateFilmlist() {
-        LoadFilmFactory.loadNewListFromWeb(false);
+        LoadFilmFactory.loadFilmListFromWeb(false);
     }
 
     public static void minimizeGui() {

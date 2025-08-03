@@ -73,7 +73,7 @@ public class AboSearchDownloadsFactory {
         // workOnFilmListLoadFinished und "Abo suchen" ist ein oder AUTOMODE
         ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Downloads suchen:", -1.0, false);
 
-        if (ProgData.getInstance().loadFilmListWorker.p2LoadFilmlist.getPropLoadFilmlist()) {
+        if (ProgData.FILMLIST_IS_DOWNLOADING.get()) {
             // wird danach eh gemacht
             alreadyRunning.set(false);
             ProgData.busy.busyOffFx();

@@ -15,9 +15,10 @@
  */
 
 
-package de.p2tools.mtplayer.controller.film;
+package de.p2tools.mtplayer.controller.load;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.p2lib.mediathek.audiolistload.P2LoadAudioList;
 
 public class LoadAudioFactory {
@@ -26,14 +27,14 @@ public class LoadAudioFactory {
     }
 
     public static void loadAudioListProgStart() {
-        // neu einmal direkt nach dem Programmstart
+        // nur einmal direkt nach dem Programmstart
         ProgData.AUDIOLIST_IS_DOWNLOADING.set(true);
         P2LoadAudioList p2LoadAudioList = new P2LoadAudioList(ProgData.getInstance().pEventHandler, new FilmListMTP());
         LoadFactory.initLoadFactoryConst();
         p2LoadAudioList.loadAudioListAtProgStart();
     }
 
-    public static void loadAudioListButton() {
+    public static void loadAudioListFromWeb() {
         // aus dem Menü oder Button in den Einstellungen
         // immer neu aus dem Web laden
         ProgData.AUDIOLIST_IS_DOWNLOADING.set(true);
@@ -41,6 +42,4 @@ public class LoadAudioFactory {
         LoadFactory.initLoadFactoryConst();
         p2LoadAudioList.loadNewAudioListFromWeb();
     }
-
-
 }

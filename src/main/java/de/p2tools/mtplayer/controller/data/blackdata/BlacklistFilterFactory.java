@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.controller.data.blackdata;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.film.FilmListMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataProps;
@@ -104,7 +104,6 @@ public class BlacklistFilterFactory {
         P2Duration.counterStop("markFilmBlack");
 
         if (notify) {
-//            PListener.notify(PListener.EVENT_BLACKLIST_CHANGED, BlacklistFilterFactory.class.getSimpleName());
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BLACKLIST_CHANGED);
         }
     }
