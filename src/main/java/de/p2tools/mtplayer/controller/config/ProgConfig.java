@@ -112,6 +112,7 @@ public class ProgConfig extends P2DataProgConfig {
 
         // Filter
         configFile.addConfigs(progData.filmFilterTextList); // ist der "sortierte" Textfilter (Thema, Titel ..)
+        configFile.addConfigs(progData.audioFilterTextList); // ist der "sortierte" Textfilter (Thema, Titel ..)
         configFile.addConfigs(progData.filmFilterStringLists); // sind die Textfilter in den CBO's
 
         // Live-Filter

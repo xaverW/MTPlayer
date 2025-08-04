@@ -24,7 +24,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 public final class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2DataList<FilmFilter> {
-    public String TAG = "SelectedFilterList";
+    public String TAG = "FilmFilterList:SelectedFilterList";
 
     public FilmFilterList() {
         super(FXCollections.observableArrayList());

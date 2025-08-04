@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
+import de.p2tools.mtplayer.controller.filteraudio.AudioFilterSamples;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -60,12 +60,6 @@ public class AudioFilterControllerProfiles extends VBox {
         initRest();
 
         // ist zum Markieren, ob sich der eingestellte Filter geändert hat
-//        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterControllerProfiles.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                checkCboFilter();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_AUDIO_CHANGED) {
             @Override
             public void pingGui() {
@@ -239,7 +233,7 @@ public class AudioFilterControllerProfiles extends VBox {
             progData.audioFilterWorker.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
         }
 
-        FilmFilterSamples.addStandardFilter();
+        AudioFilterSamples.addStandardFilter();
         cboFilterProfiles.getSelectionModel().selectFirst();
     }
 

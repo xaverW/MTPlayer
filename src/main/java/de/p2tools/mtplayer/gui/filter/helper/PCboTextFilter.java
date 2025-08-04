@@ -25,7 +25,7 @@ public class PCboTextFilter extends HBox {
 
     public PCboTextFilter(boolean audio) {
         this.audio = audio;
-        this.filmFilterTextList = ProgData.getInstance().filmFilterTextList;
+        this.filmFilterTextList = audio ? ProgData.getInstance().audioFilterTextList : ProgData.getInstance().filmFilterTextList;
         cbo.setMaxWidth(Double.MAX_VALUE);
         cbo.setVisibleRowCount(10);
         getChildren().add(cbo);
@@ -124,7 +124,6 @@ public class PCboTextFilter extends HBox {
 
                 if (!empty && filmFilter != null) {
                     btnDel.setOnMousePressed(m -> filmFilterTextList.remove(filmFilter));
-
                     if (!filmFilter.filterIsEmpty()) {
                         lblChannel.setText(getSubString(filmFilter.getChannel()));
                         lblTheme.setText(getSubString(filmFilter.getTheme()));

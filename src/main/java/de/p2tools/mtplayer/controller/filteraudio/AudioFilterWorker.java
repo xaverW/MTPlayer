@@ -39,9 +39,9 @@ public final class AudioFilterWorker {
     // ist die Liste der gespeicherten Filter
     private final FilmFilterList filmFilterList = new FilmFilterList("AudioFilterList");
     // ist die Liste der BACK Filter
-    private final FilmFilterList backwardFilterList = new FilmFilterList("BackwardAudioFilterList");
+    private final FilmFilterList backwardFilterList = new FilmFilterList("AudioFilterListBackward");
     // ist die Liste der FORWARD Filter
-    private final FilmFilterList forwardFilterList = new FilmFilterList("ForwardAudioFilterList");
+    private final FilmFilterList forwardFilterList = new FilmFilterList("AudioFilterListForward");
 
     // ist der FastFilter
     private final FilmFastFilter fastFilter = new FilmFastFilter(true, "AudioFastFilter");

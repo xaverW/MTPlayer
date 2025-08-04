@@ -105,6 +105,7 @@ public class ProgData {
     public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile FILME
     public AudioFilterWorker audioFilterWorker; // gespeicherte Filterprofile Audios
     public FilmFilterTextList filmFilterTextList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
+    public FilmFilterTextList audioFilterTextList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
     public FilmFilterString filmFilterStringLists; // sind die Text-Filter in den CBO's
 
     public LiveFilmFilterWorker liveFilmFilterWorker; // Live
@@ -176,7 +177,8 @@ public class ProgData {
         audioList = new FilmListMTP();
         audioListFiltered = new FilmListMTP();
 
-        filmFilterTextList = new FilmFilterTextList();
+        filmFilterTextList = new FilmFilterTextList("FilmFilterTextList");
+        audioFilterTextList = new FilmFilterTextList("AudioFilterTextList");
         filmFilterStringLists = new FilmFilterString();
         filmFilterWorker = new FilmFilterWorker();
         liveFilmFilterWorker = new LiveFilmFilterWorker(this);

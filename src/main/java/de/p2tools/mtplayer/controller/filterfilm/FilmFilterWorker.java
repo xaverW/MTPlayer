@@ -38,9 +38,9 @@ public final class FilmFilterWorker {
     // ist die Liste der gespeicherten Filter
     private final FilmFilterList filmFilterList = new FilmFilterList();
     // ist die Liste der BACK Filter
-    private final FilmFilterList backwardFilterList = new FilmFilterList("BackwardFilterList");
+    private final FilmFilterList backwardFilterList = new FilmFilterList("FilmFilterListBackward");
     // ist die Liste der FORWARD Filter
-    private final FilmFilterList forwardFilterList = new FilmFilterList("ForwardFilterList");
+    private final FilmFilterList forwardFilterList = new FilmFilterList("FilmFilterListForward");
 
     // ist der FastFilter
     private final FilmFastFilter fastFilter = new FilmFastFilter(false, "FilmFastFilter");

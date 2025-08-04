@@ -21,10 +21,11 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 public final class FilmFilterTextList extends SimpleListProperty<FilmFilterText> implements P2DataList<FilmFilterText> {
-    public final String TAG = "TextFilterList";
+    public String TAG = "TextFilterList";
 
-    public FilmFilterTextList() {
+    public FilmFilterTextList(String tag) {
         super(FXCollections.observableArrayList());
+        this.TAG = tag;
     }
 
     @Override
