@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilter;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 import javafx.scene.control.*;
@@ -33,7 +33,7 @@ public class AudioFilterDialog extends P2DialogExtra {
     private final Button btnOk = new Button("_Ok");
     private final Button btnClearFilter = new Button("Filter löschen");
 
-    private final TableView<AudioFilter> tableView = new TableView<>();
+    private final TableView<FilmFilter> tableView = new TableView<>();
     private final ProgData progData;
 
     public AudioFilterDialog(ProgData progData) {
@@ -74,7 +74,7 @@ public class AudioFilterDialog extends P2DialogExtra {
         });
         tableView.setRowFactory(param -> new TableRow<>() {
             @Override
-            protected void updateItem(AudioFilter item, boolean empty) {
+            protected void updateItem(FilmFilter item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty) {
                     this.setDisable(P2SeparatorComboBox.isSeparator(item.toString()));
@@ -82,7 +82,7 @@ public class AudioFilterDialog extends P2DialogExtra {
             }
         });
 
-        final TableColumn<AudioFilter, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<FilmFilter, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnFactoryString(nameColumn);
 
@@ -110,7 +110,7 @@ public class AudioFilterDialog extends P2DialogExtra {
         }
     }
 
-    private void columnFactoryString(TableColumn<AudioFilter, String> column) {
+    private void columnFactoryString(TableColumn<FilmFilter, String> column) {
         column.setCellFactory(c -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {

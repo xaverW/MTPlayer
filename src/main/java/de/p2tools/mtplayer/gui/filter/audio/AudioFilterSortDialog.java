@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.filter.audio;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilter;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
@@ -40,7 +40,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
     private final Button btnDel = new Button();
     private final Button btnAddSeparator = new Button();
 
-    private final TableView<AudioFilter> tableView = new TableView<>();
+    private final TableView<FilmFilter> tableView = new TableView<>();
     private final ProgData progData;
 
     public AudioFilterSortDialog(ProgData progData) {
@@ -70,7 +70,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
         tableView.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        final TableColumn<AudioFilter, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<FilmFilter, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnFactoryString(nameColumn);
 
@@ -140,7 +140,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
     }
 
     private void delFilter() {
-        AudioFilter sf = tableView.getSelectionModel().getSelectedItem();
+        FilmFilter sf = tableView.getSelectionModel().getSelectedItem();
         if (sf == null) {
             P2Alert.showInfoNoSelection();
             return;
@@ -153,7 +153,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
 
     private void addSeparator() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
-        AudioFilter sf = new AudioFilter(P2SeparatorComboBox.SEPARATOR);
+        FilmFilter sf = new FilmFilter(true, P2SeparatorComboBox.SEPARATOR);
         if (sel < 0) {
             progData.audioFilterWorker.getFilmFilterList().add(sf);
         } else {
@@ -161,7 +161,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
         }
     }
 
-    private void columnFactoryString(TableColumn<AudioFilter, String> column) {
+    private void columnFactoryString(TableColumn<FilmFilter, String> column) {
         column.setCellFactory(c -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {

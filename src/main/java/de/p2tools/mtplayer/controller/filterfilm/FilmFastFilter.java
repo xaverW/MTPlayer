@@ -26,8 +26,11 @@ import javafx.util.Duration;
 public final class FilmFastFilter extends FilmFastFilterProps implements Filter {
 
     private final PauseTransition pause = new PauseTransition(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue())); // nach Ablauf wird Änderung gemeldet - oder nach Return
+    private final boolean audio;
 
-    public FilmFastFilter() {
+    public FilmFastFilter(boolean audio, String tag) {
+        this.audio = audio;
+        TAG = tag;
         initFilter();
     }
 
@@ -44,14 +47,22 @@ public final class FilmFastFilter extends FilmFastFilterProps implements Filter 
         // sind die ComboBoxen wenn return gedrückt wird
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
-//        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilmFilter.class.getSimpleName());
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+        if (audio) {
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+
+        } else {
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+        }
     }
 
     private void initFilter() {
         pause.setOnFinished(event -> {
-//            PListener.notify(PListener.EVENT_FILTER_CHANGED, FastFilmFilter.class.getSimpleName());
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+            if (audio) {
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+
+            } else {
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+            }
         });
         pause.setDuration(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue()));
         ProgConfig.SYSTEM_FILTER_WAIT_TIME.addListener((observable, oldValue, newValue) -> {

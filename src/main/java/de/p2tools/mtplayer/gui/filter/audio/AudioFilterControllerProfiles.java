@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilter;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -42,7 +42,7 @@ import java.util.Optional;
 
 public class AudioFilterControllerProfiles extends VBox {
 
-    private final ComboBox<AudioFilter> cboFilterProfiles = new P2SeparatorComboBox<>();
+    private final ComboBox<FilmFilter> cboFilterProfiles = new P2SeparatorComboBox<>();
     private final MenuButton mbFilterTools = new MenuButton("");
     private final Button btnLoadFilter = new Button("");
     private final Button btnSaveFilter = new Button("");
@@ -197,7 +197,7 @@ public class AudioFilterControllerProfiles extends VBox {
     }
 
     private void saveFilter() {
-        final AudioFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        final FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             newFilter();
         } else {
@@ -207,7 +207,7 @@ public class AudioFilterControllerProfiles extends VBox {
     }
 
     private void delFilter() {
-        AudioFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             P2Alert.showInfoNoSelection();
             return;
@@ -235,8 +235,8 @@ public class AudioFilterControllerProfiles extends VBox {
 
         } else if (!progData.audioFilterWorker.getFilmFilterList().isEmpty()) {
             // dann eine Markierung
-            progData.audioFilterWorker.getFilmFilterList().add(new AudioFilter(P2SeparatorComboBox.SEPARATOR));
-            progData.audioFilterWorker.getFilmFilterList().add(new AudioFilter(P2SeparatorComboBox.SEPARATOR));
+            progData.audioFilterWorker.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
+            progData.audioFilterWorker.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
         }
 
         FilmFilterSamples.addStandardFilter();
@@ -259,7 +259,7 @@ public class AudioFilterControllerProfiles extends VBox {
     }
 
     private void renameFilter() {
-        final AudioFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        final FilmFilter sf = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf == null) {
             return;
         }
@@ -280,8 +280,8 @@ public class AudioFilterControllerProfiles extends VBox {
     }
 
     private void checkCboFilter() {
-        AudioFilter sf = progData.audioFilterWorker.getActFilterSettings();
-        AudioFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
+        FilmFilter sf = progData.audioFilterWorker.getActFilterSettings();
+        FilmFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf.isSame(sfCbo)) {
             //if (SelectedFilmFilterFactory.compareFilterWithoutNameOfFilter(sf, sfCbo)) {
             markFilterOk(true);
@@ -290,12 +290,12 @@ public class AudioFilterControllerProfiles extends VBox {
         }
     }
 
-    private static class ListViewListCellCallback implements Callback<ListView<AudioFilter>, ListCell<AudioFilter>> {
+    private static class ListViewListCellCallback implements Callback<ListView<FilmFilter>, ListCell<FilmFilter>> {
         @Override
-        public ListCell<AudioFilter> call(ListView<AudioFilter> param) {
+        public ListCell<FilmFilter> call(ListView<FilmFilter> param) {
             return new ListCell<>() {
                 @Override
-                public void updateItem(AudioFilter item, boolean empty) {
+                public void updateItem(FilmFilter item, boolean empty) {
                     super.updateItem(item, empty);
 
                     if (item == null || empty) {

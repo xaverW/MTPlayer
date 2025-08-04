@@ -38,7 +38,7 @@ public class AudioFilterControllerClearFilter extends VBox {
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
-    private final PCboTextFilter cboTextFilter = new PCboTextFilter();
+    private final PCboTextFilter cboTextFilter = new PCboTextFilter(true);
 
     private final ProgData progData;
 

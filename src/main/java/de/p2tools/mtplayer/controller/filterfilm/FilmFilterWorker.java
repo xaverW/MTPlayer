@@ -27,9 +27,9 @@ import java.util.Optional;
 public final class FilmFilterWorker {
 
     // ist der aktuell angezeigte Filter
-    public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung"; // dient nur der Info im Config-File
-    public static final String STORED_FILTER_NAME = "gespeicherte aktuelle Einstellung"; // dient nur der Info im Config-File
-    public static final String STORED_SMALL_FILTER_NAME = "gespeicherte aktuelle Einstellung, kleiner Filter"; // dient nur der Info im Config-File
+    public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung: Filme"; // dient nur der Info im Config-File
+    public static final String STORED_FILTER_NAME = "gespeicherte aktuelle Einstellung: Filme"; // dient nur der Info im Config-File
+    public static final String STORED_SMALL_FILTER_NAME = "gespeicherte aktuelle Einstellung, kleiner Filter: Filme"; // dient nur der Info im Config-File
     // ist der "aktuelle" Filter im Programm
     private final FilmFilter actFilterSettings = new FilmFilter(SELECTED_FILTER_NAME);
     private final FilmFilter storedFilterSettings = new FilmFilter(STORED_FILTER_NAME);
@@ -43,7 +43,7 @@ public final class FilmFilterWorker {
     private final FilmFilterList forwardFilterList = new FilmFilterList("ForwardFilterList");
 
     // ist der FastFilter
-    private final FilmFastFilter fastFilter = new FilmFastFilter();
+    private final FilmFastFilter fastFilter = new FilmFastFilter(false, "FilmFastFilter");
     // da werden die Forward/Backward Filter verwaltet
     private final FilmFilterBackward filmFilterBackward = new FilmFilterBackward();
 
@@ -154,14 +154,12 @@ public final class FilmFilterWorker {
 
     private void postFilterChange() {
         filmFilterBackward.addBackward();
-//        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilterWorker.class.getSimpleName());
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
     }
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
         BlacklistFilterFactory.makeBlackFilteredFilmlist();
-//        PListener.notify(PListener.EVENT_FILTER_CHANGED, FilterWorker.class.getSimpleName());
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
     }
 

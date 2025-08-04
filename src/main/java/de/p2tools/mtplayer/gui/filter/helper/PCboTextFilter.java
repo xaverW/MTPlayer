@@ -21,33 +21,60 @@ public class PCboTextFilter extends HBox {
     private ComboBox<FilmFilterText> cbo = new ComboBox<>();
     private boolean itsMe = false;
     private final FilmFilterTextList filmFilterTextList;
+    boolean audio;
 
-    public PCboTextFilter() {
+    public PCboTextFilter(boolean audio) {
+        this.audio = audio;
         this.filmFilterTextList = ProgData.getInstance().filmFilterTextList;
         cbo.setMaxWidth(Double.MAX_VALUE);
         cbo.setVisibleRowCount(10);
         getChildren().add(cbo);
         HBox.setHgrow(cbo, Priority.ALWAYS);
 
-        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
-            @Override
-            public void pingGui() {
-                // dann sel löschen und evtl. neuen Filter hinzufügen
-                addNewToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
-            }
-        });
+        if (audio) {
+            ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_AUDIO_CHANGED) {
+                @Override
+                public void pingGui() {
+                    // dann sel löschen und evtl. neuen Filter hinzufügen
+                    addNewToList(ProgData.getInstance().audioFilterWorker.getActFilterSettings());
+                }
+            });
+
+        } else {
+            ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
+                @Override
+                public void pingGui() {
+                    // dann sel löschen und evtl. neuen Filter hinzufügen
+                    addNewToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
+                }
+            });
+        }
         cbo.valueProperty().addListener((u, o, n) -> {
             if (n != null) {
-                FilmFilter actFilmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
-                actFilmFilter.setChannel(n.getChannel());
-                actFilmFilter.setExactTheme(n.getTheme());
-                actFilmFilter.setTheme(n.getTheme());
-                actFilmFilter.setThemeTitle(n.getThemeTitle());
-                actFilmFilter.setTitle(n.getTitle());
-                actFilmFilter.setSomewhere(n.getSomewhere());
-                itsMe = true;
-                ProgData.getInstance().filmFilterWorker.setActFilterSettings(actFilmFilter);
-                itsMe = false;
+                if (audio) {
+                    FilmFilter actFilmFilter = ProgData.getInstance().audioFilterWorker.getActFilterSettings().getCopy();
+                    actFilmFilter.setChannel(n.getChannel());
+                    actFilmFilter.setExactTheme(n.getTheme());
+                    actFilmFilter.setTheme(n.getTheme());
+                    actFilmFilter.setThemeTitle(n.getThemeTitle());
+                    actFilmFilter.setTitle(n.getTitle());
+                    actFilmFilter.setSomewhere(n.getSomewhere());
+                    itsMe = true;
+                    ProgData.getInstance().audioFilterWorker.setActFilterSettings(actFilmFilter);
+                    itsMe = false;
+
+                } else {
+                    FilmFilter actFilmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
+                    actFilmFilter.setChannel(n.getChannel());
+                    actFilmFilter.setExactTheme(n.getTheme());
+                    actFilmFilter.setTheme(n.getTheme());
+                    actFilmFilter.setThemeTitle(n.getThemeTitle());
+                    actFilmFilter.setTitle(n.getTitle());
+                    actFilmFilter.setSomewhere(n.getSomewhere());
+                    itsMe = true;
+                    ProgData.getInstance().filmFilterWorker.setActFilterSettings(actFilmFilter);
+                    itsMe = false;
+                }
             }
         });
 

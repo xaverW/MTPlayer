@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class FilmFastFilterProps extends P2DataSample<FilmFastFilter> implements Comparable<FilmFastFilter> {
 
-    public static String TAG = "FastFilmFilterProps";
+    public String TAG = "FastFilmFilterProps";
 
     private final StringProperty filterTerm = new SimpleStringProperty(); // ist der Filter-Wert
     public StringProperty[] sfStringPropArr = {filterTerm};

@@ -1,6 +1,7 @@
 package de.p2tools.mtplayer.controller.filteraudio;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import javafx.beans.property.StringProperty;
 
 public class AudioFilterBackward {
@@ -14,7 +15,7 @@ public class AudioFilterBackward {
             return;
         }
 
-        AudioFilter sf = ProgData.getInstance().audioFilterWorker.getBackwardFilterList()
+        FilmFilter sf = ProgData.getInstance().audioFilterWorker.getBackwardFilterList()
                 .remove(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().size() - 1); // ist die aktuelle Einstellung
 
         ProgData.getInstance().audioFilterWorker.getForwardFilterList().addToList(sf);
@@ -30,20 +31,20 @@ public class AudioFilterBackward {
             return;
         }
 
-        final AudioFilter sf = ProgData.getInstance().audioFilterWorker.getForwardFilterList()
+        final FilmFilter sf = ProgData.getInstance().audioFilterWorker.getForwardFilterList()
                 .remove(ProgData.getInstance().audioFilterWorker.getForwardFilterList().size() - 1);
         ProgData.getInstance().audioFilterWorker.setActFilterSettings(sf);
     }
 
     public void addBackward() {
-        final AudioFilter actFilter = new AudioFilter();
+        final FilmFilter actFilter = new FilmFilter(true);
         ProgData.getInstance().audioFilterWorker.getActFilterSettings().copyTo(actFilter);
         if (ProgData.getInstance().audioFilterWorker.getBackwardFilterList().isEmpty()) {
             ProgData.getInstance().audioFilterWorker.getBackwardFilterList().addToList(actFilter);
             return;
         }
 
-        AudioFilter backwardFilter = ProgData.getInstance().audioFilterWorker.getBackwardFilterList().get(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().size() - 1);
+        FilmFilter backwardFilter = ProgData.getInstance().audioFilterWorker.getBackwardFilterList().get(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().size() - 1);
         if (actFilter.isSame(backwardFilter)) {
             // dann hat sich nichts geändert (z.B. mehrmals gelöscht)
             return;
@@ -80,7 +81,7 @@ public class AudioFilterBackward {
         ProgData.getInstance().audioFilterWorker.getBackwardFilterList().addToList(actFilter);
     }
 
-    private boolean checkText(StringProperty old, StringProperty nnew, AudioFilter oldSf, AudioFilter newSf,
+    private boolean checkText(StringProperty old, StringProperty nnew, FilmFilter oldSf, FilmFilter newSf,
                               boolean check) {
         // wenn sich nur ein Teil im Suchtext geändert hat, wird nur das aktualisiert, nicht ein neuer Back angelegt
         if (old.get().equals(nnew.get())) {

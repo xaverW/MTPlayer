@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilter;
 import de.p2tools.mtplayer.controller.filteraudio.AudioFilterSamples;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
@@ -39,7 +39,7 @@ import java.util.Optional;
 public class AudioMenu {
     final private VBox vBox;
     final private ProgData progData;
-    private AudioFilter storedActFilterSettings = null;
+    private FilmFilter storedActFilterSettings = null;
     private static final String FILM_FILTER_BOOKMARK_TEXT = "Alle angelegte Bookmarks anzeigen\n" +
             "der zweite Klick stellt den\n" +
             "eingestellten Filter wieder her";
@@ -124,8 +124,8 @@ public class AudioMenu {
         });
 
         btFilterBookmark.setOnAction(a -> {
-            AudioFilter sf = progData.audioFilterWorker.getActFilterSettings();
-            AudioFilter bookmarkFilter = AudioFilterSamples.getBookmarkFilter();
+            FilmFilter sf = progData.audioFilterWorker.getActFilterSettings();
+            FilmFilter bookmarkFilter = AudioFilterSamples.getBookmarkFilter();
 
             if (sf.isSame(bookmarkFilter)) {
                 // dann ist der BlackFilter aktiv, dann zurückschalten

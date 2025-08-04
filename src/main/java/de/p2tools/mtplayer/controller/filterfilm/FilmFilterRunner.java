@@ -42,12 +42,6 @@ public class FilmFilterRunner {
         this.progData = progData;
 
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
-//        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                filterList();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
             @Override
             public void ping() {
@@ -55,17 +49,6 @@ public class FilmFilterRunner {
             }
         });
 
-//        PListener.addListener(new PListener(PListener.EVENT_HISTORY_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                FilmFilter filmFilter = progData.filterWorker.getActFilterSettings();
-//                if (filmFilter.isNotVis() && filmFilter.isNotHistory() ||
-//                        filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory()) {
-//                    //nur dann wird History gefiltert
-//                    filterList();
-//                }
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_HISTORY_CHANGED) {
             @Override
             public void ping() {
@@ -78,24 +61,12 @@ public class FilmFilterRunner {
             }
         });
 
-//        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                filterList();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_BLACKLIST_CHANGED) {
             @Override
             public void ping() {
                 filterList();
             }
         });
-//        PListener.addListener(new PListener(PListener.EVENT_DIACRITIC_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                filterList();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_DIACRITIC_CHANGED) {
             @Override
             public void ping() {

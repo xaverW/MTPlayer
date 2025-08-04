@@ -1,5 +1,6 @@
 package de.p2tools.mtplayer.controller.filteraudio;
 
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
@@ -36,7 +37,7 @@ public class AudioFilterText extends P2DataSample<AudioFilterText> implements Co
         return TAG;
     }
 
-    public AudioFilterText(AudioFilter filmFilter) {
+    public AudioFilterText(FilmFilter filmFilter) {
         if (filmFilter.isChannelVis()) {
             channel.set(filmFilter.getChannel());
         }

@@ -21,6 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFastFilter;
+import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataProps;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
@@ -35,8 +37,8 @@ public class AudioFilterPredicateFactory {
 
     public static Predicate<FilmData> getPredicate(ProgData progData) {
 
-        AudioFilter filmFilter = progData.audioFilterWorker.getActFilterSettings();
-        AudioFastFilter fastFilmFilter = progData.audioFilterWorker.getFastFilterSettings();
+        FilmFilter filmFilter = progData.audioFilterWorker.getActFilterSettings();
+        FilmFastFilter fastFilmFilter = progData.audioFilterWorker.getFastFilterSettings();
 
         de.p2tools.p2lib.mediathek.filter.Filter fChannel;
         de.p2tools.p2lib.mediathek.filter.Filter fSomewhere;
@@ -190,7 +192,7 @@ public class AudioFilterPredicateFactory {
         return predicate;
     }
 
-    private static Predicate<FilmData> addFastFilter(AudioFilter filmFilter, AudioFastFilter fastFilmFilter,
+    private static Predicate<FilmData> addFastFilter(FilmFilter filmFilter, FilmFastFilter fastFilmFilter,
                                                      Predicate<FilmData> predicate) {
         de.p2tools.p2lib.mediathek.filter.Filter fastFilter = new de.p2tools.p2lib.mediathek.filter.Filter(fastFilmFilter.getFilterTerm(), true);
 

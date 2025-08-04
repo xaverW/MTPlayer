@@ -29,8 +29,16 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
 
     private boolean filterIsOff = true; // Filter ist EIN - meldet Änderungen
     private final PauseTransition pause = new PauseTransition(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue())); // nach Ablauf wird Änderung gemeldet - oder nach Return
+    private boolean audio = false;
 
     public FilmFilter() {
+        initFilter();
+        setName("Filter");
+    }
+
+    public FilmFilter(boolean audio) {
+        TAG = "AudioFilter";
+        this.audio = audio;
         initFilter();
         setName("Filter");
     }
@@ -40,19 +48,42 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         setName(name);
     }
 
+    public FilmFilter(boolean audio, String name) {
+        TAG = "AudioFilter";
+        this.audio = audio;
+        initFilter();
+        setName(name);
+    }
+
     public void reportFilterReturn() {
         // sind die ComboBoxen wenn return gedrückt wird
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
-        ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+        if (audio) {
+            ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+
+        } else {
+            ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+        }
     }
 
     private void reportFilterChange() {
         // sind die anderen Filter (ändern, ein-ausschalten), wenn Pause abgelaufen ist / gestoppt ist
         if (!filterIsOff) {
-            ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+            if (audio) {
+                ProgData.getInstance().audioFilterWorker.getBackwardFilmFilter().addBackward();
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+                System.out.println("=================================");
+                System.out.println("AUDIO FILTER MELDEN");
+
+            } else {
+                ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+                System.out.println("=================================");
+                System.out.println("FILM FILTER MELDEN");
+            }
         }
     }
 
@@ -250,7 +281,11 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
     private void reportBlacklistChange() {
         if (!filterIsOff) { // todo ??
             BlacklistFilterFactory.makeBlackFilteredFilmlist();
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+            if (audio) {
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+            } else {
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+            }
         }
     }
 

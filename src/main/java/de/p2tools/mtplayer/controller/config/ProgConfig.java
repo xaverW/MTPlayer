@@ -20,8 +20,6 @@ package de.p2tools.mtplayer.controller.config;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFastFilter;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilter;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFastFilter;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilterWorker;
@@ -66,7 +64,8 @@ public class ProgConfig extends P2DataProgConfig {
 
         configFile.addConfigs(progData.setDataList);
 
-        // Filter
+        // =================
+        // Filter, Filme
         final FilmFastFilter filmFastFilter = progData.filmFilterWorker.getFastFilterSettings(); // Fast-Filter
         configFile.addConfigs(filmFastFilter);
 
@@ -75,12 +74,12 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(akt_sf);
 
         final FilmFilter sSkt_sf = progData.filmFilterWorker.getStoredFilterSettings(); // akt-Filter
-        sSkt_sf.TAG = "StoredFilter";
+        sSkt_sf.TAG = "StoredFilmFilter";
         sSkt_sf.setName(FilmFilterWorker.STORED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(sSkt_sf);
 
         final FilmFilter sSmallAkt_sf = progData.filmFilterWorker.getStoredSmallFilterSettings(); // akt-Filter
-        sSmallAkt_sf.TAG = "StoredSmallFilter";
+        sSmallAkt_sf.TAG = "StoredSmallFilmFilter";
         sSmallAkt_sf.setName(FilmFilterWorker.STORED_SMALL_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(sSmallAkt_sf);
 
@@ -88,20 +87,21 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.filmFilterWorker.getBackwardFilterList()); // Filterprofile
         configFile.addConfigs(progData.filmFilterWorker.getForwardFilterList()); // Filterprofile
 
-        // Audio-Filter
-        final AudioFastFilter fastAudioFilter = progData.audioFilterWorker.getFastFilterSettings(); // Fast-Filter
+        // =================
+        // Filter, Audio
+        final FilmFastFilter fastAudioFilter = progData.audioFilterWorker.getFastFilterSettings(); // Fast-Filter
         configFile.addConfigs(fastAudioFilter);
 
-        final AudioFilter akt_audo_sf = progData.audioFilterWorker.getActFilterSettings(); // akt-Filter
-        akt_audo_sf.setName(FilmFilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
-        configFile.addConfigs(akt_audo_sf);
+        final FilmFilter akt_audio_sf = progData.audioFilterWorker.getActFilterSettings(); // akt-Filter
+        akt_audio_sf.setName(FilmFilterWorker.SELECTED_FILTER_NAME); // nur zur Info im Config-File
+        configFile.addConfigs(akt_audio_sf);
 
-        final AudioFilter sSkt_audio_sf = progData.audioFilterWorker.getStoredFilterSettings(); // akt-Filter
+        final FilmFilter sSkt_audio_sf = progData.audioFilterWorker.getStoredFilterSettings(); // akt-Filter
         sSkt_audio_sf.TAG = "StoredAudioFilter";
         sSkt_audio_sf.setName(FilmFilterWorker.STORED_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(sSkt_audio_sf);
 
-        final AudioFilter sSmallAkt_audio_sf = progData.audioFilterWorker.getStoredSmallFilterSettings(); // akt-Filter
+        final FilmFilter sSmallAkt_audio_sf = progData.audioFilterWorker.getStoredSmallFilterSettings(); // akt-Filter
         sSmallAkt_audio_sf.TAG = "StoredSmallAudioFilter";
         sSmallAkt_audio_sf.setName(FilmFilterWorker.STORED_SMALL_FILTER_NAME); // nur zur Info im Config-File
         configFile.addConfigs(sSmallAkt_audio_sf);
@@ -110,6 +110,7 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.audioFilterWorker.getBackwardFilterList()); // Filterprofile
         configFile.addConfigs(progData.audioFilterWorker.getForwardFilterList()); // Filterprofile
 
+        // Filter
         configFile.addConfigs(progData.filmFilterTextList); // ist der "sortierte" Textfilter (Thema, Titel ..)
         configFile.addConfigs(progData.filmFilterStringLists); // sind die Textfilter in den CBO's
 
