@@ -153,7 +153,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
 
     private void addSeparator() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
-        FilmFilter sf = new FilmFilter(true, P2SeparatorComboBox.SEPARATOR);
+        FilmFilter sf = new FilmFilter(P2SeparatorComboBox.SEPARATOR);
         if (sel < 0) {
             progData.filterWorkerAudio.getFilmFilterList().add(sf);
         } else {

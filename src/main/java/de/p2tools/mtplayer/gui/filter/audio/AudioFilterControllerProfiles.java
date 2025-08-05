@@ -229,8 +229,8 @@ public class AudioFilterControllerProfiles extends VBox {
 
         } else if (!progData.filterWorkerAudio.getFilmFilterList().isEmpty()) {
             // dann eine Markierung
-            progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
-            progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
+            progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+            progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
         }
 
         AudioFilterSamples.addStandardFilter();

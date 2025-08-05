@@ -29,7 +29,7 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
 
     private boolean filterIsOff = true; // Filter ist EIN - meldet Änderungen
     private final PauseTransition pause = new PauseTransition(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue())); // nach Ablauf wird Änderung gemeldet - oder nach Return
-    private boolean audio = false;
+    private boolean audio = false; // ist nur, wohin gemeldet werden soll (actFilter): reportFilterReturn
 
     public FilmFilter() {
         initFilter();
@@ -37,24 +37,6 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
     }
 
     public FilmFilter(String name) {
-        initFilter();
-        setName(name);
-    }
-
-    public FilmFilter(String tag, String name) {
-        this.TAG = tag;
-        initFilter();
-        setName(name);
-    }
-
-    public FilmFilter(boolean audio) {
-        this.audio = audio;
-        initFilter();
-        setName("Filter");
-    }
-
-    public FilmFilter(boolean audio, String name) {
-        this.audio = audio;
         initFilter();
         setName(name);
     }
@@ -67,7 +49,7 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
     }
 
     public void reportFilterReturn() {
-        // sind die ComboBoxen wenn return gedrückt wird
+        // sind die ComboBoxen, wenn return gedrückt wird
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
         if (audio) {
@@ -78,14 +60,6 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
             ProgData.getInstance().filterWorkerFilm.getBackwardFilmFilter().addBackward();
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
         }
-    }
-
-    public boolean isAudio() {
-        return audio;
-    }
-
-    public void setAudio(boolean audio) {
-        this.audio = audio;
     }
 
     private void reportFilterChange() {
@@ -299,12 +273,10 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
 
     private void reportBlacklistChange() {
         if (!filterIsOff) { // todo ??
-            BlacklistFilterFactory.makeBlackFilteredFilmlist(audio);
-            if (audio) {
-                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
-            } else {
-                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
-            }
+            BlacklistFilterFactory.makeBlackFilteredFilmlist(true);
+            BlacklistFilterFactory.makeBlackFilteredFilmlist(false);
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
         }
     }
 

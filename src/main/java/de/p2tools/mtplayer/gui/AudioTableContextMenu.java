@@ -127,6 +127,7 @@ public class AudioTableContextMenu {
     }
 
     private Menu addAbo(FilmDataMTP film) {
+        // todo audio
         Menu submenuAbo = new Menu("Abo");
         final MenuItem miAboAddFilter = new MenuItem("aus dem Filter ein Abo erstellen");
         final MenuItem miAboAddChannelTheme = new MenuItem("Abo mit Sender und Thema anlegen");
@@ -191,8 +192,8 @@ public class AudioTableContextMenu {
     private Menu addBlacklist(FilmDataMTP film) {
         Menu submenuBlacklist = new Menu("Blacklist");
 
-        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
-        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(true));
+        final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für das Audio erstellen");
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.AUDIO));
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
         miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(film.getChannel(), film.getTheme(), ""));

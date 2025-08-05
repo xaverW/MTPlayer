@@ -163,15 +163,15 @@ public class MTPlayerFactory {
     public static void addBlacklist() {
         switch (MTPlayerController.paneShown) {
             case FILM:
-                BlacklistFactory.addBlackFilm(true);
+                BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.FILM);
                 break;
             case AUDIO:
-                BlacklistFactory.addBlackFilm(true); // todo audio
+                BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.AUDIO);
                 break;
             case LIVE_FILM:
                 break;
             case DOWNLOAD:
-                BlacklistFactory.addBlackFilm(false);
+                BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.DOWNLOAD);
                 break;
             case ABO:
                 break;
@@ -181,10 +181,10 @@ public class MTPlayerFactory {
     public static void addBlacklistTheme() {
         switch (MTPlayerController.paneShown) {
             case FILM:
-                BlacklistFactory.addBlackThemeFilm();
+                BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.FILM);
                 break;
             case AUDIO:
-                BlacklistFactory.addBlackThemeFilm(); // todo audio
+                BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.AUDIO);
                 break;
             case LIVE_FILM:
                 break;

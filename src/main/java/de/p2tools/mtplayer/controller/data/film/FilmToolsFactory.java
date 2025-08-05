@@ -61,7 +61,7 @@ public class FilmToolsFactory {
      * @return
      */
     public static ArrayList<String> getSenderListNotToLoad() {
-        return new ArrayList(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue().split(",")));
+        return new ArrayList<>(Arrays.asList(ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue().split(",")));
     }
 
     public static void checkAllSenderSelectedNotToLoad(Stage stage) { // todo -> p2lib
@@ -103,7 +103,7 @@ public class FilmToolsFactory {
             try {
                 P2Duration.counterStart("mark(FilmData filmData)");
                 filmList.forEach((FilmData f) -> {
-                    mark(f);
+                    mark(f); // Geo, Future, History, UT, Mark
                     if (!urlHashSet.add(getHashFromFilm(f))) {
                         ++countDouble;
                         f.setDoubleUrl(true);
@@ -118,7 +118,7 @@ public class FilmToolsFactory {
             // dann nach Sender-Reihenfolge
             P2Duration.counterStart("mark(FilmData filmData)");
             filmList.forEach((FilmData f) -> {
-                mark(f);
+                mark(f); // Geo, Future, History, UT, Mark
             });
             for (String sender : senderArr) {
                 addSender(filmList, urlHashSet, senderArr, sender);
@@ -150,6 +150,7 @@ public class FilmToolsFactory {
     }
 
     private static void mark(FilmData filmData) {
+        // Geo, Future, History, UT, Mark
         filmData.setGeoBlocked();
         filmData.setInFuture();
         filmData.setShown(ProgData.getInstance().historyList.checkIfUrlAlreadyIn(filmData.getUrlHistory()));
