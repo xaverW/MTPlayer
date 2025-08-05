@@ -45,24 +45,24 @@ public class AudioFilterControllerTextFilter extends VBox {
     public AudioFilterControllerTextFilter() {
         super();
         progData = ProgData.getInstance();
-        mbChannel = new P2MenuButton(progData.filterWorkerAudio.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelList);
+        mbChannel = new P2MenuButton(progData.filterWorkerAudio.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelListAudio);
 
         final BooleanSupplier supplierReportReturn = () -> {
             progData.filterWorkerAudio.getActFilterSettings().reportFilterReturn();
             return true;
         };
 
-        cboThemeExact = new PCboThemeExact(progData, progData.filterWorkerAudio.getActFilterSettings().exactThemeProperty());
+        cboThemeExact = new PCboThemeExact(true, progData, progData.filterWorkerAudio.getActFilterSettings().exactThemeProperty());
 
-        cboTheme = new PCboString(progData.stringFilterLists.getFilterListTheme(),
+        cboTheme = new PCboString(progData.stringFilterLists.getFilterListAudioTheme(),
                 progData.filterWorkerAudio.getActFilterSettings().themeProperty(), supplierReportReturn);
-        cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListThemeTitle(),
+        cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListAudioThemeTitle(),
                 progData.filterWorkerAudio.getActFilterSettings().themeTitleProperty(), supplierReportReturn);
-        cboTitle = new PCboString(progData.stringFilterLists.getFilterListTitel(),
+        cboTitle = new PCboString(progData.stringFilterLists.getFilterListAudioTitel(),
                 progData.filterWorkerAudio.getActFilterSettings().titleProperty(), supplierReportReturn);
-        cboSomewhere = new PCboString(progData.stringFilterLists.getFilterListSomewhere(),
+        cboSomewhere = new PCboString(progData.stringFilterLists.getFilterListAudioSomewhere(),
                 progData.filterWorkerAudio.getActFilterSettings().somewhereProperty(), supplierReportReturn);
-        cboUrl = new PCboString(progData.stringFilterLists.getFilterListUrl(),
+        cboUrl = new PCboString(progData.stringFilterLists.getFilterListAudioUrl(),
                 progData.filterWorkerAudio.getActFilterSettings().urlProperty(), supplierReportReturn);
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);

@@ -19,7 +19,10 @@ package de.p2tools.mtplayer.controller.load;
 
 
 import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
@@ -90,7 +93,13 @@ public class LoadAudioListWorker {
 
             logList.add("Blacklist filtern");
             progData.maskerPane.setMaskerText("Blacklist filtern");
-            progData.audioListFiltered.setAll(progData.audioList);
+
+            logList.add("Blacklist filtern");
+            progData.maskerPane.setMaskerText("Blacklist filtern");
+            BlacklistFilterFactory.markFilmBlack(true, false);
+
+//            progData.audioListFiltered.setAll(progData.audioList);
+//            progData.audioListFiltered.loadTheme(); // wird sonst im
 
             logList.add("Filme in Downloads eingetragen");
             progData.maskerPane.setMaskerText("Downloads eingetragen");
@@ -112,9 +121,14 @@ public class LoadAudioListWorker {
     public void workOnFilmListLoadFinished() {
         Platform.runLater(() -> {
             // alle Sender laden
-            ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.audioList.sender));
+            ThemeListFactory.allChannelListAudio.setAll(Arrays.asList(progData.audioList.sender));
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            ThemeListFactory.createThemeList(progData, progData.filterWorkerAudio.getActFilterSettings().getChannel());
+            ThemeListFactory.createThemeList(true, progData, progData.filterWorkerAudio.getActFilterSettings().getChannel());
+
+            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+                // wenn gewollt oder im AutoMode immer suchen
+                AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
+            }
 
             // activate the saved filter
             progData.worker.resetFilter();

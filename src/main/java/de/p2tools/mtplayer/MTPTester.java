@@ -84,7 +84,11 @@ public class MTPTester {
 
             Button btnBlack = new Button("Gen-Black");
             btnBlack.setOnAction(a -> {
-                BlacklistFilterFactory.markFilmBlackThread(true);
+                ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Blacklist", -1, false);
+                new Thread(() -> {
+                    BlacklistFilterFactory.markFilmBlack(true);
+                    ProgData.busy.busyOffFx();
+                }).start();
             });
             gridPane.add(btnBlack, 0, ++row);
 

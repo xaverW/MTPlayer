@@ -108,7 +108,7 @@ public class LoadFilmListWorker {
 
             logList.add("Blacklist filtern");
             progData.maskerPane.setMaskerText("Blacklist filtern");
-            BlacklistFilterFactory.markFilmBlack(false);
+            BlacklistFilterFactory.markFilmBlack(false, false);
 
             progData.blackList.sortAndCleanTheList();
             progData.filmListFilter.sortAndCleanTheList();
@@ -156,10 +156,10 @@ public class LoadFilmListWorker {
     public void workOnFilmListLoadFinished() {
         Platform.runLater(() -> {
             // alle Sender laden
-            ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.filmList.sender));
+            ThemeListFactory.allChannelListFilm.setAll(Arrays.asList(progData.filmList.sender));
 
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            ThemeListFactory.createThemeList(progData, progData.filterWorkerFilm.getActFilterSettings().getChannel());
+            ThemeListFactory.createThemeList(false, progData, progData.filterWorkerFilm.getActFilterSettings().getChannel());
 
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 // wenn gewollt oder im AutoMode immer suchen

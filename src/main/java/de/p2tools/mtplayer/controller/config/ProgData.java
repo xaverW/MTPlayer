@@ -182,8 +182,8 @@ public class ProgData {
 
         stringFilterLists = new StringFilter();
         filterWorkerFilm = new FilterWorker(false);
-        liveFilmFilterWorker = new LiveFilmFilterWorker(this);
         filterWorkerAudio = new FilterWorker(true);
+        liveFilmFilterWorker = new LiveFilmFilterWorker(this);
 
 
         filmListFilter = new BlackList(this, "FilmListFilter");

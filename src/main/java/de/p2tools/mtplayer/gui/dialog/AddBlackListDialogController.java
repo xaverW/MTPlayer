@@ -71,7 +71,7 @@ public class AddBlackListDialogController extends P2DialogExtra {
         this.title = blackData.getTitle();
         this.blackData = blackData;
         mbChannel = new P2MenuButton(this.blackData.channelProperty(),
-                ThemeListFactory.allChannelList, true);
+                ThemeListFactory.allChannelListFilm, true);
 
         init(true);
     }

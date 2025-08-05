@@ -290,7 +290,7 @@ public class PaneFilmUt {
     }
 
     private void initConfigs(VBox vBox) {
-        cboSender.setItems(ThemeListFactory.allChannelList);
+        cboSender.setItems(ThemeListFactory.allChannelListFilm);
         cboSender.getSelectionModel().select(0);
         cboSender.setEditable(true);
         cboSender.getSelectionModel().selectedItemProperty().addListener(changeListener);

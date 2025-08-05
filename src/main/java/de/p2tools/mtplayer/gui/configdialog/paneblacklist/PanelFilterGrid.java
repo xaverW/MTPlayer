@@ -61,7 +61,7 @@ public class PanelFilterGrid {
         this.tableView = tableView;
         this.list = list;
         this.blackListFilterBlackList = blackListFilterBlackList;
-        this.mbFilterChannel = new P2MenuButton(mbFilterChannelProp, ThemeListFactory.allChannelList);
+        this.mbFilterChannel = new P2MenuButton(mbFilterChannelProp, ThemeListFactory.allChannelListFilm);
 
         bind();
         addPredicate();

@@ -85,13 +85,13 @@ public class FilmFilterRunner {
             try {
                 Platform.runLater(() -> {
                     String text = "=======================================\n" +
-                            "   ===== FILTERN: " + ++count + " =====\n" +
+                            "   ===== FILTERN FILM: " + ++count + " =====\n" +
                             "=======================================";
                     P2Log.debugLog(text);
 
                     if (ProgData.getInstance().filterWorkerFilm.getActFilterSettings().isThemeVis() &&
                             ProgData.getInstance().filterWorkerFilm.getActFilterSettings().isThemeIsExact() &&
-                            !ThemeListFactory.themeForChannelList
+                            !ThemeListFactory.themeForChannelListFilm
                                     .contains(ProgData.getInstance().filterWorkerFilm.getActFilterSettings().getExactTheme())) {
                         // Filter ExactTheme kontrollieren
                         P2Log.debugLog("Clear filter");

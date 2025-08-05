@@ -127,7 +127,7 @@ public class PaneFilmDouble {
         lvSender.setItems(selList);
 
         final ComboBox<String> cboSender = new ComboBox<>();
-        cboSender.setItems(ThemeListFactory.allChannelList);
+        cboSender.setItems(ThemeListFactory.allChannelListFilm);
         cboSender.getSelectionModel().select(0);
 
         Button btnAdd = new Button("");

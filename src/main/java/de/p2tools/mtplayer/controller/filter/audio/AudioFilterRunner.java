@@ -85,13 +85,13 @@ public class AudioFilterRunner {
             try {
                 Platform.runLater(() -> {
                     String text = "=======================================\n" +
-                            "   ===== FILTERN: " + ++count + " =====\n" +
+                            "   ===== FILTERN AUDIO: " + ++count + " =====\n" +
                             "=======================================";
                     P2Log.debugLog(text);
 
                     if (ProgData.getInstance().filterWorkerAudio.getActFilterSettings().isThemeVis() &&
                             ProgData.getInstance().filterWorkerAudio.getActFilterSettings().isThemeIsExact() &&
-                            !ThemeListFactory.themeForChannelList
+                            !ThemeListFactory.themeForChannelListFilm
                                     .contains(ProgData.getInstance().filterWorkerAudio.getActFilterSettings().getExactTheme())) {
                         // Filter ExactTheme kontrollieren
                         P2Log.debugLog("Clear filter");

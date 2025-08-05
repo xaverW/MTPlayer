@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.controller.worker;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -28,25 +29,37 @@ import java.text.Collator;
 import java.util.*;
 
 public class ThemeListFactory {
-    public static final ObservableList<String> allChannelList = FXCollections.observableArrayList("");
+    public static final ObservableList<String> allChannelListFilm = FXCollections.observableArrayList("");
+    public static ObservableList<String> themeForChannelListFilm = FXCollections.observableArrayList("");
+    public static BooleanProperty themeForChannelChangedFilm = new SimpleBooleanProperty(false);
 
-    public static ObservableList<String> themeForChannelList = FXCollections.observableArrayList("");
-    public static BooleanProperty themeForChannelChanged = new SimpleBooleanProperty(false);
+    public static final ObservableList<String> allChannelListAudio = FXCollections.observableArrayList("");
+    public static ObservableList<String> themeForChannelListAudio = FXCollections.observableArrayList("");
+    public static BooleanProperty themeForChannelChangedAudio = new SimpleBooleanProperty(false);
 
     public static final ObservableList<String> channelsForAbosList = FXCollections.observableArrayList("");
     public static final ObservableList<String> allAboNamesList = FXCollections.observableArrayList("");
 
+
     private ThemeListFactory() {
     }
 
-    public synchronized static void createThemeList(ProgData progData, String sender) {
+    public synchronized static void createThemeList(boolean audio, ProgData progData, String sender) {
         //toDo geht vielleicht besser??
         P2Duration.counterStart("createThemeList");
+
+        FilmListMTP listFiltered; // Filmliste, wie im TabFilme angezeigt
+        if (audio) {
+            listFiltered = progData.audioListFiltered;
+        } else {
+            listFiltered = progData.filmListFiltered;
+        }
+
         final ArrayList<String> newThemeList = new ArrayList<>();
         if (sender.isEmpty()) {
-            newThemeList.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[0]));
+            newThemeList.addAll(Arrays.asList(listFiltered.themePerChannel[0]));
         } else {
-            makeTheme(progData, sender.trim(), newThemeList);
+            makeTheme(listFiltered, sender.trim(), newThemeList);
         }
 
         Collator collator = Collator.getInstance(Locale.GERMANY);
@@ -63,26 +76,33 @@ public class ThemeListFactory {
         };
         newThemeList.sort(comparator);
 
-//        Platform.runLater(() -> {
         progData.worker.saveFilter();
-        themeForChannelList = FXCollections.observableArrayList("");
-        themeForChannelList.setAll(newThemeList);
+        if (audio) {
+            themeForChannelListAudio = FXCollections.observableArrayList("");
+            themeForChannelListAudio.setAll(newThemeList);
+        } else {
+            themeForChannelListFilm = FXCollections.observableArrayList("");
+            themeForChannelListFilm.setAll(newThemeList);
+        }
         progData.worker.resetFilter();
-        themeForChannelChanged.setValue(!themeForChannelChanged.getValue());
-//        });
+        if (audio) {
+            themeForChannelChangedAudio.setValue(!themeForChannelChangedAudio.getValue());
+        } else {
+            themeForChannelChangedFilm.setValue(!themeForChannelChangedFilm.getValue());
+        }
         P2Duration.counterStop("createThemeList");
     }
 
-    private static void makeTheme(ProgData progData, String sender, ArrayList<String> theme) {
+    private static void makeTheme(FilmListMTP listMTP, String sender, ArrayList<String> theme) {
         if (sender.contains(",")) {
             String[] senderArr = sender.toLowerCase().split(",");
             final TreeSet<String> tree = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
             tree.add("");
 
-            for (int i = 1; i < progData.filmListFiltered.themePerChannel.length; ++i) {
+            for (int i = 1; i < listMTP.themePerChannel.length; ++i) {
                 for (String s : senderArr) {
-                    if (progData.filmListFiltered.sender[i].equalsIgnoreCase(s.trim())) {
-                        tree.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[i]));
+                    if (listMTP.sender[i].equalsIgnoreCase(s.trim())) {
+                        tree.addAll(Arrays.asList(listMTP.themePerChannel[i]));
                         break;
                     }
                 }
@@ -90,9 +110,9 @@ public class ThemeListFactory {
             theme.addAll(tree);
 
         } else {
-            for (int i = 1; i < progData.filmListFiltered.themePerChannel.length; ++i) {
-                if (progData.filmListFiltered.sender[i].equalsIgnoreCase(sender)) {
-                    theme.addAll(Arrays.asList(progData.filmListFiltered.themePerChannel[i]));
+            for (int i = 1; i < listMTP.themePerChannel.length; ++i) {
+                if (listMTP.sender[i].equalsIgnoreCase(sender)) {
+                    theme.addAll(Arrays.asList(listMTP.themePerChannel[i]));
                     break;
                 }
             }

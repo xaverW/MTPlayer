@@ -55,7 +55,7 @@ public class DownloadFilterController extends FilterController {
         progData.downloadFilterController = this;
 
         mbChannel = new P2MenuButton(ProgConfig.FILTER_DOWNLOAD_CHANNEL,
-                ThemeListFactory.allChannelList);
+                ThemeListFactory.allChannelListFilm);
 
         initLayout();
         initFilter();

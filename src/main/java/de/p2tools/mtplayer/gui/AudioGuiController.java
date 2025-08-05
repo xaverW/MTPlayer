@@ -90,7 +90,7 @@ public class AudioGuiController extends AnchorPane {
         scrollPaneTable.setContent(tableView);
 
         paneFilmInfo = new PaneFilmInfo(ProgConfig.AUDIO_PANE_INFO_DIVIDER);
-        paneButton = new PaneFilmButton(false);
+        paneButton = new PaneFilmButton(PaneFilmButton.PANE.AUDIO);
 
         MediaDataDto mDtoMedia = new MediaDataDto();
         MediaDataDto mDtoAbo = new MediaDataDto();

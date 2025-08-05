@@ -150,8 +150,8 @@ public class AudioFilterControllerProfiles extends VBox {
                 new SeparatorMenuItem(), miAddStandard, miReset);
         mbFilterTools.setTooltip(new Tooltip("Gespeicherte Filterprofile bearbeiten"));
 
-        cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_FILM_SEL_FILTER.get());
-        ProgConfig.FILTER_FILM_SEL_FILTER.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
+        cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_AUDIO_SEL_FILTER.get());
+        ProgConfig.FILTER_AUDIO_SEL_FILTER.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
 
         cboFilterProfiles.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

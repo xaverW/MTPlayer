@@ -105,12 +105,12 @@ public class Worker {
         } else {
             ProgConfig.FILTER_DOWNLOAD_ABO.setValue("");
         }
-        if (ThemeListFactory.allChannelList.contains(downloadFilterChannel)) {
+        if (ThemeListFactory.allChannelListFilm.contains(downloadFilterChannel)) {
             ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
         } else {
             ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue("");
         }
-        if (ThemeListFactory.allChannelList.contains(aboFilterChannel)) {
+        if (ThemeListFactory.allChannelListFilm.contains(aboFilterChannel)) {
             ProgConfig.FILTER_ABO_CHANNEL.setValue(aboFilterChannel);
         } else {
             ProgConfig.FILTER_ABO_CHANNEL.setValue("");

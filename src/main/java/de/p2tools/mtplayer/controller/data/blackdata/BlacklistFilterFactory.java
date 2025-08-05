@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
-import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataProps;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
@@ -46,20 +45,18 @@ public class BlacklistFilterFactory {
     private BlacklistFilterFactory() {
     }
 
-    public static void markFilmBlackThread(boolean notify) {
-        ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Blacklist", -1, false);
-        new Thread(() -> {
-            BlacklistFilterFactory.markFilmBlack(notify);
-            ProgData.busy.busyOffFx();
-        }).start();
+    public static synchronized void markFilmBlack(boolean notify) {
+        // dann werden beide markiert
+        markFilmBlack(true, notify);
+        markFilmBlack(false, notify);
     }
 
-    public static synchronized void markFilmBlack(boolean notify) {
+    public static synchronized void markFilmBlack(boolean audio, boolean notify) {
         // Filmliste geladen, Button/Menü, ConfigDialog, Filter blkBtn
         // hier werden die Filme gekennzeichnet, ob sie "black" sind und das dauert
 
-        P2Duration.counterStart("markFilmBlack");
-        P2Log.sysLog("markFilmBlack -> start");
+        P2Duration.counterStart("markFilmBlack" + (audio ? "-Audio" : "-Film"));
+        P2Log.sysLog("markFilmBlack " + (audio ? "Audio" : "Film") + " -> start");
 
         final boolean maskerPane;
         if (ProgData.getInstance().maskerPane.isVisible()) {
@@ -74,11 +71,12 @@ public class BlacklistFilterFactory {
 
         //Filmliste durchlaufen und geblockte Filme markieren (parallel: Blockiert sich selbst durch Film.setBlocked)
         P2Duration.counterStart("forEach");
-        final int sum = ProgData.getInstance().filmList.size();
+        FilmListMTP list = audio ? ProgData.getInstance().filmList : ProgData.getInstance().audioList;
+        final int sum = list.size();
         act = 0;
         now = 0;
 
-        ProgData.getInstance().filmList.forEach(filmDataMTP -> {
+        list.forEach(filmDataMTP -> {
             ++act;
             ++now;
             if (now > 5_000) {
@@ -95,25 +93,32 @@ public class BlacklistFilterFactory {
         P2Duration.counterStop("forEach");
 
         //und jetzt die filteredList erstellen
-        makeBlackFilteredFilmlist();
+        makeBlackFilteredFilmlist(audio);
 
         if (maskerPane) {
             ProgData.getInstance().maskerPane.setMaskerProgress(-1.0, "Blacklist filtern");
         }
-        P2Log.sysLog("markFilmBlack -> stop");
-        P2Duration.counterStop("markFilmBlack");
+        P2Log.sysLog("markFilmBlack " + (audio ? "Audio" : "Film") + " stop");
+        P2Duration.counterStop("markFilmBlack" + (audio ? "-Audio" : "-Film"));
 
         if (notify) {
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BLACKLIST_CHANGED);
         }
     }
 
-    public static synchronized void makeBlackFilteredFilmlist() {
+    public static synchronized void makeBlackFilteredFilmlist(boolean audio) {
         // nach dem markieren der Filme in der Liste, nach dem ein-/ausschalten der Blacklist
         // es wird die Black-gefilterte Filmliste erstellt
         final ProgData progData = ProgData.getInstance();
-        final FilmListMTP filmList = progData.filmList;
-        final FilmListMTP filmListFiltered = progData.filmListFiltered;
+        final FilmListMTP filmList;
+        final FilmListMTP filmListFiltered;
+        if (audio) {
+            filmList = progData.audioList;
+            filmListFiltered = progData.audioListFiltered;
+        } else {
+            filmList = progData.filmList;
+            filmListFiltered = progData.filmListFiltered;
+        }
 
         P2Duration.counterStart("makeBlackFilteredFilmlist");
         loadCurrentBlacklistSettings();

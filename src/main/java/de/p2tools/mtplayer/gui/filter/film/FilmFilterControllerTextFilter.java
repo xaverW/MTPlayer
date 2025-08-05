@@ -45,24 +45,24 @@ public class FilmFilterControllerTextFilter extends VBox {
     public FilmFilterControllerTextFilter() {
         super();
         progData = ProgData.getInstance();
-        mbChannel = new P2MenuButton(progData.filterWorkerFilm.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelList);
+        mbChannel = new P2MenuButton(progData.filterWorkerFilm.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelListFilm);
 
         final BooleanSupplier supplierReportReturn = () -> {
             progData.filterWorkerFilm.getActFilterSettings().reportFilterReturn();
             return true;
         };
 
-        cboThemeExact = new PCboThemeExact(progData, progData.filterWorkerFilm.getActFilterSettings().exactThemeProperty());
+        cboThemeExact = new PCboThemeExact(false, progData, progData.filterWorkerFilm.getActFilterSettings().exactThemeProperty());
 
-        cboTheme = new PCboString(progData.stringFilterLists.getFilterListTheme(),
+        cboTheme = new PCboString(progData.stringFilterLists.getFilterListFilmTheme(),
                 progData.filterWorkerFilm.getActFilterSettings().themeProperty(), supplierReportReturn);
-        cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListThemeTitle(),
+        cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListFilmThemeTitle(),
                 progData.filterWorkerFilm.getActFilterSettings().themeTitleProperty(), supplierReportReturn);
-        cboTitle = new PCboString(progData.stringFilterLists.getFilterListTitel(),
+        cboTitle = new PCboString(progData.stringFilterLists.getFilterListFilmTitel(),
                 progData.filterWorkerFilm.getActFilterSettings().titleProperty(), supplierReportReturn);
-        cboSomewhere = new PCboString(progData.stringFilterLists.getFilterListSomewhere(),
+        cboSomewhere = new PCboString(progData.stringFilterLists.getFilterListFilmSomewhere(),
                 progData.filterWorkerFilm.getActFilterSettings().somewhereProperty(), supplierReportReturn);
-        cboUrl = new PCboString(progData.stringFilterLists.getFilterListUrl(),
+        cboUrl = new PCboString(progData.stringFilterLists.getFilterListFilmUrl(),
                 progData.filterWorkerFilm.getActFilterSettings().urlProperty(), supplierReportReturn);
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);

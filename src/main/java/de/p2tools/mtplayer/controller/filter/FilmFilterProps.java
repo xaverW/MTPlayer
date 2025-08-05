@@ -183,6 +183,7 @@ public class FilmFilterProps extends P2DataSample<FilmFilter> implements Compara
     }
 
     public void copyTo(FilmFilter sf) {
+
         for (int i = 0; i < sfBooleanPropArr.length; ++i) {
             sf.sfBooleanPropArr[i].setValue(this.sfBooleanPropArr[i].getValue());
         }

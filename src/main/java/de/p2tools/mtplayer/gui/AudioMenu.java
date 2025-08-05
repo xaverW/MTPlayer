@@ -273,7 +273,7 @@ public class AudioMenu {
         mb.getItems().add(submenuBookmark);
 
         final CheckMenuItem miSmallFilter = new CheckMenuItem("Einfachen Filter anzeigen");
-        miSmallFilter.selectedProperty().bindBidirectional(ProgConfig.FILMFILTER_SMALL_FILTER);
+        miSmallFilter.selectedProperty().bindBidirectional(ProgConfig.AUDIOFILTER_SMALL_FILTER);
 
         final MenuItem miShowFilter = new MenuItem("Filter ein-/ausblenden" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_SHOW_FILTER.getActShortcut());

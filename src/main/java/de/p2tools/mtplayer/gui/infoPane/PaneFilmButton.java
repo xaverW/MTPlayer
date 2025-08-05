@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
-import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Color;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -33,11 +33,15 @@ import javafx.scene.layout.VBox;
 
 public class PaneFilmButton extends VBox {
 
-    private final boolean live;
-    private final TilePane tilePane;
+    public enum PANE {
+        FILM, AUDIO, LIVE
+    }
 
-    public PaneFilmButton(boolean live) {
-        this.live = live;
+    private final TilePane tilePane;
+    private final PANE pane;
+
+    public PaneFilmButton(PANE pane) {
+        this.pane = pane;
         VBox.setVgrow(this, Priority.ALWAYS);
 
         this.tilePane = new TilePane();
@@ -51,12 +55,6 @@ public class PaneFilmButton extends VBox {
 
         addButton();
         ProgData.getInstance().setDataList.addListener((u, o, n) -> addButton());
-//        PListener.addListener(new PListener(PListener.EVENT_FILM_BUTTON_CHANGED, FilmFilterRunner.class.getSimpleName()) {
-//            @Override
-//            public void ping() {
-//                addButton();
-//            }
-//        });
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILM_BUTTON_CHANGED) {
             @Override
             public void ping() {
@@ -82,15 +80,15 @@ public class PaneFilmButton extends VBox {
             }
 
             btn.setOnAction(a -> {
-                        if (live) {
-                            FilmPlayFactory.playFilmListWithSet(setData,
-                                    ProgData.getInstance().liveFilmGuiController.getSelList(true));
-                        } else {
-                            FilmPlayFactory.playFilmListWithSet(setData,
-                                    ProgData.getInstance().filmGuiController.getSelList(true));
-                        }
-                    }
-            );
+                switch (pane) {
+                    case FILM -> FilmPlayFactory.playFilmListWithSet(setData,
+                            ProgData.getInstance().filmGuiController.getSelList(true));
+                    case AUDIO -> FilmPlayFactory.playFilmListWithSet(setData,
+                            ProgData.getInstance().audioGuiController.getSelList(true));
+                    case LIVE -> FilmPlayFactory.playFilmListWithSet(setData,
+                            ProgData.getInstance().liveFilmGuiController.getSelList(true));
+                }
+            });
             tilePane.getChildren().add(btn);
         });
     }

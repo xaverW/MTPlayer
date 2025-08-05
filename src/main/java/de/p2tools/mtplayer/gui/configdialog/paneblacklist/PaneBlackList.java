@@ -82,7 +82,7 @@ public class PaneBlackList {
         this.panelButton = new PanelButton();
 
         mbChannel = new P2MenuButton(mbChannelProp,
-                ThemeListFactory.allChannelList, true);
+                ThemeListFactory.allChannelListFilm, true);
 
         if (controlBlackListNotFilmFilter) {
             tableView = new TableBlacklist(Table.TABLE_ENUM.BLACKLIST);

@@ -49,19 +49,18 @@ public class FilterWorker {
 
     public FilterWorker(boolean audio) {
         this.audio = audio;
-        actFilterSettings = new FilmFilter("ActFilterSettings" + (audio ? "Audio" : "Film"), SELECTED_FILTER_NAME);
-        storedFilterSettings = new FilmFilter("StoredFilterSettings" + (audio ? "Audio" : "Film"), STORED_FILTER_NAME);
-        storedSmallFilterSettings = new FilmFilter("StoredSmallFilterSettings" + (audio ? "Audio" : "Film"), STORED_SMALL_FILTER_NAME);
+        actFilterSettings = new FilmFilter("ActFilterSettings" + (audio ? "Audio" : "Film"), audio, SELECTED_FILTER_NAME);
+        storedFilterSettings = new FilmFilter("StoredFilterSettings" + (audio ? "Audio" : "Film"), audio, STORED_FILTER_NAME);
+        storedSmallFilterSettings = new FilmFilter("StoredSmallFilterSettings" + (audio ? "Audio" : "Film"), audio, STORED_SMALL_FILTER_NAME);
 
         filmFilterList = new FilmFilterList("FilmFilterList" + (audio ? "Audio" : "Film"));
         backwardFilterList = new FilmFilterList("FilmFilterListBackward" + (audio ? "Audio" : "Film"));
         forwardFilterList = new FilmFilterList("FilmFilterListForward" + (audio ? "Audio" : "Film"));
 
-        fastFilter = new FastFilter("FastFilter" + (audio ? "Audio" : "Film"), false);
+        fastFilter = new FastFilter("FastFilter" + (audio ? "Audio" : "Film"), audio);
 
         getActFilterSettings().channelProperty().addListener(l -> {
-            // todo audio
-            ThemeListFactory.createThemeList(ProgData.getInstance(), getActFilterSettings().channelProperty().getValueSafe());
+            ThemeListFactory.createThemeList(audio, ProgData.getInstance(), getActFilterSettings().channelProperty().getValueSafe());
         });
     }
 
@@ -175,7 +174,7 @@ public class FilterWorker {
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
-        BlacklistFilterFactory.makeBlackFilteredFilmlist();
+        BlacklistFilterFactory.makeBlackFilteredFilmlist(audio);
         if (audio) {
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
         } else {

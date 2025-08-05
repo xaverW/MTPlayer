@@ -138,7 +138,7 @@ public class AddAboDto {
 
         addAboData = InitAddAboArray.initAboArray(abo);
 
-        this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelList, true);
+        this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelListFilm, true);
         channelProperty.addListener((u, o, n) -> getAct().abo.setChannel(channelProperty.getValueSafe()));
 
         initChannelTTDescription = new InitChannelTTDescription(this);
@@ -165,7 +165,7 @@ public class AddAboDto {
 
         addAboData = InitAddAboArray.initAboArray(aboList);
 
-        this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelList, true);
+        this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelListFilm, true);
         channelProperty.addListener((u, o, n) -> getAct().abo.setChannel(channelProperty.getValueSafe()));
 
         initChannelTTDescription = new InitChannelTTDescription(this);

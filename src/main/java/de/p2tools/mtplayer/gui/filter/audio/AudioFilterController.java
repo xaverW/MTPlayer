@@ -44,7 +44,7 @@ public class AudioFilterController extends FilterController {
         filmFilterControllerBlacklist = new AudioFilterControllerBlacklist();
 
         filmSmallFilterControllerFilter = new AudioSmallFilterControllerFilter();
-        ProgConfig.FILMFILTER_SMALL_FILTER.addListener((u, o, n) -> {
+        ProgConfig.AUDIOFILTER_SMALL_FILTER.addListener((u, o, n) -> {
             setFilter();
             setGui();
         });
@@ -54,7 +54,7 @@ public class AudioFilterController extends FilterController {
     }
 
     private void setFilterStart() {
-        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+        if (ProgConfig.AUDIOFILTER_SMALL_FILTER.get()) {
             // actFilterSettings sind die Einstellungen des Filters beim Beenden
             ProgData.getInstance().filterWorkerAudio.getActFilterSettings()
                     .copyTo(ProgData.getInstance().filterWorkerAudio.getStoredSmallFilterSettings());
@@ -68,7 +68,7 @@ public class AudioFilterController extends FilterController {
     }
 
     private void setFilter() {
-        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+        if (ProgConfig.AUDIOFILTER_SMALL_FILTER.get()) {
             // dann den kleinen Filter
             ProgData.getInstance().filterWorkerAudio.getActFilterSettings()
                     .copyTo(ProgData.getInstance().filterWorkerAudio.getStoredFilterSettings());
@@ -87,7 +87,7 @@ public class AudioFilterController extends FilterController {
     }
 
     private void setGui() {
-        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+        if (ProgConfig.AUDIOFILTER_SMALL_FILTER.get()) {
             getChildren().clear();
             final VBox vBox = getVBoxFilter();
             vBox.getChildren().addAll(filmFilterControllerTextFilter);

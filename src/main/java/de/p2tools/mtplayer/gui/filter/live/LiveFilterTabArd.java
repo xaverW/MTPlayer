@@ -61,7 +61,7 @@ public class LiveFilterTabArd extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboString cboSearch;
-        cboSearch = new PCboString(progData.stringFilterLists.getFilterListArdLive(),
+        cboSearch = new PCboString(progData.stringFilterLists.getFilterListLiveArd(),
                 ProgConfig.LIVE_FILM_GUI_SEARCH_ARD);
 
         VBox vBox = new VBox();
@@ -98,7 +98,7 @@ public class LiveFilterTabArd extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboString cboSearchUrl;
-        cboSearchUrl = new PCboString(progData.stringFilterLists.getFilterListArdUrl(),
+        cboSearchUrl = new PCboString(progData.stringFilterLists.getFilterListLiveArdUrl(),
                 ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD);
 
         vBox = new VBox(2);

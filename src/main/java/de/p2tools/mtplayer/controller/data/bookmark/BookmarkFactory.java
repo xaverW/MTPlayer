@@ -205,6 +205,7 @@ public class BookmarkFactory {
 
     public static void markBookmarks() {
         // beim Programmstart die Filme markieren
+        // todo audio
         if (ProgData.getInstance().bookmarkList.isEmpty()) {
             return;
         }

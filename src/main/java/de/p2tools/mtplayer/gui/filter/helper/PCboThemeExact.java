@@ -7,23 +7,39 @@ import org.controlsfx.control.SearchableComboBox;
 
 public class PCboThemeExact extends SearchableComboBox<String> {
 
-    public PCboThemeExact(ProgData progData, StringProperty stringPropertyThemeExact) {
+    public PCboThemeExact(boolean audio, ProgData progData, StringProperty stringPropertyThemeExact) {
+        if (audio) {
+            setItems(ThemeListFactory.themeForChannelListAudio);
+            ThemeListFactory.themeForChannelChangedAudio.addListener((u, o, n) -> {
+                setItems(ThemeListFactory.themeForChannelListAudio);
+            });
+            getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                        if (!progData.filterWorkerAudio.getActFilterSettings().isThemeIsExact()) {
+                            // dann betrifft es das nicht
+                            return;
+                        }
 
-        setItems(ThemeListFactory.themeForChannelList);
-        ThemeListFactory.themeForChannelChanged.addListener((u, o, n) -> {
-            setItems(ThemeListFactory.themeForChannelList);
-        });
-
-        getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!progData.filterWorkerFilm.getActFilterSettings().isThemeIsExact()) {
-                        // dann betrifft es das nicht
-                        return;
+                        final String str = newValue == null ? "" : newValue;
+                        stringPropertyThemeExact.setValue(str);
                     }
+            );
 
-                    final String str = newValue == null ? "" : newValue;
-                    stringPropertyThemeExact.setValue(str);
-                }
-        );
+        } else {
+            setItems(ThemeListFactory.themeForChannelListFilm);
+            ThemeListFactory.themeForChannelChangedFilm.addListener((u, o, n) -> {
+                setItems(ThemeListFactory.themeForChannelListFilm);
+            });
+            getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                        if (!progData.filterWorkerFilm.getActFilterSettings().isThemeIsExact()) {
+                            // dann betrifft es das nicht
+                            return;
+                        }
+
+                        final String str = newValue == null ? "" : newValue;
+                        stringPropertyThemeExact.setValue(str);
+                    }
+            );
+        }
 
         stringPropertyThemeExact.addListener((u, o, n) -> {
             getSelectionModel().select(stringPropertyThemeExact.getValue());

@@ -49,7 +49,7 @@ public class LiveFilmFilterText extends VBox {
         };
 
         mbChannel = new P2MenuButton(progData.liveFilmFilterWorker.getActFilterSettings().channelProperty(),
-                ThemeListFactory.allChannelList);
+                ThemeListFactory.allChannelListFilm);
         cboThema = new PCboString(progData.stringFilterLists.getFilterListLiveThema(),
                 progData.liveFilmFilterWorker.getActFilterSettings().themeProperty(), booleanSupplier);
         cboTitle = new PCboString(progData.stringFilterLists.getFilterListLiveTitel(),

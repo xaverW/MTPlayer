@@ -82,7 +82,7 @@ public class LiveFilmGuiController extends AnchorPane {
         scrollPaneTableFilm.setContent(tableView);
 
         paneFilmInfo = new PaneFilmInfo(ProgConfig.LIVE_FILM_PANE_INFO_DIVIDER);
-        paneButton = new PaneFilmButton(true);
+        paneButton = new PaneFilmButton(PaneFilmButton.PANE.LIVE);
 
         MediaDataDto mDtoMedia = new MediaDataDto();
         MediaDataDto mDtoAbo = new MediaDataDto();
