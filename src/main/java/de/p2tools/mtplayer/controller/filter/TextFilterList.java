@@ -21,6 +21,8 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 public final class TextFilterList extends SimpleListProperty<TextFilter> implements P2DataList<TextFilter> {
+    // sind die gespeicherten Text-Filter in der eigenen CBO
+
     public String TAG;
 
     public TextFilterList(String tag) {

@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.filterlive;
+package de.p2tools.mtplayer.controller.filter.live;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;

@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterSamples;
+import de.p2tools.mtplayer.controller.filter.film.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;

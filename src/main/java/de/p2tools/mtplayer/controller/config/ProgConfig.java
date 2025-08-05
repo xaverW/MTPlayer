@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.filter.FastFilter;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
-import de.p2tools.mtplayer.controller.filterlive.LiveFilter;
+import de.p2tools.mtplayer.controller.filter.live.LiveFilter;
 import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.pdata.P2Data;

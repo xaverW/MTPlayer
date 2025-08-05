@@ -91,10 +91,10 @@ public class AudioFilterRunner {
 
                     if (ProgData.getInstance().filterWorkerAudio.getActFilterSettings().isThemeVis() &&
                             ProgData.getInstance().filterWorkerAudio.getActFilterSettings().isThemeIsExact() &&
-                            !ThemeListFactory.themeForChannelListFilm
+                            !ThemeListFactory.themeForChannelListAudio
                                     .contains(ProgData.getInstance().filterWorkerAudio.getActFilterSettings().getExactTheme())) {
                         // Filter ExactTheme kontrollieren
-                        P2Log.debugLog("Clear filter");
+                        P2Log.debugLog("Clear audio-filter");
 
                         progData.filterWorkerAudio.getActFilterSettings().switchFilterOff(true);
                         ProgData.getInstance().filterWorkerAudio.getActFilterSettings().setExactTheme("");

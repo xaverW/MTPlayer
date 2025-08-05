@@ -9,6 +9,8 @@ import javafx.beans.property.StringProperty;
 import java.util.ArrayList;
 
 public class TextFilter extends P2DataSample<TextFilter> implements Comparable<TextFilter> {
+    // sind die gespeicherten Text-Filter in der eigenen CBO
+
     public static String TAG = "TextFilter";
 
     private final StringProperty channel = new SimpleStringProperty("");

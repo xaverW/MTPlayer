@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filter.film;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -94,7 +94,7 @@ public class FilmFilterRunner {
                             !ThemeListFactory.themeForChannelListFilm
                                     .contains(ProgData.getInstance().filterWorkerFilm.getActFilterSettings().getExactTheme())) {
                         // Filter ExactTheme kontrollieren
-                        P2Log.debugLog("Clear filter");
+                        P2Log.debugLog("Clear film-filter");
 
                         progData.filterWorkerFilm.getActFilterSettings().switchFilterOff(true);
                         ProgData.getInstance().filterWorkerFilm.getActFilterSettings().setExactTheme("");

@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.filterlive;
+package de.p2tools.mtplayer.controller.filter.live;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
