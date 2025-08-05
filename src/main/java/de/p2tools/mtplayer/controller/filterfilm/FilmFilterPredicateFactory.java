@@ -21,6 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.filter.FastFilter;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataProps;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
@@ -35,8 +37,8 @@ public class FilmFilterPredicateFactory {
 
     public static Predicate<FilmData> getPredicate(ProgData progData) {
 
-        FilmFilter filmFilter = progData.filmFilterWorker.getActFilterSettings();
-        FilmFastFilter filmFastFilter = progData.filmFilterWorker.getFastFilterSettings();
+        FilmFilter filmFilter = progData.filterWorkerFilm.getActFilterSettings();
+        FastFilter fastFilter = progData.filterWorkerFilm.getFastFilterSettings();
 
         de.p2tools.p2lib.mediathek.filter.Filter fChannel;
         de.p2tools.p2lib.mediathek.filter.Filter fSomewhere;
@@ -168,7 +170,7 @@ public class FilmFilterPredicateFactory {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
         }
 
-        predicate = addFastFilter(filmFilter, filmFastFilter, predicate);
+        predicate = addFastFilter(filmFilter, fastFilter, predicate);
 
         if (!fChannel.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchChannelSmart(fChannel, f));
@@ -190,7 +192,7 @@ public class FilmFilterPredicateFactory {
         return predicate;
     }
 
-    private static Predicate<FilmData> addFastFilter(FilmFilter filmFilter, FilmFastFilter filmFastFilter,
+    private static Predicate<FilmData> addFastFilter(FilmFilter filmFilter, FastFilter filmFastFilter,
                                                      Predicate<FilmData> predicate) {
         de.p2tools.p2lib.mediathek.filter.Filter fastFilter = new de.p2tools.p2lib.mediathek.filter.Filter(filmFastFilter.getFilterTerm(), true);
 

@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilterSamples;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.audio.AudioFilterSamples;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -101,7 +101,7 @@ public class AudioFilterControllerProfiles extends VBox {
 
     private void filterProfiles() {
         // Filterprofile einrichten
-        cboFilterProfiles.setItems(progData.audioFilterWorker.getFilmFilterList());
+        cboFilterProfiles.setItems(progData.filterWorkerAudio.getFilmFilterList());
         cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
@@ -187,7 +187,7 @@ public class AudioFilterControllerProfiles extends VBox {
     }
 
     private void loadFilter() {
-        progData.audioFilterWorker.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
+        progData.filterWorkerAudio.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
     }
 
     private void saveFilter() {
@@ -195,7 +195,7 @@ public class AudioFilterControllerProfiles extends VBox {
         if (sf == null) {
             newFilter();
         } else {
-            progData.audioFilterWorker.getFilmFilterList().saveStoredFilter(sf);
+            progData.filterWorkerAudio.getFilmFilterList().saveStoredFilter(sf);
             checkCboFilter();
         }
     }
@@ -207,13 +207,13 @@ public class AudioFilterControllerProfiles extends VBox {
             return;
         }
 
-        if (progData.audioFilterWorker.getFilmFilterList().removeStoredFilter(sf)) {
+        if (progData.filterWorkerAudio.getFilmFilterList().removeStoredFilter(sf)) {
             cboFilterProfiles.getSelectionModel().clearSelection();
         }
     }
 
     private void delAllFilter() {
-        progData.audioFilterWorker.getFilmFilterList().removeAllStoredFilter();
+        progData.filterWorkerAudio.getFilmFilterList().removeAllStoredFilter();
         cboFilterProfiles.getSelectionModel().clearSelection();
     }
 
@@ -225,12 +225,12 @@ public class AudioFilterControllerProfiles extends VBox {
                             "ersetzt werden?")) {
                 return;
             }
-            progData.audioFilterWorker.getFilmFilterList().clear();
+            progData.filterWorkerAudio.getFilmFilterList().clear();
 
-        } else if (!progData.audioFilterWorker.getFilmFilterList().isEmpty()) {
+        } else if (!progData.filterWorkerAudio.getFilmFilterList().isEmpty()) {
             // dann eine Markierung
-            progData.audioFilterWorker.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
-            progData.audioFilterWorker.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
+            progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
+            progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
         }
 
         AudioFilterSamples.addStandardFilter();
@@ -238,7 +238,7 @@ public class AudioFilterControllerProfiles extends VBox {
     }
 
     private void newFilter() {
-        final TextInputDialog dialog = new TextInputDialog(progData.audioFilterWorker.getFilmFilterList().getNextName());
+        final TextInputDialog dialog = new TextInputDialog(progData.filterWorkerAudio.getFilmFilterList().getNextName());
         dialog.setTitle("Filterprofilname");
         dialog.setHeaderText("Den Namen des Filterprofils vorgeben");
         dialog.setContentText("Name:");
@@ -247,7 +247,7 @@ public class AudioFilterControllerProfiles extends VBox {
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            progData.audioFilterWorker.getFilmFilterList().addNewStoredFilter(result.get());
+            progData.filterWorkerAudio.getFilmFilterList().addNewStoredFilter(result.get());
             cboFilterProfiles.getSelectionModel().selectLast();
         }
     }
@@ -274,7 +274,7 @@ public class AudioFilterControllerProfiles extends VBox {
     }
 
     private void checkCboFilter() {
-        FilmFilter sf = progData.audioFilterWorker.getActFilterSettings();
+        FilmFilter sf = progData.filterWorkerAudio.getActFilterSettings();
         FilmFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf.isSame(sfCbo)) {
             //if (SelectedFilmFilterFactory.compareFilterWithoutNameOfFilter(sf, sfCbo)) {

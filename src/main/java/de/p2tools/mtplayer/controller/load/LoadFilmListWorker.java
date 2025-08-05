@@ -159,7 +159,7 @@ public class LoadFilmListWorker {
             ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.filmList.sender));
 
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            ThemeListFactory.createThemeList(progData, progData.filmFilterWorker.getActFilterSettings().getChannel());
+            ThemeListFactory.createThemeList(progData, progData.filterWorkerFilm.getActFilterSettings().getChannel());
 
             if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
                 // wenn gewollt oder im AutoMode immer suchen

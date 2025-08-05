@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.configlist.ConfigStringList;
@@ -8,7 +8,8 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-public class FilmFilterString extends P2DataSample<FilmFilterString> implements Comparable<FilmFilterString> {
+public class StringFilter extends P2DataSample<StringFilter> implements Comparable<StringFilter> {
+    // sind die gespeicherten String in den CBO's der TextFilter
 
     public static String TAG = "StringFilter";
 
@@ -29,8 +30,7 @@ public class FilmFilterString extends P2DataSample<FilmFilterString> implements 
     private final ObservableList<String> filterListLiveThema = FXCollections.observableArrayList();
     private final ObservableList<String> filterListLiveTitel = FXCollections.observableArrayList();
 
-
-    public FilmFilterString() {
+    public StringFilter() {
     }
 
     @Override

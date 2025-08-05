@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
@@ -24,9 +24,9 @@ import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-public class FilmFastFilterProps extends P2DataSample<FilmFastFilter> implements Comparable<FilmFastFilter> {
+public class FastFilterProps extends P2DataSample<FastFilter> implements Comparable<FastFilter> {
 
-    public String TAG = "FastFilmFilterProps";
+    public String TAG = "FastFilterProps";
 
     private final StringProperty filterTerm = new SimpleStringProperty(); // ist der Filter-Wert
     public StringProperty[] sfStringPropArr = {filterTerm};
@@ -73,7 +73,7 @@ public class FilmFastFilterProps extends P2DataSample<FilmFastFilter> implements
     }
 
     @Override
-    public int compareTo(FilmFastFilter o) {
+    public int compareTo(FastFilter o) {
         return filterTerm.getValue().compareTo(o.getFilterTerm());
     }
 }

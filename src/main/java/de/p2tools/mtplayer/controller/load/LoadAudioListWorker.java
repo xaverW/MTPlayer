@@ -114,7 +114,7 @@ public class LoadAudioListWorker {
             // alle Sender laden
             ThemeListFactory.allChannelList.setAll(Arrays.asList(progData.audioList.sender));
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
-            ThemeListFactory.createThemeList(progData, progData.audioFilterWorker.getActFilterSettings().getChannel());
+            ThemeListFactory.createThemeList(progData, progData.filterWorkerAudio.getActFilterSettings().getChannel());
 
             // activate the saved filter
             progData.worker.resetFilter();

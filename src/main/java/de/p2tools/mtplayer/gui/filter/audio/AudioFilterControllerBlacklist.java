@@ -54,14 +54,14 @@ public class AudioFilterControllerBlacklist extends HBox {
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
 
         setTglBlacklist();
-        progData.audioFilterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> setTglBlacklist());
+        progData.filterWorkerAudio.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> setTglBlacklist());
         tglBlacklist.getCheckBox().setOnAction((mouseEvent) -> {
             if (tglBlacklist.isIndeterminate()) {
-                progData.audioFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+                progData.filterWorkerAudio.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
             } else if (tglBlacklist.isSelected()) {
-                progData.audioFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+                progData.filterWorkerAudio.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
             } else {
-                progData.audioFilterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+                progData.filterWorkerAudio.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
             }
         });
 
@@ -72,7 +72,7 @@ public class AudioFilterControllerBlacklist extends HBox {
     }
 
     private void setTglBlacklist() {
-        switch (progData.audioFilterWorker.getActFilterSettings().blacklistOnOffProperty().getValue()) {
+        switch (progData.filterWorkerAudio.getActFilterSettings().blacklistOnOffProperty().getValue()) {
             case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
                 tglBlacklist.setIndeterminate(false);
                 tglBlacklist.setSelected(false);

@@ -47,7 +47,7 @@ public class LiveFilterTabZdf extends Tab {
         });
 
         final PCboString cboSearch;
-        cboSearch = new PCboString(progData.filmFilterStringLists.getFilterListZdfLive(),
+        cboSearch = new PCboString(progData.stringFilterLists.getFilterListZdfLive(),
                 ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF);
 
         Button btnSearchZdf = new Button();
@@ -98,7 +98,7 @@ public class LiveFilterTabZdf extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboString cboSearchUrl;
-        cboSearchUrl = new PCboString(progData.filmFilterStringLists.getFilterListZdfUrl(),
+        cboSearchUrl = new PCboString(progData.stringFilterLists.getFilterListZdfUrl(),
                 ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF);
 
         vBox = new VBox(2);

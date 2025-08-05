@@ -103,19 +103,19 @@ public class AudioTableContextMenu {
         Menu submenuFilter = new Menu("Filter");
 
         final MenuItem miFilterChannel = new MenuItem("nach Sender filtern");
-        miFilterChannel.setOnAction(event -> progData.audioFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel()));
+        miFilterChannel.setOnAction(event -> progData.filterWorkerAudio.getActFilterSettings().setChannelAndVis(film.getChannel()));
         final MenuItem miFilterTheme = new MenuItem("nach Thema filtern");
-        miFilterTheme.setOnAction(event -> progData.audioFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false));
+        miFilterTheme.setOnAction(event -> progData.filterWorkerAudio.getActFilterSettings().setThemeAndVis(film.getTheme(), false));
         final MenuItem miFilterChannelTheme = new MenuItem("nach Sender und Thema filtern");
         miFilterChannelTheme.setOnAction(event -> {
-            progData.audioFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.audioFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
+            progData.filterWorkerAudio.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.filterWorkerAudio.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
         });
         final MenuItem miFilterChannelThemeTitle = new MenuItem("nach Sender, Thema und Titel filtern");
         miFilterChannelThemeTitle.setOnAction(event -> {
-            progData.audioFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.audioFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
-            progData.audioFilterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
+            progData.filterWorkerAudio.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.filterWorkerAudio.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
+            progData.filterWorkerAudio.getActFilterSettings().setTitleAndVis(film.getTitle());
         });
 
         miFilterChannel.setDisable(film == null);

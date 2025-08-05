@@ -20,8 +20,8 @@ package de.p2tools.mtplayer.controller.update;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterWorker;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 
 public class ProgConfigUpdate {
@@ -48,10 +48,10 @@ public class ProgConfigUpdate {
             // dann müssen die gespeicherten Filter aktualisiert werden
             final int FILTER_DAYS_MAX__OLD = 30; // ist der alte Wert für "alles"
 
-            if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
-                ProgData.getInstance().filmFilterWorker.getActFilterSettings().setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
+            if (ProgData.getInstance().filterWorkerFilm.getActFilterSettings().getTimeRange() == FILTER_DAYS_MAX__OLD) {
+                ProgData.getInstance().filterWorkerFilm.getActFilterSettings().setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
             }
-            ProgData.getInstance().filmFilterWorker.getFilmFilterList().forEach(sf -> {
+            ProgData.getInstance().filterWorkerFilm.getFilmFilterList().forEach(sf -> {
                 if (sf.getTimeRange() == FILTER_DAYS_MAX__OLD) {
                     sf.setTimeRange(FilterCheck.FILTER_ALL_OR_MIN);
                 }
@@ -60,12 +60,12 @@ public class ProgConfigUpdate {
 
         if (!ProgConfig.SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER.getValue()) {
             // theme exact wurde erweitert, theme/exactTheme wird getrennt gespeichert
-            FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
+            FilmFilter filmFilter = ProgData.getInstance().filterWorkerFilm.getActFilterSettings();
             if (filmFilter.isThemeIsExact()) {
                 filmFilter.setExactTheme(filmFilter.getTheme());
             }
 
-            ProgData.getInstance().filmFilterWorker.getFilmFilterList().forEach(sf -> {
+            ProgData.getInstance().filterWorkerFilm.getFilmFilterList().forEach(sf -> {
                 // exactTheme ist neu
                 if (sf.isThemeIsExact()) {
                     sf.setExactTheme(sf.getTheme());
@@ -75,14 +75,14 @@ public class ProgConfigUpdate {
 
         if (!ProgConfig.SYSTEM_AFTER_UPDATE_RBTV.getValue()) {
             // "rbtv" und "Radio Bremen TV" wird umbenannt in "RBTV"
-            FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
+            FilmFilter filmFilter = ProgData.getInstance().filterWorkerFilm.getActFilterSettings();
             if (filmFilter.channelProperty().getValueSafe().contains("rbtv") ||
                     filmFilter.channelProperty().getValueSafe().contains("Radio Bremen TV")) {
                 filmFilter.setChannel(filmFilter.channelProperty().getValueSafe().replaceAll("rbtv", "RBTV"));
                 filmFilter.setChannel(filmFilter.channelProperty().getValueSafe().replaceAll("Radio Bremen TV", "RBTV"));
             }
 
-            ProgData.getInstance().filmFilterWorker.getFilmFilterList().forEach(sf -> {
+            ProgData.getInstance().filterWorkerFilm.getFilmFilterList().forEach(sf -> {
                 if (sf.channelProperty().getValueSafe().contains("rbtv") ||
                         sf.channelProperty().getValueSafe().contains("Radio Bremen TV")) {
                     sf.setChannel(sf.channelProperty().getValueSafe().replaceAll("rbtv", "RBTV"));
@@ -122,11 +122,11 @@ public class ProgConfigUpdate {
         }
 
         if (!ProgConfig.SYSTEM_SMALL_FILTER.getValue()) {
-            ProgData.getInstance().filmFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().filmFilterWorker.getStoredFilterSettings());
+            ProgData.getInstance().filterWorkerFilm.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerFilm.getStoredFilterSettings());
             // ist dann ein smallFilter
-            ProgData.getInstance().filmFilterWorker.getActFilterSettings().clearFilter();
-            FilmFilterWorker.setSmallFilter(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
+            ProgData.getInstance().filterWorkerFilm.getActFilterSettings().clearFilter();
+            FilterWorker.setSmallFilter(ProgData.getInstance().filterWorkerFilm.getActFilterSettings());
         }
 
         setUpdateDone();

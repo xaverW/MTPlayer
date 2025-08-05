@@ -15,11 +15,11 @@
  */
 
 
-package de.p2tools.mtplayer.controller.filteraudio;
+package de.p2tools.mtplayer.controller.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -53,7 +53,7 @@ public class AudioFilterRunner {
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_HISTORY_CHANGED) {
             @Override
             public void ping() {
-                FilmFilter filmFilter = progData.audioFilterWorker.getActFilterSettings();
+                FilmFilter filmFilter = progData.filterWorkerAudio.getActFilterSettings();
                 if (filmFilter.isNotVis() && filmFilter.isNotHistory() ||
                         filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory()) {
                     //nur dann wird History gefiltert
@@ -89,16 +89,16 @@ public class AudioFilterRunner {
                             "=======================================";
                     P2Log.debugLog(text);
 
-                    if (ProgData.getInstance().audioFilterWorker.getActFilterSettings().isThemeVis() &&
-                            ProgData.getInstance().audioFilterWorker.getActFilterSettings().isThemeIsExact() &&
+                    if (ProgData.getInstance().filterWorkerAudio.getActFilterSettings().isThemeVis() &&
+                            ProgData.getInstance().filterWorkerAudio.getActFilterSettings().isThemeIsExact() &&
                             !ThemeListFactory.themeForChannelList
-                                    .contains(ProgData.getInstance().audioFilterWorker.getActFilterSettings().getExactTheme())) {
+                                    .contains(ProgData.getInstance().filterWorkerAudio.getActFilterSettings().getExactTheme())) {
                         // Filter ExactTheme kontrollieren
                         P2Log.debugLog("Clear filter");
 
-                        progData.audioFilterWorker.getActFilterSettings().switchFilterOff(true);
-                        ProgData.getInstance().audioFilterWorker.getActFilterSettings().setExactTheme("");
-                        progData.audioFilterWorker.getActFilterSettings().switchFilterOff(false);
+                        progData.filterWorkerAudio.getActFilterSettings().switchFilterOff(true);
+                        ProgData.getInstance().filterWorkerAudio.getActFilterSettings().setExactTheme("");
+                        progData.filterWorkerAudio.getActFilterSettings().switchFilterOff(false);
                     }
 
                     progData.audioGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird

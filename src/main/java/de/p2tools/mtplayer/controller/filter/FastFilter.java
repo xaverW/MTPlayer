@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -23,14 +23,14 @@ import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
-public final class FilmFastFilter extends FilmFastFilterProps implements Filter {
+public final class FastFilter extends FastFilterProps implements Filter {
 
     private final PauseTransition pause = new PauseTransition(Duration.millis(ProgConfig.SYSTEM_FILTER_WAIT_TIME.getValue())); // nach Ablauf wird Änderung gemeldet - oder nach Return
     private final boolean audio;
 
-    public FilmFastFilter(boolean audio, String tag) {
-        this.audio = audio;
+    public FastFilter(String tag, boolean audio) {
         TAG = tag;
+        this.audio = audio;
         initFilter();
     }
 

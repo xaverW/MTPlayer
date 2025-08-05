@@ -103,19 +103,19 @@ public class FilmTableContextMenu {
         Menu submenuFilter = new Menu("Filter");
 
         final MenuItem miFilterChannel = new MenuItem("nach Sender filtern");
-        miFilterChannel.setOnAction(event -> progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel()));
+        miFilterChannel.setOnAction(event -> progData.filterWorkerFilm.getActFilterSettings().setChannelAndVis(film.getChannel()));
         final MenuItem miFilterTheme = new MenuItem("nach Thema filtern");
-        miFilterTheme.setOnAction(event -> progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false));
+        miFilterTheme.setOnAction(event -> progData.filterWorkerFilm.getActFilterSettings().setThemeAndVis(film.getTheme(), false));
         final MenuItem miFilterChannelTheme = new MenuItem("nach Sender und Thema filtern");
         miFilterChannelTheme.setOnAction(event -> {
-            progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
+            progData.filterWorkerFilm.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.filterWorkerFilm.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
         });
         final MenuItem miFilterChannelThemeTitle = new MenuItem("nach Sender, Thema und Titel filtern");
         miFilterChannelThemeTitle.setOnAction(event -> {
-            progData.filmFilterWorker.getActFilterSettings().setChannelAndVis(film.getChannel());
-            progData.filmFilterWorker.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
-            progData.filmFilterWorker.getActFilterSettings().setTitleAndVis(film.getTitle());
+            progData.filterWorkerFilm.getActFilterSettings().setChannelAndVis(film.getChannel());
+            progData.filterWorkerFilm.getActFilterSettings().setThemeAndVis(film.getTheme(), false);
+            progData.filterWorkerFilm.getActFilterSettings().setTitleAndVis(film.getTitle());
         });
 
         miFilterChannel.setDisable(film == null);

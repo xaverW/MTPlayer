@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -124,7 +124,7 @@ public class FilmMenu {
         });
 
         btFilterBookmark.setOnAction(a -> {
-            FilmFilter sf = progData.filmFilterWorker.getActFilterSettings();
+            FilmFilter sf = progData.filterWorkerFilm.getActFilterSettings();
             FilmFilter bookmarkFilter = FilmFilterSamples.getBookmarkFilter();
 
             if (sf.isSame(bookmarkFilter)) {
@@ -132,18 +132,18 @@ public class FilmMenu {
                 if (storedActFilterSettings != null) {
                     // dann haben wir einen gespeicherten Filter
                     storedActFilterSettings.setOnlyBookmark(false); // falls der eingeschaltet war
-                    progData.filmFilterWorker.setActFilterSettings(storedActFilterSettings);
+                    progData.filterWorkerFilm.setActFilterSettings(storedActFilterSettings);
                     storedActFilterSettings = null;
 
                 } else {
                     // dann gibts keinen gespeicherten, dann einfach löschen
-                    progData.filmFilterWorker.getActFilterSettings().clearFilter();
+                    progData.filterWorkerFilm.getActFilterSettings().clearFilter();
                 }
 
             } else {
                 // dann ist es ein anderer Filter, Black einschalten und ActFilter merken
-                storedActFilterSettings = progData.filmFilterWorker.getActFilterSettings().getCopy();
-                progData.filmFilterWorker.setActFilterSettings(bookmarkFilter);
+                storedActFilterSettings = progData.filterWorkerFilm.getActFilterSettings().getCopy();
+                progData.filterWorkerFilm.setActFilterSettings(bookmarkFilter);
             }
 
             progData.filmGuiController.tableView.refresh();

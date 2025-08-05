@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
 import de.p2tools.mtplayer.gui.dialog.abodialog.AboAddDialogController;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
@@ -70,7 +70,7 @@ public class AboListFactory {
 
     public static void addNewAboFromFilterButton() {
         // aus Menü/TableContextMenü
-        FilmFilter filmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings();
+        FilmFilter filmFilter = ProgData.getInstance().filterWorkerFilm.getActFilterSettings();
         String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
 
         boolean themeIsExact = filmFilter.isThemeIsExact();
@@ -133,13 +133,13 @@ public class AboListFactory {
 
         final AboData abo = oAbo.get();
         new AboAddDialogController(ProgData.getInstance(),
-                ProgData.getInstance().filmFilterWorker.getActFilterSettings(), abo);
+                ProgData.getInstance().filterWorkerFilm.getActFilterSettings(), abo);
     }
 
     public static void setFilmFilterFromAbo() {
         // Menü
         Optional<AboData> abo = ProgData.getInstance().aboGuiController.getSel();
-        ProgData.getInstance().filmFilterWorker.setFilterFromAbo(abo);
+        ProgData.getInstance().filterWorkerFilm.setFilterFromAbo(abo);
     }
 
     public static void editAbo() {

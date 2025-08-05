@@ -32,12 +32,11 @@ import de.p2tools.mtplayer.controller.data.history.HistoryList;
 import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilterRunner;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilterWorker;
+import de.p2tools.mtplayer.controller.filter.FilterWorker;
+import de.p2tools.mtplayer.controller.filter.StringFilter;
+import de.p2tools.mtplayer.controller.filter.TextFilterList;
+import de.p2tools.mtplayer.controller.filter.audio.AudioFilterRunner;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilterRunner;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterString;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterTextList;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterWorker;
 import de.p2tools.mtplayer.controller.filterlive.LiveFilmFilterWorker;
 import de.p2tools.mtplayer.controller.load.LoadAudioListWorker;
 import de.p2tools.mtplayer.controller.load.LoadFilmListWorker;
@@ -102,11 +101,12 @@ public class ProgData {
 
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public PShortcut pShortcut; // verwendete Shortcuts
-    public FilmFilterWorker filmFilterWorker; // gespeicherte Filterprofile FILME
-    public AudioFilterWorker audioFilterWorker; // gespeicherte Filterprofile Audios
-    public FilmFilterTextList filmFilterTextList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
-    public FilmFilterTextList audioFilterTextList; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
-    public FilmFilterString filmFilterStringLists; // sind die Text-Filter in den CBO's
+    //
+    public FilterWorker filterWorkerFilm; // gespeicherte Filterprofile FILME
+    public FilterWorker filterWorkerAudio; // gespeicherte Filterprofile Audios
+    public TextFilterList textFilterListFilm; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
+    public TextFilterList textFilterListAudio; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
+    public StringFilter stringFilterLists; // sind die Text-Filter in den CBO's aller Filter
 
     public LiveFilmFilterWorker liveFilmFilterWorker; // Live
     public FilmFilterRunner filmFilterRunner; // Filme
@@ -177,12 +177,13 @@ public class ProgData {
         audioList = new FilmListMTP();
         audioListFiltered = new FilmListMTP();
 
-        filmFilterTextList = new FilmFilterTextList("FilmFilterTextList");
-        audioFilterTextList = new FilmFilterTextList("AudioFilterTextList");
-        filmFilterStringLists = new FilmFilterString();
-        filmFilterWorker = new FilmFilterWorker();
+        textFilterListFilm = new TextFilterList("FilterTextListFilm");
+        textFilterListAudio = new TextFilterList("FilterTextListAudio");
+
+        stringFilterLists = new StringFilter();
+        filterWorkerFilm = new FilterWorker(false);
         liveFilmFilterWorker = new LiveFilmFilterWorker(this);
-        audioFilterWorker = new AudioFilterWorker();
+        filterWorkerAudio = new FilterWorker(true);
 
 
         filmListFilter = new BlackList(this, "FilmListFilter");

@@ -14,43 +14,53 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filteraudio;
+package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFastFilter;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterList;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 
-public final class AudioFilterWorker {
+import java.util.Optional;
+
+public class FilterWorker {
 
     // ist der aktuell angezeigte Filter
-    public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung: Audio"; // dient nur der Info im Config-File
-    public static final String STORED_FILTER_NAME = "gespeicherte aktuelle Einstellung: Audio"; // dient nur der Info im Config-File
-    public static final String STORED_SMALL_FILTER_NAME = "gespeicherte aktuelle Einstellung, kleiner Filter: Audio"; // dient nur der Info im Config-File
+    public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung: Filme"; // dient nur der Info im Config-File
+    public static final String STORED_FILTER_NAME = "gespeicherte aktuelle Einstellung: Filme"; // dient nur der Info im Config-File
+    public static final String STORED_SMALL_FILTER_NAME = "gespeicherte aktuelle Einstellung, kleiner Filter: Filme"; // dient nur der Info im Config-File
 
     // ist der "aktuelle" Filter im Programm
-    private final FilmFilter actFilterSettings = new FilmFilter(true, SELECTED_FILTER_NAME);
-    private final FilmFilter storedFilterSettings = new FilmFilter(true, STORED_FILTER_NAME);
-    private final FilmFilter storedSmallFilterSettings = new FilmFilter(true, STORED_SMALL_FILTER_NAME);
+    public final FilmFilter actFilterSettings;
+    public final FilmFilter storedFilterSettings;
+    public final FilmFilter storedSmallFilterSettings;
 
-    // ist die Liste der gespeicherten Filter
-    private final FilmFilterList filmFilterList = new FilmFilterList("AudioFilterList");
-    // ist die Liste der BACK Filter
-    private final FilmFilterList backwardFilterList = new FilmFilterList("AudioFilterListBackward");
-    // ist die Liste der FORWARD Filter
-    private final FilmFilterList forwardFilterList = new FilmFilterList("AudioFilterListForward");
+    // sind  die Liste der gespeicherten Filter, BACKWARD, FORWARD
+    public final FilmFilterList filmFilterList;
+    public final FilmFilterList backwardFilterList;
+    public final FilmFilterList forwardFilterList;
 
     // ist der FastFilter
-    private final FilmFastFilter fastFilter = new FilmFastFilter(true, "AudioFastFilter");
-
+    public final FastFilter fastFilter;
     // da werden die Forward/Backward Filter verwaltet
-    private final AudioFilterBackward backwardFilmFilter = new AudioFilterBackward();
+    private final FilterBackward filterBackward = new FilterBackward(false);
+    private final boolean audio;
 
-    public AudioFilterWorker() {
+    public FilterWorker(boolean audio) {
+        this.audio = audio;
+        actFilterSettings = new FilmFilter("ActFilterSettings" + (audio ? "Audio" : "Film"), SELECTED_FILTER_NAME);
+        storedFilterSettings = new FilmFilter("StoredFilterSettings" + (audio ? "Audio" : "Film"), STORED_FILTER_NAME);
+        storedSmallFilterSettings = new FilmFilter("StoredSmallFilterSettings" + (audio ? "Audio" : "Film"), STORED_SMALL_FILTER_NAME);
+
+        filmFilterList = new FilmFilterList("FilmFilterList" + (audio ? "Audio" : "Film"));
+        backwardFilterList = new FilmFilterList("FilmFilterListBackward" + (audio ? "Audio" : "Film"));
+        forwardFilterList = new FilmFilterList("FilmFilterListForward" + (audio ? "Audio" : "Film"));
+
+        fastFilter = new FastFilter("FastFilter" + (audio ? "Audio" : "Film"), false);
+
         getActFilterSettings().channelProperty().addListener(l -> {
+            // todo audio
             ThemeListFactory.createThemeList(ProgData.getInstance(), getActFilterSettings().channelProperty().getValueSafe());
         });
     }
@@ -83,12 +93,12 @@ public final class AudioFilterWorker {
         return forwardFilterList;
     }
 
-    public FilmFastFilter getFastFilterSettings() {
+    public FastFilter getFastFilterSettings() {
         return fastFilter;
     }
 
-    public AudioFilterBackward getBackwardFilmFilter() {
-        return backwardFilmFilter;
+    public FilterBackward getBackwardFilmFilter() {
+        return filterBackward;
     }
 
     public synchronized void setActFilterSettings(FilmFilter sf) {
@@ -110,6 +120,36 @@ public final class AudioFilterWorker {
         }
     }
 
+    public synchronized void setFilterFromAbo(Optional<AboData> oAbo) {
+        // Filter nach einem Abo einstellen
+        if (oAbo.isEmpty()) {
+            return;
+        }
+
+        final AboData abo = oAbo.get();
+        actFilterSettings.switchFilterOff(true);
+        actFilterSettings.turnOffFilter(); // Filter erstmal löschen und dann alle abschalten
+
+        actFilterSettings.setChannelAndVis(abo.getChannel());
+        actFilterSettings.setThemeAndVis(abo.getTheme(), abo.isThemeExact());
+        actFilterSettings.setThemeTitleAndVis(abo.getThemeTitle());
+        actFilterSettings.setTitleAndVis(abo.getTitle());
+
+        actFilterSettings.setSomewhereVis(true);
+        actFilterSettings.setSomewhere(abo.getSomewhere());
+
+        actFilterSettings.setMinMaxDurVis(true);
+        actFilterSettings.setMinDur(abo.getMinDurationMinute());
+        actFilterSettings.setMaxDur(abo.getMaxDurationMinute());
+
+        actFilterSettings.setTimeRangeVis(true);
+        actFilterSettings.setTimeRange(abo.getTimeRange());
+
+        forwardFilterList.clear();
+        actFilterSettings.switchFilterOff(false);
+        postFilterChange();
+    }
+
     public synchronized void clearFilter() {
         actFilterSettings.switchFilterOff(true);
 
@@ -125,14 +165,22 @@ public final class AudioFilterWorker {
     }
 
     private void postFilterChange() {
-        backwardFilmFilter.addBackward();
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+        filterBackward.addBackward();
+        if (audio) {
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+        } else {
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+        }
     }
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
         BlacklistFilterFactory.makeBlackFilteredFilmlist();
-        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+        if (audio) {
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+        } else {
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+        }
     }
 
     public static void setSmallFilter(FilmFilter filmFilter) {

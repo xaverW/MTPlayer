@@ -85,52 +85,52 @@ public class AudioFilterControllerFilter extends VBox {
             }
         });
 
-        slTimeRange.setValue(progData.audioFilterWorker.getActFilterSettings().getTimeRange());
+        slTimeRange.setValue(progData.filterWorkerAudio.getActFilterSettings().getTimeRange());
         setLabelSlider();
-        progData.audioFilterWorker.getActFilterSettings().timeRangeProperty().addListener(
-                l -> slTimeRange.setValue(progData.audioFilterWorker.getActFilterSettings().getTimeRange()));
+        progData.filterWorkerAudio.getActFilterSettings().timeRangeProperty().addListener(
+                l -> slTimeRange.setValue(progData.filterWorkerAudio.getActFilterSettings().getTimeRange()));
 
         // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
         slTimeRange.valueProperty().addListener((o, oldV, newV) -> {
             setLabelSlider();
             if (!slTimeRange.isValueChanging()) {
-                progData.audioFilterWorker.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
+                progData.filterWorkerAudio.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
             }
         });
 
         slTimeRange.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
                     if (!newvalue) {
-                        progData.audioFilterWorker.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
+                        progData.filterWorkerAudio.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
                     }
                 }
         );
     }
 
     private void initDurFilter() {
-        slDur.minValueProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().minDurProperty());
-        slDur.maxValueProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().maxDurProperty());
+        slDur.minValueProperty().bindBidirectional(progData.filterWorkerAudio.getActFilterSettings().minDurProperty());
+        slDur.maxValueProperty().bindBidirectional(progData.filterWorkerAudio.getActFilterSettings().maxDurProperty());
     }
 
     private void initFilmTimeAndDateFilter() {
         slTime.set24h();
-        slTime.minValueProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().minTimeProperty());
-        slTime.maxValueProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().maxTimeProperty());
-        tglFilmTime.selectedProperty().bindBidirectional(progData.audioFilterWorker.getActFilterSettings().minMaxTimeInvertProperty());
+        slTime.minValueProperty().bindBidirectional(progData.filterWorkerAudio.getActFilterSettings().minTimeProperty());
+        slTime.maxValueProperty().bindBidirectional(progData.filterWorkerAudio.getActFilterSettings().maxTimeProperty());
+        tglFilmTime.selectedProperty().bindBidirectional(progData.filterWorkerAudio.getActFilterSettings().minMaxTimeInvertProperty());
 
         pDatePicker.valueProperty().addListener((u, o, n) -> {
             LocalDate newDate = pDatePicker.getDateLDate();
             if (newDate != null) {
                 try {
-                    progData.audioFilterWorker.getActFilterSettings().setShowDate(P2LDateFactory.toString(newDate));
+                    progData.filterWorkerAudio.getActFilterSettings().setShowDate(P2LDateFactory.toString(newDate));
                 } catch (Exception ex) {
-                    progData.audioFilterWorker.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
+                    progData.filterWorkerAudio.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
                 }
 
             } else {
-                progData.audioFilterWorker.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
+                progData.filterWorkerAudio.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
             }
         });
-        progData.audioFilterWorker.getActFilterSettings().showDateProperty().addListener((observable, oldValue, newValue) -> {
+        progData.filterWorkerAudio.getActFilterSettings().showDateProperty().addListener((observable, oldValue, newValue) -> {
             initPDatePicker();
         });
         initPDatePicker();
@@ -140,9 +140,9 @@ public class AudioFilterControllerFilter extends VBox {
 
     private void initPDatePicker() {
         try {
-            final String s = progData.audioFilterWorker.getActFilterSettings().getShowDate();
+            final String s = progData.filterWorkerAudio.getActFilterSettings().getShowDate();
             if (!P2LDateFactory.fromString(s).equals(LocalDate.MIN) && !s.isEmpty()) {
-                LocalDate localDate = P2LDateFactory.fromString(progData.audioFilterWorker.getActFilterSettings().getShowDate());
+                LocalDate localDate = P2LDateFactory.fromString(progData.filterWorkerAudio.getActFilterSettings().getShowDate());
                 pDatePicker.setValue(localDate);
             } else {
                 pDatePicker.clearDate();
@@ -166,20 +166,20 @@ public class AudioFilterControllerFilter extends VBox {
         HBox.setHgrow(hh, Priority.ALWAYS);
         lblTimeRange.setMinWidth(0);
         vBox.getChildren().addAll(h, slTimeRange);
-        vBox.visibleProperty().bind(progData.audioFilterWorker.getActFilterSettings().timeRangeVisProperty());
-        vBox.managedProperty().bind(progData.audioFilterWorker.getActFilterSettings().timeRangeVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerAudio.getActFilterSettings().timeRangeVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerAudio.getActFilterSettings().timeRangeVisProperty());
         getChildren().addAll(vBox);
 
         // MinMax Dauer
-        slDur.visibleProperty().bind(progData.audioFilterWorker.getActFilterSettings().minMaxDurVisProperty());
-        slDur.managedProperty().bind(progData.audioFilterWorker.getActFilterSettings().minMaxDurVisProperty());
+        slDur.visibleProperty().bind(progData.filterWorkerAudio.getActFilterSettings().minMaxDurVisProperty());
+        slDur.managedProperty().bind(progData.filterWorkerAudio.getActFilterSettings().minMaxDurVisProperty());
         getChildren().addAll(slDur);
 
         // MinMax Uhrzeit
         vBox = new VBox(2);
         vBox.getChildren().addAll(slTime, tglFilmTime);
-        vBox.visibleProperty().bind(progData.audioFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
-        vBox.managedProperty().bind(progData.audioFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerAudio.getActFilterSettings().minMaxTimeVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerAudio.getActFilterSettings().minMaxTimeVisProperty());
         getChildren().addAll(vBox);
 
         //Sendedatum
@@ -191,8 +191,8 @@ public class AudioFilterControllerFilter extends VBox {
         pDatePicker.setMaxWidth(Double.MAX_VALUE);
 
         vBox.getChildren().addAll(lblShowDate, hBox);
-        vBox.visibleProperty().bind(progData.audioFilterWorker.getActFilterSettings().showDateVisProperty());
-        vBox.managedProperty().bind(progData.audioFilterWorker.getActFilterSettings().showDateVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerAudio.getActFilterSettings().showDateVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerAudio.getActFilterSettings().showDateVisProperty());
         getChildren().addAll(vBox);
     }
 
@@ -217,31 +217,31 @@ public class AudioFilterControllerFilter extends VBox {
         final String NOT_FUTURE = "Zukunft";
 
         checkOnly.setEmptyText("Alles");
-        checkOnly.addItem(ONLY_BOOKMARK, "Nur Filme der Bookmarks anzeigen", progData.audioFilterWorker.getActFilterSettings().onlyBookmarkProperty());
-        checkOnly.addItem(ONLY_HD, "Nur HD-Filme anzeigen", progData.audioFilterWorker.getActFilterSettings().onlyHdProperty());
-        checkOnly.addItem(ONLY_UT, "Nur Filme mit Untertitel anzeigen", progData.audioFilterWorker.getActFilterSettings().onlyUtProperty());
-        checkOnly.addItem(ONLY_MARK, "Nur markierte Filme anzeigen", progData.audioFilterWorker.getActFilterSettings().onlyMarkProperty());
-        checkOnly.addItem(ONLY_NEW, "Nur neue Filme anzeigen", progData.audioFilterWorker.getActFilterSettings().onlyNewProperty());
-        checkOnly.addItem(ONLY_LIVE, "Nur Livestreams anzeigen", progData.audioFilterWorker.getActFilterSettings().onlyLiveProperty());
-        checkOnly.addItem(ONLY_AKT_HISTORY, "Nur die aktuelle History anzeigen", progData.audioFilterWorker.getActFilterSettings().onlyActHistoryProperty());
+        checkOnly.addItem(ONLY_BOOKMARK, "Nur Filme der Bookmarks anzeigen", progData.filterWorkerAudio.getActFilterSettings().onlyBookmarkProperty());
+        checkOnly.addItem(ONLY_HD, "Nur HD-Filme anzeigen", progData.filterWorkerAudio.getActFilterSettings().onlyHdProperty());
+        checkOnly.addItem(ONLY_UT, "Nur Filme mit Untertitel anzeigen", progData.filterWorkerAudio.getActFilterSettings().onlyUtProperty());
+        checkOnly.addItem(ONLY_MARK, "Nur markierte Filme anzeigen", progData.filterWorkerAudio.getActFilterSettings().onlyMarkProperty());
+        checkOnly.addItem(ONLY_NEW, "Nur neue Filme anzeigen", progData.filterWorkerAudio.getActFilterSettings().onlyNewProperty());
+        checkOnly.addItem(ONLY_LIVE, "Nur Livestreams anzeigen", progData.filterWorkerAudio.getActFilterSettings().onlyLiveProperty());
+        checkOnly.addItem(ONLY_AKT_HISTORY, "Nur die aktuelle History anzeigen", progData.filterWorkerAudio.getActFilterSettings().onlyActHistoryProperty());
 
         checkNot.setEmptyText("Nichts");
-        checkNot.addItem(NOT_ABO, "Keine Filme für die es ein Abo gibt, anzeigen", progData.audioFilterWorker.getActFilterSettings().notAboProperty());
-        checkNot.addItem(NOT_HISTORY, "Bereits gesehene Filme nicht anzeigen", progData.audioFilterWorker.getActFilterSettings().notHistoryProperty());
-        checkNot.addItem(NOT_DOUBLE, "Doppelte Filme nur einmal anzeigen", progData.audioFilterWorker.getActFilterSettings().notDoubleProperty());
-        checkNot.addItem(NOT_GEO, "Geo-geblockte Filme nicht anzeigen", progData.audioFilterWorker.getActFilterSettings().notGeoProperty());
-        checkNot.addItem(NOT_FUTURE, "Keine Filme mit Datum in der Zukunft anzeigen", progData.audioFilterWorker.getActFilterSettings().notFutureProperty());
+        checkNot.addItem(NOT_ABO, "Keine Filme für die es ein Abo gibt, anzeigen", progData.filterWorkerAudio.getActFilterSettings().notAboProperty());
+        checkNot.addItem(NOT_HISTORY, "Bereits gesehene Filme nicht anzeigen", progData.filterWorkerAudio.getActFilterSettings().notHistoryProperty());
+        checkNot.addItem(NOT_DOUBLE, "Doppelte Filme nur einmal anzeigen", progData.filterWorkerAudio.getActFilterSettings().notDoubleProperty());
+        checkNot.addItem(NOT_GEO, "Geo-geblockte Filme nicht anzeigen", progData.filterWorkerAudio.getActFilterSettings().notGeoProperty());
+        checkNot.addItem(NOT_FUTURE, "Keine Filme mit Datum in der Zukunft anzeigen", progData.filterWorkerAudio.getActFilterSettings().notFutureProperty());
 
         VBox vBox = new VBox(2);
         vBox.getChildren().addAll(lblOnly, checkOnly);
-        vBox.visibleProperty().bind(progData.audioFilterWorker.getActFilterSettings().onlyVisProperty());
-        vBox.managedProperty().bind(progData.audioFilterWorker.getActFilterSettings().onlyVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerAudio.getActFilterSettings().onlyVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerAudio.getActFilterSettings().onlyVisProperty());
         getChildren().add(vBox);
 
         vBox = new VBox(2);
         vBox.getChildren().addAll(lblNot, checkNot);
-        vBox.visibleProperty().bind(progData.audioFilterWorker.getActFilterSettings().notVisProperty());
-        vBox.managedProperty().bind(progData.audioFilterWorker.getActFilterSettings().notVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerAudio.getActFilterSettings().notVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerAudio.getActFilterSettings().notVisProperty());
         getChildren().add(vBox);
     }
 

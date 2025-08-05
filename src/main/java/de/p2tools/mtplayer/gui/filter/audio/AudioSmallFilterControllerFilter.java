@@ -50,6 +50,6 @@ public class AudioSmallFilterControllerFilter extends HBox {
 
     private void clearFilter() {
         P2Duration.onlyPing("Filter löschen");
-        progData.audioFilterWorker.clearFilter();
+        progData.filterWorkerAudio.clearFilter();
     }
 }

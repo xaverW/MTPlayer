@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
@@ -24,11 +24,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
 public final class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2DataList<FilmFilter> {
-    public String TAG = "FilmFilterList:SelectedFilterList";
-
-    public FilmFilterList() {
-        super(FXCollections.observableArrayList());
-    }
+    public String TAG;
 
     public FilmFilterList(String tag) {
         super(FXCollections.observableArrayList());
@@ -107,7 +103,7 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
     public void addNewStoredFilter(String name) {
         // einen neuen Filter zu den gespeicherten hinzufügen
         final FilmFilter sf = new FilmFilter();
-        ProgData.getInstance().filmFilterWorker.getActFilterSettings().copyTo(sf);
+        ProgData.getInstance().filterWorkerFilm.getActFilterSettings().copyTo(sf);
         sf.setName(name.isEmpty() ? getNextName() : name);
         add(sf);
     }
@@ -158,7 +154,7 @@ public final class FilmFilterList extends SimpleListProperty<FilmFilter> impleme
         }
 
         final String name = sf.getName();
-        ProgData.getInstance().filmFilterWorker.getActFilterSettings().copyTo(sf);
+        ProgData.getInstance().filterWorkerFilm.getActFilterSettings().copyTo(sf);
         sf.setName(name);
     }
 }

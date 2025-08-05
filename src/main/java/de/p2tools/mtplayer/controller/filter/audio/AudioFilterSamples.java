@@ -14,10 +14,10 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filteraudio;
+package de.p2tools.mtplayer.controller.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 
 public class AudioFilterSamples {
@@ -69,7 +69,7 @@ public class AudioFilterSamples {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter(true, "nur \"neue\" anzeigen");
@@ -105,7 +105,7 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter(true, "nur \"neue\" in HD");
@@ -143,10 +143,10 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
-        progData.audioFilterWorker.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
+        progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
 
         //========================================================
         sf = new FilmFilter(true, "Livestreams");
@@ -181,15 +181,15 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         // nur Bookmark
         sf = getBookmarkFilter();
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
-        progData.audioFilterWorker.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
+        progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(true, P2SeparatorComboBox.SEPARATOR));
 
         //========================================================
         sf = new FilmFilter(true, "nur neue Fernsehfilme");
@@ -228,7 +228,7 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter(true, "nur Serien");
@@ -270,7 +270,7 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter(true, "Abendkrimi");
@@ -310,7 +310,7 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter(true, "aktuelle Nachrichten");
@@ -350,7 +350,7 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter(true, "Nachrichten mit Europa UND Brexit");
@@ -388,7 +388,7 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter(true, "nur ARD ODER ZDF");
@@ -424,7 +424,7 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter(true, "keine Beitrage mit: \"Audiodeskription\" und \"Gebärdensprache\" anzeigen");
@@ -460,6 +460,6 @@ public class AudioFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.audioFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerAudio.getFilmFilterList().add(sf);
     }
 }

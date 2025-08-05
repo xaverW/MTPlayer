@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterWorker;
+import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.scene.control.Separator;
@@ -56,33 +56,33 @@ public class FilmFilterController extends FilterController {
     private void setFilterStart() {
         if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
             // actFilterSettings sind die Einstellungen des Filters beim Beenden
-            ProgData.getInstance().filmFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().filmFilterWorker.getStoredSmallFilterSettings());
+            ProgData.getInstance().filterWorkerFilm.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerFilm.getStoredSmallFilterSettings());
             // vis setzen
-            FilmFilterWorker.setSmallFilter(ProgData.getInstance().filmFilterWorker.getStoredSmallFilterSettings());
+            FilterWorker.setSmallFilter(ProgData.getInstance().filterWorkerFilm.getStoredSmallFilterSettings());
 
         } else {
-            ProgData.getInstance().filmFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().filmFilterWorker.getStoredFilterSettings());
+            ProgData.getInstance().filterWorkerFilm.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerFilm.getStoredFilterSettings());
         }
     }
 
     private void setFilter() {
         if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
             // dann den kleinen Filter
-            ProgData.getInstance().filmFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().filmFilterWorker.getStoredFilterSettings());
+            ProgData.getInstance().filterWorkerFilm.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerFilm.getStoredFilterSettings());
 
-            FilmFilterWorker.setSmallFilter(ProgData.getInstance().filmFilterWorker.getStoredSmallFilterSettings());
-            ProgData.getInstance().filmFilterWorker.setActFilterSettings(ProgData.getInstance().filmFilterWorker.getStoredSmallFilterSettings());
+            FilterWorker.setSmallFilter(ProgData.getInstance().filterWorkerFilm.getStoredSmallFilterSettings());
+            ProgData.getInstance().filterWorkerFilm.setActFilterSettings(ProgData.getInstance().filterWorkerFilm.getStoredSmallFilterSettings());
 
         } else {
             // dann alle Filter
-            ProgData.getInstance().filmFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().filmFilterWorker.getStoredSmallFilterSettings());
+            ProgData.getInstance().filterWorkerFilm.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerFilm.getStoredSmallFilterSettings());
 
-            ProgData.getInstance().filmFilterWorker.setActFilterSettings(
-                    ProgData.getInstance().filmFilterWorker.getStoredFilterSettings());
+            ProgData.getInstance().filterWorkerFilm.setActFilterSettings(
+                    ProgData.getInstance().filterWorkerFilm.getStoredFilterSettings());
         }
     }
 

@@ -53,14 +53,14 @@ public class AudioFilterControllerClearFilter extends VBox {
 
     private void addButton() {
         btnGoBack.setGraphic(ProgIcons.ICON_BUTTON_BACKWARD.getImageView());
-        btnGoBack.setOnAction(a -> progData.audioFilterWorker.getBackwardFilmFilter().goBackward());
-        btnGoBack.disableProperty().bind(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().emptyProperty()
-                .or(ProgData.getInstance().audioFilterWorker.getBackwardFilterList().sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
+        btnGoBack.setOnAction(a -> progData.filterWorkerAudio.getBackwardFilmFilter().goBackward());
+        btnGoBack.disableProperty().bind(ProgData.getInstance().filterWorkerAudio.getBackwardFilterList().emptyProperty()
+                .or(ProgData.getInstance().filterWorkerAudio.getBackwardFilterList().sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnGoForward.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
-        btnGoForward.setOnAction(a -> progData.audioFilterWorker.getBackwardFilmFilter().goForward());
-        btnGoForward.disableProperty().bind(ProgData.getInstance().audioFilterWorker.getForwardFilterList().emptyProperty());
+        btnGoForward.setOnAction(a -> progData.filterWorkerAudio.getBackwardFilmFilter().goForward());
+        btnGoForward.disableProperty().bind(ProgData.getInstance().filterWorkerAudio.getForwardFilterList().emptyProperty());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnClearFilter.setOnAction(a -> clearFilter());
@@ -84,6 +84,6 @@ public class AudioFilterControllerClearFilter extends VBox {
 
     private void clearFilter() {
         P2Duration.onlyPing("Filter löschen");
-        progData.audioFilterWorker.clearFilter();
+        progData.filterWorkerAudio.clearFilter();
     }
 }

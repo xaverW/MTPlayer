@@ -77,17 +77,17 @@ public class AboFilterController extends FilterController {
         cboState.getItems().addAll(AboConstants.ALL, AboConstants.ABO_ON, AboConstants.ABO_OFF);
         cboState.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_TYPE);
 
-        cboName = new PCboString(progData.filmFilterStringLists.getFilterListAboName(),
+        cboName = new PCboString(progData.stringFilterLists.getFilterListAboName(),
                 ProgConfig.FILTER_ABO_NAME);
         FilterCheckRegEx fN = new FilterCheckRegEx(cboName.getEditor());
         cboName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
 
-        cboSearchText = new PCboString(progData.filmFilterStringLists.getFilterListAboSearchText(),
+        cboSearchText = new PCboString(progData.stringFilterLists.getFilterListAboSearchText(),
                 ProgConfig.FILTER_ABO_SEARCH_TEXT);
         FilterCheckRegEx fS = new FilterCheckRegEx(cboSearchText.getEditor());
         cboSearchText.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fS.checkPattern());
 
-        cboDescription = new PCboString(progData.filmFilterStringLists.getFilterListAboDescription(),
+        cboDescription = new PCboString(progData.stringFilterLists.getFilterListAboDescription(),
                 ProgConfig.FILTER_ABO_DESCRIPTION);
         FilterCheckRegEx fD = new FilterCheckRegEx(cboDescription.getEditor());
         cboDescription.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());

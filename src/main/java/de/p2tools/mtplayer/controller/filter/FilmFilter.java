@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -36,20 +36,31 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         setName("Filter");
     }
 
-    public FilmFilter(boolean audio) {
-        TAG = "AudioFilter";
-        this.audio = audio;
-        initFilter();
-        setName("Filter");
-    }
-
     public FilmFilter(String name) {
         initFilter();
         setName(name);
     }
 
+    public FilmFilter(String tag, String name) {
+        this.TAG = tag;
+        initFilter();
+        setName(name);
+    }
+
+    public FilmFilter(boolean audio) {
+        this.audio = audio;
+        initFilter();
+        setName("Filter");
+    }
+
     public FilmFilter(boolean audio, String name) {
-        TAG = "AudioFilter";
+        this.audio = audio;
+        initFilter();
+        setName(name);
+    }
+
+    public FilmFilter(String tag, boolean audio, String name) {
+        this.TAG = tag;
         this.audio = audio;
         initFilter();
         setName(name);
@@ -60,11 +71,11 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         P2Log.debugLog("reportFilterReturn");
         pause.stop();
         if (audio) {
-            ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+            ProgData.getInstance().filterWorkerFilm.getBackwardFilmFilter().addBackward();
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
 
         } else {
-            ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+            ProgData.getInstance().filterWorkerFilm.getBackwardFilmFilter().addBackward();
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
         }
     }
@@ -73,13 +84,13 @@ public final class FilmFilter extends FilmFilterProps implements Filter {
         // sind die anderen Filter (ändern, ein-ausschalten), wenn Pause abgelaufen ist / gestoppt ist
         if (!filterIsOff) {
             if (audio) {
-                ProgData.getInstance().audioFilterWorker.getBackwardFilmFilter().addBackward();
+                ProgData.getInstance().filterWorkerAudio.getBackwardFilmFilter().addBackward();
                 ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
                 System.out.println("=================================");
                 System.out.println("AUDIO FILTER MELDEN");
 
             } else {
-                ProgData.getInstance().filmFilterWorker.getBackwardFilmFilter().addBackward();
+                ProgData.getInstance().filterWorkerFilm.getBackwardFilmFilter().addBackward();
                 ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
                 System.out.println("=================================");
                 System.out.println("FILM FILTER MELDEN");

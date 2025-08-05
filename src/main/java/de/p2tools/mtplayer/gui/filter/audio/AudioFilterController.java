@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.gui.filter.audio;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilterWorker;
+import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.scene.control.Separator;
@@ -56,33 +56,33 @@ public class AudioFilterController extends FilterController {
     private void setFilterStart() {
         if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
             // actFilterSettings sind die Einstellungen des Filters beim Beenden
-            ProgData.getInstance().audioFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+            ProgData.getInstance().filterWorkerAudio.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerAudio.getStoredSmallFilterSettings());
             // vis setzen
-            AudioFilterWorker.setSmallFilter(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+            FilterWorker.setSmallFilter(ProgData.getInstance().filterWorkerAudio.getStoredSmallFilterSettings());
 
         } else {
-            ProgData.getInstance().audioFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().audioFilterWorker.getStoredFilterSettings());
+            ProgData.getInstance().filterWorkerAudio.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerAudio.getStoredFilterSettings());
         }
     }
 
     private void setFilter() {
         if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
             // dann den kleinen Filter
-            ProgData.getInstance().audioFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().audioFilterWorker.getStoredFilterSettings());
+            ProgData.getInstance().filterWorkerAudio.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerAudio.getStoredFilterSettings());
 
-            AudioFilterWorker.setSmallFilter(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
-            ProgData.getInstance().audioFilterWorker.setActFilterSettings(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+            FilterWorker.setSmallFilter(ProgData.getInstance().filterWorkerAudio.getStoredSmallFilterSettings());
+            ProgData.getInstance().filterWorkerAudio.setActFilterSettings(ProgData.getInstance().filterWorkerAudio.getStoredSmallFilterSettings());
 
         } else {
             // dann alle Filter
-            ProgData.getInstance().audioFilterWorker.getActFilterSettings()
-                    .copyTo(ProgData.getInstance().audioFilterWorker.getStoredSmallFilterSettings());
+            ProgData.getInstance().filterWorkerAudio.getActFilterSettings()
+                    .copyTo(ProgData.getInstance().filterWorkerAudio.getStoredSmallFilterSettings());
 
-            ProgData.getInstance().audioFilterWorker.setActFilterSettings(
-                    ProgData.getInstance().audioFilterWorker.getStoredFilterSettings());
+            ProgData.getInstance().filterWorkerAudio.setActFilterSettings(
+                    ProgData.getInstance().filterWorkerAudio.getStoredFilterSettings());
         }
     }
 

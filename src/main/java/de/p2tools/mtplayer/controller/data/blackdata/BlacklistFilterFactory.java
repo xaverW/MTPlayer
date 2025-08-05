@@ -124,12 +124,12 @@ public class BlacklistFilterFactory {
 
             Stream<FilmDataMTP> initialStream = filmList.parallelStream();
 
-            if (progData.filmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
+            if (progData.filterWorkerFilm.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
                 //blacklist ONLY
                 P2Log.sysLog("FilmlistBlackFilter - isBlacklistOnly");
                 initialStream = initialStream.filter(FilmDataProps::isBlackBlocked);
 
-            } else if (progData.filmFilterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
+            } else if (progData.filterWorkerFilm.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
                 //blacklist ON
                 P2Log.sysLog("FilmlistBlackFilter - isBlacklistOn");
                 initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());

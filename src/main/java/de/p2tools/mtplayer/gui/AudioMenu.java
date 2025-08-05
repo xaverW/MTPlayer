@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilterSamples;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.audio.AudioFilterSamples;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
@@ -124,7 +124,7 @@ public class AudioMenu {
         });
 
         btFilterBookmark.setOnAction(a -> {
-            FilmFilter sf = progData.audioFilterWorker.getActFilterSettings();
+            FilmFilter sf = progData.filterWorkerAudio.getActFilterSettings();
             FilmFilter bookmarkFilter = AudioFilterSamples.getBookmarkFilter();
 
             if (sf.isSame(bookmarkFilter)) {
@@ -132,18 +132,18 @@ public class AudioMenu {
                 if (storedActFilterSettings != null) {
                     // dann haben wir einen gespeicherten Filter
                     storedActFilterSettings.setOnlyBookmark(false); // falls der eingeschaltet war
-                    progData.audioFilterWorker.setActFilterSettings(storedActFilterSettings);
+                    progData.filterWorkerAudio.setActFilterSettings(storedActFilterSettings);
                     storedActFilterSettings = null;
 
                 } else {
                     // dann gibts keinen gespeicherten, dann einfach löschen
-                    progData.audioFilterWorker.getActFilterSettings().clearFilter();
+                    progData.filterWorkerAudio.getActFilterSettings().clearFilter();
                 }
 
             } else {
                 // dann ist es ein anderer Filter, Black einschalten und ActFilter merken
-                storedActFilterSettings = progData.audioFilterWorker.getActFilterSettings().getCopy();
-                progData.audioFilterWorker.setActFilterSettings(bookmarkFilter);
+                storedActFilterSettings = progData.filterWorkerAudio.getActFilterSettings().getCopy();
+                progData.filterWorkerAudio.setActFilterSettings(bookmarkFilter);
             }
 
             progData.audioGuiController.tableView.refresh();

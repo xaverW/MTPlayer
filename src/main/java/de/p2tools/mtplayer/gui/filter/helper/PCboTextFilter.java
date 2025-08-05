@@ -3,9 +3,9 @@ package de.p2tools.mtplayer.gui.filter.helper;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterText;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilterTextList;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.TextFilter;
+import de.p2tools.mtplayer.controller.filter.TextFilterList;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -18,14 +18,14 @@ import javafx.util.StringConverter;
 
 public class PCboTextFilter extends HBox {
 
-    private ComboBox<FilmFilterText> cbo = new ComboBox<>();
+    private ComboBox<TextFilter> cbo = new ComboBox<>();
     private boolean itsMe = false;
-    private final FilmFilterTextList filmFilterTextList;
+    private final TextFilterList textFilterList;
     boolean audio;
 
     public PCboTextFilter(boolean audio) {
         this.audio = audio;
-        this.filmFilterTextList = audio ? ProgData.getInstance().audioFilterTextList : ProgData.getInstance().filmFilterTextList;
+        this.textFilterList = audio ? ProgData.getInstance().textFilterListAudio : ProgData.getInstance().textFilterListFilm;
         cbo.setMaxWidth(Double.MAX_VALUE);
         cbo.setVisibleRowCount(10);
         getChildren().add(cbo);
@@ -36,7 +36,7 @@ public class PCboTextFilter extends HBox {
                 @Override
                 public void pingGui() {
                     // dann sel löschen und evtl. neuen Filter hinzufügen
-                    addNewToList(ProgData.getInstance().audioFilterWorker.getActFilterSettings());
+                    addNewToList(ProgData.getInstance().filterWorkerAudio.getActFilterSettings());
                 }
             });
 
@@ -45,14 +45,14 @@ public class PCboTextFilter extends HBox {
                 @Override
                 public void pingGui() {
                     // dann sel löschen und evtl. neuen Filter hinzufügen
-                    addNewToList(ProgData.getInstance().filmFilterWorker.getActFilterSettings());
+                    addNewToList(ProgData.getInstance().filterWorkerFilm.getActFilterSettings());
                 }
             });
         }
         cbo.valueProperty().addListener((u, o, n) -> {
             if (n != null) {
                 if (audio) {
-                    FilmFilter actFilmFilter = ProgData.getInstance().audioFilterWorker.getActFilterSettings().getCopy();
+                    FilmFilter actFilmFilter = ProgData.getInstance().filterWorkerAudio.getActFilterSettings().getCopy();
                     actFilmFilter.setChannel(n.getChannel());
                     actFilmFilter.setExactTheme(n.getTheme());
                     actFilmFilter.setTheme(n.getTheme());
@@ -60,11 +60,11 @@ public class PCboTextFilter extends HBox {
                     actFilmFilter.setTitle(n.getTitle());
                     actFilmFilter.setSomewhere(n.getSomewhere());
                     itsMe = true;
-                    ProgData.getInstance().audioFilterWorker.setActFilterSettings(actFilmFilter);
+                    ProgData.getInstance().filterWorkerAudio.setActFilterSettings(actFilmFilter);
                     itsMe = false;
 
                 } else {
-                    FilmFilter actFilmFilter = ProgData.getInstance().filmFilterWorker.getActFilterSettings().getCopy();
+                    FilmFilter actFilmFilter = ProgData.getInstance().filterWorkerFilm.getActFilterSettings().getCopy();
                     actFilmFilter.setChannel(n.getChannel());
                     actFilmFilter.setExactTheme(n.getTheme());
                     actFilmFilter.setTheme(n.getTheme());
@@ -72,23 +72,23 @@ public class PCboTextFilter extends HBox {
                     actFilmFilter.setTitle(n.getTitle());
                     actFilmFilter.setSomewhere(n.getSomewhere());
                     itsMe = true;
-                    ProgData.getInstance().filmFilterWorker.setActFilterSettings(actFilmFilter);
+                    ProgData.getInstance().filterWorkerFilm.setActFilterSettings(actFilmFilter);
                     itsMe = false;
                 }
             }
         });
 
         // die gespeicherten Filter eintragen
-        cbo.setItems(filmFilterTextList);
+        cbo.setItems(textFilterList);
 
         cbo.setConverter(new StringConverter<>() {
             @Override
-            public String toString(FilmFilterText filmFilterText) {
+            public String toString(TextFilter textFilter) {
                 return "";
             }
 
             @Override
-            public FilmFilterText fromString(String string) {
+            public TextFilter fromString(String string) {
                 return null;
             }
         });
@@ -117,13 +117,13 @@ public class PCboTextFilter extends HBox {
 
 
             @Override
-            protected void updateItem(FilmFilterText filmFilter, boolean empty) {
+            protected void updateItem(TextFilter filmFilter, boolean empty) {
                 super.updateItem(filmFilter, empty);
                 cbo.setVisibleRowCount(8);
                 cbo.setVisibleRowCount(10);
 
                 if (!empty && filmFilter != null) {
-                    btnDel.setOnMousePressed(m -> filmFilterTextList.remove(filmFilter));
+                    btnDel.setOnMousePressed(m -> textFilterList.remove(filmFilter));
                     if (!filmFilter.filterIsEmpty()) {
                         lblChannel.setText(getSubString(filmFilter.getChannel()));
                         lblTheme.setText(getSubString(filmFilter.getTheme()));
@@ -145,7 +145,7 @@ public class PCboTextFilter extends HBox {
         });
     }
 
-    public ComboBox<FilmFilterText> getCbo() {
+    public ComboBox<TextFilter> getCbo() {
         return cbo;
     }
 
@@ -166,19 +166,19 @@ public class PCboTextFilter extends HBox {
         // einen neuen Filter einfügen
         cbo.getSelectionModel().clearSelection();
 
-        FilmFilterText addFilter = new FilmFilterText(addF);
+        TextFilter addFilter = new TextFilter(addF);
         if (addFilter.filterIsEmpty()) {
             // dann sind die eingeschalteten Textfilter leer, ist nix
             return;
         }
 
-        FilmFilterText tf = filmFilterTextList.stream().filter(addFilter::filterIsSame).findFirst().orElse(null);
+        TextFilter tf = textFilterList.stream().filter(addFilter::filterIsSame).findFirst().orElse(null);
         if (tf == null) {
             // dann ist er noch nicht / nicht mehr drin und kommt an Stelle 1
-            while (filmFilterTextList.size() > 15) {
-                filmFilterTextList.remove(filmFilterTextList.size() - 1);
+            while (textFilterList.size() > 15) {
+                textFilterList.remove(textFilterList.size() - 1);
             }
-            filmFilterTextList.add(0, addFilter);
+            textFilterList.add(0, addFilter);
         }
     }
 }

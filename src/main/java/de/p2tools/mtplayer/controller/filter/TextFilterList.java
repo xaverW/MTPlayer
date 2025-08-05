@@ -14,16 +14,16 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.filterfilm;
+package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-public final class FilmFilterTextList extends SimpleListProperty<FilmFilterText> implements P2DataList<FilmFilterText> {
-    public String TAG = "TextFilterList";
+public final class TextFilterList extends SimpleListProperty<TextFilter> implements P2DataList<TextFilter> {
+    public String TAG;
 
-    public FilmFilterTextList(String tag) {
+    public TextFilterList(String tag) {
         super(FXCollections.observableArrayList());
         this.TAG = tag;
     }
@@ -39,14 +39,14 @@ public final class FilmFilterTextList extends SimpleListProperty<FilmFilterText>
     }
 
     @Override
-    public FilmFilterText getNewItem() {
-        return new FilmFilterText();
+    public TextFilter getNewItem() {
+        return new TextFilter();
     }
 
     @Override
     public void addNewItem(Object obj) {
-        if (obj.getClass().equals(FilmFilterText.class)) {
-            add((FilmFilterText) obj);
+        if (obj.getClass().equals(TextFilter.class)) {
+            add((TextFilter) obj);
         }
     }
 }

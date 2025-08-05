@@ -45,56 +45,56 @@ public class AudioFilterControllerTextFilter extends VBox {
     public AudioFilterControllerTextFilter() {
         super();
         progData = ProgData.getInstance();
-        mbChannel = new P2MenuButton(progData.audioFilterWorker.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelList);
+        mbChannel = new P2MenuButton(progData.filterWorkerAudio.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelList);
 
         final BooleanSupplier supplierReportReturn = () -> {
-            progData.audioFilterWorker.getActFilterSettings().reportFilterReturn();
+            progData.filterWorkerAudio.getActFilterSettings().reportFilterReturn();
             return true;
         };
 
-        cboThemeExact = new PCboThemeExact(progData, progData.audioFilterWorker.getActFilterSettings().exactThemeProperty());
+        cboThemeExact = new PCboThemeExact(progData, progData.filterWorkerAudio.getActFilterSettings().exactThemeProperty());
 
-        cboTheme = new PCboString(progData.filmFilterStringLists.getFilterListTheme(),
-                progData.audioFilterWorker.getActFilterSettings().themeProperty(), supplierReportReturn);
-        cboThemeTitle = new PCboString(progData.filmFilterStringLists.getFilterListThemeTitle(),
-                progData.audioFilterWorker.getActFilterSettings().themeTitleProperty(), supplierReportReturn);
-        cboTitle = new PCboString(progData.filmFilterStringLists.getFilterListTitel(),
-                progData.audioFilterWorker.getActFilterSettings().titleProperty(), supplierReportReturn);
-        cboSomewhere = new PCboString(progData.filmFilterStringLists.getFilterListSomewhere(),
-                progData.audioFilterWorker.getActFilterSettings().somewhereProperty(), supplierReportReturn);
-        cboUrl = new PCboString(progData.filmFilterStringLists.getFilterListUrl(),
-                progData.audioFilterWorker.getActFilterSettings().urlProperty(), supplierReportReturn);
+        cboTheme = new PCboString(progData.stringFilterLists.getFilterListTheme(),
+                progData.filterWorkerAudio.getActFilterSettings().themeProperty(), supplierReportReturn);
+        cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListThemeTitle(),
+                progData.filterWorkerAudio.getActFilterSettings().themeTitleProperty(), supplierReportReturn);
+        cboTitle = new PCboString(progData.stringFilterLists.getFilterListTitel(),
+                progData.filterWorkerAudio.getActFilterSettings().titleProperty(), supplierReportReturn);
+        cboSomewhere = new PCboString(progData.stringFilterLists.getFilterListSomewhere(),
+                progData.filterWorkerAudio.getActFilterSettings().somewhereProperty(), supplierReportReturn);
+        cboUrl = new PCboString(progData.stringFilterLists.getFilterListUrl(),
+                progData.filterWorkerAudio.getActFilterSettings().urlProperty(), supplierReportReturn);
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addFilter();
     }
 
     private void addFilter() {
-        addTxt("Sender", mbChannel, this, progData.audioFilterWorker.getActFilterSettings().channelVisProperty());
+        addTxt("Sender", mbChannel, this, progData.filterWorkerAudio.getActFilterSettings().channelVisProperty());
 
         BooleanProperty b = new SimpleBooleanProperty();
-        b.bind(progData.audioFilterWorker.getActFilterSettings().themeVisProperty()
-                .and(progData.audioFilterWorker.getActFilterSettings().themeIsExactProperty().not())
+        b.bind(progData.filterWorkerAudio.getActFilterSettings().themeVisProperty()
+                .and(progData.filterWorkerAudio.getActFilterSettings().themeIsExactProperty().not())
         );
         addTxt("Thema", cboTheme, this, b);
 
         b = new SimpleBooleanProperty();
-        b.bind(progData.audioFilterWorker.getActFilterSettings().themeVisProperty()
-                .and(progData.audioFilterWorker.getActFilterSettings().themeIsExactProperty())
+        b.bind(progData.filterWorkerAudio.getActFilterSettings().themeVisProperty()
+                .and(progData.filterWorkerAudio.getActFilterSettings().themeIsExactProperty())
         );
         addTxt("Thema exakt", cboThemeExact, this, b);
 
-        addTxt("Thema oder Titel", cboThemeTitle, this, progData.audioFilterWorker.getActFilterSettings().themeTitleVisProperty());
-        addTxt("Titel", cboTitle, this, progData.audioFilterWorker.getActFilterSettings().titleVisProperty());
-        addTxt("Irgendwo", cboSomewhere, this, progData.audioFilterWorker.getActFilterSettings().somewhereVisProperty());
-        addTxt("URL", cboUrl, this, progData.audioFilterWorker.getActFilterSettings().urlVisProperty());
+        addTxt("Thema oder Titel", cboThemeTitle, this, progData.filterWorkerAudio.getActFilterSettings().themeTitleVisProperty());
+        addTxt("Titel", cboTitle, this, progData.filterWorkerAudio.getActFilterSettings().titleVisProperty());
+        addTxt("Irgendwo", cboSomewhere, this, progData.filterWorkerAudio.getActFilterSettings().somewhereVisProperty());
+        addTxt("URL", cboUrl, this, progData.filterWorkerAudio.getActFilterSettings().urlVisProperty());
 
-        this.visibleProperty().bind(progData.audioFilterWorker.getActFilterSettings().channelVisProperty()
-                .or(progData.audioFilterWorker.getActFilterSettings().themeVisProperty()
-                        .or(progData.audioFilterWorker.getActFilterSettings().themeTitleVisProperty()
-                                .or(progData.audioFilterWorker.getActFilterSettings().titleVisProperty()
-                                        .or(progData.audioFilterWorker.getActFilterSettings().somewhereVisProperty()
-                                                .or(progData.audioFilterWorker.getActFilterSettings().urlVisProperty())
+        this.visibleProperty().bind(progData.filterWorkerAudio.getActFilterSettings().channelVisProperty()
+                .or(progData.filterWorkerAudio.getActFilterSettings().themeVisProperty()
+                        .or(progData.filterWorkerAudio.getActFilterSettings().themeTitleVisProperty()
+                                .or(progData.filterWorkerAudio.getActFilterSettings().titleVisProperty()
+                                        .or(progData.filterWorkerAudio.getActFilterSettings().somewhereVisProperty()
+                                                .or(progData.filterWorkerAudio.getActFilterSettings().urlVisProperty())
                                         )
                                 )
                         )

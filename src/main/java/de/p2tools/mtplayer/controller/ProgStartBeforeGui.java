@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
-import de.p2tools.mtplayer.controller.filteraudio.AudioFilterSamples;
+import de.p2tools.mtplayer.controller.filter.audio.AudioFilterSamples;
 import de.p2tools.mtplayer.controller.filterfilm.FilmFilterSamples;
 import de.p2tools.mtplayer.controller.update.ProgConfigUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
@@ -183,10 +183,10 @@ public class ProgStartBeforeGui {
         ProgData.getInstance().cleaningDataListPropose.initList();
 
         //Filter einrichten
-        if (ProgData.getInstance().filmFilterWorker.getFilmFilterList().isEmpty()) {
+        if (ProgData.getInstance().filterWorkerFilm.getFilmFilterList().isEmpty()) {
             FilmFilterSamples.addStandardFilter();
         }
-        if (ProgData.getInstance().audioFilterWorker.getFilmFilterList().isEmpty()) {
+        if (ProgData.getInstance().filterWorkerAudio.getFilmFilterList().isEmpty()) {
             AudioFilterSamples.addStandardFilter();
         }
 

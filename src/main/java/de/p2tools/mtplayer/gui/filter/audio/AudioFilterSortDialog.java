@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.filter.audio;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.filterfilm.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
@@ -75,7 +75,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
         columnFactoryString(nameColumn);
 
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.audioFilterWorker.getFilmFilterList());
+        tableView.setItems(progData.filterWorkerAudio.getFilmFilterList());
 
         // Button
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
@@ -94,7 +94,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.audioFilterWorker.getFilmFilterList().top(sel, true);
+                int res = progData.filterWorkerAudio.getFilmFilterList().top(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -107,7 +107,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.audioFilterWorker.getFilmFilterList().top(sel, false);
+                int res = progData.filterWorkerAudio.getFilmFilterList().top(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -120,7 +120,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.audioFilterWorker.getFilmFilterList().up(sel, true);
+                int res = progData.filterWorkerAudio.getFilmFilterList().up(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -133,7 +133,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.audioFilterWorker.getFilmFilterList().up(sel, false);
+                int res = progData.filterWorkerAudio.getFilmFilterList().up(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -146,7 +146,7 @@ public class AudioFilterSortDialog extends P2DialogExtra {
             return;
         }
 
-        if (progData.audioFilterWorker.getFilmFilterList().removeStoredFilter(sf)) {
+        if (progData.filterWorkerAudio.getFilmFilterList().removeStoredFilter(sf)) {
             tableView.getSelectionModel().selectFirst();
         }
     }
@@ -155,9 +155,9 @@ public class AudioFilterSortDialog extends P2DialogExtra {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         FilmFilter sf = new FilmFilter(true, P2SeparatorComboBox.SEPARATOR);
         if (sel < 0) {
-            progData.audioFilterWorker.getFilmFilterList().add(sf);
+            progData.filterWorkerAudio.getFilmFilterList().add(sf);
         } else {
-            progData.audioFilterWorker.getFilmFilterList().add(sel + 1, sf);
+            progData.filterWorkerAudio.getFilmFilterList().add(sel + 1, sf);
         }
     }
 

@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.filterfilm;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 
 public class FilmFilterSamples {
@@ -68,7 +69,7 @@ public class FilmFilterSamples {
         sf.setNotGeo(false);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur \"neue\" anzeigen");
@@ -104,7 +105,7 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur \"neue\" in HD");
@@ -142,10 +143,10 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
-        progData.filmFilterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+        progData.filterWorkerFilm.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
 
         //========================================================
         sf = new FilmFilter("Livestreams");
@@ -180,15 +181,15 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         // nur Bookmark
         sf = getBookmarkFilter();
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
-        progData.filmFilterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+        progData.filterWorkerFilm.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
 
         //========================================================
         sf = new FilmFilter("nur neue Fernsehfilme");
@@ -227,7 +228,7 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur Serien");
@@ -269,7 +270,7 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Abendkrimi");
@@ -309,7 +310,7 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("aktuelle Nachrichten");
@@ -349,7 +350,7 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("Nachrichten mit Europa UND Brexit");
@@ -387,7 +388,7 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("nur ARD ODER ZDF");
@@ -423,7 +424,7 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
         sf = new FilmFilter("keine Beitrage mit: \"Audiodeskription\" und \"Gebärdensprache\" anzeigen");
@@ -459,6 +460,6 @@ public class FilmFilterSamples {
         sf.setNotGeo(true);
         sf.setNotFuture(false);
 
-        progData.filmFilterWorker.getFilmFilterList().add(sf);
+        progData.filterWorkerFilm.getFilmFilterList().add(sf);
     }
 }

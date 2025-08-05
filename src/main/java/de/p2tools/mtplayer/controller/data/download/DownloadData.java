@@ -59,7 +59,7 @@ public final class DownloadData extends DownloadDataProps {
         setSubtitle(setData.isSubtitle());
 
         String resolution;
-        if (ProgData.getInstance().filmFilterWorker.getActFilterSettings().isOnlyHd()) {
+        if (ProgData.getInstance().filterWorkerFilm.getActFilterSettings().isOnlyHd()) {
             resolution = FilmDataMTP.RESOLUTION_HD;
         } else {
             resolution = setData.getResolution();

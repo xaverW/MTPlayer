@@ -50,6 +50,6 @@ public class FilmSmallFilterControllerFilter extends HBox {
 
     private void clearFilter() {
         P2Duration.onlyPing("Filter löschen");
-        progData.filmFilterWorker.clearFilter();
+        progData.filterWorkerFilm.clearFilter();
     }
 }

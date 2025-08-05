@@ -85,52 +85,52 @@ public class FilmFilterControllerFilter extends VBox {
             }
         });
 
-        slTimeRange.setValue(progData.filmFilterWorker.getActFilterSettings().getTimeRange());
+        slTimeRange.setValue(progData.filterWorkerFilm.getActFilterSettings().getTimeRange());
         setLabelSlider();
-        progData.filmFilterWorker.getActFilterSettings().timeRangeProperty().addListener(
-                l -> slTimeRange.setValue(progData.filmFilterWorker.getActFilterSettings().getTimeRange()));
+        progData.filterWorkerFilm.getActFilterSettings().timeRangeProperty().addListener(
+                l -> slTimeRange.setValue(progData.filterWorkerFilm.getActFilterSettings().getTimeRange()));
 
         // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
         slTimeRange.valueProperty().addListener((o, oldV, newV) -> {
             setLabelSlider();
             if (!slTimeRange.isValueChanging()) {
-                progData.filmFilterWorker.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
+                progData.filterWorkerFilm.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
             }
         });
 
         slTimeRange.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
                     if (!newvalue) {
-                        progData.filmFilterWorker.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
+                        progData.filterWorkerFilm.getActFilterSettings().setTimeRange((int) slTimeRange.getValue());
                     }
                 }
         );
     }
 
     private void initDurFilter() {
-        slDur.minValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minDurProperty());
-        slDur.maxValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().maxDurProperty());
+        slDur.minValueProperty().bindBidirectional(progData.filterWorkerFilm.getActFilterSettings().minDurProperty());
+        slDur.maxValueProperty().bindBidirectional(progData.filterWorkerFilm.getActFilterSettings().maxDurProperty());
     }
 
     private void initFilmTimeAndDateFilter() {
         slTime.set24h();
-        slTime.minValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minTimeProperty());
-        slTime.maxValueProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().maxTimeProperty());
-        tglFilmTime.selectedProperty().bindBidirectional(progData.filmFilterWorker.getActFilterSettings().minMaxTimeInvertProperty());
+        slTime.minValueProperty().bindBidirectional(progData.filterWorkerFilm.getActFilterSettings().minTimeProperty());
+        slTime.maxValueProperty().bindBidirectional(progData.filterWorkerFilm.getActFilterSettings().maxTimeProperty());
+        tglFilmTime.selectedProperty().bindBidirectional(progData.filterWorkerFilm.getActFilterSettings().minMaxTimeInvertProperty());
 
         pDatePicker.valueProperty().addListener((u, o, n) -> {
             LocalDate newDate = pDatePicker.getDateLDate();
             if (newDate != null) {
                 try {
-                    progData.filmFilterWorker.getActFilterSettings().setShowDate(P2LDateFactory.toString(newDate));
+                    progData.filterWorkerFilm.getActFilterSettings().setShowDate(P2LDateFactory.toString(newDate));
                 } catch (Exception ex) {
-                    progData.filmFilterWorker.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
+                    progData.filterWorkerFilm.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
                 }
 
             } else {
-                progData.filmFilterWorker.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
+                progData.filterWorkerFilm.getActFilterSettings().setShowDate(FilterCheck.FILTER_SHOW_DATE_ALL);
             }
         });
-        progData.filmFilterWorker.getActFilterSettings().showDateProperty().addListener((observable, oldValue, newValue) -> {
+        progData.filterWorkerFilm.getActFilterSettings().showDateProperty().addListener((observable, oldValue, newValue) -> {
             initPDatePicker();
         });
         initPDatePicker();
@@ -140,9 +140,9 @@ public class FilmFilterControllerFilter extends VBox {
 
     private void initPDatePicker() {
         try {
-            final String s = progData.filmFilterWorker.getActFilterSettings().getShowDate();
+            final String s = progData.filterWorkerFilm.getActFilterSettings().getShowDate();
             if (!P2LDateFactory.fromString(s).equals(LocalDate.MIN) && !s.isEmpty()) {
-                LocalDate localDate = P2LDateFactory.fromString(progData.filmFilterWorker.getActFilterSettings().getShowDate());
+                LocalDate localDate = P2LDateFactory.fromString(progData.filterWorkerFilm.getActFilterSettings().getShowDate());
                 pDatePicker.setValue(localDate);
             } else {
                 pDatePicker.clearDate();
@@ -166,20 +166,20 @@ public class FilmFilterControllerFilter extends VBox {
         HBox.setHgrow(hh, Priority.ALWAYS);
         lblTimeRange.setMinWidth(0);
         vBox.getChildren().addAll(h, slTimeRange);
-        vBox.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().timeRangeVisProperty());
-        vBox.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().timeRangeVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerFilm.getActFilterSettings().timeRangeVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerFilm.getActFilterSettings().timeRangeVisProperty());
         getChildren().addAll(vBox);
 
         // MinMax Dauer
-        slDur.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
-        slDur.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxDurVisProperty());
+        slDur.visibleProperty().bind(progData.filterWorkerFilm.getActFilterSettings().minMaxDurVisProperty());
+        slDur.managedProperty().bind(progData.filterWorkerFilm.getActFilterSettings().minMaxDurVisProperty());
         getChildren().addAll(slDur);
 
         // MinMax Uhrzeit
         vBox = new VBox(2);
         vBox.getChildren().addAll(slTime, tglFilmTime);
-        vBox.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
-        vBox.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().minMaxTimeVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerFilm.getActFilterSettings().minMaxTimeVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerFilm.getActFilterSettings().minMaxTimeVisProperty());
         getChildren().addAll(vBox);
 
         //Sendedatum
@@ -191,8 +191,8 @@ public class FilmFilterControllerFilter extends VBox {
         pDatePicker.setMaxWidth(Double.MAX_VALUE);
 
         vBox.getChildren().addAll(lblShowDate, hBox);
-        vBox.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().showDateVisProperty());
-        vBox.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().showDateVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerFilm.getActFilterSettings().showDateVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerFilm.getActFilterSettings().showDateVisProperty());
         getChildren().addAll(vBox);
     }
 
@@ -217,31 +217,31 @@ public class FilmFilterControllerFilter extends VBox {
         final String NOT_FUTURE = "Zukunft";
 
         checkOnly.setEmptyText("Alles");
-        checkOnly.addItem(ONLY_BOOKMARK, "Nur Filme der Bookmarks anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyBookmarkProperty());
-        checkOnly.addItem(ONLY_HD, "Nur HD-Filme anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyHdProperty());
-        checkOnly.addItem(ONLY_UT, "Nur Filme mit Untertitel anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyUtProperty());
-        checkOnly.addItem(ONLY_MARK, "Nur markierte Filme anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyMarkProperty());
-        checkOnly.addItem(ONLY_NEW, "Nur neue Filme anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyNewProperty());
-        checkOnly.addItem(ONLY_LIVE, "Nur Livestreams anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyLiveProperty());
-        checkOnly.addItem(ONLY_AKT_HISTORY, "Nur die aktuelle History anzeigen", progData.filmFilterWorker.getActFilterSettings().onlyActHistoryProperty());
+        checkOnly.addItem(ONLY_BOOKMARK, "Nur Filme der Bookmarks anzeigen", progData.filterWorkerFilm.getActFilterSettings().onlyBookmarkProperty());
+        checkOnly.addItem(ONLY_HD, "Nur HD-Filme anzeigen", progData.filterWorkerFilm.getActFilterSettings().onlyHdProperty());
+        checkOnly.addItem(ONLY_UT, "Nur Filme mit Untertitel anzeigen", progData.filterWorkerFilm.getActFilterSettings().onlyUtProperty());
+        checkOnly.addItem(ONLY_MARK, "Nur markierte Filme anzeigen", progData.filterWorkerFilm.getActFilterSettings().onlyMarkProperty());
+        checkOnly.addItem(ONLY_NEW, "Nur neue Filme anzeigen", progData.filterWorkerFilm.getActFilterSettings().onlyNewProperty());
+        checkOnly.addItem(ONLY_LIVE, "Nur Livestreams anzeigen", progData.filterWorkerFilm.getActFilterSettings().onlyLiveProperty());
+        checkOnly.addItem(ONLY_AKT_HISTORY, "Nur die aktuelle History anzeigen", progData.filterWorkerFilm.getActFilterSettings().onlyActHistoryProperty());
 
         checkNot.setEmptyText("Nichts");
-        checkNot.addItem(NOT_ABO, "Keine Filme für die es ein Abo gibt, anzeigen", progData.filmFilterWorker.getActFilterSettings().notAboProperty());
-        checkNot.addItem(NOT_HISTORY, "Bereits gesehene Filme nicht anzeigen", progData.filmFilterWorker.getActFilterSettings().notHistoryProperty());
-        checkNot.addItem(NOT_DOUBLE, "Doppelte Filme nur einmal anzeigen", progData.filmFilterWorker.getActFilterSettings().notDoubleProperty());
-        checkNot.addItem(NOT_GEO, "Geo-geblockte Filme nicht anzeigen", progData.filmFilterWorker.getActFilterSettings().notGeoProperty());
-        checkNot.addItem(NOT_FUTURE, "Keine Filme mit Datum in der Zukunft anzeigen", progData.filmFilterWorker.getActFilterSettings().notFutureProperty());
+        checkNot.addItem(NOT_ABO, "Keine Filme für die es ein Abo gibt, anzeigen", progData.filterWorkerFilm.getActFilterSettings().notAboProperty());
+        checkNot.addItem(NOT_HISTORY, "Bereits gesehene Filme nicht anzeigen", progData.filterWorkerFilm.getActFilterSettings().notHistoryProperty());
+        checkNot.addItem(NOT_DOUBLE, "Doppelte Filme nur einmal anzeigen", progData.filterWorkerFilm.getActFilterSettings().notDoubleProperty());
+        checkNot.addItem(NOT_GEO, "Geo-geblockte Filme nicht anzeigen", progData.filterWorkerFilm.getActFilterSettings().notGeoProperty());
+        checkNot.addItem(NOT_FUTURE, "Keine Filme mit Datum in der Zukunft anzeigen", progData.filterWorkerFilm.getActFilterSettings().notFutureProperty());
 
         VBox vBox = new VBox(2);
         vBox.getChildren().addAll(lblOnly, checkOnly);
-        vBox.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().onlyVisProperty());
-        vBox.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().onlyVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerFilm.getActFilterSettings().onlyVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerFilm.getActFilterSettings().onlyVisProperty());
         getChildren().add(vBox);
 
         vBox = new VBox(2);
         vBox.getChildren().addAll(lblNot, checkNot);
-        vBox.visibleProperty().bind(progData.filmFilterWorker.getActFilterSettings().notVisProperty());
-        vBox.managedProperty().bind(progData.filmFilterWorker.getActFilterSettings().notVisProperty());
+        vBox.visibleProperty().bind(progData.filterWorkerFilm.getActFilterSettings().notVisProperty());
+        vBox.managedProperty().bind(progData.filterWorkerFilm.getActFilterSettings().notVisProperty());
         getChildren().add(vBox);
     }
 
