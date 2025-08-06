@@ -144,7 +144,7 @@ public class FilmTableContextMenu {
         miAboAddFilter.setOnAction(a -> {
             AboListFactory.addNewAboFromFilterButton();
         });
-        AboData aboData = film == null ? null : AboFactory.findAbo(film);
+        AboData aboData = film == null ? null : AboFactory.findAbo(false, film);
         if (aboData == null) {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen

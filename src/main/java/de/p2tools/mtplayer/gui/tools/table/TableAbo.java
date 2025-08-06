@@ -80,10 +80,10 @@ public class TableAbo extends PTable<AboData> {
         activeColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         activeColumn.getStyleClass().add("alignCenter");
 
-        final TableColumn<AboData, Integer> sourceColumn = new TableColumn<>("Quelle");
-        sourceColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
-        TableAboFactory.columnFactorySource(sourceColumn);
-        sourceColumn.getStyleClass().add("alignCenter");
+        final TableColumn<AboData, Integer> listColumn = new TableColumn<>("Liste");
+        listColumn.setCellValueFactory(new PropertyValueFactory<>("list"));
+        TableAboFactory.columnFactoryList(listColumn);
+        listColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> hitColumn = new TableColumn<>("Treffer");
         hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
@@ -164,7 +164,7 @@ public class TableAbo extends PTable<AboData> {
         genDateColumn.getStyleClass().add("alignCenter");
 
         getColumns().addAll(
-                nrColumn, activeColumn, sourceColumn,
+                nrColumn, activeColumn, listColumn,
                 hitColumn, nameColumn, startColumn, resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
                 somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn,

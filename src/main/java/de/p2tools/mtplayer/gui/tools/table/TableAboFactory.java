@@ -9,7 +9,7 @@ public class TableAboFactory {
 
     }
 
-    public static void columnFactorySource(TableColumn<AboData, Integer> column) {
+    public static void columnFactoryList(TableColumn<AboData, Integer> column) {
         column.setCellFactory(c -> new TableCell<>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -22,9 +22,9 @@ public class TableAboFactory {
                 }
 
                 AboData aboData = getTableView().getItems().get(getIndex());
-                if (aboData.getSource() == AboData.ABO_FILM) {
+                if (aboData.getList() == AboData.ABO_FILM) {
                     setText("Film");
-                } else if (aboData.getSource() == AboData.ABO_AUDIO) {
+                } else if (aboData.getList() == AboData.ABO_AUDIO) {
                     setText("Audio");
                 } else {
                     setText("F & A");

@@ -155,36 +155,6 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
         return null;
     }
 
-//    /**
-//     * search downloads for abos after loading a filmlist
-//     */
-//    public synchronized void searchForDownloadsFromAbos() {
-//        final int count = getSize();
-//        DownloadFactoryAbo.refreshDownloads(this);
-//        DownloadFactoryAbo.searchForNewDownloadsForAbos(this);
-////        DownloadFactoryAbo.searchDownloadsFromAbos(this);
-//        if (getSize() == count) {
-//            // dann wurden evtl. nur zurückgestellte Downloads wieder aktiviert
-//            setDownloadsChanged();
-//        }
-//    }
-
-    public synchronized List<DownloadData> getListOfStartsNotFinished(String source) {
-        return DownloadFactoryStarts.getListOfStartsNotFinished(this, source);
-    }
-
-    public synchronized List<DownloadData> getListOfStartsNotLoading(String source) {
-        return DownloadFactoryStarts.getListOfStartsNotLoading(this, source);
-    }
-
-    public synchronized void cleanUpButtonStarts() {
-        DownloadFactoryStarts.cleanUpButtonStarts(this);
-    }
-
-//    public synchronized DownloadData getNextStart() {
-//        return DownloadFactoryStarts.getNextStart(this);
-//    }
-
     public synchronized void resetPlacedBack() {
         // zurückgestellte wieder aktivieren
         forEach(d -> d.setPlacedBack(false));

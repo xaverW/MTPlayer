@@ -344,18 +344,6 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void initListener() {
-//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                paneBandwidthChart.searchInfos(InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
-//                        paneBandwidthChart)
-//                );
-//
-//                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD, paneDownloadInfoList)) {
-//                    paneDownloadInfoList.setInfoText();
-//                }
-//            }
-//        });
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
             public void pingGui() {
@@ -368,17 +356,6 @@ public class DownloadGuiController extends AnchorPane {
                 }
             }
         });
-
-//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, DownloadGuiController.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                if (!ProgConfig.FILTER_DOWNLOAD_STATE.get().isEmpty()) {
-//                    // dann den Filter aktualisieren
-//                    // todo?? bei vielen Downloads kann das sonst die ganze Tabelle ausbremsen
-//                    setFilter();
-//                }
-//            }
-//        });
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
             public void pingGui() {
@@ -390,22 +367,6 @@ public class DownloadGuiController extends AnchorPane {
             }
         });
 
-//        PListener.addListener(new PListener(PListener.EVENT_BLACKLIST_CHANGED, DownloadGuiController.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                if ((ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode)
-//                        && ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue()) {
-//                    // nur auf Blacklist reagieren, wenn auch für Abos eingeschaltet
-//                    DownloadDataFactory.searchForAbosAndMaybeStart();
-//                }
-//            }
-//        });
-//        PListener.addListener(new PListener(PListener.EVENT_SET_DATA_CHANGED, DownloadGuiController.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                tableView.refresh();
-//            }
-//        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_SET_DATA_CHANGED) {
             @Override
             public void pingGui() {
@@ -414,17 +375,6 @@ public class DownloadGuiController extends AnchorPane {
         });
         progData.downloadList.downloadsChangedProperty().addListener((observable, oldValue, newValue) ->
                 setFilter());
-
-//        ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.addListener((observable, oldValue, newValue) -> {
-//            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-//                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
-//            }
-//        });
-//        progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-//            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
-//                Platform.runLater(DownloadFactory::searchForAbosAndMaybeStart);
-//            }
-//        });
     }
 
     private void initTable() {
@@ -485,26 +435,18 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilterProperty() {
-        ProgConfig.FILTER_DOWNLOAD_CHANNEL.addListener((observable, oldValue, newValue) -> {
-            setFilter();
-        });
-        ProgConfig.FILTER_DOWNLOAD_ABO.addListener((observable, oldValue, newValue) -> {
-            setFilter();
-        });
-        ProgConfig.FILTER_DOWNLOAD_SOURCE.addListener((observable, oldValue, newValue) -> {
-            setFilter();
-        });
-        ProgConfig.FILTER_DOWNLOAD_TYPE.addListener((observable, oldValue, newValue) -> {
-            setFilter();
-        });
-        ProgConfig.FILTER_DOWNLOAD_STATE.addListener((observable, oldValue, newValue) -> {
-            setFilter();
-        });
+        ProgConfig.FILTER_DOWNLOAD_LIST.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_DOWNLOAD_CHANNEL.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_DOWNLOAD_ABO.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_DOWNLOAD_SOURCE.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_DOWNLOAD_TYPE.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_DOWNLOAD_STATE.addListener((observable, oldValue, newValue) -> setFilter());
     }
 
     private void setFilter() {
         Platform.runLater(() -> {
             Predicate<DownloadData> predicate = downloadData -> true;
+            final String list = ProgConfig.FILTER_DOWNLOAD_LIST.getValueSafe();
             final String sender = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
             final String abo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
             final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.getValueSafe();
@@ -512,6 +454,12 @@ public class DownloadGuiController extends AnchorPane {
             final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
 
             predicate = predicate.and(download -> !download.isPlacedBack());
+
+            if (!list.isEmpty()) {
+                predicate = predicate.and(downloadData ->
+                        list.equals(DownloadConstants.SRC_COMBO_FILM) && !downloadData.isAudio() ||
+                                list.equals(DownloadConstants.SRC_COMBO_AUDIO) && downloadData.isAudio());
+            }
 
             if (!sender.isEmpty()) {
                 Filter filter = new Filter(sender, true);

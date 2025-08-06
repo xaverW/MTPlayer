@@ -36,6 +36,7 @@ import javafx.util.StringConverter;
 
 public class DownloadFilterController extends FilterController {
 
+    private final ComboBox<String> cboList = new ComboBox<>(); //Downloadquelle: Filme/Audios
     private final ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
     private final ComboBox<String> cboKind = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
     private final P2MenuButton mbChannel;
@@ -65,6 +66,7 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void initLayout() {
+        addCont("Liste", cboList, vBoxFilter);
         addCont("Quelle", cboSrc, vBoxFilter);
         addCont("Downloadart", cboKind, vBoxFilter);
         addCont("Sender", mbChannel, vBoxFilter);
@@ -81,7 +83,7 @@ public class DownloadFilterController extends FilterController {
         hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
         hBoxHelp.getChildren().add(btnHelpFilter);
 
-        vBoxFilter.getChildren().addAll(hBoxClear, P2GuiTools.getVBoxGrower(), hBoxHelp);
+        vBoxFilter.getChildren().addAll(P2GuiTools.getVDistance(10), hBoxClear, P2GuiTools.getVBoxGrower(), hBoxHelp);
 
         // black
         VBox vb = new VBox(FilterController.FILTER_SPACING_TEXTFILTER);
@@ -104,10 +106,14 @@ public class DownloadFilterController extends FilterController {
     private void initFilter() {
         btnClear.setOnAction(a -> clearFilter());
 
+        cboList.getItems().addAll(DownloadConstants.ALL,
+                DownloadConstants.SRC_COMBO_FILM,
+                DownloadConstants.SRC_COMBO_AUDIO);
+        cboList.valueProperty().bindBidirectional(ProgConfig.FILTER_DOWNLOAD_LIST);
+
         cboSrc.getItems().addAll(DownloadConstants.ALL,
                 DownloadConstants.SRC_COMBO_DOWNLOAD,
                 DownloadConstants.SRC_COMBO_ABO);
-
         Bindings.bindBidirectional(cboSrc.valueProperty(), ProgConfig.FILTER_DOWNLOAD_SOURCE,
                 new StringConverter<>() {
 
@@ -143,7 +149,6 @@ public class DownloadFilterController extends FilterController {
         cboKind.getItems().addAll(DownloadConstants.ALL,
                 DownloadConstants.TYPE_COMBO_DOWNLOAD,
                 DownloadConstants.TYPE_COMBO_PROGRAM);
-
         Bindings.bindBidirectional(cboKind.valueProperty(), ProgConfig.FILTER_DOWNLOAD_TYPE,
                 new StringConverter<>() {
 
@@ -199,6 +204,9 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void clearFilter() {
+        if (cboList.getSelectionModel() != null) {
+            cboList.getSelectionModel().selectFirst();
+        }
         if (cboSrc.getSelectionModel() != null) {
             cboSrc.getSelectionModel().selectFirst();
         }

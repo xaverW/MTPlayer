@@ -38,7 +38,7 @@ public class DownloadDataProps extends P2DataSample<DownloadData> {
     private final ObservableList<String> urlList = FXCollections.observableArrayList(); // wenn mehrere Filme gestartet werden sollen
     private final IntegerProperty no = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
     private final IntegerProperty filmNo = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
-    private final BooleanProperty audio = new SimpleBooleanProperty(false); // dann ist ein Download aus AUDIO
+    private final BooleanProperty audio = new SimpleBooleanProperty(false); // dann ist es ein Download aus AUDIO
 
     private final StringProperty aboName = new SimpleStringProperty("");
     private final StringProperty channel = new SimpleStringProperty("");

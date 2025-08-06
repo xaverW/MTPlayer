@@ -47,6 +47,9 @@ public class DownloadConstants {
     public static final String SRC_DOWNLOAD = "Download"; // sind manuell angelegte Downloads
     public static final String SRC_ABO = "Abo"; // sind Downloads aus Abos
 
+    public static final String SRC_COMBO_FILM = "nur Filme";
+    public static final String SRC_COMBO_AUDIO = "nur Audios";
+
     public static final String SRC_COMBO_DOWNLOAD = "nur Downloads";
     public static final String SRC_COMBO_ABO = "nur Abos";
 

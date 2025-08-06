@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
+import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
@@ -58,11 +59,6 @@ public class AboSearchDownloadsFactory {
         }
 
         ProgData.getInstance().aboList.notifyChanges();
-
-//        AboFactory.setAboForFilmlist();
-//        ProgData.getInstance().worker.getAboNames();
-//        searchForDownloadsFromAbosAndMaybeStart();
-//        ProgData.getInstance().filmFilterRunner.filterList();
     }
 
     public static void searchForDownloadsFromAbosAndMaybeStart() {
@@ -73,6 +69,7 @@ public class AboSearchDownloadsFactory {
         // workOnFilmListLoadFinished und "Abo suchen" ist ein oder AUTOMODE
         ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Downloads suchen:", -1.0, false);
 
+        // todo audio
         if (ProgData.FILMLIST_IS_DOWNLOADING.get()) {
             // wird danach eh gemacht
             alreadyRunning.set(false);
@@ -88,7 +85,11 @@ public class AboSearchDownloadsFactory {
             return;
         }
 
-        searchDownloadsBefore();
+        P2Log.sysLog("Downloads aus Abos suchen");
+        //erledigte entfernen, nicht gestartete Abos entfernen und nach neuen Abos suchen
+        count = ProgData.getInstance().downloadList.getSize();
+        DownloadFactory.refreshDownloads(ProgData.getInstance().downloadList);
+
         new Thread(new Task<Void>() {
             @Override
             protected Void call() {
@@ -99,14 +100,6 @@ public class AboSearchDownloadsFactory {
                 return null;
             }
         }).start();
-    }
-
-    private static void searchDownloadsBefore() {
-        P2Log.sysLog("Downloads aus Abos suchen");
-
-        //erledigte entfernen, nicht gestartete Abos entfernen und nach neuen Abos suchen
-        count = ProgData.getInstance().downloadList.getSize();
-        DownloadFactory.refreshDownloads(ProgData.getInstance().downloadList);
     }
 
     private static void searchForNewDownloadsForAbos(DownloadList downloadList) {
@@ -129,15 +122,32 @@ public class AboSearchDownloadsFactory {
         Set<String> syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(new HashSet<>(500)); //todo für 90% übertrieben, für 10% immer noch zu wenig???
         downloadList.forEach((download) -> syncDownloadsAlreadyInTheListHash.add(download.getUrl()));
 
+        final int sum = ProgData.getInstance().audioList.size() + ProgData.getInstance().filmList.size();
+        act = 0;
+        now = 0;
+        search(false, sum, syncDownloadArrayList, syncDownloadsAlreadyInTheListHash);
+        search(true, sum, syncDownloadArrayList, syncDownloadsAlreadyInTheListHash);
+
+        if (found) {
+            Platform.runLater(() -> {
+                searchDownloadsAfter(syncDownloadArrayList, downloadList, syncDownloadsAlreadyInTheListHash);
+                ProgData.downloadSearchDone = true; // braucht der AutoMode, damit er weiß, wann er anfangen kann
+                P2Duration.counterStop("searchForNewDownloadsForAbos");
+            });
+        } else {
+            ProgData.downloadSearchDone = true; // braucht der AutoMode, damit er weiß, wann er anfangen kann
+            P2Duration.counterStop("searchForNewDownloadsForAbos");
+        }
+    }
+
+    private static void search(boolean audio, int sum, List<DownloadData> syncDownloadArrayList, Set<String> syncDownloadsAlreadyInTheListHash) {
         // prüfen ob in "alle Filme" oder nur "nach Blacklist" gesucht werden soll
         final boolean checkWithBlackList = ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO.getValue();
 
         // und jetzt die Filmliste ablaufen
-        final int sum = ProgData.getInstance().filmList.size();
-        act = 0;
-        now = 0;
+        FilmListMTP filmList = audio ? ProgData.getInstance().audioList : ProgData.getInstance().filmList;
 
-        ProgData.getInstance().filmList.parallelStream().forEach(film -> {
+        filmList.parallelStream().forEach(film -> {
             ++act;
             ++now;
             if (now > 5_000) {
@@ -178,8 +188,6 @@ public class AboSearchDownloadsFactory {
             final SetData setData = aboData.getSetData(ProgData.getInstance());
             DownloadData downloadData;
 
-            // todo audio
-            boolean audio = aboData.getSource() == AboData.ABO_AUDIO || aboData.getSource() == AboData.ABO_FILM_AUDIO;
             if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
                 downloadData = new DownloadData(audio, DownloadConstants.SRC_ABO, setData, film, aboData, "", "", true);
             } else {
@@ -189,17 +197,6 @@ public class AboSearchDownloadsFactory {
             syncDownloadArrayList.add(downloadData);
             found = true;
         });
-
-        if (found) {
-            Platform.runLater(() -> {
-                searchDownloadsAfter(syncDownloadArrayList, downloadList, syncDownloadsAlreadyInTheListHash);
-                ProgData.downloadSearchDone = true; // braucht der AutoMode, damit er weiß, wann er anfangen kann
-                P2Duration.counterStop("searchForNewDownloadsForAbos");
-            });
-        } else {
-            ProgData.downloadSearchDone = true; // braucht der AutoMode, damit er weiß, wann er anfangen kann
-            P2Duration.counterStop("searchForNewDownloadsForAbos");
-        }
     }
 
     private static void searchDownloadsAfter(List<DownloadData> syncDownloadArrayList,

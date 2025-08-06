@@ -30,16 +30,16 @@ public class AboFactory {
     }
 
     public static String getSourceText(AboData abo) {
-        if (abo.getSource() == AboData.ABO_FILM_AUDIO) {
+        if (abo.getList() == AboData.ABO_FILM_AUDIO) {
             return "Film/Audio";
-        } else if (abo.getSource() == AboData.ABO_FILM) {
+        } else if (abo.getList() == AboData.ABO_FILM) {
             return "Film";
         } else {
             return "Audio";
         }
     }
 
-    public static AboData findAbo(FilmData film) {
+    public static AboData findAbo(boolean audio, FilmData film) {
         //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
         if (film.isLive()) {
             //Livestreams gehören nicht in ein Abo
@@ -48,6 +48,10 @@ public class AboFactory {
 
         film.setLowerCase();
         final AboData aboData = ProgData.getInstance().aboList.stream()
+                .filter(abo -> abo.getList() == AboData.ABO_FILM_AUDIO ||
+                        audio && abo.getList() == AboData.ABO_AUDIO ||
+                        !audio && abo.getList() == AboData.ABO_FILM)
+
                 .filter(abo -> FilmFilterCheck.checkFilterMatch(
                         abo.fChannel,
                         abo.fTheme,
@@ -63,10 +67,11 @@ public class AboFactory {
     }
 
     public static synchronized void setAboForFilmlist() {
-        setAboForFilmlist(ProgData.getInstance().filmList);
+        setAboForFilmlist(false, ProgData.getInstance().filmList);
+        setAboForFilmlist(true, ProgData.getInstance().audioList);
     }
 
-    public static synchronized void setAboForFilmlist(Filmlist<FilmDataMTP> filmlist) {
+    public static synchronized void setAboForFilmlist(boolean audio, Filmlist<FilmDataMTP> filmlist) {
         // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
         // braucht länger
         P2Duration.counterStart("setAboForFilmlist");
@@ -93,13 +98,13 @@ public class AboFactory {
         });
 
         // das kostet die Zeit!!
-        filmlist.forEach(AboFactory::assignAboToFilm);
+        filmlist.forEach(f -> assignAboToFilm(audio, f));
 
         P2Duration.counterStop("setAboForFilmlist");
     }
 
-    private static void assignAboToFilm(FilmDataMTP film) {
-        final AboData abo = findAbo(film);
+    private static void assignAboToFilm(boolean audio, FilmDataMTP film) {
+        final AboData abo = findAbo(audio, film);
 
         if (abo == null) {
             // kein Abo gefunden
@@ -152,7 +157,7 @@ public class AboFactory {
                     checkAboExist(dataAbo.getTitle(), checkAbo.getTitle(), false) &&
                     checkAboExist(dataAbo.getSomewhere(), checkAbo.getSomewhere(), false) &&
 
-                    dataAbo.getSource() == checkAbo.getSource()) {
+                    dataAbo.getList() == checkAbo.getList()) {
                 if (no) {
                     if (dataAbo.getNo() != checkAbo.getNo()) {
                         return dataAbo;

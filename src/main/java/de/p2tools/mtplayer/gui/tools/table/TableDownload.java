@@ -94,9 +94,9 @@ public class TableDownload extends PTable<DownloadData> {
         filmNrColumn.setCellFactory(new P2CellIntMax().cellFactory);
         filmNrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        final TableColumn<DownloadData, Boolean> audioColumn = new TableColumn<>("Audio");
+        final TableColumn<DownloadData, Boolean> audioColumn = new TableColumn<>("Liste");
         audioColumn.setCellValueFactory(new PropertyValueFactory<>("audio"));
-        audioColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+        TableDownloadFactory.columnFactoryList(audioColumn);
         audioColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, String> aboColumn = new TableColumn<>("Abo");

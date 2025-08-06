@@ -370,6 +370,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILTER_ABO_TYPE = addStrProp("filter-abo-type");
 
     // Filter Download
+    public static StringProperty FILTER_DOWNLOAD_LIST = addStrProp("filter-download-list");
     public static StringProperty FILTER_DOWNLOAD_CHANNEL = addStrProp("filter-download-channel");
     public static StringProperty FILTER_DOWNLOAD_SOURCE = addStrProp("filter-download-source");
     public static StringProperty FILTER_DOWNLOAD_TYPE = addStrProp("filter-download-type");

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class AboDataProps extends P2DataSample<AboData> implements Comparable<AboData> {
 
     private final IntegerProperty no = new SimpleIntegerProperty(0);
-    private final IntegerProperty source = new SimpleIntegerProperty(AboData.ABO_FILM_AUDIO); // wo gesucht werden soll
+    private final IntegerProperty list = new SimpleIntegerProperty(AboData.ABO_FILM_AUDIO); // wo gesucht werden soll
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private final StringProperty name = new SimpleStringProperty("");
@@ -60,7 +60,7 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
     private int countHit = 0;
     private String buttonDummy = "";
 
-    public final Property[] properties = {no, source, active, hit, name, description, resolution,
+    public final Property[] properties = {no, list, active, hit, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
             timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, aboDir, aboFileName, date, setDataId, genDate};
 
@@ -71,31 +71,31 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
         //das muss noch gesetzt werden!!
         setSetDataId(setData.getValue() == null ? "" : setData.getValue().getId());
 
-        ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_intProp("no", no));
-        list.add(new Config_intProp("search", source));
-        list.add(new Config_boolProp("active", active));
-        list.add(new Config_intProp("hit", hit));
-        list.add(new Config_stringProp("name", name));
-        list.add(new Config_stringProp("description", description));
-        list.add(new Config_stringProp("resolution", resolution));
-        list.add(new Config_stringProp("channel", channel));
-        list.add(new Config_stringProp("theme", theme));
-        list.add(new Config_boolProp("themeExact", themeExact));
-        list.add(new Config_stringProp("themeTitle", themeTitle));
-        list.add(new Config_stringProp("title", title));
-        list.add(new Config_stringProp("somewhere", somewhere));
-        list.add(new Config_intProp("timeRange", timeRange));
-        list.add(new Config_intProp("minDurationMinute", minDurationMinute));
-        list.add(new Config_intProp("maxDurationMinute", maxDurationMinute));
-        list.add(new Config_stringProp("startTime", startTime));
-        list.add(new Config_stringProp("aboSubDir", aboSubDir));
-        list.add(new Config_stringProp("aboDir", aboDir));
-        list.add(new Config_stringProp("aboFileName", aboFileName));
-        list.add(new Config_pDateProp("date", date));
-        list.add(new Config_stringProp("setDataId", setDataId));
-        list.add(new Config_pDateProp("genDate", genDate));
-        return list.toArray(new Config[]{});
+        ArrayList<Config> configList = new ArrayList<>();
+        configList.add(new Config_intProp("no", no));
+        configList.add(new Config_intProp("list", list));
+        configList.add(new Config_boolProp("active", active));
+        configList.add(new Config_intProp("hit", hit));
+        configList.add(new Config_stringProp("name", name));
+        configList.add(new Config_stringProp("description", description));
+        configList.add(new Config_stringProp("resolution", resolution));
+        configList.add(new Config_stringProp("channel", channel));
+        configList.add(new Config_stringProp("theme", theme));
+        configList.add(new Config_boolProp("themeExact", themeExact));
+        configList.add(new Config_stringProp("themeTitle", themeTitle));
+        configList.add(new Config_stringProp("title", title));
+        configList.add(new Config_stringProp("somewhere", somewhere));
+        configList.add(new Config_intProp("timeRange", timeRange));
+        configList.add(new Config_intProp("minDurationMinute", minDurationMinute));
+        configList.add(new Config_intProp("maxDurationMinute", maxDurationMinute));
+        configList.add(new Config_stringProp("startTime", startTime));
+        configList.add(new Config_stringProp("aboSubDir", aboSubDir));
+        configList.add(new Config_stringProp("aboDir", aboDir));
+        configList.add(new Config_stringProp("aboFileName", aboFileName));
+        configList.add(new Config_pDateProp("date", date));
+        configList.add(new Config_stringProp("setDataId", setDataId));
+        configList.add(new Config_pDateProp("genDate", genDate));
+        return configList.toArray(new Config[]{});
     }
 
     @Override
@@ -141,16 +141,16 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
         this.no.set(no);
     }
 
-    public int getSource() {
-        return source.get();
+    public int getList() {
+        return list.get();
     }
 
-    public IntegerProperty sourceProperty() {
-        return source;
+    public IntegerProperty listProperty() {
+        return list;
     }
 
-    public void setSource(int source) {
-        this.source.set(source);
+    public void setList(int list) {
+        this.list.set(list);
     }
 
     public boolean isActive() {
