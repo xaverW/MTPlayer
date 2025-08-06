@@ -38,6 +38,7 @@ public class DownloadDataProps extends P2DataSample<DownloadData> {
     private final ObservableList<String> urlList = FXCollections.observableArrayList(); // wenn mehrere Filme gestartet werden sollen
     private final IntegerProperty no = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
     private final IntegerProperty filmNo = new SimpleIntegerProperty(P2LibConst.NUMBER_NOT_STARTED);
+    private final BooleanProperty audio = new SimpleBooleanProperty(false); // dann ist ein Download aus AUDIO
 
     private final StringProperty aboName = new SimpleStringProperty("");
     private final StringProperty channel = new SimpleStringProperty("");
@@ -91,7 +92,7 @@ public class DownloadDataProps extends P2DataSample<DownloadData> {
     private final BooleanProperty infoFile = new SimpleBooleanProperty(false);
     private final BooleanProperty subtitle = new SimpleBooleanProperty(false);
 
-    public final Property[] properties = {no, filmNo, aboName, channel, theme, title, description,
+    public final Property[] properties = {no, filmNo, audio, aboName, channel, theme, title, description,
             state, progress, remaining, bandwidth, downloadSize,
             filmDate, filmDateStr, filmTime, durationMinute,
             hd, small, ut, geoBlocked, resolution, filmSizeNormal, filmSizeHd, filmSizeSmall, filmUrlNormal, filmUrlHd, filmUrlSmall,
@@ -120,6 +121,7 @@ public class DownloadDataProps extends P2DataSample<DownloadData> {
         ArrayList<Config> list = new ArrayList<>();
         list.add(new Config_intProp("no", no));
         list.add(new Config_intProp("filmNr", filmNo));
+        list.add(new Config_boolProp("audio", audio));
         list.add(new Config_stringProp("aboName", aboName));
         list.add(new Config_stringProp("channel", channel));
         list.add(new Config_stringProp("theme", theme));
@@ -250,6 +252,18 @@ public class DownloadDataProps extends P2DataSample<DownloadData> {
 
     public void setFilmNo(int filmNo) {
         this.filmNo.set(filmNo);
+    }
+
+    public boolean isAudio() {
+        return audio.get();
+    }
+
+    public BooleanProperty audioProperty() {
+        return audio;
+    }
+
+    public void setAudio(boolean audio) {
+        this.audio.set(audio);
     }
 
     public String getAboName() {

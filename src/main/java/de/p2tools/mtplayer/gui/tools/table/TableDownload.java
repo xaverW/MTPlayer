@@ -77,12 +77,6 @@ public class TableDownload extends PTable<DownloadData> {
         ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
-//        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableDownload.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                refreshTable();
-//            }
-//        });
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_REFRESH_TABLE) {
             @Override
             public void pingGui() {
@@ -99,6 +93,11 @@ public class TableDownload extends PTable<DownloadData> {
         filmNrColumn.setCellValueFactory(new PropertyValueFactory<>("filmNo"));
         filmNrColumn.setCellFactory(new P2CellIntMax().cellFactory);
         filmNrColumn.getStyleClass().add("alignCenterRightPadding_10");
+
+        final TableColumn<DownloadData, Boolean> audioColumn = new TableColumn<>("Audio");
+        audioColumn.setCellValueFactory(new PropertyValueFactory<>("audio"));
+        audioColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+        audioColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, String> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("aboName"));
@@ -212,28 +211,13 @@ public class TableDownload extends PTable<DownloadData> {
         titleColumn.setPrefWidth(230);
 
         getColumns().addAll(
-                nrColumn, filmNrColumn,
+                nrColumn, filmNrColumn, audioColumn,
                 aboColumn, buttonColumn, senderColumn, themeColumn, titleColumn,
                 progressColumn, remainingColumn, speedColumn, startTimeColumn, sizeColumn,
                 datumColumn, timeColumn, durationColumn,
                 hdColumn, utColumn, geoColumn, artColumn, srcColumn, /*placedBackColumn,*/
                 programColumn, setColumn, fileNameColumn, pathColumn, urlColumn);
 
-//        PListener.addListener(new PListener(PListener.EVENT_TIMER_SECOND, TableDownload.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                if (!getSortOrder().isEmpty() &&
-//                        (getSortOrder().get(0).equals(progressColumn) ||
-//                                getSortOrder().get(0).equals(remainingColumn) ||
-//                                getSortOrder().get(0).equals(speedColumn)
-//                        )) {
-//                    // dann sind es die Spalten die sich ändern
-//                    sort();
-//                    //todo ??
-////                    System.out.println("sort " + i++);
-//                }
-//            }
-//        });
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
             public void pingGui() {

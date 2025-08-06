@@ -82,6 +82,7 @@ public class DownloadAddDialogGui {
         gridPane.add(addDownloadDto.lblFilmTitle, 1, row);
         gridPane.add(addDownloadDto.btnAll, 3, row, 1, 2);
         GridPane.setValignment(addDownloadDto.btnAll, VPos.TOP);
+
         // Datum - Zeit - Länge
         gridPane.add(addDownloadDto.lblFilmDateTime, 1, ++row);
 
