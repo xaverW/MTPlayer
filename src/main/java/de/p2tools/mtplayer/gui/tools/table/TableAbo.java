@@ -65,12 +65,6 @@ public class TableAbo extends PTable<AboData> {
         ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgColorList.ABO_SWITCHED_OFF.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
-//        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableAbo.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                refreshTable();
-//            }
-//        });
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_REFRESH_TABLE) {
             @Override
             public void pingGui() {
@@ -85,6 +79,11 @@ public class TableAbo extends PTable<AboData> {
         activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
         activeColumn.setCellFactory(new P2CellCheckBox().cellFactory);
         activeColumn.getStyleClass().add("alignCenter");
+
+        final TableColumn<AboData, Integer> sourceColumn = new TableColumn<>("Quelle");
+        sourceColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
+        TableAboFactory.columnFactorySource(sourceColumn);
+        sourceColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<AboData, Integer> hitColumn = new TableColumn<>("Treffer");
         hitColumn.setCellValueFactory(new PropertyValueFactory<>("hit"));
@@ -165,7 +164,8 @@ public class TableAbo extends PTable<AboData> {
         genDateColumn.getStyleClass().add("alignCenter");
 
         getColumns().addAll(
-                nrColumn, activeColumn, hitColumn, nameColumn, startColumn, resColumn, senderColumn,
+                nrColumn, activeColumn, sourceColumn,
+                hitColumn, nameColumn, startColumn, resColumn, senderColumn,
                 themeColumn, themeExactColumn, themeTitleColumn, titleColumn,
                 somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn,
                 destinationColumn, datumColumn, psetColumn, genDateColumn);

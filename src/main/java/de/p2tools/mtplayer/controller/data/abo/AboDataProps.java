@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class AboDataProps extends P2DataSample<AboData> implements Comparable<AboData> {
 
     private final IntegerProperty no = new SimpleIntegerProperty(0);
-    private final IntegerProperty search = new SimpleIntegerProperty(AboData.ABO_FILM_AUDIO); // wo gesucht werden soll
+    private final IntegerProperty source = new SimpleIntegerProperty(AboData.ABO_FILM_AUDIO); // wo gesucht werden soll
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private final StringProperty name = new SimpleStringProperty("");
@@ -60,7 +60,7 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
     private int countHit = 0;
     private String buttonDummy = "";
 
-    public final Property[] properties = {no, search, active, hit, name, description, resolution,
+    public final Property[] properties = {no, source, active, hit, name, description, resolution,
             channel, theme, themeExact, themeTitle, title, somewhere,
             timeRange, minDurationMinute, maxDurationMinute, startTime, aboSubDir, aboDir, aboFileName, date, setDataId, genDate};
 
@@ -73,7 +73,7 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
 
         ArrayList<Config> list = new ArrayList<>();
         list.add(new Config_intProp("no", no));
-        list.add(new Config_intProp("search", search));
+        list.add(new Config_intProp("search", source));
         list.add(new Config_boolProp("active", active));
         list.add(new Config_intProp("hit", hit));
         list.add(new Config_stringProp("name", name));
@@ -141,16 +141,16 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
         this.no.set(no);
     }
 
-    public int getSearch() {
-        return search.get();
+    public int getSource() {
+        return source.get();
     }
 
-    public IntegerProperty searchProperty() {
-        return search;
+    public IntegerProperty sourceProperty() {
+        return source;
     }
 
-    public void setSearch(int search) {
-        this.search.set(search);
+    public void setSource(int source) {
+        this.source.set(source);
     }
 
     public boolean isActive() {

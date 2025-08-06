@@ -22,6 +22,7 @@ public class AboFieldNames {
     public static final String ABO_NO = "Nr";
     public static final String ABO_HIT = "Treffer";
     public static final String ABO_ACTIVE = "Aktiv";
+    public static final String ABO_SOURCE = "Quelle";
     public static final String ABO_NAME = "Name";
     public static final String ABO_DESCRIPTION = "Beschreibung";
     public static final String ABO__RESOLUTION = "Auflösung";

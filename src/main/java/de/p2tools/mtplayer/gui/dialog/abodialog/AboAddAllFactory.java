@@ -44,6 +44,8 @@ public class AboAddAllFactory {
 
             addAboDto.chkActiveAll.setVisible(false);
             addAboDto.chkActiveAll.setManaged(false);
+            addAboDto.chkSourceAll.setVisible(false);
+            addAboDto.chkSourceAll.setManaged(false);
             addAboDto.chkDescriptionAll.setVisible(false);
             addAboDto.chkDescriptionAll.setManaged(false);
             addAboDto.chkResolutionAll.setVisible(false);
@@ -75,6 +77,7 @@ public class AboAddAllFactory {
 
         } else {
             addAboDto.chkActiveAll.getStyleClass().add("checkBoxAll");
+            addAboDto.chkSourceAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkDescriptionAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkResolutionAll.getStyleClass().add("checkBoxAll");
             addAboDto.chkChannelAll.getStyleClass().add("checkBoxAll");
@@ -94,6 +97,12 @@ public class AboAddAllFactory {
                 addCheckAllCss(addAboDto);
                 if (addAboDto.chkActiveAll.isSelected()) {
                     addAboDto.initChannelTTDescription.setActive();
+                }
+            });
+            addAboDto.chkSourceAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                addCheckAllCss(addAboDto);
+                if (addAboDto.chkSourceAll.isSelected()) {
+                    addAboDto.initChannelTTDescription.setSource();
                 }
             });
             addAboDto.chkDescriptionAll.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -195,6 +204,7 @@ public class AboAddAllFactory {
             addAboDto.chkSetAll.setSelected(isNotSelected);
         }
         addAboDto.chkActiveAll.setSelected(isNotSelected);
+        addAboDto.chkSourceAll.setSelected(isNotSelected);
         addAboDto.chkDescriptionAll.setSelected(isNotSelected);
         addAboDto.chkResolutionAll.setSelected(isNotSelected);
         addAboDto.chkChannelAll.setSelected(isNotSelected);
@@ -227,6 +237,7 @@ public class AboAddAllFactory {
 
     private static boolean isAllSelected(AddAboDto addAboDto) {
         return addAboDto.chkActiveAll.isSelected() ||
+                addAboDto.chkSourceAll.isSelected() ||
                 addAboDto.chkDescriptionAll.isSelected() ||
                 addAboDto.chkResolutionAll.isSelected() ||
                 addAboDto.chkChannelAll.isSelected() ||

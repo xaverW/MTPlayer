@@ -27,7 +27,10 @@ import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -100,17 +103,23 @@ public class AboAddDialogGuiAbo extends VBox {
         gridPane.add(new Label(), 0, ++row);
         gridPane.add(new Label(), 0, ++row);
 
+        // Quelle Film-Audio
+        gridPane.add(DownloadAddDialogFactory.getText(AboFieldNames.ABO_SOURCE + ":"), 0, ++row);
+        HBox hBox = new HBox(10);
+        hBox.setPadding(new Insets(2));
+        hBox.getStyleClass().add("downloadDialog");
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.getChildren().addAll(addAboDto.rbFilmAudio, addAboDto.rbFilm, addAboDto.rbAudio);
+        gridPane.add(hBox, 1, row);
+        gridPane.add(addAboDto.chkSourceAll, 2, row);
+        gridPane.add(new Label(), 0, ++row);
+
         // Auflösung
         HBox hRes = new HBox(10);
         hRes.setPadding(new Insets(2));
         hRes.getStyleClass().add("downloadDialog");
         hRes.setAlignment(Pos.CENTER_LEFT);
         hRes.getChildren().addAll(addAboDto.rbHd, addAboDto.rbHigh, addAboDto.rbLow);
-
-        ToggleGroup tg = new ToggleGroup();
-        addAboDto.rbHd.setToggleGroup(tg);
-        addAboDto.rbHigh.setToggleGroup(tg);
-        addAboDto.rbLow.setToggleGroup(tg);
 
         final Button btnHelpRes = P2Button.helpButton(stage,
                 "Auflösung", HelpText.ABO_RES);

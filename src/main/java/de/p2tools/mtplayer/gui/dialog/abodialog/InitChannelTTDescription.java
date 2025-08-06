@@ -17,6 +17,8 @@
 
 package de.p2tools.mtplayer.gui.dialog.abodialog;
 
+import de.p2tools.mtplayer.controller.data.abo.AboData;
+
 import java.util.Arrays;
 
 public class InitChannelTTDescription {
@@ -33,6 +35,24 @@ public class InitChannelTTDescription {
                 return;
             }
             setActive();
+        });
+        addAboDto.rbFilm.selectedProperty().addListener((u, o, n) -> {
+            if (!addAboDto.rbFilm.isFocused()) {
+                return;
+            }
+            setSource();
+        });
+        addAboDto.rbAudio.selectedProperty().addListener((u, o, n) -> {
+            if (!addAboDto.rbAudio.isFocused()) {
+                return;
+            }
+            setSource();
+        });
+        addAboDto.rbFilmAudio.selectedProperty().addListener((u, o, n) -> {
+            if (!addAboDto.rbFilmAudio.isFocused()) {
+                return;
+            }
+            setSource();
         });
         addAboDto.textAreaDescription.textProperty().addListener((u, o, n) -> {
             if (!addAboDto.textAreaDescription.isFocused()) {
@@ -78,6 +98,9 @@ public class InitChannelTTDescription {
     public void makeAct() {
         // nach dem actFilm setzen, z.B. beim Wechsel
         addAboDto.chkActive.setSelected(addAboDto.getAct().abo.isActive());
+        addAboDto.rbFilm.setSelected(addAboDto.getAct().abo.getSource() == AboData.ABO_FILM);
+        addAboDto.rbAudio.setSelected(addAboDto.getAct().abo.getSource() == AboData.ABO_AUDIO);
+        addAboDto.rbFilmAudio.setSelected(addAboDto.getAct().abo.getSource() == AboData.ABO_FILM_AUDIO);
         addAboDto.textAreaDescription.setText(addAboDto.getAct().abo.getDescription());
         addAboDto.channelProperty.setValue(addAboDto.getAct().abo.getChannel());
         addAboDto.textAreaTheme.setText(addAboDto.getAct().abo.getTheme());
@@ -96,6 +119,28 @@ public class InitChannelTTDescription {
             });
         } else {
             addAboDto.getAct().abo.setActive(addAboDto.chkActive.isSelected());
+        }
+    }
+
+    public void setSource() {
+        if (addAboDto.chkSourceAll.isSelected()) {
+            Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
+                if (addAboDto.rbFilm.isSelected()) {
+                    addAboData.abo.setSource(AboData.ABO_FILM);
+                } else if (addAboDto.rbAudio.isSelected()) {
+                    addAboData.abo.setSource(AboData.ABO_AUDIO);
+                } else {
+                    addAboData.abo.setSource(AboData.ABO_FILM_AUDIO);
+                }
+            });
+        } else {
+            if (addAboDto.rbFilm.isSelected()) {
+                addAboDto.getAct().abo.setSource(AboData.ABO_FILM);
+            } else if (addAboDto.rbAudio.isSelected()) {
+                addAboDto.getAct().abo.setSource(AboData.ABO_AUDIO);
+            } else {
+                addAboDto.getAct().abo.setSource(AboData.ABO_FILM_AUDIO);
+            }
         }
     }
 

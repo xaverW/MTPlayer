@@ -29,6 +29,16 @@ public class AboFactory {
     private AboFactory() {
     }
 
+    public static String getSourceText(AboData abo) {
+        if (abo.getSource() == AboData.ABO_FILM_AUDIO) {
+            return "Film/Audio";
+        } else if (abo.getSource() == AboData.ABO_FILM) {
+            return "Film";
+        } else {
+            return "Audio";
+        }
+    }
+
     public static AboData findAbo(FilmData film) {
         //liefert ein Abo zu dem Film, auch Abos die ausgeschaltet sind, Film zu klein ist, ...
         if (film.isLive()) {
@@ -140,7 +150,9 @@ public class AboFactory {
 
                     checkAboExist(dataAbo.getThemeTitle(), checkAbo.getThemeTitle(), false) &&
                     checkAboExist(dataAbo.getTitle(), checkAbo.getTitle(), false) &&
-                    checkAboExist(dataAbo.getSomewhere(), checkAbo.getSomewhere(), false)) {
+                    checkAboExist(dataAbo.getSomewhere(), checkAbo.getSomewhere(), false) &&
+
+                    dataAbo.getSource() == checkAbo.getSource()) {
                 if (no) {
                     if (dataAbo.getNo() != checkAbo.getNo()) {
                         return dataAbo;

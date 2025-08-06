@@ -209,7 +209,6 @@ public class AboAddDialogController extends P2DialogExtra {
     }
 
     private void initButton() {
-//        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> updateCss());
         setMaskerPane();
         progData.maskerPane.visibleProperty().addListener((u, o, n) -> {
             setMaskerPane();
@@ -224,7 +223,6 @@ public class AboAddDialogController extends P2DialogExtra {
         });
 
         btnOk.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
-//        btnOk.disableProperty().bind(ProgData.busy.busyProperty());
         btnOk.setOnAction(a -> {
             if (check()) {
                 apply(true);
@@ -232,7 +230,6 @@ public class AboAddDialogController extends P2DialogExtra {
             }
         });
         btnApply.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
-//        btnApply.disableProperty().bind(ProgData.busy.busyProperty());
         btnApply.setOnAction(a -> {
             if (check()) {
                 apply(false);
@@ -267,6 +264,7 @@ public class AboAddDialogController extends P2DialogExtra {
                             "findet die gleichen (oder mehr) Filme:" +
                             "\n\n" +
                             ("Abo-Nr: " + abo.getNo() + "\n") +
+                            ("Quelle: " + AboFactory.getSourceText(abo) + "\n") +
                             (abo.getChannel().isEmpty() ? "" : "Sender: " + abo.getChannel() + "\n") +
                             (abo.getTheme().isEmpty() ? "" : "Thema: " + abo.getTheme() + "\n") +
                             (abo.getThemeTitle().isEmpty() ? "" : "Thema-Titel: " + abo.getThemeTitle() + "\n") +

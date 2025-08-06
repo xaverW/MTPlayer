@@ -43,13 +43,13 @@ import java.util.List;
 public class AddAboDto {
 
     public boolean isNewAbo = true;
-    public final InitChannelTTDescription initChannelTTDescription;
-    public final InitName initName;
-    public final InitResolution initResolution;
-    public final InitTimeRangeAndDuration initTimeRangeAndDuration;
-    public final InitStartTime initStartTime;
-    public final InitDestination initDestination;
-    public final InitSetData initSetData;
+    public InitChannelTTDescription initChannelTTDescription;
+    public InitName initName;
+    public InitResolution initResolution;
+    public InitTimeRangeAndDuration initTimeRangeAndDuration;
+    public InitStartTime initStartTime;
+    public InitDestination initDestination;
+    public InitSetData initSetData;
 
     public final ProgData progData;
     public AddAboData[] addAboData;
@@ -65,6 +65,7 @@ public class AddAboDto {
     public final Button btnAll = new Button("Für alle ändern");
 
     public final CheckAll chkActiveAll = new CheckAll();
+    public final CheckAll chkSourceAll = new CheckAll();
     public final CheckAll chkDescriptionAll = new CheckAll();
     public final CheckAll chkResolutionAll = new CheckAll();
     public final CheckAll chkChannelAll = new CheckAll();
@@ -83,6 +84,10 @@ public class AddAboDto {
     public final CheckBox chkActive = new CheckBox();
     public final CheckBox chkThemeExact = new CheckBox();
     public final TextField txtName = new TextField();
+
+    public final RadioButton rbFilm = new RadioButton("Film");
+    public final RadioButton rbAudio = new RadioButton("Audio");
+    public final RadioButton rbFilmAudio = new RadioButton("Film und Audio");
 
     public final Text textSet = DownloadAddDialogFactory.getText("Set:");
     public final ComboBox<SetData> cboSetData = new ComboBox<>();
@@ -116,7 +121,7 @@ public class AddAboDto {
     public final TextArea textAreaTitle = new P2TextAreaIgnoreTab(false, true);
     public final TextArea textAreaSomewhere = new P2TextAreaIgnoreTab(false, true);
 
-    public final P2MenuButton mbChannel;
+    public P2MenuButton mbChannel;
     public final StringProperty channelProperty = new SimpleStringProperty();
 
     public final P2TimePicker p2TimePicker = new P2TimePicker();
@@ -129,25 +134,8 @@ public class AddAboDto {
         this.isNewAbo = isNewAbo;
         this.aboList.setAll(abo);
 
-        ToggleGroup tgl1 = new ToggleGroup();
-        rbSetPath.setToggleGroup(tgl1);
-        rbOwnPath.setToggleGroup(tgl1);
-        ToggleGroup tgl2 = new ToggleGroup();
-        rbSetFileName.setToggleGroup(tgl2);
-        rbOwnFileName.setToggleGroup(tgl2);
-
         addAboData = InitAddAboArray.initAboArray(abo);
-
-        this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelListFilm, true);
-        channelProperty.addListener((u, o, n) -> getAct().abo.setChannel(channelProperty.getValueSafe()));
-
-        initChannelTTDescription = new InitChannelTTDescription(this);
-        initName = new InitName(this);
-        initResolution = new InitResolution(this);
-        initTimeRangeAndDuration = new InitTimeRangeAndDuration(this);
-        initStartTime = new InitStartTime(this);
-        initDestination = new InitDestination(this);
-        initSetData = new InitSetData(this);
+        init();
     }
 
     public AddAboDto(ProgData progData, boolean isNewAbo, List<AboData> aboList) {
@@ -156,16 +144,30 @@ public class AddAboDto {
         this.isNewAbo = isNewAbo;
         this.aboList.setAll(aboList);
 
+        addAboData = InitAddAboArray.initAboArray(aboList);
+        init();
+    }
+
+    private void init() {
+        ToggleGroup tgSource = new ToggleGroup();
+        rbFilm.setToggleGroup(tgSource);
+        rbAudio.setToggleGroup(tgSource);
+        rbFilmAudio.setToggleGroup(tgSource);
+
+        ToggleGroup tg = new ToggleGroup();
+        rbHd.setToggleGroup(tg);
+        rbHigh.setToggleGroup(tg);
+        rbLow.setToggleGroup(tg);
+
         ToggleGroup tgl1 = new ToggleGroup();
         rbSetPath.setToggleGroup(tgl1);
         rbOwnPath.setToggleGroup(tgl1);
+
         ToggleGroup tgl2 = new ToggleGroup();
         rbSetFileName.setToggleGroup(tgl2);
         rbOwnFileName.setToggleGroup(tgl2);
 
-        addAboData = InitAddAboArray.initAboArray(aboList);
-
-        this.mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelListFilm, true);
+        mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelListFilm, true);
         channelProperty.addListener((u, o, n) -> getAct().abo.setChannel(channelProperty.getValueSafe()));
 
         initChannelTTDescription = new InitChannelTTDescription(this);

@@ -179,7 +179,7 @@ public class AboSearchDownloadsFactory {
             DownloadData downloadData;
 
             // todo audio
-            boolean audio = aboData.getSearch() == AboData.ABO_AUDIO || aboData.getSearch() == AboData.ABO_FILM_AUDIO;
+            boolean audio = aboData.getSource() == AboData.ABO_AUDIO || aboData.getSource() == AboData.ABO_FILM_AUDIO;
             if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
                 downloadData = new DownloadData(audio, DownloadConstants.SRC_ABO, setData, film, aboData, "", "", true);
             } else {
