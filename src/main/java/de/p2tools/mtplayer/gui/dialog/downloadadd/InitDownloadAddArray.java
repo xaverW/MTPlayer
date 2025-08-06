@@ -31,7 +31,8 @@ public class InitDownloadAddArray {
     private InitDownloadAddArray() {
     }
 
-    public static AddDownloadData[] initDownloadInfoArrayFilm(ArrayList<FilmDataMTP> filmsToDownloadList,
+    public static AddDownloadData[] initDownloadInfoArrayFilm(boolean audio,
+                                                              ArrayList<FilmDataMTP> filmsToDownloadList,
                                                               AddDownloadDto addDownloadDto) {
         // neue Downloads anlegen
         String aktPath = "";
@@ -62,11 +63,11 @@ public class InitDownloadAddArray {
             }
             // Downloads anlegen
             if (i < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
-                addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
+                addDownloadData[i].download = new DownloadData(audio, DownloadConstants.SRC_DOWNLOAD,
                         addDownloadDto.setDataStart, film, null,
                         aktPath, resolution, true);
             } else {
-                addDownloadData[i].download = new DownloadData(DownloadConstants.SRC_DOWNLOAD,
+                addDownloadData[i].download = new DownloadData(audio, DownloadConstants.SRC_DOWNLOAD,
                         addDownloadDto.setDataStart, film, null,
                         aktPath, resolution, false);
             }

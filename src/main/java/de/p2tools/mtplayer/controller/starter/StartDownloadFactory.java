@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFiles;
 import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorData;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.gui.dialog.DownloadSubtitleDialog;
@@ -53,7 +53,7 @@ public class StartDownloadFactory {
     private StartDownloadFactory() {
     }
 
-    public static void downloadSubtitle(FilmDataMTP filmData, boolean subtitel) {
+    public static void downloadSubtitle(boolean audio, FilmDataMTP filmData, boolean subtitel) {
         SetData setData = ProgData.getInstance().setDataList.getSetDataForDownloads("");
         if (setData == null) {
             // braucht's eigentlich nicht, aber DOWNLOAD klappt sonst nicht!!
@@ -63,7 +63,7 @@ public class StartDownloadFactory {
 
         ArrayList<FilmDataMTP> list = new ArrayList<>();
         list.add(filmData);
-        DownloadData downloadData = new DownloadData(list, setData);
+        DownloadData downloadData = new DownloadData(audio, list, setData);
         if (subtitel) {
             downloadData.setSubtitle(true);
         } else {

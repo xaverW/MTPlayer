@@ -32,24 +32,24 @@ public class FilmSaveFactory {
     private FilmSaveFactory() {
     }
 
-    public static void saveFilm(FilmDataMTP film) {
+    public static void saveFilm(boolean audio, FilmDataMTP film) {
         // aus Button/Menü
         ArrayList<FilmDataMTP> list = new ArrayList<>();
         list.add(film);
-        saveFilmList(list, null);
+        saveFilmList(audio, list, null);
     }
 
     public static void saveFilmList() {
         // Menü: Sel Filme speichern
-        saveFilmList(ProgData.getInstance().filmGuiController.getSelList(true), null);
+        saveFilmList(false, ProgData.getInstance().filmGuiController.getSelList(true), null);
     }
 
     public static void saveAudioList() {
         // Menü: Sel Filme speichern
-        saveFilmList(ProgData.getInstance().audioGuiController.getSelList(true), null);
+        saveFilmList(true, ProgData.getInstance().audioGuiController.getSelList(true), null);
     }
 
-    public static void saveFilmList(List<FilmDataMTP> list, SetData setData) {
+    public static void saveFilmList(boolean audio, List<FilmDataMTP> list, SetData setData) {
         // Filme speichern, Menü
         if (list.isEmpty()) {
             return;
@@ -109,7 +109,7 @@ public class FilmSaveFactory {
         }
 
         if (!filmsAddDownloadList.isEmpty()) {
-            new DownloadAddDialogController(progData, filmsAddDownloadList, setData);
+            new DownloadAddDialogController(audio, progData, filmsAddDownloadList, setData);
         }
     }
 }

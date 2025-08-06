@@ -74,13 +74,13 @@ public class FilmMenu {
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
             if (filmSelection.isPresent()) {
-                FilmPlayFactory.playFilm(filmSelection.get());
+                FilmPlayFactory.playFilm(false, filmSelection.get());
                 progData.filmGuiController.tableView.refresh();
                 progData.filmGuiController.tableView.requestFocus();
             }
         });
         btPlayAll.setOnAction(a -> {
-            FilmPlayFactory.playFilmList(ProgData.getInstance().filmGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(false, ProgData.getInstance().filmGuiController.getSelList(true));
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
@@ -177,7 +177,7 @@ public class FilmMenu {
                 return;
             }
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
-            filmSelection.ifPresent(FilmPlayFactory::playFilm);
+            filmSelection.ifPresent(film -> FilmPlayFactory.playFilm(false, film));
         });
         P2ShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
 
@@ -186,7 +186,7 @@ public class FilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            FilmPlayFactory.playFilmList(ProgData.getInstance().filmGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(false, ProgData.getInstance().filmGuiController.getSelList(true));
         });
         P2ShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
 

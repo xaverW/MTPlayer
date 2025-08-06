@@ -74,13 +74,13 @@ public class AudioMenu {
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
             if (filmSelection.isPresent()) {
-                FilmPlayFactory.playFilm(filmSelection.get());
+                FilmPlayFactory.playFilm(true, filmSelection.get());
                 progData.audioGuiController.tableView.refresh();
                 progData.audioGuiController.tableView.requestFocus();
             }
         });
         btPlayAll.setOnAction(a -> {
-            FilmPlayFactory.playFilmList(ProgData.getInstance().audioGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(true, ProgData.getInstance().audioGuiController.getSelList(true));
             progData.audioGuiController.tableView.refresh();
             progData.audioGuiController.tableView.requestFocus();
         });
@@ -177,7 +177,7 @@ public class AudioMenu {
                 return;
             }
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
-            filmSelection.ifPresent(FilmPlayFactory::playFilm);
+            filmSelection.ifPresent(filmDataMTP -> FilmPlayFactory.playFilm(true, filmDataMTP));
         });
         P2ShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
 
@@ -186,7 +186,7 @@ public class AudioMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
                 return;
             }
-            FilmPlayFactory.playFilmList(ProgData.getInstance().audioGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(true, ProgData.getInstance().audioGuiController.getSelList(true));
         });
         P2ShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
 

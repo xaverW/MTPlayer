@@ -53,7 +53,7 @@ public class FilmTableContextMenu {
         MenuItem miStart = new MenuItem("Film abspielen");
         miStart.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
-            filmSelection.ifPresent(FilmPlayFactory::playFilm);
+            filmSelection.ifPresent(f -> FilmPlayFactory.playFilm(false, f));
         });
 
         MenuItem miSave = new MenuItem("Film speichern");
@@ -177,7 +177,7 @@ public class FilmTableContextMenu {
             list.forEach(setData -> {
                 final MenuItem item = new MenuItem(setData.getVisibleName());
                 item.setDisable(film == null);
-                item.setOnAction(event -> FilmPlayFactory.playFilmListWithSet(setData,
+                item.setOnAction(event -> FilmPlayFactory.playFilmListWithSet(false, setData,
                         ProgData.getInstance().filmGuiController.getSelList(true)));
                 submenuSet.getItems().add(item);
             });
@@ -241,11 +241,11 @@ public class FilmTableContextMenu {
 
         final MenuItem miLoadUt = new MenuItem("Untertitel speichern");
         miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
-        miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film, true));
+        miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(false, film, true));
 
         final MenuItem miLoadTxt = new MenuItem("Info-Datei speichern");
         miLoadTxt.setDisable(film == null);
-        miLoadTxt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film, false));
+        miLoadTxt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(false, film, false));
 
         final MenuItem miFilmsSetShown;
         if (film != null && film.isShown()) {

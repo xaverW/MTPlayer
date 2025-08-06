@@ -75,7 +75,7 @@ public class CellLiveFilmButton<S, T> extends TableCell<S, T> {
                     getTableView().getSelectionModel().select(getIndex());
 
                     FilmDataMTP film = getTableView().getItems().get(getIndex());
-                    FilmPlayFactory.playFilm(film);
+                    FilmPlayFactory.playFilm(false, film);
 
                     getTableView().refresh();
                     getTableView().requestFocus();
@@ -85,7 +85,7 @@ public class CellLiveFilmButton<S, T> extends TableCell<S, T> {
                     getTableView().getSelectionModel().select(getIndex());
 
                     FilmDataMTP film = getTableView().getItems().get(getIndex());
-                    FilmSaveFactory.saveFilm(film);
+                    FilmSaveFactory.saveFilm(false, film);
 
                     getTableView().refresh();
                     getTableView().requestFocus();

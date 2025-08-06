@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.tools.P2ToolsFactory;
@@ -79,7 +79,8 @@ public class PaneHistoryContextMenu {
 
         MenuItem miDownload = new MenuItem("Download noch einmal anlegen");
         miDownload.setDisable(film == null);
-        miDownload.setOnAction(a -> FilmSaveFactory.saveFilm(film));
+        // todo audio
+        miDownload.setOnAction(a -> FilmSaveFactory.saveFilm(false, film));
 
         contextMenu.getItems().addAll(miDelUrl, miCopyUrl, miShowFilm, miDownload);
     }

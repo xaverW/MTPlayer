@@ -155,14 +155,15 @@ public class TableBookmarkFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
+                    // todo audio
                     if (bookmarkData.getFilmData() == null) {
                         FilmDataMTP filmData = new FilmDataMTP();
                         filmData.arr[FilmData.FILM_TITLE] = bookmarkData.getTitle();
                         filmData.arr[FilmData.FILM_THEME] = bookmarkData.getTheme();
                         filmData.arr[FilmData.FILM_URL] = bookmarkData.getUrl();
-                        FilmPlayFactory.playFilm(filmData);
+                        FilmPlayFactory.playFilm(false, filmData);
                     } else {
-                        FilmPlayFactory.playFilm(filmDataMTP);
+                        FilmPlayFactory.playFilm(false, filmDataMTP);
                     }
 
                     getTableView().refresh();
@@ -173,14 +174,15 @@ public class TableBookmarkFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
+                    // todo audio
                     if (bookmarkData.getFilmData() == null) {
                         FilmDataMTP filmData = new FilmDataMTP();
                         filmData.arr[FilmData.FILM_TITLE] = bookmarkData.getTitle();
                         filmData.arr[FilmData.FILM_THEME] = bookmarkData.getTheme();
                         filmData.arr[FilmData.FILM_URL] = bookmarkData.getUrl();
-                        FilmSaveFactory.saveFilm(filmData);
+                        FilmSaveFactory.saveFilm(false, filmData);
                     } else {
-                        FilmSaveFactory.saveFilm(filmDataMTP);
+                        FilmSaveFactory.saveFilm(false, filmDataMTP);
                     }
 
                     getTableView().refresh();

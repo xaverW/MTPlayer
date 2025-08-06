@@ -81,11 +81,11 @@ public class PaneFilmButton extends VBox {
 
             btn.setOnAction(a -> {
                 switch (pane) {
-                    case FILM -> FilmPlayFactory.playFilmListWithSet(setData,
+                    case FILM -> FilmPlayFactory.playFilmListWithSet(false, setData,
                             ProgData.getInstance().filmGuiController.getSelList(true));
-                    case AUDIO -> FilmPlayFactory.playFilmListWithSet(setData,
+                    case AUDIO -> FilmPlayFactory.playFilmListWithSet(true, setData,
                             ProgData.getInstance().audioGuiController.getSelList(true));
-                    case LIVE -> FilmPlayFactory.playFilmListWithSet(setData,
+                    case LIVE -> FilmPlayFactory.playFilmListWithSet(false, setData,
                             ProgData.getInstance().liveFilmGuiController.getSelList(true));
                 }
             });

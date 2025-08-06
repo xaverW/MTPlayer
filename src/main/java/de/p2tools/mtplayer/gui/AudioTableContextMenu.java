@@ -53,7 +53,7 @@ public class AudioTableContextMenu {
         MenuItem miStart = new MenuItem("Audio abspielen");
         miStart.setOnAction(a -> {
             final Optional<FilmDataMTP> sel = ProgData.getInstance().audioGuiController.getSel(true, true);
-            sel.ifPresent(FilmPlayFactory::playFilm);
+            sel.ifPresent(f -> FilmPlayFactory.playFilm(true, f));
         });
 
         MenuItem miSave = new MenuItem("Audio speichern");
@@ -178,7 +178,7 @@ public class AudioTableContextMenu {
             list.forEach(setData -> {
                 final MenuItem item = new MenuItem(setData.getVisibleName());
                 item.setDisable(audio == null);
-                item.setOnAction(event -> FilmPlayFactory.playFilmListWithSet(setData,
+                item.setOnAction(event -> FilmPlayFactory.playFilmListWithSet(true, setData,
                         ProgData.getInstance().audioGuiController.getSelList(true)));
                 submenuSet.getItems().add(item);
             });
@@ -242,7 +242,7 @@ public class AudioTableContextMenu {
 
         final MenuItem miLoadTxt = new MenuItem("Info-Datei speichern");
         miLoadTxt.setDisable(film == null);
-        miLoadTxt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film, false));
+        miLoadTxt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(true, film, false));
 
         final MenuItem miFilmsSetShown;
         if (film != null && film.isShown()) {

@@ -178,10 +178,12 @@ public class AboSearchDownloadsFactory {
             final SetData setData = aboData.getSetData(ProgData.getInstance());
             DownloadData downloadData;
 
+            // todo audio
+            boolean audio = aboData.getSearch() == AboData.ABO_AUDIO || aboData.getSearch() == AboData.ABO_FILM_AUDIO;
             if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {
-                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData, "", "", true);
+                downloadData = new DownloadData(audio, DownloadConstants.SRC_ABO, setData, film, aboData, "", "", true);
             } else {
-                downloadData = new DownloadData(DownloadConstants.SRC_ABO, setData, film, aboData, "", "", false);
+                downloadData = new DownloadData(audio, DownloadConstants.SRC_ABO, setData, film, aboData, "", "", false);
             }
 
             syncDownloadArrayList.add(downloadData);

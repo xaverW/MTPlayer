@@ -20,8 +20,8 @@ package de.p2tools.mtplayer.gui.dialog.abodialog;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import javafx.collections.FXCollections;
 
@@ -205,7 +205,7 @@ public class InitDestination {
 
         final SetData setData = addAboDto.getAct().abo.getSetData();
         final AboData abo = addAboDto.getAct().abo;
-        DownloadData downloadData = new DownloadData(DownloadConstants.SRC_DOWNLOAD, setData, filmData, abo, "", "", false);
+        DownloadData downloadData = new DownloadData(false, DownloadConstants.SRC_DOWNLOAD, setData, filmData, abo, "", "", false);
         addAboDto.lblResPath.setText(downloadData.getDestPath());
         addAboDto.lblResFileName.setText(downloadData.getDestFileName());
     }

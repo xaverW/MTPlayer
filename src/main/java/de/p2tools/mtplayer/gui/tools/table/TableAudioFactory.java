@@ -48,7 +48,7 @@ public class TableAudioFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-                    FilmPlayFactory.playFilm(film);
+                    FilmPlayFactory.playFilm(true, film);
 
                     getTableView().refresh();
                     getTableView().requestFocus();
@@ -61,7 +61,7 @@ public class TableAudioFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-                    FilmSaveFactory.saveFilm(film);
+                    FilmSaveFactory.saveFilm(true, film);
 
                     getTableView().refresh();
                     getTableView().requestFocus();

@@ -163,7 +163,7 @@ public class TableFilmFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-                    FilmPlayFactory.playFilm(film);
+                    FilmPlayFactory.playFilm(false, film);
 
                     getTableView().refresh();
                     getTableView().requestFocus();
@@ -176,7 +176,7 @@ public class TableFilmFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-                    FilmSaveFactory.saveFilm(film);
+                    FilmSaveFactory.saveFilm(false, film);
 
                     getTableView().refresh();
                     getTableView().requestFocus();

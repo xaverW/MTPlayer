@@ -111,12 +111,12 @@ public class AddDownloadDto {
     public final RadioButton rbStartNow = new RadioButton("sofort");
     public final RadioButton rbStartAtTime = new RadioButton("um: ");
 
-    public AddDownloadDto(ProgData progData, SetData setDataStart, ArrayList<FilmDataMTP> filmsToDownloadList) {
+    public AddDownloadDto(boolean audio, ProgData progData, SetData setDataStart, ArrayList<FilmDataMTP> filmsToDownloadList) {
         // einen neuen Download anlegen
         this.progData = progData;
         this.setDataStart = setDataStart;
 
-        addDownloadData = InitDownloadAddArray.initDownloadInfoArrayFilm(filmsToDownloadList, this);
+        addDownloadData = InitDownloadAddArray.initDownloadInfoArrayFilm(audio, filmsToDownloadList, this);
         initSetDataDownload = new InitSetDataDownload(this);
         initPathName = new InitPathName(this);
         initResolutionButton = new InitResolutionButton(this);

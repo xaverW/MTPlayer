@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
-import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.starter.LogMsgFactory;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
@@ -45,7 +45,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
     private final ArrayList filmsToDownloadList;
     private final AddDownloadDto addDownloadDto;
 
-    public DownloadAddDialogController(ProgData progData,
+    public DownloadAddDialogController(boolean audio, ProgData progData,
                                        ArrayList<FilmDataMTP> filmsToDownloadList,
                                        SetData setDataStart) {
         super(progData.primaryStage,
@@ -62,7 +62,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
         }
 
         setAll = true;
-        this.addDownloadDto = new AddDownloadDto(progData, setDataStart, filmsToDownloadList);
+        this.addDownloadDto = new AddDownloadDto(audio, progData, setDataStart, filmsToDownloadList);
         initAll();
 
         init(true);

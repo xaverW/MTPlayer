@@ -69,19 +69,19 @@ public class LiveFilmMenu {
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
             if (filmSelection.isPresent()) {
-                FilmPlayFactory.playFilm(filmSelection.get());
+                FilmPlayFactory.playFilm(false, filmSelection.get());
                 progData.filmGuiController.tableView.refresh();
                 progData.filmGuiController.tableView.requestFocus();
 
             }
         });
         btPlayAll.setOnAction(a -> {
-            FilmPlayFactory.playFilmList(ProgData.getInstance().liveFilmGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(false, ProgData.getInstance().liveFilmGuiController.getSelList(true));
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
         btSave.setOnAction(a -> {
-            FilmSaveFactory.saveFilmList(ProgData.getInstance().liveFilmGuiController.getSelList(true), null);
+            FilmSaveFactory.saveFilmList(false, ProgData.getInstance().liveFilmGuiController.getSelList(true), null);
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
@@ -105,7 +105,7 @@ public class LiveFilmMenu {
                 return;
             }
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
-            filmSelection.ifPresent(FilmPlayFactory::playFilm);
+            filmSelection.ifPresent(film -> FilmPlayFactory.playFilm(false, film));
         });
         P2ShortcutWorker.addShortCut(mbPlay, PShortcut.SHORTCUT_PLAY_FILM);
 
@@ -114,7 +114,7 @@ public class LiveFilmMenu {
             if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
                 return;
             }
-            FilmPlayFactory.playFilmList(ProgData.getInstance().liveFilmGuiController.getSelList(true));
+            FilmPlayFactory.playFilmList(false, ProgData.getInstance().liveFilmGuiController.getSelList(true));
         });
         P2ShortcutWorker.addShortCut(mbPlayAll, PShortcut.SHORTCUT_PLAY_FILM_ALL);
 

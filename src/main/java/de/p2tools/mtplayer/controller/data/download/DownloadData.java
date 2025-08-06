@@ -47,9 +47,10 @@ public final class DownloadData extends DownloadDataProps {
     public DownloadData() {
     }
 
-    public DownloadData(List<FilmDataMTP> filmList, SetData setData) {
+    public DownloadData(boolean audio, List<FilmDataMTP> filmList, SetData setData) {
         // das ist ein Download der über den Button/Menü "Abspielen" gestartet wurde
         // und der wird nicht in die DownloadListe einsortiert, muss also sofort gestartet werden
+        setAudio(audio);
         setFilm(filmList.get(0));
         setSetData(setData, true);
         setSource(DownloadConstants.SRC_BUTTON);
@@ -77,9 +78,10 @@ public final class DownloadData extends DownloadDataProps {
         DownloadFactoryMakeParameter.makeProgParameter(this, null, "", "");
     }
 
-    public DownloadData(String source, SetData setData, FilmDataMTP film,
+    public DownloadData(boolean audio, String source, SetData setData, FilmDataMTP film,
                         AboData abo, String path, String resolution, boolean setSize) {
         // das sind "normale" Downloads (Abos, manuell), die auch in der DownloadListe/Tabelle erscheinen
+        setAudio(audio);
         setFilm(film);
         setSetData(setData, true);
         setAbo(abo);

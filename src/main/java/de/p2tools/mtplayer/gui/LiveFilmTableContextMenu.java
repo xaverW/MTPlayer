@@ -46,7 +46,7 @@ public class LiveFilmTableContextMenu {
         MenuItem miStart = new MenuItem("Film abspielen");
         miStart.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
-            filmSelection.ifPresent(FilmPlayFactory::playFilm);
+            filmSelection.ifPresent(f -> FilmPlayFactory.playFilm(false, f));
         });
 
         MenuItem miSave = new MenuItem("Film speichern");
@@ -62,11 +62,11 @@ public class LiveFilmTableContextMenu {
 
         final MenuItem miLoadUt = new MenuItem("Untertitel speichern");
         miLoadUt.setDisable(film == null || film.getUrlSubtitle().isEmpty());
-        miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film, true));
+        miLoadUt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(false, film, true));
 
         final MenuItem miLoadTxt = new MenuItem("Info-Datei speichern");
         miLoadTxt.setDisable(film == null);
-        miLoadTxt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(film, false));
+        miLoadTxt.setOnAction(a -> StartDownloadFactory.downloadSubtitle(false, film, false));
 
         MenuItem miFilmInfo = new MenuItem("Filminformation anzeigen");
         miFilmInfo.setDisable(film == null);

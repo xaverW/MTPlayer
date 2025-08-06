@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -66,12 +66,12 @@ public class StartDownload {
         });
     }
 
-    public synchronized void startUrlWithProgram(FilmDataMTP film, SetData pSet) {
+    public synchronized void startUrlWithProgram(boolean audio, FilmDataMTP film, SetData pSet) {
         // Quelle "Button" ist immer ein vom User gestarteter Film, also Quelle_Button!!!!!!!!!!!
         // url mit dem Programm mit der Nr. starten (Button oder TabFilm, TabDownload "rechte Maustaste")
         final String url = film.arr[FilmDataXml.FILM_URL];
         if (!url.isEmpty()) {
-            final DownloadData download = new DownloadData(DownloadConstants.SRC_BUTTON, pSet, film,
+            final DownloadData download = new DownloadData(audio, DownloadConstants.SRC_BUTTON, pSet, film,
                     null, "", "", false);
 
             progData.downloadList.startDownloads(download);

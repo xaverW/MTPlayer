@@ -41,10 +41,10 @@ public class FilmPlayFactory {
         film.arr[FilmDataMTP.FILM_URL] = download.getUrl();
         film.arr[FilmDataMTP.FILM_URL_SMALL] = "";
         // und starten
-        playFilm(film);
+        playFilm(download.isAudio(), film);
     }
 
-    public static void playFilmListWithSet(SetData psetData, List<FilmDataMTP> list) {
+    public static void playFilmListWithSet(boolean audio, SetData psetData, List<FilmDataMTP> list) {
         // Button/Menü: Film mit Set starten
         if (list.isEmpty()) {
             return;
@@ -52,13 +52,13 @@ public class FilmPlayFactory {
 
         if (psetData.isPlay()) {
             // dann ist es das Set zum Abspielen der Filme
-            play(list);
+            play(audio, list);
             return;
         }
 
         if (psetData.isSave()) {
             // wenn ein Set zum Speichern gewählt wurde, einen Download anlegen und starten
-            FilmSaveFactory.saveFilmList(list, psetData);
+            FilmSaveFactory.saveFilmList(audio, list, psetData);
             return;
         }
 
@@ -67,27 +67,27 @@ public class FilmPlayFactory {
 //        filmDataMTP.ifPresent(dataMTP -> ProgData.getInstance().startDownload.startUrlWithProgram(dataMTP, psetData, ""));
 
         // todo aus filmGui oder liveFilmGui??
-        ProgData.getInstance().startDownload.startUrlWithProgram(list.get(0), psetData);
+        ProgData.getInstance().startDownload.startUrlWithProgram(audio, list.get(0), psetData);
     }
 
-    public static synchronized void playFilmList(ArrayList<FilmDataMTP> list) {
+    public static synchronized void playFilmList(boolean audio, ArrayList<FilmDataMTP> list) {
         // aus Menü/Button Film abspielen
         if (list.isEmpty()) {
             return;
         }
-        play(list);
+        play(audio, list);
     }
 
-    public static synchronized void playFilm(FilmDataMTP mtp) {
+    public static synchronized void playFilm(boolean audio, FilmDataMTP mtp) {
         // aus Menü
         if (mtp != null) {
             ArrayList<FilmDataMTP> list = new ArrayList<>();
             list.add(mtp);
-            play(list);
+            play(audio, list);
         }
     }
 
-    private static void play(List<FilmDataMTP> filmList) {
+    private static void play(boolean audio, List<FilmDataMTP> filmList) {
         // Film abspielen, Menü, Button
         SetData setData = ProgData.getInstance().setDataList.getSetDataPlay();
         if (setData == null) {
@@ -95,7 +95,7 @@ public class FilmPlayFactory {
             return;
         }
 
-        DownloadData downloadData = new DownloadData(filmList, setData);
+        DownloadData downloadData = new DownloadData(audio, filmList, setData);
         final ArrayList<String> list = new ArrayList<>();
         startMsg(downloadData, list);
 
