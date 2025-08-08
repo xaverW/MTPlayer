@@ -92,21 +92,21 @@ public class LiveFilmGuiController extends AnchorPane {
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         P2ClosePaneDto infoDto = new P2ClosePaneDto(paneFilmInfo,
                 ProgConfig.LIVE_FILM__INFO_PANE_IS_RIP,
-                ProgConfig.LIVE_FILM__INFO_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
+                ProgConfig.LIVE_FILM__INFO_DIALOG_SIZE, MTPlayerController.TAB_LIVE_ON,
                 "Beschreibung", "Beschreibung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneButton,
                 ProgConfig.LIVE_FILM__BUTTON_PANE_IS_RIP,
-                ProgConfig.LIVE_FILM__BUTTON_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
+                ProgConfig.LIVE_FILM__BUTTON_DIALOG_SIZE, MTPlayerController.TAB_LIVE_ON,
                 "Buttons", "Buttons", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneMedia,
                 ProgConfig.LIVE_FILM__MEDIA_PANE_IS_RIP,
-                ProgConfig.LIVE_FILM__MEDIA_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
+                ProgConfig.LIVE_FILM__MEDIA_DIALOG_SIZE, MTPlayerController.TAB_LIVE_ON,
                 "Mediensammlung", "Mediensammlung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
@@ -262,10 +262,10 @@ public class LiveFilmGuiController extends AnchorPane {
 
     private void setFilmInfos(FilmDataMTP film) {
         // Film in FilmInfoDialog setzen
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM, paneFilmInfo)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_LIVE_ON, paneFilmInfo)) {
             paneFilmInfo.setFilm(film);
         }
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.LIVE_FILM, paneMedia)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_LIVE_ON, paneMedia)) {
             paneMedia.setSearchPredicate(film);
         }
         FilmInfoDialogController.getInstance().setFilm(film);

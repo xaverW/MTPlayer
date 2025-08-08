@@ -173,7 +173,7 @@ public class AudioMenu {
 
         final MenuItem mbPlay = new MenuItem("Audio abspielen");
         mbPlay.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
+            if (!MTPlayerController.TAB_AUDIO_ON.get()) {
                 return;
             }
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
@@ -183,7 +183,7 @@ public class AudioMenu {
 
         final MenuItem mbPlayAll = new MenuItem("Alle markierten Audios abspielen");
         mbPlayAll.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
+            if (!MTPlayerController.TAB_AUDIO_ON.get()) {
                 return;
             }
             FilmPlayFactory.playFilmList(true, ProgData.getInstance().audioGuiController.getSelList(true));
@@ -192,7 +192,7 @@ public class AudioMenu {
 
         final MenuItem mbSave = new MenuItem("Audios speichern");
         mbSave.setOnAction(e -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
+            if (!MTPlayerController.TAB_AUDIO_ON.get()) {
                 return;
             }
             FilmSaveFactory.saveAudioList();
@@ -205,7 +205,7 @@ public class AudioMenu {
         mb.getItems().add(new SeparatorMenuItem());
         final MenuItem miFilmShown = new MenuItem("Audio als gesehen markieren");
         miFilmShown.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
+            if (!MTPlayerController.TAB_AUDIO_ON.get()) {
                 return;
             }
             progData.audioGuiController.setFilmShown(true);
@@ -214,7 +214,7 @@ public class AudioMenu {
 
         final MenuItem miFilmNotShown = new MenuItem("Audio als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.AUDIO) {
+            if (!MTPlayerController.TAB_AUDIO_ON.get()) {
                 return;
             }
             progData.audioGuiController.setFilmShown(false);

@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ControllerLoadFilmList extends P2AccordionPane {
+public class ControllerLoad extends P2AccordionPane {
 
     private PaneFilmLoad paneFilmLoad;
     private PaneFilmDouble paneFilmDouble;
@@ -45,7 +45,7 @@ public class ControllerLoadFilmList extends P2AccordionPane {
     private final ProgData progData;
     private final Stage stage;
 
-    public ControllerLoadFilmList(Stage stage, BooleanProperty diacriticChanged) {
+    public ControllerLoad(Stage stage, BooleanProperty diacriticChanged) {
         super(ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
         this.stage = stage;
         this.diacriticChanged = diacriticChanged;

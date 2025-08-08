@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
@@ -48,7 +49,7 @@ public class DownloadGui {
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         P2ClosePaneDto infoDto = new P2ClosePaneDto(downloadFilterController,
                 ProgConfig.DOWNLOAD__FILTER_IS_RIP,
-                ProgConfig.DOWNLOAD__FILTER_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                ProgConfig.DOWNLOAD__FILTER_DIALOG_SIZE, MTPlayerController.TAB_DOWNLOAD_ON,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);

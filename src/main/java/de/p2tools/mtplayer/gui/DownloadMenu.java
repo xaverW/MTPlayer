@@ -136,7 +136,7 @@ public class DownloadMenu {
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
         miUndo.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+            if (!MTPlayerController.TAB_DOWNLOAD_ON.get()) {
                 return;
             }
             progData.downloadList.undoDownloads();
@@ -216,7 +216,7 @@ public class DownloadMenu {
 
         final MenuItem miDownloadStart = new MenuItem("Downloads starten");
         miDownloadStart.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+            if (!MTPlayerController.TAB_DOWNLOAD_ON.get()) {
                 return;
             }
             progData.downloadGuiController.startDownload(false);
@@ -225,7 +225,7 @@ public class DownloadMenu {
 
         final MenuItem miDownloadStop = new MenuItem("Downloads stoppen");
         miDownloadStop.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+            if (!MTPlayerController.TAB_DOWNLOAD_ON.get()) {
                 return;
             }
             progData.downloadGuiController.stopDownload(false);
@@ -234,7 +234,7 @@ public class DownloadMenu {
 
         final MenuItem miChange = new MenuItem("Downloads ändern");
         miChange.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+            if (!MTPlayerController.TAB_DOWNLOAD_ON.get()) {
                 return;
             }
             progData.downloadGuiController.changeDownload();
@@ -268,7 +268,7 @@ public class DownloadMenu {
 
         final MenuItem mbUpdateList = new MenuItem("Liste der Downloads aktualisieren");
         mbUpdateList.setOnAction(e -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+            if (!MTPlayerController.TAB_DOWNLOAD_ON.get()) {
                 return;
             }
             AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
@@ -276,7 +276,7 @@ public class DownloadMenu {
         P2ShortcutWorker.addShortCut(mbUpdateList, PShortcut.SHORTCUT_DOWNLOADS_UPDATE);
         final MenuItem mbClean = new MenuItem("Liste der Downloads aufräumen");
         mbClean.setOnAction(e -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.DOWNLOAD) {
+            if (!MTPlayerController.TAB_DOWNLOAD_ON.get()) {
                 return;
             }
             DownloadFactory.cleanUpList(progData.downloadList);

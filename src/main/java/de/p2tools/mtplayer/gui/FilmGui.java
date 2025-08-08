@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.film.FilmFilterController;
@@ -48,7 +49,7 @@ public class FilmGui {
 
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         BooleanProperty show = new SimpleBooleanProperty();
-        show.bind(ProgData.FILM_TAB_ON.and(ProgConfig.FAST_SEARCH_ON.not()));
+        show.bind(MTPlayerController.TAB_FILM_ON.and(ProgConfig.FAST_SEARCH_ON.not()));
 
         P2ClosePaneDto infoDto = new P2ClosePaneDto(filmFilterController,
                 ProgConfig.FILM__FILTER_IS_RIP,

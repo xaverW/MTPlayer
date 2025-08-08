@@ -48,7 +48,7 @@ public class ConfigDialogController extends P2DialogExtra {
     private final BooleanProperty diacriticChanged = new SimpleBooleanProperty(false);
 
     private ControllerConfig controllerConfig;
-    private ControllerLoadFilmList controllerLoadFilmList;
+    private ControllerLoad controllerLoad;
     private ControllerBlackList controllerBlackList;
     private ControllerDownload controllerDownload;
     private ControllerMedia controllerMedia;
@@ -146,7 +146,7 @@ public class ConfigDialogController extends P2DialogExtra {
     @Override
     public void close() {
         controllerConfig.close();
-        controllerLoadFilmList.close();
+        controllerLoad.close();
         controllerBlackList.close();
         controllerDownload.close();
         controllerMedia.close();
@@ -168,10 +168,10 @@ public class ConfigDialogController extends P2DialogExtra {
                 tabPane.getTabs().add(tab);
             }
 
-            controllerLoadFilmList = new ControllerLoadFilmList(this.getStage(), diacriticChanged);
-            tab = new Tab("Filme/Audios laden");
+            controllerLoad = new ControllerLoad(this.getStage(), diacriticChanged);
+            tab = new Tab("Filme - Audios");
             tab.setClosable(false);
-            tab.setContent(controllerLoadFilmList);
+            tab.setContent(controllerLoad);
             tabPane.getTabs().add(tab);
 
             controllerBlackList = new ControllerBlackList(this.getStage(), blackChanged);

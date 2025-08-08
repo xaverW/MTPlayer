@@ -116,7 +116,7 @@ public class AboMenu {
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());
         miUndo.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.ABO) {
+            if (!MTPlayerController.TAB_ABO_ON.get()) {
                 return;
             }
             progData.aboList.undoAbos();

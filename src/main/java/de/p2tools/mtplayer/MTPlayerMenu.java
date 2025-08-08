@@ -81,19 +81,19 @@ public class MTPlayerMenu extends MenuButton {
 
     private void addMenuButton() {
         final CheckMenuItem miFilm = new CheckMenuItem("Rechte Menüleiste");
-        miFilm.visibleProperty().bind(ProgData.FILM_TAB_ON);
+        miFilm.visibleProperty().bind(MTPlayerController.TAB_FILM_ON);
         miFilm.selectedProperty().bindBidirectional(ProgConfig.FILM_GUI_SHOW_MENU);
 
         final CheckMenuItem miLiveFilm = new CheckMenuItem("Rechte Menüleiste");
-        miLiveFilm.visibleProperty().bind(ProgData.LIVE_FILM_TAB_ON);
+        miLiveFilm.visibleProperty().bind(MTPlayerController.TAB_LIVE_ON);
         miLiveFilm.selectedProperty().bindBidirectional(ProgConfig.LIVE_FILM_GUI_SHOW_MENU);
 
         final CheckMenuItem miDownload = new CheckMenuItem("Rechte Menüleiste");
-        miDownload.visibleProperty().bind(ProgData.DOWNLOAD_TAB_ON);
+        miDownload.visibleProperty().bind(MTPlayerController.TAB_DOWNLOAD_ON);
         miDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_GUI_SHOW_MENU);
 
         final CheckMenuItem miAbo = new CheckMenuItem("Rechte Menüleiste");
-        miAbo.visibleProperty().bind(ProgData.ABO_TAB_ON);
+        miAbo.visibleProperty().bind(MTPlayerController.TAB_ABO_ON);
         miAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_GUI_SHOW_MENU);
 
         getItems().addAll(miFilm, miLiveFilm, miDownload, miAbo);

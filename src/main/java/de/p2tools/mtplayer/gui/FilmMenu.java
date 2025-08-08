@@ -173,7 +173,7 @@ public class FilmMenu {
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (!MTPlayerController.TAB_FILM_ON.get()) {
                 return;
             }
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
@@ -183,7 +183,7 @@ public class FilmMenu {
 
         final MenuItem mbPlayAll = new MenuItem("Alle markierten Film abspielen");
         mbPlayAll.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (!MTPlayerController.TAB_FILM_ON.get()) {
                 return;
             }
             FilmPlayFactory.playFilmList(false, ProgData.getInstance().filmGuiController.getSelList(true));
@@ -192,7 +192,7 @@ public class FilmMenu {
 
         final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (!MTPlayerController.TAB_FILM_ON.get()) {
                 return;
             }
             FilmSaveFactory.saveFilmList();
@@ -205,7 +205,7 @@ public class FilmMenu {
         mb.getItems().add(new SeparatorMenuItem());
         final MenuItem miFilmShown = new MenuItem("Filme als gesehen markieren");
         miFilmShown.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (!MTPlayerController.TAB_FILM_ON.get()) {
                 return;
             }
             progData.filmGuiController.setFilmShown(true);
@@ -214,7 +214,7 @@ public class FilmMenu {
 
         final MenuItem miFilmNotShown = new MenuItem("Filme als ungesehen markieren");
         miFilmNotShown.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (!MTPlayerController.TAB_FILM_ON.get()) {
                 return;
             }
             progData.filmGuiController.setFilmShown(false);

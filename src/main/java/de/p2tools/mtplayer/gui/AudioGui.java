@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.audio.AudioFilterController;
@@ -48,7 +49,7 @@ public class AudioGui {
 
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         BooleanProperty show = new SimpleBooleanProperty();
-        show.bind(ProgData.AUDIO_TAB_ON.and(ProgConfig.FAST_SEARCH_ON.not()));
+        show.bind(MTPlayerController.TAB_AUDIO_ON.and(ProgConfig.FAST_SEARCH_ON.not()));
 
         P2ClosePaneDto infoDto = new P2ClosePaneDto(filmFilterController,
                 ProgConfig.AUDIO__FILTER_IS_RIP,

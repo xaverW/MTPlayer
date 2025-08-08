@@ -101,7 +101,7 @@ public class LiveFilmMenu {
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (!MTPlayerController.TAB_LIVE_ON.get()) {
                 return;
             }
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
@@ -111,7 +111,7 @@ public class LiveFilmMenu {
 
         final MenuItem mbPlayAll = new MenuItem("Alle markierten Film abspielen");
         mbPlayAll.setOnAction(a -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (!MTPlayerController.TAB_LIVE_ON.get()) {
                 return;
             }
             FilmPlayFactory.playFilmList(false, ProgData.getInstance().liveFilmGuiController.getSelList(true));
@@ -120,7 +120,7 @@ public class LiveFilmMenu {
 
         final MenuItem mbSave = new MenuItem("Film speichern");
         mbSave.setOnAction(e -> {
-            if (MTPlayerController.paneShown != MTPlayerController.PANE_SHOWN.FILM) {
+            if (!MTPlayerController.TAB_LIVE_ON.get()) {
                 return;
             }
             FilmSaveFactory.saveFilmList();

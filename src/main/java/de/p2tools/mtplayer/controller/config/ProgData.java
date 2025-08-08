@@ -85,12 +85,6 @@ public class ProgData {
     public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
     public static BooleanProperty AUDIOLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Audioliste geladen
 
-    public static BooleanProperty FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
-    public static BooleanProperty AUDIO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
-    public static BooleanProperty LIVE_FILM_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
-    public static BooleanProperty DOWNLOAD_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
-    public static BooleanProperty ABO_TAB_ON = new SimpleBooleanProperty(Boolean.FALSE);
-
     // Infos
     public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen
     public static String filmListUrl = ""; //URL von der die Filmliste geladen werden soll

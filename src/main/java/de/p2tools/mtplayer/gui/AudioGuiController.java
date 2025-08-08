@@ -101,21 +101,21 @@ public class AudioGuiController extends AnchorPane {
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         P2ClosePaneDto infoDto = new P2ClosePaneDto(paneFilmInfo,
                 ProgConfig.AUDIO__INFO_PANE_IS_RIP,
-                ProgConfig.AUDIO__INFO_DIALOG_SIZE, ProgData.AUDIO_TAB_ON,
+                ProgConfig.AUDIO__INFO_DIALOG_SIZE, MTPlayerController.TAB_AUDIO_ON,
                 "Beschreibung", "Beschreibung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneButton,
                 ProgConfig.AUDIO__BUTTON_PANE_IS_RIP,
-                ProgConfig.AUDIO__BUTTON_DIALOG_SIZE, ProgData.AUDIO_TAB_ON,
+                ProgConfig.AUDIO__BUTTON_DIALOG_SIZE, MTPlayerController.TAB_AUDIO_ON,
                 "Buttons", "Buttons", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneMedia,
                 ProgConfig.AUDIO__MEDIA_PANE_IS_RIP,
-                ProgConfig.AUDIO__MEDIA_DIALOG_SIZE, ProgData.AUDIO_TAB_ON,
+                ProgConfig.AUDIO__MEDIA_DIALOG_SIZE, MTPlayerController.TAB_AUDIO_ON,
                 "Mediensammlung", "Mediensammlung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
@@ -384,10 +384,10 @@ public class AudioGuiController extends AnchorPane {
 
     private void setFilmInfos(FilmDataMTP film) {
         // Film in FilmInfoDialog setzen
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.AUDIO, paneFilmInfo)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_AUDIO_ON, paneFilmInfo)) {
             paneFilmInfo.setFilm(film);
         }
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.AUDIO, paneMedia)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_AUDIO_ON, paneMedia)) {
             paneMedia.setSearchPredicate(film);
         }
         FilmInfoDialogController.getInstance().setFilm(film);

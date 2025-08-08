@@ -259,32 +259,26 @@ public class StatusBarController extends AnchorPane {
     }
 
     public void setStatusbarIndex() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                filmPane.toFront();
-                setInfoFilm();
-                setTextForRightDisplayFilm();
-                break;
-            case AUDIO:
-                audioPane.toFront();
-                setInfoAudio();
-                setTextForRightDisplayAudio();
-                break;
-            case LIVE_FILM:
-                liveFilmPane.toFront();
-                setInfoLiveFilm();
-                setTextForRightDisplayFilm();
-                break;
-            case DOWNLOAD:
-                downloadPane.toFront();
-                setInfoDownload();
-                setTextForRightDisplayFilm();
-                break;
-            case ABO:
-                aboPane.toFront();
-                setInfoAbo();
-                setTextForRightDisplayFilm();
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            filmPane.toFront();
+            setInfoFilm();
+            setTextForRightDisplayFilm();
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            audioPane.toFront();
+            setInfoAudio();
+            setTextForRightDisplayAudio();
+        } else if (MTPlayerController.TAB_LIVE_ON.get()) {
+            liveFilmPane.toFront();
+            setInfoLiveFilm();
+            setTextForRightDisplayFilm();
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            downloadPane.toFront();
+            setInfoDownload();
+            setTextForRightDisplayFilm();
+        } else if (MTPlayerController.TAB_ABO_ON.get()) {
+            aboPane.toFront();
+            setInfoAbo();
+            setTextForRightDisplayFilm();
         }
     }
 

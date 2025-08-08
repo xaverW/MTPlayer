@@ -64,135 +64,86 @@ public class MTPlayerFactory {
     }
 
     public static void setFilter() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                ProgConfig.FILM__FILTER_IS_SHOWING.setValue(!ProgConfig.FILM__FILTER_IS_SHOWING.getValue());
-                break;
-            case AUDIO:
-                ProgConfig.AUDIO__FILTER_IS_SHOWING.setValue(!ProgConfig.AUDIO__FILTER_IS_SHOWING.getValue());
-                break;
-            case LIVE_FILM:
-                ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.getValue());
-                break;
-            case DOWNLOAD:
-                ProgConfig.DOWNLOAD__FILTER_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD__FILTER_IS_SHOWING.getValue());
-                break;
-            case ABO:
-                ProgConfig.ABO__FILTER_IS_SHOWING.setValue(!ProgConfig.ABO__FILTER_IS_SHOWING.getValue());
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            ProgConfig.FILM__FILTER_IS_SHOWING.setValue(!ProgConfig.FILM__FILTER_IS_SHOWING.getValue());
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            ProgConfig.AUDIO__FILTER_IS_SHOWING.setValue(!ProgConfig.AUDIO__FILTER_IS_SHOWING.getValue());
+        } else if (MTPlayerController.TAB_LIVE_ON.get()) {
+            ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM__FILTER_IS_SHOWING.getValue());
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            ProgConfig.DOWNLOAD__FILTER_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD__FILTER_IS_SHOWING.getValue());
+        } else if (MTPlayerController.TAB_ABO_ON.get()) {
+            ProgConfig.ABO__FILTER_IS_SHOWING.setValue(!ProgConfig.ABO__FILTER_IS_SHOWING.getValue());
         }
     }
 
     public static void setInfos() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                ProgConfig.FILM__INFO_IS_SHOWING.setValue(!ProgConfig.FILM__INFO_IS_SHOWING.getValue());
-                break;
-            case AUDIO:
-                ProgConfig.AUDIO__INFO_IS_SHOWING.setValue(!ProgConfig.AUDIO__INFO_IS_SHOWING.getValue());
-                break;
-            case LIVE_FILM:
-                ProgConfig.LIVE_FILM__INFO_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM__INFO_IS_SHOWING.getValue());
-                break;
-            case DOWNLOAD:
-                ProgConfig.DOWNLOAD__INFO_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD__INFO_IS_SHOWING.getValue());
-                break;
-            case ABO:
-                ProgConfig.ABO__INFO_IS_SHOWING.setValue(!ProgConfig.ABO__INFO_IS_SHOWING.getValue());
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            ProgConfig.FILM__INFO_IS_SHOWING.setValue(!ProgConfig.FILM__INFO_IS_SHOWING.getValue());
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            ProgConfig.AUDIO__INFO_IS_SHOWING.setValue(!ProgConfig.AUDIO__INFO_IS_SHOWING.getValue());
+        } else if (MTPlayerController.TAB_LIVE_ON.get()) {
+            ProgConfig.LIVE_FILM__INFO_IS_SHOWING.setValue(!ProgConfig.LIVE_FILM__INFO_IS_SHOWING.getValue());
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            ProgConfig.DOWNLOAD__INFO_IS_SHOWING.setValue(!ProgConfig.DOWNLOAD__INFO_IS_SHOWING.getValue());
+        } else if (MTPlayerController.TAB_ABO_ON.get()) {
+            ProgConfig.ABO__INFO_IS_SHOWING.setValue(!ProgConfig.ABO__INFO_IS_SHOWING.getValue());
         }
     }
 
     public static void showFilmInfos() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                ProgData.getInstance().filmGuiController.showFilmInfo();
-                break;
-            case AUDIO:
-                ProgData.getInstance().audioGuiController.showFilmInfo();
-                break;
-            case LIVE_FILM:
-                ProgData.getInstance().liveFilmGuiController.showFilmInfo();
-                break;
-            case DOWNLOAD:
-                ProgData.getInstance().downloadGuiController.showFilmInfo();
-                break;
-            case ABO:
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            ProgData.getInstance().filmGuiController.showFilmInfo();
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            ProgData.getInstance().audioGuiController.showFilmInfo();
+        } else if (MTPlayerController.TAB_LIVE_ON.get()) {
+            ProgData.getInstance().liveFilmGuiController.showFilmInfo();
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            ProgData.getInstance().downloadGuiController.showFilmInfo();
         }
     }
 
     public static void copyTheme() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                ProgData.getInstance().filmGuiController.copyFilmThemeTitle(true);
-                break;
-            case AUDIO:
-                ProgData.getInstance().audioGuiController.copyFilmThemeTitle(true);
-                break;
-            case LIVE_FILM:
-                ProgData.getInstance().liveFilmGuiController.copyFilmThemeTitle(true);
-                break;
-            case DOWNLOAD:
-                ProgData.getInstance().downloadGuiController.copyFilmThemeTitle(true);
-                break;
-            case ABO:
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            ProgData.getInstance().filmGuiController.copyFilmThemeTitle(true);
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            ProgData.getInstance().audioGuiController.copyFilmThemeTitle(true);
+        } else if (MTPlayerController.TAB_LIVE_ON.get()) {
+            ProgData.getInstance().liveFilmGuiController.copyFilmThemeTitle(true);
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            ProgData.getInstance().downloadGuiController.copyFilmThemeTitle(true);
         }
     }
 
     public static void copyTitle() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                ProgData.getInstance().filmGuiController.copyFilmThemeTitle(false);
-                break;
-            case AUDIO:
-                ProgData.getInstance().audioGuiController.copyFilmThemeTitle(false);
-                break;
-            case LIVE_FILM:
-                ProgData.getInstance().liveFilmGuiController.copyFilmThemeTitle(false);
-                break;
-            case DOWNLOAD:
-                ProgData.getInstance().downloadGuiController.copyFilmThemeTitle(false);
-                break;
-            case ABO:
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            ProgData.getInstance().filmGuiController.copyFilmThemeTitle(false);
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            ProgData.getInstance().audioGuiController.copyFilmThemeTitle(false);
+        } else if (MTPlayerController.TAB_LIVE_ON.get()) {
+            ProgData.getInstance().liveFilmGuiController.copyFilmThemeTitle(false);
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            ProgData.getInstance().downloadGuiController.copyFilmThemeTitle(false);
         }
     }
 
     public static void addBlacklist() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.FILM);
-                break;
-            case AUDIO:
-                BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.AUDIO);
-                break;
-            case LIVE_FILM:
-                break;
-            case DOWNLOAD:
-                BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.DOWNLOAD);
-                break;
-            case ABO:
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.FILM);
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.AUDIO);
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.DOWNLOAD);
         }
     }
 
     public static void addBlacklistTheme() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.FILM);
-                break;
-            case AUDIO:
-                BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.AUDIO);
-                break;
-            case LIVE_FILM:
-                break;
-            case DOWNLOAD:
-                BlacklistFactory.addBlackThemeDownload();
-                break;
-            case ABO:
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.FILM);
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.AUDIO);
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            BlacklistFactory.addBlackThemeDownload();
         }
     }
 
@@ -201,36 +152,22 @@ public class MTPlayerFactory {
     }
 
     public static void setMediaCollection() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-                ProgData.getInstance().filmGuiController.searchFilmInMediaCollection();
-                break;
-            case AUDIO:
-                ProgData.getInstance().audioGuiController.searchFilmInMediaCollection();
-                break;
-            case LIVE_FILM:
-                ProgData.getInstance().liveFilmGuiController.searchFilmInMediaCollection();
-                break;
-            case DOWNLOAD:
-                ProgData.getInstance().downloadGuiController.searchFilmInMediaCollection();
-                break;
-            case ABO:
-                break;
+        if (MTPlayerController.TAB_FILM_ON.get()) {
+            ProgData.getInstance().filmGuiController.searchFilmInMediaCollection();
+        } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
+            ProgData.getInstance().audioGuiController.searchFilmInMediaCollection();
+        } else if (MTPlayerController.TAB_LIVE_ON.get()) {
+            ProgData.getInstance().liveFilmGuiController.searchFilmInMediaCollection();
+        } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            ProgData.getInstance().downloadGuiController.searchFilmInMediaCollection();
         }
     }
 
     public static void undoDels() {
-        switch (MTPlayerController.paneShown) {
-            case FILM:
-            case AUDIO:
-            case LIVE_FILM:
-                break;
-            case DOWNLOAD:
-                ProgData.getInstance().downloadList.undoDownloads();
-                break;
-            case ABO:
-                ProgData.getInstance().aboList.undoAbos();
-                break;
+        if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
+            ProgData.getInstance().downloadList.undoDownloads();
+        } else if (MTPlayerController.TAB_ABO_ON.get()) {
+            ProgData.getInstance().aboList.undoAbos();
         }
     }
 }

@@ -112,35 +112,35 @@ public class DownloadGuiController extends AnchorPane {
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         P2ClosePaneDto infoDto = new P2ClosePaneDto(paneFilmInfo,
                 ProgConfig.DOWNLOAD__INFO_PANE_IS_RIP,
-                ProgConfig.DOWNLOAD__INFO_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                ProgConfig.DOWNLOAD__INFO_DIALOG_SIZE, MTPlayerController.TAB_DOWNLOAD_ON,
                 "Beschreibung", "Beschreibung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneMedia,
                 ProgConfig.DOWNLOAD__MEDIA_PANE__IS_RIP,
-                ProgConfig.DOWNLOAD__MEDIA_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                ProgConfig.DOWNLOAD__MEDIA_DIALOG_SIZE, MTPlayerController.TAB_DOWNLOAD_ON,
                 "Mediensammlung", "Mediensammlung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneBandwidthChart,
                 ProgConfig.DOWNLOAD__CHART_PANE_IS_RIP,
-                ProgConfig.DOWNLOAD__CHART_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                ProgConfig.DOWNLOAD__CHART_DIALOG_SIZE, MTPlayerController.TAB_DOWNLOAD_ON,
                 "Bandbreite", "Bandbreite", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneDownloadError,
                 ProgConfig.DOWNLOAD__ERROR_PANE_IS_RIP,
-                ProgConfig.DOWNLOAD__ERROR_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                ProgConfig.DOWNLOAD__ERROR_DIALOG_SIZE, MTPlayerController.TAB_DOWNLOAD_ON,
                 "Fehler", "Fehler", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneDownloadInfoList,
                 ProgConfig.DOWNLOAD__LIST_PANE_IS_RIP,
-                ProgConfig.DOWNLOAD__LIST_DIALOG_SIZE, ProgData.DOWNLOAD_TAB_ON,
+                ProgConfig.DOWNLOAD__LIST_DIALOG_SIZE, MTPlayerController.TAB_DOWNLOAD_ON,
                 "Infos", "Infos", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
@@ -255,12 +255,10 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     private void setFilmInfos(DownloadData download) {
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
-                paneFilmInfo)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_DOWNLOAD_ON, paneFilmInfo)) {
             paneFilmInfo.setFilm(download);
         }
-        if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
-                paneMedia)) {
+        if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_DOWNLOAD_ON, paneMedia)) {
             paneMedia.setSearchPredicate(download);
         }
         FilmInfoDialogController.getInstance().setFilm(download != null ? download.getFilm() : null);
@@ -347,11 +345,11 @@ public class DownloadGuiController extends AnchorPane {
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
             public void pingGui() {
-                paneBandwidthChart.searchInfos(InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD,
+                paneBandwidthChart.searchInfos(InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_DOWNLOAD_ON,
                         paneBandwidthChart)
                 );
 
-                if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.DOWNLOAD, paneDownloadInfoList)) {
+                if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_DOWNLOAD_ON, paneDownloadInfoList)) {
                     paneDownloadInfoList.setInfoText();
                 }
             }
@@ -392,7 +390,7 @@ public class DownloadGuiController extends AnchorPane {
             });
 
             row.hoverProperty().addListener((observable) -> {
-                final DownloadData downloadData = (DownloadData) row.getItem();
+                final DownloadData downloadData = row.getItem();
                 if (row.isHover() && downloadData != null) { // null bei den leeren Zeilen unterhalb
                     setFilmInfos(downloadData);
                 } else if (downloadData == null) {

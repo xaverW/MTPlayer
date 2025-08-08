@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
@@ -48,7 +49,7 @@ public class AboGui {
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         P2ClosePaneDto infoDto = new P2ClosePaneDto(aboFilterController,
                 ProgConfig.ABO__FILTER_IS_RIP,
-                ProgConfig.ABO__FILTER_DIALOG_SIZE, ProgData.ABO_TAB_ON,
+                ProgConfig.ABO__FILTER_DIALOG_SIZE, MTPlayerController.TAB_ABO_ON,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);

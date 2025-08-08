@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.gui;
 
+import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.live.LiveFilmFilterController;
@@ -49,7 +50,7 @@ public class LiveFilmGui {
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         P2ClosePaneDto infoDto = new P2ClosePaneDto(liveFilmFilterController,
                 ProgConfig.LIVE_FILM__FILTER_IS_RIP,
-                ProgConfig.LIVE_FILM__FILTER_DIALOG_SIZE, ProgData.LIVE_FILM_TAB_ON,
+                ProgConfig.LIVE_FILM__FILTER_DIALOG_SIZE, MTPlayerController.TAB_LIVE_ON,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);

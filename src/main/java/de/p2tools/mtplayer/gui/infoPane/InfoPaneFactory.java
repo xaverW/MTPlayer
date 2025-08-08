@@ -17,7 +17,6 @@
 
 package de.p2tools.mtplayer.gui.infoPane;
 
-import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneH;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Tab;
@@ -38,8 +37,8 @@ public class InfoPaneFactory {
         return tab;
     }
 
-    public static boolean paneIsVisible(MTPlayerController.PANE_SHOWN paneShown, Pane infoPane) {
-        if (MTPlayerController.paneShown != paneShown) {
+    public static boolean paneIsVisible(BooleanProperty paneShown, Pane infoPane) {
+        if (!paneShown.get()) {
             return false;
 
         } else if (!infoPane.isVisible()) {

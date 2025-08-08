@@ -94,14 +94,14 @@ public class AboGuiController extends AnchorPane {
         ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         P2ClosePaneDto infoDto = new P2ClosePaneDto(paneAboInfo,
                 ProgConfig.ABO__INFO_PANE_IS_RIP,
-                ProgConfig.ABO__INFO__DIALOG_SIZE, ProgData.ABO_TAB_ON,
+                ProgConfig.ABO__INFO__DIALOG_SIZE, MTPlayerController.TAB_ABO_ON,
                 "Beschreibung", "Beschreibung", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
 
         infoDto = new P2ClosePaneDto(paneAboInfoList,
                 ProgConfig.ABO__LIST_PANE_IS_RIP,
-                ProgConfig.ABO__LIST_DIALOG_SIZE, ProgData.ABO_TAB_ON,
+                ProgConfig.ABO__LIST_DIALOG_SIZE, MTPlayerController.TAB_ABO_ON,
                 "Infos", "Infos", false,
                 progData.maskerPane.getVisibleProperty());
         list.add(infoDto);
@@ -202,11 +202,11 @@ public class AboGuiController extends AnchorPane {
             row.hoverProperty().addListener((observable) -> {
                 final AboData aboData = row.getItem();
                 if (row.isHover() && aboData != null) {
-                    if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
+                    if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_ABO_ON, paneAboInfo)) {
                         paneAboInfo.setAbo(aboData);
                     }
                 } else {
-                    if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
+                    if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_ABO_ON, paneAboInfo)) {
                         paneAboInfo.setAbo(tableView.getSelectionModel().getSelectedItem());
                     }
                 }
@@ -215,7 +215,7 @@ public class AboGuiController extends AnchorPane {
         }, progData.aboList));
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (InfoPaneFactory.paneIsVisible(MTPlayerController.PANE_SHOWN.ABO, paneAboInfo)) {
+            if (InfoPaneFactory.paneIsVisible(MTPlayerController.TAB_ABO_ON, paneAboInfo)) {
                 paneAboInfo.setAbo(tableView.getSelectionModel().getSelectedItem());
             }
         });
