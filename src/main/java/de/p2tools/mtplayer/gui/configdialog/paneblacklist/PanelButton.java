@@ -127,17 +127,6 @@ public class PanelButton {
             blackDataChanged.set(true);
             list.clearList();
         });
-//        listenerLoadFilmlist = new P2LoadListener() {
-//            @Override
-//            public void start(P2LoadEvent event) {
-//                btnCountHits.setDisable(true);
-//            }
-//
-//            @Override
-//            public void finished(P2LoadEvent event) {
-//                btnCountHits.setDisable(false);
-//            }
-//        };
         listenerLoadFilmlistStart = new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
             @Override
             public void pingGui() {
@@ -151,7 +140,6 @@ public class PanelButton {
             }
         };
 
-//        ProgData.getInstance().loadFilmFactory.loadFilmlist.p2LoadNotifier.addListenerLoadFilmlist(listenerLoadFilmlist);
         ProgData.getInstance().pEventHandler.addListener(listenerLoadFilmlistStart);
         ProgData.getInstance().pEventHandler.addListener(listenerLoadFilmlistFinished);
 

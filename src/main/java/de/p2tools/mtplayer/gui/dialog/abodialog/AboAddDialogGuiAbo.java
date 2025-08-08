@@ -104,13 +104,21 @@ public class AboAddDialogGuiAbo extends VBox {
         gridPane.add(new Label(), 0, ++row);
 
         // Quelle Film-Audio
-        gridPane.add(DownloadAddDialogFactory.getText(AboFieldNames.ABO_SOURCE + ":"), 0, ++row);
         HBox hBox = new HBox(10);
         hBox.setPadding(new Insets(2));
         hBox.getStyleClass().add("downloadDialog");
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.getChildren().addAll(addAboDto.rbFilmAudio, addAboDto.rbFilm, addAboDto.rbAudio);
-        gridPane.add(hBox, 1, row);
+
+        final Button btnHelpQ = P2Button.helpButton(stage,
+                "Quelle", HelpText.ABO_QUELLE);
+
+        HBox hQ = new HBox(P2LibConst.PADDING_HBOX);
+        hQ.getChildren().addAll(hBox, btnHelpQ);
+        HBox.setHgrow(hBox, Priority.ALWAYS);
+
+        gridPane.add(DownloadAddDialogFactory.getText(AboFieldNames.ABO_SOURCE + ":"), 0, ++row);
+        gridPane.add(hQ, 1, row);
         gridPane.add(addAboDto.chkSourceAll, 2, row);
         gridPane.add(new Label(), 0, ++row);
 

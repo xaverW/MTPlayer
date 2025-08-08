@@ -20,7 +20,6 @@ package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
-import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -90,17 +89,7 @@ public class PanelMoveButton {
             }
         });
 
-        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
-        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
-                "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
-        btnLoad.setOnAction(event -> {
-            LoadFilmFactory.loadFilmListFromWeb(true);
-        });
-
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
-        if (!controlBlackListNotFilmFilter) {
-            hBoxButton.getChildren().addAll(btnLoad);
-        }
         hBoxButton.getChildren().addAll(P2GuiTools.getHBoxGrower(), btnCopy, btnMove, btnHelpCount);
 
         VBox.setVgrow(tableView, Priority.ALWAYS);

@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.film.FilmToolsFactory;
+import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -61,7 +62,7 @@ public class PaneFilmSender {
         makeOnly(vBox);
         makeSender(vBox);
 
-        TitledPane tpConfig = new TitledPane("Filmliste bereits beim Laden filtern", vBox);
+        TitledPane tpConfig = new TitledPane("Liste bereits beim Laden filtern", vBox);
         if (result != null) {
             result.add(tpConfig);
         }
@@ -69,9 +70,7 @@ public class PaneFilmSender {
     }
 
     private void makeOnly(VBox vBox) {
-        final Button btnHelpDouble = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
-                HelpText.LOAD_FILMLIST_ONLY_MARK_DOUBLE);
-        final Button btnHelpDays = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
+        final Button btnHelpDays = P2Button.helpButton(stage, "Film/Audio-Liste beim Laden filtern",
                 HelpText.LOAD_ONLY_FILMS);
 
         final GridPane gridPane = new GridPane();
@@ -80,14 +79,14 @@ public class PaneFilmSender {
         gridPane.setPadding(new Insets(0));
 
         int row = 0;
-        gridPane.add(new Label("Nur Filme der letzten Tage laden:"), 0, row, 2, 1);
+        gridPane.add(new Label("Nur Beiträge der letzten Tage laden:"), 0, row, 2, 1);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDays, 1, row);
         gridPane.add(lblDays, 2, row);
         gridPane.add(btnHelpDays, 3, row, 1, 2);
 
         gridPane.add(new Label(), 0, ++row);
-        gridPane.add(new Label("Nur Filme mit Mindestlänge laden:"), 0, ++row, 2, 1);
+        gridPane.add(new Label("Nur Beiträge mit Mindestlänge laden:"), 0, ++row, 2, 1);
         gridPane.add(new Label("Filme laden:"), 0, ++row);
         gridPane.add(slDuration, 1, row);
         gridPane.add(lblDuration, 2, row);
@@ -101,7 +100,7 @@ public class PaneFilmSender {
     }
 
     private void makeSender(VBox vBox) {
-        final Button btnHelpSender = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
+        final Button btnHelpSender = P2Button.helpButton(stage, "Film/Audio-Liste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_SENDER);
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_LEFT);
@@ -114,17 +113,32 @@ public class PaneFilmSender {
         final TilePane tilePaneSender = getTilePaneSender();
         vBox.getChildren().addAll(tilePaneSender);
 
-        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
-        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+
+        Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
+        btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Audioliste werden so sofort übernommen"));
+        btnLoadAudio.setOnAction(event -> {
+            LoadAudioFactory.loadAudioListFromWeb();
+        });
+        btnLoadAudio.setMaxWidth(Double.MAX_VALUE);
+        btnLoadAudio.disableProperty().bind(ProgConfig.SYSTEM_USE_AUDIOLIST.not());
+        HBox.setHgrow(btnLoadAudio, Priority.ALWAYS);
+
+        Button btnLoadFilm = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoadFilm.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
-        btnLoad.setOnAction(event -> {
+        btnLoadFilm.setOnAction(event -> {
             LoadFilmFactory.loadFilmListFromWeb(true);
         });
+        btnLoadFilm.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(btnLoadFilm, Priority.ALWAYS);
 
-        hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnLoad);
-        vBox.getChildren().addAll(P2GuiTools.getHDistance(P2LibConst.DIST_BUTTON), hBox);
+        HBox hBoxBtn = new HBox(5);
+        hBoxBtn.setAlignment(Pos.CENTER_RIGHT);
+        hBoxBtn.getChildren().addAll(btnLoadAudio, btnLoadFilm);
+
+
+        vBox.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBoxBtn);
     }
 
     private TilePane getTilePaneSender() {
@@ -185,10 +199,10 @@ public class PaneFilmSender {
 
     private void setValueSlider() {
         int days = (int) slDays.getValue();
-        lblDays.setText(days == 0 ? "alles laden" : "nur Filme der letzten " + days + " Tage");
+        lblDays.setText(days == 0 ? "alles laden" : "nur Beiträge der letzten " + days + " Tage");
 
         int duration = (int) slDuration.getValue();
-        lblDuration.setText(duration == 0 ? "alles laden" : "nur Filme mit mindestens " + duration + " Minuten Länge");
+        lblDuration.setText(duration == 0 ? "alles laden" : "nur Beiträge mit mindestens " + duration + " Minuten Länge");
     }
 
     private void checkPropSender(ArrayList<CheckBox> aListCb) {

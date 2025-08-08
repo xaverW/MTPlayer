@@ -18,28 +18,31 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.BooleanProperty;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.Collection;
 
 public class PaneFilmLoad {
 
-    private final P2ToggleSwitch tglLoad = new P2ToggleSwitch("Beim Programmstart eine neue Filmliste laden");
-    private final P2ToggleSwitch tglLoadNewList = new P2ToggleSwitch("Neue Filmlisten sofort laden");
+    private final P2ToggleSwitch tglUseLive = new P2ToggleSwitch("");
+    private final P2ToggleSwitch tglUseAudio = new P2ToggleSwitch("");
+    private final P2ToggleSwitch tglLoadAudio = new P2ToggleSwitch("Audioliste beim Programmstart neu laden");
+    private final P2ToggleSwitch tglLoadFilm = new P2ToggleSwitch("Filmliste beim Programmstart neu laden");
+    private final P2ToggleSwitch tglLoadNewList = new P2ToggleSwitch("Neue Filmlisten immer sofort laden");
     private final BooleanProperty diacriticChanged;
 
     private final ProgData progData;
@@ -52,7 +55,10 @@ public class PaneFilmLoad {
     }
 
     public void close() {
-        tglLoad.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
+        tglUseLive.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_LIVE);
+        tglUseAudio.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_AUDIOLIST);
+        tglLoadAudio.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_AUDIOLIST_ON_PROGRAMSTART);
+        tglLoadFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
         tglLoadNewList.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY);
     }
 
@@ -61,10 +67,22 @@ public class PaneFilmLoad {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
-        tglLoad.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
+        tglUseLive.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_LIVE);
+        tglUseAudio.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_AUDIOLIST);
+        tglLoadAudio.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_AUDIOLIST_ON_PROGRAMSTART);
+        tglLoadAudio.disableProperty().bind(tglUseAudio.selectedProperty().not());
+        tglLoadFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
         tglLoadNewList.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY);
 
-        final Button btnHelpLoad = P2Button.helpButton(stage, "Filmliste laden",
+        final Button btnHelpLive = P2Button.helpButton(stage, "Live-Suche im Programm verwenden",
+                HelpText.USE_LIVE);
+
+        final Button btnHelpUse = P2Button.helpButton(stage, "Audioliste im Programm verwenden",
+                HelpText.USE_AUDIOLIST);
+
+        final Button btnHelpLoadAudio = P2Button.helpButton(stage, "Audioliste laden",
+                HelpText.LOAD_AUDIOLIST_PROGRAMSTART);
+        final Button btnHelpLoadFilm = P2Button.helpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
 
         final Button btnHelpNewList = P2Button.helpButton(stage, "Filmliste laden",
@@ -79,12 +97,28 @@ public class PaneFilmLoad {
                 HelpText.DIAKRITISCHE_ZEICHEN);
 
 
-        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
-        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+        Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
+        btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Audioliste werden so sofort übernommen"));
+        btnLoadAudio.setOnAction(event -> {
+            LoadAudioFactory.loadAudioListFromWeb();
+        });
+        btnLoadAudio.setMaxWidth(Double.MAX_VALUE);
+        btnLoadAudio.disableProperty().bind(tglUseAudio.selectedProperty().not());
+        HBox.setHgrow(btnLoadAudio, Priority.ALWAYS);
+
+        Button btnLoadFilm = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoadFilm.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
-        btnLoad.setOnAction(event -> {
+        btnLoadFilm.setOnAction(event -> {
             LoadFilmFactory.loadFilmListFromWeb(true);
         });
+        btnLoadFilm.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(btnLoadFilm, Priority.ALWAYS);
+
+        HBox hBoxBtn = new HBox(5);
+        hBoxBtn.setAlignment(Pos.CENTER_RIGHT);
+        hBoxBtn.getChildren().addAll(btnLoadAudio, btnLoadFilm);
 
 
         Separator sp2 = new Separator();
@@ -92,18 +126,26 @@ public class PaneFilmLoad {
         sp2.setMinHeight(0);
 
         int row = 0;
-        gridPane.add(tglLoad, 0, row, 2, 1);
-        gridPane.add(btnHelpLoad, 2, row);
+        gridPane.add(P2Text.getTextBold("Live-Suche im Programm verwenden"), 0, row, 2, 1);
+        gridPane.add(tglUseLive, 1, row);
+        gridPane.add(btnHelpLive, 2, row);
+
+        gridPane.add(P2Text.getTextBold("ARD-Audiothek im Programm verwenden"), 0, ++row, 2, 1);
+        gridPane.add(tglUseAudio, 1, row);
+        gridPane.add(btnHelpUse, 2, row);
+
+        gridPane.add(tglLoadAudio, 0, ++row, 2, 1);
+        gridPane.add(btnHelpLoadAudio, 2, row);
+
+        gridPane.add(new Label(), 0, ++row, 2, 1);
+        gridPane.add(tglLoadFilm, 0, ++row, 2, 1);
+        gridPane.add(btnHelpLoadFilm, 2, row);
 
         gridPane.add(tglLoadNewList, 0, ++row, 2, 1);
         gridPane.add(btnHelpNewList, 2, row);
 
         gridPane.add(tglRemoveDiacritic, 0, ++row, 2, 1);
         gridPane.add(btnHelpDia, 2, row);
-
-        gridPane.add(new Label(), 0, ++row, 3, 1);
-        gridPane.add(btnLoad, 0, ++row, 3, 1);
-        GridPane.setHalignment(btnLoad, HPos.RIGHT);
 
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSize(),
@@ -115,13 +157,13 @@ public class PaneFilmLoad {
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
         hBox.getChildren().add(new Label("Änderungen in diesem Tab\n" +
-                "wirken sich erst nach dem Neuladen einer Filmliste aus"));
+                "wirken sich erst nach dem Neuladen einer Film/Audio-Liste aus"));
 
         final VBox vBox = new VBox(P2LibConst.PADDING);
         vBox.setPadding(new Insets(P2LibConst.PADDING));
-        vBox.getChildren().addAll(hBox, gridPane);
+        vBox.getChildren().addAll(hBox, gridPane, P2GuiTools.getVBoxGrower(), hBoxBtn);
 
-        TitledPane tpConfig = new TitledPane("Filmliste laden", vBox);
+        TitledPane tpConfig = new TitledPane("Filme/Audios laden", vBox);
         result.add(tpConfig);
         return tpConfig;
     }

@@ -61,7 +61,7 @@ public class MTPlayerMenu extends MenuButton {
         miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
 
         final CheckMenuItem miLive = new CheckMenuItem("Live-Suche");
-        miLive.selectedProperty().bindBidirectional(ProgConfig.LIVE_FILM_IS_VISIBLE);
+        miLive.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_LIVE);
 
 
         final MenuItem miQuit = new MenuItem("Beenden");

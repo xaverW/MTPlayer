@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.utdata.UtData;
+import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -99,7 +100,7 @@ public class PaneFilmUt {
         initConfigs(vBox);
         addLoadFilmList(vBox);
 
-        TitledPane tpReplace = new TitledPane(ut ? "Filme mit Untertitel markieren" : "Filme markieren", vBox);
+        TitledPane tpReplace = new TitledPane(ut ? "Beiträge mit Untertitel markieren" : "Beiträge markieren", vBox);
         result.add(tpReplace);
         tpReplace.setMaxHeight(Double.MAX_VALUE);
         VBox.setVgrow(tpReplace, Priority.ALWAYS);
@@ -318,16 +319,30 @@ public class PaneFilmUt {
     }
 
     private void addLoadFilmList(VBox vBox) {
-        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
-        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+        Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
+        btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Audioliste werden so sofort übernommen"));
+        btnLoadAudio.setOnAction(event -> {
+            LoadAudioFactory.loadAudioListFromWeb();
+        });
+        btnLoadAudio.setMaxWidth(Double.MAX_VALUE);
+        btnLoadAudio.disableProperty().bind(ProgConfig.SYSTEM_USE_AUDIOLIST.not());
+        HBox.setHgrow(btnLoadAudio, Priority.ALWAYS);
+
+        Button btnLoadFilm = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoadFilm.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
-        btnLoad.setOnAction(event -> {
+        btnLoadFilm.setOnAction(event -> {
             LoadFilmFactory.loadFilmListFromWeb(true);
         });
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnLoad);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(20), hBox);
+        btnLoadFilm.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(btnLoadFilm, Priority.ALWAYS);
+
+        HBox hBoxBtn = new HBox(5);
+        hBoxBtn.setAlignment(Pos.CENTER_RIGHT);
+        hBoxBtn.getChildren().addAll(btnLoadAudio, btnLoadFilm);
+
+        vBox.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBoxBtn);
     }
 
     private void setActReplaceData() {

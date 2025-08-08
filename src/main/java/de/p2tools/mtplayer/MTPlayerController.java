@@ -178,13 +178,15 @@ public class MTPlayerController extends StackPane {
         btnAudio.setTooltip(new Tooltip("Audios anzeigen"));
         btnAudio.setOnAction(e -> selPanelAudio());
         btnAudio.setMaxWidth(Double.MAX_VALUE);
+        btnAudio.visibleProperty().bind(ProgConfig.SYSTEM_USE_AUDIOLIST);
+        btnAudio.managedProperty().bind(ProgConfig.SYSTEM_USE_AUDIOLIST);
 
         btnLive.setTooltip(new Tooltip("Live-Filme suchen"));
         btnLive.setOnAction(e -> selPanelLiveFilm());
         btnLive.setMaxWidth(Double.MAX_VALUE);
-        btnLive.visibleProperty().bind(ProgConfig.LIVE_FILM_IS_VISIBLE);
+        btnLive.visibleProperty().bind(ProgConfig.SYSTEM_USE_LIVE);
         btnLive.managedProperty().bind(btnLive.visibleProperty());
-        ProgConfig.LIVE_FILM_IS_VISIBLE.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_USE_LIVE.addListener((u, o, n) -> {
             if (n) {
                 selPanelLiveFilm();
             } else {
@@ -340,7 +342,7 @@ public class MTPlayerController extends StackPane {
     }
 
     private void setButtonStyle() {
-        if (ProgConfig.LIVE_FILM_IS_VISIBLE.get()) {
+        if (ProgConfig.SYSTEM_USE_LIVE.get()) {
             setButtonStyleSmall();
         } else {
             setButtonStyleBig();

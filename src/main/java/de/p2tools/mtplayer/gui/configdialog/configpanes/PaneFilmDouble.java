@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -31,12 +32,13 @@ import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -44,7 +46,7 @@ import java.util.Collection;
 
 public class PaneFilmDouble {
 
-    private final P2ToggleSwitch tglRemove = new P2ToggleSwitch("Doppelte Filme beim Laden der Filmliste ausschließen");
+    private final P2ToggleSwitch tglRemove = new P2ToggleSwitch("Doppelte Filme beim Laden der Liste ausschließen");
     private final P2ToggleSwitch tglTT = new P2ToggleSwitch("Filme sind nur gleich, wenn auch Thema und Titel gleich sind");
 
     private final VBox vBox = new VBox(P2LibConst.PADDING);
@@ -73,12 +75,29 @@ public class PaneFilmDouble {
                 HelpText.LOAD_FILMLIST_MARK_DOUBLE);
 
 
-        Button btnLoad = new Button("_Filmliste mit diesen Einstellungen neu laden");
-        btnLoad.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+        Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
+        btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Audioliste werden so sofort übernommen"));
+        btnLoadAudio.setOnAction(event -> {
+            LoadAudioFactory.loadAudioListFromWeb();
+        });
+        btnLoadAudio.setMaxWidth(Double.MAX_VALUE);
+        btnLoadAudio.disableProperty().bind(ProgConfig.SYSTEM_USE_AUDIOLIST.not());
+        HBox.setHgrow(btnLoadAudio, Priority.ALWAYS);
+
+        Button btnLoadFilm = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoadFilm.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
-        btnLoad.setOnAction(event -> {
+        btnLoadFilm.setOnAction(event -> {
             LoadFilmFactory.loadFilmListFromWeb(true);
         });
+        btnLoadFilm.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(btnLoadFilm, Priority.ALWAYS);
+
+        HBox hBoxBtn = new HBox(5);
+        hBoxBtn.setAlignment(Pos.CENTER_RIGHT);
+        hBoxBtn.getChildren().addAll(btnLoadAudio, btnLoadFilm);
+
 
         Separator sp2 = new Separator();
         sp2.getStyleClass().add("pseperator2");
@@ -98,20 +117,16 @@ public class PaneFilmDouble {
         gridPane.add(lvSender, 0, ++row, 2, 1);
         gridPane.add(hBoxButton, 0, ++row, 2, 1);
 
-        gridPane.add(new Label(), 0, ++row);
-        gridPane.add(btnLoad, 0, ++row, 2, 1);
-        GridPane.setHalignment(btnLoad, HPos.RIGHT);
-
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcPrefSize());
 
         vBox.setPadding(new Insets(P2LibConst.PADDING));
-        vBox.getChildren().addAll(gridPane);
+        vBox.getChildren().addAll(gridPane, P2GuiTools.getVBoxGrower(), hBoxBtn);
 
         addSenderList();
 
-        TitledPane tpConfig = new TitledPane("Doppelte Filme markieren", vBox);
+        TitledPane tpConfig = new TitledPane("Doppelte Beiträge markieren", vBox);
         result.add(tpConfig);
         return tpConfig;
     }

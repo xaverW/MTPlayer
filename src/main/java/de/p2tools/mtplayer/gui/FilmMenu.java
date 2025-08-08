@@ -158,10 +158,10 @@ public class FilmMenu {
             }
         });
 
-        vBox.getChildren().add(P2GuiTools.getVBoxGrower());
-        final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
-                "Live-Suche", "Live-Suche in der ARD/ZDF-Mediathek", ProgIcons.ICON_TOOLBAR_LIVE.getImageView());
-        btLiveFilm.setOnAction(a -> ProgConfig.LIVE_FILM_IS_VISIBLE.set(!ProgConfig.LIVE_FILM_IS_VISIBLE.get()));
+//        vBox.getChildren().add(P2GuiTools.getVBoxGrower());
+//        final ToolBarButton btLiveFilm = new ToolBarButton(vBox,
+//                "Live-Suche", "Live-Suche in der ARD/ZDF-Mediathek", ProgIcons.ICON_TOOLBAR_LIVE.getImageView());
+//        btLiveFilm.setOnAction(a -> ProgConfig.LIVE_FILM_IS_VISIBLE.set(!ProgConfig.LIVE_FILM_IS_VISIBLE.get()));
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
     }
 

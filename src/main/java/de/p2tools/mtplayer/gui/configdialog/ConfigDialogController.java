@@ -136,7 +136,6 @@ public class ConfigDialogController extends P2DialogExtra {
                 FilmFactory.flattenDiacritic(progData.filmList);
                 new P2WriteFilmlistJson().write(ProgInfos.getLocalFilmListFile(), progData.filmList);
 
-//                PListener.notify(PListener.EVENT_DIACRITIC_CHANGED, ConfigDialogController.class.getSimpleName());
                 progData.pEventHandler.notifyListener(PEvents.EVENT_DIACRITIC_CHANGED);
                 ProgData.getInstance().maskerPane.switchOffMasker();
             }).start();
@@ -153,7 +152,6 @@ public class ConfigDialogController extends P2DialogExtra {
         controllerMedia.close();
         controllerSet.close();
 
-//        PListener.notify(PListener.EVENT_SET_DATA_CHANGED, ConfigDialogController.class.getSimpleName());
         progData.pEventHandler.notifyListener(PEvents.EVENT_SET_DATA_CHANGED);
         dialogIsRunning.setValue(false);
         super.close();
@@ -171,7 +169,7 @@ public class ConfigDialogController extends P2DialogExtra {
             }
 
             controllerLoadFilmList = new ControllerLoadFilmList(this.getStage(), diacriticChanged);
-            tab = new Tab("Filmliste laden");
+            tab = new Tab("Filme/Audios laden");
             tab.setClosable(false);
             tab.setContent(controllerLoadFilmList);
             tabPane.getTabs().add(tab);

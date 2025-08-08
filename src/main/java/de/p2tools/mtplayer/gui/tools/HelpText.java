@@ -508,6 +508,12 @@ public class HelpText {
                     "automatisch die hohe Auflösung heruntergeladen." +
                     "\n";
 
+    public static final String ABO_QUELLE =
+            "Hier kann ausgewählt werden, in welcher Liste nach Beiträgen " +
+                    "gesucht werden soll.\n" +
+                    "Filmliste - Audioliste - in beiden" +
+                    "\n";
+
     public static final String ABO_PATH =
             "Downloads aus Abos können im Pfad der im Set vorgegeben ist, in einem Unterordner davon oder " +
                     "in einem eigenen Pfad der im Abo vorgegeben wird, gespeichert werden. " +
@@ -783,6 +789,25 @@ public class HelpText {
             LOAD_FILMLIST_SENDER_STARTDIALOG +
                     "\n" +
                     "Wirksam erst nach dem Neuladen der kompletten Filmliste." +
+                    "\n";
+
+    public static final String USE_LIVE =
+            "Hier kann festgelegt werden, ob die Live-Suche im " +
+                    "Programm verwendet werden soll. Der Tab für die " +
+                    "Live-Suche wird dann ein/ausgeblendet." +
+                    "\n";
+
+    public static final String USE_AUDIOLIST =
+            "Hier kann festgelegt werden, ob die Beiträge der " +
+                    "ARD-Audiothek im Programm angezeigt/verwendet " +
+                    "werden sollen. Der Tab für die Audiothek wird dann " +
+                    "ein/ausgeblendet und es werden keine Beiträge daraus " +
+                    "geladen." +
+                    "\n";
+
+    public static final String LOAD_AUDIOLIST_PROGRAMSTART =
+            "Die Audioliste wird beim Programmstart automatisch geladen, " +
+                    "wenn sie noch vom Vortag ist." +
                     "\n";
 
     public static final String LOAD_FILMLIST_PROGRAMSTART =

@@ -21,6 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
+import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -39,6 +41,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -125,9 +128,38 @@ public class PaneBlackList {
         panelButton.addButton(stage, vBox, tableView, blackDataChanged, list);
         PanelMoveButton.addMoveButton(stage, vBox, tableView, progData, controlBlackListNotFilmFilter, blackDataChanged, list);
         addConfigs(vBox);
+
+
+        Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
+        btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Audioliste werden so sofort übernommen"));
+        btnLoadAudio.setOnAction(event -> {
+            LoadAudioFactory.loadAudioListFromWeb();
+        });
+        btnLoadAudio.setMaxWidth(Double.MAX_VALUE);
+        btnLoadAudio.disableProperty().bind(ProgConfig.SYSTEM_USE_AUDIOLIST.not());
+        HBox.setHgrow(btnLoadAudio, Priority.ALWAYS);
+
+        Button btnLoadFilm = new Button("_Filmliste mit diesen Einstellungen neu laden");
+        btnLoadFilm.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
+                "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
+        btnLoadFilm.setOnAction(event -> {
+            LoadFilmFactory.loadFilmListFromWeb(true);
+        });
+        btnLoadFilm.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(btnLoadFilm, Priority.ALWAYS);
+
+        HBox hBoxBtn = new HBox(5);
+        hBoxBtn.setAlignment(Pos.CENTER_RIGHT);
+        hBoxBtn.getChildren().addAll(btnLoadAudio, btnLoadFilm);
+
+        if (!controlBlackListNotFilmFilter) {
+            vBox.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBoxBtn);
+        }
+
         vBox.getChildren().add(ProgData.busy.getBusyHbox(Busy.BUSY_SRC.PANE_BLACKLIST));
 
-        TitledPane tpBlack = new TitledPane(controlBlackListNotFilmFilter ? "Blacklist" : "Filme ausschließen", vBox);
+        TitledPane tpBlack = new TitledPane(controlBlackListNotFilmFilter ? "Blacklist" : "Beiträge ausschließen", vBox);
         result.add(tpBlack);
         tpBlack.setMaxHeight(Double.MAX_VALUE);
     }

@@ -129,7 +129,9 @@ public class LoadFilmListWorker {
             ProgConfig.SYSTEM_FILMLIST_DATE.setValue(progData.filmList.isEmpty() ? "" : filmDate);
 
             //damit auf jeden Fall, aus
-            progData.maskerPane.switchOffMasker();
+            if (!ProgData.AUDIOLIST_IS_DOWNLOADING.get()) {
+                progData.maskerPane.switchOffMasker();
+            }
 
             if (ProgData.firstProgramStart) {
                 ProgData.firstProgramStart = false;

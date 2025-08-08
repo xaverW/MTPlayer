@@ -113,7 +113,9 @@ public class LoadAudioListWorker {
             progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
 
             //damit auf jeden Fall, aus
-            progData.maskerPane.switchOffMasker();
+            if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
+                progData.maskerPane.switchOffMasker();
+            }
 
         }).start();
     }
