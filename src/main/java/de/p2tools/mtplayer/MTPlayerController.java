@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.gui.*;
-import de.p2tools.mtplayer.gui.filter.SearchFast;
+import de.p2tools.mtplayer.gui.filter.FastFilter;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -51,7 +51,9 @@ public class MTPlayerController extends StackPane {
     private final Button btnLive = new Button("Live");
     private final Button btnDownload = new Button("Downloads");
     private final Button btnAbo = new Button("Abos");
-    private final SearchFast searchFast = new SearchFast();
+    private final StackPane stackPaneFast = new StackPane();
+    private final FastFilter fastFilterFilm = new FastFilter(false);
+    private final FastFilter fastFilterAudio = new FastFilter(true);
 
     private final BorderPane borderPane = new BorderPane();
     private final StackPane stackPaneCont = new StackPane();
@@ -77,6 +79,9 @@ public class MTPlayerController extends StackPane {
 
     private void init() {
         try {
+            stackPaneFast.getChildren().addAll(fastFilterFilm, fastFilterAudio);
+            stackPaneFast.setAlignment(Pos.CENTER_RIGHT);
+
             // Toolbar
             TilePane tilePaneButton = new TilePane();
             tilePaneButton.setPrefColumns(4);
@@ -89,9 +94,9 @@ public class MTPlayerController extends StackPane {
             hBoxTop.setPadding(new Insets(2, 10, 2, 10));
             hBoxTop.setSpacing(10);
             hBoxTop.setAlignment(Pos.CENTER);
-            HBox.setHgrow(tilePaneButton, Priority.SOMETIMES);
-            HBox.setHgrow(searchFast, Priority.ALWAYS);
-            hBoxTop.getChildren().addAll(btnFilmlist, tilePaneButton, searchFast, new MTPlayerMenu());
+            HBox.setHgrow(tilePaneButton, Priority.ALWAYS);
+            HBox.setHgrow(stackPaneFast, Priority.NEVER);
+            hBoxTop.getChildren().addAll(btnFilmlist, tilePaneButton, stackPaneFast, new MTPlayerMenu());
 
             // Center
             splitPaneFilm = filmGui.pack();
@@ -177,6 +182,8 @@ public class MTPlayerController extends StackPane {
     }
 
     private void initButton() {
+        ProgConfig.FAST_FILM_SEARCH_ON.addListener((u, o, n) -> setButtonStyle());
+        ProgConfig.FAST_AUDIO_SEARCH_ON.addListener((u, o, n) -> setButtonStyle());
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
         btnFilm.setOnAction(e -> selPanelFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);
@@ -315,29 +322,25 @@ public class MTPlayerController extends StackPane {
     }
 
     private void setButtonStyle() {
-        if (ProgConfig.SYSTEM_USE_LIVE.get()) {
-            setButtonStyleSmall();
-        } else {
-            setButtonStyleBig();
-        }
-    }
-
-    private void setButtonStyleBig() {
         btnFilm.getStyleClass().clear();
         btnAudio.getStyleClass().clear();
         btnLive.getStyleClass().clear();
         btnDownload.getStyleClass().clear();
         btnAbo.getStyleClass().clear();
 
+
+        fastFilterFilm.setVisible(false);
+        fastFilterAudio.setVisible(false);
+
         if (TAB_FILM_ON.get()) {
-            searchFast.setVisible(true);
+            fastFilterFilm.setVisible(true);
             btnFilm.getStyleClass().add("btnTabTop-sel");
         } else {
-            searchFast.setVisible(false);
             btnFilm.getStyleClass().add("btnTabTop");
         }
 
         if (TAB_AUDIO_ON.get()) {
+            fastFilterAudio.setVisible(true);
             btnAudio.getStyleClass().add("btnTabTop-sel");
         } else {
             btnAudio.getStyleClass().add("btnTabTop");
@@ -360,45 +363,13 @@ public class MTPlayerController extends StackPane {
         } else {
             btnAbo.getStyleClass().add("btnTabTop");
         }
-    }
 
-    private void setButtonStyleSmall() {
-        btnFilm.getStyleClass().clear();
-        btnAudio.getStyleClass().clear();
-        btnLive.getStyleClass().clear();
-        btnDownload.getStyleClass().clear();
-        btnAbo.getStyleClass().clear();
-
-        if (TAB_FILM_ON.get()) {
-            searchFast.setVisible(true);
-            btnFilm.getStyleClass().add("btnTabTopSmall-sel");
-        } else {
-            searchFast.setVisible(false);
-            btnFilm.getStyleClass().add("btnTabTopSmall");
-        }
-
-        if (TAB_AUDIO_ON.get()) {
-            btnAudio.getStyleClass().add("btnTabTopSmall-sel");
-        } else {
-            btnAudio.getStyleClass().add("btnTabTopSmall");
-        }
-
-        if (TAB_LIVE_ON.get()) {
-            btnLive.getStyleClass().add("btnTabTopSmall-sel");
-        } else {
-            btnLive.getStyleClass().add("btnTabTopSmall");
-        }
-
-        if (TAB_DOWNLOAD_ON.get()) {
-            btnDownload.getStyleClass().add("btnTabTopSmall-sel");
-        } else {
-            btnDownload.getStyleClass().add("btnTabTopSmall");
-        }
-
-        if (TAB_ABO_ON.get()) {
-            btnAbo.getStyleClass().add("btnTabTopSmall-sel");
-        } else {
-            btnAbo.getStyleClass().add("btnTabTopSmall");
+        if (ProgConfig.FAST_FILM_SEARCH_ON.get() || ProgConfig.FAST_AUDIO_SEARCH_ON.get()) {
+            btnFilm.getStyleClass().add("btnTabTopS");
+            btnAudio.getStyleClass().add("btnTabTopS");
+            btnLive.getStyleClass().add("btnTabTopS");
+            btnDownload.getStyleClass().add("btnTabTopS");
+            btnAbo.getStyleClass().add("btnTabTopS");
         }
     }
 

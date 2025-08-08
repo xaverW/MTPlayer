@@ -422,8 +422,10 @@ public class ProgConfig extends P2DataProgConfig {
     public static DoubleProperty FILM_PANE_INFO_DIVIDER = addDoubleProp("film-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
     // Gui Film -> fast search
-    public static BooleanProperty FAST_SEARCH_ON = addBoolProp("fast-search-on", Boolean.FALSE);
-    public static IntegerProperty FAST_SEARCH_WHERE = addIntProp("fast-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
+    public static BooleanProperty FAST_FILM_SEARCH_ON = addBoolProp("fast-film-search-on", Boolean.FALSE);
+    public static IntegerProperty FAST_FILM_SEARCH_WHERE = addIntProp("fast-film-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
+    public static BooleanProperty FAST_AUDIO_SEARCH_ON = addBoolProp("fast-audio-search-on", Boolean.FALSE);
+    public static IntegerProperty FAST_AUDIO_SEARCH_WHERE = addIntProp("fast-audio-search-where", ProgConst.SEARCH_FAST_THEME_TITLE);
 
     // Film Info Pane
     public static BooleanProperty FILM__FILTER_IS_SHOWING = addBoolProp("film--filter-is-showing", Boolean.TRUE);

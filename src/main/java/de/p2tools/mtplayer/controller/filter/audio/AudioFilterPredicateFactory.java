@@ -209,8 +209,8 @@ public class AudioFilterPredicateFactory {
         String filterTitle = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
         de.p2tools.p2lib.mediathek.filter.Filter fTitle = new de.p2tools.p2lib.mediathek.filter.Filter(filterTitle, true);
 
-        if (ProgConfig.FAST_SEARCH_ON.getValue() &&
-                ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME_TITLE) {
+        if (ProgConfig.FAST_AUDIO_SEARCH_ON.getValue() &&
+                ProgConfig.FAST_AUDIO_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME_TITLE) {
             // dann mit dem FAST
             if (!fastFilter.isEmpty) {
                 predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeTitle(fastFilter, f));
@@ -222,8 +222,8 @@ public class AudioFilterPredicateFactory {
             }
         }
 
-        if (ProgConfig.FAST_SEARCH_ON.getValue() &&
-                ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME) {
+        if (ProgConfig.FAST_AUDIO_SEARCH_ON.getValue() &&
+                ProgConfig.FAST_AUDIO_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME) {
             // dann mit dem FAST
             if (!fastFilter.isEmpty) {
                 predicate = predicate.and(f -> FilmFilterCheck.checkMatchTheme(fastFilter, f));
@@ -235,8 +235,8 @@ public class AudioFilterPredicateFactory {
             }
         }
 
-        if (ProgConfig.FAST_SEARCH_ON.getValue() &&
-                ProgConfig.FAST_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_TITLE) {
+        if (ProgConfig.FAST_AUDIO_SEARCH_ON.getValue() &&
+                ProgConfig.FAST_AUDIO_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_TITLE) {
             // dann mit dem FAST
             if (!fastFilter.isEmpty) {
                 predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fastFilter, f));

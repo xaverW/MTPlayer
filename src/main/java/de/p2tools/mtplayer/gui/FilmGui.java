@@ -30,8 +30,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
-import java.util.ArrayList;
-
 public class FilmGui {
 
     ProgData progData;
@@ -47,17 +45,15 @@ public class FilmGui {
         filmFilterController = new FilmFilterController();
         filmGuiController = new FilmGuiController();
 
-        ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         BooleanProperty show = new SimpleBooleanProperty();
-        show.bind(MTPlayerController.TAB_FILM_ON.and(ProgConfig.FAST_SEARCH_ON.not()));
+        show.bind(MTPlayerController.TAB_FILM_ON.and(ProgConfig.FAST_FILM_SEARCH_ON.not()));
 
         P2ClosePaneDto infoDto = new P2ClosePaneDto(filmFilterController,
                 ProgConfig.FILM__FILTER_IS_RIP,
                 ProgConfig.FILM__FILTER_DIALOG_SIZE, show,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
-        list.add(infoDto);
-        infoControllerFilter = new P2ClosePaneController(list, ProgConfig.FILM__FILTER_IS_SHOWING);
+        infoControllerFilter = new P2ClosePaneController(infoDto, ProgConfig.FILM__FILTER_IS_SHOWING);
     }
 
     public SplitPane pack() {

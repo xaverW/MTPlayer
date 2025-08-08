@@ -30,34 +30,30 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
-import java.util.ArrayList;
-
 public class AudioGui {
 
     ProgData progData;
     private final SplitPane splitPane = new SplitPane();
     private final HBox hBox = new HBox();
-    private final AudioFilterController filmFilterController;
+    private final AudioFilterController audioFilterController;
     private final AudioGuiController audioGuiController;
     private final BooleanProperty boundFilter = new SimpleBooleanProperty(false);
     private final P2ClosePaneController infoControllerFilter;
 
     public AudioGui() {
         progData = ProgData.getInstance();
-        filmFilterController = new AudioFilterController();
+        audioFilterController = new AudioFilterController();
         audioGuiController = new AudioGuiController();
 
-        ArrayList<P2ClosePaneDto> list = new ArrayList<>();
         BooleanProperty show = new SimpleBooleanProperty();
-        show.bind(MTPlayerController.TAB_AUDIO_ON.and(ProgConfig.FAST_SEARCH_ON.not()));
+        show.bind(MTPlayerController.TAB_AUDIO_ON.and(ProgConfig.FAST_AUDIO_SEARCH_ON.not()));
 
-        P2ClosePaneDto infoDto = new P2ClosePaneDto(filmFilterController,
+        P2ClosePaneDto infoDto = new P2ClosePaneDto(audioFilterController,
                 ProgConfig.AUDIO__FILTER_IS_RIP,
                 ProgConfig.AUDIO__FILTER_DIALOG_SIZE, show,
                 "Filter", "Filter", true,
                 progData.maskerPane.getVisibleProperty());
-        list.add(infoDto);
-        infoControllerFilter = new P2ClosePaneController(list, ProgConfig.AUDIO__FILTER_IS_SHOWING);
+        infoControllerFilter = new P2ClosePaneController(infoDto, ProgConfig.AUDIO__FILTER_IS_SHOWING);
     }
 
     public SplitPane pack() {
@@ -68,7 +64,7 @@ public class AudioGui {
         progData.audioGuiController = audioGuiController;
 
         splitPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        SplitPane.setResizableWithParent(filmFilterController, Boolean.FALSE);
+        SplitPane.setResizableWithParent(audioFilterController, Boolean.FALSE);
 
         hBox.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
         hBox.setMinSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);

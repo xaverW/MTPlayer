@@ -21,7 +21,8 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
     private final ObservableList<String> filterListFilmUrl = FXCollections.observableArrayList();
 
     // FastFilter
-    private final ObservableList<String> filterListFastFilter = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListFastFilterFilm = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListFastFilterAudio = FXCollections.observableArrayList();
 
     // Audio
     private final ObservableList<String> filterListAudioTheme = FXCollections.observableArrayList();
@@ -60,7 +61,8 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
         list.add(new ConfigStringList("filterListSomewhere", filterListFilmSomewhere));
         list.add(new ConfigStringList("filterListUrl", filterListFilmUrl));
 
-        list.add(new ConfigStringList("filterListFastFilter", filterListFastFilter));
+        list.add(new ConfigStringList("filterListFastFilterFilm", filterListFastFilterFilm));
+        list.add(new ConfigStringList("filterListFastFilterAudio", filterListFastFilterAudio));
 
         list.add(new ConfigStringList("filterListAudioTheme", filterListAudioTheme));
         list.add(new ConfigStringList("filterListAudioThemeTitle", filterListAudioThemeTitle));
@@ -103,8 +105,12 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
     }
 
     // FastFilter
-    public ObservableList<String> getFilterListFastFilter() {
-        return filterListFastFilter;
+    public ObservableList<String> getFilterListFastFilterFilm() {
+        return filterListFastFilterFilm;
+    }
+
+    public ObservableList<String> getFilterListFastFilterAudio() {
+        return filterListFastFilterAudio;
     }
 
     // Audio

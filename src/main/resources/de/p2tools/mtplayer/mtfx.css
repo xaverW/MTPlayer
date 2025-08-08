@@ -101,7 +101,7 @@
     -fx-border-color: #939a9f;
 }
 .fast-search-off {
-    -fx-padding: 2;
+    -fx-padding: 10 2 10 2;
 }
 
 /*Button im fastSearch im Tab Filme*/
@@ -130,3 +130,37 @@
     -fx-border-width: 1;
     -fx-padding: 5;
 }
+
+
+
+/* Button Sender/Favoriten/History */
+/* sind die blauen TabButton */
+.btnTabTop, .btnTabTop-sel{
+    /*-fx-background-radius: 15 15 4 4;*/
+    -fx-background-radius: 15 15 0 0;
+    -fx-background-color: radial-gradient(focus-angle 45deg, focus-distance 20%, center 90% 75%, radius 30%, reflect, #305d9c, #203e68 75%, #1e3c64 75%);
+    -fx-effect: dropshadow(three-pass-box, #464f5f, 3, 0.2 , 2 , 2 );
+    -fx-padding: 5 30 5 30;
+
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.btnTabTop:hover{
+    -fx-effect: dropshadow(three-pass-box, #464f5f, 10, 0.2 , 3 , 3);
+}
+.btnTabTop-sel{
+    -fx-background-color: radial-gradient(focus-angle 45deg, focus-distance 20%, center 90% 75%, radius 30%, reflect, #4e9bff, #4181d6 75%, #407cd0 75%);
+    -fx-effect: dropshadow(three-pass-box, #404040, 5, 0.2 , 2 , 2 );
+    -fx-font-size: 1.0em;
+}
+.btnTabTop-sel:hover{
+    -fx-effect: dropshadow(three-pass-box, #464f5f, 10, 0.2 , 3 , 3);
+}
+
+.btnTabTopS{
+    -fx-padding: 5 10 5 10;
+}
+
+
+
