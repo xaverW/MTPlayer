@@ -28,7 +28,7 @@ public class LoadAudioFactory {
     }
 
     public static void loadAudioListProgStart() {
-        // nur einmal direkt nach dem Programmstart
+        // nur einmal direkt nach dem Programmstart, geladen wird, wenn lokale nicht von HEUTE
         if ((!ProgConfig.SYSTEM_USE_AUDIOLIST.get())) {
             // dann will der User nicht :)
             return;
@@ -41,7 +41,7 @@ public class LoadAudioFactory {
     }
 
     public static void loadAudioListFromWeb() {
-        // aus dem Menü oder Button in den Einstellungen immer neu aus dem Web laden
+        // aus dem Menü oder Button in den Einstellungen immer neu aus dem Web laden, wird immer aus dem Web geladen
         if ((!ProgConfig.SYSTEM_USE_AUDIOLIST.get())) {
             // dann will der User nicht :)
             return;

@@ -180,6 +180,10 @@ public class LoadFilmListWorker {
         ProgData progData = ProgData.getInstance();
         int counter = 50; //todo das dauert sonst viel zu lang
         for (DownloadData d : progData.downloadList) {
+            if (d.isAudio()) {
+                continue;
+            }
+            
             --counter;
             if (counter < 0) {
                 break;

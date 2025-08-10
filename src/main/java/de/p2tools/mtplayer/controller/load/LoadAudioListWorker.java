@@ -98,9 +98,6 @@ public class LoadAudioListWorker {
             progData.maskerPane.setMaskerText("Blacklist filtern");
             BlacklistFilterFactory.markFilmBlack(true, false);
 
-//            progData.audioListFiltered.setAll(progData.audioList);
-//            progData.audioListFiltered.loadTheme(); // wird sonst im
-
             logList.add("Filme in Downloads eingetragen");
             progData.maskerPane.setMaskerText("Downloads eingetragen");
             addFilmInDownloads();
@@ -144,11 +141,15 @@ public class LoadAudioListWorker {
         ProgData progData = ProgData.getInstance();
         int counter = 50; //todo das dauert sonst viel zu lang
         for (DownloadData d : progData.downloadList) {
+            if (!d.isAudio()) {
+                continue;
+            }
+
             --counter;
             if (counter < 0) {
                 break;
             }
-            d.setFilm(progData.filmList.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
+            d.setFilm(progData.audioList.getFilmByUrl_small_high_hd(d.getUrl())); //todo sollen da wirklich alle Filmfelder gesetzt werden??
             d.initResolution();
         }
         P2Duration.counterStop("addFilmInList");
