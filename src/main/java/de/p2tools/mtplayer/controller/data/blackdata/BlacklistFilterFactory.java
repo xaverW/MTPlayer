@@ -182,6 +182,7 @@ public class BlacklistFilterFactory {
         // nach Treffer **abbrechen**
         // Counter werden vorher schon gelöscht
         filmData.setLowerCase();
+        // todo java.util.ConcurrentModificationException
         for (final BlackData blackData : list) {
             if (!blackData.isActive()) {
                 //dann ist er ausgeschaltet

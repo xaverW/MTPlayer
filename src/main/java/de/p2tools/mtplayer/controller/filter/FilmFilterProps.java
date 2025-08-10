@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class FilmFilterProps extends P2DataSample<FilmFilter> implements Comparable<FilmFilter> {
 
-    public String TAG = "FilmFilter";
+    public String TAG = "FilmFilter:SelectedFilter";
 
     private final StringProperty name = new SimpleStringProperty();
     private final BooleanProperty channelVis = new SimpleBooleanProperty(true);

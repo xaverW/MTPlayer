@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
-import de.p2tools.p2lib.tools.log.P2Log;
 
 public class ProgConfigUpdate {
     // hier werden geänderte Programmeinstellungen/Funktionen angepasst,
@@ -38,7 +37,6 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_ABO_START_TIME.setValue(true); // für Version 17
         ProgConfig.SYSTEM_CHANGE_LOG_DIR.setValue(true); // für Version 17
         ProgConfig.SYSTEM_SMALL_FILTER.setValue(true); // für Version 20
-        ProgConfig.SYSTEM_SELECTED_FILTER.setValue(true); // für Version 20
     }
 
     public static void update() {
@@ -129,18 +127,6 @@ public class ProgConfigUpdate {
             // ist dann ein smallFilter
             ProgData.getInstance().filterWorkerFilm.getActFilterSettings().clearFilter();
             FilterWorker.setSmallFilter(ProgData.getInstance().filterWorkerFilm.getActFilterSettings());
-        }
-
-        if (!ProgConfig.SYSTEM_SELECTED_FILTER.getValue()) {
-            ProgData.getInstance().filterWorkerFilm.getFilmFilterList().clear();
-            P2Log.sysLog("Die alten Filter übertagen: " + ProgData.getInstance().selectedFilterList.size());
-            ProgData.getInstance().selectedFilterList.forEach(f -> {
-                FilmFilter filmFilter = new FilmFilter();
-                f.copyTo(filmFilter);
-                ProgData.getInstance().filterWorkerFilm.getFilmFilterList().add(filmFilter);
-            });
-            // und kann dann über den Jordan
-            ProgData.getInstance().selectedFilterList.clear();
         }
 
         setUpdateDone();

@@ -26,11 +26,6 @@ import java.util.Optional;
 
 public class FilterWorker {
 
-    // ist der aktuell angezeigte Filter
-    public static final String SELECTED_FILTER_NAME = "aktuelle Einstellung: Filme"; // dient nur der Info im Config-File
-    public static final String STORED_FILTER_NAME = "gespeicherte aktuelle Einstellung: Filme"; // dient nur der Info im Config-File
-    public static final String STORED_SMALL_FILTER_NAME = "gespeicherte aktuelle Einstellung, kleiner Filter: Filme"; // dient nur der Info im Config-File
-
     // ist der "aktuelle" Filter im Programm
     public final FilmFilter actFilterSettings;
     public final FilmFilter storedFilterSettings;
@@ -49,21 +44,21 @@ public class FilterWorker {
 
     public FilterWorker(boolean audio) {
         this.audio = audio;
-        actFilterSettings = new FilmFilter("actFilterSettings" + (audio ? "Audio" : "Film"), audio, SELECTED_FILTER_NAME);
-        storedFilterSettings = new FilmFilter("storedFilterSettings" + (audio ? "Audio" : "Film"), audio, STORED_FILTER_NAME);
-        storedSmallFilterSettings = new FilmFilter("storedSmallFilterSettings" + (audio ? "Audio" : "Film"), audio, STORED_SMALL_FILTER_NAME);
+        actFilterSettings = new FilmFilter("ActFilterSettings" + (audio ? "Audio" : "Film"), audio);
+        storedFilterSettings = new FilmFilter("StoredFilterSettings" + (audio ? "Audio" : "Film"), audio);
+        storedSmallFilterSettings = new FilmFilter("StoredSmallFilterSettings" + (audio ? "Audio" : "Film"), audio);
 
         if (audio) {
-            filmFilterList = new FilmFilterList("filmFilterList" + "Audio");
-            backwardFilterList = new FilmFilterList("filmFilterListBackward" + "Audio");
-            forwardFilterList = new FilmFilterList("filmFilterListForward" + "Audio");
+            filmFilterList = new FilmFilterList("FilmFilterList" + "Audio");
+            backwardFilterList = new FilmFilterList("FilmFilterListBackward" + "Audio");
+            forwardFilterList = new FilmFilterList("FilmFilterListForward" + "Audio");
         } else {
-            filmFilterList = new FilmFilterList("selectedFilterList:FilmFilterList" + "Film");
-            backwardFilterList = new FilmFilterList("filmFilterListBackward" + "Film");
-            forwardFilterList = new FilmFilterList("filmFilterListForward" + "Film");
+            filmFilterList = new FilmFilterList("FilmFilterList" + "Film" + ":SelectedFilterList");
+            backwardFilterList = new FilmFilterList("FilmFilterListBackward" + "Film");
+            forwardFilterList = new FilmFilterList("FilmFilterListForward" + "Film");
         }
 
-        fastFilter = new FastFilter("fastFilter" + (audio ? "Audio" : "Film"), audio);
+        fastFilter = new FastFilter("FastFilter" + (audio ? "Audio" : "Film"), audio);
 
         getActFilterSettings().channelProperty().addListener(l -> {
             ThemeListFactory.createThemeList(audio, ProgData.getInstance(), getActFilterSettings().channelProperty().getValueSafe());

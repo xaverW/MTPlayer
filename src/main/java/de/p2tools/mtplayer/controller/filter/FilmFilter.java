@@ -41,11 +41,10 @@ public class FilmFilter extends FilmFilterProps implements Filter {
         setName(name);
     }
 
-    public FilmFilter(String tag, boolean audio, String name) {
+    public FilmFilter(String tag, boolean audio) {
         this.TAG = tag;
         this.audio = audio;
         initFilter();
-        setName(name);
     }
 
     public void reportFilterReturn() {

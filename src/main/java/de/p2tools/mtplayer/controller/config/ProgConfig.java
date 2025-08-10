@@ -81,8 +81,6 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.filterWorkerFilm.getBackwardFilterList()); // Filterprofile
         configFile.addConfigs(progData.filterWorkerFilm.getForwardFilterList()); // Filterprofile
 
-        configFile.addConfigs(progData.selectedFilterList); // sind die alten gespeicherten Filterprofile, nur fürs Update!!
-
         // =================
         // Filter, Audio
         final FastFilter fastAudioFilter = progData.filterWorkerAudio.getFastFilterSettings(); // Fast-Filter
@@ -210,7 +208,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_CHANGE_LOG_DIR = addBoolProp("system-change-log-dir", Boolean.FALSE);
     public static BooleanProperty SYSTEM_USE_NEW_BOOKMARK_FILE = addBoolProp("system-use-new-bookmark-file", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_FILTER = addBoolProp("system-small-filter", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_SELECTED_FILTER = addBoolProp("system-selected-filter", Boolean.FALSE);
 
     // configs zum Anzeigen der WhatsNew
     public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
