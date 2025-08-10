@@ -57,11 +57,11 @@ public class StatusBarController extends AnchorPane {
     private final HBox hBoxCircleAudio = new HBox(0);
 
     //LiveFilm
-    private final Label lblSelLiveFilm = new Label();
-    private final Label lblLeftLiveFilm = new Label();
-    private final Label lblRightLiveFilm = new Label();
-    private final Circle circleLiveFilm = new Circle(6);
-    private final HBox hBoxCircleLiveFilm = new HBox(0);
+    private final Label lblSelLive = new Label();
+    private final Label lblLeftLive = new Label();
+    private final Label lblRightLive = new Label();
+    private final Circle circleLive = new Circle(6);
+    private final HBox hBoxCircleLive = new HBox(0);
 
     //Download
     private final Label lblSelDownload = new Label();
@@ -78,11 +78,11 @@ public class StatusBarController extends AnchorPane {
     private final HBox hBoxCircleAbo = new HBox(0);
 
     private final StackPane stackPane = new StackPane();
-    private final Pane filmPane;
-    private final Pane audioPane;
-    private final Pane liveFilmPane;
-    private final Pane downloadPane;
-    private final Pane aboPane;
+    private final Pane paneFilm;
+    private final Pane paneAudio;
+    private final Pane paneLive;
+    private final Pane paneDownload;
+    private final Pane paneAbo;
 
     private final ProgData progData;
     private boolean stopTimer = false;
@@ -101,20 +101,21 @@ public class StatusBarController extends AnchorPane {
 
         lblSelFilm.setTooltip(new Tooltip("Anzahl markierter Filme"));
         lblSelAudio.setTooltip(new Tooltip("Anzahl markierter Audios"));
-        lblSelLiveFilm.setTooltip(new Tooltip("Anzahl markierter Filme"));
+        lblSelLive.setTooltip(new Tooltip("Anzahl markierter Filme"));
         lblSelDownload.setTooltip(new Tooltip("Anzahl markierter Downloads"));
         lblSelAbo.setTooltip(new Tooltip("Anzahl markierter Abos"));
 
         hBoxCircleFilm.getChildren().add(circleFilm);
         hBoxCircleAudio.getChildren().add(circleAudio);
+        hBoxCircleLive.getChildren().add(circleLive);
         hBoxCircleDownload.getChildren().add(circleDownload);
         hBoxCircleAbo.getChildren().add(circleAbo);
 
-        filmPane = getHBox(lblSelFilm, lblLeftFilm, hBoxCircleFilm, lblRightFilm);
-        audioPane = getHBox(lblSelAudio, lblLeftAudio, hBoxCircleAudio, lblRightAudio);
-        liveFilmPane = getHBox(lblSelLiveFilm, lblLeftLiveFilm, hBoxCircleLiveFilm, lblRightLiveFilm);
-        downloadPane = getHBox(lblSelDownload, lblLeftDownload, hBoxCircleDownload, lblRightDownload);
-        aboPane = getHBox(lblSelAbo, lblLeftAbo, hBoxCircleAbo, lblRightAbo);
+        paneFilm = getHBox(lblSelFilm, lblLeftFilm, hBoxCircleFilm, lblRightFilm);
+        paneAudio = getHBox(lblSelAudio, lblLeftAudio, hBoxCircleAudio, lblRightAudio);
+        paneLive = getHBox(lblSelLive, lblLeftLive, hBoxCircleLive, lblRightLive);
+        paneDownload = getHBox(lblSelDownload, lblLeftDownload, hBoxCircleDownload, lblRightDownload);
+        paneAbo = getHBox(lblSelAbo, lblLeftAbo, hBoxCircleAbo, lblRightAbo);
 
         HBox hBusy = ProgData.busy.getBusyHbox(Busy.BUSY_SRC.GUI);
         hBusy.setStyle("-fx-background-color: -fx-background;");
@@ -171,14 +172,14 @@ public class StatusBarController extends AnchorPane {
         hBoxCircleAudio.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
         hBoxCircleAudio.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
 
-        lblSelLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
-        lblSelLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
-        lblLeftLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
-        lblLeftLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
-        lblRightLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
-        lblRightLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
-        hBoxCircleLiveFilm.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
-        hBoxCircleLiveFilm.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
+        lblSelLive.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
+        lblSelLive.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
+        lblLeftLive.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
+        lblLeftLive.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_LEFT);
+        lblRightLive.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
+        lblRightLive.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
+        hBoxCircleLive.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
+        hBoxCircleLive.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
 
         lblSelDownload.visibleProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
         lblSelDownload.managedProperty().bind(ProgConfig.SYSTEM_STATUS_BAR_FIELD_SEL);
@@ -208,9 +209,10 @@ public class StatusBarController extends AnchorPane {
             }
         });
 
-        stackPane.getChildren().addAll(filmPane, audioPane, downloadPane, aboPane);
+        stackPane.getChildren().addAll(paneFilm, paneAudio, paneLive, paneDownload, paneAbo);
         stackPane.setPadding(new Insets(0));
-        filmPane.toFront();
+        paneFilm.toFront();
+        //todo audio
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILMLIST_LOAD_START) {
             @Override
             public void pingGui() {
@@ -260,23 +262,23 @@ public class StatusBarController extends AnchorPane {
 
     public void setStatusbarIndex() {
         if (MTPlayerController.TAB_FILM_ON.get()) {
-            filmPane.toFront();
+            paneFilm.toFront();
             setInfoFilm();
             setTextForRightDisplayFilm();
         } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
-            audioPane.toFront();
+            paneAudio.toFront();
             setInfoAudio();
             setTextForRightDisplayAudio();
         } else if (MTPlayerController.TAB_LIVE_ON.get()) {
-            liveFilmPane.toFront();
+            paneLive.toFront();
             setInfoLiveFilm();
             setTextForRightDisplayFilm();
         } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
-            downloadPane.toFront();
+            paneDownload.toFront();
             setInfoDownload();
             setTextForRightDisplayFilm();
         } else if (MTPlayerController.TAB_ABO_ON.get()) {
-            aboPane.toFront();
+            paneAbo.toFront();
             setInfoAbo();
             setTextForRightDisplayFilm();
         }
@@ -298,9 +300,9 @@ public class StatusBarController extends AnchorPane {
 
     private void setInfoLiveFilm() {
         setCircleStyle();
-        lblLeftFilm.setText(DownloadInfosFactory.getStatusInfosLiveFilm());
+        lblLeftLive.setText(DownloadInfosFactory.getStatusInfosLiveFilm());
         final int selCount = progData.liveFilmGuiController.getSelCount();
-        lblSelFilm.setText(selCount > 0 ? selCount + "" : " ");
+        lblSelLive.setText(selCount > 0 ? selCount + "" : " ");
     }
 
     private void setInfoDownload() {
@@ -313,7 +315,6 @@ public class StatusBarController extends AnchorPane {
     private void setInfoAbo() {
         setCircleStyle();
         lblLeftAbo.setText(DownloadInfosFactory.getStatusInfosAbo());
-
         final int selCount = progData.aboGuiController.getSelCount();
         lblSelAbo.setText(selCount > 0 ? selCount + "" : " ");
     }
@@ -323,11 +324,13 @@ public class StatusBarController extends AnchorPane {
             //dann ausschalten
             circleFilm.setVisible(false);
             circleAudio.setVisible(false);
+            circleLive.setVisible(false);
             circleDownload.setVisible(false);
             circleAbo.setVisible(false);
         } else {
             circleFilm.setVisible(true);
             circleAudio.setVisible(true);
+            circleLive.setVisible(true);
             circleDownload.setVisible(true);
             circleAbo.setVisible(true);
         }
@@ -336,18 +339,21 @@ public class StatusBarController extends AnchorPane {
         if (progData.downloadInfos.getFinishedError() > 0) {
             circleFilm.setFill(Paint.valueOf("red"));
             circleAudio.setFill(Paint.valueOf("red"));
+            circleLive.setFill(Paint.valueOf("red"));
             circleDownload.setFill(Paint.valueOf("red"));
             circleAbo.setFill(Paint.valueOf("red"));
 
         } else if (progData.downloadInfos.getLoading() > 0) {
             circleFilm.setFill(Paint.valueOf("green"));
             circleAudio.setFill(Paint.valueOf("green"));
+            circleLive.setFill(Paint.valueOf("green"));
             circleDownload.setFill(Paint.valueOf("green"));
             circleAbo.setFill(Paint.valueOf("green"));
 
         } else {
             circleFilm.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
             circleAudio.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
+            circleLive.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
             circleDownload.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
             circleAbo.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
         }
@@ -379,6 +385,7 @@ public class StatusBarController extends AnchorPane {
         }
         // Infopanel setzen
         lblRightFilm.setText(strText);
+        lblRightLive.setText(strText);
         lblRightDownload.setText(strText);
         lblRightAbo.setText(strText);
     }
@@ -408,8 +415,6 @@ public class StatusBarController extends AnchorPane {
             strText += strHour + ':' + strMinute + ':' + strSecond + ' ';
         }
         // Infopanel setzen
-        lblRightFilm.setText(strText);
-        lblRightDownload.setText(strText);
-        lblRightAbo.setText(strText);
+        lblRightAudio.setText(strText);
     }
 }

@@ -11,13 +11,35 @@ import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
 
 public class TableBookmarkFactory {
     private TableBookmarkFactory() {
+    }
+
+    public static void columnFactoryList(TableColumn<BookmarkData, Boolean> column) {
+        column.setCellFactory(c -> new TableCell<>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                    return;
+                }
+
+                if (item) {
+                    setText("Audio");
+                } else {
+                    setText("Film");
+                }
+                BookmarkData bookmarkData = getTableView().getItems().get(getIndex());
+                set(bookmarkData, this);
+            }
+        });
     }
 
     public static void columnFactoryString(TableColumn<BookmarkData, String> column) {
@@ -78,34 +100,6 @@ public class TableBookmarkFactory {
         });
     }
 
-    public static void columnFactoryFilmData(TableColumn<BookmarkData, FilmDataMTP> column) {
-        column.setCellFactory(c -> new TableCell<>() {
-            @Override
-            protected void updateItem(FilmDataMTP item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                setAlignment(Pos.CENTER);
-                CheckBox box = new CheckBox();
-                box.setMaxHeight(6);
-                box.setMinHeight(6);
-                box.setPrefSize(6, 6);
-                box.setDisable(true);
-                box.getStyleClass().add("checkbox-table");
-                box.setSelected(true);
-                setGraphic(box);
-
-                BookmarkData bookmarkData = getTableView().getItems().get(getIndex());
-                set(bookmarkData, this);
-            }
-        });
-    }
-
     public static void columnFactoryButton(TableColumn<BookmarkData, String> column) {
         column.setCellFactory(c -> new TableCell<>() {
             @Override
@@ -150,7 +144,6 @@ public class TableBookmarkFactory {
                     btnBookmark.setMinHeight(18);
                 }
 
-                // btnPlay.setDisable(filmDataMTP == null); // todo?
                 btnPlay.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
@@ -161,9 +154,9 @@ public class TableBookmarkFactory {
                         filmData.arr[FilmData.FILM_TITLE] = bookmarkData.getTitle();
                         filmData.arr[FilmData.FILM_THEME] = bookmarkData.getTheme();
                         filmData.arr[FilmData.FILM_URL] = bookmarkData.getUrl();
-                        FilmPlayFactory.playFilm(false, filmData);
+                        FilmPlayFactory.playFilm(bookmarkData.isAudio(), filmData);
                     } else {
-                        FilmPlayFactory.playFilm(false, filmDataMTP);
+                        FilmPlayFactory.playFilm(bookmarkData.isAudio(), filmDataMTP);
                     }
 
                     getTableView().refresh();
@@ -174,15 +167,14 @@ public class TableBookmarkFactory {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
 
-                    // todo audio
                     if (bookmarkData.getFilmData() == null) {
                         FilmDataMTP filmData = new FilmDataMTP();
                         filmData.arr[FilmData.FILM_TITLE] = bookmarkData.getTitle();
                         filmData.arr[FilmData.FILM_THEME] = bookmarkData.getTheme();
                         filmData.arr[FilmData.FILM_URL] = bookmarkData.getUrl();
-                        FilmSaveFactory.saveFilm(false, filmData);
+                        FilmSaveFactory.saveFilm(bookmarkData.isAudio(), filmData);
                     } else {
-                        FilmSaveFactory.saveFilm(false, filmDataMTP);
+                        FilmSaveFactory.saveFilm(bookmarkData.isAudio(), filmDataMTP);
                     }
 
                     getTableView().refresh();

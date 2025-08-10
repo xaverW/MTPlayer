@@ -17,11 +17,14 @@
 package de.p2tools.mtplayer.controller.data.bookmark;
 
 import de.p2tools.p2lib.configfile.config.Config;
+import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_pDateProp;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.date.P2DateProperty;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -29,6 +32,7 @@ import java.util.ArrayList;
 
 public class BookmarkDataProps extends P2DataSample<BookmarkData> {
 
+    private final BooleanProperty audio = new SimpleBooleanProperty(false); // dann ist es ein Bookmark aus AUDIO
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
@@ -55,6 +59,7 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
+        list.add(new Config_boolProp("audio", audio));
         list.add(new Config_stringProp("channel", channel));
         list.add(new Config_stringProp("theme", theme));
         list.add(new Config_stringProp("title", title));
@@ -62,6 +67,18 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
         list.add(new Config_stringProp("info", info));
         list.add(new Config_pDateProp("date", date));
         return list.toArray(new Config[]{});
+    }
+
+    public boolean isAudio() {
+        return audio.get();
+    }
+
+    public void setAudio(boolean audio) {
+        this.audio.set(audio);
+    }
+
+    public BooleanProperty audioProperty() {
+        return audio;
     }
 
     public String getChannel() {

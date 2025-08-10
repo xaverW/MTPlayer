@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -51,6 +50,7 @@ public class BookmarkFactory {
             ProgData.getInstance().bookmarkList.clearList();
             FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS_XML);
             ProgData.getInstance().filmList.forEach(film -> film.setBookmark(false));
+            ProgData.getInstance().audioList.forEach(film -> film.setBookmark(false));
 
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BOOKMARK_CHANGED);
         }
@@ -167,18 +167,17 @@ public class BookmarkFactory {
         });
 
         ProgData.getInstance().bookmarkList.removeUrlHash(hash);
-
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BOOKMARK_CHANGED);
     }
 
-    public static void addBookmark(FilmDataMTP film) {
+    public static void addBookmark(boolean audio, FilmDataMTP film) {
         // Button in der Tabelle / Kontextmenü Tabelle
         ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>(1);
         filmArrayList.add(film);
-        addBookmarkList(filmArrayList);
+        addBookmarkList(audio, filmArrayList);
     }
 
-    public static void addBookmarkList(ArrayList<FilmDataMTP> filmArrayList) {
+    public static void addBookmarkList(boolean audio, ArrayList<FilmDataMTP> filmArrayList) {
         // Button Tabelle oder Menü
         if (filmArrayList == null || filmArrayList.isEmpty()) {
             return;
@@ -195,7 +194,7 @@ public class BookmarkFactory {
                 continue;
             }
 
-            BookmarkData bookmarkData = new BookmarkData(film);
+            BookmarkData bookmarkData = new BookmarkData(audio, film);
             ProgData.getInstance().bookmarkList.addToThisList(bookmarkData);
         }
 
@@ -205,25 +204,30 @@ public class BookmarkFactory {
 
     public static void markBookmarks() {
         // beim Programmstart die Filme markieren
-        // todo audio
         if (ProgData.getInstance().bookmarkList.isEmpty()) {
             return;
         }
 
-        FilmListMTP filmlist = ProgData.getInstance().filmList;
         BookmarkList bookmarkList = ProgData.getInstance().bookmarkList;
 
         HashMap<String, BookmarkData> hash = new HashMap<>();
         bookmarkList.forEach(b -> hash.put(b.getUrl(), b));
 
-        P2Duration.counterStart("markBookmarks2");
-        filmlist.forEach(film -> {
+        P2Duration.counterStart("markBookmarks");
+        ProgData.getInstance().filmList.forEach(film -> {
             BookmarkData bookmarkData = hash.get(film.getUrlHistory());
             if (bookmarkData != null) {
                 film.setBookmark(true);
                 bookmarkData.setFilmData(film);
             }
         });
-        P2Duration.counterStop("markBookmarks2");
+        ProgData.getInstance().audioList.forEach(film -> {
+            BookmarkData bookmarkData = hash.get(film.getUrlHistory());
+            if (bookmarkData != null) {
+                film.setBookmark(true);
+                bookmarkData.setFilmData(film);
+            }
+        });
+        P2Duration.counterStop("markBookmarks");
     }
 }

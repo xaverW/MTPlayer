@@ -28,8 +28,9 @@ public class BookmarkData extends BookmarkDataProps {
     public BookmarkData() {
     }
 
-    public BookmarkData(FilmDataMTP filmDataMTP) {
+    public BookmarkData(boolean audio, FilmDataMTP filmDataMTP) {
         // beim Neuanlegen eines Bookmarks
+        setAudio(audio);
         setChannel(filmDataMTP.getChannel());
         setTheme(filmDataMTP.getTheme());
         setTitle(filmDataMTP.getTitle());

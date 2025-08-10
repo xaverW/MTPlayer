@@ -107,7 +107,7 @@ public class FilmMenu {
                 "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_DIALOG.getImageView());
 
         btBookmark.setOnAction(a -> {
-            BookmarkFactory.addBookmarkList(progData.filmGuiController.getSelList(true));
+            BookmarkFactory.addBookmarkList(false, progData.filmGuiController.getSelList(true));
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
             ;
@@ -259,7 +259,7 @@ public class FilmMenu {
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
         final MenuItem miBookmarkAdd = new MenuItem("Neue Bookmarks anlegen");
-        miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmarkList(progData.filmGuiController.getSelList(true)));
+        miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmarkList(false, progData.filmGuiController.getSelList(true)));
 
         final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
         miBookmarkDel.setOnAction(a -> BookmarkFactory.removeBookmarkList(progData.filmGuiController.getSelList(true)));

@@ -184,6 +184,22 @@ public class MTPlayerController extends StackPane {
     private void initButton() {
         ProgConfig.FAST_FILM_SEARCH_ON.addListener((u, o, n) -> setButtonStyle());
         ProgConfig.FAST_AUDIO_SEARCH_ON.addListener((u, o, n) -> setButtonStyle());
+        ProgConfig.SYSTEM_USE_AUDIOLIST.addListener((u, o, n) -> {
+            // wenn Audio ein, dann Film
+            fastFilterAudio.setManaged(ProgConfig.SYSTEM_USE_AUDIOLIST.get());
+            if (TAB_AUDIO_ON.get()) {
+                selPanelFilm();
+            } else {
+                setButtonStyle();
+            }
+        });
+        ProgConfig.SYSTEM_USE_LIVE.addListener((u, o, n) -> {
+            // wenn Audio ein, dann Film
+            if (TAB_LIVE_ON.get()) {
+                selPanelFilm();
+            }
+        });
+
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
         btnFilm.setOnAction(e -> selPanelFilm());
         btnFilm.setMaxWidth(Double.MAX_VALUE);
@@ -364,7 +380,8 @@ public class MTPlayerController extends StackPane {
             btnAbo.getStyleClass().add("btnTabTop");
         }
 
-        if (ProgConfig.FAST_FILM_SEARCH_ON.get() || ProgConfig.FAST_AUDIO_SEARCH_ON.get()) {
+        if (ProgConfig.FAST_FILM_SEARCH_ON.get() ||
+                ProgConfig.FAST_AUDIO_SEARCH_ON.get() && ProgConfig.SYSTEM_USE_AUDIOLIST.get()) {
             btnFilm.getStyleClass().add("btnTabTopS");
             btnAudio.getStyleClass().add("btnTabTopS");
             btnLive.getStyleClass().add("btnTabTopS");

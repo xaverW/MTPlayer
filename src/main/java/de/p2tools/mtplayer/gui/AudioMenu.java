@@ -107,7 +107,7 @@ public class AudioMenu {
                 "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_DIALOG.getImageView());
 
         btBookmark.setOnAction(a -> {
-            BookmarkFactory.addBookmarkList(progData.audioGuiController.getSelList(true));
+            BookmarkFactory.addBookmarkList(true, progData.audioGuiController.getSelList(true));
             progData.audioGuiController.tableView.refresh();
             progData.audioGuiController.tableView.requestFocus();
             ;
@@ -259,7 +259,7 @@ public class AudioMenu {
         // Bookmarks
         Menu submenuBookmark = new Menu("Bookmarks");
         final MenuItem miBookmarkAdd = new MenuItem("Neue Bookmarks anlegen");
-        miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmarkList(progData.audioGuiController.getSelList(true)));
+        miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmarkList(true, progData.audioGuiController.getSelList(true)));
 
         final MenuItem miBookmarkDel = new MenuItem("Bookmarks löschen");
         miBookmarkDel.setOnAction(a -> BookmarkFactory.removeBookmarkList(progData.audioGuiController.getSelList(true)));

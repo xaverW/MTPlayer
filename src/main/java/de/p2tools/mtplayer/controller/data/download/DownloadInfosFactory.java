@@ -276,7 +276,7 @@ public class DownloadInfosFactory {
     }
 
     public static synchronized String getTrayInfo() {
-        if (progData.downloadList.size() == 0) {
+        if (progData.downloadList.isEmpty()) {
             // dann gibts keine :)
             return "keine Downloads";
         }
@@ -311,7 +311,7 @@ public class DownloadInfosFactory {
     private static String getInfoText() {
         String text1 = "Downloads: " + progData.downloadList.size();
 
-        if (progData.downloadList.size() > 0) {
+        if (!progData.downloadList.isEmpty()) {
             String txt;
             txt = ", (";
 

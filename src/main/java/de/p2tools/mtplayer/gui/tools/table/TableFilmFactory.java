@@ -196,7 +196,7 @@ public class TableFilmFactory {
                     if (film.isBookmark()) {
                         BookmarkFactory.removeBookmark(film);
                     } else {
-                        BookmarkFactory.addBookmark(film);
+                        BookmarkFactory.addBookmark(false, film);
                     }
 
                     getTableView().refresh();
