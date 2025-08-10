@@ -33,6 +33,7 @@ import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
+import de.p2tools.mtplayer.controller.filter.SelectedFilterList;
 import de.p2tools.mtplayer.controller.filter.StringFilter;
 import de.p2tools.mtplayer.controller.filter.TextFilterList;
 import de.p2tools.mtplayer.controller.filter.audio.AudioFilterRunner;
@@ -101,6 +102,8 @@ public class ProgData {
     public TextFilterList textFilterListFilm; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
     public TextFilterList textFilterListAudio; // ist die eine CBO mit den gespeicherten Textfiltern (Thema, Titel, ..)
     public StringFilter stringFilterLists; // sind die Text-Filter in den CBO's aller Filter
+
+    public SelectedFilterList selectedFilterList = new SelectedFilterList(); // ist nur für das Update, damit die gespeicherten nicht verloren gehen!!
 
     public LiveFilmFilterWorker liveFilmFilterWorker; // Live
     public FilmFilterRunner filmFilterRunner; // Filme

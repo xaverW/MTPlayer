@@ -49,15 +49,21 @@ public class FilterWorker {
 
     public FilterWorker(boolean audio) {
         this.audio = audio;
-        actFilterSettings = new FilmFilter("ActFilterSettings" + (audio ? "Audio" : "Film"), audio, SELECTED_FILTER_NAME);
-        storedFilterSettings = new FilmFilter("StoredFilterSettings" + (audio ? "Audio" : "Film"), audio, STORED_FILTER_NAME);
-        storedSmallFilterSettings = new FilmFilter("StoredSmallFilterSettings" + (audio ? "Audio" : "Film"), audio, STORED_SMALL_FILTER_NAME);
+        actFilterSettings = new FilmFilter("actFilterSettings" + (audio ? "Audio" : "Film"), audio, SELECTED_FILTER_NAME);
+        storedFilterSettings = new FilmFilter("storedFilterSettings" + (audio ? "Audio" : "Film"), audio, STORED_FILTER_NAME);
+        storedSmallFilterSettings = new FilmFilter("storedSmallFilterSettings" + (audio ? "Audio" : "Film"), audio, STORED_SMALL_FILTER_NAME);
 
-        filmFilterList = new FilmFilterList("FilmFilterList" + (audio ? "Audio" : "Film"));
-        backwardFilterList = new FilmFilterList("FilmFilterListBackward" + (audio ? "Audio" : "Film"));
-        forwardFilterList = new FilmFilterList("FilmFilterListForward" + (audio ? "Audio" : "Film"));
+        if (audio) {
+            filmFilterList = new FilmFilterList("filmFilterList" + "Audio");
+            backwardFilterList = new FilmFilterList("filmFilterListBackward" + "Audio");
+            forwardFilterList = new FilmFilterList("filmFilterListForward" + "Audio");
+        } else {
+            filmFilterList = new FilmFilterList("selectedFilterList:FilmFilterList" + "Film");
+            backwardFilterList = new FilmFilterList("filmFilterListBackward" + "Film");
+            forwardFilterList = new FilmFilterList("filmFilterListForward" + "Film");
+        }
 
-        fastFilter = new FastFilter("FastFilter" + (audio ? "Audio" : "Film"), audio);
+        fastFilter = new FastFilter("fastFilter" + (audio ? "Audio" : "Film"), audio);
 
         getActFilterSettings().channelProperty().addListener(l -> {
             ThemeListFactory.createThemeList(audio, ProgData.getInstance(), getActFilterSettings().channelProperty().getValueSafe());

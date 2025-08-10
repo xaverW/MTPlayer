@@ -23,7 +23,7 @@ import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
-public final class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2DataList<FilmFilter> {
+public class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2DataList<FilmFilter> {
     public String TAG;
 
     public FilmFilterList(String tag) {
