@@ -79,15 +79,17 @@ public class ProgTipOfDayFactory {
         pToolTipList.add(pToolTip);
 
         text = START;
-        text += "Live-Suche in den ARD/ZDF\n" +
-                "Mediatheken:\n\n" +
+        text += "Live-Suche in den\n" +
+                "ARD/ZDF Mediatheken:\n\n" +
                 "Ist die Live-Suche eingeschaltet,\n" +
                 "kann damit in den Mediatheken\n" +
                 "von ARD und ZDF gesucht werden.\n" +
                 "Es ist auch möglich, mit der URL\n" +
                 "einer Filmseite den Film zu suchen.\n" +
                 "Die Filme können dann ganz normal\n" +
-                "angesehen oder gespeichert werden.";
+                "angesehen oder gespeichert werden.\n" +
+                "In den Einstellungen kann die \n" +
+                "Live-Suche ausgeblendet werden.";
         image = "/de/p2tools/mtplayer/res/tooltips/Live_Suche.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
@@ -173,6 +175,16 @@ public class ProgTipOfDayFactory {
 
         text = START;
         text += "In den Einstellungen des Abos\n" +
+                "kann auch vorgeben werden,\n" +
+                "ob ein Beitrag in der\n" +
+                "Filmliste/Audioliste oder\n" +
+                "beiden gesucht werden soll.";
+        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Quelle.png";
+        pToolTip = new P2TipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
+        text += "In den Einstellungen des Abos\n" +
                 "kann auch die Startzeit\n" +
                 "der Downloads aus diesem\n" +
                 "Abo vorgegeben werden.\n\n" +
@@ -202,7 +214,8 @@ public class ProgTipOfDayFactory {
                 "wichtig sind.\n\n" +
                 "Das untere Menü ist immer\n" +
                 "für den jeweils angezeigten\n" +
-                "Tab (Filme, Live, Downloads, Abos).";
+                "Tab (Filme, Audios,\n" +
+                "Live, Downloads, Abos).";
         image = "/de/p2tools/mtplayer/res/tooltips/Menue.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
@@ -283,17 +296,18 @@ public class ProgTipOfDayFactory {
 
         text = START;
         text += "Einstellungen zum Filtern\n" +
-                "im Tab Filme können hier\n" +
-                "erreicht werden.";
+                "im Tab Filme/Audios können\n" +
+                "hier erreicht werden.";
         image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_1.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
         text += "In den Filtereinstellungen bei\n" +
-                "den Filmen können Filter ein- und\n" +
-                "ausgeschaltet werden. Beim Suchen werden\n" +
-                "nur die eingeschalteten Filter\n" +
+                "den Filmen/Audios können Filter\n" +
+                "ein- und ausgeschaltet werden.\n" +
+                "Beim Suchen werden nur\n" +
+                "die eingeschalteten Filter\n" +
                 "verwendet. Das Suchen ist schneller\n" +
                 "wenn nicht alle Filter eingeschaltet sind.";
         image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_2.png";
@@ -302,14 +316,25 @@ public class ProgTipOfDayFactory {
 
         text = START;
         text += "In den Filtereinstellungen bei\n" +
-                "den Filmen kann eine Wartezeit\n" +
-                "vorgegeben werden.\n\n" +
+                "den Filmen/Audios kann eine\n" +
+                "Wartezeit vorgegeben werden.\n\n" +
                 "Diese wird dann bei der Suche\n" +
                 "in den Textfeldern abgewartet,\n" +
                 "bis die Suche beginnt.\n\n" +
                 "Es wird dann nicht bei jedem\n" +
                 "Buchstaben die Suche gestartet.";
         image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_3.png";
+        pToolTip = new P2TipOfDay(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
+        text += "In den Filmen/Audios kann ein\n" +
+                "einfacher Filter über das\n" +
+                "Menü eingestellt werden. Er\n" +
+                "enthält nur das nötigste und\n" +
+                "ist dadurch etwas leichter\n" +
+                "zu bedienen.";
+        image = "/de/p2tools/mtplayer/res/tooltips/EinfacherFilter.png";
         pToolTip = new P2TipOfDay(text, image);
         pToolTipList.add(pToolTip);
     }

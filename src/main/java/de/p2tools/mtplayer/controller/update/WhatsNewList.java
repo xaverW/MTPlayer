@@ -39,13 +39,7 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
     }
 
     private void addWhatsNew() {
-        WhatsNewInfo whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 4, 7),
-                "",
-                "Live-Suche ZDF",
-                "Die Live-Suche für das ZDF wurde an die geänderte Mediathek angepasst.", 50);
-        add(whatsNewInfo);
-
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 4, 28),
+        WhatsNewInfo whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 4, 28),
                 "/de/p2tools/mtplayer/res/whatsnew/whatsNew_bookmark.png",
 
                 "Bookmarks",
@@ -63,6 +57,19 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "angezeigt werden. Er enthält nur das nötigste und ist " +
                         "übersichtlicher. Umschalten lässt sich das " +
                         "im Film-Menü->Einfacher Filter.", 100);
+        add(whatsNewInfo);
+
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 8, 25),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_audiolist.png",
+
+                "Audiothek",
+                "Jetzt werden auch die Beiträge der ARD-Audiothek " +
+                        "angezeigt. Die Beiträge können genauso wie die Filme " +
+                        "abgespielt und aufgezeichnet werden. Auch Abos lassen sich " +
+                        "anlegen.\n" +
+                        "Wer die Audiothek nicht verwenden will, kann sie in den Einstellungen " +
+                        "abschalten.\n" +
+                        "Wenns Vorschläge dazu gibt, gerne per Mail oder im Forum.", 140);
         add(whatsNewInfo);
     }
 }
