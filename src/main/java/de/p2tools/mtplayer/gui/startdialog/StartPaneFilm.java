@@ -68,8 +68,8 @@ public class StartPaneFilm {
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
-        Label lbl = new Label("Die Filmliste enthält inzwischen ~ 800_000 Filme. Davon sind etwa " +
-                "150_000 doppelt (z.B. ARD und BR). Es ist also eine gute Idee, die doppelten nicht zu laden " +
+        Label lbl = new Label("Die Filmliste enthält inzwischen ~ 700_000 Filme. Davon sind auch " +
+                "einige doppelt (z.B. ARD und BR). Es ist also eine gute Idee, die doppelten nicht zu laden " +
                 "und eventuell auch alte Filme nicht mehr zu laden. Auf älteren Rechnern ist " +
                 "die Suche dann schneller.");
         lbl.setWrapText(true);
@@ -89,7 +89,6 @@ public class StartPaneFilm {
 
         int row = 0;
         final P2ToggleSwitch tglRemove = new P2ToggleSwitch("Doppelte Filme beim Laden der Filmliste ausschließen");
-        ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE.setValue(Boolean.TRUE); // beim ersten Start wird angelegt
         tglRemove.setSelected(ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE.getValue());
         tglRemove.selectedProperty().addListener((u, o, n) -> ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE.setValue(tglRemove.isSelected()));
         gridPane.add(tglRemove, 0, row, 3, 1);

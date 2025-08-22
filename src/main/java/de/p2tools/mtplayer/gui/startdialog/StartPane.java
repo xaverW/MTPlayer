@@ -47,8 +47,8 @@ public class StartPane {
                 "aktualisiert." +
 
                 P2LibConst.LINE_SEPARATORx2 +
-                "2) Die Ansicht der Filme, Downloads" + P2LibConst.LINE_SEPARATOR +
-                "oder Abos wird hier umgeschaltet." +
+                "2) Die Ansicht der Filme, Audios, Live-Suche," + P2LibConst.LINE_SEPARATOR +
+                "Downloads oder Abos wird hier umgeschaltet." +
 
                 P2LibConst.LINE_SEPARATORx2 +
                 "3) Hier befinden sich" + P2LibConst.LINE_SEPARATOR +
@@ -66,8 +66,9 @@ public class StartPane {
                 P2LibConst.LINE_SEPARATORx2 +
                 "6) Hier lassen sich einzelne Filme" + P2LibConst.LINE_SEPARATOR +
                 "vormerken, die Vormerkungen" + P2LibConst.LINE_SEPARATOR +
-                "wieder löschen und zuletzt werden" + P2LibConst.LINE_SEPARATOR +
-                "alle vorgemerkte Filme angezeigt.");
+                "wieder löschen, nur diese Anzeigen" + P2LibConst.LINE_SEPARATOR +
+                "und zuletzt öffnet sich ein Dialog" + P2LibConst.LINE_SEPARATOR +
+                "mit den markierten Filmen.");
 
         hBox.getChildren().add(text);
 
@@ -107,11 +108,7 @@ public class StartPane {
 
                         P2LibConst.LINE_SEPARATORx2 +
                         "5) Damit kann eine vereinfachte" + P2LibConst.LINE_SEPARATOR +
-                        "Suche ausgewählt werden." +
-
-                        P2LibConst.LINE_SEPARATORx2 +
-                        "6) Die Live-Suche kann " + P2LibConst.LINE_SEPARATOR +
-                        "damit ein- und ausgeblendet werden..");
+                        "Suche ausgewählt werden.");
 
         hBox.getChildren().add(text);
 

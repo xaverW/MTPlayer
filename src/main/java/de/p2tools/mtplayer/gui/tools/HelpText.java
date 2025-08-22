@@ -820,14 +820,11 @@ public class HelpText {
                     "\n";
 
     public static final String LOAD_FILMLIST_ONLY_MARK_DOUBLE =
-            "In der Filmliste sind ~150.000 Filme doppelt enthalten (z.B. bei ARD und BR)." +
+            "In der Filmliste sind einige Filme doppelt enthalten (z.B. bei ARD und BR)." +
                     "\n\n" +
                     "Doppelte können bereits beim Laden der Filmliste ausgefiltert werden. Da die Filmliste " +
                     "inzwischen sehr lang ist, wäre das eine " +
                     "sehr gute Entscheidung. In den Einstellungen kann das auch wieder geändert werden." +
-//                    "\n\n" +
-//                    "Sie können die doppelten Filme aber auch im Programm mit einem Filter " +
-//                    "oder mit der Blacklist ausblenden." +
                     "\n";
 
     public static final String LOAD_FILMLIST_MARK_DOUBLE =
