@@ -59,7 +59,7 @@ public class AboTableContextMenu {
         final MenuItem miChange = new MenuItem("Abos ändern");
         miChange.setOnAction(a -> AboListFactory.editAbo());
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
-        miNew.setOnAction(a -> AboListFactory.addNewAbo("Neu", "", "", ""));
+        miNew.setOnAction(a -> AboListFactory.addNewAbo(AboData.ABO_FILM_AUDIO, "Neu", "", "", ""));
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> progData.aboList.undoAbos());
@@ -100,16 +100,18 @@ public class AboTableContextMenu {
     }
 
     private Menu getSubMenuFilter(AboData abo) {
-        final MenuItem miAboAddFilter = new MenuItem("Neues Abo aus dem Film-Filter erstellen");
-        miAboAddFilter.setOnAction(a -> AboListFactory.addNewAboFromFilterButton());
+        final MenuItem miAboAddFilterFilm = new MenuItem("Neues Abo aus dem Film-Filter erstellen");
+        miAboAddFilterFilm.setOnAction(a -> AboListFactory.addNewAboFromFilterButton(false));
+        final MenuItem miAboAddFilterAudio = new MenuItem("Neues Abo aus dem Audio-Filter erstellen");
+        miAboAddFilterAudio.setOnAction(a -> AboListFactory.addNewAboFromFilterButton(true));
         final MenuItem miAboToFilter = new MenuItem("Filmfilter aus dem Abo setzen");
         miAboToFilter.setOnAction(a -> AboListFactory.setFilmFilterFromAbo());
         final MenuItem miFilterToAbo = new MenuItem("Abo aus dem Filmfilter setzen");
         miFilterToAbo.setOnAction(a -> AboListFactory.changeAboFromFilterButton());
 
-        Menu mFilter = new Menu("Filmfilter - Abo");
+        Menu mFilter = new Menu("Filter - Abo");
         mFilter.setDisable(abo == null);
-        mFilter.getItems().addAll(miAboAddFilter, miAboToFilter, miFilterToAbo);
+        mFilter.getItems().addAll(miAboAddFilterFilm, miAboAddFilterAudio, miAboToFilter, miFilterToAbo);
         return mFilter;
     }
 }

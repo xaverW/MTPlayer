@@ -510,8 +510,8 @@ public class HelpText {
 
     public static final String ABO_QUELLE =
             "Hier kann ausgewählt werden, in welcher Liste nach Beiträgen " +
-                    "gesucht werden soll.\n" +
-                    "Filmliste - Audioliste - in beiden" +
+                    "gesucht werden soll:\n" +
+                    "Filmliste - Audioliste - oder in beiden" +
                     "\n";
 
     public static final String ABO_PATH =

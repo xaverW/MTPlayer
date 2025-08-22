@@ -129,7 +129,7 @@ public class AudioFilterControllerProfiles extends VBox {
         miNew.setOnAction(e -> newFilter());
 
         final MenuItem miAbo = new MenuItem("Aus den Filtereinstellungen ein Abo erstellen");
-        miAbo.setOnAction(a -> AboListFactory.addNewAboFromFilterButton());
+        miAbo.setOnAction(a -> AboListFactory.addNewAboFromFilterButton(true));
         miAbo.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
         final MenuItem miResort = new MenuItem("Filterprofile sortieren");

@@ -129,7 +129,7 @@ public class AudioTableContextMenu {
     private Menu addAbo(FilmDataMTP film) {
         // todo audio
         Menu submenuAbo = new Menu("Abo");
-        final MenuItem miAboAddFilter = new MenuItem("aus dem Filter ein Abo erstellen");
+        final MenuItem miAboAddFilter = new MenuItem("Aus dem Filter ein Abo erstellen");
         final MenuItem miAboAddChannelTheme = new MenuItem("Abo mit Sender und Thema anlegen");
         final MenuItem miAboAddChannelThemeTitle = new MenuItem("Abo mit Sender und Thema und Titel anlegen");
         final MenuItem miAboChange = new MenuItem("Abo ändern");
@@ -143,16 +143,16 @@ public class AudioTableContextMenu {
 
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
-            AboListFactory.addNewAboFromFilterButton();
+            AboListFactory.addNewAboFromFilterButton(true);
         });
         AboData aboData = film == null ? null : AboFactory.findAbo(true, film);
         if (aboData == null) {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen
             miAboAddChannelTheme.setOnAction(a ->
-                    AboListFactory.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), ""));
+                    AboListFactory.addNewAbo(AboData.ABO_AUDIO, film.getTheme(), film.getChannel(), film.getTheme(), ""));
             miAboAddChannelThemeTitle.setOnAction(a ->
-                    AboListFactory.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
+                    AboListFactory.addNewAbo(AboData.ABO_AUDIO, film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
             //Abo löschen/ändern
             miAboChange.setDisable(true);
             miAboDel.setDisable(true);

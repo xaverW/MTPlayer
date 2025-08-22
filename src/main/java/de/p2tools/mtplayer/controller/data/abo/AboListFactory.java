@@ -38,7 +38,7 @@ public class AboListFactory {
     private AboListFactory() {
     }
 
-    public static void addNewAbo(String aboName, String filmChannel, String filmTheme, String filmTitle) {
+    public static void addNewAbo(int audio, String aboName, String filmChannel, String filmTheme, String filmTitle) {
         // Menü: abo anlegen
         int minDuration, maxDuration;
         try {
@@ -54,6 +54,7 @@ public class AboListFactory {
         String namePath = DownloadFactory.replaceFileNameWithReplaceList(aboName, false /* nur ein Ordner */);
 
         final AboData abo = new AboData(ProgData.getInstance(),
+                audio,
                 namePath /* name */,
                 filmChannel,
                 filmTheme,
@@ -68,9 +69,14 @@ public class AboListFactory {
         new AboAddDialogController(ProgData.getInstance(), abo);
     }
 
-    public static void addNewAboFromFilterButton() {
+    public static void addNewAboFromFilterButton(boolean audio) {
         // aus Menü/TableContextMenü
-        FilmFilter filmFilter = ProgData.getInstance().filterWorkerFilm.getActFilterSettings();
+        FilmFilter filmFilter;
+        if (audio) {
+            filmFilter = ProgData.getInstance().filterWorkerAudio.getActFilterSettings();
+        } else {
+            filmFilter = ProgData.getInstance().filterWorkerFilm.getActFilterSettings();
+        }
         String channel = filmFilter.isChannelVis() ? filmFilter.getChannel() : "";
 
         boolean themeIsExact = filmFilter.isThemeIsExact();
@@ -109,6 +115,7 @@ public class AboListFactory {
         searchTitle = DownloadFactory.replaceFileNameWithReplaceList(searchTitle, false /* nur ein Ordner */);
 
         final AboData abo = new AboData(ProgData.getInstance(),
+                audio ? AboData.ABO_AUDIO : AboData.ABO_FILM,
                 searchTitle /* name */,
                 channel,
                 theme,

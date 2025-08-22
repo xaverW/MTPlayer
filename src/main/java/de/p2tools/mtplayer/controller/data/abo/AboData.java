@@ -42,6 +42,7 @@ public class AboData extends AboDataProps {
     }
 
     public AboData(ProgData progData,
+                   int audio,
                    String name,
                    String channel,
                    String theme,
@@ -60,6 +61,7 @@ public class AboData extends AboDataProps {
         initFilter();
 
         setName(name);
+        setList(audio);
 
         setChannel(channel);
         setTheme(theme);

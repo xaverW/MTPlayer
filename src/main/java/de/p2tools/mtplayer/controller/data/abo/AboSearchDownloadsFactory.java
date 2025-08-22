@@ -69,8 +69,8 @@ public class AboSearchDownloadsFactory {
         // workOnFilmListLoadFinished und "Abo suchen" ist ein oder AUTOMODE
         ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Downloads suchen:", -1.0, false);
 
-        // todo audio
-        if (ProgData.FILMLIST_IS_DOWNLOADING.get()) {
+        if (ProgData.FILMLIST_IS_DOWNLOADING.get() ||
+                ProgData.AUDIOLIST_IS_DOWNLOADING.get()) {
             // wird danach eh gemacht
             alreadyRunning.set(false);
             ProgData.busy.busyOffFx();
@@ -119,7 +119,7 @@ public class AboSearchDownloadsFactory {
 
 
         // mit den bereits enthaltenen Download-URLs füllen
-        Set<String> syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(new HashSet<>(500)); //todo für 90% übertrieben, für 10% immer noch zu wenig???
+        Set<String> syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(new HashSet<>(500)); // für 90% übertrieben, für 10% immer noch zu wenig???
         downloadList.forEach((download) -> syncDownloadsAlreadyInTheListHash.add(download.getUrl()));
 
         final int sum = ProgData.getInstance().audioList.size() + ProgData.getInstance().filmList.size();

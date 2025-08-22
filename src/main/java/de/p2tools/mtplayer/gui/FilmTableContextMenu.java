@@ -142,16 +142,16 @@ public class FilmTableContextMenu {
 
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
-            AboListFactory.addNewAboFromFilterButton();
+            AboListFactory.addNewAboFromFilterButton(false);
         });
         AboData aboData = film == null ? null : AboFactory.findAbo(false, film);
         if (aboData == null) {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen
             miAboAddChannelTheme.setOnAction(a ->
-                    AboListFactory.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), ""));
+                    AboListFactory.addNewAbo(AboData.ABO_FILM, film.getTheme(), film.getChannel(), film.getTheme(), ""));
             miAboAddChannelThemeTitle.setOnAction(a ->
-                    AboListFactory.addNewAbo(film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
+                    AboListFactory.addNewAbo(AboData.ABO_FILM, film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
             //Abo löschen/ändern
             miAboChange.setDisable(true);
             miAboDel.setDisable(true);
