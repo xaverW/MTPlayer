@@ -156,10 +156,10 @@ public class MTPlayerController extends StackPane {
         btnFilmlist.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
                 LoadFilmFactory.loadFilmListFromWeb(true);
+                LoadAudioFactory.loadAudioListFromWeb();
 
             } else if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
                 progData.checkForNewFilmlist.check();
-                LoadAudioFactory.loadAudioListFromWeb();
             }
         });
         progData.checkForNewFilmlist.foundNewListProperty().addListener((u, o, n) -> {
