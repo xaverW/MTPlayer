@@ -17,17 +17,13 @@
 package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
@@ -71,11 +67,7 @@ public class StartPaneColorMode {
         vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox);
 
         tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME_START);
-        final Button btnHelpTheme = P2Button.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
-                HelpText.DARK_THEME);
         tglBlackWhiteIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACK_WHITE_ICON_START);
-        final Button btnHelpIcon = P2Button.helpButton(stage, "Erscheinungsbild der Programmoberfläche",
-                HelpText.BLACK_WHITE_ICON);
 
         ProgConfig.SYSTEM_DARK_THEME_START.addListener((u, o, n) -> {
             setHBox();
@@ -84,22 +76,9 @@ public class StartPaneColorMode {
             setHBox();
         });
 
-        int row = 0;
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-
-        gridPane.add(tglDarkTheme, 0, row);
-        gridPane.add(btnHelpTheme, 1, row);
-        GridPane.setHalignment(btnHelpTheme, HPos.RIGHT);
-
-        gridPane.add(tglBlackWhiteIcon, 0, ++row);
-        gridPane.add(btnHelpIcon, 1, row);
-        GridPane.setHalignment(btnHelpIcon, HPos.RIGHT);
-
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
-        vBox.getChildren().add(gridPane);
+        VBox vTgl = new VBox(P2LibConst.SPACING_VBOX);
+        vTgl.getChildren().addAll(tglDarkTheme, tglBlackWhiteIcon);
+        vBox.getChildren().add(vTgl);
 
         final GridPane gridPaneGui = new GridPane();
         gridPaneGui.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
