@@ -20,7 +20,9 @@ package de.p2tools.mtplayer.controller.load;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
+import de.p2tools.p2lib.mediathek.audiolistload.P2LoadAudioFactory;
 import de.p2tools.p2lib.mediathek.audiolistload.P2LoadAudioList;
+import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 
 public class LoadAudioFactory {
 
@@ -36,20 +38,26 @@ public class LoadAudioFactory {
 
         ProgData.AUDIOLIST_IS_DOWNLOADING.set(true);
         P2LoadAudioList p2LoadAudioList = new P2LoadAudioList(ProgData.getInstance().pEventHandler, new FilmListMTP());
-        LoadFactory.initLoadFactoryConst();
         p2LoadAudioList.loadAudioListAtProgStart();
     }
 
-    public static void loadAudioListFromWeb() {
+    public static void loadAudioListFromWeb(boolean alwaysNew, boolean init) {
         // aus dem Menü oder Button in den Einstellungen immer neu aus dem Web laden, wird immer aus dem Web geladen
         if ((!ProgConfig.SYSTEM_USE_AUDIOLIST.get())) {
             // dann will der User nicht :)
             return;
         }
 
+        if (!alwaysNew && !P2LoadAudioFactory.isNotFromToday(P2LoadConst.dateStoredAudiolist.getValueSafe())) {
+            // dann nicht immer laden und noch nicht zu alt
+            return;
+        }
+
         ProgData.AUDIOLIST_IS_DOWNLOADING.set(true);
+        if (init) {
+            LoadFactory.initLoadFactoryConst();
+        }
         P2LoadAudioList p2LoadAudioList = new P2LoadAudioList(ProgData.getInstance().pEventHandler, new FilmListMTP());
-        LoadFactory.initLoadFactoryConst();
         p2LoadAudioList.loadNewAudioListFromWeb();
     }
 }

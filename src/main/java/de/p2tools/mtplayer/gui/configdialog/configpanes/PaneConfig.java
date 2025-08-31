@@ -40,10 +40,7 @@ public class PaneConfig {
 
     private final P2ToggleSwitch tglOnlyOneInstance = new P2ToggleSwitch("Nur eine Instanz des Programms öffnen");
     private final P2ToggleSwitch tglStartMaximised = new P2ToggleSwitch("Programm immer \"Maximiert\" starten");
-    private final P2ToggleSwitch tglSmallFilm = new P2ToggleSwitch("In der Tabelle \"Film\" nur kleine Button anzeigen:");
-    private final P2ToggleSwitch tglSmallDownload = new P2ToggleSwitch("In der Tabelle \"Download\" nur kleine Button anzeigen:");
-    private final P2ToggleSwitch tglSmallAbo = new P2ToggleSwitch("In der Tabelle \"Abo\" nur kleine Button anzeigen:");
-    private final P2ToggleSwitch tglCheckStart = new P2ToggleSwitch("Einstellungen zum Speichern beim Programmstart prüfen:");
+    private final P2ToggleSwitch tglCheckStart = new P2ToggleSwitch("Einstellungen zum Speichern beim Programmstart prüfen");
     private final P2ToggleSwitch tglTipOfDay = new P2ToggleSwitch("Tip des Tages anzeigen");
     private TextField txtUserAgent;
 
@@ -56,9 +53,6 @@ public class PaneConfig {
     public void close() {
         tglOnlyOneInstance.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ONE_INSTANCE);
         tglStartMaximised.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED);
-        tglSmallFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
-        tglSmallDownload.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
-        tglSmallAbo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO);
         tglCheckStart.selectedProperty().unbindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
         tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT);
@@ -83,14 +77,7 @@ public class PaneConfig {
                 HelpText.START_MAXIMISED);
         GridPane.setHalignment(btnHelpStartMaximised, HPos.RIGHT);
 
-
-        tglSmallFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM);
-        tglSmallDownload.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD);
-        tglSmallAbo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO);
         tglCheckStart.selectedProperty().bindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
-
-        final Button btnHelpSize = P2Button.helpButton(stage, "Nur kleine Button anzeigen",
-                HelpText.SMALL_BUTTON);
 
         final Button btnHelpCheck = P2Button.helpButton(stage, "Download-Einstellungen prüfen",
                 HelpText.CHECK_SET_PROGRAM_START);
@@ -138,24 +125,15 @@ public class PaneConfig {
         gridPane.add(btnHelpStartMaximised, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
-        gridPane.add(tglSmallFilm, 0, ++row, 2, 1);
-        gridPane.add(btnHelpSize, 2, row, 1, 2);
-        gridPane.add(tglSmallDownload, 0, ++row, 2, 1);
-        gridPane.add(tglSmallAbo, 0, ++row, 2, 1);
-        gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglCheckStart, 0, ++row, 2, 1);
         gridPane.add(btnHelpCheck, 2, row);
 
-        GridPane.setHalignment(btnHelpSize, HPos.RIGHT);
-        GridPane.setValignment(btnHelpSize, VPos.TOP);
         GridPane.setHalignment(btnHelpCheck, HPos.RIGHT);
         GridPane.setValignment(btnHelpCheck, VPos.CENTER);
 
-//        gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglTipOfDay, 0, ++row, 2, 1);
         gridPane.add(btnHelpTipOfDay, 2, row);
 
-//        gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(new Label("User Agent:"), 0, ++row);
         gridPane.add(txtUserAgent, 1, row);
         gridPane.add(btnHelpUserAgent, 2, row);

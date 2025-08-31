@@ -78,7 +78,7 @@ public class Worker {
 
             //dann soll sofort eine neue Liste geladen werden
             P2Log.sysLog("Es gibt eine neue Filmliste und die soll sofort geladen werden");
-            LoadFilmFactory.loadFilmListFromWeb(false);
+            LoadFilmFactory.loadFilmListFromWeb(false, true);
         });
     }
 

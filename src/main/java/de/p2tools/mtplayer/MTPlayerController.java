@@ -20,8 +20,7 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
-import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.load.LoadFactory;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.FastFilter;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
@@ -151,12 +150,11 @@ public class MTPlayerController extends StackPane {
                 "Mit der rechten Maustaste wird immer die komplette Filmliste geladen. [" +
                 ProgConfig.SHORTCUT_LOAD_FILMLIST.getValueSafe() + "]"));
         btnFilmlist.setOnAction(e -> {
-            LoadFilmFactory.loadFilmListFromWeb(false);
+            LoadFactory.updateLists(false); // Filmliste/Audioliste aktualisieren, wenn notwendig
         });
         btnFilmlist.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                LoadFilmFactory.loadFilmListFromWeb(true);
-                LoadAudioFactory.loadAudioListFromWeb();
+                LoadFactory.updateLists(true); // Filmliste/Audioliste aktualisieren, immer alles
 
             } else if (mouseEvent.getButton().equals(MouseButton.MIDDLE)) {
                 progData.checkForNewFilmlist.check();

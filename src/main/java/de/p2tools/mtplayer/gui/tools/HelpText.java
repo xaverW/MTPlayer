@@ -805,13 +805,14 @@ public class HelpText {
                     "geladen." +
                     "\n";
 
-    public static final String LOAD_AUDIOLIST_PROGRAMSTART =
-            "Die Audioliste wird beim Programmstart automatisch geladen, " +
-                    "wenn sie noch vom Vortag ist." +
-                    "\n";
-
     public static final String LOAD_FILMLIST_PROGRAMSTART =
-            "Die Filmliste wird beim Programmstart automatisch geladen, " +
+            "Audioliste\n" +
+                    "Die Audioliste wird beim Programmstart automatisch geladen, " +
+                    "wenn sie nicht von \"heute\" ist. Sie kann auch über den " +
+                    "Button \"Filmliste\" aktualisiert werden.\n" +
+                    "\n" +
+                    "Filmliste\n" +
+                    "Die Filmliste wird beim Programmstart automatisch geladen, " +
                     "wenn sie älter als 3 Stunden ist. Sie kann auch über den " +
                     "Button \"Filmliste\" aktualisiert werden.\n" +
                     "\n" +

@@ -10,6 +10,21 @@ public class LoadFactory {
     private LoadFactory() {
     }
 
+    public static void loadProgStart() {
+        if (!ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue()) {
+            return;
+        }
+        LoadFactory.initLoadFactoryConst();
+        LoadFilmFactory.loadFilmListProgStart();
+        LoadAudioFactory.loadAudioListProgStart();
+    }
+
+    public static void updateLists(boolean alwaysNew) {
+        LoadFactory.initLoadFactoryConst();
+        LoadFilmFactory.loadFilmListFromWeb(alwaysNew, false); // Filmliste aktualisieren
+        LoadAudioFactory.loadAudioListFromWeb(alwaysNew, false); // Audioliste laden
+    }
+
     public static void initLoadFactoryConst() {
         P2LoadConst.GEO_HOME_PLACE = ProgConfig.SYSTEM_GEO_HOME_PLACE.getValue();
         P2LoadConst.SYSTEM_LOAD_NOT_SENDER = ProgConfig.SYSTEM_LOAD_NOT_SENDER.getValue();

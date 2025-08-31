@@ -134,7 +134,7 @@ public class PaneBlackList {
         btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Audioliste werden so sofort übernommen"));
         btnLoadAudio.setOnAction(event -> {
-            LoadAudioFactory.loadAudioListFromWeb();
+            LoadAudioFactory.loadAudioListFromWeb(true, true);
         });
         btnLoadAudio.setMaxWidth(Double.MAX_VALUE);
         btnLoadAudio.disableProperty().bind(ProgConfig.SYSTEM_USE_AUDIOLIST.not());
@@ -144,7 +144,7 @@ public class PaneBlackList {
         btnLoadFilm.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoadFilm.setOnAction(event -> {
-            LoadFilmFactory.loadFilmListFromWeb(true);
+            LoadFilmFactory.loadFilmListFromWeb(true, true);
         });
         btnLoadFilm.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(btnLoadFilm, Priority.ALWAYS);

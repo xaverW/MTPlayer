@@ -20,8 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
-import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.load.LoadFactory;
 import de.p2tools.mtplayer.gui.filter.film.FilmFilterDialog;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.log.P2LogMessage;
@@ -49,8 +48,7 @@ public class ProgStartAfterGui {
         //die gespeicherte Filmliste laden, vorher den FilmFilter einschalten
         ProgData.getInstance().filterWorkerFilm.getActFilterSettings().switchFilterOff(false);
         ProgData.getInstance().filterWorkerAudio.getActFilterSettings().switchFilterOff(false);
-        LoadFilmFactory.loadFilmListProgStart();
-        LoadAudioFactory.loadAudioListProgStart();
+        LoadFactory.loadProgStart(); // Filmliste/Audioliste laden
     }
 
     public static void startMsg(boolean showAll) {

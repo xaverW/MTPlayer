@@ -40,8 +40,7 @@ public class PaneFilmLoad {
 
     private final P2ToggleSwitch tglUseLive = new P2ToggleSwitch("");
     private final P2ToggleSwitch tglUseAudio = new P2ToggleSwitch("");
-    private final P2ToggleSwitch tglLoadAudio = new P2ToggleSwitch("Audioliste beim Programmstart neu laden");
-    private final P2ToggleSwitch tglLoadFilm = new P2ToggleSwitch("Filmliste beim Programmstart neu laden");
+    private final P2ToggleSwitch tglLoadFilm = new P2ToggleSwitch("Filmliste/Audioliste beim Programmstart neu laden");
     private final P2ToggleSwitch tglLoadNewList = new P2ToggleSwitch("Neue Filmlisten immer sofort laden");
     private final BooleanProperty diacriticChanged;
 
@@ -57,7 +56,6 @@ public class PaneFilmLoad {
     public void close() {
         tglUseLive.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_LIVE);
         tglUseAudio.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_AUDIOLIST);
-        tglLoadAudio.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_AUDIOLIST_ON_PROGRAMSTART);
         tglLoadFilm.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
         tglLoadNewList.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY);
     }
@@ -69,8 +67,6 @@ public class PaneFilmLoad {
 
         tglUseLive.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_LIVE);
         tglUseAudio.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_AUDIOLIST);
-        tglLoadAudio.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_AUDIOLIST_ON_PROGRAMSTART);
-        tglLoadAudio.disableProperty().bind(tglUseAudio.selectedProperty().not());
         tglLoadFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
         tglLoadNewList.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY);
 
@@ -80,9 +76,7 @@ public class PaneFilmLoad {
         final Button btnHelpUse = P2Button.helpButton(stage, "Audioliste im Programm verwenden",
                 HelpText.USE_AUDIOLIST);
 
-        final Button btnHelpLoadAudio = P2Button.helpButton(stage, "Audioliste laden",
-                HelpText.LOAD_AUDIOLIST_PROGRAMSTART);
-        final Button btnHelpLoadFilm = P2Button.helpButton(stage, "Filmliste laden",
+        final Button btnHelpLoadFilm = P2Button.helpButton(stage, "Filmliste/Audioliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
 
         final Button btnHelpNewList = P2Button.helpButton(stage, "Filmliste laden",
@@ -101,7 +95,7 @@ public class PaneFilmLoad {
         btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Audioliste werden so sofort übernommen"));
         btnLoadAudio.setOnAction(event -> {
-            LoadAudioFactory.loadAudioListFromWeb();
+            LoadAudioFactory.loadAudioListFromWeb(true, true);
         });
         btnLoadAudio.setMaxWidth(Double.MAX_VALUE);
         btnLoadAudio.disableProperty().bind(tglUseAudio.selectedProperty().not());
@@ -111,7 +105,7 @@ public class PaneFilmLoad {
         btnLoadFilm.setTooltip(new Tooltip("Eine komplette neue Filmliste laden.\n" +
                 "Geänderte Einstellungen für das Laden der Filmliste werden so sofort übernommen"));
         btnLoadFilm.setOnAction(event -> {
-            LoadFilmFactory.loadFilmListFromWeb(true);
+            LoadFilmFactory.loadFilmListFromWeb(true, true);
         });
         btnLoadFilm.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(btnLoadFilm, Priority.ALWAYS);
@@ -126,16 +120,13 @@ public class PaneFilmLoad {
         sp2.setMinHeight(0);
 
         int row = 0;
-        gridPane.add(P2Text.getTextBold("Live-Suche im Programm verwenden"), 0, row, 2, 1);
-        gridPane.add(tglUseLive, 1, row);
-        gridPane.add(btnHelpLive, 2, row);
-
-        gridPane.add(P2Text.getTextBold("ARD-Audiothek im Programm verwenden"), 0, ++row, 2, 1);
+        gridPane.add(P2Text.getTextBold("ARD-Audiothek im Programm verwenden"), 0, row, 2, 1);
         gridPane.add(tglUseAudio, 1, row);
         gridPane.add(btnHelpUse, 2, row);
 
-        gridPane.add(tglLoadAudio, 0, ++row, 2, 1);
-        gridPane.add(btnHelpLoadAudio, 2, row);
+        gridPane.add(P2Text.getTextBold("Live-Suche im Programm verwenden"), 0, ++row, 2, 1);
+        gridPane.add(tglUseLive, 1, row);
+        gridPane.add(btnHelpLive, 2, row);
 
         gridPane.add(new Label(), 0, ++row, 2, 1);
         gridPane.add(tglLoadFilm, 0, ++row, 2, 1);
