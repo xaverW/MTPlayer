@@ -37,6 +37,7 @@ public class FilmFilterPredicateFactory {
 
     public static Predicate<FilmData> getPredicate(ProgData progData, boolean audio) {
 
+        boolean small = audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER.get() : ProgConfig.FILMFILTER_SMALL_FILTER.get();
         FilmFilter filmFilter = audio ? progData.filterWorkerAudio.getActFilterSettings() :
                 progData.filterWorkerFilm.getActFilterSettings();
         FastFilter fastFilter = audio ? progData.filterWorkerAudio.getFastFilterSettings() :
@@ -66,7 +67,16 @@ public class FilmFilterPredicateFactory {
         final boolean onlyUt = filmFilter.isOnlyVis() && filmFilter.isOnlyUt();
         final boolean onlyMark = filmFilter.isOnlyVis() && filmFilter.isOnlyMark();
         final boolean onlyLive = filmFilter.isOnlyVis() && filmFilter.isOnlyLive();
-        final boolean onlyNew = filmFilter.isOnlyVis() && filmFilter.isOnlyNew();
+
+        final boolean onlyNew;
+        if (small) {
+            // ist immer angeschaltet
+            onlyNew = filmFilter.isOnlyNew();
+        } else {
+            // dann, nur wenn angeschaltet
+            onlyNew = filmFilter.isOnlyVis() && filmFilter.isOnlyNew();
+        }
+
         final boolean onlyAktHist = filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory();
 
         final boolean noAbos = filmFilter.isNotVis() && filmFilter.isNotAbo();

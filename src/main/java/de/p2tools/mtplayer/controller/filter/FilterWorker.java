@@ -197,6 +197,7 @@ public class FilterWorker {
         filmFilter.setMinMaxTimeVis(false);
         filmFilter.setMinMaxTimeInvert(false);
         filmFilter.setShowDateVis(false);
+
         filmFilter.setNotVis(false);
         filmFilter.setOnlyVis(false);
     }

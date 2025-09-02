@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
 public class FilmFilterController extends FilterController {
 
     final FilmFilterControllerTextFilter filmFilterControllerTextFilter;
+    final FilmFilterControllerOnlyNew filmFilterControllerOnlyNew;
     final FilmFilterControllerFilter filmFilterControllerFilter;
     final FilmFilterControllerClearFilter filmFilterControllerClearFilter;
 
@@ -39,6 +40,7 @@ public class FilmFilterController extends FilterController {
     public FilmFilterController(FilterDto filterDto) {
         this.filterDto = filterDto;
         filmFilterControllerTextFilter = new FilmFilterControllerTextFilter(filterDto);
+        filmFilterControllerOnlyNew = new FilmFilterControllerOnlyNew(filterDto);
         filmFilterControllerFilter = new FilmFilterControllerFilter(filterDto);
         filmFilterControllerClearFilter = new FilmFilterControllerClearFilter(filterDto);
 
@@ -104,8 +106,11 @@ public class FilmFilterController extends FilterController {
             getChildren().clear();
             final VBox vBox = getVBoxFilter();
             vBox.getChildren().addAll(filmFilterControllerTextFilter);
-            vBox.getChildren().add(P2GuiTools.getHDistance(20));
+            vBox.getChildren().add(P2GuiTools.getHDistance(10));
             vBox.getChildren().addAll(filmFilterControllerFilter);
+            vBox.getChildren().add(P2GuiTools.getHDistance(10));
+            vBox.getChildren().addAll(filmFilterControllerOnlyNew);
+
             vBox.getChildren().add(P2GuiTools.getVBoxGrower());
             vBox.getChildren().addAll(filmSmallFilterControllerFilter);
 
