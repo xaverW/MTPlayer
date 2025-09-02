@@ -38,7 +38,11 @@ public class FilmSmallFilterControllerFilter extends HBox {
         progData = ProgData.getInstance();
 
         Button btnSmall = new Button("Alle Filter anzeigen");
-        btnSmall.setOnAction(a -> ProgConfig.FILMFILTER_SMALL_FILTER.set(false));
+        if (filterDto.audio) {
+            btnSmall.setOnAction(a -> ProgConfig.AUDIOFILTER_SMALL_FILTER.set(false));
+        } else {
+            btnSmall.setOnAction(a -> ProgConfig.FILMFILTER_SMALL_FILTER.set(false));
+        }
         setSpacing(5);
 
         final Button btnClearFilter = P2ButtonClearFilterFactory.getPButtonClearFilter();

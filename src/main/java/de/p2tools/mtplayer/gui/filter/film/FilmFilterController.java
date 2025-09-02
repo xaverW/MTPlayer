@@ -46,17 +46,26 @@ public class FilmFilterController extends FilterController {
         filmFilterControllerBlacklist = new FilmFilterControllerBlacklist(filterDto);
 
         filmSmallFilterControllerFilter = new FilmSmallFilterControllerFilter(filterDto);
-        ProgConfig.FILMFILTER_SMALL_FILTER.addListener((u, o, n) -> {
-            setFilter();
-            setGui();
-        });
+        if (filterDto.audio) {
+            ProgConfig.AUDIOFILTER_SMALL_FILTER.addListener((u, o, n) -> {
+                setFilter();
+                setGui();
+            });
+
+        } else {
+            ProgConfig.FILMFILTER_SMALL_FILTER.addListener((u, o, n) -> {
+                setFilter();
+                setGui();
+            });
+        }
 
         setFilterStart();
         setGui();
     }
 
     private void setFilterStart() {
-        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+        boolean small = filterDto.audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER.get() : ProgConfig.FILMFILTER_SMALL_FILTER.get();
+        if (small) {
             // actFilterSettings sind die Einstellungen des Filters beim Beenden
             filterDto.filterWorker.getActFilterSettings()
                     .copyTo(filterDto.filterWorker.getStoredSmallFilterSettings());
@@ -70,7 +79,8 @@ public class FilmFilterController extends FilterController {
     }
 
     private void setFilter() {
-        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+        boolean small = filterDto.audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER.get() : ProgConfig.FILMFILTER_SMALL_FILTER.get();
+        if (small) {
             // dann den kleinen Filter
             filterDto.filterWorker.getActFilterSettings()
                     .copyTo(filterDto.filterWorker.getStoredFilterSettings());
@@ -89,7 +99,8 @@ public class FilmFilterController extends FilterController {
     }
 
     private void setGui() {
-        if (ProgConfig.FILMFILTER_SMALL_FILTER.get()) {
+        boolean small = filterDto.audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER.get() : ProgConfig.FILMFILTER_SMALL_FILTER.get();
+        if (small) {
             getChildren().clear();
             final VBox vBox = getVBoxFilter();
             vBox.getChildren().addAll(filmFilterControllerTextFilter);
