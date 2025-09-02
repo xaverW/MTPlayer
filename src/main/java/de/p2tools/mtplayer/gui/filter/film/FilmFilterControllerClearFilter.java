@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.filter.helper.PCboTextFilter;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -41,11 +42,13 @@ public class FilmFilterControllerClearFilter extends VBox {
     private final PCboTextFilter cboTextFilter = new PCboTextFilter(false);
 
     private final ProgData progData;
+    private final FilterDto filterDto;
 
-    public FilmFilterControllerClearFilter() {
+    public FilmFilterControllerClearFilter(FilterDto filterDto) {
         super();
+        this.filterDto = filterDto;
         progData = ProgData.getInstance();
-        progData.filmFilterControllerClearFilter = this;
+//        progData.filmFilterControllerClearFilter = this;
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addButton();
@@ -53,20 +56,20 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void addButton() {
         btnGoBack.setGraphic(ProgIcons.ICON_BUTTON_BACKWARD.getImageView());
-        btnGoBack.setOnAction(a -> progData.filterWorkerFilm.getBackwardFilmFilter().goBackward());
-        btnGoBack.disableProperty().bind(ProgData.getInstance().filterWorkerFilm.getBackwardFilterList().emptyProperty()
-                .or(ProgData.getInstance().filterWorkerFilm.getBackwardFilterList().sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
+        btnGoBack.setOnAction(a -> filterDto.filterWorker.getBackwardFilmFilter().goBackward());
+        btnGoBack.disableProperty().bind(filterDto.filterWorker.getBackwardFilterList().emptyProperty()
+                .or(filterDto.filterWorker.getBackwardFilterList().sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnGoForward.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
-        btnGoForward.setOnAction(a -> progData.filterWorkerFilm.getBackwardFilmFilter().goForward());
-        btnGoForward.disableProperty().bind(ProgData.getInstance().filterWorkerFilm.getForwardFilterList().emptyProperty());
+        btnGoForward.setOnAction(a -> filterDto.filterWorker.getBackwardFilmFilter().goForward());
+        btnGoForward.disableProperty().bind(filterDto.filterWorker.getForwardFilterList().emptyProperty());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnClearFilter.setOnAction(a -> clearFilter());
 
         btnEditFilter.setGraphic(ProgIcons.ICON_BUTTON_EDIT.getImageView());
-        btnEditFilter.setOnAction(a -> new FilmFilterEditDialog(progData));
+        btnEditFilter.setOnAction(a -> new FilmFilterEditDialog(progData, filterDto));
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 
         HBox hBox1 = new HBox(P2LibConst.DIST_BUTTON);
@@ -84,6 +87,6 @@ public class FilmFilterControllerClearFilter extends VBox {
 
     private void clearFilter() {
         P2Duration.onlyPing("Filter löschen");
-        progData.filterWorkerFilm.clearFilter();
+        filterDto.filterWorker.clearFilter();
     }
 }

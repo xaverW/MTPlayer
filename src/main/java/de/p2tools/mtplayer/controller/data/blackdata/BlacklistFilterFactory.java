@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
+import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataProps;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
@@ -112,6 +113,7 @@ public class BlacklistFilterFactory {
         final ProgData progData = ProgData.getInstance();
         final FilmListMTP filmList;
         final FilmListMTP filmListFiltered;
+        final FilterWorker filterWorker = audio ? progData.filterWorkerAudio : progData.filterWorkerFilm;
         if (audio) {
             filmList = progData.audioList;
             filmListFiltered = progData.audioListFiltered;
@@ -129,12 +131,12 @@ public class BlacklistFilterFactory {
 
             Stream<FilmDataMTP> initialStream = filmList.parallelStream();
 
-            if (progData.filterWorkerFilm.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
+            if (filterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
                 //blacklist ONLY
                 P2Log.sysLog("FilmlistBlackFilter - isBlacklistOnly");
                 initialStream = initialStream.filter(FilmDataProps::isBlackBlocked);
 
-            } else if (progData.filterWorkerFilm.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
+            } else if (filterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
                 //blacklist ON
                 P2Log.sysLog("FilmlistBlackFilter - isBlacklistOn");
                 initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());

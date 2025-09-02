@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
@@ -100,10 +99,10 @@ public class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2
         return neu;
     }
 
-    public void addNewStoredFilter(String name) {
+    public void addNewStoredFilter(FilterDto filterDto, String name) {
         // einen neuen Filter zu den gespeicherten hinzufügen
         final FilmFilter sf = new FilmFilter();
-        ProgData.getInstance().filterWorkerFilm.getActFilterSettings().copyTo(sf);
+        filterDto.filterWorker.getActFilterSettings().copyTo(sf);
         sf.setName(name.isEmpty() ? getNextName() : name);
         add(sf);
     }
@@ -145,16 +144,5 @@ public class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2
                 "Sollen alle Filterprofile gelöscht werden?")) {
             clear();
         }
-    }
-
-    public void saveStoredFilter(FilmFilter sf) {
-        // gesicherten Filter mit den aktuellen Einstellungen überschreiben
-        if (sf == null) {
-            return;
-        }
-
-        final String name = sf.getName();
-        ProgData.getInstance().filterWorkerFilm.getActFilterSettings().copyTo(sf);
-        sf.setName(name);
     }
 }

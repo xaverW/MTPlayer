@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Pos;
@@ -31,11 +32,12 @@ import javafx.scene.layout.Priority;
 
 public class FilmFilterControllerBlacklist extends HBox {
 
-    private final ProgData progData;
-
     private final P2ToggleSwitch tglBlacklist = new P2ToggleSwitch("Blacklist:");
+    private final ProgData progData;
+    private final FilterDto filterDto;
 
-    public FilmFilterControllerBlacklist() {
+    public FilmFilterControllerBlacklist(FilterDto filterDto) {
+        this.filterDto = filterDto;
         progData = ProgData.getInstance();
 
         Button btnBlack = new Button("");
@@ -54,14 +56,14 @@ public class FilmFilterControllerBlacklist extends HBox {
                 "Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt."));
 
         setTglBlacklist();
-        progData.filterWorkerFilm.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> setTglBlacklist());
+        filterDto.filterWorker.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> setTglBlacklist());
         tglBlacklist.getCheckBox().setOnAction((mouseEvent) -> {
             if (tglBlacklist.isIndeterminate()) {
-                progData.filterWorkerFilm.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+                filterDto.filterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
             } else if (tglBlacklist.isSelected()) {
-                progData.filterWorkerFilm.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+                filterDto.filterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
             } else {
-                progData.filterWorkerFilm.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+                filterDto.filterWorker.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
             }
         });
 
@@ -72,7 +74,7 @@ public class FilmFilterControllerBlacklist extends HBox {
     }
 
     private void setTglBlacklist() {
-        switch (progData.filterWorkerFilm.getActFilterSettings().blacklistOnOffProperty().getValue()) {
+        switch (filterDto.filterWorker.getActFilterSettings().blacklistOnOffProperty().getValue()) {
             case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
                 tglBlacklist.setIndeterminate(false);
                 tglBlacklist.setSelected(false);

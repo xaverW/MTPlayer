@@ -35,7 +35,6 @@ import de.p2tools.mtplayer.controller.data.utdata.UtDataList;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.mtplayer.controller.filter.StringFilter;
 import de.p2tools.mtplayer.controller.filter.TextFilterList;
-import de.p2tools.mtplayer.controller.filter.audio.AudioFilterRunner;
 import de.p2tools.mtplayer.controller.filter.film.FilmFilterRunner;
 import de.p2tools.mtplayer.controller.filter.live.LiveFilmFilterWorker;
 import de.p2tools.mtplayer.controller.load.LoadAudioListWorker;
@@ -51,8 +50,6 @@ import de.p2tools.mtplayer.gui.chart.ChartData;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
-import de.p2tools.mtplayer.gui.filter.audio.AudioFilterControllerClearFilter;
-import de.p2tools.mtplayer.gui.filter.film.FilmFilterControllerClearFilter;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.p2event.P2EventHandler;
@@ -104,7 +101,7 @@ public class ProgData {
 
     public LiveFilmFilterWorker liveFilmFilterWorker; // Live
     public FilmFilterRunner filmFilterRunner; // Filme
-    public AudioFilterRunner audioFilterRunner; // Audios
+    public FilmFilterRunner audioFilterRunner; // Audios
 
     // Gui
     public Stage primaryStage = null;
@@ -117,8 +114,8 @@ public class ProgData {
     public DownloadFilterController downloadFilterController = null;
     public AboGuiController aboGuiController = null; // Tab mit den Abos
     public AboFilterController aboFilterController = null;
-    public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
-    public AudioFilterControllerClearFilter audioFilterControllerClearFilter = null;
+    //    public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
+//    public AudioFilterControllerClearFilter audioFilterControllerClearFilter = null;
     public CheckForNewFilmlist checkForNewFilmlist;
     public final ChartData chartData;
     public final ProgTray progTray;
@@ -189,8 +186,8 @@ public class ProgData {
         downloadList = new DownloadList(this);
 //        downloadListButton = new DownloadList(this);
 
-        filmFilterRunner = new FilmFilterRunner(this);
-        audioFilterRunner = new AudioFilterRunner(this);
+        filmFilterRunner = new FilmFilterRunner(this, false);
+        audioFilterRunner = new FilmFilterRunner(this, true);
 
         historyList = new HistoryList(ProgConst.FILE_HISTORY, HistoryList.HISTORY_LIST.HISTORY);
         historyListAbos = new HistoryList(ProgConst.FILE_FINISHED_ABOS, HistoryList.HISTORY_LIST.ABO);

@@ -35,10 +35,12 @@ public class FilmFilterPredicateFactory {
     private FilmFilterPredicateFactory() {
     }
 
-    public static Predicate<FilmData> getPredicate(ProgData progData) {
+    public static Predicate<FilmData> getPredicate(ProgData progData, boolean audio) {
 
-        FilmFilter filmFilter = progData.filterWorkerFilm.getActFilterSettings();
-        FastFilter fastFilter = progData.filterWorkerFilm.getFastFilterSettings();
+        FilmFilter filmFilter = audio ? progData.filterWorkerAudio.getActFilterSettings() :
+                progData.filterWorkerFilm.getActFilterSettings();
+        FastFilter fastFilter = audio ? progData.filterWorkerAudio.getFastFilterSettings() :
+                progData.filterWorkerFilm.getFastFilterSettings();
 
         de.p2tools.p2lib.mediathek.filter.Filter fChannel;
         de.p2tools.p2lib.mediathek.filter.Filter fSomewhere;
@@ -170,7 +172,7 @@ public class FilmFilterPredicateFactory {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchFilmTime(minTimeSec, maxTimeSec, minMaxTimeInvert, f.filmTime));
         }
 
-        predicate = addFastFilter(filmFilter, fastFilter, predicate);
+        predicate = addFastFilter(filmFilter, fastFilter, predicate, audio);
 
         if (!fChannel.isEmpty) {
             predicate = predicate.and(f -> FilmFilterCheck.checkMatchChannelSmart(fChannel, f));
@@ -193,7 +195,7 @@ public class FilmFilterPredicateFactory {
     }
 
     private static Predicate<FilmData> addFastFilter(FilmFilter filmFilter, FastFilter filmFastFilter,
-                                                     Predicate<FilmData> predicate) {
+                                                     Predicate<FilmData> predicate, boolean audio) {
         de.p2tools.p2lib.mediathek.filter.Filter fastFilter = new de.p2tools.p2lib.mediathek.filter.Filter(filmFastFilter.getFilterTerm(), true);
 
         // Thema
@@ -209,8 +211,9 @@ public class FilmFilterPredicateFactory {
         String filterTitle = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
         de.p2tools.p2lib.mediathek.filter.Filter fTitle = new de.p2tools.p2lib.mediathek.filter.Filter(filterTitle, true);
 
-        if (ProgConfig.FAST_FILM_SEARCH_ON.getValue() &&
-                ProgConfig.FAST_FILM_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME_TITLE) {
+        if ((audio ? ProgConfig.FAST_AUDIO_SEARCH_ON.getValue() : ProgConfig.FAST_FILM_SEARCH_ON.getValue()) &&
+                (audio ? ProgConfig.FAST_AUDIO_SEARCH_WHERE.getValue() : ProgConfig.FAST_FILM_SEARCH_WHERE.getValue()) ==
+                        ProgConst.SEARCH_FAST_THEME_TITLE) {
             // dann mit dem FAST
             if (!fastFilter.isEmpty) {
                 predicate = predicate.and(f -> FilmFilterCheck.checkMatchThemeTitle(fastFilter, f));
@@ -222,8 +225,9 @@ public class FilmFilterPredicateFactory {
             }
         }
 
-        if (ProgConfig.FAST_FILM_SEARCH_ON.getValue() &&
-                ProgConfig.FAST_FILM_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_THEME) {
+        if ((audio ? ProgConfig.FAST_AUDIO_SEARCH_ON.getValue() : ProgConfig.FAST_FILM_SEARCH_ON.getValue()) &&
+                (audio ? ProgConfig.FAST_AUDIO_SEARCH_WHERE.getValue() : ProgConfig.FAST_FILM_SEARCH_WHERE.getValue()) ==
+                        ProgConst.SEARCH_FAST_THEME) {
             // dann mit dem FAST
             if (!fastFilter.isEmpty) {
                 predicate = predicate.and(f -> FilmFilterCheck.checkMatchTheme(fastFilter, f));
@@ -235,8 +239,9 @@ public class FilmFilterPredicateFactory {
             }
         }
 
-        if (ProgConfig.FAST_FILM_SEARCH_ON.getValue() &&
-                ProgConfig.FAST_FILM_SEARCH_WHERE.getValue() == ProgConst.SEARCH_FAST_TITLE) {
+        if ((audio ? ProgConfig.FAST_AUDIO_SEARCH_ON.getValue() : ProgConfig.FAST_FILM_SEARCH_ON.getValue()) &&
+                (audio ? ProgConfig.FAST_AUDIO_SEARCH_WHERE.getValue() : ProgConfig.FAST_FILM_SEARCH_WHERE.getValue()) ==
+                        ProgConst.SEARCH_FAST_TITLE) {
             // dann mit dem FAST
             if (!fastFilter.isEmpty) {
                 predicate = predicate.and(f -> FilmFilterCheck.checkMatchTitle(fastFilter, f));

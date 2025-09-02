@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
@@ -41,60 +42,63 @@ public class FilmFilterControllerTextFilter extends VBox {
     private final PCboString cboUrl;
 
     private final ProgData progData;
+    private final FilterDto filterDto;
 
-    public FilmFilterControllerTextFilter() {
+    public FilmFilterControllerTextFilter(FilterDto filterDto) {
         super();
+        this.filterDto = filterDto;
         progData = ProgData.getInstance();
-        mbChannel = new P2MenuButton(progData.filterWorkerFilm.getActFilterSettings().channelProperty(), ThemeListFactory.allChannelListFilm);
+        mbChannel = new P2MenuButton(filterDto.filterWorker.getActFilterSettings().channelProperty(),
+                (filterDto.audio ? ThemeListFactory.allChannelListAudio : ThemeListFactory.allChannelListFilm));
 
         final BooleanSupplier supplierReportReturn = () -> {
-            progData.filterWorkerFilm.getActFilterSettings().reportFilterReturn();
+            filterDto.filterWorker.getActFilterSettings().reportFilterReturn();
             return true;
         };
 
-        cboThemeExact = new PCboThemeExact(false, progData, progData.filterWorkerFilm.getActFilterSettings().exactThemeProperty());
+        cboThemeExact = new PCboThemeExact(progData, filterDto);
 
         cboTheme = new PCboString(progData.stringFilterLists.getFilterListFilmTheme(),
-                progData.filterWorkerFilm.getActFilterSettings().themeProperty(), supplierReportReturn);
+                filterDto.filterWorker.getActFilterSettings().themeProperty(), supplierReportReturn);
         cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListFilmThemeTitle(),
-                progData.filterWorkerFilm.getActFilterSettings().themeTitleProperty(), supplierReportReturn);
+                filterDto.filterWorker.getActFilterSettings().themeTitleProperty(), supplierReportReturn);
         cboTitle = new PCboString(progData.stringFilterLists.getFilterListFilmTitel(),
-                progData.filterWorkerFilm.getActFilterSettings().titleProperty(), supplierReportReturn);
+                filterDto.filterWorker.getActFilterSettings().titleProperty(), supplierReportReturn);
         cboSomewhere = new PCboString(progData.stringFilterLists.getFilterListFilmSomewhere(),
-                progData.filterWorkerFilm.getActFilterSettings().somewhereProperty(), supplierReportReturn);
+                filterDto.filterWorker.getActFilterSettings().somewhereProperty(), supplierReportReturn);
         cboUrl = new PCboString(progData.stringFilterLists.getFilterListFilmUrl(),
-                progData.filterWorkerFilm.getActFilterSettings().urlProperty(), supplierReportReturn);
+                filterDto.filterWorker.getActFilterSettings().urlProperty(), supplierReportReturn);
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addFilter();
     }
 
     private void addFilter() {
-        addTxt("Sender", mbChannel, this, progData.filterWorkerFilm.getActFilterSettings().channelVisProperty());
+        addTxt("Sender", mbChannel, this, filterDto.filterWorker.getActFilterSettings().channelVisProperty());
 
         BooleanProperty b = new SimpleBooleanProperty();
-        b.bind(progData.filterWorkerFilm.getActFilterSettings().themeVisProperty()
-                .and(progData.filterWorkerFilm.getActFilterSettings().themeIsExactProperty().not())
+        b.bind(filterDto.filterWorker.getActFilterSettings().themeVisProperty()
+                .and(filterDto.filterWorker.getActFilterSettings().themeIsExactProperty().not())
         );
         addTxt("Thema", cboTheme, this, b);
 
         b = new SimpleBooleanProperty();
-        b.bind(progData.filterWorkerFilm.getActFilterSettings().themeVisProperty()
-                .and(progData.filterWorkerFilm.getActFilterSettings().themeIsExactProperty())
+        b.bind(filterDto.filterWorker.getActFilterSettings().themeVisProperty()
+                .and(filterDto.filterWorker.getActFilterSettings().themeIsExactProperty())
         );
         addTxt("Thema exakt", cboThemeExact, this, b);
 
-        addTxt("Thema oder Titel", cboThemeTitle, this, progData.filterWorkerFilm.getActFilterSettings().themeTitleVisProperty());
-        addTxt("Titel", cboTitle, this, progData.filterWorkerFilm.getActFilterSettings().titleVisProperty());
-        addTxt("Irgendwo", cboSomewhere, this, progData.filterWorkerFilm.getActFilterSettings().somewhereVisProperty());
-        addTxt("URL", cboUrl, this, progData.filterWorkerFilm.getActFilterSettings().urlVisProperty());
+        addTxt("Thema oder Titel", cboThemeTitle, this, filterDto.filterWorker.getActFilterSettings().themeTitleVisProperty());
+        addTxt("Titel", cboTitle, this, filterDto.filterWorker.getActFilterSettings().titleVisProperty());
+        addTxt("Irgendwo", cboSomewhere, this, filterDto.filterWorker.getActFilterSettings().somewhereVisProperty());
+        addTxt("URL", cboUrl, this, filterDto.filterWorker.getActFilterSettings().urlVisProperty());
 
-        this.visibleProperty().bind(progData.filterWorkerFilm.getActFilterSettings().channelVisProperty()
-                .or(progData.filterWorkerFilm.getActFilterSettings().themeVisProperty()
-                        .or(progData.filterWorkerFilm.getActFilterSettings().themeTitleVisProperty()
-                                .or(progData.filterWorkerFilm.getActFilterSettings().titleVisProperty()
-                                        .or(progData.filterWorkerFilm.getActFilterSettings().somewhereVisProperty()
-                                                .or(progData.filterWorkerFilm.getActFilterSettings().urlVisProperty())
+        this.visibleProperty().bind(filterDto.filterWorker.getActFilterSettings().channelVisProperty()
+                .or(filterDto.filterWorker.getActFilterSettings().themeVisProperty()
+                        .or(filterDto.filterWorker.getActFilterSettings().themeTitleVisProperty()
+                                .or(filterDto.filterWorker.getActFilterSettings().titleVisProperty()
+                                        .or(filterDto.filterWorker.getActFilterSettings().somewhereVisProperty()
+                                                .or(filterDto.filterWorker.getActFilterSettings().urlVisProperty())
                                         )
                                 )
                         )

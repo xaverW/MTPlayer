@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
@@ -30,8 +31,10 @@ import javafx.scene.layout.HBox;
 public class FilmSmallFilterControllerFilter extends HBox {
 
     private final ProgData progData;
+    private final FilterDto filterDto;
 
-    public FilmSmallFilterControllerFilter() {
+    public FilmSmallFilterControllerFilter(FilterDto filterDto) {
+        this.filterDto = filterDto;
         progData = ProgData.getInstance();
 
         Button btnSmall = new Button("Alle Filter anzeigen");
@@ -50,6 +53,6 @@ public class FilmSmallFilterControllerFilter extends HBox {
 
     private void clearFilter() {
         P2Duration.onlyPing("Filter löschen");
-        progData.filterWorkerFilm.clearFilter();
+        filterDto.filterWorker.clearFilter();
     }
 }

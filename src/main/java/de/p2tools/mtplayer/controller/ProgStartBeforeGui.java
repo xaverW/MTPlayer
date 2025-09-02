@@ -71,6 +71,7 @@ public class ProgStartBeforeGui {
             SetImportFactory.getStandardSet(null);
             P2Duration.onlyPing("Erster Start: PSet geladen");
             FilmFilterSamples.addStandardFilter();
+            AudioFilterSamples.addStandardFilter();
             P2Duration.onlyPing("Erster Start: CleaningList init");
             ProgData.getInstance().cleaningDataListMedia.initList();
             ProgData.getInstance().cleaningDataListPropose.initList();

@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
 import javafx.scene.control.*;
@@ -35,11 +36,13 @@ public class FilmFilterDialog extends P2DialogExtra {
 
     private final TableView<FilmFilter> tableView = new TableView<>();
     private final ProgData progData;
+    private final FilterDto filterDto;
 
-    public FilmFilterDialog(ProgData progData) {
-        super(ProgData.getInstance().primaryStage, ProgConfig.FILM__FILTER_DIALOG_SIZE, "Filmfilter",
+    public FilmFilterDialog(ProgData progData, FilterDto filterDto) {
+        super(progData.primaryStage, ProgConfig.FILM__FILTER_DIALOG_SIZE, "Filmfilter",
                 false, false, DECO.NO_BORDER, true);
         this.progData = progData;
+        this.filterDto = filterDto;
         init(false);
     }
 
@@ -56,7 +59,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         addAnyButton(btnClearFilter);
         btnClearFilter.setTooltip(new Tooltip("Der Filter (nicht das Filterprofil) wird gelöscht"));
         btnClearFilter.setOnAction(a -> {
-            progData.filterWorkerFilm.clearFilter();
+            filterDto.filterWorker.clearFilter();
             tableView.getSelectionModel().clearSelection();
         });
 
@@ -69,7 +72,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
             if (n != null) {
-                progData.filterWorkerFilm.setActFilterSettings(n);
+                filterDto.filterWorker.setActFilterSettings(n);
             }
         });
         tableView.setRowFactory(param -> new TableRow<>() {
@@ -87,7 +90,7 @@ public class FilmFilterDialog extends P2DialogExtra {
         columnFactoryString(nameColumn);
 
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.filterWorkerFilm.getFilmFilterList());
+        tableView.setItems(filterDto.filterWorker.getFilmFilterList());
     }
 
     @Override
@@ -123,7 +126,7 @@ public class FilmFilterDialog extends P2DialogExtra {
                     return;
                 }
 
-                if (P2SeparatorComboBox.isSeparator(item.toString())) {
+                if (P2SeparatorComboBox.isSeparator(item)) {
                     setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR_WIDTH.getImageView());
                     setText(null);
                     setStyle("-fx-alignment: center;");

@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.filter.film;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -33,27 +34,41 @@ public class FilmFilterRunner {
     private static final AtomicBoolean search = new AtomicBoolean(false);
     private static final AtomicBoolean research = new AtomicBoolean(false);
     private int count = 0;
+    private final boolean audio;
 
     /**
      * hier wird das Filtern der Filmliste "angestoßen"
      *
      * @param progData
      */
-    public FilmFilterRunner(ProgData progData) {
+    public FilmFilterRunner(ProgData progData, boolean audio) {
         this.progData = progData;
+        this.audio = audio;
 
         progData.aboList.listChangedProperty().addListener((observable, oldValue, newValue) -> filterList());
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
-            @Override
-            public void ping() {
-                filterList();
-            }
-        });
+        if (audio) {
+            progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_AUDIO_CHANGED) {
+                @Override
+                public void ping() {
+                    filterList();
+                }
+            });
+
+        } else {
+            progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
+                @Override
+                public void ping() {
+                    filterList();
+                }
+            });
+        }
 
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_HISTORY_CHANGED) {
             @Override
             public void ping() {
-                FilmFilter filmFilter = progData.filterWorkerFilm.getActFilterSettings();
+                FilmFilter filmFilter = audio ? progData.filterWorkerAudio.getActFilterSettings() :
+                        progData.filterWorkerFilm.getActFilterSettings();
+
                 if (filmFilter.isNotVis() && filmFilter.isNotHistory() ||
                         filmFilter.isOnlyVis() && filmFilter.getOnlyActHistory()) {
                     //nur dann wird History gefiltert
@@ -85,25 +100,38 @@ public class FilmFilterRunner {
             try {
                 Platform.runLater(() -> {
                     String text = "=======================================\n" +
-                            "   ===== FILTERN FILM: " + ++count + " =====\n" +
+                            "   ===== FILTERN" + (audio ? " AUDIO: " : " FILM: ") + ++count + " =====\n" +
                             "=======================================";
                     P2Log.debugLog(text);
 
-                    if (ProgData.getInstance().filterWorkerFilm.getActFilterSettings().isThemeVis() &&
-                            ProgData.getInstance().filterWorkerFilm.getActFilterSettings().isThemeIsExact() &&
-                            !ThemeListFactory.themeForChannelListFilm
-                                    .contains(ProgData.getInstance().filterWorkerFilm.getActFilterSettings().getExactTheme())) {
+                    final FilterWorker filterWorker;
+                    if (audio) {
+                        filterWorker = ProgData.getInstance().filterWorkerAudio;
+                    } else {
+                        filterWorker = ProgData.getInstance().filterWorkerFilm;
+                    }
+                    if (filterWorker.getActFilterSettings().isThemeVis() &&
+                            filterWorker.getActFilterSettings().isThemeIsExact() &&
+                            !(audio ? ThemeListFactory.themeForChannelListAudio : ThemeListFactory.themeForChannelListFilm)
+                                    .contains(filterWorker.getActFilterSettings().getExactTheme())) {
                         // Filter ExactTheme kontrollieren
                         P2Log.debugLog("Clear film-filter");
 
-                        progData.filterWorkerFilm.getActFilterSettings().switchFilterOff(true);
-                        ProgData.getInstance().filterWorkerFilm.getActFilterSettings().setExactTheme("");
-                        progData.filterWorkerFilm.getActFilterSettings().switchFilterOff(false);
+                        filterWorker.getActFilterSettings().switchFilterOff(true);
+                        filterWorker.getActFilterSettings().setExactTheme("");
+                        filterWorker.getActFilterSettings().switchFilterOff(false);
                     }
 
-                    progData.filmGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird
-                    progData.filmListFiltered.filteredListSetPred(FilmFilterPredicateFactory.getPredicate(progData));
-                    progData.filmGuiController.selectLastShown(); // und jetzt wieder setzen
+                    if (audio) {
+                        progData.audioGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird
+                        progData.audioListFiltered.filteredListSetPred(FilmFilterPredicateFactory.getPredicate(progData, true));
+                        progData.audioGuiController.selectLastShown(); // und jetzt wieder setzen
+
+                    } else {
+                        progData.filmGuiController.getSel(true, false); // damit die letzte Pos gesetzt wird
+                        progData.filmListFiltered.filteredListSetPred(FilmFilterPredicateFactory.getPredicate(progData, false));
+                        progData.filmGuiController.selectLastShown(); // und jetzt wieder setzen
+                    }
 
                     search.set(false);
                     if (research.get()) {

@@ -22,6 +22,9 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
+import de.p2tools.mtplayer.controller.filter.FilterFactory;
+import de.p2tools.mtplayer.controller.filter.audio.AudioFilterSamples;
 import de.p2tools.mtplayer.controller.filter.film.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -49,9 +52,11 @@ public class FilmFilterControllerProfiles extends VBox {
     private final Button btnNewFilter = new Button("");
 
     private final ProgData progData;
+    private final FilterDto filterDto;
 
-    public FilmFilterControllerProfiles() {
+    public FilmFilterControllerProfiles(FilterDto filterDto) {
         super();
+        this.filterDto = filterDto;
         progData = ProgData.getInstance();
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
@@ -59,29 +64,23 @@ public class FilmFilterControllerProfiles extends VBox {
         filterProfiles();
         initRest();
 
-        // ist zum Markieren, ob sich der eingestellte Filter geändert hat
-//        PListener.addListener(new PListener(PListener.EVENT_FILTER_CHANGED, FilmFilterControllerProfiles.class.getSimpleName()) {
-//            @Override
-//            public void pingFx() {
-//                checkCboFilter();
-//            }
-//        });
-        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
-            @Override
-            public void pingGui() {
-                checkCboFilter();
-            }
-        });
-        checkCboFilter();
-    }
+        if (filterDto.audio) {
+            progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_AUDIO_CHANGED) {
+                @Override
+                public void pingGui() {
+                    checkCboFilter();
+                }
+            });
 
-    private void markFilterOk(boolean ok) {
-        if (ok) {
-            cboFilterProfiles.getStyleClass().removeAll("markFilterOk");
-            cboFilterProfiles.getStyleClass().add("markFilterOk");
         } else {
-            cboFilterProfiles.getStyleClass().removeAll("markFilterOk");
+            progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILTER_FILM_CHANGED) {
+                @Override
+                public void pingGui() {
+                    checkCboFilter();
+                }
+            });
         }
+        checkCboFilter();
     }
 
     private void initButton() {
@@ -98,7 +97,7 @@ public class FilmFilterControllerProfiles extends VBox {
             }
         });
         btnSaveFilter.setGraphic(ProgIcons.ICON_FILTER_SAVE.getImageView());
-        btnSaveFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als Filterprofil speichern"));
+        btnSaveFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung im Filterprofil speichern"));
 
         btnNewFilter.setOnAction(a -> newFilter());
         btnNewFilter.setGraphic(ProgIcons.ICON_FILTER_NEW.getImageView());
@@ -107,7 +106,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private void filterProfiles() {
         // Filterprofile einrichten
-        cboFilterProfiles.setItems(progData.filterWorkerFilm.getFilmFilterList());
+        cboFilterProfiles.setItems(filterDto.filterWorker.getFilmFilterList());
         cboFilterProfiles.setTooltip(new Tooltip("Gespeicherte Filterprofile können\n" +
                 "hier geladen werden"));
 
@@ -139,10 +138,10 @@ public class FilmFilterControllerProfiles extends VBox {
         miAbo.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
 
         final MenuItem miResort = new MenuItem("Filterprofile sortieren");
-        miResort.setOnAction(e -> new FilmFilterSortDialog(progData).showDialog());
+        miResort.setOnAction(e -> new FilmFilterSortDialog(progData, filterDto).showDialog());
 
         final MenuItem miFilterDialog = new MenuItem("Filterprofile in eigenem Fenster anzeigen");
-        miFilterDialog.setOnAction(e -> new FilmFilterDialog(progData).showDialog());
+        miFilterDialog.setOnAction(e -> new FilmFilterDialog(progData, new FilterDto(false)).showDialog());
 
         final MenuItem miAddStandard = new MenuItem("Standard-Filterprofile anhängen");
         miAddStandard.setOnAction(e -> resetFilter(false));
@@ -156,8 +155,13 @@ public class FilmFilterControllerProfiles extends VBox {
                 new SeparatorMenuItem(), miAddStandard, miReset);
         mbFilterTools.setTooltip(new Tooltip("Gespeicherte Filterprofile bearbeiten"));
 
-        cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_FILM_SEL_FILTER.get());
-        ProgConfig.FILTER_FILM_SEL_FILTER.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
+        if (filterDto.audio) {
+            cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_AUDIO_SEL_FILTER.get());
+            ProgConfig.FILTER_AUDIO_SEL_FILTER.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
+        } else {
+            cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_FILM_SEL_FILTER.get());
+            ProgConfig.FILTER_FILM_SEL_FILTER.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
+        }
 
         cboFilterProfiles.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -193,7 +197,7 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void loadFilter() {
-        progData.filterWorkerFilm.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
+        filterDto.filterWorker.setActFilterSettings(cboFilterProfiles.getSelectionModel().getSelectedItem());
     }
 
     private void saveFilter() {
@@ -201,7 +205,7 @@ public class FilmFilterControllerProfiles extends VBox {
         if (sf == null) {
             newFilter();
         } else {
-            progData.filterWorkerFilm.getFilmFilterList().saveStoredFilter(sf);
+            FilterFactory.saveStoredFilter(filterDto.filterWorker, sf);
             checkCboFilter();
         }
     }
@@ -213,13 +217,13 @@ public class FilmFilterControllerProfiles extends VBox {
             return;
         }
 
-        if (progData.filterWorkerFilm.getFilmFilterList().removeStoredFilter(sf)) {
+        if (filterDto.filterWorker.getFilmFilterList().removeStoredFilter(sf)) {
             cboFilterProfiles.getSelectionModel().clearSelection();
         }
     }
 
     private void delAllFilter() {
-        progData.filterWorkerFilm.getFilmFilterList().removeAllStoredFilter();
+        filterDto.filterWorker.getFilmFilterList().removeAllStoredFilter();
         cboFilterProfiles.getSelectionModel().clearSelection();
     }
 
@@ -231,20 +235,24 @@ public class FilmFilterControllerProfiles extends VBox {
                             "ersetzt werden?")) {
                 return;
             }
-            progData.filterWorkerFilm.getFilmFilterList().clear();
+            filterDto.filterWorker.getFilmFilterList().clear();
 
-        } else if (!progData.filterWorkerFilm.getFilmFilterList().isEmpty()) {
+        } else if (!filterDto.filterWorker.getFilmFilterList().isEmpty()) {
             // dann eine Markierung
-            progData.filterWorkerFilm.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
-            progData.filterWorkerFilm.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+            filterDto.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+            filterDto.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
         }
 
-        FilmFilterSamples.addStandardFilter();
+        if (filterDto.audio) {
+            AudioFilterSamples.addStandardFilter();
+        } else {
+            FilmFilterSamples.addStandardFilter();
+        }
         cboFilterProfiles.getSelectionModel().selectFirst();
     }
 
     private void newFilter() {
-        final TextInputDialog dialog = new TextInputDialog(progData.filterWorkerFilm.getFilmFilterList().getNextName());
+        final TextInputDialog dialog = new TextInputDialog(filterDto.filterWorker.getFilmFilterList().getNextName());
         dialog.setTitle("Filterprofilname");
         dialog.setHeaderText("Den Namen des Filterprofils vorgeben");
         dialog.setContentText("Name:");
@@ -253,7 +261,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
         final Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            progData.filterWorkerFilm.getFilmFilterList().addNewStoredFilter(result.get());
+            filterDto.filterWorker.getFilmFilterList().addNewStoredFilter(filterDto, result.get());
             cboFilterProfiles.getSelectionModel().selectLast();
         }
     }
@@ -280,13 +288,13 @@ public class FilmFilterControllerProfiles extends VBox {
     }
 
     private void checkCboFilter() {
-        FilmFilter sf = progData.filterWorkerFilm.getActFilterSettings();
+        FilmFilter sf = filterDto.filterWorker.getActFilterSettings();
         FilmFilter sfCbo = cboFilterProfiles.getSelectionModel().getSelectedItem();
         if (sf.isSame(sfCbo)) {
-            //if (SelectedFilmFilterFactory.compareFilterWithoutNameOfFilter(sf, sfCbo)) {
-            markFilterOk(true);
+            cboFilterProfiles.getStyleClass().removeAll("markFilterOk");
+            cboFilterProfiles.getStyleClass().add("markFilterOk");
         } else {
-            markFilterOk(false);
+            cboFilterProfiles.getStyleClass().removeAll("markFilterOk");
         }
     }
 

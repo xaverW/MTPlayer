@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
@@ -42,10 +43,12 @@ public class FilmFilterSortDialog extends P2DialogExtra {
 
     private final TableView<FilmFilter> tableView = new TableView<>();
     private final ProgData progData;
+    private final FilterDto filterDto;
 
-    public FilmFilterSortDialog(ProgData progData) {
+    public FilmFilterSortDialog(ProgData progData, FilterDto filterDto) {
         super(ProgData.getInstance().primaryStage, null, "Filmfilter", true, true, DECO.NO_BORDER);
         this.progData = progData;
+        this.filterDto = filterDto;
 
         init(false);
     }
@@ -75,7 +78,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         columnFactoryString(nameColumn);
 
         tableView.getColumns().add(nameColumn);
-        tableView.setItems(progData.filterWorkerFilm.getFilmFilterList());
+        tableView.setItems(filterDto.filterWorker.getFilmFilterList());
 
         // Button
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
@@ -94,7 +97,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filterWorkerFilm.getFilmFilterList().top(sel, true);
+                int res = filterDto.filterWorker.getFilmFilterList().top(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -107,7 +110,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filterWorkerFilm.getFilmFilterList().top(sel, false);
+                int res = filterDto.filterWorker.getFilmFilterList().top(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -120,7 +123,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filterWorkerFilm.getFilmFilterList().up(sel, true);
+                int res = filterDto.filterWorker.getFilmFilterList().up(sel, true);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -133,7 +136,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             if (sel < 0) {
                 P2Alert.showInfoNoSelection();
             } else {
-                int res = progData.filterWorkerFilm.getFilmFilterList().up(sel, false);
+                int res = filterDto.filterWorker.getFilmFilterList().up(sel, false);
                 tableView.getSelectionModel().select(res);
             }
         });
@@ -146,7 +149,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             return;
         }
 
-        if (progData.filterWorkerFilm.getFilmFilterList().removeStoredFilter(sf)) {
+        if (filterDto.filterWorker.getFilmFilterList().removeStoredFilter(sf)) {
             tableView.getSelectionModel().selectFirst();
         }
     }
@@ -155,9 +158,9 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
         FilmFilter sf = new FilmFilter(P2SeparatorComboBox.SEPARATOR);
         if (sel < 0) {
-            progData.filterWorkerFilm.getFilmFilterList().add(sf);
+            filterDto.filterWorker.getFilmFilterList().add(sf);
         } else {
-            progData.filterWorkerFilm.getFilmFilterList().add(sel + 1, sf);
+            filterDto.filterWorker.getFilmFilterList().add(sel + 1, sf);
         }
     }
 

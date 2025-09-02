@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.load.LoadFactory;
 import de.p2tools.mtplayer.gui.filter.film.FilmFilterDialog;
 import de.p2tools.p2lib.tools.P2InfoFactory;
@@ -41,7 +42,7 @@ public class ProgStartAfterGui {
         setTitle();
         ProgData.getInstance().progTray.initProgTray();
         if (ProgConfig.FILM_GUI_FILTER_DIALOG_IS_SHOWING.getValue()) {
-            new FilmFilterDialog(ProgData.getInstance()).showDialog();
+            new FilmFilterDialog(ProgData.getInstance(), new FilterDto(false)).showDialog();
         }
         ProgData.getInstance().pEventHandler.startTimer();
 

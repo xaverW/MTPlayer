@@ -1,14 +1,15 @@
 package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import javafx.beans.property.StringProperty;
 import org.controlsfx.control.SearchableComboBox;
 
 public class PCboThemeExact extends SearchableComboBox<String> {
 
-    public PCboThemeExact(boolean audio, ProgData progData, StringProperty stringPropertyThemeExact) {
-        if (audio) {
+
+    public PCboThemeExact(ProgData progData, FilterDto filterDto) {
+        if (filterDto.audio) {
             setItems(ThemeListFactory.themeForChannelListAudio);
             ThemeListFactory.themeForChannelChangedAudio.addListener((u, o, n) -> {
                 setItems(ThemeListFactory.themeForChannelListAudio);
@@ -20,7 +21,7 @@ public class PCboThemeExact extends SearchableComboBox<String> {
                         }
 
                         final String str = newValue == null ? "" : newValue;
-                        stringPropertyThemeExact.setValue(str);
+                        filterDto.filterWorker.getActFilterSettings().exactThemeProperty().setValue(str);
                     }
             );
 
@@ -36,15 +37,15 @@ public class PCboThemeExact extends SearchableComboBox<String> {
                         }
 
                         final String str = newValue == null ? "" : newValue;
-                        stringPropertyThemeExact.setValue(str);
+                        filterDto.filterWorker.getActFilterSettings().exactThemeProperty().setValue(str);
                     }
             );
         }
 
-        stringPropertyThemeExact.addListener((u, o, n) -> {
-            getSelectionModel().select(stringPropertyThemeExact.getValue());
+        filterDto.filterWorker.getActFilterSettings().exactThemeProperty().addListener((u, o, n) -> {
+            getSelectionModel().select(filterDto.filterWorker.getActFilterSettings().exactThemeProperty().getValue());
         });
 
-        getSelectionModel().select(stringPropertyThemeExact.getValue());
+        getSelectionModel().select(filterDto.filterWorker.getActFilterSettings().exactThemeProperty().getValue());
     }
 }

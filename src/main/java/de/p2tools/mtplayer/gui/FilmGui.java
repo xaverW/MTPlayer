@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.gui.filter.film.FilmFilterController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneController;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
@@ -42,7 +43,8 @@ public class FilmGui {
 
     public FilmGui() {
         progData = ProgData.getInstance();
-        filmFilterController = new FilmFilterController();
+        FilterDto filterDto = new FilterDto(false);
+        filmFilterController = new FilmFilterController(filterDto);
         filmGuiController = new FilmGuiController();
 
         BooleanProperty show = new SimpleBooleanProperty();
