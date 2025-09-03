@@ -106,7 +106,7 @@ public class PanelFilterGrid {
         vb1.setPadding(new Insets(P2LibConst.PADDING));
         vb1.getStyleClass().add("extra-pane");
 
-        Label label = new Label("Diese Felder durchsuchen:");
+        Label label = new Label("Blacklist-Eintrag suchen:");
         vb1.getChildren().add(label);
 
         VBox vb = new VBox(SPACE_TITLE);
@@ -136,7 +136,7 @@ public class PanelFilterGrid {
         vb2.setAlignment(Pos.TOP_LEFT);
         vb2.setPadding(new Insets(SPACE_VBOX));
         vb2.getStyleClass().add("extra-pane");
-        vb2.getChildren().addAll(new Label("Alle Felder durchsuchen:"), txtFilterSomewhere);
+        vb2.getChildren().addAll(new Label("In allen Feldern suchen:"), txtFilterSomewhere);
 
         VBox vb3 = new VBox();
         vb3.setAlignment(Pos.CENTER_RIGHT);

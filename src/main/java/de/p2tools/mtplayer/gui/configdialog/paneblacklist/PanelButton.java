@@ -51,7 +51,6 @@ public class PanelButton {
     }
 
     void close() {
-//        ProgData.getInstance().loadFilmFactory.loadFilmlist.p2LoadNotifier.removeListenerLoadFilmlist(listenerLoadFilmlist);
         ProgData.getInstance().pEventHandler.removeListener(listenerLoadFilmlistStart);
         ProgData.getInstance().pEventHandler.removeListener(listenerLoadFilmlistFinished);
     }
@@ -118,7 +117,7 @@ public class PanelButton {
         Button btnClear = new Button("_Alle löschen");
         btnClear.setTooltip(new Tooltip("Alle Einträge in der Liste werden gelöscht"));
         btnClear.setOnAction(event -> {
-            if (list.size() > 0) {
+            if (!list.isEmpty()) {
                 if (!P2Alert.showAlertOkCancel(stage, "Liste löschen", "Sollen alle Tabelleneinträge gelöscht werden?",
                         "Die Tabelle wird komplett gelöscht und alle Einträge gehen verloren.")) {
                     return;

@@ -67,17 +67,20 @@ public class BlacklistFilterFactory {
             maskerPane = false;
         }
 
-        ProgData.getInstance().blackList.clearCounter();
+        if (!audio) {
+            // wird nur bei Filmen gezählt??
+            ProgData.getInstance().blackList.clearCounter();
+        }
         loadCurrentBlacklistSettings();
 
         //Filmliste durchlaufen und geblockte Filme markieren (parallel: Blockiert sich selbst durch Film.setBlocked)
         P2Duration.counterStart("forEach");
-        FilmListMTP list = audio ? ProgData.getInstance().filmList : ProgData.getInstance().audioList;
+        FilmListMTP list = audio ? ProgData.getInstance().audioList : ProgData.getInstance().filmList;
         final int sum = list.size();
         act = 0;
         now = 0;
 
-        list.forEach(filmDataMTP -> {
+        list.forEach(film -> {
             ++act;
             ++now;
             if (now > 5_000) {
@@ -88,8 +91,9 @@ public class BlacklistFilterFactory {
                     ProgData.getInstance().maskerPane.setMaskerProgress(percent, "Blacklist filtern");
                 }
             }
-            filmDataMTP.setBlackBlocked(checkFilmIsBlockedCompleteBlackData(filmDataMTP,
-                    ProgData.getInstance().blackList, true));
+            // gezählt wird nur bei Filmen
+            film.setBlackBlocked(checkFilmIsBlockedCompleteBlackData(film,
+                    ProgData.getInstance().blackList, !audio));
         });
         P2Duration.counterStop("forEach");
 
@@ -128,7 +132,6 @@ public class BlacklistFilterFactory {
 
         if (filmList != null) {
             filmListFiltered.setMeta(filmList);
-
             Stream<FilmDataMTP> initialStream = filmList.parallelStream();
 
             if (filterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {

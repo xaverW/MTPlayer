@@ -113,6 +113,7 @@ public class FilmFilterController extends FilterController {
 
             vBox.getChildren().add(P2GuiTools.getVBoxGrower());
             vBox.getChildren().addAll(filmSmallFilterControllerFilter);
+            getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
 
         } else {
             // dann alle Filter

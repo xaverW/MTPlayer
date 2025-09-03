@@ -35,8 +35,10 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.SortedList;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -52,9 +54,12 @@ public class PaneBlackList {
 
     private SplitPane splitPane;
     private final TableBlacklist tableView;
-    private final RadioButton rbBlack = new RadioButton("Blacklist");
-    private final RadioButton rbWhite = new RadioButton("Whitelist");
-    private final RadioButton rbOff = new RadioButton("Alles anzeigen");
+    private final RadioButton rbBlackFilm = new RadioButton("Blacklist");
+    private final RadioButton rbWhiteFilm = new RadioButton("Whitelist");
+    private final RadioButton rbOffFilm = new RadioButton("Alles anzeigen");
+    private final RadioButton rbBlackAudio = new RadioButton("Blacklist");
+    private final RadioButton rbWhiteAudio = new RadioButton("Whitelist");
+    private final RadioButton rbOffAudio = new RadioButton("Alles anzeigen");
     private final GridPane gridPane = new GridPane();
 
     private final P2MenuButton mbChannel;
@@ -168,19 +173,51 @@ public class PaneBlackList {
         final Button btnHelp = P2Button.helpButton(stage, "Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST);
 
-        final ToggleGroup toggleGroup = new ToggleGroup();
-        rbBlack.setToggleGroup(toggleGroup);
-        rbWhite.setToggleGroup(toggleGroup);
-        rbOff.setToggleGroup(toggleGroup);
-        toggleGroup.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
+        final ToggleGroup toggleGroupFilm = new ToggleGroup();
+        rbBlackFilm.setToggleGroup(toggleGroupFilm);
+        rbWhiteFilm.setToggleGroup(toggleGroupFilm);
+        rbOffFilm.setToggleGroup(toggleGroupFilm);
+        toggleGroupFilm.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
+
+        final ToggleGroup toggleGroupAudio = new ToggleGroup();
+        rbBlackAudio.setToggleGroup(toggleGroupAudio);
+        rbWhiteAudio.setToggleGroup(toggleGroupAudio);
+        rbOffAudio.setToggleGroup(toggleGroupAudio);
+        toggleGroupAudio.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
+
         setRb();
         progData.filterWorkerFilm.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
             setRb();
         });
+        progData.filterWorkerAudio.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
+            setRb();
+        });
 
-        HBox hBox = new HBox(P2LibConst.PADDING);
-        hBox.getChildren().addAll(rbBlack, rbWhite, rbOff, P2GuiTools.getHBoxGrower(), btnHelp);
-        vBox.getChildren().add(hBox);
+
+        GridPane gridPaneBlack = new GridPane();
+        gridPaneBlack.setHgap(20);
+        gridPaneBlack.setVgap(10);
+        gridPaneBlack.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcPrefSize(),
+                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+
+        GridPane.setValignment(btnHelp, VPos.TOP);
+        GridPane.setHalignment(btnHelp, HPos.RIGHT);
+        gridPaneBlack.add(P2Text.getTextBold("Filme:"), 0, 0);
+        gridPaneBlack.add(rbBlackFilm, 1, 0);
+        gridPaneBlack.add(rbWhiteFilm, 2, 0);
+        gridPaneBlack.add(rbOffFilm, 3, 0);
+        gridPaneBlack.add(btnHelp, 4, 0, 1, 2);
+
+        if (controlBlackListNotFilmFilter) {
+            gridPaneBlack.add(P2Text.getTextBold("Audios:"), 0, 1);
+            gridPaneBlack.add(rbBlackAudio, 1, 1);
+            gridPaneBlack.add(rbWhiteAudio, 2, 1);
+            gridPaneBlack.add(rbOffAudio, 3, 1);
+        }
+        vBox.getChildren().add(gridPaneBlack);
     }
 
     private void initTable() {
@@ -289,34 +326,50 @@ public class PaneBlackList {
     private void setRb() {
         if (controlBlackListNotFilmFilter) {
             //dann wird die BlackList gesteuert
+
             switch (progData.filterWorkerFilm.getActFilterSettings().getBlacklistOnOff()) {
                 case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
                     //OFF
-                    rbOff.setSelected(true);
+                    rbOffFilm.setSelected(true);
                     break;
                 case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
                     //BLACK
-                    rbBlack.setSelected(true);
+                    rbBlackFilm.setSelected(true);
                     break;
                 case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
                     //WHITE, also invers
-                    rbWhite.setSelected(true);
+                    rbWhiteFilm.setSelected(true);
                     break;
             }
+            switch (progData.filterWorkerAudio.getActFilterSettings().getBlacklistOnOff()) {
+                case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
+                    //OFF
+                    rbOffAudio.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
+                    //BLACK
+                    rbBlackAudio.setSelected(true);
+                    break;
+                case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
+                    //WHITE, also invers
+                    rbWhiteAudio.setSelected(true);
+                    break;
+            }
+
         } else {
             //dann wird der FilmListFilter gesteuert
             switch (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue()) {
                 case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
                     //OFF
-                    rbOff.setSelected(true);
+                    rbOffFilm.setSelected(true);
                     break;
                 case BlacklistFilterFactory.BLACKLILST_FILTER_ON:
                     //BLACK
-                    rbBlack.setSelected(true);
+                    rbBlackFilm.setSelected(true);
                     break;
                 case BlacklistFilterFactory.BLACKLILST_FILTER_INVERS:
                     //WHITE, also invers
-                    rbWhite.setSelected(true);
+                    rbWhiteFilm.setSelected(true);
                     break;
             }
         }
@@ -325,23 +378,33 @@ public class PaneBlackList {
     private void setBlackProp() {
         if (controlBlackListNotFilmFilter) {
             //dann wird die BlackList gesteuert
-            if (rbBlack.isSelected()) {
+            if (rbBlackFilm.isSelected()) {
                 //BLACK
                 progData.filterWorkerFilm.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
-            } else if (rbWhite.isSelected()) {
+            } else if (rbWhiteFilm.isSelected()) {
                 //WHITE, also invers
                 progData.filterWorkerFilm.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
             } else {
                 //OFF
                 progData.filterWorkerFilm.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
             }
+            if (rbBlackAudio.isSelected()) {
+                //BLACK
+                progData.filterWorkerAudio.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
+            } else if (rbWhiteAudio.isSelected()) {
+                //WHITE, also invers
+                progData.filterWorkerAudio.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
+            } else {
+                //OFF
+                progData.filterWorkerAudio.getActFilterSettings().setBlacklistOnOff(BlacklistFilterFactory.BLACKLILST_FILTER_OFF);
+            }
 
         } else {
             //dann wird der FilmList Filter gesteuert
-            if (rbBlack.isSelected()) {
+            if (rbBlackFilm.isSelected()) {
                 //BLACK
                 ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_ON);
-            } else if (rbWhite.isSelected()) {
+            } else if (rbWhiteFilm.isSelected()) {
                 //WHITE, also invers
                 ProgConfig.SYSTEM_FILMLIST_FILTER.setValue(BlacklistFilterFactory.BLACKLILST_FILTER_INVERS);
             } else {

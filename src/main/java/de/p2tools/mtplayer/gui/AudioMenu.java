@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
-import de.p2tools.mtplayer.controller.filter.audio.AudioFilterSamples;
+import de.p2tools.mtplayer.controller.filter.film.AudioFilterSamples;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;

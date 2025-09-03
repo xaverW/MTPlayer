@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.filter.FilterFactory;
-import de.p2tools.mtplayer.controller.filter.audio.AudioFilterSamples;
+import de.p2tools.mtplayer.controller.filter.film.AudioFilterSamples;
 import de.p2tools.mtplayer.controller.filter.film.FilmFilterSamples;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
