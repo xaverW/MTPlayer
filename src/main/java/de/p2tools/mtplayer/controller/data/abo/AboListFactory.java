@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
@@ -115,7 +116,7 @@ public class AboListFactory {
         searchTitle = DownloadFactory.replaceFileNameWithReplaceList(searchTitle, false /* nur ein Ordner */);
 
         final AboData abo = new AboData(ProgData.getInstance(),
-                audio ? AboData.ABO_AUDIO : AboData.ABO_FILM,
+                audio ? ProgConst.LIST_AUDIO : ProgConst.LIST_FILM,
                 searchTitle /* name */,
                 channel,
                 theme,

@@ -22,10 +22,6 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.mediathek.filter.Filter;
 
 public class AboData extends AboDataProps {
-    public static final int ABO_FILM_AUDIO = 0;
-    public static final int ABO_FILM = 1;
-    public static final int ABO_AUDIO = 2;
-
     public int nr;
     public Filter fChannel = new Filter();
     public Filter fTheme = new Filter();

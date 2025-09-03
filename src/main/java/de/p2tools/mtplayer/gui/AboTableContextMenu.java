@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
@@ -59,7 +60,7 @@ public class AboTableContextMenu {
         final MenuItem miChange = new MenuItem("Abos ändern");
         miChange.setOnAction(a -> AboListFactory.editAbo());
         final MenuItem miNew = new MenuItem("neues Abo anlegen");
-        miNew.setOnAction(a -> AboListFactory.addNewAbo(AboData.ABO_FILM_AUDIO, "Neu", "", "", ""));
+        miNew.setOnAction(a -> AboListFactory.addNewAbo(ProgConst.LIST_FILM_AUDIO, "Neu", "", "", ""));
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen");
         miUndo.setOnAction(a -> progData.aboList.undoAbos());

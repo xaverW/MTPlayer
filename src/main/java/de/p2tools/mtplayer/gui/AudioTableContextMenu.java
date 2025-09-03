@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
@@ -150,9 +151,9 @@ public class AudioTableContextMenu {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen
             miAboAddChannelTheme.setOnAction(a ->
-                    AboListFactory.addNewAbo(AboData.ABO_AUDIO, film.getTheme(), film.getChannel(), film.getTheme(), ""));
+                    AboListFactory.addNewAbo(ProgConst.LIST_AUDIO, film.getTheme(), film.getChannel(), film.getTheme(), ""));
             miAboAddChannelThemeTitle.setOnAction(a ->
-                    AboListFactory.addNewAbo(AboData.ABO_AUDIO, film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
+                    AboListFactory.addNewAbo(ProgConst.LIST_AUDIO, film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
             //Abo löschen/ändern
             miAboChange.setDisable(true);
             miAboDel.setDisable(true);

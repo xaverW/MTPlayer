@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller.data.abo;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
@@ -30,9 +31,9 @@ public class AboFactory {
     }
 
     public static String getSourceText(AboData abo) {
-        if (abo.getList() == AboData.ABO_FILM_AUDIO) {
+        if (abo.getList() == ProgConst.LIST_FILM_AUDIO) {
             return "Film/Audio";
-        } else if (abo.getList() == AboData.ABO_FILM) {
+        } else if (abo.getList() == ProgConst.LIST_FILM) {
             return "Film";
         } else {
             return "Audio";
@@ -48,9 +49,9 @@ public class AboFactory {
 
         film.setLowerCase();
         final AboData aboData = ProgData.getInstance().aboList.stream()
-                .filter(abo -> abo.getList() == AboData.ABO_FILM_AUDIO ||
-                        audio && abo.getList() == AboData.ABO_AUDIO ||
-                        !audio && abo.getList() == AboData.ABO_FILM)
+                .filter(abo -> abo.getList() == ProgConst.LIST_FILM_AUDIO ||
+                        audio && abo.getList() == ProgConst.LIST_AUDIO ||
+                        !audio && abo.getList() == ProgConst.LIST_FILM)
 
                 .filter(abo -> FilmFilterCheck.checkFilterMatch(
                         abo.fChannel,

@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
@@ -67,7 +66,7 @@ public class AboMenu {
                 "Abos ändern", "Markierte Abos ändern", ProgIcons.ICON_TOOLBAR_CONFIG.getImageView());
 
         btNew.setOnAction(a -> {
-            AboListFactory.addNewAbo(AboData.ABO_FILM_AUDIO, "Neu", "", "", "");
+            AboListFactory.addNewAbo(ProgConst.LIST_FILM_AUDIO, "Neu", "", "", "");
             progData.aboGuiController.tableView.refresh();
             progData.aboGuiController.tableView.requestFocus();
         });
@@ -112,7 +111,7 @@ public class AboMenu {
         final MenuItem miChange = new MenuItem("Abos ändern");
         miChange.setOnAction(a -> AboListFactory.editAbo());
         final MenuItem miNew = new MenuItem("Neues Abo anlegen");
-        miNew.setOnAction(a -> AboListFactory.addNewAbo(AboData.ABO_FILM_AUDIO, "Neu", "", "", ""));
+        miNew.setOnAction(a -> AboListFactory.addNewAbo(ProgConst.LIST_FILM_AUDIO, "Neu", "", "", ""));
 
         final MenuItem miUndo = new MenuItem("Gelöschte wieder anlegen" + PShortKeyFactory.SHORT_CUT_LEER +
                 PShortcut.SHORTCUT_UNDO_DELETE.getActShortcut());

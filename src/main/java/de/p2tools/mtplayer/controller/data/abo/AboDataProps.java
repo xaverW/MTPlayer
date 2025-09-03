@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.data.abo;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 public class AboDataProps extends P2DataSample<AboData> implements Comparable<AboData> {
 
     private final IntegerProperty no = new SimpleIntegerProperty(0);
-    private final IntegerProperty list = new SimpleIntegerProperty(AboData.ABO_FILM_AUDIO); // wo gesucht werden soll
+    private final IntegerProperty list = new SimpleIntegerProperty(ProgConst.LIST_FILM_AUDIO); // wo gesucht werden soll
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private final StringProperty name = new SimpleStringProperty("");

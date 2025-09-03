@@ -16,16 +16,14 @@
 
 package de.p2tools.mtplayer.controller.data.blackdata;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.configfile.config.Config;
 import de.p2tools.p2lib.configfile.config.Config_boolProp;
 import de.p2tools.p2lib.configfile.config.Config_lDate;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,6 +33,7 @@ public class BlackDataProps extends P2DataSample<BlackDataProps> {
     public static final String TAG = "BlackData";
 
     private int no = 0;
+    private final IntegerProperty list = new SimpleIntegerProperty(ProgConst.LIST_FILM_AUDIO); // wo gesucht werden soll
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);

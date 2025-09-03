@@ -56,6 +56,11 @@ public class ProgConst {
     public static final int SEARCH_FAST_THEME = 1;
     public static final int SEARCH_FAST_TITLE = 2;
 
+    public static final int LIST_FILM_AUDIO = 0;
+    public static final int LIST_FILM = 1;
+    public static final int LIST_AUDIO = 2;
+
+
     public static final String M3U8_URL = "m3u8";
     public static final String REG_EX = Filter.FILTER_REG_EX;
 
@@ -126,4 +131,6 @@ public class ProgConst {
     public static final int MAX_FILTER_GO_BACK = 20;
 
     public static final String THEME_LIVE = "Livestream";
+
+
 }

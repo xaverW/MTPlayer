@@ -17,7 +17,7 @@
 
 package de.p2tools.mtplayer.gui.dialog.abodialog;
 
-import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 
 import java.util.Arrays;
 
@@ -98,9 +98,9 @@ public class InitChannelTTDescription {
     public void makeAct() {
         // nach dem actFilm setzen, z.B. beim Wechsel
         addAboDto.chkActive.setSelected(addAboDto.getAct().abo.isActive());
-        addAboDto.rbFilm.setSelected(addAboDto.getAct().abo.getList() == AboData.ABO_FILM);
-        addAboDto.rbAudio.setSelected(addAboDto.getAct().abo.getList() == AboData.ABO_AUDIO);
-        addAboDto.rbFilmAudio.setSelected(addAboDto.getAct().abo.getList() == AboData.ABO_FILM_AUDIO);
+        addAboDto.rbFilm.setSelected(addAboDto.getAct().abo.getList() == ProgConst.LIST_FILM);
+        addAboDto.rbAudio.setSelected(addAboDto.getAct().abo.getList() == ProgConst.LIST_AUDIO);
+        addAboDto.rbFilmAudio.setSelected(addAboDto.getAct().abo.getList() == ProgConst.LIST_FILM_AUDIO);
         addAboDto.textAreaDescription.setText(addAboDto.getAct().abo.getDescription());
         addAboDto.channelProperty.setValue(addAboDto.getAct().abo.getChannel());
         addAboDto.textAreaTheme.setText(addAboDto.getAct().abo.getTheme());
@@ -126,20 +126,20 @@ public class InitChannelTTDescription {
         if (addAboDto.chkSourceAll.isSelected()) {
             Arrays.stream(addAboDto.addAboData).forEach(addAboData -> {
                 if (addAboDto.rbFilm.isSelected()) {
-                    addAboData.abo.setList(AboData.ABO_FILM);
+                    addAboData.abo.setList(ProgConst.LIST_FILM);
                 } else if (addAboDto.rbAudio.isSelected()) {
-                    addAboData.abo.setList(AboData.ABO_AUDIO);
+                    addAboData.abo.setList(ProgConst.LIST_AUDIO);
                 } else {
-                    addAboData.abo.setList(AboData.ABO_FILM_AUDIO);
+                    addAboData.abo.setList(ProgConst.LIST_FILM_AUDIO);
                 }
             });
         } else {
             if (addAboDto.rbFilm.isSelected()) {
-                addAboDto.getAct().abo.setList(AboData.ABO_FILM);
+                addAboDto.getAct().abo.setList(ProgConst.LIST_FILM);
             } else if (addAboDto.rbAudio.isSelected()) {
-                addAboDto.getAct().abo.setList(AboData.ABO_AUDIO);
+                addAboDto.getAct().abo.setList(ProgConst.LIST_AUDIO);
             } else {
-                addAboDto.getAct().abo.setList(AboData.ABO_FILM_AUDIO);
+                addAboDto.getAct().abo.setList(ProgConst.LIST_FILM_AUDIO);
             }
         }
     }
