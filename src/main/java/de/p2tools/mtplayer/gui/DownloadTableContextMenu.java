@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
@@ -130,11 +131,11 @@ public class DownloadTableContextMenu {
         miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.DOWNLOAD));
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
-        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(downloadData.getChannel(), downloadData.getTheme(), ""));
+        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(ProgConst.LIST_FILM_AUDIO, downloadData.getChannel(), downloadData.getTheme(), ""));
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
-        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlack("", downloadData.getTheme(), ""));
+        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlack(ProgConst.LIST_FILM_AUDIO, "", downloadData.getTheme(), ""));
         final MenuItem miBlackTitle = new MenuItem("Titel direkt in die Blacklist einfügen");
-        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack("", "", downloadData.getTitle()));
+        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack(ProgConst.LIST_FILM_AUDIO, "", "", downloadData.getTitle()));
 
         miBlack.setDisable(downloadData == null);
         miBlackSenderTheme.setDisable(downloadData == null);

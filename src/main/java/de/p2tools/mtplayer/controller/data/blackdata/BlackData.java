@@ -35,10 +35,11 @@ public class BlackData extends BlackDataProps {
         initFilter();
     }
 
-    public BlackData(String sender, String theme, String title, String themeTitle) {
+    public BlackData(int list, String sender, String theme, String title, String themeTitle) {
         super();
         initFilter();
 
+        setList(list);
         setChannel(sender);
         setTheme(theme);
         setTitle(title);

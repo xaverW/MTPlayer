@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller.data.blackdata;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
@@ -34,14 +35,13 @@ public class BlacklistFactory {
     public static void addBlackFilm(BLACK black) {
         // aus dem Menü: mit markiertem Film ein Black erstellen
         // Dialog anzeigen
-        // todo audio
         BlackData blackData = null;
         if (black.equals(BLACK.FILM)) {
             final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(true, true);
             if (filmDataMTP.isEmpty()) {
                 return;
             }
-            blackData = new BlackData(filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
+            blackData = new BlackData(ProgConst.LIST_FILM, filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
                     filmDataMTP.get().getTitle(), "");
 
         } else if (black.equals(BLACK.AUDIO)) {
@@ -49,7 +49,7 @@ public class BlacklistFactory {
             if (filmDataMTP.isEmpty()) {
                 return;
             }
-            blackData = new BlackData(filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
+            blackData = new BlackData(ProgConst.LIST_AUDIO, filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
                     filmDataMTP.get().getTitle(), "");
 
         } else if (black.equals(BLACK.DOWNLOAD)) {
@@ -57,7 +57,7 @@ public class BlacklistFactory {
             if (downloadData.isEmpty()) {
                 return;
             }
-            blackData = new BlackData(downloadData.get().getChannel(), downloadData.get().getTheme(),
+            blackData = new BlackData(ProgConst.LIST_FILM_AUDIO, downloadData.get().getChannel(), downloadData.get().getTheme(),
                     downloadData.get().getTitle(), "");
         }
 
@@ -78,13 +78,13 @@ public class BlacklistFactory {
             if (filmSelection.isEmpty()) {
                 return;
             }
-            addBlack("", filmSelection.get().getTheme(), "");
+            addBlack(ProgConst.LIST_FILM, "", filmSelection.get().getTheme(), "");
         } else if (black.equals(BLACK.AUDIO)) {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
             if (filmSelection.isEmpty()) {
                 return;
             }
-            addBlack("", filmSelection.get().getTheme(), "");
+            addBlack(ProgConst.LIST_AUDIO, "", filmSelection.get().getTheme(), "");
         }
     }
 
@@ -95,7 +95,7 @@ public class BlacklistFactory {
         if (downloadData.isEmpty()) {
             return;
         }
-        addBlack("", "", downloadData.get().getTitle());
+        addBlack(ProgConst.LIST_FILM_AUDIO, "", "", downloadData.get().getTitle());
     }
 
     public static void addBlackSenderThemeDownload() {
@@ -105,7 +105,7 @@ public class BlacklistFactory {
         if (downloadData.isEmpty()) {
             return;
         }
-        addBlack(downloadData.get().getChannel(), downloadData.get().getTheme(), "");
+        addBlack(ProgConst.LIST_FILM_AUDIO, downloadData.get().getChannel(), downloadData.get().getTheme(), "");
     }
 
     public static void addBlackThemeDownload() {
@@ -115,11 +115,11 @@ public class BlacklistFactory {
         if (downloadData.isEmpty()) {
             return;
         }
-        addBlack("", downloadData.get().getTheme(), "");
+        addBlack(ProgConst.LIST_FILM_AUDIO, "", downloadData.get().getTheme(), "");
     }
 
-    public static void addBlack(String sender, String theme, String titel) {
-        BlackData blackData = new BlackData(sender, theme, titel, "");
+    public static void addBlack(int list, String sender, String theme, String titel) {
+        BlackData blackData = new BlackData(list, sender, theme, titel, "");
         ProgData.getInstance().blackList.addAndNotify(blackData);
     }
 
@@ -153,39 +153,39 @@ public class BlacklistFactory {
 
     public static void addStandardsList(BlackList list) {
         //nach Auftreten sortiert!
-        BlackData bl = new BlackData("", "", "- Audiodeskription", "");
+        BlackData bl = new BlackData(ProgConst.LIST_FILM, "", "", "- Audiodeskription", "");
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "(Audiodeskription)", "");
+        bl = new BlackData(ProgConst.LIST_FILM, "", "", "(Audiodeskription)", "");
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "(Gebärdensprache)", "");
+        bl = new BlackData(ProgConst.LIST_FILM, "", "", "(Gebärdensprache)", "");
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "mit Gebärdensprache", "");
+        bl = new BlackData(ProgConst.LIST_FILM, "", "", "mit Gebärdensprache", "");
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "(mit Untertitel)", "");
+        bl = new BlackData(ProgConst.LIST_FILM, "", "", "(mit Untertitel)", "");
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "(Originalversion mit Untertitel)", "");
+        bl = new BlackData(ProgConst.LIST_FILM, "", "", "(Originalversion mit Untertitel)", "");
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "in Gebärdensprache", "");
+        bl = new BlackData(ProgConst.LIST_FILM, "", "", "in Gebärdensprache", "");
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "in Gebärdensprache", "", "");
+        bl = new BlackData(ProgConst.LIST_FILM, "", "in Gebärdensprache", "", "");
         bl.setThemeExact(false);
         list.add(bl);
 
-        bl = new BlackData("", "", "\"Trailer:\"", "");
+        bl = new BlackData(ProgConst.LIST_FILM, "", "", "\"Trailer:\"", "");
         bl.setThemeExact(false);
         list.add(bl);
     }

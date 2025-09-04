@@ -196,11 +196,11 @@ public class FilmTableContextMenu {
         miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.FILM));
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
-        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(film.getChannel(), film.getTheme(), ""));
+        miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(ProgConst.LIST_FILM, film.getChannel(), film.getTheme(), ""));
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen");
-        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlack("", film.getTheme(), ""));
+        miBlackTheme.setOnAction(event -> BlacklistFactory.addBlack(ProgConst.LIST_FILM, "", film.getTheme(), ""));
         final MenuItem miBlackTitle = new MenuItem("Titel direkt in die Blacklist einfügen");
-        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack("", "", film.getTitle()));
+        miBlackTitle.setOnAction(event -> BlacklistFactory.addBlack(ProgConst.LIST_FILM, "", "", film.getTitle()));
 
         miBlack.setDisable(film == null);
         miBlackSenderTheme.setDisable(film == null);

@@ -64,6 +64,7 @@ public class BlackDataProps extends P2DataSample<BlackDataProps> {
 
     public BlackData getCopy() {
         BlackData bl = new BlackData();
+        bl.setList(list.get());
         bl.setChannel(channel.getValueSafe());
         bl.setTheme(theme.getValueSafe());
         bl.setThemeExact(themeExact.getValue());
