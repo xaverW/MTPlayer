@@ -17,10 +17,7 @@
 package de.p2tools.mtplayer.controller.data.blackdata;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.p2lib.configfile.config.Config;
-import de.p2tools.p2lib.configfile.config.Config_boolProp;
-import de.p2tools.p2lib.configfile.config.Config_lDate;
-import de.p2tools.p2lib.configfile.config.Config_stringProp;
+import de.p2tools.p2lib.configfile.config.*;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import javafx.beans.property.*;
@@ -48,20 +45,21 @@ public class BlackDataProps extends P2DataSample<BlackDataProps> {
 
     @Override
     public Config[] getConfigsArr() {
-        ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_stringProp("channel", channel));
-        list.add(new Config_stringProp("theme", theme));
-        list.add(new Config_boolProp("themeExact", themeExact));
-        list.add(new Config_stringProp("title", title));
-        list.add(new Config_stringProp("themeTitle", themeTitle));
-        list.add(new Config_boolProp("active", active));
-        list.add(new Config_lDate("genDate", P2LDateFactory.toString(genDate)) {
+        ArrayList<Config> configList = new ArrayList<>();
+        configList.add(new Config_intProp("list", list));
+        configList.add(new Config_stringProp("channel", channel));
+        configList.add(new Config_stringProp("theme", theme));
+        configList.add(new Config_boolProp("themeExact", themeExact));
+        configList.add(new Config_stringProp("title", title));
+        configList.add(new Config_stringProp("themeTitle", themeTitle));
+        configList.add(new Config_boolProp("active", active));
+        configList.add(new Config_lDate("genDate", P2LDateFactory.toString(genDate)) {
             @Override
             public void setUsedValue(LocalDate act) {
                 genDate = act;
             }
         });
-        return list.toArray(new Config[]{});
+        return configList.toArray(new Config[]{});
     }
 
     public BlackData getCopy() {
@@ -87,6 +85,18 @@ public class BlackDataProps extends P2DataSample<BlackDataProps> {
 
     public void setNo(int no) {
         this.no = no;
+    }
+
+    public int getList() {
+        return list.get();
+    }
+
+    public void setList(int list) {
+        this.list.set(list);
+    }
+
+    public IntegerProperty listProperty() {
+        return list;
     }
 
     public String getChannel() {

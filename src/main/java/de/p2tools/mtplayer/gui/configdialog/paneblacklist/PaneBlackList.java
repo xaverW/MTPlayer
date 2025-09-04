@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
@@ -34,6 +35,7 @@ import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -52,15 +54,22 @@ import java.util.List;
 
 public class PaneBlackList {
 
-    private SplitPane splitPane;
-    private final TableBlacklist tableView;
     private final RadioButton rbBlackFilm = new RadioButton("Blacklist");
     private final RadioButton rbWhiteFilm = new RadioButton("Whitelist");
     private final RadioButton rbOffFilm = new RadioButton("Alles anzeigen");
+
     private final RadioButton rbBlackAudio = new RadioButton("Blacklist");
     private final RadioButton rbWhiteAudio = new RadioButton("Whitelist");
     private final RadioButton rbOffAudio = new RadioButton("Alles anzeigen");
+
+    public final RadioButton rbFilm = new RadioButton("Film");
+    public final RadioButton rbAudio = new RadioButton("Audio");
+    public final RadioButton rbFilmAudio = new RadioButton("Film und Audio");
+
+    private SplitPane splitPane;
+    private final TableBlacklist tableView;
     private final GridPane gridPane = new GridPane();
+    private final P2ToggleSwitch tglActive = new P2ToggleSwitch("Aktiv:");
 
     private final P2MenuButton mbChannel;
     private final StringProperty mbChannelProp = new SimpleStringProperty();
@@ -68,7 +77,6 @@ public class PaneBlackList {
     private final TextField txtTheme = new TextField();
     private final TextField txtTitle = new TextField();
     private final TextField txtThemeTitle = new TextField();
-    private final P2ToggleSwitch tglActive = new P2ToggleSwitch("Aktiv:");
 
     private final BlackList list;
     private final SortedList<BlackData> sortedList;
@@ -81,6 +89,18 @@ public class PaneBlackList {
 
     private final Stage stage;
     private final ProgData progData;
+    private final ToggleGroup toggleGroupList = new ToggleGroup();
+    private final ChangeListener<Toggle> changeListener = (u, o, n) -> {
+        if (blackData != null) {
+            if (rbFilmAudio.isSelected()) {
+                blackData.setList(ProgConst.LIST_FILM_AUDIO);
+            } else if (rbFilm.isSelected()) {
+                blackData.setList(ProgConst.LIST_FILM);
+            } else {
+                blackData.setList(ProgConst.LIST_AUDIO);
+            }
+        }
+    };
 
     public PaneBlackList(Stage stage, ProgData progData, boolean controlBlackListNotFilmFilter, BooleanProperty blackDataChanged) {
         this.stage = stage;
@@ -95,16 +115,16 @@ public class PaneBlackList {
         if (controlBlackListNotFilmFilter) {
             tableView = new TableBlacklist(Table.TABLE_ENUM.BLACKLIST);
             Table.setTable(tableView);
-
             sortedList = progData.blackList.getSortedList();
             list = progData.blackList;
+
         } else {
             tableView = new TableBlacklist(Table.TABLE_ENUM.FILMFILTER);
             Table.setTable(tableView);
-
             sortedList = progData.filmListFilter.getSortedList();
             list = progData.filmListFilter;
         }
+
         panelFilterGrid = new PanelFilterGrid(tableView, list,
                 controlBlackListNotFilmFilter ? progData.blackListFilterBlackList : progData.blackListFilterFilmList);
     }
@@ -133,7 +153,6 @@ public class PaneBlackList {
         panelButton.addButton(stage, vBox, tableView, blackDataChanged, list);
         PanelMoveButton.addMoveButton(stage, vBox, tableView, progData, controlBlackListNotFilmFilter, blackDataChanged, list);
         addConfigs(vBox);
-
 
         Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
         btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
@@ -177,22 +196,25 @@ public class PaneBlackList {
         rbBlackFilm.setToggleGroup(toggleGroupFilm);
         rbWhiteFilm.setToggleGroup(toggleGroupFilm);
         rbOffFilm.setToggleGroup(toggleGroupFilm);
-        toggleGroupFilm.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
+        toggleGroupFilm.selectedToggleProperty().addListener((u, o, n) -> setBlackPropOnOff());
 
         final ToggleGroup toggleGroupAudio = new ToggleGroup();
         rbBlackAudio.setToggleGroup(toggleGroupAudio);
         rbWhiteAudio.setToggleGroup(toggleGroupAudio);
         rbOffAudio.setToggleGroup(toggleGroupAudio);
-        toggleGroupAudio.selectedToggleProperty().addListener((u, o, n) -> setBlackProp());
+        toggleGroupAudio.selectedToggleProperty().addListener((u, o, n) -> setBlackPropOnOff());
 
-        setRb();
+        rbFilmAudio.setToggleGroup(toggleGroupList);
+        rbFilm.setToggleGroup(toggleGroupList);
+        rbAudio.setToggleGroup(toggleGroupList);
+
         progData.filterWorkerFilm.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
-            setRb();
+            setBlackOnOff();
         });
         progData.filterWorkerAudio.getActFilterSettings().blacklistOnOffProperty().addListener((u, o, n) -> {
-            setRb();
+            setBlackOnOff();
         });
-
+        setBlackOnOff();
 
         GridPane gridPaneBlack = new GridPane();
         gridPaneBlack.setHgap(20);
@@ -287,12 +309,19 @@ public class PaneBlackList {
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         int row = 0;
+
+        HBox hBoxChannel = new HBox(P2LibConst.SPACING_HBOX);
+        hBoxChannel.setAlignment(Pos.CENTER_LEFT);
+        hBoxChannel.getChildren().addAll(mbChannel, P2GuiTools.getVDistance(50),
+                tglActive, P2GuiTools.getHBoxGrower(), rbFilmAudio, rbFilm, rbAudio);
         gridPane.add(new Label("Sender:"), 0, row);
-        gridPane.add(mbChannel, 1, row);
+        gridPane.add(hBoxChannel, 1, row);
 
         gridPane.add(new Label("Thema:"), 0, ++row);
-        gridPane.add(txtTheme, 1, row);
-        gridPane.add(tgThemeExact, 2, row);
+        HBox hBoxTheme = new HBox(P2LibConst.SPACING_HBOX);
+        hBoxTheme.getChildren().addAll(txtTheme, tgThemeExact);
+        HBox.setHgrow(txtTheme, Priority.ALWAYS);
+        gridPane.add(hBoxTheme, 1, row);
 
         gridPane.add(new Label("Titel:"), 0, ++row);
         gridPane.add(txtTitle, 1, row);
@@ -300,14 +329,13 @@ public class PaneBlackList {
         gridPane.add(new Label("Thema-Titel:"), 0, ++row);
         gridPane.add(txtThemeTitle, 1, row);
 
-        gridPane.add(tglActive, 0, ++row, 2, 1);
-
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
                 P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSize());
         gridPane.setDisable(true);
         gridPane.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
 
+        toggleGroupList.selectedToggleProperty().addListener((o, u, n) -> setChanged());
         mbChannel.textProperty().addListener((observable, oldValue, newValue) -> setChanged());
         txtTheme.textProperty().addListener((observable, oldValue, newValue) -> setChanged());
         tgThemeExact.selectedProperty().addListener((observable, oldValue, newValue) -> setChanged());
@@ -323,10 +351,9 @@ public class PaneBlackList {
         }
     }
 
-    private void setRb() {
+    private void setBlackOnOff() {
         if (controlBlackListNotFilmFilter) {
             //dann wird die BlackList gesteuert
-
             switch (progData.filterWorkerFilm.getActFilterSettings().getBlacklistOnOff()) {
                 case BlacklistFilterFactory.BLACKLILST_FILTER_OFF:
                     //OFF
@@ -375,7 +402,7 @@ public class PaneBlackList {
         }
     }
 
-    private void setBlackProp() {
+    private void setBlackPropOnOff() {
         if (controlBlackListNotFilmFilter) {
             //dann wird die BlackList gesteuert
             if (rbBlackFilm.isSelected()) {
@@ -421,6 +448,8 @@ public class PaneBlackList {
             return;
         }
 
+        toggleGroupList.selectedToggleProperty().removeListener(changeListener);
+
         if (blackData != null) {
             mbChannelProp.unbindBidirectional(blackData.channelProperty());
             tgThemeExact.selectedProperty().unbindBidirectional(blackData.themeExactProperty());
@@ -428,6 +457,7 @@ public class PaneBlackList {
             txtTitle.textProperty().unbindBidirectional(blackData.titleProperty());
             txtThemeTitle.textProperty().unbindBidirectional(blackData.themeTitleProperty());
             tglActive.selectedProperty().unbindBidirectional(blackData.activeProperty());
+
             txtTheme.setText("");
             txtTitle.setText("");
             txtThemeTitle.setText("");
@@ -435,6 +465,11 @@ public class PaneBlackList {
 
         blackData = blackDataAct;
         if (blackData != null) {
+            rbFilmAudio.setSelected(blackData.getList() == ProgConst.LIST_FILM_AUDIO);
+            rbFilm.setSelected(blackData.getList() == ProgConst.LIST_FILM);
+            rbAudio.setSelected(blackData.getList() == ProgConst.LIST_AUDIO);
+            toggleGroupList.selectedToggleProperty().addListener(changeListener);
+
             mbChannelProp.bindBidirectional(blackData.channelProperty());
             txtTheme.textProperty().bindBidirectional(blackData.themeProperty());
             tgThemeExact.selectedProperty().bindBidirectional(blackData.themeExactProperty());

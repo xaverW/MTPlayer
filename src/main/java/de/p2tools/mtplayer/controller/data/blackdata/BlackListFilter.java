@@ -16,13 +16,12 @@
 
 package de.p2tools.mtplayer.controller.data.blackdata;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import javafx.beans.property.*;
 
 public final class BlackListFilter {
 
+    private final IntegerProperty list = new SimpleIntegerProperty(ProgConst.LIST_FILM_AUDIO);
     private final StringProperty channel = new SimpleStringProperty();
     private final StringProperty theme = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
@@ -35,6 +34,17 @@ public final class BlackListFilter {
     private final BooleanProperty filterActiveIndeterminate = new SimpleBooleanProperty(true);
     private final BooleanProperty filterActive = new SimpleBooleanProperty(true);
 
+    public int getList() {
+        return list.get();
+    }
+
+    public void setList(int list) {
+        this.list.set(list);
+    }
+
+    public IntegerProperty listProperty() {
+        return list;
+    }
 
     public String getChannel() {
         return channel.get();

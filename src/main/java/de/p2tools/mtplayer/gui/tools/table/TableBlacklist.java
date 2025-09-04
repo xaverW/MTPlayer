@@ -60,6 +60,15 @@ public class TableBlacklist extends PTable<BlackData> {
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
 
+        final TableColumn<BlackData, Boolean> activeColumn = new TableColumn<>("Aktiv");
+        activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
+        activeColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+
+        final TableColumn<BlackData, Integer> listColumn = new TableColumn<>("Liste");
+        listColumn.setCellValueFactory(new PropertyValueFactory<>("list"));
+        listColumn.getStyleClass().add("alignCenter");
+        TableBlackFactory.columnFactoryList(listColumn);
+
         final TableColumn<BlackData, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         channelColumn.getStyleClass().add("alignCenter");
@@ -77,10 +86,6 @@ public class TableBlacklist extends PTable<BlackData> {
         final TableColumn<BlackData, String> themeTitleColumn = new TableColumn<>("Thema-Titel");
         themeTitleColumn.setCellValueFactory(new PropertyValueFactory<>("themeTitle"));
 
-        final TableColumn<BlackData, Boolean> activeColumn = new TableColumn<>("Aktiv");
-        activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
-        activeColumn.setCellFactory(new P2CellCheckBox().cellFactory);
-
         final TableColumn<BlackData, LocalDate> dateColumn = new TableColumn<>("Erstelldatum");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
         dateColumn.setCellFactory(new P2CellLocalDate().cellFactory);
@@ -89,7 +94,7 @@ public class TableBlacklist extends PTable<BlackData> {
         hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
         hitsColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        getColumns().addAll(nrColumn, hitsColumn, channelColumn, themeColumn,
-                themeExactColumn, titleColumn, themeTitleColumn, activeColumn, dateColumn);
+        getColumns().addAll(nrColumn, activeColumn, listColumn, hitsColumn, channelColumn,
+                themeColumn, themeExactColumn, titleColumn, themeTitleColumn, dateColumn);
     }
 }

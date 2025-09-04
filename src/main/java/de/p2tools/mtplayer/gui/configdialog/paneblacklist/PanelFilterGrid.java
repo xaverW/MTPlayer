@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackListFilter;
@@ -53,6 +54,10 @@ public class PanelFilterGrid {
     private final P2ToggleSwitch tglFilterThemeExact = new P2ToggleSwitch("Thema exakt");
     private final P2ToggleSwitch tglFilterActive = new P2ToggleSwitch("Aktiv");
 
+    public final RadioButton rbFilm = new RadioButton("Film");
+    public final RadioButton rbAudio = new RadioButton("Audio");
+    public final RadioButton rbFilmAudio = new RadioButton("Film/Audio");
+
     private final Button btnClearFilter = P2ButtonClearFilterFactory.getPButtonClear();
     private final TableView<BlackData> tableView;
     private final BlackListFilter blackListFilterBlackList;
@@ -68,6 +73,10 @@ public class PanelFilterGrid {
     }
 
     private void bind() {
+        rbFilmAudio.setSelected(blackListFilterBlackList.getList() == ProgConst.LIST_FILM_AUDIO);
+        rbFilm.setSelected(blackListFilterBlackList.getList() == ProgConst.LIST_FILM);
+        rbAudio.setSelected(blackListFilterBlackList.getList() == ProgConst.LIST_AUDIO);
+
         mbFilterChannelProp.bindBidirectional(blackListFilterBlackList.channelProperty());
         txtFilterThema.textProperty().bindBidirectional(blackListFilterBlackList.themeProperty());
         txtFilterTitel.textProperty().bindBidirectional(blackListFilterBlackList.titleProperty());
@@ -84,6 +93,14 @@ public class PanelFilterGrid {
     }
 
     public void close() {
+        if (rbFilmAudio.isSelected()) {
+            blackListFilterBlackList.setList(ProgConst.LIST_FILM_AUDIO);
+        } else if (rbFilm.isSelected()) {
+            blackListFilterBlackList.setList(ProgConst.LIST_FILM);
+        } else {
+            blackListFilterBlackList.setList(ProgConst.LIST_AUDIO);
+        }
+
         mbFilterChannelProp.unbindBidirectional(blackListFilterBlackList.channelProperty());
         txtFilterThema.textProperty().unbindBidirectional(blackListFilterBlackList.themeProperty());
         txtFilterTitel.textProperty().unbindBidirectional(blackListFilterBlackList.titleProperty());
@@ -109,6 +126,13 @@ public class PanelFilterGrid {
         Label label = new Label("Blacklist-Eintrag suchen:");
         vb1.getChildren().add(label);
 
+        vb1.getChildren().add(P2GuiTools.getVDistance(5));
+        vb1.getChildren().add(tglFilterActive);
+
+        HBox hBox = new HBox(2);
+        hBox.getChildren().addAll(rbFilmAudio, rbFilm, rbAudio);
+        vb1.getChildren().add(hBox);
+
         VBox vb = new VBox(SPACE_TITLE);
         vb.getChildren().addAll(new Label("Sender"), mbFilterChannel);
         vb1.getChildren().add(vb);
@@ -129,9 +153,6 @@ public class PanelFilterGrid {
         vb1.getChildren().add(vb);
         HBox.setHgrow(vb, Priority.ALWAYS);
 
-        vb1.getChildren().add(P2GuiTools.getVDistance(5));
-        vb1.getChildren().add(tglFilterActive);
-
         VBox vb2 = new VBox();
         vb2.setAlignment(Pos.TOP_LEFT);
         vb2.setPadding(new Insets(SPACE_VBOX));
@@ -150,7 +171,6 @@ public class PanelFilterGrid {
         tableView.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
 
         splitPane.getItems().addAll(tableView, vAll);
-//        splitPane.getItems().get(0).autosize();
         SplitPane.setResizableWithParent(vAll, false);
         SplitPane.setResizableWithParent(tableView, false);
 
@@ -167,6 +187,12 @@ public class PanelFilterGrid {
     }
 
     private void makeFilter() {
+        final ToggleGroup toggleGroupList = new ToggleGroup();
+        rbFilmAudio.setToggleGroup(toggleGroupList);
+        rbFilm.setToggleGroup(toggleGroupList);
+        rbAudio.setToggleGroup(toggleGroupList);
+        toggleGroupList.selectedToggleProperty().addListener((u, o, n) -> addPredicate());
+
         mbFilterChannelProp.addListener((u, o, n) -> addPredicate());
         txtFilterThema.textProperty().addListener((u, o, n) -> addPredicate());
         txtFilterTitel.textProperty().addListener((u, o, n) -> addPredicate());
@@ -179,6 +205,7 @@ public class PanelFilterGrid {
         tglFilterActive.indeterminateProperty().addListener((u, o, n) -> addPredicate());
 
         btnClearFilter.setOnAction(a -> {
+            rbFilmAudio.setSelected(true);
             mbFilterChannelProp.setValue("");
             txtFilterThema.clear();
             tglFilterThemeExact.setSelected(false);
@@ -193,6 +220,11 @@ public class PanelFilterGrid {
 
     private void addPredicate() {
         Predicate<BlackData> predicate = blackData -> true;
+        if (rbFilm.isSelected()) {
+            predicate = predicate.and(blackData -> blackData.getList() == ProgConst.LIST_FILM);
+        } else if (rbAudio.isSelected()) {
+            predicate = predicate.and(blackData -> blackData.getList() == ProgConst.LIST_AUDIO);
+        }
 
         if (!mbFilterChannelProp.getValueSafe().isEmpty()) {
             Filter filter = new Filter(mbFilterChannelProp.getValueSafe(), true);
