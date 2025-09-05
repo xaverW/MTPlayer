@@ -54,22 +54,26 @@ public class LoadFactory {
         P2LoadConst.filmListUrl = ProgData.filmListUrl;
 
 
-        // ProgData.getInstance().filmListFilter.clearCounter(); //todo evtl. nur beim Neuladen einer kompletten Liste??
         // ist für den Filter beim Laden der Liste (nur für die Filmliste)
         if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
             //ist sonst evtl. noch von "vorher" gesetzt
-            P2LoadConst.checker = null;
+            P2LoadConst.checkerFilm = null;
+            P2LoadConst.checkerAudio = null;
 
         } else if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
             //dann sollen Filme geprüft werden
             ProgData.getInstance().filmListFilter.clearCounter();
-            P2LoadConst.checker = filmData -> BlacklistFilterFactory.checkFilmIsBlack(false, filmData,
+            P2LoadConst.checkerFilm = filmData -> BlacklistFilterFactory.checkFilmIsBlack(false, filmData,
+                    ProgData.getInstance().filmListFilter, true);
+            P2LoadConst.checkerAudio = filmData -> BlacklistFilterFactory.checkFilmIsBlack(true, filmData,
                     ProgData.getInstance().filmListFilter, true);
 
         } else {
             //dann ist er inverse
             ProgData.getInstance().filmListFilter.clearCounter();
-            P2LoadConst.checker = filmData -> !BlacklistFilterFactory.checkFilmIsBlack(false, filmData,
+            P2LoadConst.checkerFilm = filmData -> !BlacklistFilterFactory.checkFilmIsBlack(false, filmData,
+                    ProgData.getInstance().filmListFilter, true);
+            P2LoadConst.checkerAudio = filmData -> !BlacklistFilterFactory.checkFilmIsBlack(true, filmData,
                     ProgData.getInstance().filmListFilter, true);
         }
     }
