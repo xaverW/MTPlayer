@@ -93,7 +93,7 @@ public class LoadAudioListWorker {
 
             logList.add("Blacklist filtern");
             progData.maskerPane.setMaskerText("Blacklist filtern");
-            BlacklistFilterFactory.markFilmBlack(true, false);
+            BlacklistFilterFactory.markFilmsIfBlack(true, false);
 
             logList.add("Filme in Downloads eingetragen");
             progData.maskerPane.setMaskerText("Downloads eingetragen");

@@ -96,7 +96,7 @@ public class BlacklistFactory {
         }
 
         ProgData.getInstance().blackList.add(blackData);
-        new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
+        new Thread(() -> BlacklistFilterFactory.markFilmsIfBlack(true)).start();
     }
 
     public static void addBlackThemeFilm(BLACK_SRC blackSRC) {
@@ -153,7 +153,7 @@ public class BlacklistFactory {
     public static void addBlack(int list, String sender, String theme, String titel) {
         BlackData blackData = new BlackData(list, sender, theme, titel, "");
         ProgData.getInstance().blackList.add(blackData);
-        new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
+        new Thread(() -> BlacklistFilterFactory.markFilmsIfBlack(true)).start();
     }
 
     public static boolean blackIsEmpty(BlackData blackData) {
@@ -168,7 +168,7 @@ public class BlacklistFactory {
     }
 
     public static void addStandardsList(BlackList list) {
-        //nach Auftreten sortiert!
+        // Button addStandards, nach Auftreten sortiert!
         BlackData bl = new BlackData(ProgConst.LIST_FILM, "", "", "- Audiodeskription", "");
         bl.setThemeExact(false);
         list.add(bl);
@@ -205,6 +205,6 @@ public class BlacklistFactory {
         bl.setThemeExact(false);
         list.add(bl);
 
-        new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
+        new Thread(() -> BlacklistFilterFactory.markFilmsIfBlack(true)).start();
     }
 }

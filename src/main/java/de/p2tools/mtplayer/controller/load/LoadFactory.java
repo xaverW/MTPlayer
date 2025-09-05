@@ -63,13 +63,13 @@ public class LoadFactory {
         } else if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
             //dann sollen Filme geprüft werden
             ProgData.getInstance().filmListFilter.clearCounter();
-            P2LoadConst.checker = filmData -> BlacklistFilterFactory.checkFilmAndCountHits(false, filmData,
+            P2LoadConst.checker = filmData -> BlacklistFilterFactory.checkFilmIsBlack(false, filmData,
                     ProgData.getInstance().filmListFilter, true);
 
         } else {
             //dann ist er inverse
             ProgData.getInstance().filmListFilter.clearCounter();
-            P2LoadConst.checker = filmData -> !BlacklistFilterFactory.checkFilmAndCountHits(false, filmData,
+            P2LoadConst.checker = filmData -> !BlacklistFilterFactory.checkFilmIsBlack(false, filmData,
                     ProgData.getInstance().filmListFilter, true);
         }
     }

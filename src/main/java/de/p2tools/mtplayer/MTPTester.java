@@ -86,7 +86,7 @@ public class MTPTester {
             btnBlack.setOnAction(a -> {
                 ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Blacklist", -1, false);
                 new Thread(() -> {
-                    BlacklistFilterFactory.markFilmBlack(true);
+                    BlacklistFilterFactory.markFilmsIfBlack(true);
                     ProgData.busy.busyOffFx();
                 }).start();
             });

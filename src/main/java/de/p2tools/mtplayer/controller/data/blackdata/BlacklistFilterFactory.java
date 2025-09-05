@@ -46,16 +46,19 @@ public class BlacklistFilterFactory {
     private BlacklistFilterFactory() {
     }
 
-    public static synchronized void markFilmBlack(boolean notify) {
+    public static synchronized void markFilmsIfBlack(boolean notify) {
+        // Filme die Black sind, markieren
         // Blacklist hinzugefügt, Config-Dialog beendet und Black geändert
-        // dann werden beide markiert
-        markFilmBlack(true, notify);
-        markFilmBlack(false, notify);
+        // es werden Filme/Audio beide markiert
+        ProgData.getInstance().blackList.clearCounter();
+        markFilmsIfBlack(true, notify);
+        markFilmsIfBlack(false, notify);
     }
 
-    public static synchronized void markFilmBlack(boolean audio, boolean notify) {
-        // Filmliste geladen, Button/Menü, ConfigDialog, Filter blkBtn
-        // hier werden die Filme gekennzeichnet, ob sie "black" sind und das dauert
+    public static synchronized void markFilmsIfBlack(boolean audio, boolean notify) {
+        // Filme die Black sind, markieren, es werden die Filme gekennzeichnet, ob sie "black" sind
+        // und es wird die gefilterte Liste erstellt
+        // Filmliste geladen
 
         P2Duration.counterStart("markFilmBlack" + (audio ? "-Audio" : "-Film"));
         P2Log.sysLog("markFilmBlack " + (audio ? "Audio" : "Film") + " -> start");
@@ -68,10 +71,6 @@ public class BlacklistFilterFactory {
             maskerPane = false;
         }
 
-        if (!audio) {
-            // wird nur bei Filmen gezählt??
-            ProgData.getInstance().blackList.clearCounter();
-        }
         loadCurrentBlacklistSettings();
 
         //Filmliste durchlaufen und geblockte Filme markieren (parallel: Blockiert sich selbst durch Film.setBlocked)
@@ -92,13 +91,12 @@ public class BlacklistFilterFactory {
                     ProgData.getInstance().maskerPane.setMaskerProgress(percent, "Blacklist filtern");
                 }
             }
-            // gezählt wird nur bei Filmen
-            film.setBlackBlocked(checkFilmIsBlockedCompleteBlackData(audio, film,
-                    ProgData.getInstance().blackList, !audio));
+            film.setBlackBlocked(checkFilmIsBlackComplete(audio, film,
+                    ProgData.getInstance().blackList, true));
         });
         P2Duration.counterStop("forEach");
 
-        //und jetzt die filteredList erstellen
+        //und jetzt die FilteredList erstellen
         makeBlackFilteredFilmlist(audio);
 
         if (maskerPane) {
@@ -113,7 +111,7 @@ public class BlacklistFilterFactory {
     }
 
     public static synchronized void makeBlackFilteredFilmlist(boolean audio) {
-        // nach dem markieren der Filme in der Liste, nach dem ein-/ausschalten der Blacklist
+        // nach dem Markieren der Filme in der Liste, nach dem ein-/ausschalten der Blacklist
         // es wird die Black-gefilterte Filmliste erstellt
         final ProgData progData = ProgData.getInstance();
         final FilmListMTP filmList;
@@ -128,7 +126,7 @@ public class BlacklistFilterFactory {
         }
 
         P2Duration.counterStart("makeBlackFilteredFilmlist");
-        loadCurrentBlacklistSettings();
+//        loadCurrentBlacklistSettings();
         filmListFiltered.clear();
 
         if (filmList != null) {
@@ -157,11 +155,11 @@ public class BlacklistFilterFactory {
         P2Duration.counterStop("makeBlackFilteredFilmlist");
     }
 
-    public static synchronized boolean checkFilmIsBlockedCompleteBlackData(boolean audio,
-                                                                           FilmData filmData,
-                                                                           List<BlackData> list,
-                                                                           boolean incCounter) {
-        // beim Abo-Suchen wenn eingeschaltet, und beim markieren der Filme: "markFilmBlack()"
+    public static synchronized boolean checkFilmIsBlackComplete(boolean audio,
+                                                                FilmData filmData,
+                                                                List<BlackData> list,
+                                                                boolean incCounter) {
+        // beim Abo-Suchen wenn eingeschaltet, und beim markieren der Filme: "markFilmsIfBlack()"
         // hier werden der Film gegen alle BLACK-Einstellungen der Blacklist geprüft
         // liefert TRUE -> wenn der Film zur Blacklist passt, also geblockt werden soll (oder nicht WHITE)
         // Counter werden vorher schon gelöscht und werden gesetzt
@@ -175,33 +173,28 @@ public class BlacklistFilterFactory {
         if (doNotShowFutureFilms && filmData.isInFuture()) {
             return true;
         }
-        if (minFilmDuration != 0 && !checkOkFilmLength(filmData)) {
+        if (minFilmDuration != 0 && !checkFilmLength(filmData)) {
             return true;
         }
-        if (maxFilmDays > 0 && !checkOkDate(filmData)) {
+        if (maxFilmDays > 0 && !checkDate(filmData)) {
             return true;
         }
 
-        return checkFilmAndCountHits(audio, filmData, list, incCounter);
+        return checkFilmIsBlack(audio, filmData, list, incCounter);
     }
 
-    private static boolean checkOkFilmLength(FilmData film) {
+    private static boolean checkFilmLength(FilmData film) {
         return film.getDurationMinute() == 0 || film.getDurationMinute() >= minFilmDuration;
     }
 
-    private static boolean checkOkDate(FilmData film) {
-        final long filmTime = film.filmDate.getTime(); // liefert die ms nach "o"
-        if (filmTime != 0 && filmTime <= maxFilmDays) {
-            return false;
-        }
-
-        return true;
+    private static boolean checkDate(FilmData film) {
+        final long filmTime = film.filmDate.getTime(); // liefert die ms nach "0"
+        return filmTime == 0 || filmTime > maxFilmDays;
     }
 
-    public static boolean checkFilmAndCountHits(boolean audio, FilmData filmData, List<BlackData> list, boolean countHits) {
-        // Aufruf nach dem Neuladen einer Filmliste aus dem Web (ist der FilmListFilter beim Laden) oder Test/Markieren eines Films
-        // nach Treffer **abbrechen**
-        // Counter werden vorher schon gelöscht
+    public static boolean checkFilmIsBlack(boolean audio, FilmData filmData, List<BlackData> list, boolean countHits) {
+        // Aufruf nach dem Neuladen einer Filmliste aus dem Web (ist der FilmListFilter beim Laden) oder checkFilmIsBlackComplete
+        // nach Treffer **abbrechen** und Counter werden vorher schon gelöscht
         filmData.setLowerCase();
         // todo java.util.ConcurrentModificationException
         for (final BlackData blackData : list) {

@@ -108,7 +108,7 @@ public class LoadFilmListWorker {
 
             logList.add("Blacklist filtern");
             progData.maskerPane.setMaskerText("Blacklist filtern");
-            BlacklistFilterFactory.markFilmBlack(false, false);
+            BlacklistFilterFactory.markFilmsIfBlack(false, false);
 
             progData.blackList.sortAndCleanTheList();
             progData.filmListFilter.sortAndCleanTheList();
@@ -183,7 +183,7 @@ public class LoadFilmListWorker {
             if (d.isAudio()) {
                 continue;
             }
-            
+
             --counter;
             if (counter < 0) {
                 break;

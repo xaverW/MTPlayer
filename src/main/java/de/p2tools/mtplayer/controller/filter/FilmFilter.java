@@ -271,6 +271,7 @@ public class FilmFilter extends FilmFilterProps implements Filter {
     }
 
     private void reportBlacklistChange() {
+        System.out.println("====> FilmFilter");
         if (!filterIsOff) { // todo ??
             BlacklistFilterFactory.makeBlackFilteredFilmlist(audio);
             if (audio) {

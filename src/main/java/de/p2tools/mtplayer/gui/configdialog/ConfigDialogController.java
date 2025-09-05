@@ -109,7 +109,7 @@ public class ConfigDialogController extends P2DialogExtra {
         if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
             //dann wird die Blacklist immer neu gemacht, sonst wirds dann eh gemacht
             new Thread(() -> {
-                BlacklistFilterFactory.markFilmBlack(true);
+                BlacklistFilterFactory.markFilmsIfBlack(true);
                 blackChanged.setValue(false);
             }).start();
         }
@@ -124,7 +124,7 @@ public class ConfigDialogController extends P2DialogExtra {
 
         if (blackChanged.get() && !ProgData.FILMLIST_IS_DOWNLOADING.get()) {
             // sonst hat sich nichts geändert oder wird dann eh gemacht
-            new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
+            new Thread(() -> BlacklistFilterFactory.markFilmsIfBlack(true)).start();
         }
 
         if (diacriticChanged.getValue() && ProgConfig.SYSTEM_REMOVE_DIACRITICS.getValue()) {
