@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistCountFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -94,7 +94,7 @@ public class PanelButton {
             }
             ProgData.busy.busyOnFx(Busy.BUSY_SRC.PANE_BLACKLIST, "Blacklist", -1, false);
             new Thread(() -> {
-                BlacklistFilterFactory.countHits(list);
+                BlacklistCountFactory.countHits(list); // Filmliste, Audioliste
                 P2TableFactory.refreshTable(tableView);
                 ProgData.busy.busyOffFx();
             }).start();

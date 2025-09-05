@@ -55,6 +55,7 @@ public class LoadFactory {
 
 
         // ProgData.getInstance().filmListFilter.clearCounter(); //todo evtl. nur beim Neuladen einer kompletten Liste??
+        // ist für den Filter beim Laden der Liste (nur für die Filmliste)
         if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_OFF) {
             //ist sonst evtl. noch von "vorher" gesetzt
             P2LoadConst.checker = null;
@@ -62,13 +63,13 @@ public class LoadFactory {
         } else if (ProgConfig.SYSTEM_FILMLIST_FILTER.getValue() == BlacklistFilterFactory.BLACKLILST_FILTER_ON) {
             //dann sollen Filme geprüft werden
             ProgData.getInstance().filmListFilter.clearCounter();
-            P2LoadConst.checker = filmData -> BlacklistFilterFactory.checkFilmAndCountHits(filmData,
+            P2LoadConst.checker = filmData -> BlacklistFilterFactory.checkFilmAndCountHits(false, filmData,
                     ProgData.getInstance().filmListFilter, true);
 
         } else {
             //dann ist er inverse
             ProgData.getInstance().filmListFilter.clearCounter();
-            P2LoadConst.checker = filmData -> !BlacklistFilterFactory.checkFilmAndCountHits(filmData,
+            P2LoadConst.checker = filmData -> !BlacklistFilterFactory.checkFilmAndCountHits(false, filmData,
                     ProgData.getInstance().filmListFilter, true);
         }
     }

@@ -193,7 +193,7 @@ public class FilmTableContextMenu {
         Menu submenuBlacklist = new Menu("Blacklist");
 
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen");
-        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.FILM));
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK_SRC.FILM));
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
         miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(ProgConst.LIST_FILM, film.getChannel(), film.getTheme(), ""));

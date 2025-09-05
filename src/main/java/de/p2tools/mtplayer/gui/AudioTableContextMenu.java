@@ -194,7 +194,7 @@ public class AudioTableContextMenu {
         Menu submenuBlacklist = new Menu("Blacklist");
 
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für das Audio erstellen");
-        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.AUDIO));
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK_SRC.AUDIO));
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
         miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlack(ProgConst.LIST_AUDIO, film.getChannel(), film.getTheme(), ""));

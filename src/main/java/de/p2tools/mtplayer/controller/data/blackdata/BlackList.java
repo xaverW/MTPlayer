@@ -26,7 +26,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -99,12 +98,12 @@ public class BlackList extends SimpleListProperty<BlackData> implements P2DataLi
         return super.add(b);
     }
 
-    public synchronized void addAndNotify(BlackData b) {
-        //add durch Button/Menü
-        b.setNo(no++);
-        super.add(b);
-        new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
-    }
+//    public synchronized void addAndNotify(BlackData b) {
+//        //add durch Button/Menü
+//        b.setNo(no++);
+//        super.add(b);
+//        new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
+//    }
 
     public synchronized void removeBlackData(List<BlackData> list) {
         addBlackDataToUndoList(list);
@@ -124,22 +123,20 @@ public class BlackList extends SimpleListProperty<BlackData> implements P2DataLi
 
     public synchronized void sortAndCleanTheList() {
         //mit den bestehenden Treffern sortieren
-        Collections.sort(this, Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
-
-        //zum Schluss noch neu nummerieren 1, 2, ...
+        this.sort(Comparator.comparingInt(BlackDataProps::getCountHits).reversed());
+        //zum Schluss noch putzen und neu nummerieren 1, 2, ...
         cleanTheList();
     }
 
     public synchronized void cleanTheList() {
-        ArrayList blackList = new ArrayList();
+        ArrayList<BlackData> blackList = new ArrayList<>();
 
-        this.stream().forEach(bl -> {
+        this.forEach(bl -> {
             if (!BlacklistFactory.blackIsEmpty(bl) &&
                     !BlacklistFactory.blackExistsAlready(bl, blackList)) {
                 blackList.add(bl);
             }
         });
-
         this.setAll(blackList);
 
         //zum Schluss noch neu nummerieren 1, 2, ...

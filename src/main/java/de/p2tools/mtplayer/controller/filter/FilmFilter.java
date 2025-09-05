@@ -272,10 +272,12 @@ public class FilmFilter extends FilmFilterProps implements Filter {
 
     private void reportBlacklistChange() {
         if (!filterIsOff) { // todo ??
-            BlacklistFilterFactory.makeBlackFilteredFilmlist(true);
-            BlacklistFilterFactory.makeBlackFilteredFilmlist(false);
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+            BlacklistFilterFactory.makeBlackFilteredFilmlist(audio);
+            if (audio) {
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
+            } else {
+                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
+            }
         }
     }
 

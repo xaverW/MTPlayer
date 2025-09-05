@@ -18,6 +18,7 @@ package de.p2tools.mtplayer.controller.data.blackdata;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
@@ -28,7 +29,6 @@ import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -47,6 +47,7 @@ public class BlacklistFilterFactory {
     }
 
     public static synchronized void markFilmBlack(boolean notify) {
+        // Blacklist hinzugefügt, Config-Dialog beendet und Black geändert
         // dann werden beide markiert
         markFilmBlack(true, notify);
         markFilmBlack(false, notify);
@@ -92,7 +93,7 @@ public class BlacklistFilterFactory {
                 }
             }
             // gezählt wird nur bei Filmen
-            film.setBlackBlocked(checkFilmIsBlockedCompleteBlackData(film,
+            film.setBlackBlocked(checkFilmIsBlockedCompleteBlackData(audio, film,
                     ProgData.getInstance().blackList, !audio));
         });
         P2Duration.counterStop("forEach");
@@ -156,7 +157,9 @@ public class BlacklistFilterFactory {
         P2Duration.counterStop("makeBlackFilteredFilmlist");
     }
 
-    public static synchronized boolean checkFilmIsBlockedCompleteBlackData(FilmData filmData, List<BlackData> list,
+    public static synchronized boolean checkFilmIsBlockedCompleteBlackData(boolean audio,
+                                                                           FilmData filmData,
+                                                                           List<BlackData> list,
                                                                            boolean incCounter) {
         // beim Abo-Suchen wenn eingeschaltet, und beim markieren der Filme: "markFilmBlack()"
         // hier werden der Film gegen alle BLACK-Einstellungen der Blacklist geprüft
@@ -179,10 +182,23 @@ public class BlacklistFilterFactory {
             return true;
         }
 
-        return checkFilmAndCountHits(filmData, list, incCounter);
+        return checkFilmAndCountHits(audio, filmData, list, incCounter);
     }
 
-    public static boolean checkFilmAndCountHits(FilmData filmData, List<BlackData> list, boolean countHits) {
+    private static boolean checkOkFilmLength(FilmData film) {
+        return film.getDurationMinute() == 0 || film.getDurationMinute() >= minFilmDuration;
+    }
+
+    private static boolean checkOkDate(FilmData film) {
+        final long filmTime = film.filmDate.getTime(); // liefert die ms nach "o"
+        if (filmTime != 0 && filmTime <= maxFilmDays) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean checkFilmAndCountHits(boolean audio, FilmData filmData, List<BlackData> list, boolean countHits) {
         // Aufruf nach dem Neuladen einer Filmliste aus dem Web (ist der FilmListFilter beim Laden) oder Test/Markieren eines Films
         // nach Treffer **abbrechen**
         // Counter werden vorher schon gelöscht
@@ -191,6 +207,12 @@ public class BlacklistFilterFactory {
         for (final BlackData blackData : list) {
             if (!blackData.isActive()) {
                 //dann ist er ausgeschaltet
+                continue;
+            }
+            if (audio && blackData.getList() == ProgConst.LIST_FILM) {
+                continue;
+            }
+            if (!audio && blackData.getList() == ProgConst.LIST_AUDIO) {
                 continue;
             }
 
@@ -204,55 +226,6 @@ public class BlacklistFilterFactory {
         }
         filmData.clearLowerCase();
         return false;
-    }
-
-    private static void checkFilmAndCountHitsForAll(FilmData filmData, List<BlackData> list) {
-        filmData.setLowerCase();
-        list.parallelStream().forEach(blackData -> {
-            if (BlacklistFilterFactory.checkFilmIsBlocked(blackData, filmData)) {
-                blackData.incCountHits();
-            }
-        });
-        filmData.clearLowerCase();
-    }
-
-    public static synchronized void countHits(BlackData blackData) {
-        // Aufruf mit Button im AddBlackList-Dialog zum Zählen
-        // hier wird ein BlackDate gegen die Filmliste gefiltert und die Treffer ermittelt
-        List<BlackData> bl = new ArrayList<>();
-        bl.add(blackData);
-        countHits(bl);
-    }
-
-    public static synchronized void countHits(List<BlackData> list) {
-        // Aufruf mit Button zum Zählen, Einstellungen
-        // hier wird die Blacklist gegen die Filmliste gefiltert und die Treffer
-        // für *jeden* Blacklist-Eintrag ermittelt, wird nicht nach einem Treffer abgebrochen
-        P2Duration.counterStart("countHits");
-
-        for (BlackData bl : list) {
-            bl.clearCounter();
-        }
-
-        List<BlackData> copyList = new ArrayList<>(list);
-        final int sum = ProgData.getInstance().filmList.size();
-        act = 0;
-        now = 0;
-        final FilmListMTP filmDataMTPS = ProgData.getInstance().filmList;
-        if (filmDataMTPS != null) {
-            // wenn parallel, variieren die Werte etwas??
-            filmDataMTPS.forEach(film -> {
-                ++act;
-                ++now;
-                if (now > 1_000) {
-                    now = 0;
-                    final double percent = (double) act / sum;
-                    ProgData.busy.setProgress(percent);
-                }
-                checkFilmAndCountHitsForAll(film, copyList);
-            });
-        }
-        P2Duration.counterStop("countHits");
     }
 
     private static void loadCurrentBlacklistSettings() {
@@ -274,7 +247,7 @@ public class BlacklistFilterFactory {
         doNotShowDoubleFilms = ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_DOUBLE.getValue();
     }
 
-    private static boolean checkFilmIsBlocked(BlackData blackData, FilmData filmData) {
+    public static boolean checkFilmIsBlocked(BlackData blackData, FilmData filmData) {
         // erst mal "schnell" prüfen->bringt ~20%
         if (blackData.quickChannel) {
             if (filmData.FILM_CHANNEL_STR.contains(blackData.fChannel.filterArr[0])) {
@@ -333,30 +306,5 @@ public class BlacklistFilterFactory {
         } else {
             return false;
         }
-    }
-
-    /**
-     * Check film based on date
-     *
-     * @param film item to be checked
-     * @return true if film can be displayed
-     */
-    private static boolean checkOkDate(FilmData film) {
-        final long filmTime = film.filmDate.getTime(); // liefert die ms nach "o"
-        if (filmTime != 0 && filmTime <= maxFilmDays) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Filter based on film length.
-     *
-     * @param film item to check
-     * @return true if film should be displayed
-     */
-    private static boolean checkOkFilmLength(FilmData film) {
-        return film.getDurationMinute() == 0 || film.getDurationMinute() >= minFilmDuration;
     }
 }

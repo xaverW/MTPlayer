@@ -69,6 +69,11 @@ public class TableBlacklist extends PTable<BlackData> {
         listColumn.getStyleClass().add("alignCenter");
         TableBlackFactory.columnFactoryList(listColumn);
 
+        final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
+        hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
+        hitsColumn.getStyleClass().add("alignCenterRightPadding_10");
+//        TableBlackFactory.columnFactoryCount(hitsColumn);
+
         final TableColumn<BlackData, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         channelColumn.getStyleClass().add("alignCenter");
@@ -89,10 +94,6 @@ public class TableBlacklist extends PTable<BlackData> {
         final TableColumn<BlackData, LocalDate> dateColumn = new TableColumn<>("Erstelldatum");
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
         dateColumn.setCellFactory(new P2CellLocalDate().cellFactory);
-
-        final TableColumn<BlackData, Integer> hitsColumn = new TableColumn<>("Treffer");
-        hitsColumn.setCellValueFactory(new PropertyValueFactory<>("countHits"));
-        hitsColumn.getStyleClass().add("alignCenterRightPadding_10");
 
         getColumns().addAll(nrColumn, activeColumn, listColumn, hitsColumn, channelColumn,
                 themeColumn, themeExactColumn, titleColumn, themeTitleColumn, dateColumn);

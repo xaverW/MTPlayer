@@ -23,115 +23,23 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.dialog.AddBlackListDialogController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class BlacklistFactory {
-    public enum BLACK {FILM, AUDIO, DOWNLOAD}
+    public enum BLACK_SRC {FILM, AUDIO, DOWNLOAD}
 
     private BlacklistFactory() {
     }
 
-    public static void addBlackFilm(BLACK black) {
-        // aus dem Menü: mit markiertem Film ein Black erstellen
-        // Dialog anzeigen
-        BlackData blackData = null;
-        if (black.equals(BLACK.FILM)) {
-            final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(true, true);
-            if (filmDataMTP.isEmpty()) {
-                return;
-            }
-            blackData = new BlackData(ProgConst.LIST_FILM, filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
-                    filmDataMTP.get().getTitle(), "");
-
-        } else if (black.equals(BLACK.AUDIO)) {
-            final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().audioGuiController.getSel(true, true);
-            if (filmDataMTP.isEmpty()) {
-                return;
-            }
-            blackData = new BlackData(ProgConst.LIST_AUDIO, filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
-                    filmDataMTP.get().getTitle(), "");
-
-        } else if (black.equals(BLACK.DOWNLOAD)) {
-            final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
-            if (downloadData.isEmpty()) {
-                return;
-            }
-            blackData = new BlackData(ProgConst.LIST_FILM_AUDIO, downloadData.get().getChannel(), downloadData.get().getTheme(),
-                    downloadData.get().getTitle(), "");
-        }
-
-        AddBlackListDialogController addBlacklistDialogController =
-                new AddBlackListDialogController(blackData);
-        if (!addBlacklistDialogController.isOk()) {
-            //dann doch nicht
-            return;
-        }
-        ProgData.getInstance().blackList.addAndNotify(blackData);
-    }
-
-    public static void addBlackThemeFilm(BLACK black) {
-        // aus dem Menü: mit markiertem Film ein Black erstellen
-        // Dialog anzeigen
-        if (black.equals(BLACK.FILM)) {
-            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
-            if (filmSelection.isEmpty()) {
-                return;
-            }
-            addBlack(ProgConst.LIST_FILM, "", filmSelection.get().getTheme(), "");
-        } else if (black.equals(BLACK.AUDIO)) {
-            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
-            if (filmSelection.isEmpty()) {
-                return;
-            }
-            addBlack(ProgConst.LIST_AUDIO, "", filmSelection.get().getTheme(), "");
-        }
-    }
-
-    public static void addBlackTitleDownload() {
-        // aus dem Menü: mit markiertem Film ein Black erstellen
-        // Dialog anzeigen
-        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
-        if (downloadData.isEmpty()) {
-            return;
-        }
-        addBlack(ProgConst.LIST_FILM_AUDIO, "", "", downloadData.get().getTitle());
-    }
-
-    public static void addBlackSenderThemeDownload() {
-        // aus dem Menü: mit markiertem Film ein Black erstellen
-        // Dialog anzeigen
-        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
-        if (downloadData.isEmpty()) {
-            return;
-        }
-        addBlack(ProgConst.LIST_FILM_AUDIO, downloadData.get().getChannel(), downloadData.get().getTheme(), "");
-    }
-
-    public static void addBlackThemeDownload() {
-        // aus dem Menü: mit markiertem Film ein Black erstellen
-        // Dialog anzeigen
-        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
-        if (downloadData.isEmpty()) {
-            return;
-        }
-        addBlack(ProgConst.LIST_FILM_AUDIO, "", downloadData.get().getTheme(), "");
-    }
-
-    public static void addBlack(int list, String sender, String theme, String titel) {
-        BlackData blackData = new BlackData(list, sender, theme, titel, "");
-        ProgData.getInstance().blackList.addAndNotify(blackData);
-    }
-
-    public static boolean blackIsEmpty(BlackData blackData) {
-        // true, wenn es das Black schon gibt
-        if (blackData.getChannel().isEmpty() &&
-                blackData.getTheme().isEmpty() &&
-                blackData.getTitle().isEmpty() &&
-                blackData.getThemeTitle().isEmpty()) {
-            return true;
-        }
-        return false;
+    public static List<BlackData> getSubList(boolean audio, List<BlackData> list) {
+        final List<BlackData> ret = new ArrayList<>();
+        list.stream().filter(b -> b.getList() == ProgConst.LIST_FILM_AUDIO ||
+                        audio && b.getList() == ProgConst.LIST_AUDIO ||
+                        !audio && b.getList() == ProgConst.LIST_FILM)
+                .forEach(ret::add);
+        return ret;
     }
 
     public static boolean blackExistsAlready(BlackData blackData, List<BlackData> list) {
@@ -147,6 +55,114 @@ public class BlacklistFactory {
                     data.getThemeTitle().equalsIgnoreCase(blackData.getThemeTitle())) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    public static void addBlackFilm(BLACK_SRC blackSRC) {
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        BlackData blackData = null;
+        if (blackSRC.equals(BLACK_SRC.FILM)) {
+            final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().filmGuiController.getSel(true, true);
+            if (filmDataMTP.isEmpty()) {
+                return;
+            }
+            blackData = new BlackData(ProgConst.LIST_FILM, filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
+                    filmDataMTP.get().getTitle(), "");
+
+        } else if (blackSRC.equals(BLACK_SRC.AUDIO)) {
+            final Optional<FilmDataMTP> filmDataMTP = ProgData.getInstance().audioGuiController.getSel(true, true);
+            if (filmDataMTP.isEmpty()) {
+                return;
+            }
+            blackData = new BlackData(ProgConst.LIST_AUDIO, filmDataMTP.get().getChannel(), filmDataMTP.get().getTheme(),
+                    filmDataMTP.get().getTitle(), "");
+
+        } else if (blackSRC.equals(BLACK_SRC.DOWNLOAD)) {
+            final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+            if (downloadData.isEmpty()) {
+                return;
+            }
+            blackData = new BlackData(ProgConst.LIST_FILM_AUDIO, downloadData.get().getChannel(), downloadData.get().getTheme(),
+                    downloadData.get().getTitle(), "");
+        }
+
+        AddBlackListDialogController addBlacklistDialogController =
+                new AddBlackListDialogController(blackData);
+        if (!addBlacklistDialogController.isOk()) {
+            //dann doch nicht
+            return;
+        }
+
+        ProgData.getInstance().blackList.add(blackData);
+        new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
+    }
+
+    public static void addBlackThemeFilm(BLACK_SRC blackSRC) {
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        if (blackSRC.equals(BLACK_SRC.FILM)) {
+            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
+            if (filmSelection.isEmpty()) {
+                return;
+            }
+            addBlack(ProgConst.LIST_FILM, "", filmSelection.get().getTheme(), "");
+        } else if (blackSRC.equals(BLACK_SRC.AUDIO)) {
+            final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
+            if (filmSelection.isEmpty()) {
+                return;
+            }
+            addBlack(ProgConst.LIST_AUDIO, "", filmSelection.get().getTheme(), "");
+        }
+    }
+
+    public static void addBlackTitleDownload() {
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+        if (downloadData.isEmpty()) {
+            return;
+        }
+
+        addBlack(ProgConst.LIST_FILM_AUDIO, "", "", downloadData.get().getTitle());
+    }
+
+    public static void addBlackSenderThemeDownload() {
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+        if (downloadData.isEmpty()) {
+            return;
+        }
+
+        addBlack(ProgConst.LIST_FILM_AUDIO, downloadData.get().getChannel(), downloadData.get().getTheme(), "");
+    }
+
+    public static void addBlackThemeDownload() {
+        // aus dem Menü: mit markiertem Film ein Black erstellen
+        // Dialog anzeigen
+        final Optional<DownloadData> downloadData = ProgData.getInstance().downloadGuiController.getSel(true);
+        if (downloadData.isEmpty()) {
+            return;
+        }
+
+        addBlack(ProgConst.LIST_FILM_AUDIO, "", downloadData.get().getTheme(), "");
+    }
+
+    public static void addBlack(int list, String sender, String theme, String titel) {
+        BlackData blackData = new BlackData(list, sender, theme, titel, "");
+        ProgData.getInstance().blackList.add(blackData);
+        new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
+    }
+
+    public static boolean blackIsEmpty(BlackData blackData) {
+        // true, wenn es das Black schon gibt
+        if (blackData.getChannel().isEmpty() &&
+                blackData.getTheme().isEmpty() &&
+                blackData.getTitle().isEmpty() &&
+                blackData.getThemeTitle().isEmpty()) {
+            return true;
         }
         return false;
     }
@@ -188,5 +204,7 @@ public class BlacklistFactory {
         bl = new BlackData(ProgConst.LIST_FILM, "", "", "\"Trailer:\"", "");
         bl.setThemeExact(false);
         list.add(bl);
+
+        new Thread(() -> BlacklistFilterFactory.markFilmBlack(true)).start();
     }
 }

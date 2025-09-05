@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
-import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
+import de.p2tools.mtplayer.controller.data.blackdata.BlacklistCountFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
@@ -33,6 +33,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+
+import java.util.Collections;
 
 public class AddBlackListDialogController extends P2DialogExtra {
 
@@ -114,7 +116,7 @@ public class AddBlackListDialogController extends P2DialogExtra {
 
     private void initGridPane() {
         btnCount.setOnAction(a -> {
-            BlacklistFilterFactory.countHits(blackData);
+            BlacklistCountFactory.countHits(Collections.singletonList(blackData));
             lblCount.setText(blackData.getCountHits() + "");
         });
 

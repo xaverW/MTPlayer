@@ -245,12 +245,12 @@ public class FilmMenu {
         Menu submenuBlacklist = new Menu("Blacklist");
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
-        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.FILM));
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK_SRC.FILM));
 
         final MenuItem miBlackTheme = new MenuItem("Thema direkt in die Blacklist einfügen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST_THEME.getActShortcut());
         miBlackTheme.setOnAction(event -> {
-            BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.FILM);
+            BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK_SRC.FILM);
         });
         submenuBlacklist.getItems().addAll(miBlack, miBlackTheme);
         mb.getItems().addAll(submenuBlacklist);

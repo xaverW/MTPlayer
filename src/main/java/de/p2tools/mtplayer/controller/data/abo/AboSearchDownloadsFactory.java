@@ -166,7 +166,7 @@ public class AboSearchDownloadsFactory {
             aboData.incrementCountHit();
 
             if (checkWithBlackList && BlacklistFilterFactory.
-                    checkFilmIsBlockedCompleteBlackData(film, ProgData.getInstance().blackList, false)) {
+                    checkFilmIsBlockedCompleteBlackData(audio, film, ProgData.getInstance().blackList, false)) {
                 // Blacklist auch bei Abos anwenden und Film wird blockiert
                 return;
             }

@@ -33,4 +33,25 @@ public class TableBlackFactory {
             }
         });
     }
+
+//    public static void columnFactoryCount(TableColumn<BlackData, Integer> column) {
+//        column.setCellFactory(c -> new TableCell<>() {
+//            @Override
+//            protected void updateItem(Integer item, boolean empty) {
+//                super.updateItem(item, empty);
+//
+//                if (item == null || empty) {
+//                    setText(null);
+//                    setStyle("");
+//                    return;
+//                }
+//
+//                if (item == 0) {
+//                    setText("");
+//                } else {
+//                    setText(item + "");
+//                }
+//            }
+//        });
+//    }
 }

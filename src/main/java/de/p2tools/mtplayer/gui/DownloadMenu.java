@@ -294,7 +294,7 @@ public class DownloadMenu {
 
         final MenuItem miBlack = new MenuItem("Blacklist-Eintrag für den Film erstellen" +
                 PShortKeyFactory.SHORT_CUT_LEER + PShortcut.SHORTCUT_ADD_BLACKLIST.getActShortcut());
-        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.DOWNLOAD));
+        miBlack.setOnAction(event -> BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK_SRC.DOWNLOAD));
 
         final MenuItem miBlackSenderTheme = new MenuItem("Sender und Thema direkt in die Blacklist einfügen");
         miBlackSenderTheme.setOnAction(event -> BlacklistFactory.addBlackSenderThemeDownload());

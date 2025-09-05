@@ -131,19 +131,19 @@ public class MTPlayerFactory {
 
     public static void addBlacklist() {
         if (MTPlayerController.TAB_FILM_ON.get()) {
-            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.FILM);
+            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK_SRC.FILM);
         } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
-            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.AUDIO);
+            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK_SRC.AUDIO);
         } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
-            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK.DOWNLOAD);
+            BlacklistFactory.addBlackFilm(BlacklistFactory.BLACK_SRC.DOWNLOAD);
         }
     }
 
     public static void addBlacklistTheme() {
         if (MTPlayerController.TAB_FILM_ON.get()) {
-            BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.FILM);
+            BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK_SRC.FILM);
         } else if (MTPlayerController.TAB_AUDIO_ON.get()) {
-            BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK.AUDIO);
+            BlacklistFactory.addBlackThemeFilm(BlacklistFactory.BLACK_SRC.AUDIO);
         } else if (MTPlayerController.TAB_DOWNLOAD_ON.get()) {
             BlacklistFactory.addBlackThemeDownload();
         }
