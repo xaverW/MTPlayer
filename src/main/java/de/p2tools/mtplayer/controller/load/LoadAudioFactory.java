@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.p2lib.mediathek.audiolistload.P2ReadAudioFactory;
-import de.p2tools.p2lib.mediathek.audiolistload.P2ReadAudio_toFilmList;
+import de.p2tools.p2lib.mediathek.audiolistload.P2ReadAudioToFilmList;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 
 public class LoadAudioFactory {
@@ -37,7 +37,7 @@ public class LoadAudioFactory {
         }
 
         ProgData.AUDIOLIST_IS_DOWNLOADING.set(true);
-        P2ReadAudio_toFilmList p2LoadAudioList = new P2ReadAudio_toFilmList(ProgData.getInstance().pEventHandler, new FilmListMTP());
+        P2ReadAudioToFilmList p2LoadAudioList = new P2ReadAudioToFilmList(ProgData.getInstance().pEventHandler, new FilmListMTP());
         p2LoadAudioList.loadAudioListAtProgStart();
     }
 
@@ -57,7 +57,7 @@ public class LoadAudioFactory {
         if (init) {
             LoadFactory.initLoadFactoryConst();
         }
-        P2ReadAudio_toFilmList p2LoadAudioList = new P2ReadAudio_toFilmList(ProgData.getInstance().pEventHandler, new FilmListMTP());
+        P2ReadAudioToFilmList p2LoadAudioList = new P2ReadAudioToFilmList(ProgData.getInstance().pEventHandler, new FilmListMTP());
         p2LoadAudioList.loadNewAudioListFromWeb();
     }
 }
