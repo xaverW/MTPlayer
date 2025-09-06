@@ -257,6 +257,15 @@ public class PaneBlackList {
                 if (cells != null && !cells.isEmpty()) {
                     String cel = cells.get(0).getTableColumn().getText();
                     switch (cel) {
+                        case "Liste":
+                            if (rbFilmAudio.isSelected()) {
+                                rbFilm.setSelected(true);
+                            } else if (rbFilm.isSelected()) {
+                                rbAudio.setSelected(true);
+                            } else {
+                                rbFilmAudio.setSelected(true);
+                            }
+                            break;
                         case "Sender":
                             mbChannel.requestFocus();
                             mbChannel.show();

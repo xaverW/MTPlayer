@@ -30,7 +30,7 @@ public class BlackDataProps extends P2DataSample<BlackDataProps> {
     public static final String TAG = "BlackData";
 
     private int no = 0;
-    private final IntegerProperty list = new SimpleIntegerProperty(ProgConst.LIST_FILM_AUDIO); // wo gesucht werden soll
+    private final IntegerProperty list = new SimpleIntegerProperty(ProgConst.LIST_FILM); // wo gesucht werden soll
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final BooleanProperty themeExact = new SimpleBooleanProperty(true);
