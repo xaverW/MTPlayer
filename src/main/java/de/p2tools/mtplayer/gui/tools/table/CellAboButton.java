@@ -89,7 +89,7 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                     getTableView().requestFocus();
                 });
 
-                if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO.get()) {
+                if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_ABO.get()) {
                     btnActivate.setMaxHeight(18);
                     btnActivate.setMinHeight(18);
                     btnDel.setMaxHeight(18);

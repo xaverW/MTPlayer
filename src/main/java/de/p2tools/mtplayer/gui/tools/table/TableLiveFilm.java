@@ -68,7 +68,7 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
         ProgColorList.FILM_NEW.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.FILM_HISTORY.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.BOOKMARK.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_LIVE.addListener((observableValue, s, t1) -> refresh());
+        ProgConfig.SYSTEM_SMALL_TABLE_ROW_LIVE.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.LIVE_FILM_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> refresh());
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
 //        PListener.addListener(new PListener(PListener.EVENT_REFRESH_TABLE, TableLiveFilm.class.getSimpleName()) {

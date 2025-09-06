@@ -97,7 +97,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         getTableView().requestFocus();
                     });
 
-                    if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.get()) {
+                    if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.get()) {
                         btnDownStart.setMinHeight(18);
                         btnDownStart.setMaxHeight(18);
                         btnDownDel.setMinHeight(18);
@@ -137,7 +137,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         getTableView().requestFocus();
                     });
 
-                    if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.get()) {
+                    if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.get()) {
                         btnDownStop.setMinHeight(18);
                         btnDownStop.setMaxHeight(18);
                         btnDownDel.setMinHeight(18);
@@ -179,7 +179,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         getTableView().requestFocus();
                     });
 
-                    if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.get()) {
+                    if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.get()) {
                         btnFilmStart.setMinHeight(18);
                         btnFilmStart.setMaxHeight(18);
                         btnOpenDirectory.setMinHeight(18);
@@ -221,7 +221,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         getTableView().requestFocus();
                     });
 
-                    if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.get()) {
+                    if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.get()) {
                         btnDownStart.setMinHeight(18);
                         btnDownStart.setMaxHeight(18);
                         btnDownDel.setMinHeight(18);

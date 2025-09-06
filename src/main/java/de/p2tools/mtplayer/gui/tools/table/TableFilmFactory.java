@@ -203,7 +203,7 @@ public class TableFilmFactory {
                     getTableView().requestFocus();
                 });
 
-                if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_FILM.get()) {
+                if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_FILM.get()) {
                     btnPlay.setMaxHeight(18);
                     btnPlay.setMinHeight(18);
                     btnSave.setMaxHeight(18);

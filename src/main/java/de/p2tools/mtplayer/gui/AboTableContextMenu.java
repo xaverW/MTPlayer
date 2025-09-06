@@ -92,7 +92,7 @@ public class AboTableContextMenu {
 
         contextMenu.getItems().add(new SeparatorMenuItem());
         CheckMenuItem smallTableRow = new CheckMenuItem("Nur kleine Button anzeigen");
-        smallTableRow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_ROW_TABLE_ABO);
+        smallTableRow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SMALL_TABLE_ROW_ABO);
         CheckMenuItem toolTipTable = new CheckMenuItem("Infos beim Überfahren einer Zeile anzeigen");
         toolTipTable.selectedProperty().bindBidirectional(ProgConfig.ABO_GUI_SHOW_TABLE_TOOL_TIP);
         MenuItem resetTable = new MenuItem("Tabelle zurücksetzen");

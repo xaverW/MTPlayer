@@ -88,7 +88,7 @@ public class TableAudioFactory {
                     getTableView().requestFocus();
                 });
 
-                if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_AUDIO.get()) {
+                if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_AUDIO.get()) {
                     btnPlay.setMaxHeight(18);
                     btnPlay.setMinHeight(18);
                     btnSave.setMaxHeight(18);

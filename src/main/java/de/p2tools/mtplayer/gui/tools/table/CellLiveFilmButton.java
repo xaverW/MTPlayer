@@ -63,7 +63,7 @@ public class CellLiveFilmButton<S, T> extends TableCell<S, T> {
                 btnSave.getStyleClass().addAll("btnFunction", "btnFuncTable");
                 btnSave.setGraphic(ProgIcons.IMAGE_TABLE_FILM_SAVE.getImageView());
 
-                if (ProgConfig.SYSTEM_SMALL_ROW_TABLE_LIVE.get()) {
+                if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_LIVE.get()) {
                     btnPlay.setMaxHeight(18);
                     btnPlay.setMinHeight(18);
                     btnSave.setMaxHeight(18);

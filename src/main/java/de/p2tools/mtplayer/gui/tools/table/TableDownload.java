@@ -74,7 +74,7 @@ public class TableDownload extends PTable<DownloadData> {
         ProgColorList.DOWNLOAD_RUN.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.DOWNLOAD_FINISHED.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
         ProgColorList.DOWNLOAD_ERROR.colorProperty().addListener((a, b, c) -> P2TableFactory.refreshTable(this));
-        ProgConfig.SYSTEM_SMALL_ROW_TABLE_DOWNLOAD.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
+        ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.addListener((observableValue, s, t1) -> P2TableFactory.refreshTable(this));
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> P2TableFactory.refreshTable(this));
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_REFRESH_TABLE) {
