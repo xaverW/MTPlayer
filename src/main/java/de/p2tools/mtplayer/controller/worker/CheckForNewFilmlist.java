@@ -37,7 +37,7 @@ public class CheckForNewFilmlist extends SearchFilmlistUpdate {
         progData.pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_SECOND) {
             @Override
             public void pingGui() {
-                // kan dauern und hält dann das Programm beim Start auf
+                // kann dauern und hält dann das Programm beim Start auf
                 new Thread(() -> hasNewFilmlist(ProgData.getInstance().filmList.getFilmlistId())).start();
             }
         });
