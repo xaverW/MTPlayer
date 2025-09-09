@@ -59,7 +59,7 @@ public class LiveFactory {
                 }
             });
 
-            AboFactory.setAboForFilmlist(false, ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList());
+            AboFactory.setAboForList(false, ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList());
         });
     }
 

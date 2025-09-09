@@ -101,7 +101,7 @@ public class LoadFilmListWorker {
             progData.filmList.loadTheme();
 
             logList.add("Abos eintragen");
-            AboFactory.setAboForFilmlist();
+            AboFactory.setAboForList(false, ProgData.getInstance().filmList);
 
             logList.add("Bookmarks eintragen");
             BookmarkFactory.markBookmarks();

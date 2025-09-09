@@ -190,6 +190,7 @@ public class AboListFactory {
     }
 
     private static void deleteAbo(ObservableList<AboData> lAbo) {
+        // Menü/Button
         if (lAbo.isEmpty()) {
             return;
         }

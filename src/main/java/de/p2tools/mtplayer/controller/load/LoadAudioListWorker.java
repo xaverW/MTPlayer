@@ -21,6 +21,7 @@ package de.p2tools.mtplayer.controller.load;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
@@ -87,6 +88,9 @@ public class LoadAudioListWorker {
 
             logList.add("Themen suchen");
             progData.audioList.loadTheme();
+
+            logList.add("Abos eintragen");
+            AboFactory.setAboForList(true, ProgData.getInstance().audioList);
 
             logList.add("Bookmarks eintragen");
             BookmarkFactory.markBookmarks();

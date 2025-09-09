@@ -67,12 +67,12 @@ public class AboFactory {
         return aboData;
     }
 
-    public static synchronized void setAboForFilmlist() {
-        setAboForFilmlist(false, ProgData.getInstance().filmList);
-        setAboForFilmlist(true, ProgData.getInstance().audioList);
+    public static synchronized void setAboForList() {
+        setAboForList(false, ProgData.getInstance().filmList);
+        setAboForList(true, ProgData.getInstance().audioList);
     }
 
-    public static synchronized void setAboForFilmlist(boolean audio, Filmlist<FilmDataMTP> filmlist) {
+    public static synchronized void setAboForList(boolean audio, Filmlist<FilmDataMTP> filmlist) {
         // hier wird tatsächlich für jeden Film die Liste der Abos durchsucht,
         // braucht länger
         P2Duration.counterStart("setAboForFilmlist");

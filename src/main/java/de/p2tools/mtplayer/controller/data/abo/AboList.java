@@ -93,33 +93,33 @@ public class AboList extends SimpleListProperty<AboData> implements P2DataList<A
     }
 
     public synchronized void setAboActive(List<AboData> lAbo, boolean on) {
+        // Menü
         if (!lAbo.isEmpty()) {
-            lAbo.stream().forEach(abo -> abo.setActive(on));
+            lAbo.forEach(abo -> abo.setActive(on));
             notifyChanges();
         }
     }
 
     public synchronized void setAboActive(AboData abo, boolean on) {
+        // Menü/Button
         abo.setActive(on);
         notifyChanges();
     }
 
     public synchronized void deleteAbo(ObservableList<AboData> lAbo) {
-        // dann soll das Abo gelöscht werden
+        // dann soll das Abo gelöscht werden, Menü/Button
         P2Log.sysLog("Abo löschen");
         addAbosToUndoList(lAbo); // erst eintragen, dann löschen - selList ändert sich dann
         this.removeAll(lAbo);
         notifyChanges();
     }
 
-//    public synchronized void notifyChangesFromDialog() {
-//        listChanged.setValue(!listChanged.get());
-//    }
-
     public synchronized void notifyChanges() {
-        if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
+        // Menü/Button/Dialog
+        if (!ProgData.FILMLIST_IS_DOWNLOADING.get() &&
+                !ProgData.AUDIOLIST_IS_DOWNLOADING.get()) {
             // wird danach eh gemacht
-            AboFactory.setAboForFilmlist();
+            AboFactory.setAboForList();
         }
         listChanged.setValue(!listChanged.get());
     }
@@ -222,6 +222,7 @@ public class AboList extends SimpleListProperty<AboData> implements P2DataList<A
     }
 
     public synchronized void undoAbos() {
+        // Menü/Button
         if (undoList.isEmpty()) {
             return;
         }
