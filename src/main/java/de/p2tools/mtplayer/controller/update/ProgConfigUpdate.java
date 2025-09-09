@@ -37,6 +37,7 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_ABO_START_TIME.setValue(true); // für Version 17
         ProgConfig.SYSTEM_CHANGE_LOG_DIR.setValue(true); // für Version 17
         ProgConfig.SYSTEM_SMALL_FILTER.setValue(true); // für Version 20
+        ProgConfig.SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART.setValue(true); // für Version 20
     }
 
     public static void update() {
@@ -127,6 +128,13 @@ public class ProgConfigUpdate {
             // ist dann ein smallFilter
             ProgData.getInstance().filterWorkerFilm.getActFilterSettings().clearFilter();
             FilterWorker.setSmallFilter(ProgData.getInstance().filterWorkerFilm.getActFilterSettings());
+        }
+
+        if (!ProgConfig.SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART.getValue()) {
+            // falls jemand nur "sofort laden" und nicht auch "beim Programmstart"
+            if (ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY.get()) {
+                ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.set(true);
+            }
         }
 
         setUpdateDone();

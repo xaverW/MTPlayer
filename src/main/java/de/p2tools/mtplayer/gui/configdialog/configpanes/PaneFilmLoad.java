@@ -70,6 +70,13 @@ public class PaneFilmLoad {
         tglLoadFilm.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART);
         tglLoadNewList.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY);
 
+
+        tglLoadNewList.disableProperty().bind(tglLoadFilm.selectedProperty().not());
+        tglLoadFilm.selectedProperty().addListener((u, o, n) -> {
+            if (!tglLoadFilm.isSelected()) {
+                tglLoadNewList.setSelected(false);
+            }
+        });
         final Button btnHelpLive = P2Button.helpButton(stage, "Live-Suche im Programm verwenden",
                 HelpText.USE_LIVE);
 

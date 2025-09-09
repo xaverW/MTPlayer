@@ -208,6 +208,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_CHANGE_LOG_DIR = addBoolProp("system-change-log-dir", Boolean.FALSE);
     public static BooleanProperty SYSTEM_USE_NEW_BOOKMARK_FILE = addBoolProp("system-use-new-bookmark-file", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_FILTER = addBoolProp("system-small-filter", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART = addBoolProp("system-update-load-filmlist-programstart", Boolean.FALSE);
 
     // configs zum Anzeigen der WhatsNew
     public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
