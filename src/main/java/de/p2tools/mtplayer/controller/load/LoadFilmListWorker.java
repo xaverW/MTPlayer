@@ -94,6 +94,7 @@ public class LoadFilmListWorker {
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
     private void afterLoadingFilmList() {
+        boolean search = !ProgData.AUDIOLIST_IS_DOWNLOADING.get();
         new Thread(() -> {
             List<String> logList = new ArrayList<>();
 
@@ -121,7 +122,7 @@ public class LoadFilmListWorker {
             P2Duration.onlyPing("Filme nachbearbeiten: Ende");
 
             progData.maskerPane.setMaskerText("Abos suchen");
-            workOnFilmListLoadFinished();
+            workOnFilmListLoadFinished(search);
 
             progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
 
@@ -155,7 +156,7 @@ public class LoadFilmListWorker {
         }).start();
     }
 
-    public void workOnFilmListLoadFinished() {
+    private void workOnFilmListLoadFinished(boolean search) {
         Platform.runLater(() -> {
             // alle Sender laden
             ThemeListFactory.allChannelListFilm.setAll(Arrays.asList(progData.filmList.sender));
@@ -163,7 +164,7 @@ public class LoadFilmListWorker {
             // und jetzt noch die Themen für den Sender des aktuellen Filters laden
             ThemeListFactory.createThemeList(false, progData, progData.filterWorkerFilm.getActFilterSettings().getChannel());
 
-            if (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode) {
+            if (search && (ProgConfig.ABO_SEARCH_NOW.getValue() || ProgData.autoMode)) {
                 // wenn gewollt oder im AutoMode immer suchen
                 AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
             }

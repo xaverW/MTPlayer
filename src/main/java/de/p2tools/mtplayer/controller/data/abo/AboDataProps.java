@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class AboDataProps extends P2DataSample<AboData> implements Comparable<AboData> {
 
     private final IntegerProperty no = new SimpleIntegerProperty(0);
-    private final IntegerProperty list = new SimpleIntegerProperty(ProgConst.LIST_FILM_AUDIO); // wo gesucht werden soll
+    private final IntegerProperty list = new SimpleIntegerProperty(ProgConst.LIST_FILM); // wo gesucht werden soll
     private final BooleanProperty active = new SimpleBooleanProperty(true);
     private final IntegerProperty hit = new SimpleIntegerProperty(0);
     private final StringProperty name = new SimpleStringProperty("");

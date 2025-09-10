@@ -54,7 +54,7 @@ public class ProgStartBeforeGui {
             ProgData.firstProgramStart = true;
 
             ProgConfigUpdate.setUpdateDone(); // dann ist's ja kein Programmupdate
-            WhatsNewFactory.setLastShown(); // muss dann ja nicht angezeigt werden
+            WhatsNewFactory.setLastShown(); // muss dann ja nicht angezeigt werden todo: Datum
 
             ProgData.getInstance().replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
             ProgData.getInstance().utDataList.init(true); // einmal ein Muster anlegen
