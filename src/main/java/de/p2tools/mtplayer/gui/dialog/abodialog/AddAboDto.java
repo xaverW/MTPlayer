@@ -28,6 +28,7 @@ import de.p2tools.p2lib.guitools.P2TextAreaIgnoreTab;
 import de.p2tools.p2lib.guitools.P2TimePicker;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
+import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -149,6 +150,11 @@ public class AddAboDto {
     }
 
     private void init() {
+        new FilterCheckRegEx(textAreaTheme);
+        new FilterCheckRegEx(textAreaThemeTitle);
+        new FilterCheckRegEx(textAreaTitle);
+        new FilterCheckRegEx(textAreaSomewhere);
+
         ToggleGroup tgSource = new ToggleGroup();
         rbFilm.setToggleGroup(tgSource);
         rbAudio.setToggleGroup(tgSource);
