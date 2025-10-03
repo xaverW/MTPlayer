@@ -80,9 +80,7 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
     }
 
     private void init() {
-        FilterCheckRegEx regEx = new FilterCheckRegEx(getEditor());
-        regEx.checkPattern();
-
+        new FilterCheckRegEx(getEditor());
         getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 return;

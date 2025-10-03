@@ -26,6 +26,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -46,7 +47,6 @@ public class PaneSetList extends VBox {
     private final Stage stage;
     private final ProgData progData;
     private final ObjectProperty<SetData> setDataObjectProperty;
-//    private final P2ToggleSwitch tglCheckStart = new P2ToggleSwitch("Beim Programmstart prüfen:");
 
     public PaneSetList(Stage stage, ObjectProperty<SetData> setDataObjectProperty) {
         this.stage = stage;
@@ -59,7 +59,6 @@ public class PaneSetList extends VBox {
     public void close() {
         progData.setDataList.getUndoList().clear();
         progData.setDataList.forEach(setData -> setData.getProgramList().getUndoList().clear());
-//        tglCheckStart.selectedProperty().unbindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
     }
 
     public Optional<SetData> getSel(boolean show) {
@@ -95,12 +94,20 @@ public class PaneSetList extends VBox {
         vBox.getChildren().addAll(scrollPane);
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
-        final TableColumn<SetData, String> visibleNameColumn = new TableColumn<>("Name");
-        visibleNameColumn.setCellValueFactory(new PropertyValueFactory<>("visibleName"));
-        visibleNameColumn.setCellFactory(cellFactoryName);
+        final TableColumn<SetData, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("visibleName"));
+        nameColumn.setCellFactory(cellFactoryName);
 
-        tableView.getColumns().addAll(visibleNameColumn);
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        final TableColumn<SetData, String> playColumn = new TableColumn<>("Abspielen");
+        playColumn.setCellValueFactory(new PropertyValueFactory<>("play"));
+        playColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+
+        final TableColumn<SetData, String> aboColumn = new TableColumn<>("Abo");
+        aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
+        aboColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+
+        tableView.getColumns().addAll(nameColumn, playColumn, aboColumn);
+
         tableView.setItems(progData.setDataList);
         tableView.setOnMousePressed(m -> {
             if (m.getButton().equals(MouseButton.SECONDARY)) {
@@ -110,6 +117,11 @@ public class PaneSetList extends VBox {
                 tableView.setContextMenu(contextMenu);
             }
         });
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_NEXT_COLUMN);
+        nameColumn.setPrefWidth(150);
+        playColumn.setPrefWidth(70);
+        aboColumn.setPrefWidth(50);
+
         tableView.getSelectionModel().selectedItemProperty().addListener((u, o, n) ->
                 setDataObjectProperty.setValue(n));
         progData.setDataList.listChangedProperty().addListener((u, o, n) -> tableView.refresh());
@@ -201,10 +213,6 @@ public class PaneSetList extends VBox {
         btnCheck.setTooltip(new Tooltip("Die angelegten Sets überprüfen"));
         btnCheck.setOnAction(event -> SetFactory.checkPrograms(stage, progData, true));
         btnCheck.setMaxWidth(Double.MAX_VALUE);
-
-//        tglCheckStart.selectedProperty().bindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
-//        tglCheckStart.setTooltip(new Tooltip("Beim Programmstart werden die Sets geprüft. Bei einem Fehler " +
-//                "wird eine Meldung angezeigt."));
 
         final Button btnHelp = P2Button.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
 

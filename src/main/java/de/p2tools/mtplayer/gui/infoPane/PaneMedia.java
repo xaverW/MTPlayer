@@ -36,6 +36,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
+import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.SortedList;
@@ -194,6 +195,7 @@ public class PaneMedia extends VBox {
         progData.historyListAbos.getFilteredList().addListener((ListChangeListener<HistoryData>) c ->
                 Platform.runLater(() -> lblSumAbo.setText(progData.historyListAbos.getFilteredList().size() + "")));
 
+        new FilterCheckRegEx(txtSearchMedia);
         txtSearchMedia.textProperty().addListener((u, o, n) -> {
             filter(mediaDataDtoMedia);
         });
@@ -203,6 +205,7 @@ public class PaneMedia extends VBox {
                 txtSearchMedia.setText(sel);
             }
         });
+        new FilterCheckRegEx(txtSearchAbo);
         txtSearchAbo.textProperty().addListener((u, o, n) -> {
             filter(mediaDataDtoAbo);
         });

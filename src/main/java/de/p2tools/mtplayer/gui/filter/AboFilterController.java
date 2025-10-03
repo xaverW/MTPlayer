@@ -79,18 +79,18 @@ public class AboFilterController extends FilterController {
 
         cboName = new PCboString(progData.stringFilterLists.getFilterListAboName(),
                 ProgConfig.FILTER_ABO_NAME);
-        FilterCheckRegEx fN = new FilterCheckRegEx(cboName.getEditor());
-        cboName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
+        new FilterCheckRegEx(cboName.getEditor());
+//        cboName.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fN.checkPattern());
 
         cboSearchText = new PCboString(progData.stringFilterLists.getFilterListAboSearchText(),
                 ProgConfig.FILTER_ABO_SEARCH_TEXT);
-        FilterCheckRegEx fS = new FilterCheckRegEx(cboSearchText.getEditor());
-        cboSearchText.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fS.checkPattern());
+        new FilterCheckRegEx(cboSearchText.getEditor());
+//        cboSearchText.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fS.checkPattern());
 
         cboDescription = new PCboString(progData.stringFilterLists.getFilterListAboDescription(),
                 ProgConfig.FILTER_ABO_DESCRIPTION);
-        FilterCheckRegEx fD = new FilterCheckRegEx(cboDescription.getEditor());
-        cboDescription.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
+        new FilterCheckRegEx(cboDescription.getEditor());
+//        cboDescription.getEditor().textProperty().addListener((observable, oldValue, newValue) -> fD.checkPattern());
     }
 
     private void clearFilter() {

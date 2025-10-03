@@ -45,7 +45,7 @@ public class PCboString_ extends ComboBox<PCboString_.PCboSearchLabel> {
     }
 
     private void init() {
-        FilterCheckRegEx regEx = new FilterCheckRegEx(getEditor());
+        new FilterCheckRegEx(getEditor());
         getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 return;
@@ -54,7 +54,7 @@ public class PCboString_ extends ComboBox<PCboString_.PCboSearchLabel> {
                 // dann ist eine Auswahl aus der Combo
                 addLastFilter();
             }
-            regEx.checkPattern();
+//            regEx.checkPattern();
             strSearchProperty.setValue(getEditor().getText());
         });
 

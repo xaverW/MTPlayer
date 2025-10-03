@@ -252,9 +252,9 @@ public class PaneDialogScrollPane extends ScrollPane {
     }
 
     void initAction() {
-        FilterCheckRegEx filterCheckRegEx = new FilterCheckRegEx(txtSearch);
+        new FilterCheckRegEx(txtSearch);
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            filterCheckRegEx.checkPattern();
+//            filterCheckRegEx.checkPattern();
             filter();
             mediaDataDto.searchStringProp.setValue(txtSearch.getText());
         });

@@ -159,13 +159,12 @@ public class PaneReplace {
         chkActive.selectedProperty().addListener((u, o, n) -> setLblText());
         chkStop.selectedProperty().addListener((u, o, n) -> setLblText());
 
-        FilterCheckRegEx regEx = new FilterCheckRegEx(txtFrom);
-        txtFrom.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) {
-                return;
-            }
-            regEx.checkPattern();
-        });
+        new FilterCheckRegEx(txtFrom);
+//        txtFrom.textProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue == null) {
+//                return;
+//            }
+//        });
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Eintrag löschen"));
