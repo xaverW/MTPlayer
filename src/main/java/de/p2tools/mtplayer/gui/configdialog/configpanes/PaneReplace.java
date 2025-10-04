@@ -160,11 +160,6 @@ public class PaneReplace {
         chkStop.selectedProperty().addListener((u, o, n) -> setLblText());
 
         new FilterCheckRegEx(txtFrom);
-//        txtFrom.textProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) {
-//                return;
-//            }
-//        });
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Eintrag löschen"));
@@ -255,7 +250,13 @@ public class PaneReplace {
         Button btnReset = new Button("_Tabelle zurücksetzen");
         btnReset.setTooltip(new Tooltip("Alle Einträge löschen und Standardeinträge wieder herstellen"));
         btnReset.setOnAction(event -> {
-            ProgData.getInstance().replaceList.init();
+            if (P2Alert.BUTTON.YES.equals(P2Alert.showAlert_yes_no(stage,
+                    "Tabelle löschen",
+                    "Alle Einträge in der Tabelle werden gelöscht!",
+                    "Soll die Tabelle gelöscht und " +
+                            "die zwei Standardeinträge wieder eingefügt werden?"))) {
+                ProgData.getInstance().replaceList.init();
+            }
         });
 
         HBox hBox = new HBox();
