@@ -27,6 +27,7 @@ import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataProps;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
+import de.p2tools.p2lib.mediathek.filter.Filter;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 
 import java.util.function.Predicate;
@@ -206,20 +207,20 @@ public class FilmFilterPredicateFactory {
 
     private static Predicate<FilmData> addFastFilter(FilmFilter filmFilter, FastFilter filmFastFilter,
                                                      Predicate<FilmData> predicate, boolean audio) {
-        de.p2tools.p2lib.mediathek.filter.Filter fastFilter = new de.p2tools.p2lib.mediathek.filter.Filter(filmFastFilter.getFilterTerm(), true);
+        Filter fastFilter = new Filter(filmFastFilter.getFilterTerm(), true);
 
         // Thema
         final boolean themeIsExact = filmFilter.isThemeIsExact();
         String filterTheme = filmFilter.isThemeVis() ? filmFilter.getResTheme() : "";
-        de.p2tools.p2lib.mediathek.filter.Filter fTheme = new de.p2tools.p2lib.mediathek.filter.Filter(filterTheme, themeIsExact, true);
+        Filter fTheme = new Filter(filterTheme, themeIsExact, true);
 
         // ThemaTitel
         String filterThemeTitle = filmFilter.isThemeTitleVis() ? filmFilter.getThemeTitle() : "";
-        de.p2tools.p2lib.mediathek.filter.Filter fThemeTitle = new de.p2tools.p2lib.mediathek.filter.Filter(filterThemeTitle, true);
+        Filter fThemeTitle = new Filter(filterThemeTitle, true);
 
         // Titel
         String filterTitle = filmFilter.isTitleVis() ? filmFilter.getTitle() : "";
-        de.p2tools.p2lib.mediathek.filter.Filter fTitle = new de.p2tools.p2lib.mediathek.filter.Filter(filterTitle, true);
+        Filter fTitle = new Filter(filterTitle, true);
 
         if ((audio ? ProgConfig.FAST_AUDIO_SEARCH_ON.getValue() : ProgConfig.FAST_FILM_SEARCH_ON.getValue()) &&
                 (audio ? ProgConfig.FAST_AUDIO_SEARCH_WHERE.getValue() : ProgConfig.FAST_FILM_SEARCH_WHERE.getValue()) ==
