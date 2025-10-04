@@ -17,9 +17,10 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.replace.ReplaceFactory;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.AboSubDir;
 import de.p2tools.p2lib.mediathek.tools.P2FileNameUtils;
 import de.p2tools.p2lib.tools.P2InfoFactory;
@@ -180,7 +181,7 @@ public class DownloadFactoryMakeParameter {
                 }
             }
 
-            name = DownloadFactory.replaceFileNameWithReplaceList(name, false /* pfad */);
+            name = ReplaceFactory.replaceFileNameWithReplaceList(name, false /* pfad */);
             name = name + suff;
 
             // prüfen ob das Suffix 2x vorkommt
@@ -232,7 +233,7 @@ public class DownloadFactoryMakeParameter {
                     // --> das wird aber nur beim ersten mal klappen, dann wird im
                     // DownloadDialog immer der letzte Pfad zuerst angeboten
                     path = P2FileUtils.addsPath(path,
-                            DownloadFactory.replaceFileNameWithReplaceList(download.getTheme(), true /* pfad */));
+                            ReplaceFactory.replaceFileNameWithReplaceList(download.getTheme(), true /* pfad */));
                 }
             }
 
@@ -357,7 +358,7 @@ public class DownloadFactoryMakeParameter {
 
     private static String setMaxLength(String name, int length, boolean andReplace) {
         if (andReplace) {
-            name = DownloadFactory.replaceFileNameWithReplaceList(name, false /* pfad */);
+            name = ReplaceFactory.replaceFileNameWithReplaceList(name, false /* pfad */);
         }
 
         if (length <= 0) {

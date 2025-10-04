@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
+import de.p2tools.mtplayer.controller.data.replace.ReplaceFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.gui.dialog.AboDelDialogController;
 import de.p2tools.mtplayer.gui.dialog.abodialog.AboAddDialogController;
@@ -52,7 +52,7 @@ public class AboListFactory {
             ProgConfig.ABO_MINUTE_MAX_SIZE.setValue(FilterCheck.FILTER_DURATION_MAX_MINUTE);
         }
 
-        String namePath = DownloadFactory.replaceFileNameWithReplaceList(aboName, false /* nur ein Ordner */);
+        String namePath = ReplaceFactory.replaceFileNameWithReplaceList(aboName, false /* nur ein Ordner */);
 
         final AboData abo = new AboData(ProgData.getInstance(),
                 audio,
@@ -113,7 +113,7 @@ public class AboListFactory {
         if (searchTitle.isEmpty()) {
             searchTitle = "Abo aus Filter";
         }
-        searchTitle = DownloadFactory.replaceFileNameWithReplaceList(searchTitle, false /* nur ein Ordner */);
+        searchTitle = ReplaceFactory.replaceFileNameWithReplaceList(searchTitle, false /* nur ein Ordner */);
 
         final AboData abo = new AboData(ProgData.getInstance(),
                 audio ? ProgConst.LIST_AUDIO : ProgConst.LIST_FILM,

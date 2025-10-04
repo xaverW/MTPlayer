@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.controller.data.download;
+package de.p2tools.mtplayer.controller.data.replace;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
