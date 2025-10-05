@@ -99,6 +99,7 @@ public class DownloadDirectHttp extends Thread {
                     closeConn();
                     return;
                 }
+
                 download.getDownloadStartDto().addStartCounter();
                 openConnForDownload(restartWithOutSSL);
                 if (download.isStateStartedRun()) {

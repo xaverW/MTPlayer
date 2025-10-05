@@ -65,7 +65,7 @@ public class DownloadExternal extends Thread {
     private void runWhile() {
         int stat = stat_start;
         if (!new CheckDownloadFileExists().checkIfContinue(progData, download, false)) {
-            // dann abbrechen
+            // dann abbrechen, Downloadmanager liefert immer TRUE!
             return;
         }
 
@@ -125,7 +125,7 @@ public class DownloadExternal extends Thread {
         final RuntimeExecDownload runtimeExecDownload = new RuntimeExecDownload(download);
         download.getDownloadStartDto().setProcess(runtimeExecDownload.exec(true /* log */));
         if (download.getDownloadStartDto().getProcess() != null) {
-            if (download.getProgramDownloadmanager()) {
+            if (download.isProgramDownloadmanager()) {
                 retStat = stat_finished_ok;
             } else {
                 retStat = stat_running;
@@ -190,7 +190,7 @@ public class DownloadExternal extends Thread {
     }
 
     private int checkDownload() {
-        if (download.getSource().equals(DownloadConstants.SRC_BUTTON) || download.getProgramDownloadmanager()) {
+        if (download.getSource().equals(DownloadConstants.SRC_BUTTON) || download.isProgramDownloadmanager()) {
             // für die direkten Starts mit dem Button und die remote downloads wars das dann
             return stat_finished_ok;
         }

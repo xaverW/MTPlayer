@@ -39,7 +39,7 @@ public class CellDownloadProgress<S, T> extends TableCell<S, T> {
                 super.updateItem(item, empty);
                 if (item != null) {
                     DownloadData download = getTableView().getItems().get(getIndex());
-                    if (download.getProgramDownloadmanager()) {
+                    if (download.isProgramDownloadmanager()) {
                         final String text = DownloadConstants.getTextProgress(true, download.getState(), item);
                         Label label = new Label(text);
                         setGraphic(label);

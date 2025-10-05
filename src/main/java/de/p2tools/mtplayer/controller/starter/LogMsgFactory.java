@@ -137,7 +137,7 @@ public class LogMsgFactory {
             }
 
             list.add("==== ==== ==== ==== ==== ==== ==== ==== ==== ");
-            if (download.getProgramDownloadmanager()) {
+            if (download.isProgramDownloadmanager()) {
                 list.add("Programm ist ein Downloadmanager");
             }
             list.add("Programmset: " + (download.getSetData() == null ? "" : download.getSetData().getVisibleName()));
