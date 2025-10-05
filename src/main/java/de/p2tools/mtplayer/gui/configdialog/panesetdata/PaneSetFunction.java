@@ -40,7 +40,10 @@ import javafx.stage.Stage;
 import java.util.Collection;
 
 public class PaneSetFunction {
-    private final Button btnPlay = new Button("Abspielen setzen");
+    private final String SET_IS_PLAY = "Filme werden damit abgespielt";
+    private final String SET_IS_NOT_PLAY = "Filme damit abspielen";
+
+    private final Button btnPlay = new Button();
     private final P2ToggleSwitch tglSave = new P2ToggleSwitch("Speichern:");
     private final P2ToggleSwitch tglButton = new P2ToggleSwitch("Button:");
     private final P2ToggleSwitch tglAbo = new P2ToggleSwitch("Abo:");
@@ -112,7 +115,6 @@ public class PaneSetFunction {
                 HelpTextPset.HELP_PSET_BUTTON), 2, row);
 
         colorPicker.setOnAction(a -> {
-//                    PListener.notify(PListener.EVENT_FILM_BUTTON_CHANGED, PaneSetFunction.class.getSimpleName());
                     progData.pEventHandler.notifyListener(PEvents.EVENT_FILM_BUTTON_CHANGED);
                 }
         );
@@ -120,7 +122,6 @@ public class PaneSetFunction {
         Button btnResetColor = new Button("_Standardfarbe");
         btnResetColor.setOnAction(event -> {
             setDataObjectProperty.getValue().setColor(SetData.RESET_COLOR);
-//            PListener.notify(PListener.EVENT_FILM_BUTTON_CHANGED, PaneSetFunction.class.getSimpleName());
             progData.pEventHandler.notifyListener(PEvents.EVENT_FILM_BUTTON_CHANGED);
         });
         final Button btnHelpColor = P2Button.helpButton(stage, "Schriftfarbe auswählen",
@@ -152,8 +153,12 @@ public class PaneSetFunction {
     private void playSetText() {
         if (setData != null && setData.isPlay()) {
             lblPlay.getStyleClass().add("markSetPlay");
+            btnPlay.setDisable(true);
+            btnPlay.setText(SET_IS_PLAY);
         } else {
             lblPlay.getStyleClass().removeAll("markSetPlay");
+            btnPlay.setDisable(false);
+            btnPlay.setText(SET_IS_NOT_PLAY);
         }
     }
 
@@ -162,14 +167,14 @@ public class PaneSetFunction {
         setData = setDataObjectProperty.getValue();
         if (setData != null) {
             playSetText();
-            //rbPlay.selectedProperty().bindBidirectional(setdata.playProperty());
+            setData.playProperty().addListener((u, o, n) -> {
+                playSetText();
+            });
 
             tglSave.selectedProperty().bindBidirectional(setData.saveProperty());
             tglAbo.selectedProperty().bindBidirectional(setData.aboProperty());
-
             tglButton.selectedProperty().bindBidirectional(setData.buttonProperty());
             tglButton.selectedProperty().addListener(changeListener);
-
             colorPicker.valueProperty().bindBidirectional(setData.colorProperty());
             colorPicker.valueProperty().addListener(changeListener);
         }
@@ -178,14 +183,11 @@ public class PaneSetFunction {
     private void unBindProgData() {
         if (setData != null) {
             playSetText();
-            //rbPlay.selectedProperty().unbindBidirectional(setdata.playProperty());
 
             tglSave.selectedProperty().unbindBidirectional(setData.saveProperty());
             tglAbo.selectedProperty().unbindBidirectional(setData.aboProperty());
-
             tglButton.selectedProperty().unbindBidirectional(setData.buttonProperty());
             tglButton.selectedProperty().removeListener(changeListener);
-
             colorPicker.valueProperty().unbindBidirectional(setData.colorProperty());
             colorPicker.valueProperty().removeListener(changeListener);
         }

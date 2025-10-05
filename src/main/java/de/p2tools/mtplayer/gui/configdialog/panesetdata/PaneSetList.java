@@ -26,7 +26,6 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -98,13 +97,13 @@ public class PaneSetList extends VBox {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("visibleName"));
         nameColumn.setCellFactory(cellFactoryName);
 
-        final TableColumn<SetData, String> playColumn = new TableColumn<>("Abspielen");
+        final TableColumn<SetData, Boolean> playColumn = new TableColumn<>("Abspielen");
         playColumn.setCellValueFactory(new PropertyValueFactory<>("play"));
-        playColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+        playColumn.setCellFactory(new PCellCheckBoxPlay<>().cellFactory);
 
-        final TableColumn<SetData, String> aboColumn = new TableColumn<>("Abo");
+        final TableColumn<SetData, Boolean> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
-        aboColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+        aboColumn.setCellFactory(new PCellCheckBoxAbo<>().cellFactory);
 
         tableView.getColumns().addAll(nameColumn, playColumn, aboColumn);
 

@@ -10,6 +10,7 @@
 /*Tabelle Sets: Set ist "Abspielen" */
 .markSetPlay{
     -fx-text-fill: #ff0000;
+    -fx-underline: true;
 }
 
 /* ist die ComboBox mit den Filterprofilen: markiert wenn das Profil aktiv ist*/
