@@ -628,7 +628,7 @@ public class DownloadDataProps extends P2DataSample<DownloadData> {
         this.programCallArray.set(programCallArray);
     }
 
-    public boolean getProgramDownloadmanager() {
+    public boolean isProgramDownloadmanager() {
         return programDownloadmanager.get();
     }
 
