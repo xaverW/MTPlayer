@@ -53,9 +53,9 @@ public class AboSearchDownloadsFactory {
     public static void searchFromDialog(boolean fromOk) {
         if (ProgConfig.ABO_SEARCH_NOW.getValue()) {
             // nur dann werden Downloads gesucht
+            alreadyRunning.set(true);
             ProgData.busy.busyOn(fromOk ? Busy.BUSY_SRC.GUI : Busy.BUSY_SRC.ABO_DIALOG,
                     "Downloads suchen:", -1.0, false);
-            alreadyRunning.set(true);
         }
 
         ProgData.getInstance().aboList.notifyChanges();
@@ -66,22 +66,24 @@ public class AboSearchDownloadsFactory {
         // EVENT_BLACKLIST_CHANGED geändert und "Abo suchen" ist ein
         // SYSTEM_BLACKLIST_SHOW_ABO geändert und "Abo suchen" ist ein
         // AboList geändert und "Abo suchen" ist ein
+        // EVENT_SET_DATA_CHANGED
         // workOnFilmListLoadFinished und "Abo suchen" ist ein oder AUTOMODE
+        alreadyRunning.set(true);
         ProgData.busy.busyOnFx(Busy.BUSY_SRC.GUI, "Downloads suchen:", -1.0, false);
 
         if (ProgData.FILMLIST_IS_DOWNLOADING.get() ||
                 ProgData.AUDIOLIST_IS_DOWNLOADING.get()) {
             // wird danach eh gemacht
-            alreadyRunning.set(false);
             ProgData.busy.busyOffFx();
+            alreadyRunning.set(false);
             return;
         }
 
         if (ProgData.getInstance().setDataList.getSetDataForAbo() == null) {
             // SetData sind nicht eingerichtet
             Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.ABO));
-            alreadyRunning.set(false);
             ProgData.busy.busyOffFx();
+            alreadyRunning.set(false);
             return;
         }
 
@@ -94,9 +96,9 @@ public class AboSearchDownloadsFactory {
             @Override
             protected Void call() {
                 searchForNewDownloadsForAbos(ProgData.getInstance().downloadList);
-                alreadyRunning.set(false);
-                ProgData.busy.busyOffFx();
                 ProgData.getInstance().downloadList.setDownloadsChanged();
+                ProgData.busy.busyOffFx();
+                alreadyRunning.set(false);
                 return null;
             }
         }).start();
@@ -110,13 +112,11 @@ public class AboSearchDownloadsFactory {
         // den Abo-TrefferZähler zurücksetzen
         ProgData.getInstance().aboList.forEach(AboDataProps::clearCountHit);
 
-
         if (ProgData.getInstance().setDataList.getSetDataForAbo("") == null) {
             // dann fehlt ein Set für die Abos
             Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.ABO));
             return;
         }
-
 
         // mit den bereits enthaltenen Download-URLs füllen
         Set<String> syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(new HashSet<>(500)); // für 90% übertrieben, für 10% immer noch zu wenig???

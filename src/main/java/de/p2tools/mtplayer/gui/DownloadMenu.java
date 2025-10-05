@@ -49,6 +49,7 @@ public class DownloadMenu {
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIcons.ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
+        btnRefresh.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnStart = new ToolBarButton(vBox,

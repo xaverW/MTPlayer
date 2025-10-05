@@ -61,6 +61,12 @@ public class Worker {
                 }
             });
         });
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_SET_DATA_CHANGED) {
+            @Override
+            public void pingGui() {
+                AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
+            }
+        });
 
         progData.checkForNewFilmlist.foundNewListProperty().addListener((u, o, n) -> {
             if (!ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY.getValue()) {
