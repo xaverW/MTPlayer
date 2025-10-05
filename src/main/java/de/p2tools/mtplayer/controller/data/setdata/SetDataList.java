@@ -24,9 +24,7 @@ public class SetDataList extends SetDataListWorker {
 
     public boolean removeSetData(Object obj) {
         // remove and notify
-        boolean ret = super.remove(obj);
-        setListChanged();
-        return ret;
+        return super.remove(obj);
     }
 
     public boolean addSetData(SetData psetData) {
@@ -42,7 +40,6 @@ public class SetDataList extends SetDataListWorker {
             psetData.setPlay(false);
         }
         final boolean ret = super.add(psetData);
-        setListChanged();
         return ret;
     }
 
@@ -58,7 +55,6 @@ public class SetDataList extends SetDataListWorker {
                 ret = false;
             }
         }
-        setListChanged();
         return ret;
     }
 
@@ -188,7 +184,6 @@ public class SetDataList extends SetDataListWorker {
             sData.setPlay(false);
         }
         setData.setPlay(true);
-        setListChanged();
     }
 
     public SetData getSetDataWithId(String id) {
@@ -213,7 +208,6 @@ public class SetDataList extends SetDataListWorker {
             ++newIdx;
         }
         this.add(newIdx, prog);
-        setListChanged();
         return newIdx;
     }
 

@@ -45,6 +45,7 @@ public class ConfigDialogController extends P2DialogExtra {
     private final Button btnApply = new Button("_Anwenden");
     private final String geo = ProgConfig.SYSTEM_GEO_HOME_PLACE.get();
     private final BooleanProperty blackChanged = new SimpleBooleanProperty(false);
+    private final BooleanProperty setDataChanged = new SimpleBooleanProperty(false);
     private final BooleanProperty diacriticChanged = new SimpleBooleanProperty(false);
 
     private ControllerConfig controllerConfig;
@@ -140,6 +141,10 @@ public class ConfigDialogController extends P2DialogExtra {
                 ProgData.getInstance().maskerPane.switchOffMasker();
             }).start();
         }
+
+        if (setDataChanged.get()) {
+            progData.pEventHandler.notifyListener(PEvents.EVENT_SET_DATA_CHANGED);
+        }
         close();
     }
 
@@ -152,7 +157,6 @@ public class ConfigDialogController extends P2DialogExtra {
         controllerMedia.close();
         controllerSet.close();
 
-        progData.pEventHandler.notifyListener(PEvents.EVENT_SET_DATA_CHANGED);
         dialogIsRunning.setValue(false);
         super.close();
     }
@@ -200,6 +204,7 @@ public class ConfigDialogController extends P2DialogExtra {
             tab = new Tab("Aufzeichnen/Abspielen");
             tab.setClosable(false);
             tab.setContent(controllerSet);
+            tab.selectedProperty().addListener((u, o, n) -> setDataChanged.set(true));
             if (!blackListDialog) {
                 tabPane.getTabs().add(tab);
             }

@@ -55,7 +55,7 @@ public class PaneFilmButton extends VBox {
 
         addButton();
         ProgData.getInstance().setDataList.addListener((u, o, n) -> addButton());
-        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_FILM_BUTTON_CHANGED) {
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_SET_DATA_BUTTON_CHANGED) {
             @Override
             public void ping() {
                 addButton();

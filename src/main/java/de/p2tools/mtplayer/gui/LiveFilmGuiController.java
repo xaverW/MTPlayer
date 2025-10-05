@@ -189,11 +189,11 @@ public class LiveFilmGuiController extends AnchorPane {
 
     private void initListener() {
         ProgConfig.LIVE_FILM__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
-        progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (progData.setDataList.getSetDataListButton().size() > 2) {
-                ProgConfig.LIVE_FILM__INFO_IS_SHOWING.set(true);
-            }
-        });
+//        progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (progData.setDataList.getSetDataListButton().size() > 2) {
+//                ProgConfig.LIVE_FILM__INFO_IS_SHOWING.set(true);
+//            }
+//        });
     }
 
     private void initTable() {

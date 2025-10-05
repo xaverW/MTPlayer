@@ -35,7 +35,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.util.Optional;
 
@@ -95,17 +94,25 @@ public class PaneSetList extends VBox {
 
         final TableColumn<SetData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("visibleName"));
-        nameColumn.setCellFactory(cellFactoryName);
+        nameColumn.setCellFactory(new PCellName<>().cellFactory);
 
         final TableColumn<SetData, Boolean> playColumn = new TableColumn<>("Abspielen");
         playColumn.setCellValueFactory(new PropertyValueFactory<>("play"));
         playColumn.setCellFactory(new PCellCheckBoxPlay<>().cellFactory);
 
+        final TableColumn<SetData, Boolean> saveColumn = new TableColumn<>("Speichern");
+        saveColumn.setCellValueFactory(new PropertyValueFactory<>("save"));
+        saveColumn.setCellFactory(new PCellCheckBox<>(PCellCheckBox.DATA.SAVE).cellFactory);
+
         final TableColumn<SetData, Boolean> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
-        aboColumn.setCellFactory(new PCellCheckBoxAbo<>().cellFactory);
+        aboColumn.setCellFactory(new PCellCheckBox<>(PCellCheckBox.DATA.ABO).cellFactory);
 
-        tableView.getColumns().addAll(nameColumn, playColumn, aboColumn);
+        final TableColumn<SetData, Boolean> buttonColumn = new TableColumn<>("Button");
+        buttonColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
+        buttonColumn.setCellFactory(new PCellCheckBox<>(PCellCheckBox.DATA.BUTTON).cellFactory);
+
+        tableView.getColumns().addAll(nameColumn, playColumn, saveColumn, aboColumn, buttonColumn);
 
         tableView.setItems(progData.setDataList);
         tableView.setOnMousePressed(m -> {
@@ -118,12 +125,9 @@ public class PaneSetList extends VBox {
         });
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_NEXT_COLUMN);
         nameColumn.setPrefWidth(150);
-        playColumn.setPrefWidth(70);
-        aboColumn.setPrefWidth(50);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((u, o, n) ->
                 setDataObjectProperty.setValue(n));
-        progData.setDataList.listChangedProperty().addListener((u, o, n) -> tableView.refresh());
         setDataObjectProperty.setValue(tableView.getSelectionModel().getSelectedItem());
         tableView.getSelectionModel().selectFirst();
     }
@@ -243,31 +247,5 @@ public class PaneSetList extends VBox {
         return sel;
     }
 
-    private Callback<TableColumn<SetData, String>, TableCell<SetData, String>> cellFactoryName
-            = (final TableColumn<SetData, String> param) -> {
 
-        final TableCell<SetData, String> cell = new TableCell<SetData, String>() {
-
-            @Override
-            public void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-
-                SetData setData = getTableView().getItems().get(getIndex());
-                Label lbl = new Label(setData.getVisibleName());
-                if (setData.isPlay()) {
-                    lbl.getStyleClass().add("markSetPlay");
-                } else {
-                    lbl.getStyleClass().removeAll("markSetPlay");
-                }
-                setGraphic(lbl);
-            }
-        };
-        return cell;
-    };
 }

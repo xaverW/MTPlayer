@@ -27,7 +27,6 @@ import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -49,7 +48,6 @@ public class PaneSetFunction {
     private final P2ToggleSwitch tglAbo = new P2ToggleSwitch("Abo:");
     private final ColorPicker colorPicker = new ColorPicker();
     private final Label lblPlay = new Label("Abspielen:");
-    private ChangeListener changeListener;
 
     private final Stage stage;
     private final ProgData progData;
@@ -67,8 +65,6 @@ public class PaneSetFunction {
     }
 
     public void makePane(Collection<TitledPane> result) {
-        changeListener = (observable, oldValue, newValue) -> ProgData.getInstance().setDataList.setListChanged();
-
         VBox vBox = new VBox(10);
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(P2LibConst.PADDING));
@@ -82,6 +78,8 @@ public class PaneSetFunction {
             playSetText();
         });
         playSetText();
+        tglButton.selectedProperty().addListener((u, o, n) ->
+                progData.pEventHandler.notifyListener(PEvents.EVENT_SET_DATA_BUTTON_CHANGED));
 
         int row = 0;
         //Speichern, Button, Abo
@@ -115,14 +113,14 @@ public class PaneSetFunction {
                 HelpTextPset.HELP_PSET_BUTTON), 2, row);
 
         colorPicker.setOnAction(a -> {
-                    progData.pEventHandler.notifyListener(PEvents.EVENT_FILM_BUTTON_CHANGED);
+                    progData.pEventHandler.notifyListener(PEvents.EVENT_SET_DATA_BUTTON_CHANGED);
                 }
         );
         Label lblColor = new Label("Farbe:");
         Button btnResetColor = new Button("_Standardfarbe");
         btnResetColor.setOnAction(event -> {
             setDataObjectProperty.getValue().setColor(SetData.RESET_COLOR);
-            progData.pEventHandler.notifyListener(PEvents.EVENT_FILM_BUTTON_CHANGED);
+            progData.pEventHandler.notifyListener(PEvents.EVENT_SET_DATA_BUTTON_CHANGED);
         });
         final Button btnHelpColor = P2Button.helpButton(stage, "Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR);
@@ -173,10 +171,9 @@ public class PaneSetFunction {
 
             tglSave.selectedProperty().bindBidirectional(setData.saveProperty());
             tglAbo.selectedProperty().bindBidirectional(setData.aboProperty());
+
             tglButton.selectedProperty().bindBidirectional(setData.buttonProperty());
-            tglButton.selectedProperty().addListener(changeListener);
             colorPicker.valueProperty().bindBidirectional(setData.colorProperty());
-            colorPicker.valueProperty().addListener(changeListener);
         }
     }
 
@@ -186,10 +183,9 @@ public class PaneSetFunction {
 
             tglSave.selectedProperty().unbindBidirectional(setData.saveProperty());
             tglAbo.selectedProperty().unbindBidirectional(setData.aboProperty());
+
             tglButton.selectedProperty().unbindBidirectional(setData.buttonProperty());
-            tglButton.selectedProperty().removeListener(changeListener);
             colorPicker.valueProperty().unbindBidirectional(setData.colorProperty());
-            colorPicker.valueProperty().removeListener(changeListener);
         }
     }
 }

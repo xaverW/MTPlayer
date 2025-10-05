@@ -235,11 +235,11 @@ public class FilmGuiController extends AnchorPane {
     private void initListener() {
         ProgConfig.FILM__INFO_IS_SHOWING.addListener((observable, oldValue, newValue) -> setInfoPane());
 
-        progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
-            if (progData.setDataList.getSetDataListButton().size() > 2) {
-                ProgConfig.FILM__INFO_IS_SHOWING.set(true);
-            }
-        });
+//        progData.setDataList.listChangedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (progData.setDataList.getSetDataListButton().size() > 2) {
+//                ProgConfig.FILM__INFO_IS_SHOWING.set(true);
+//            }
+//        });
     }
 
     private void initTable() {

@@ -17,8 +17,6 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +28,6 @@ import java.util.List;
 public class SetDataListWorker extends SimpleListProperty<SetData> implements P2DataList<SetData> {
     // Liste aller Programmsets
     public static final String TAG = "SetDataList";
-    private BooleanProperty listChanged = new SimpleBooleanProperty(true);
     private final ObservableList<SetData> undoList = FXCollections.observableArrayList();
 
     public SetDataListWorker() {
@@ -57,18 +54,6 @@ public class SetDataListWorker extends SimpleListProperty<SetData> implements P2
         if (obj.getClass().equals(SetData.class)) {
             add((SetData) obj);
         }
-    }
-
-    public boolean isListChanged() {
-        return listChanged.get();
-    }
-
-    public BooleanProperty listChangedProperty() {
-        return listChanged;
-    }
-
-    public void setListChanged() {
-        this.listChanged.set(!listChanged.get());
     }
 
     @Override

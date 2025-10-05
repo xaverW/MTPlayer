@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
@@ -39,7 +38,6 @@ import java.util.Collection;
 public class PaneSetName {
     private final TextField txtVisibleName = new TextField("");
     private final TextArea txtDescription = new TextArea("");
-    private ChangeListener<String> changeListener;
     private SetData setData = null;
     private final ObjectProperty<SetData> setDataObjectProperty;
 
@@ -58,8 +56,6 @@ public class PaneSetName {
     }
 
     public void makePane(Collection<TitledPane> result) {
-        changeListener = (observable, oldValue, newValue) -> ProgData.getInstance().setDataList.setListChanged();
-
         VBox vBox = new VBox(P2LibConst.PADDING);
         vBox.setFillWidth(true);
         vBox.setPadding(new Insets(10));
@@ -100,8 +96,6 @@ public class PaneSetName {
         setData = setDataObjectProperty.getValue();
         if (setData != null) {
             txtVisibleName.textProperty().bindBidirectional(setData.visibleNameProperty());
-            txtVisibleName.textProperty().addListener(changeListener);
-
             txtDescription.textProperty().bindBidirectional(setData.descriptionProperty());
         }
     }
@@ -109,7 +103,6 @@ public class PaneSetName {
     private void unBindProgData() {
         if (setData != null) {
             txtVisibleName.textProperty().unbindBidirectional(setData.visibleNameProperty());
-            txtVisibleName.textProperty().removeListener(changeListener);
             txtVisibleName.setText("");
 
             txtDescription.textProperty().unbindBidirectional(setData.descriptionProperty());

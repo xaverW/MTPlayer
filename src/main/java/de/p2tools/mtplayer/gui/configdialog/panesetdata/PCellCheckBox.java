@@ -17,6 +17,8 @@
 
 package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 
+import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
@@ -28,7 +30,14 @@ import javafx.util.Callback;
 /**
  * das style der box ist: "checkbox-table"
  */
-public class PCellCheckBoxAbo<S, T> extends TableCell<S, T> {
+public class PCellCheckBox<S, T> extends TableCell<S, T> {
+    public enum DATA {SAVE, ABO, BUTTON}
+
+    private final DATA dataEnum;
+
+    public PCellCheckBox(DATA dataEnum) {
+        this.dataEnum = dataEnum;
+    }
 
     public Callback<TableColumn<SetData, Boolean>, TableCell<SetData, Boolean>> cellFactory
             = (final TableColumn<SetData, Boolean> param) -> new TableCell<>() {
@@ -53,7 +62,14 @@ public class PCellCheckBoxAbo<S, T> extends TableCell<S, T> {
             box.setSelected(item);
             box.setOnAction(a -> {
                 SetData setData = getTableView().getItems().get(getIndex());
-                setData.setAbo(!item);
+                switch (dataEnum) {
+                    case SAVE -> setData.setSave(!item);
+                    case ABO -> setData.setAbo(!item);
+                    case BUTTON -> {
+                        setData.setButton(!item);
+                        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_SET_DATA_BUTTON_CHANGED);
+                    }
+                }
             });
         }
     };

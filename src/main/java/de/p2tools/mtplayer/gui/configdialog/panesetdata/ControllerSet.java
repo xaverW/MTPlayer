@@ -54,6 +54,7 @@ public class ControllerSet extends AnchorPane {
         paneSetDownload = new PaneSetDownload(stage, setDataObjectProperty);
         paneSetProgram = new PaneSetProgram(stage, setDataObjectProperty);
         paneSetList = new PaneSetList(stage, setDataObjectProperty);
+
         ArrayList<TitledPane> titledPanes = new ArrayList<>();
         paneSetName.makePane(titledPanes);
         paneSetFunction.makePane(titledPanes);
