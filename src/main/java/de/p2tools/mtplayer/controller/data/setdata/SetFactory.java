@@ -217,13 +217,14 @@ public class SetFactory {
 
         for (final SetData setData : data.setDataList) {
             ret = true;
-            if (!setData.isFreeLine() && !setData.isLable()) {
-                // nur wenn kein Lable oder freeline
+            if (setData.isPlay() || setData.isSaveAbo()) {
+                // nur Sets die auch zum Abspielen/Speichern verwendet werden
                 text.append("+++++++++++++++++++++++++++++++").append(P2LibConst.LINE_SEPARATOR);
                 text.append(PIPE + "Programmgruppe: ").append(setData.getVisibleName()).append(P2LibConst.LINE_SEPARATOR);
-                final String destPath = setData.getDestPath();
-                if (setData.progsContainPath()) {
-                    // beim nur Abspielen wird er nicht gebraucht
+                if (!setData.isPlay() && setData.isSaveAbo()) {
+                    // Speichern/Abspielen und nicht Play - beim Abspielen wird er nicht gebraucht
+                    // auch nicht bei "nur-Button"
+                    final String destPath = setData.getDestPath();
                     if (destPath.isEmpty()) {
                         ret = false;
                         text.append(PIPE + LEER + "Zielpfad fehlt!").append(P2LibConst.LINE_SEPARATOR);

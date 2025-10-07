@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.data.setdata;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
@@ -153,9 +152,26 @@ public class SetDataList extends SetDataListWorker {
         return get(0);
     }
 
+    public SetDataList getSetDataListSaveAbo() {
+        // liefert eine Liste Programmsets, die zum Speichern angelegt sind,
+        // Abo ist immer auch SAVE, wenn leer wird das erste ABO genommen
+        SetDataList list = new SetDataList();
+        stream().filter(SetData::isSave).collect(Collectors.toCollection(() -> list));
+        if (list.isEmpty()) {
+            stream().filter(SetData::isAbo).findFirst().ifPresent(list::add);
+        }
+        return list;
+    }
+
     public SetDataList getSetDataListSave() {
         // liefert eine Liste Programmsets, die zum Speichern angelegt sind (ist meist nur eins)
         return stream().filter(SetDataProps::isSave)
+                .collect(Collectors.toCollection(SetDataList::new));
+    }
+
+    public SetDataList getSetDataListAbo() {
+        // liefert eine Liste Programmsets, die für Abos angelegt sind (ist meist nur eins)
+        return stream().filter(SetDataProps::isAbo)
                 .collect(Collectors.toCollection(SetDataList::new));
     }
 
@@ -167,12 +183,6 @@ public class SetDataList extends SetDataListWorker {
                 .filter(SetDataProps::isButton)
 //                .filter(setData -> !setData.getProgramList().isEmpty()) // könnte auch Sets ohne Programm geben??
 //                .filter(setData -> !setData.getVisibleName().isEmpty()) // kann es nicht mehr geben
-                .collect(Collectors.toCollection(SetDataList::new));
-    }
-
-    public SetDataList getSetDataListAbo() {
-        // liefert eine Liste Programmsets, die für Abos angelegt sind (ist meist nur eins)
-        return stream().filter(SetDataProps::isAbo)
                 .collect(Collectors.toCollection(SetDataList::new));
     }
 
@@ -208,7 +218,7 @@ public class SetDataList extends SetDataListWorker {
         return newIdx;
     }
 
-    public ArrayList<String> getStringListSetData() {
-        return stream().map(SetData::setDataToString).collect(Collectors.toCollection(ArrayList::new));
-    }
+//    public ArrayList<String> getStringListSetData() {
+//        return stream().map(SetData::setDataToString).collect(Collectors.toCollection(ArrayList::new));
+//    }
 }

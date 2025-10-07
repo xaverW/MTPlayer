@@ -60,7 +60,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
         this.filmsToDownloadList = filmsToDownloadList;
 
         if (setDataStart == null) {
-            setDataStart = progData.setDataList.getSetDataListSave().get(0);
+            setDataStart = progData.setDataList.getSetDataListSaveAbo().get(0);
         }
 
         setAll = true;
@@ -124,7 +124,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
         } else {
             addDownloadDto.chkStartTimeAll.setSelected(true);
         }
-        if (progData.setDataList.getSetDataListSave().size() <= 1) {
+        if (progData.setDataList.getSetDataListSaveAbo().size() <= 1) {
             // nur wenns auch eine Auswahl gibt
             addDownloadDto.chkSetAll.setSelected(false);
         }
@@ -136,14 +136,15 @@ public class DownloadAddDialogController extends P2DialogExtra {
         downloadAddDialogGui.init();
         addOkCancelButtons(btnOk, btnCancel);
 
-        if (progData.setDataList.getSetDataListSave().isEmpty() ||
-                filmsToDownloadList.isEmpty()) {
+        if (filmsToDownloadList.isEmpty()) {
             // Satz mit x, war wohl nix
-            // braucht's eigentlich nicht, aber DOWNLOAD klappt sonst nicht!!
+            ok = false;
+            Platform.runLater(this::quit);
+        }
+        if (progData.setDataList.getSetDataListSaveAbo().isEmpty()) {
+            // Satz mit x, war wohl nix
             Platform.runLater(() -> {
                 new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.SAVE);
-//                ok = false;
-//                quit();
             });
         }
     }

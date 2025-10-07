@@ -191,7 +191,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
             if (FilmToolsFactory.checkIfLiveStream(download.getTheme())) {
                 continue;
             }
-            if (!download.getSetData().isPlay() && !download.getSetData().isSave()) {
+            if (!download.getSetData().isPlay() && !download.getSetData().isSaveAbo()) {
                 // dann ist es nicht zum Abspielen oder Speichern->Button
                 continue;
             }

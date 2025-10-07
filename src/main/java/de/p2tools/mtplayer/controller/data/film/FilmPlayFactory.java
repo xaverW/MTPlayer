@@ -56,7 +56,7 @@ public class FilmPlayFactory {
             return;
         }
 
-        if (psetData.isSave()) {
+        if (psetData.isSaveAbo()) {
             // wenn ein Set zum Speichern gewählt wurde, einen Download anlegen und starten
             FilmSaveFactory.saveFilmList(audio, list, psetData);
             return;

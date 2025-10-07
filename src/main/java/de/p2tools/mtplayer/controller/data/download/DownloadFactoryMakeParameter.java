@@ -75,29 +75,30 @@ public class DownloadFactoryMakeParameter {
         return makeProgParameter(download, download.getAbo(), download.getDestFileName(), download.getDestPath());
     }
 
-    public static boolean makeProgParameter(DownloadData download, AboData abo, String name, String path) {
+    public static boolean makeProgParameter(DownloadData downloadData, AboData abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
         try {
-            final ProgramData programData = download.getSetData().getProgUrl(download.getUrl());
+            final ProgramData programData = downloadData.getSetData().getProgUrl(downloadData.getUrl());
             if (programData == null) {
                 return false; //todo ist das gut da wenn kein Set zum Download???
             }
 
-            // Direkter Download nur wenn url passt und wenn im Programm ein Zielpfad ist sonst Abspielen
-            // legt fest, dass NICHT Abspielen, Abspielen immer über Programm!
-            download.setType((download.getSetData().checkDownloadDirect(download.getUrl()) && download.getSetData().progsContainPath()) ?
+            // Direkter Download nur, wenn url passt und wenn im Programm ein Zielpfad, sonst Programm
+            // auch Abspielen immer über Programm!
+            downloadData.setType((downloadData.getSetData().checkDownloadDirect(downloadData.getUrl()) &&
+                    downloadData.getSetData().progsContainPath()) ?
                     DownloadConstants.TYPE_DOWNLOAD : DownloadConstants.TYPE_PROGRAM);
 
-            if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
-                download.setProgramName(DownloadConstants.TYPE_DOWNLOAD);
+            if (downloadData.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
+                downloadData.setProgramName(DownloadConstants.TYPE_DOWNLOAD);
             } else {
-                download.setProgramName(programData.getName());
+                downloadData.setProgramName(programData.getName());
             }
 
-            download.setProgramDownloadmanager(programData.isDownManager());
+            downloadData.setProgramDownloadmanager(programData.isDownManager());
 
-            buildFileNamePath(download, download.getSetData(), abo, name, path);
-            buildProgParameter(download, programData);
+            buildFileNamePath(downloadData, downloadData.getSetData(), abo, name, path);
+            buildProgParameter(downloadData, programData);
         } catch (final Exception ex) {
             P2Log.errorLog(825600145, ex);
         }

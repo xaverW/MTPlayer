@@ -40,9 +40,9 @@ public class InitSetDataDownload {
         };
         addDownloadDto.cboSetData.setOnAction(onAction);
 
-        if (addDownloadDto.progData.setDataList.getSetDataListSave().size() > 1) {
+        if (addDownloadDto.progData.setDataList.getSetDataListSaveAbo().size() > 1) {
             // nur dann machts Sinn
-            addDownloadDto.cboSetData.getItems().addAll(addDownloadDto.progData.setDataList.getSetDataListSave());
+            addDownloadDto.cboSetData.getItems().addAll(addDownloadDto.progData.setDataList.getSetDataListSaveAbo());
             addDownloadDto.cboSetData.getSelectionModel().select(setData);
         }
     }

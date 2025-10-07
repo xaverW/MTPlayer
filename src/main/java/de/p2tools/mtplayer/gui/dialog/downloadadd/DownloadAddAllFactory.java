@@ -26,7 +26,7 @@ public class DownloadAddAllFactory {
     }
 
     public static void init(AddDownloadDto addDownloadDto) {
-        if (ProgData.getInstance().setDataList.getSetDataListSave().size() == 1) {
+        if (ProgData.getInstance().setDataList.getSetDataListSaveAbo().size() == 1) {
             // wenns nur ein Set gibt, macht dann keinen Sinn
             addDownloadDto.textSet.setVisible(false);
             addDownloadDto.textSet.setManaged(false);
@@ -107,7 +107,7 @@ public class DownloadAddAllFactory {
     private static void changeAll(AddDownloadDto addDownloadDto) {
         boolean isNotSelected = !isAllSelected(addDownloadDto);
 
-        if (ProgData.getInstance().setDataList.getSetDataListSave().size() > 1) {
+        if (ProgData.getInstance().setDataList.getSetDataListSaveAbo().size() > 1) {
             // nur dann wird er angezeigt
             addDownloadDto.chkSetAll.setSelected(isNotSelected);
         }

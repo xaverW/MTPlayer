@@ -54,15 +54,13 @@ public class FilmSaveFactory {
         if (list.isEmpty()) {
             return;
         }
-
         ProgData progData = ProgData.getInstance();
-        if (progData.setDataList.getSetDataListSave().isEmpty()) {
-            new NoSetDialogController(progData, NoSetDialogController.TEXT.SAVE);
-            return;
-        }
-
         if (setData == null) {
-            setData = progData.setDataList.getSetDataListSave().get(0);
+            if (progData.setDataList.getSetDataListSaveAbo().isEmpty()) {
+                new NoSetDialogController(progData, NoSetDialogController.TEXT.SAVE);
+                return;
+            }
+            setData = progData.setDataList.getSetDataListSaveAbo().get(0);
         }
 
         ArrayList<FilmDataMTP> filmsAddDownloadList = new ArrayList<>();

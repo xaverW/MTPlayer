@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.controller.data.setdata;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
-import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.tools.P2Index;
 
 public class SetData extends SetDataProps {
@@ -47,8 +46,7 @@ public class SetData extends SetDataProps {
     }
 
     public boolean progsContainPath() {
-        // ein Programmschalter mit
-        // "**" (Pfad/Datei) oder %a (Pfad) oder %b (Datei)
+        // ein Programmschalter mit "**" (Pfad/Datei) oder %a (Pfad) oder %b (Datei)
         // damit ist es ein Set zum Speichern
         boolean ret = false;
 
@@ -63,29 +61,28 @@ public class SetData extends SetDataProps {
         return ret;
     }
 
-    public boolean isEmpty() {
-        boolean ret = true;
-        for (final String s : arr) {
-            if (!s.isEmpty()) {
-                ret = false;
-            }
-        }
-        if (!programList.isEmpty()) {
-            ret = false;
-        }
-        return ret;
-    }
+//    public boolean isEmpty() {
+//        boolean ret = true;
+//        for (final String s : arr) {
+//            if (!s.isEmpty()) {
+//                ret = false;
+//            }
+//        }
+//        if (!programList.isEmpty()) {
+//            ret = false;
+//        }
+//        return ret;
+//    }
 
-    public boolean isLable() {
-        // wenn die Programmliste leer ist und einen Namen hat, ist es ein Lable
-        return programList.isEmpty() && !getVisibleName().isEmpty();
-    }
-
-    public boolean isFreeLine() {
-        //Wenn die Programmgruppe keinen Namen hat, leere Zeile
-        return getVisibleName().isEmpty();
-    }
-
+//    public boolean isLable() {
+//         wenn die Programmliste leer ist und einen Namen hat, ist es ein Lable
+//        return programList.isEmpty() && !getVisibleName().isEmpty();
+//    }
+//
+//    public boolean isFreeLine() {
+//        Wenn die Programmgruppe keinen Namen hat, leere Zeile
+//        return getVisibleName().isEmpty();
+//    }
 
     public ProgramData getProgUrl(String url) {
         //mit einer Url das Passende Programm finden
@@ -154,19 +151,19 @@ public class SetData extends SetDataProps {
     }
 
 
-    public String setDataToString() {
-        String ret = "";
-        ret += "================================================" + P2LibConst.LINE_SEPARATOR;
-        ret += "| Programmset" + P2LibConst.LINE_SEPARATOR;
-        for (int i = 0; i < MAX_ELEM; ++i) {
-            ret += "| " + COLUMN_NAMES[i] + ": " + arr[i] + P2LibConst.LINE_SEPARATOR;
-        }
-        for (final Object aListeProg : programList) {
-            ret += "|" + P2LibConst.LINE_SEPARATOR;
-            ret += aListeProg.toString();
-        }
-        ret += "|_______________________________________________" + P2LibConst.LINE_SEPARATOR;
-        return ret;
-    }
+//    public String setDataToString() {
+//        String ret = "";
+//        ret += "================================================" + P2LibConst.LINE_SEPARATOR;
+//        ret += "| Programmset" + P2LibConst.LINE_SEPARATOR;
+//        for (int i = 0; i < MAX_ELEM; ++i) {
+//            ret += "| " + COLUMN_NAMES[i] + ": " + arr[i] + P2LibConst.LINE_SEPARATOR;
+//        }
+//        for (final Object aListeProg : programList) {
+//            ret += "|" + P2LibConst.LINE_SEPARATOR;
+//            ret += aListeProg.toString();
+//        }
+//        ret += "|_______________________________________________" + P2LibConst.LINE_SEPARATOR;
+//        return ret;
+//    }
 
 }

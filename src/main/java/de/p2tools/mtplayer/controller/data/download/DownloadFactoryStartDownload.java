@@ -32,7 +32,7 @@ public class DownloadFactoryStartDownload {
 
     public static void startDownloads(DownloadList downloadList, ArrayList<DownloadData> downloads) {
         // Menü/Automatisch
-        if (ProgData.getInstance().setDataList.getSetDataListSave().isEmpty()) {
+        if (ProgData.getInstance().setDataList.getSetDataListSaveAbo().isEmpty()) {
             // Satz mit x, war wohl nix
             Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.SAVE));
             return;
@@ -46,9 +46,11 @@ public class DownloadFactoryStartDownload {
         ProgData.getInstance().historyList.addDownloadDataListToHistory(downloads);
     }
 
-    public static boolean startDownloads(DownloadList downloadList, Collection<DownloadData> list,
+    public static boolean startDownloads(DownloadList downloadList,
+                                         Collection<DownloadData> list,
                                          boolean alsoFinished) {
-        if (ProgData.getInstance().setDataList.getSetDataListSave().isEmpty()) {
+
+        if (ProgData.getInstance().setDataList.getSetDataListSaveAbo().isEmpty()) {
             // Satz mit x, war wohl nix
             Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.SAVE));
             return false;

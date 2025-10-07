@@ -195,6 +195,11 @@ public class SetDataProps extends SetDataXml {
         return save.get();
     }
 
+    public boolean isSaveAbo() {
+        // zum Speichern, Abo ist immer auch SAVE
+        return save.get() || abo.get();
+    }
+
     public BooleanProperty saveProperty() {
         return save;
     }

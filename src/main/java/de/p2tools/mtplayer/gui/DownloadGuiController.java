@@ -274,6 +274,7 @@ public class DownloadGuiController extends AnchorPane {
     }
 
     public void startDownload(boolean all) {
+        // Menü
         downloadStartAgain(all);
     }
 
@@ -510,6 +511,7 @@ public class DownloadGuiController extends AnchorPane {
 
 
     private void downloadStartAgain(boolean all) {
+        // Menü
         // bezieht sich auf "alle" oder nur die markierten Filme
         // der/die noch nicht gestartet sind, werden gestartet
         // Filme dessen Start schon auf fehler steht werden wieder gestartet
