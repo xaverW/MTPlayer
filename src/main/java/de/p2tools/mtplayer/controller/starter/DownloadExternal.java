@@ -125,11 +125,18 @@ public class DownloadExternal extends Thread {
         final RuntimeExecDownload runtimeExecDownload = new RuntimeExecDownload(download);
         download.getDownloadStartDto().setProcess(runtimeExecDownload.exec(true /* log */));
         if (download.getDownloadStartDto().getProcess() != null) {
+
             if (download.isProgramDownloadmanager()) {
+                // Downloadmanager, dann wars das
+                if (download.isAbo()) {
+                    progData.historyListAbos.addHistoryDataToHistory(download.getTheme(), download.getTitle(), download.getHistoryUrl());
+                }
                 retStat = stat_finished_ok;
+
             } else {
                 retStat = stat_running;
             }
+
         } else {
             retStat = stat_restart;
         }

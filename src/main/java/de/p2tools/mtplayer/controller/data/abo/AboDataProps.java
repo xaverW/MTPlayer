@@ -104,14 +104,6 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
         return TAG;
     }
 
-    public SetData getSetData(ProgData progData) {
-        // wenn das Set noch nicht vorhanden ist, wird es vorher gesetzt
-        if (setData.getValue() == null) {
-            setSetData(progData.setDataList.getSetDataForAbo());
-        }
-        return setData.get();
-    }
-
     public SetData getSetData() {
         return setData.get();
     }

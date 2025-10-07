@@ -79,7 +79,7 @@ public class AboSearchDownloadsFactory {
             return;
         }
 
-        if (ProgData.getInstance().setDataList.getSetDataForAbo() == null) {
+        if (ProgData.getInstance().setDataList.getSetDataForAbo("") == null) {
             // SetData sind nicht eingerichtet
             Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.ABO));
             ProgData.busy.busyOffFx();
@@ -111,12 +111,6 @@ public class AboSearchDownloadsFactory {
 
         // den Abo-TrefferZähler zurücksetzen
         ProgData.getInstance().aboList.forEach(AboDataProps::clearCountHit);
-
-        if (ProgData.getInstance().setDataList.getSetDataForAbo("") == null) {
-            // dann fehlt ein Set für die Abos
-            Platform.runLater(() -> new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.ABO));
-            return;
-        }
 
         // mit den bereits enthaltenen Download-URLs füllen
         Set<String> syncDownloadsAlreadyInTheListHash = Collections.synchronizedSet(new HashSet<>(500)); // für 90% übertrieben, für 10% immer noch zu wenig???
@@ -185,7 +179,7 @@ public class AboSearchDownloadsFactory {
             //dann haben wir einen Treffer :)
             //und dann auch in die Liste schreiben
             aboData.setDate(new P2Date());
-            final SetData setData = aboData.getSetData(ProgData.getInstance());
+            final SetData setData = AboFactory.getSetData(ProgData.getInstance(), aboData);
             DownloadData downloadData;
 
             if (syncDownloadArrayList.size() < ProgConst.DOWNLOAD_ADD_DIALOG_MAX_LOOK_FILE_SIZE) {

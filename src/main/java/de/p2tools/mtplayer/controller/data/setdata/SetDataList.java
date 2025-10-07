@@ -68,11 +68,10 @@ public class SetDataList extends SetDataListWorker {
         return null;
     }
 
-    public SetData getSetDataForAbo() {
-        return getSetDataForAbo("");
-    }
-
     public SetData getSetDataForAbo(String id) {
+        // Menü: neues Abo anlegen
+        // Downloads suchen
+        // beim Einlesen der Config
         // liefert mit dem SetNamen das passende Set zurück
         // wird nichts gefunden, wird das erste Set (der Abos) genommen
 
@@ -85,7 +84,7 @@ public class SetDataList extends SetDataListWorker {
             return this.get(0);
         }
 
-        // das Set mit dem Namen
+        // das Set mit ID
         for (final SetData pset : this) {
             if (pset.isAbo() && pset.getId().equals(id)) {
                 return pset;
@@ -112,11 +111,9 @@ public class SetDataList extends SetDataListWorker {
         return get(0);
     }
 
-    public SetData getSetDataForDownloads() {
-        return getSetDataForDownloads("");
-    }
-
     public SetData getSetDataForDownloads(String id) {
+        // initDownloads nach Programmstart
+        // zum Speichern (Menü) der Info/Subtitle Datei
         // liefert mit dem SetNamen das passende Set zurück
         // wird nichts gefunden, wird das erste Set (der Abos/Downloads) genommen
 

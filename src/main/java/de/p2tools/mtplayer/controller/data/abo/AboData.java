@@ -51,6 +51,7 @@ public class AboData extends AboDataProps {
                    int maxDurationMinute,
                    String destination) {
 
+        // Menü: neues anlegen
         // neue Abos sind immer ein
         setActive(true);
         setResolution(FilmDataMTP.RESOLUTION_NORMAL);
@@ -71,7 +72,7 @@ public class AboData extends AboDataProps {
         setMaxDurationMinute(maxDurationMinute);
 
         setAboSubDir(destination);
-        setSetData(progData.setDataList.getSetDataForAbo());
+        setSetData(progData.setDataList.getSetDataForAbo(""));
     }
 
     void initAbo(ProgData progData, int no) {

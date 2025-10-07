@@ -187,7 +187,7 @@ public class LoadMV implements AutoCloseable {
                         aboData.setDate(value, "");
                         break;
                     case "Programmset":
-                        aboData.setSetData(ProgData.getInstance().setDataList.getSetDataForAbo());
+                        aboData.setSetData(ProgData.getInstance().setDataList.getSetDataForAbo(""));
                         break;
 
                 }

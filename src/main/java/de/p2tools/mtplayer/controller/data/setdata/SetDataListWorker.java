@@ -64,25 +64,24 @@ public class SetDataListWorker extends SimpleListProperty<SetData> implements P2
 
     @Override
     public boolean addAll(Collection<? extends SetData> elements) {
-        elements.stream().forEach(sd -> checkSetDataName(sd));
+        elements.forEach(this::checkSetDataName);
         return super.addAll(elements);
     }
 
     @Override
     public boolean addAll(int i, Collection<? extends SetData> elements) {
-        elements.stream().forEach(sd -> checkSetDataName(sd));
+        elements.forEach(this::checkSetDataName);
         return super.addAll(i, elements);
     }
 
-    void checkSetDataName(SetData setData) {
-        // Id auf einmaligkeit prüfen und leere visibleNames füllen
+    private void checkSetDataName(SetData setData) {
+        // Id auf Einmaligkeit prüfen und leere visibleNames füllen
         // dient der geänderten Funktion -> SetData im Abo
         String setDataId = setData.getId();
         boolean found = false;
         int id = 0;
 
         do {
-
             for (SetData sd : this) {
                 if (sd.getId().equals(setDataId)) {
                     found = true;

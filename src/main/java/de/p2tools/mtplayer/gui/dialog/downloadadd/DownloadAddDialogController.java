@@ -25,9 +25,11 @@ import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.starter.LogMsgFactory;
+import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 
@@ -129,18 +131,21 @@ public class DownloadAddDialogController extends P2DialogExtra {
     }
 
     private void initGui() {
-        if (progData.setDataList.getSetDataListSave().isEmpty() ||
-                filmsToDownloadList.isEmpty()) {
-            // Satz mit x, war wohl nix
-            ok = false;
-            quit();
-            return;
-        }
-
         DownloadAddDialogGui downloadAddDialogGui = new DownloadAddDialogGui(progData, addDownloadDto, getVBoxCont());
         downloadAddDialogGui.addCont();
         downloadAddDialogGui.init();
         addOkCancelButtons(btnOk, btnCancel);
+
+        if (progData.setDataList.getSetDataListSave().isEmpty() ||
+                filmsToDownloadList.isEmpty()) {
+            // Satz mit x, war wohl nix
+            // braucht's eigentlich nicht, aber DOWNLOAD klappt sonst nicht!!
+            Platform.runLater(() -> {
+                new NoSetDialogController(ProgData.getInstance(), NoSetDialogController.TEXT.SAVE);
+//                ok = false;
+//                quit();
+            });
+        }
     }
 
     private void initButton() {

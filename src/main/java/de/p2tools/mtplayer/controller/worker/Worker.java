@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.worker;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -64,6 +65,7 @@ public class Worker {
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_SET_DATA_CHANGED) {
             @Override
             public void pingGui() {
+                AboFactory.checkAbosSetData();
                 AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
             }
         });

@@ -20,14 +20,53 @@ package de.p2tools.mtplayer.controller.data.abo;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.mediathek.filmdata.Filmlist;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
 import de.p2tools.p2lib.tools.duration.P2Duration;
+import de.p2tools.p2lib.tools.log.P2Log;
 
 public class AboFactory {
     private AboFactory() {
+    }
+
+    public static void checkAbosSetData() {
+        // wenn sich Sets geändert haben
+        P2Log.sysLog("SetData der Abos prüfen");
+        ProgData progData = ProgData.getInstance();
+        progData.aboList.forEach(a -> {
+            SetData setData = a.getSetData();
+            if (setData == null || !isSetDataForAbo(setData.getId())) {
+                // dann ein neues Setzen
+                SetData getSet = progData.setDataList.getSetDataForAbo(setData == null ? "" : setData.getId());
+                a.setSetData(getSet);
+            }
+        });
+    }
+
+    public static boolean isSetDataForAbo(String id) {
+        boolean ret = false;
+        for (SetData s : ProgData.getInstance().setDataList) {
+            if (!s.isAbo()) {
+                continue;
+            }
+            if (s.getId().equals(id)) {
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
+
+    public static SetData getSetData(ProgData progData, AboData aboData) {
+        // beim Suchen von Downloads
+        // wenn das Set noch nicht vorhanden ist, wird es vorher gesetzt
+        if (aboData.getSetData() == null) {
+            aboData.setSetData(progData.setDataList.getSetDataForAbo(""));
+        }
+        return aboData.getSetData();
     }
 
     public static String getSourceText(AboData abo) {
