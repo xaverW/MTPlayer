@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
+import de.p2tools.p2lib.tools.P2Index;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.stage.Stage;
@@ -67,6 +68,8 @@ public class SetImportFactory extends LinkedList<String[]> {
             if (!setDataList.isEmpty()) {
                 // damit die Variablen ersetzt werden
                 SetReplacePatternFactory.progReplacePattern(stage, setDataList);
+                // unt die ID setzen!!
+                setDataList.forEach(s -> s.setId(P2Index.getIndexStr()));
             } else {
                 P2Log.sysLog("Sets laden hat nicht geklappt");
             }

@@ -71,7 +71,7 @@ public class SetDataList extends SetDataListWorker {
         // Menü: neues Abo anlegen
         // Downloads suchen
         // beim Einlesen der Config
-        // liefert mit dem SetNamen das passende Set zurück
+        // liefert mit der ID das passende Set zurück
         // wird nichts gefunden, wird das erste Set (der Abos) genommen
 
         if (isEmpty()) {
@@ -106,7 +106,7 @@ public class SetDataList extends SetDataListWorker {
             }
         }
 
-        // dann eben das erste Set
+        // dann eben das erste Set, OK?????
         return get(0);
     }
 
@@ -164,6 +164,7 @@ public class SetDataList extends SetDataListWorker {
     }
 
     public SetDataList getSetDataListSave() {
+        // nur für die Kontrolle, ob eins vorhanden ist: checkPrograms
         // liefert eine Liste Programmsets, die zum Speichern angelegt sind (ist meist nur eins)
         return stream().filter(SetDataProps::isSave)
                 .collect(Collectors.toCollection(SetDataList::new));

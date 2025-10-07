@@ -85,6 +85,7 @@ public class DownloadFactoryMakeParameter {
 
             // Direkter Download nur, wenn url passt und wenn im Programm ein Zielpfad, sonst Programm
             // auch Abspielen immer über Programm!
+            // todo -> Downloadmanager
             downloadData.setType((downloadData.getSetData().checkDownloadDirect(downloadData.getUrl()) &&
                     downloadData.getSetData().progsContainPath()) ?
                     DownloadConstants.TYPE_DOWNLOAD : DownloadConstants.TYPE_PROGRAM);
