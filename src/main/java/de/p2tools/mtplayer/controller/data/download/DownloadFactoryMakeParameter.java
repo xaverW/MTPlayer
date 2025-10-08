@@ -85,10 +85,27 @@ public class DownloadFactoryMakeParameter {
 
             // Direkter Download nur, wenn url passt und wenn im Programm ein Zielpfad, sonst Programm
             // auch Abspielen immer über Programm!
-            // todo -> Downloadmanager
-            downloadData.setType((downloadData.getSetData().checkDownloadDirect(downloadData.getUrl()) &&
-                    downloadData.getSetData().progsContainPath()) ?
-                    DownloadConstants.TYPE_DOWNLOAD : DownloadConstants.TYPE_PROGRAM);
+            final SetData setData = downloadData.getSetData();
+            if (setData.isPlay()) {
+                // Play läuft immer über ein Programm
+                downloadData.setType(DownloadConstants.TYPE_PROGRAM);
+
+            } else if (setData.isButton() && !setData.isSaveAbo()) {
+                // nur Button: immer übers Programm
+                downloadData.setType(DownloadConstants.TYPE_PROGRAM);
+
+            } else if (downloadData.getSetData().checkDownloadDirect(downloadData.getUrl())) {
+                // wenn die URL passt
+                downloadData.setType(DownloadConstants.TYPE_DOWNLOAD);
+
+            } else {
+                // dann der Rest übers Programm
+                downloadData.setType(DownloadConstants.TYPE_PROGRAM);
+            }
+
+//            downloadData.setType((downloadData.getSetData().checkDownloadDirect(downloadData.getUrl()) &&
+//                    downloadData.getSetData().progsContainPath()) ?
+//                    DownloadConstants.TYPE_DOWNLOAD : DownloadConstants.TYPE_PROGRAM);
 
             if (downloadData.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
                 downloadData.setProgramName(DownloadConstants.TYPE_DOWNLOAD);

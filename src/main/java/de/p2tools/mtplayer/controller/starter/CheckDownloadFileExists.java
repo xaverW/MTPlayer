@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadContinueDialogController;
@@ -38,6 +39,12 @@ public class CheckDownloadFileExists {
     boolean checkIfContinue(ProgData progData, DownloadData download, boolean httpDownload) {
         if (!httpDownload && download.isProgramDownloadmanager()) {
             // da kümmert sich ein anderes Programm darum und dann wars das
+            return true;
+        }
+
+        if (!httpDownload && download.getSource().equals(DownloadConstants.SRC_BUTTON) &&
+                !download.getSetData().isSaveAbo()) {
+            // dann nur Button: da kümmert sich ein anderes Programm darum und dann wars das
             return true;
         }
 

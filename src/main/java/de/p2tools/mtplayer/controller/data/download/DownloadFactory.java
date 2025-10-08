@@ -105,8 +105,9 @@ public class DownloadFactory {
                         // noch nicht gestartet
                         syncRemoveList.add(download);
                     } else if (download.isStateError()) {
-                        // fehlerhafte
-                        download.resetDownload();
+                        // fehlerhafte werden auch nochmal angelegt (evtl. Set geändert)
+                        syncRemoveList.add(download);
+//                        download.resetDownload();
                     }
                 });
 

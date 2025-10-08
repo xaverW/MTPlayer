@@ -133,6 +133,11 @@ public class DownloadExternal extends Thread {
                 }
                 retStat = stat_finished_ok;
 
+            } else if (download.getSource().equals(DownloadConstants.SRC_BUTTON) &&
+                    !download.getSetData().isSaveAbo()) {
+                // Start Button (ohne Speichern), dann wars das
+                retStat = stat_finished_ok;
+
             } else {
                 retStat = stat_running;
             }
