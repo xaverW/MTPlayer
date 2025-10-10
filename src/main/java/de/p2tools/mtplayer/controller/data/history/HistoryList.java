@@ -125,7 +125,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
     //ADD
     //===============
     public synchronized void addHistoryDataToHistory(String theme, String title, String url) {
-        // wenn Abo: Fertigen Film in die Abo-History schreiben
+        // wenn Abo, dann fertigen Download in die **Abo-History** schreiben
         if (checkIfUrlAlreadyIn(url) || FilmToolsFactory.checkIfLiveStream(theme)) {
             return;
         }
@@ -143,6 +143,7 @@ public class HistoryList extends SimpleListProperty<HistoryData> {
 
     public synchronized void addFilmDataListToHistory(List<FilmDataMTP> filmList) {
         // Button oder Menü
+        // PlayFilm oder Tabellenmenü: Mark/Unmark
         // eine Liste Filme in die History schreiben
         if (filmList == null || filmList.isEmpty()) {
             return;

@@ -327,6 +327,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 2);
     public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_BYTE = addIntProp("download-max-bandwidth-byte", MtBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_SHOW = addBoolProp("download-dialog-error-show", Boolean.TRUE);
+    public static BooleanProperty DOWNLOAD_ONLY_HISTORY = addBoolProp("download-only-history", Boolean.FALSE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_TIME = addBoolProp("download-dialog-error-time", Boolean.TRUE);
 
     // ===============================================================

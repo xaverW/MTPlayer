@@ -25,7 +25,6 @@ import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
@@ -40,10 +39,11 @@ import java.util.Collection;
 public class PaneDownload {
 
     private final P2ToggleSwitch tglFinished = new P2ToggleSwitch("Benachrichtigung wenn abgeschlossen");
-    private final P2ToggleSwitch tglError = new P2ToggleSwitch("Bei Downloadfehler Fehlermeldung anzeigen");
+    private final P2ToggleSwitch tglError = new P2ToggleSwitch("Bei Downloadfehlern Fehlermeldung anzeigen");
+    private final P2ToggleSwitch tglHistory = new P2ToggleSwitch("Nur Downloads in die History eintragen");
+    private final Spinner<Integer> spinnerAnz = new Spinner<>(1, 9, 1);
     private final P2ToggleSwitch tglSSL = new P2ToggleSwitch("SSL-Download-URLs: Bei Problemen SSL abschalten");
     private final P2ToggleSwitch tglBeep = new P2ToggleSwitch("Nach jedem Download einen \"Beep\" ausgeben");
-    private final Spinner<Integer> spinnerAnz = new Spinner<>(1, 9, 1);
     private final Slider sliderBandwidth = new Slider();
     private final Label lblBandwidth = new Label();
     private final Stage stage;
@@ -56,6 +56,7 @@ public class PaneDownload {
     public void close() {
         tglFinished.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
         tglError.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW);
+        tglHistory.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_ONLY_HISTORY);
         tglSSL.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
         tglBeep.selectedProperty().unbindBidirectional(ProgConfig.DOWNLOAD_BEEP);
         sliderBandwidth.valueProperty().unbindBidirectional(ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE);
@@ -73,6 +74,10 @@ public class PaneDownload {
         tglError.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW);
         final Button btnHelpError = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
+
+        tglHistory.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_ONLY_HISTORY);
+        final Button btnHelpHistory = P2Button.helpButton(stage, "Download",
+                HelpText.DOWNLOAD_ONLY_HISTORY);
 
         final Button btnHelpStop = P2Button.helpButton(stage, "Download",
                 HelpText.DOWNLOAD_STOP);
@@ -93,10 +98,34 @@ public class PaneDownload {
 
 
         GridPane.setHalignment(btnHelpFinished, HPos.RIGHT);
+        btnHelpFinished.setPrefWidth(btnBeep.getWidth());
+        btnHelpFinished.setMaxWidth(Double.MAX_VALUE);
+
         GridPane.setHalignment(btnHelpError, HPos.RIGHT);
+        btnHelpError.setPrefWidth(btnBeep.getWidth());
+        btnHelpError.setMaxWidth(Double.MAX_VALUE);
+
+        GridPane.setHalignment(btnHelpHistory, HPos.RIGHT);
+        btnHelpHistory.setPrefWidth(btnBeep.getWidth());
+        btnHelpHistory.setMaxWidth(Double.MAX_VALUE);
+
         GridPane.setHalignment(btnHelpStop, HPos.RIGHT);
+        btnHelpStop.setPrefWidth(btnBeep.getWidth());
+        btnHelpStop.setMaxWidth(Double.MAX_VALUE);
+
         GridPane.setHalignment(btnHelpContinue, HPos.RIGHT);
+        btnHelpContinue.setPrefWidth(btnBeep.getWidth());
+        btnHelpContinue.setMaxWidth(Double.MAX_VALUE);
+
         GridPane.setHalignment(btnHelpSSL, HPos.RIGHT);
+        btnHelpSSL.setPrefWidth(btnBeep.getWidth());
+        btnHelpSSL.setMaxWidth(Double.MAX_VALUE);
+
+        GridPane.setHalignment(btnBeep, HPos.RIGHT);
+
+        GridPane.setHalignment(btnBandwidth, HPos.RIGHT);
+        btnBandwidth.setPrefWidth(btnBeep.getWidth());
+        btnBandwidth.setMaxWidth(Double.MAX_VALUE);
 
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
@@ -105,19 +134,23 @@ public class PaneDownload {
         int row = 0;
         gridPane.add(tglFinished, 0, ++row, 2, 1);
         gridPane.add(btnHelpFinished, 2, row);
-        GridPane.setValignment(btnHelpFinished, VPos.TOP);
 
+        gridPane.add(tglBeep, 0, ++row, 2, 1);
+        gridPane.add(btnBeep, 2, row);
+
+        gridPane.add(tglHistory, 0, ++row, 2, 1);
+        gridPane.add(btnHelpHistory, 2, row);
+
+        gridPane.add(new Label(), 0, ++row);
         gridPane.add(tglError, 0, ++row, 2, 1);
         gridPane.add(btnHelpError, 2, row);
 
         gridPane.add(tglSSL, 0, ++row, 2, 1);
         gridPane.add(btnHelpSSL, 2, row);
 
-        gridPane.add(tglBeep, 0, ++row, 2, 1);
-        gridPane.add(btnBeep, 2, row);
-        GridPane.setHalignment(btnBeep, HPos.RIGHT);
 
         // gleichzeitige Downloads
+        gridPane.add(new Label(), 0, ++row);
         gridPane.add(new Label(), 0, ++row);
         gridPane.add(new Label("Gleichzeitige Downloads"), 0, ++row);
         gridPane.add(btnBandwidth, 2, row, 1, 2);

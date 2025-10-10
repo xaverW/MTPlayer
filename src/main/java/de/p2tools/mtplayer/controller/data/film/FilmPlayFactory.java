@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller.data.film;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
@@ -99,7 +100,10 @@ public class FilmPlayFactory {
         final ArrayList<String> list = new ArrayList<>();
         startMsg(downloadData, list);
 
-        ProgData.getInstance().historyList.addFilmDataListToHistory(filmList);
+        if (!ProgConfig.DOWNLOAD_ONLY_HISTORY.get()) {
+            // dann den Film in die History eintragen
+            ProgData.getInstance().historyList.addFilmDataListToHistory(filmList);
+        }
         final RuntimeExecPlay runtimeExec = new RuntimeExecPlay(downloadData);
         Process process = runtimeExec.exec(true /* log */);
         if (process != null) {

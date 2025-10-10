@@ -683,6 +683,14 @@ public class HelpText {
                     "Downloads angezeigt." +
                     "\n";
 
+    public static final String DOWNLOAD_ONLY_HISTORY =
+            "Standardmäßig werden gesehene Filme und Downloads in die History " +
+                    "eingetragen. Ist diese Option eingeschaltet, werden nur noch " +
+                    "Downloads in die History eingetragen." +
+                    "\n\n" +
+                    "Die History dient dazu, bereits gesehene Filme zu markieren." +
+                    "\n";
+
     public static final String DOWNLOAD_STOP =
             "Wenn ein bereits teilweise geladener Download abgebrochen wird, " +
                     "können die teilweise geladenen Dateien gleich gelöscht werden." +
