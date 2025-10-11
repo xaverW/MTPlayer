@@ -30,12 +30,12 @@ import javafx.util.Callback;
 /**
  * das style der box ist: "checkbox-table"
  */
-public class PCellCheckBox<S, T> extends TableCell<S, T> {
+public class PCellCheckBoxSetData<S, T> extends TableCell<S, T> {
     public enum DATA {SAVE, ABO, BUTTON}
 
     private final DATA dataEnum;
 
-    public PCellCheckBox(DATA dataEnum) {
+    public PCellCheckBoxSetData(DATA dataEnum) {
         this.dataEnum = dataEnum;
     }
 

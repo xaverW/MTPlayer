@@ -583,6 +583,15 @@ public class HelpText {
                     "Schriftfarbe des Buttons festgelegt werden." +
                     "\n";
 
+    public static final String FILTER_OFFER_TABLE =
+            "Hier können Filter angelegt werden, die dann als Vorschlag " +
+                    "bei einem Doppelklick auf ein Filterfeld eingetragen " +
+                    "werden.\n" +
+                    "Ist nur ein Vorschlag vorhanden, wird er sofort eingetragen. " +
+                    "Sind mehrere Vorschläge vorhanden, kann man in " +
+                    "einem Dialog einen auswählen." +
+                    "\n";
+
     public static final String DOWNLOAD_REPLACE_TABLE =
             "Datei- und Pfadnamen werden für Downloads nach den Vorgaben des Sets oder Abos " +
                     "erstellt. Danach wird die Ersetzungstabelle abgearbeitet. " +

@@ -28,6 +28,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorList;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
 import de.p2tools.mtplayer.controller.data.history.HistoryList;
+import de.p2tools.mtplayer.controller.data.offer.OfferList;
 import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.replace.ReplaceList;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
@@ -140,6 +141,7 @@ public class ProgData {
     public CleaningDataList cleaningDataListPropose;
     public SetDataList setDataList;
     public ReplaceList replaceList;
+    public OfferList offerList;
     public UtDataList utDataList;
     public UtDataList markDataList;
     public DownloadErrorList downloadErrorList;
@@ -158,6 +160,7 @@ public class ProgData {
         busy = new Busy();
         pShortcut = new PShortcut();
         replaceList = new ReplaceList();
+        offerList = new OfferList();
         utDataList = new UtDataList(true);
         markDataList = new UtDataList(false);
         downloadErrorList = new DownloadErrorList();

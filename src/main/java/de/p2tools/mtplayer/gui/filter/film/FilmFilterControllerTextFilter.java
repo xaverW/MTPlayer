@@ -69,6 +69,7 @@ public class FilmFilterControllerTextFilter extends VBox {
         cboUrl = new PCboString(progData.stringFilterLists.getFilterListFilmUrl(),
                 filterDto.filterWorker.getActFilterSettings().urlProperty(), supplierReportReturn);
 
+
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
         addFilter();
     }

@@ -114,6 +114,7 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.cleaningDataListPropose);
         configFile.addConfigs(progData.proposeList);
         configFile.addConfigs(progData.replaceList);
+        configFile.addConfigs(progData.offerList);
         configFile.addConfigs(progData.utDataList);
         configFile.addConfigs(progData.markDataList);
         if (save) {
@@ -263,6 +264,7 @@ public class ProgConfig extends P2DataProgConfig {
     }
 
     public static BooleanProperty SYSTEM_USE_REPLACETABLE = addBoolProp("system-use-replacetable", SystemUtils.IS_OS_LINUX ? Boolean.TRUE : Boolean.FALSE);
+    public static BooleanProperty SYSTEM_USE_OFFERTABLE = addBoolProp("system-use-offertable", true);
     public static BooleanProperty SYSTEM_ONLY_ASCII = addBoolProp("system-only-ascii", Boolean.FALSE);
     public static StringProperty SYSTEM_PROG_OPEN_DIR = addStrProp("system-prog-open-dir");
     public static StringProperty SYSTEM_PROG_OPEN_URL = addStrProp("system-prog-open-url");

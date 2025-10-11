@@ -102,15 +102,15 @@ public class PaneSetList extends VBox {
 
         final TableColumn<SetData, Boolean> saveColumn = new TableColumn<>("Speichern");
         saveColumn.setCellValueFactory(new PropertyValueFactory<>("save"));
-        saveColumn.setCellFactory(new PCellCheckBox<>(PCellCheckBox.DATA.SAVE).cellFactory);
+        saveColumn.setCellFactory(new PCellCheckBoxSetData<>(PCellCheckBoxSetData.DATA.SAVE).cellFactory);
 
         final TableColumn<SetData, Boolean> aboColumn = new TableColumn<>("Abo");
         aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
-        aboColumn.setCellFactory(new PCellCheckBox<>(PCellCheckBox.DATA.ABO).cellFactory);
+        aboColumn.setCellFactory(new PCellCheckBoxSetData<>(PCellCheckBoxSetData.DATA.ABO).cellFactory);
 
         final TableColumn<SetData, Boolean> buttonColumn = new TableColumn<>("Button");
         buttonColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
-        buttonColumn.setCellFactory(new PCellCheckBox<>(PCellCheckBox.DATA.BUTTON).cellFactory);
+        buttonColumn.setCellFactory(new PCellCheckBoxSetData<>(PCellCheckBoxSetData.DATA.BUTTON).cellFactory);
 
         tableView.getColumns().addAll(nameColumn, playColumn, saveColumn, aboColumn, buttonColumn);
 

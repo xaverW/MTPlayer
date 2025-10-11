@@ -18,9 +18,14 @@
 package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.data.offer.OfferData;
+import de.p2tools.mtplayer.controller.data.offer.OfferFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -32,8 +37,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 
+import java.util.List;
 import java.util.function.BooleanSupplier;
 
 public class PCboString extends ComboBox<PCboString.PCboLabel> {
@@ -60,6 +67,33 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
     }
 
     private void start() {
+        getEditor().setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                if (mouseEvent.getClickCount() == 2) {
+
+                    if (!ProgConfig.SYSTEM_USE_OFFERTABLE.get()) {
+                        return;
+                    }
+                    List<OfferData> list = OfferFactory.getActiveList();
+                    if (list.isEmpty()) {
+                        return;
+                    }
+
+                    getSelectionModel().clearSelection();
+
+                    if (list.size() > 1) {
+                        ObjectProperty<OfferData> prop = new SimpleObjectProperty<>();
+                        new OfferFilterDialog(ProgData.getInstance(), prop);
+                        if (prop.get() != null) {
+                            getEditor().setText(prop.get().getOffer());
+                        }
+                    } else {
+                        getEditor().setText(list.get(0).getOffer());
+                    }
+                }
+            }
+        });
+
         storedFilterList.forEach(s -> {
             if (!s.isEmpty()) {
                 PCboLabel tf = itemList.stream().filter(pCboSearchLabel ->

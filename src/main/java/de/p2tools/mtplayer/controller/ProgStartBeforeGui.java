@@ -57,6 +57,7 @@ public class ProgStartBeforeGui {
             WhatsNewFactory.setLastShown(); // muss dann ja nicht angezeigt werden todo: Datum
 
             ProgData.getInstance().replaceList.init(); // einmal ein Muster anlegen, für Linux ist es bereits aktiv!
+            ProgData.getInstance().offerList.init(); // einmal ein Muster anlegen
             ProgData.getInstance().utDataList.init(true); // einmal ein Muster anlegen
             ProgData.getInstance().markDataList.init(false); // einmal ein Muster anlegen
 
@@ -168,6 +169,7 @@ public class ProgStartBeforeGui {
         ProgData progData = ProgData.getInstance();
         progData.setDataList.clear();
         progData.replaceList.clear();
+        progData.offerList.clear();
         progData.utDataList.clear();
         progData.markDataList.clear();
         progData.aboList.clear();
