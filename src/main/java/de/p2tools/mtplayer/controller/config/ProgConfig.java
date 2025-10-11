@@ -291,6 +291,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_FILTER_RETURN = addBoolProp("system-filter-return", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILTER_FIRST_ROW = addBoolProp("system-filter-first-row", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILTER_NONE_ROW = addBoolProp("system-filter-none-row", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_FILTER_REG_EX_ONLY_CONTAIN = addBoolProp("system-filter-reg-ex-only-contain", Boolean.FALSE);
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStrProp("system-download-dir-new-version", ""); // wird beim Download auf das gewählte, gesetzt
 
     public static IntegerProperty SYSTEM_FONT_SIZE = addIntProp("system-font-size", 0);

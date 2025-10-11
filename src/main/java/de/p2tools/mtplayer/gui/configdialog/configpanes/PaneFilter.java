@@ -57,6 +57,7 @@ public class PaneFilter {
     private final TableView<OfferData> tableView = new TableView<>();
     private final ObjectProperty<OfferData> offerDateProp = new SimpleObjectProperty<>(null);
     private final P2ToggleSwitch tglOffer = new P2ToggleSwitch("Vorschläge anzeigen");
+    private final P2ToggleSwitch tglRegEx = new P2ToggleSwitch("Bei der Suche mit RegEx muss der Suchtext nur enthalten sein");
 
     private final Stage stage;
 
@@ -68,6 +69,7 @@ public class PaneFilter {
         ProgData.getInstance().offerList.getUndoList().clear();
         unbindText();
         tglOffer.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_OFFERTABLE);
+        tglRegEx.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);
     }
 
     public void make(Collection<TitledPane> result) {
@@ -89,14 +91,22 @@ public class PaneFilter {
     private void make(VBox vBox) {
         final Button btnHelp = P2Button.helpButton(stage, "Filtervorschläge",
                 HelpText.FILTER_OFFER_TABLE);
+        final Button btnHelpRegEx = P2Button.helpButton(stage, "Suche mit RegEx",
+                HelpText.FILTER_REG_EX_ONLY_CONTAIN);
         tglOffer.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_OFFERTABLE);
+        tglRegEx.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
-        gridPane.add(tglOffer, 0, 0);
-        gridPane.add(btnHelp, 1, 0);
+
+        gridPane.add(tglRegEx, 0, 0);
+        gridPane.add(btnHelpRegEx, 1, 0);
+
+        gridPane.add(new Label(), 0, 1);
+        gridPane.add(tglOffer, 0, 2);
+        gridPane.add(btnHelp, 1, 2);
         gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
                 P2ColumnConstraints.getCcPrefSize());
     }

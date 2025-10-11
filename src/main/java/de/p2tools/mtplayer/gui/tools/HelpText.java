@@ -443,6 +443,16 @@ public class HelpText {
                     "Damit die Änderung wirksam wird ist evtl. ein Neustart des Programms erforderlich." +
                     "\n";
 
+    public static final String FILTER_REG_EX_ONLY_CONTAIN =
+            "Suche mit RegEx\n" +
+                    "-----------------\n" +
+                    "Normalerweise muss bei der Suche mit RegEx der Filter genau mit dem gesuchten Text " +
+                    "übereinstimmen. Ist diese Option eingeschaltet, muss der Filter nur noch in dem " +
+                    "gesuchten Text enthalten sein.\n" +
+                    "Ich suche nach \"#:Sport\", dann muss der gesuchte Text genau \"Sport\" sein. " +
+                    "Mit dieser Option werden aber alle Texte gefunden, die \"Sport\" enthalten (z.B.: sportlich)." +
+                    "\n";
+
     public static final String GUI_FILMS_EDIT_FILTER =
             "=============\n" +
                     "Filter\n" +
@@ -454,29 +464,27 @@ public class HelpText {
 
                     "=============\n" +
                     "Einstellungen\n" +
-
+                    "\n" +
+                    "-----------------\n" +
                     "Suchbeginn verzögern:\n" +
+                    "-----------------\n" +
                     "Hier kann eine Zeit eingestellt werden, die den Start der " +
                     "Suche verzögert. Gibt man einen Suchbegriff ein, wird nicht sofort nach jedem " +
                     "eingegebenen Buchstaben, die Suche gestartet." +
                     "\n" +
                     "\n" +
+                    "-----------------\n" +
                     "Return:\n" +
+                    "-----------------\n" +
                     "Diese Einstellung startet die Suche in den Textfeldern erst nach Eingabe " +
                     "der Return-Taste." +
                     "\n" +
-                    "\n" +
-                    "In den Textfeldern wird die Suche immer sofort nach Eingabe der Return-Taste " +
-                    "gestartet. Mit der Einstellung \"Return\" aber ausschließlich." +
+                    "Ansonsten startet die Suchen automatisch nach der Wartezeit." +
                     "\n" +
                     "\n" +
-                    "Ich kann eine Suche also starten wenn ich ein Suchfeld " +
-                    "(egal welches) ändere und die Wartezeit abwarte. " +
-                    "In einem Textfeld (egal welchem) kann ich zusätzlich die Suche starten " +
-                    "wenn ich \"Return\" klicke." +
-                    "\n" +
-                    "\n" +
+                    "-----------------\n" +
                     "Auswahl der Tabellenzeile:\n" +
+                    "-----------------\n" +
                     "Nach einer Suche ist ja eine andere Auswahl an Filmen in der Filmliste. " +
                     "\n" +
                     "\"Die erste Tabellenzeile:\" Hier wird dann immer die erste Zeile ausgewählt" +
@@ -484,7 +492,12 @@ public class HelpText {
                     "\"Letzte vorhandene Zeile:\" Damit wird die erste noch vorhandene Tabellenzeile ausgewählt " +
                     "die vor der, vorher ausgewählten Zeile liegt." +
                     "\n" +
-                    "\"Nichts auswählen:\" Das macht genau das, in der Filmtabelle wird nichts ausgewählt.";
+                    "\"Nichts auswählen:\" Das macht genau das, in der Filmtabelle wird nichts ausgewählt." +
+                    "\n" +
+                    "\n" +
+                    "-----------------\n" +
+                    FILTER_REG_EX_ONLY_CONTAIN;
+
 
     public static final String SETDATA_PREFIX =
             "Wenn die URL eines Films mit <Präfix> beginnt bzw. mit <Suffix> " +

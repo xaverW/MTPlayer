@@ -37,6 +37,7 @@ public class FilmFilterEditDialog extends P2DialogExtra {
     private final RadioButton rbLast = new RadioButton("Die letzte vorhandene Zeile auswählen");
     private final RadioButton rbFirst = new RadioButton("Die erste Tabellenzeile auswählen");
     private final RadioButton rbNothing = new RadioButton("Nichts neues auswählen");
+    private final P2ToggleSwitch tglRegEx = new P2ToggleSwitch("Bei RegEx muss der Suchtext nur enthalten sein:");
     private final ProgData progData;
     private final FilterDto filterDto;
 
@@ -52,6 +53,7 @@ public class FilmFilterEditDialog extends P2DialogExtra {
     public void close() {
         rbFirst.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_FIRST_ROW);
         rbNothing.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_NONE_ROW);
+        tglRegEx.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);
         super.close();
     }
 
@@ -221,6 +223,8 @@ public class FilmFilterEditDialog extends P2DialogExtra {
             rbLast.setSelected(true);
         }
 
+        tglRegEx.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);
+
         // Einbauen
         GridPane gridPane = new GridPane();
         gridPane.setHgap(5);
@@ -247,6 +251,11 @@ public class FilmFilterEditDialog extends P2DialogExtra {
         gridPane.add(rbFirst, 0, ++row, 2, 1);
         gridPane.add(rbLast, 0, ++row, 2, 1);
         gridPane.add(rbNothing, 0, ++row, 2, 1);
+
+
+        gridPane.add(new Label(""), 0, ++row, 2, 1);
+        gridPane.add(new Label(""), 0, ++row, 2, 1);
+        gridPane.add(tglRegEx, 0, ++row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
                 P2ColumnConstraints.getCcPrefSize(),
