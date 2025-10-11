@@ -38,6 +38,7 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_CHANGE_LOG_DIR.setValue(true); // für Version 17
         ProgConfig.SYSTEM_SMALL_FILTER.setValue(true); // für Version 20
         ProgConfig.SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART.setValue(true); // für Version 20
+        ProgConfig.SYSTEM_UPDATE_OFFER_FILTER.setValue(true); // für Version 20
     }
 
     public static void update() {
@@ -135,6 +136,11 @@ public class ProgConfigUpdate {
             if (ProgConfig.SYSTEM_LOAD_NEW_FILMLIST_IMMEDIATELY.get()) {
                 ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.set(true);
             }
+        }
+
+        if (!ProgConfig.SYSTEM_UPDATE_OFFER_FILTER.getValue()) {
+            // dann gleich mit den INIT füllen
+            ProgData.getInstance().offerList.init();
         }
 
         setUpdateDone();

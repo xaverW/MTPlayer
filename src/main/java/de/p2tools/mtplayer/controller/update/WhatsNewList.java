@@ -71,5 +71,14 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         "abschalten.\n" +
                         "Wenns Vorschläge dazu gibt, gerne per Mail oder im Forum.", 140);
         add(whatsNewInfo);
+
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2025, 10, 11),
+                "",
+                "Filtervorschläge",
+                "In den Textfiltern (Filme/Audios) kann mit einem Doppelklick " +
+                        "ein Filtervorschlag eingefügt werden. Die Vorschläge kann man in " +
+                        "den \"Einstellungen->Filter\" vorgeben. Die Funktion kann dort auch " +
+                        "abgeschaltet werden.", 100);
+        add(whatsNewInfo);
     }
 }

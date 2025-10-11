@@ -180,6 +180,20 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBoolProp("system-update-search-beta", Boolean.FALSE); //beta suchen
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_DAILY = addBoolProp("system-update-search-daily", Boolean.FALSE); //daily suchen
 
+    // configs zum Anzeigen der WhatsNew
+    public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
+
+    // Configs zum Aktualisieren beim Programmupdate
+    public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBoolProp("system-after-update-filter", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER = addBoolProp("system-after-update-theme-exact-filter", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_AFTER_UPDATE_RBTV = addBoolProp("system-after-update-rbtv", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_ABO_START_TIME = addBoolProp("system-abo-start-time", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_CHANGE_LOG_DIR = addBoolProp("system-change-log-dir", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_USE_NEW_BOOKMARK_FILE = addBoolProp("system-use-new-bookmark-file", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_SMALL_FILTER = addBoolProp("system-small-filter", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART = addBoolProp("system-update-load-filmlist-programstart", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_UPDATE_OFFER_FILTER = addBoolProp("system-update-offer-filter", Boolean.FALSE);
+
     // Fenstereinstellungen
     static {
         addComment("Fenstereinstellungen");
@@ -200,19 +214,6 @@ public class ProgConfig extends P2DataProgConfig {
     //Configs zur Anzeige der Diakritika in der Filmliste
     //TRUE: dann werden Diakritika nicht geändert und angezeigt
     public static BooleanProperty SYSTEM_REMOVE_DIACRITICS = addBoolProp("system-remove-diacritics", Boolean.FALSE);
-
-    // Configs zum Aktualisieren beim Programmupdate
-    public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBoolProp("system-after-update-filter", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_AFTER_UPDATE_THEME_EXACT_FILTER = addBoolProp("system-after-update-theme-exact-filter", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_AFTER_UPDATE_RBTV = addBoolProp("system-after-update-rbtv", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_ABO_START_TIME = addBoolProp("system-abo-start-time", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_CHANGE_LOG_DIR = addBoolProp("system-change-log-dir", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_USE_NEW_BOOKMARK_FILE = addBoolProp("system-use-new-bookmark-file", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_SMALL_FILTER = addBoolProp("system-small-filter", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART = addBoolProp("system-update-load-filmlist-programstart", Boolean.FALSE);
-
-    // configs zum Anzeigen der WhatsNew
-    public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
 
     // ConfigDialog, Dialog nach Start immer gleich öffnen
     public static IntegerProperty SYSTEM_CONFIG_DIALOG_TAB = new SimpleIntegerProperty(0);
