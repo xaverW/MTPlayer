@@ -180,8 +180,16 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_BETA = addBoolProp("system-update-search-beta", Boolean.FALSE); //beta suchen
     public static BooleanProperty SYSTEM_UPDATE_SEARCH_DAILY = addBoolProp("system-update-search-daily", Boolean.FALSE); //daily suchen
 
+    static {
+        addEmptyLine();
+    }
+
     // configs zum Anzeigen der WhatsNew
     public static StringProperty SYSTEM_WHATS_NEW_DATE_LAST_SHOWN = addStrProp("system-whats-new-date-last-shown", P2LDateFactory.toStringR(LocalDate.MIN)); // Date der letzten Anzeige
+
+    static {
+        addEmptyLine();
+    }
 
     // Configs zum Aktualisieren beim Programmupdate
     public static BooleanProperty SYSTEM_AFTER_UPDATE_FILTER = addBoolProp("system-after-update-filter", Boolean.FALSE);

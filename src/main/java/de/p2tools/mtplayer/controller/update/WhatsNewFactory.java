@@ -38,6 +38,7 @@ public class WhatsNewFactory {
 
     public static void checkUpdate() {
         // nach dem Laden der Filmliste
+        // wird es bei jedem Start angezeigt, wenn sich die BUILD-NO geändert hat
         P2Log.sysLog("Programmstart, alte Programm-Release-Nr: " + ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe());
         P2Log.sysLog("Programmstart, aktuelle Programm-Release-Nr: " + P2InfoFactory.getBuildNo());
         if (!ProgConfig.SYSTEM_PROG_BUILD_NO.getValueSafe().equals(P2InfoFactory.getBuildNo())) {
@@ -50,7 +51,7 @@ public class WhatsNewFactory {
         }
     }
 
-    public static void setLastShown() {
+    public static void setLastShownToNow() {
         ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.setValue(P2LDateFactory.getNowStringR());
     }
 
@@ -67,8 +68,8 @@ public class WhatsNewFactory {
             }
         } catch (Exception ignore) {
         }
-
-        whatsNewList.setLastShown();
+        // angezeigt und jetzt auf das MAX-Date setzen
+        whatsNewList.setLastShownToMax();
     }
 
     private static void checkProgUpdate() {

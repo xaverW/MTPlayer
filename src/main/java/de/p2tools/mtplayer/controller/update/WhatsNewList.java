@@ -19,11 +19,7 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
         });
     }
 
-    public LocalDate getMaxDate() {
-        return maxDate;
-    }
-
-    public void setLastShown() {
+    public void setLastShownToMax() {
         ProgConfig.SYSTEM_WHATS_NEW_DATE_LAST_SHOWN.setValue(P2LDateFactory.toStringR(maxDate));
     }
 
