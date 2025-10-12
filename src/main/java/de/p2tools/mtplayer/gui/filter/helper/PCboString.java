@@ -204,7 +204,20 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
         if (add.isEmpty()) {
             return;
         }
-        storedFilterList.add(0, add);
+
+        if (storedFilterList.isEmpty()) {
+            storedFilterList.add(add);
+
+        } else if (add.contains(storedFilterList.get(0)) ||
+                storedFilterList.get(0).contains(add)) {
+            // wenn der neue Wert nur eine "Erweiterung" ist dann austauschen
+            storedFilterList.remove(0);
+            storedFilterList.add(0, add);
+
+        } else {
+            storedFilterList.add(0, add);
+        }
+
         cleanStoredList();
     }
 
