@@ -32,8 +32,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FilmFilterRunner {
     private final ProgData progData;
-    private static final AtomicBoolean search = new AtomicBoolean(false);
-    private static final AtomicBoolean research = new AtomicBoolean(false);
+    private final AtomicBoolean search = new AtomicBoolean(false);
+    private final AtomicBoolean research = new AtomicBoolean(false);
     private int count = 0;
     private final boolean audio;
 

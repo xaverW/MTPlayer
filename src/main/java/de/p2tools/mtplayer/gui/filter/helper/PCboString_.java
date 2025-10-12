@@ -42,25 +42,24 @@ import javafx.scene.layout.HBox;
 
 import java.util.List;
 import java.util.function.BooleanSupplier;
-import java.util.stream.Collectors;
 
-public class PCboString extends ComboBox<PCboString.PCboLabel> {
-    public static final int MAX_FILTER_HISTORY = 20;
-    private final ObservableList<String> storedFilterList; // Liste der gespeicherten Filter
-    private final ObservableList<PCboLabel> itemList = FXCollections.observableArrayList(new PCboLabel("")); // aktuelle Liste der Filter
+public class PCboString_ extends ComboBox<PCboString_.PCboLabel> {
+    public static final int MAX_FILTER_HISTORY = 15;
+    private final ObservableList<String> storedFilterList;
+    private final ObservableList<PCboLabel> itemList = FXCollections.observableArrayList(new PCboLabel(""));
 
-    private final StringProperty strSearchProperty; // ist z.B.: das THEMA_PROPERTY
+    private final StringProperty strSearchProperty;
     private final BooleanSupplier doSomething; // Funktion, was bei Auswahl gemacht werden soll, Rückgabewert wird nicht gebraucht
 
-    public PCboString(ObservableList<String> storedFilterList, StringProperty strSearchProperty) {
+    public PCboString_(ObservableList<String> storedFilterList, StringProperty strSearchProperty) {
         this.storedFilterList = storedFilterList;
         this.strSearchProperty = strSearchProperty;
         this.doSomething = () -> true;
         start();
     }
 
-    public PCboString(ObservableList<String> storedFilterList,
-                      StringProperty strSearchProperty, BooleanSupplier doSomething) {
+    public PCboString_(ObservableList<String> storedFilterList,
+                       StringProperty strSearchProperty, BooleanSupplier doSomething) {
         this.storedFilterList = storedFilterList;
         this.strSearchProperty = strSearchProperty;
         this.doSomething = doSomething;
@@ -68,25 +67,6 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
     }
 
     private void start() {
-        // mit den gespeicherten füllen
-        cleanStoredList(); // leeren und doppelte Einträge entfernen
-        fillItemListWithStoredList(); // leeren und doppelte Einträge entfernen
-
-        setEditable(true);
-        setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        setVisibleRowCount(MAX_FILTER_HISTORY);
-        initListener();
-    }
-
-    private void initListener() {
-        // Anzeige wenn RegEx fehlerhaft
-        new FilterCheckRegEx(getEditor());
-
-        // Editor setzen
-        getEditor().setText(strSearchProperty.getValue());
-        strSearchProperty.addListener((u, o, n) -> getEditor().setText(strSearchProperty.getValueSafe()));
-
-        // Filtervorschläge
         getEditor().setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                 if (mouseEvent.getClickCount() == 2) {
@@ -98,6 +78,8 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
                     if (list.isEmpty()) {
                         return;
                     }
+
+                    getSelectionModel().clearSelection();
 
                     if (list.size() > 1) {
                         ObjectProperty<OfferData> prop = new SimpleObjectProperty<>();
@@ -112,32 +94,42 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
             }
         });
 
-        // wenn was eingetippt oder ausgewählt wird
+        storedFilterList.forEach(s -> {
+            if (!s.isEmpty()) {
+                PCboLabel tf = itemList.stream().filter(pCboSearchLabel ->
+                        pCboSearchLabel.getText().equals(s)).findFirst().orElse(null);
+                if (tf == null) {
+                    // sonst ist er schon drin
+                    itemList.add(new PCboLabel(s));
+                }
+            }
+        });
+        setItems(itemList);
+        fillStoredList(); // zum Putzen, hatte den Fehler zu wachsen
+
+        setEditable(true);
+        setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        setVisibleRowCount(MAX_FILTER_HISTORY);
+        init();
+    }
+
+    private void init() {
+        new FilterCheckRegEx(getEditor());
         getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 return;
             }
-            System.out.println("==> Editor");
-            addToStoredList(getEditor().getText());
+            if (!this.isShowing()) {
+                // dann ist's eine Auswahl aus der Combo
+                addLastFilter(newValue);
+            }
             strSearchProperty.setValue(getEditor().getText());
         });
-
-        // wenn die Combo geöffnet wird, Liste bauen
-        this.showingProperty().addListener((u, o, n) -> {
-            if (isShowing()) {
-                // beim Aufmachen
-                System.out.println("showingProperty");
-                fillItemListWithStoredList();
-            }
-        });
-
-        // wenn aus Combo was ausgewählt wird und RETURN dann melden
         getSelectionModel().selectedItemProperty().addListener(
                 (ChangeListener<Object>) (observable, oldValue, newValue) -> {
-                    System.out.println("Aus Combo ausgewählt");
                     // kann auch ein String!!!! sein
                     if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) { // nuss nicht sein
-                        // dann melden, wenn ein Label und nicht der gleiche Text drin steht
+                        // dann melden
                         if (this.isShowing() ||
                                 newValue != null &&
                                         newValue.getClass().equals(PCboLabel.class) &&
@@ -147,15 +139,15 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
                     }
                 });
 
-        // wenn RETURN, dann immer melden
         setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 doSomething.getAsBoolean();
             }
         });
+        strSearchProperty.addListener((u, o, n) -> getEditor().setText(strSearchProperty.getValue()));
+        getEditor().setText(strSearchProperty.getValue());
 
-        // steuert die Anzeige der Zellen im Combo (Button + Label mit Text)
-        this.setCellFactory(cell -> new ListCell<>() {
+        setCellFactory(cell -> new ListCell<>() {
             final Button btnDel = new Button();
             final HBox hBox = new HBox();
             final Label lblFilter = new Label();
@@ -172,26 +164,27 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
             }
 
             @Override
-            protected void updateItem(PCboLabel pCboLabel, boolean empty) {
-                super.updateItem(pCboLabel, empty);
+            protected void updateItem(PCboLabel searchLabel, boolean empty) {
+                super.updateItem(searchLabel, empty);
+                setVisibleRowCount(8);
+                setVisibleRowCount(10);
 
-                if (!empty && pCboLabel != null) {
+                if (!empty && searchLabel != null) {
                     btnDel.setOnMousePressed(m -> {
-                        if (pCboLabel.getText().isEmpty()) {
+                        if (searchLabel.getText().isEmpty()) {
                             // dann ist's der erste
                             if (itemList.size() > 1) {
                                 itemList.remove(1, itemList.size());
                             }
                         } else {
-                            itemList.remove(pCboLabel);
+                            itemList.remove(searchLabel);
                         }
                         getSelectionModel().select(0);
-                        fillStoredListWithItem();
+                        fillStoredList();
                     });
-
-                    lblFilter.textProperty().bind(pCboLabel.textProperty());
+                    // lblFilter.setText(searchLabel.getText());
+                    lblFilter.textProperty().bind(searchLabel.textProperty());
                     setGraphic(hBox);
-
                 } else {
                     // Nothing to display here
                     setGraphic(null);
@@ -200,42 +193,55 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
         });
     }
 
-    private void addToStoredList(String add) {
-        if (add.isEmpty()) {
+    private synchronized void addLastFilter(String addF) {
+        // einen neuen Filter einfügen
+        getSelectionModel().clearSelection();
+
+        PCboLabel addFilter = new PCboLabel(addF);
+        if (addFilter.getText().isEmpty()) {
             return;
         }
-        storedFilterList.add(0, add);
-        cleanStoredList();
-    }
 
-    private void cleanStoredList() {
-        while (storedFilterList.size() > MAX_FILTER_HISTORY) {
-            storedFilterList.remove(storedFilterList.size() - 1);
+        if (getItems().size() <= 1) {
+            // dann ist's der erste
+            getItems().add(addFilter);
+            return;
         }
-        storedFilterList.setAll(storedFilterList.stream()
-                .filter(p -> !p.isEmpty())
-                .distinct()
-                .collect(Collectors.toList())); // doppelte löschen
+
+        final PCboLabel tmp = getItems().get(1);
+        if (addF.contains(tmp.getText())) {
+            // dann wird der erste damit ersetzt
+            tmp.setText(addF);
+        }
+
+        PCboLabel tf = itemList.stream().filter(pCboSearchLabel ->
+                pCboSearchLabel.getText().equals(addF)).findFirst().orElse(null);
+
+        if (tf == null) {
+            // dann ist er nicht drin und kommt an Stelle 1
+            while (itemList.size() > MAX_FILTER_HISTORY) {
+                itemList.remove(itemList.size() - 1);
+            }
+            itemList.add(1, addFilter);
+
+        } else {
+            // dann nach vorne ziehen
+            itemList.remove(tf);
+            itemList.add(1, tf);
+        }
+
+        fillStoredList();
     }
 
-    private void fillStoredListWithItem() {
+    private void fillStoredList() {
         storedFilterList.clear();
-        itemList.stream()
-                .filter(s -> !s.getText().isEmpty())
-                .forEach(s -> storedFilterList.add(s.toString()));
-        cleanStoredList();
-    }
-
-    private void fillItemListWithStoredList() {
-        getSelectionModel().clearSelection();
-        itemList.clear();
-        itemList.add(new PCboLabel(""));
-        storedFilterList.forEach(s -> itemList.add(new PCboLabel(s)));
-        setItems(itemList);
+        itemList.forEach(s -> {
+            storedFilterList.add(s.toString());
+        });
     }
 
     static class PCboLabel extends Label implements Comparable<PCboLabel> {
-        // das sind die Labels mit dem Filter-Text, Klick löst Filter aus
+
         public PCboLabel(String value) {
             setText(value);
         }
