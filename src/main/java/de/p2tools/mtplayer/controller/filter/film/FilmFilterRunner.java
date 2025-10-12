@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
-import de.p2tools.p2lib.mediathek.filter.Filter;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -92,7 +91,6 @@ public class FilmFilterRunner {
             }
         });
         ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN.addListener((u, o, n) -> {
-            Filter.REG_EX_ONLY_CONTAIN = ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN.get();
             filterList();
         });
     }

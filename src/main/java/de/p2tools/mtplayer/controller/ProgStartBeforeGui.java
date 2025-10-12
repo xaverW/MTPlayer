@@ -95,9 +95,11 @@ public class ProgStartBeforeGui {
     }
 
     private static void initLib() {
-        P2LibInit.initLib(ProgData.getInstance().primaryStage, ProgConst.PROGRAM_NAME,
-                "",
-                ProgConfig.SYSTEM_DARK_THEME, ProgConfig.SYSTEM_BLACK_WHITE_ICON, ProgConfig.SYSTEM_THEME_CHANGED,
+        P2LibInit.initLib(ProgData.getInstance().primaryStage, ProgConst.PROGRAM_NAME, "",
+                ProgConfig.SYSTEM_DARK_THEME,
+                ProgConfig.SYSTEM_BLACK_WHITE_ICON,
+                ProgConfig.SYSTEM_THEME_CHANGED,
+                ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN,
                 ProgConst.CSS_FILE, ProgConst.CSS_FILE_DARK_THEME, ProgConfig.SYSTEM_FONT_SIZE,
                 "", MTPlayerFactory.getOwnIconPath(),
                 ProgData.debug, ProgData.duration);
