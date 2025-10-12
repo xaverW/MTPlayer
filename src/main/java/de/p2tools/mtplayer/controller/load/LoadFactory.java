@@ -11,9 +11,9 @@ public class LoadFactory {
     }
 
     public static void loadProgStart() {
-        if (!ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue()) {
-            return;
-        }
+//        if (!ProgConfig.SYSTEM_LOAD_FILMLIST_ON_PROGRAMSTART.getValue()) {
+//            return;
+//        }
         LoadFactory.initLoadFactoryConst();
         LoadFilmFactory.loadFilmListProgStart();
         LoadAudioFactory.loadAudioListProgStart();
