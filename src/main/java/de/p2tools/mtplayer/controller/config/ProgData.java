@@ -68,9 +68,6 @@ public class ProgData {
     public static boolean raspberry = false; // läuft auf einem Raspberry
     public static Busy busy; // zeigt Fortschritt (Abos suchen, ...) an
 
-    public static String gui = ""; // zur Kontrolle/Debug
-    public static String dialog = ""; // zur Kontrolle/Debug
-
     public P2EventHandler pEventHandler;
 
     public static boolean downloadSearchDone = false; // wird gesetzt, wenn das erste mal Downloads gesucht wurden

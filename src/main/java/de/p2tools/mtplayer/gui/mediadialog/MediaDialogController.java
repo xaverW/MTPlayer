@@ -51,7 +51,7 @@ public class MediaDialogController extends P2DialogExtra {
         // Aufruf mit Button aus dem Infobereich der Tabelle Filme/Download,
         // also 2x möglich
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
-                true, false, DECO.BORDER);
+                true, true, true, DECO.BORDER);
 
         this.mediaDataDtoMedia = mediaDataDto;
         this.mediaDataDtoAbo = new MediaDataDto();
@@ -65,7 +65,7 @@ public class MediaDialogController extends P2DialogExtra {
         // im Tab Filme/Downloads im Menü/Table Kontextmenü/ShorCut: "Film in Mediensammlung suchen"
         // also 6x möglich
         super(ProgData.getInstance().primaryStage, ProgConfig.MEDIA_DIALOG_SIZE, "Mediensammlung",
-                true, false, DECO.BORDER);
+                true, true, true, DECO.BORDER);
 
         this.mediaDataDtoMedia = new MediaDataDto();
         this.mediaDataDtoAbo = new MediaDataDto();

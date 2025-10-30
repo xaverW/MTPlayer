@@ -43,7 +43,7 @@ public class ImportSetDialogController extends P2DialogExtra {
         // beim Anlegen von Abos, Downloads, ..... wenn kein Set vorhanden ist
         // ResetDialog
         super(progData.primaryStage, ProgConfig.CONFIG_DIALOG_IMPORT_SET_SIZE,
-                "Set importieren", true, false, DECO.BORDER_SMALL);
+                "Set importieren", true, true, true, DECO.BORDER_SMALL);
 
         this.progData = progData;
         init(true);

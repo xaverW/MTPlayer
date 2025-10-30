@@ -39,7 +39,8 @@ public class NoSetDialogController extends P2DialogExtra {
 
     public NoSetDialogController(ProgData progData, TEXT text) {
         super(progData.primaryStage, null,
-                text == TEXT.SAVE || text == TEXT.ABO ? "Set zum Speichern" : "Kein Videoplayer!", true, false);
+                text == TEXT.SAVE || text == TEXT.ABO ? "Set zum Speichern" : "Kein Videoplayer!",
+                true, false, false);
 
         this.progData = progData;
         this.text = text;

@@ -46,7 +46,7 @@ public class MediaCleaningDialogController extends P2DialogExtra {
 
     public MediaCleaningDialogController(MediaDataDto mediaDataDtoMedia, MediaDataDto mediaDataDtoAbo) {
         super(ProgData.getInstance().primaryStage, ProgConfig.GUI_MEDIA_CONFIG_DIALOG_SIZE, "Einstellungen",
-                true, false, DECO.NO_BORDER);
+                true, true, true, DECO.NO_BORDER);
 
         this.progData = ProgData.getInstance();
         this.mediaDataDtoMedia = mediaDataDtoMedia;

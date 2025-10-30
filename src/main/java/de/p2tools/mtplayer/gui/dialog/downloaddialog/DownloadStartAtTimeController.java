@@ -67,7 +67,7 @@ public class DownloadStartAtTimeController extends P2DialogExtra {
     public DownloadStartAtTimeController(ProgData progData, List<DownloadData> dListAll,
                                          List<DownloadData> dListSel) {
         super(progData.primaryStage, ProgConfig.DOWNLOAD_DIALOG_START_AT_TIME_SIZE,
-                "Downloads starten", true, false, DECO.NO_BORDER);
+                "Downloads starten", true, true, true, DECO.NO_BORDER);
 
         this.progData = progData;
         //nur noch nicht gestartete in die Listen laden

@@ -55,7 +55,7 @@ public class QuitDialogController extends P2DialogExtra {
 
     public QuitDialogController(boolean startWithWaiting) {
         super(ProgData.getInstance().primaryStage, null, "Programm beenden",
-                true, false, DECO.BORDER);
+                true, false, false, DECO.BORDER);
         this.startWithWaiting = startWithWaiting;
         init(true);
     }

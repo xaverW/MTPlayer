@@ -41,7 +41,7 @@ public class ProposeDialogController extends P2DialogExtra {
 
     public ProposeDialogController(ProgData progData, StringProperty conf) {
         super(progData.primaryStage, conf, "Download weiterführen",
-                true, false, DECO.BORDER_SMALL);
+                true, true, true, DECO.BORDER_SMALL);
         this.progData = progData;
 
         init(true);

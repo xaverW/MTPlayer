@@ -39,7 +39,7 @@ public class CheckSetDialogController extends P2DialogExtra {
 
     public CheckSetDialogController(String text) {
         super(ProgData.getInstance().primaryStage, ProgConfig.CHECK_SET_DIALOG_SIZE, "Download-Einstellungen prüfen",
-                true, false, DECO.NO_BORDER);
+                true, true, true, DECO.NO_BORDER);
 
         this.text = text;
         vBoxCont = getVBoxCont();

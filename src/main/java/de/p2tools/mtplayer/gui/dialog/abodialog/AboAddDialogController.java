@@ -61,7 +61,7 @@ public class AboAddDialogController extends P2DialogExtra {
     public AboAddDialogController(ProgData progData, AboData abo) {
         // hier wird ein neues Abo angelegt!
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false, DECO.NO_BORDER, true);
+                "Abo anlegen", false, true, true, DECO.NO_BORDER, true);
 
         this.progData = progData;
         this.addAboDto = new AddAboDto(progData, true, abo);
@@ -71,7 +71,7 @@ public class AboAddDialogController extends P2DialogExtra {
     public AboAddDialogController(ProgData progData, List<AboData> aboList) {
         // hier werden bestehende Abos geändert
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo ändern", false, false, DECO.NO_BORDER, true);
+                "Abo ändern", false, true, true, DECO.NO_BORDER, true);
 
         this.progData = progData;
         this.addAboDto = new AddAboDto(progData, false, aboList);
@@ -81,7 +81,7 @@ public class AboAddDialogController extends P2DialogExtra {
     public AboAddDialogController(ProgData progData, FilmFilter filmFilter, AboData abo) {
         // hier wird ein bestehendes Abo an den Filter angepasst
         super(progData.primaryStage, ProgConfig.ABO_DIALOG_EDIT_SIZE,
-                "Abo anlegen", false, false, DECO.NO_BORDER, true);
+                "Abo anlegen", false, true, true, DECO.NO_BORDER, true);
 
         this.progData = progData;
         this.addAboDto = new AddAboDto(progData, false, abo);

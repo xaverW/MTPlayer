@@ -42,7 +42,8 @@ public class FilmFilterEditDialog extends P2DialogExtra {
     private final FilterDto filterDto;
 
     public FilmFilterEditDialog(ProgData progData, FilterDto filterDto) {
-        super(progData.primaryStage, null, "Filtereinstellungen", true, false, DECO.NO_BORDER);
+        super(progData.primaryStage, null, "Filtereinstellungen",
+                true, false, false, DECO.NO_BORDER);
         this.progData = progData;
         this.filterDto = filterDto;
 

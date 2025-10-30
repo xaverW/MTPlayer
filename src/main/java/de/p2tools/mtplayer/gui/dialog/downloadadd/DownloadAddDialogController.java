@@ -53,7 +53,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
         super(progData.primaryStage,
                 filmsToDownloadList.size() > 1 ?
                         ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE : ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
-                "Download anlegen", true, false, DECO.BORDER_SMALL);
+                "Download anlegen", true, true, true, DECO.BORDER_SMALL);
 
         // neue Downloads anlegen
         this.progData = progData;
@@ -74,7 +74,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
         super(progData.primaryStage,
                 downloadDataArrayList.size() > 1 ?
                         ProgConfig.DOWNLOAD_DIALOG_ADD_MORE_SIZE : ProgConfig.DOWNLOAD_DIALOG_ADD_SIZE,
-                "Download ändern", true, false, DECO.BORDER_SMALL);
+                "Download ändern", true, true, true, DECO.BORDER_SMALL);
 
         // bestehende Downloads ändern
         this.progData = progData;

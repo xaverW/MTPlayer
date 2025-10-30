@@ -46,7 +46,8 @@ public class FilmFilterSortDialog extends P2DialogExtra {
     private final FilterDto filterDto;
 
     public FilmFilterSortDialog(ProgData progData, FilterDto filterDto) {
-        super(ProgData.getInstance().primaryStage, null, "Filmfilter", true, true, DECO.NO_BORDER);
+        super(ProgData.getInstance().primaryStage, null, "Filmfilter",
+                true, false, false, DECO.NO_BORDER);
         this.progData = progData;
         this.filterDto = filterDto;
 

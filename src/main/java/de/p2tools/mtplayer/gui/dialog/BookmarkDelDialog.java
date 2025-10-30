@@ -51,7 +51,7 @@ public class BookmarkDelDialog extends P2DialogExtra {
 
     public BookmarkDelDialog(ProgData progData, Stage stage) {
         super(stage, ProgConfig.BOOKMARK_DIALOG_DEL_SIZE, "Bookmarks löschen",
-                true, false, DECO.BORDER_SMALL);
+                true, true, true, DECO.BORDER_SMALL);
         this.progData = progData;
 
         tglChangeListener = (o, u, n) -> {

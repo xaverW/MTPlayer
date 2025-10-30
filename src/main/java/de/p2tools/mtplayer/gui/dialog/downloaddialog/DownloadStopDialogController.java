@@ -55,7 +55,7 @@ public class DownloadStopDialogController extends P2DialogExtra {
 
     public DownloadStopDialogController(ObservableList<DownloadData> foundDownloadList, ObservableList<File> list, int howToDel) {
         super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_STOP_DIALOG_SIZE, "Datei löschen",
-                true, false, DECO.BORDER_SMALL);
+                true, true, true, DECO.BORDER_SMALL);
         this.foundDownloadList = foundDownloadList;
         this.list = list;
         this.howToDel = howToDel;

@@ -50,7 +50,7 @@ public class DownloadSubtitleDialog extends P2DialogExtra {
                                   StringProperty pathProp, StringProperty nameProp, BooleanProperty okProp) {
 
         super(progData.primaryStage, ProgConfig.DOWNLOAD_SUBTITLE_DIALOG_SIZE,
-                "Untertitel laden", true, false, DECO.BORDER_SMALL, true);
+                "Untertitel laden", true, true, true, DECO.BORDER_SMALL, true);
         this.subtitel = subtitel;
         this.progData = progData;
         this.pathProp = pathProp;

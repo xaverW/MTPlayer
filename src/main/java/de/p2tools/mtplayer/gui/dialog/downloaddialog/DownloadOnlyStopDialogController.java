@@ -43,7 +43,7 @@ public class DownloadOnlyStopDialogController extends P2DialogExtra {
 
     public DownloadOnlyStopDialogController(ObservableList<DownloadData> foundDownloadList, boolean delete) {
         super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_ONLY_STOP_DIALOG_SIZE, "Download löschen",
-                true, false, DECO.BORDER_SMALL);
+                true, true, true, DECO.BORDER_SMALL);
         this.foundDownloadList = foundDownloadList;
         this.delete = delete;
 

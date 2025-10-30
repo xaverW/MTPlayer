@@ -41,7 +41,8 @@ public class ChangeShutDownCallDialog extends P2DialogExtra {
 
     public ChangeShutDownCallDialog(Stage stage) {
         super(stage, null,
-                "Den Systembefehl zum Herunterfahren anpassen", true, true, DECO.NO_BORDER);
+                "Den Systembefehl zum Herunterfahren anpassen",
+                true, false, false, DECO.NO_BORDER);
 
         initDialog();
         init(false);

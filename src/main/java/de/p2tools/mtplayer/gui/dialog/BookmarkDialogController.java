@@ -57,7 +57,7 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     public BookmarkDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
-                false, false, DECO.BORDER_SMALL);
+                false, true, true, DECO.BORDER_SMALL);
         this.progData = progData;
         this.progData.bookmarkDialogController = this;
 

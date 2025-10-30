@@ -78,9 +78,6 @@ public class ProgStartBeforeGui {
             ProgData.getInstance().cleaningDataListPropose.initList();
         }
 
-        ProgData.gui = ProgConfig.SYSTEM_SIZE_GUI.getValue();
-        ProgData.dialog = ProgConfig.FILM__FILTER_DIALOG_SIZE.getValueSafe();
-
         P2Log.sysLog("History-Listen laden");
         ProgData.getInstance().historyList.loadList();
         ProgData.getInstance().historyListAbos.loadList();

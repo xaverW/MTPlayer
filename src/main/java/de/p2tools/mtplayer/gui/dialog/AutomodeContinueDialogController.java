@@ -46,7 +46,8 @@ public class AutomodeContinueDialogController extends P2DialogExtra {
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue();
 
     public AutomodeContinueDialogController() {
-        super(ProgData.getInstance().primaryStage, null, "Automodus", true, false);
+        super(ProgData.getInstance().primaryStage, null, "Automodus",
+                true, false, false);
 
         vBoxCont = getVBoxCont();
         btnCancel = new Button("_Programm nicht beenden");

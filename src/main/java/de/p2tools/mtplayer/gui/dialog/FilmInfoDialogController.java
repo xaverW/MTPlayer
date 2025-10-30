@@ -63,7 +63,7 @@ public class FilmInfoDialogController extends P2DialogExtra {
 
     private FilmInfoDialogController() {
         super(ProgData.getInstance().primaryStage, ProgConfig.FILM_INFO_DIALOG_SIZE,
-                "Filminfos", false, false, DECO.BORDER_SMALL, true);
+                "Filminfos", false, true, true, DECO.BORDER_SMALL, true);
 
         init(false);
     }

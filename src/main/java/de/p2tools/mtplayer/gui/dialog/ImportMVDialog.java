@@ -58,7 +58,7 @@ public class ImportMVDialog extends P2DialogExtra {
 
     public ImportMVDialog(ProgData progData) {
         super(progData.primaryStage, ProgConfig.IMPORT_MV_DIALOG_SIZE,
-                "MediathekView Einstellungen importieren", true, true, DECO.BORDER_SMALL, true);
+                "MediathekView Einstellungen importieren", true, false, true, DECO.BORDER_SMALL, true);
         this.progData = progData;
 
         initDialog();

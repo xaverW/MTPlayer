@@ -38,7 +38,7 @@ public class DownloadErrorStreamDialogController extends P2DialogExtra {
 
     public DownloadErrorStreamDialogController(String errorStream) {
         super(ProgData.getInstance().primaryStage, ProgConfig.DOWNLOAD_DIALOG_ERROR_STREAM_SIZE, "Fehler",
-                false, false, DECO.NO_BORDER);
+                false, true, true, DECO.NO_BORDER);
 
         this.errorStream = errorStream;
         hBoxTitle = getHBoxTitle();

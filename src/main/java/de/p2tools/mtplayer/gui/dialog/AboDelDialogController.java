@@ -42,7 +42,7 @@ public class AboDelDialogController extends P2DialogExtra {
 
     public AboDelDialogController(ObservableList<AboData> foundAboList) {
         super(ProgData.getInstance().primaryStage, ProgConfig.ABO_DEL_DIALOG_SIZE, "Abo löschen",
-                true, false, DECO.BORDER_SMALL);
+                true, true, true, DECO.BORDER_SMALL);
         this.foundDownloadList = foundAboList;
 
         vBoxCont = getVBoxCont();

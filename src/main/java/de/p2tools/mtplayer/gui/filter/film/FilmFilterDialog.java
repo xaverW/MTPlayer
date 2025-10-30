@@ -40,7 +40,7 @@ public class FilmFilterDialog extends P2DialogExtra {
 
     public FilmFilterDialog(ProgData progData, FilterDto filterDto) {
         super(progData.primaryStage, ProgConfig.FILM__FILTER_DIALOG_SIZE, "Filmfilter",
-                false, false, DECO.NO_BORDER, true);
+                false, true, true, DECO.NO_BORDER, true);
         this.progData = progData;
         this.filterDto = filterDto;
         init(false);

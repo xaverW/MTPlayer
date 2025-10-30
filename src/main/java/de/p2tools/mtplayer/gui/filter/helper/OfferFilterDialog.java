@@ -44,7 +44,7 @@ public class OfferFilterDialog extends P2DialogExtra {
 
     public OfferFilterDialog(ProgData progData, ObjectProperty<OfferData> offer) {
         super(progData.primaryStage, null, "Filtervorschlag",
-                true, false, DECO.NO_BORDER, true);
+                true, true, true, DECO.NO_BORDER, true);
         this.progData = progData;
         this.offer = offer;
         init(true);
