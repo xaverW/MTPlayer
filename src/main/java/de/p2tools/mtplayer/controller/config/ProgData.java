@@ -52,10 +52,13 @@ import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
+import de.p2tools.p2lib.css.P2CssFactory;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.p2event.P2EventHandler;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.stage.Stage;
 
 public class ProgData {
@@ -76,6 +79,7 @@ public class ProgData {
     public static boolean showUpdateAppParameter = false; // immer ein ProgrammUpdate anzeigen, Startparameter -s
     public static boolean reset = false; // Programm auf Starteinstellungen zurücksetzen
     public static boolean firstProgramStart = false; // ist der allererste Programmstart: Init wird gemacht
+    public ObjectProperty<P2CssFactory.CSS> cssProp = new SimpleObjectProperty<>(P2CssFactory.CSS.CSS_0);
 
     public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
     public static BooleanProperty AUDIOLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Audioliste geladen

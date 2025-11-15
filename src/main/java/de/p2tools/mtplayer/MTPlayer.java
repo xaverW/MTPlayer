@@ -19,7 +19,7 @@ import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
 import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.p2lib.P2LibInit;
+import de.p2tools.p2lib.css.P2CssFactory;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiSize;
 import de.p2tools.p2lib.tools.P2InfoFactory;
@@ -124,7 +124,7 @@ public class MTPlayer extends Application {
 
             ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> ProgColorList.setColorTheme());
             PShortKeyFactory.addShortKey(scene);
-            P2LibInit.addP2CssToScene(scene); // und jetzt noch CSS einstellen
+            P2CssFactory.addP2CssToScene(scene); // und jetzt noch CSS einstellen
 
             if (ProgData.startMinimized) {
                 primaryStage.setIconified(true);

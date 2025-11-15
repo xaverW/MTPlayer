@@ -40,8 +40,20 @@ public class MTPlayerMenu extends MenuButton {
         makeButton();
         setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                ProgConfig.SYSTEM_DARK_THEME.setValue(!ProgConfig.SYSTEM_DARK_THEME.getValue());
+                if (!ProgConfig.SYSTEM_DARK_THEME.get() && !ProgConfig.SYSTEM_BLACK_WHITE_ICON.get()) {
+                    ProgConfig.SYSTEM_DARK_THEME.set(true);
 
+                } else if (ProgConfig.SYSTEM_DARK_THEME.get() && !ProgConfig.SYSTEM_BLACK_WHITE_ICON.get()) {
+                    ProgConfig.SYSTEM_DARK_THEME.set(false);
+                    ProgConfig.SYSTEM_BLACK_WHITE_ICON.set(true);
+
+                } else if (!ProgConfig.SYSTEM_DARK_THEME.get() && ProgConfig.SYSTEM_BLACK_WHITE_ICON.get()) {
+                    ProgConfig.SYSTEM_DARK_THEME.set(true);
+
+                } else if (ProgConfig.SYSTEM_DARK_THEME.get() && ProgConfig.SYSTEM_BLACK_WHITE_ICON.get()) {
+                    ProgConfig.SYSTEM_DARK_THEME.set(false);
+                    ProgConfig.SYSTEM_BLACK_WHITE_ICON.set(false);
+                }
             }
         });
     }
