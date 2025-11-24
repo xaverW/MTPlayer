@@ -44,8 +44,8 @@ public class ProgConst {
     public static final String FILE_HISTORY = "history.txt";
     public static final String FILE_MEDIA_DB = "mediadb.txt";
     public static final String LOG_DIR = "Log";
-    public static final String CSS_FILE = "de/p2tools/mtplayer/mtfx.css";
-    public static final String CSS_FILE_DARK_THEME = "de/p2tools/mtplayer/mtfx-dark.css";
+    public static final String CSS_FILE = "de/p2tools/mtplayer/css/mtfx.css";
+    public static final String CSS_FILE_DARK_THEME = "de/p2tools/mtplayer/css/mtfx-dark.css";
 
     public static final String PROGRAM_ICON = "de/p2tools/mtplayer/res/p2_logo_32.png";
 //    public static final String MTPLAYER_DOWNLOAD_URL = "https://www.p2tools.de/download/";

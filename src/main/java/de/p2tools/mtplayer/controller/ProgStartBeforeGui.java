@@ -97,7 +97,8 @@ public class ProgStartBeforeGui {
                 ProgConfig.SYSTEM_DARK_THEME,
                 ProgConfig.SYSTEM_BLACK_WHITE_ICON,
 
-                "de/p2tools/mtplayer/css/",
+                new String[]{ProgConst.CSS_FILE},
+                new String[]{ProgConst.CSS_FILE_DARK_THEME},
                 ProgData.getInstance().cssProp,
                 ProgConfig.SYSTEM_FONT_SIZE,
 
