@@ -34,6 +34,15 @@ public class SearchProgramUpdate {
     private final ProgData progData;
     private String title = "";
 
+    /*
+        Ablauf beim Suchen:
+        Downloads werden abgesucht, verglichen wird das Release-Date, wenn es
+        eine aktuellere Version gibt, wird sie angezeigt.
+
+        Im Dialog werden die Versionen angezeigt, wenn sich "linux", "windows", "mac" im
+        Dateinamen findet, sonst nur wenn "alle" angeklickt ist.
+    */
+
     public SearchProgramUpdate(final ProgData progData) {
         // nach dem Laden der Filmliste beim Programmstart
         // Button
@@ -84,7 +93,8 @@ public class SearchProgramUpdate {
 
 //                new String[]{"windows"},
 //                new String[]{"raspberry"},
-                new String[]{}, // bsSearch zur Anzeige der Downloads
+//                new String[]{"mac"},
+                new String[]{}, // bsSearch zur Anzeige der Downloads, wenn leer wird es automatisch mit dem OS gefüllt
 
                 ProgConfig.SYSTEM_DOWNLOAD_DIR_NEW_VERSION,
                 showDialogAlways, // DEBUG: immer alles anzeigen

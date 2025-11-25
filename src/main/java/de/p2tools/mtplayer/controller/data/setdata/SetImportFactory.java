@@ -68,7 +68,7 @@ public class SetImportFactory extends LinkedList<String[]> {
             if (!setDataList.isEmpty()) {
                 // damit die Variablen ersetzt werden
                 SetReplacePatternFactory.progReplacePattern(stage, setDataList);
-                // unt die ID setzen!!
+                // unter die ID setzen!!
                 setDataList.forEach(s -> s.setId(P2Index.getIndexStr()));
             } else {
                 P2Log.sysLog("Sets laden hat nicht geklappt");

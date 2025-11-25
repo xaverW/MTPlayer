@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
-import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
@@ -28,6 +27,7 @@ import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
+import de.p2tools.p2lib.mediathek.download.GetProgramStandardPath;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -132,7 +132,7 @@ public class StartPanePath {
                 property = ProgConfig.SYSTEM_PATH_FFMPEG;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_FFMPEG.setValue("");
-                    txtPlayer.setText(SetFactory.getTemplatePathFFmpeg());
+                    txtPlayer.setText(GetProgramStandardPath.getTemplatePathFFmpeg());
                 });
                 hyperlink = new P2Hyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_FFMPEG,
@@ -145,7 +145,7 @@ public class StartPanePath {
                 property = ProgConfig.SYSTEM_PATH_VLC;
                 btnFind.setOnAction(event -> {
                     ProgConfig.SYSTEM_PATH_VLC.setValue("");
-                    txtPlayer.setText(SetFactory.getTemplatePathVlc());
+                    txtPlayer.setText(GetProgramStandardPath.getTemplatePathVlc());
                 });
                 hyperlink = new P2Hyperlink(stage,
                         ProgConst.ADRESSE_WEBSITE_VLC,

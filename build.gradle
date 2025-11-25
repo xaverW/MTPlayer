@@ -24,9 +24,10 @@ def theMainClass = 'de/p2tools/mtplayer/Main'
 def jre_linux = '../../ADMIN/JDK/jre_linux/'
 def jre_windows = '../../ADMIN/JDK/jre_windows/'
 
-def res_all = './res/res_all'
-def res_linux = './res/res_linux'
-def res_windows = './res/res_windows'
+def res_all     = './res/res_all'
+def res_linux     = './res/res_linux'
+def res_windows     = './res/res_windows'
+def res_mac     = './res/res_mac'
 
 def fatJarDir = layout.buildDirectory.get().toString() + "/fatJar" + "/"
 def releaseDir = './release/'
@@ -66,7 +67,7 @@ dependencies {
     //<><><><><><><><><><><><><><><><><><><><>
 
     implementation ':p2lib'
-    implementation ':controlsfx-11.2.1'
+    implementation ':controlsfx-11.2.2'
 
     implementation "org.openjfx:javafx-fxml:21:linux"
     implementation "org.openjfx:javafx-controls:21:linux"
@@ -185,6 +186,7 @@ tasks.register("copyAll") {
             from(res_all)
             from(res_linux)
             from(res_windows)
+            
             from file(fatJarDir + jarName)
             into file(buildDir_All)
         }
@@ -220,6 +222,7 @@ tasks.register("copyLinux") {
         copy {
             from(res_all)
             from(res_linux)
+            
             from file(fatJarDir + jarName)
             into file(buildDir_Linux)
         }
@@ -252,6 +255,7 @@ tasks.register("copyWindows") {
         copy {
             from(res_all)
             from(res_windows)
+            
             from file(fatJarDir + jarName)
             into file(buildDir_Win)
         }

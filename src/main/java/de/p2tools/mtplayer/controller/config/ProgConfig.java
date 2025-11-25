@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.filter.FastFilter;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.live.LiveFilter;
@@ -27,6 +26,7 @@ import de.p2tools.mtplayer.gui.chart.ChartGenerateFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.pdata.P2Data;
 import de.p2tools.p2lib.configfile.pdata.P2DataProgConfig;
+import de.p2tools.p2lib.mediathek.download.GetProgramStandardPath;
 import de.p2tools.p2lib.mediathek.download.MtBandwidthTokenBucket;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.tools.P2InfoFactory;
@@ -322,8 +322,8 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_LOAD_NOT_SENDER = addStrProp("system-load-not-sender", "");
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MAX_DAYS = addIntProp("system-load-filmlist-max-days", 0); //es werden nur die x letzten Tage geladen
     public static IntegerProperty SYSTEM_LOAD_FILMLIST_MIN_DURATION = addIntProp("system-load-filmlist-min-duration", 0); //es werden nur Filme mit mind. x Minuten geladen
-    public static StringProperty SYSTEM_PATH_VLC = addStrProp("system-path-vlc", SetFactory.getTemplatePathVlc());
-    public static StringProperty SYSTEM_PATH_FFMPEG = addStrProp("system-path-ffmpeg", SetFactory.getTemplatePathFFmpeg());
+    public static StringProperty SYSTEM_PATH_VLC = addStrProp("system-path-vlc", GetProgramStandardPath.getTemplatePathVlc());
+    public static StringProperty SYSTEM_PATH_FFMPEG = addStrProp("system-path-ffmpeg", GetProgramStandardPath.getTemplatePathFFmpeg());
     public static IntegerProperty SYSTEM_FILMLIST_COUNT_DOUBLE = addIntProp("system-filmlist-count-double", 0); // Anzahl der doppelten Filme
 
     // Download

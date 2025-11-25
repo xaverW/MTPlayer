@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.data.setdata;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DialogFileChooser;
+import de.p2tools.p2lib.mediathek.download.GetProgramStandardPath;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.stage.Stage;
 
@@ -81,7 +82,7 @@ public class SetReplacePatternFactory {
 
     private static String getPathVlc(Stage stage) {
         // liefert den Pfad, wenn vorhanden, wenn nicht, wird er in einem Dialog abgefragt
-        String orgPath = SetFactory.getTemplatePathVlc();
+        String orgPath = GetProgramStandardPath.getTemplatePathVlc();
         if (ProgConfig.SYSTEM_PATH_VLC.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_VLC.set(orgPath);
         }
@@ -106,7 +107,7 @@ public class SetReplacePatternFactory {
 
     private static String getPathFFmpeg(Stage stage) {
         // liefert den Pfad, wenn vorhanden, wenn nicht, wird er in einem Dialog abgefragt
-        String orgPath = SetFactory.getTemplatePathFFmpeg();
+        String orgPath = GetProgramStandardPath.getTemplatePathFFmpeg();
         if (ProgConfig.SYSTEM_PATH_FFMPEG.get().isEmpty()) {
             ProgConfig.SYSTEM_PATH_FFMPEG.set(orgPath);
         }
