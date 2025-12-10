@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
-import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
+import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 
 public class FilmFilterSamples {
 
@@ -146,7 +146,7 @@ public class FilmFilterSamples {
         progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
-        progData.filterWorkerFilm.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+        progData.filterWorkerFilm.getFilmFilterList().add(new FilmFilter(P2CboSeparator.SEPARATOR));
 
         //========================================================
         sf = new FilmFilter("Livestreams");
@@ -189,7 +189,7 @@ public class FilmFilterSamples {
         progData.filterWorkerFilm.getFilmFilterList().add(sf);
 
         //========================================================
-        progData.filterWorkerFilm.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+        progData.filterWorkerFilm.getFilmFilterList().add(new FilmFilter(P2CboSeparator.SEPARATOR));
 
         //========================================================
         sf = new FilmFilter("nur neue Fernsehfilme");

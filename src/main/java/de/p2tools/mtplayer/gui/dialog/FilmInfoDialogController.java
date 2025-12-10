@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -159,8 +159,8 @@ public class FilmInfoDialogController extends P2DialogExtra {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(5));
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
 
         int row = 0;
         for (int i = 0; i < FilmDataXml.MAX_ELEM; ++i) {
@@ -205,8 +205,8 @@ public class FilmInfoDialogController extends P2DialogExtra {
                     gUrl.setVgap(0);
 //                    gUrl.setGridLinesVisible(true);
                     gUrl.setPadding(new Insets(0));
-                    gUrl.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                            P2ColumnConstraints.getCcComputedSizeAndHgrow());
+                    gUrl.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                            P2GridConstraints.getCcComputedSizeAndHgrow());
 
                     gUrl.add(new Label("Niedrig:"), 0, 0);
                     gUrl.add(p2HyperlinkUrlSmall, 1, 0);

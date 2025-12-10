@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
@@ -139,8 +139,8 @@ public class PaneMediaConfig {
             rowC.setValignment(VPos.CENTER);
             gridPane.getRowConstraints().add(rowC);
         }
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
         vBox.getChildren().addAll(gridPane);
 
         initFileSizeSlider();

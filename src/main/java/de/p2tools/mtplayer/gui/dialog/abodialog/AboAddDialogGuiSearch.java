@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.Insets;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
@@ -54,9 +54,9 @@ public class AboAddDialogGuiSearch extends VBox {
         gridPane.setMaxWidth(Double.MAX_VALUE);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSizeCenter());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSizeCenter());
 
         getChildren().add(gridPane);
 

@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2Dialog;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -75,7 +75,7 @@ public class StartPaneUpdate {
 
         gridPane.add(tglSearch, 0, 0);
         gridPane.add(btnHelp, 1, 0);
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().add(gridPane);
 
         return new TitledPane("Programmupdate", vBox);

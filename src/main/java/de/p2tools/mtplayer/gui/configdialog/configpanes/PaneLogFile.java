@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.beans.property.BooleanProperty;
@@ -123,10 +123,10 @@ public class PaneLogFile {
         gridPane.add(btnClear, 3, row);
 
         gridPane.add(btnChange, 0, ++row, 4, 1);
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize());
 
         lblPath.disableProperty().bind(tglEnableLog.selectedProperty().not());
         txtLogFile.disableProperty().bind(tglEnableLog.selectedProperty().not());

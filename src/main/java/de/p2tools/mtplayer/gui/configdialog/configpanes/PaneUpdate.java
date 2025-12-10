@@ -22,9 +22,9 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -116,8 +116,8 @@ public class PaneUpdate {
         gridPane.add(btnNow, 0, ++row, 3, 1);
         GridPane.setHalignment(btnNow, HPos.RIGHT);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
 
         HBox hBoxHyper = new HBox();
         hBoxHyper.setAlignment(Pos.CENTER_LEFT);

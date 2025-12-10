@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
@@ -136,9 +136,9 @@ public class PaneSetFunction {
         gridPane.add(btnHelpColor, 2, row);
 
         gridPane.getColumnConstraints().addAll(
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
 
         setDataObjectProperty.addListener((u, o, n) -> {
             tpConfig.setDisable(setDataObjectProperty.getValue() == null);

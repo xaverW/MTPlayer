@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
-import de.p2tools.p2lib.guitools.P2MenuButton;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -33,7 +33,7 @@ import java.util.function.BooleanSupplier;
 
 public class LiveFilmFilterText extends VBox {
 
-    private final P2MenuButton mbChannel;
+    private final P2CboCheckBoxListString mbChannel;
     private final PCboString cboThema;
     private final PCboString cboTitle;
 
@@ -48,7 +48,7 @@ public class LiveFilmFilterText extends VBox {
             return true;
         };
 
-        mbChannel = new P2MenuButton(progData.liveFilmFilterWorker.getActFilterSettings().channelProperty(),
+        mbChannel = new P2CboCheckBoxListString(progData.liveFilmFilterWorker.getActFilterSettings().channelProperty(),
                 ThemeListFactory.allChannelListFilm);
         cboThema = new PCboString(progData.stringFilterLists.getFilterListLiveThema(),
                 progData.liveFilmFilterWorker.getActFilterSettings().themeProperty(), booleanSupplier);

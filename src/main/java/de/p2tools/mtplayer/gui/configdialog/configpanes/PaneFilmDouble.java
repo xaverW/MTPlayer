@@ -26,8 +26,8 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -117,9 +117,9 @@ public class PaneFilmDouble {
         gridPane.add(lvSender, 0, ++row, 2, 1);
         gridPane.add(hBoxButton, 0, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize());
 
         vBox.setPadding(new Insets(P2LibConst.PADDING));
         vBox.getChildren().addAll(gridPane, P2GuiTools.getVBoxGrower(), hBoxBtn);

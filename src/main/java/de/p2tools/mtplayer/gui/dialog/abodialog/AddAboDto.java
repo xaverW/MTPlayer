@@ -23,9 +23,9 @@ import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
-import de.p2tools.p2lib.guitools.P2MenuButton;
 import de.p2tools.p2lib.guitools.P2TextAreaIgnoreTab;
 import de.p2tools.p2lib.guitools.P2TimePicker;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
@@ -122,7 +122,7 @@ public class AddAboDto {
     public final TextArea textAreaTitle = new P2TextAreaIgnoreTab(false, true);
     public final TextArea textAreaSomewhere = new P2TextAreaIgnoreTab(false, true);
 
-    public P2MenuButton mbChannel;
+    public P2CboCheckBoxListString mbChannel;
     public final StringProperty channelProperty = new SimpleStringProperty();
 
     public final P2TimePicker p2TimePicker = new P2TimePicker();
@@ -173,7 +173,7 @@ public class AddAboDto {
         rbSetFileName.setToggleGroup(tgl2);
         rbOwnFileName.setToggleGroup(tgl2);
 
-        mbChannel = new P2MenuButton(channelProperty, ThemeListFactory.allChannelListFilm, true);
+        mbChannel = new P2CboCheckBoxListString(channelProperty, ThemeListFactory.allChannelListFilm, true);
         channelProperty.addListener((u, o, n) -> getAct().abo.setChannel(channelProperty.getValueSafe()));
 
         initChannelTTDescription = new InitChannelTTDescription(this);

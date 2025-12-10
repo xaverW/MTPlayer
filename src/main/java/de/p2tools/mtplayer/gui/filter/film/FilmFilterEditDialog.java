@@ -24,7 +24,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -259,8 +259,8 @@ public class FilmFilterEditDialog extends P2DialogExtra {
         gridPane.add(tglRegEx, 0, ++row, 2, 1);
 
         gridPane.getColumnConstraints().addAll(
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrowRight());
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrowRight());
 
         vBox.getChildren().addAll(gridPane);
     }

@@ -30,7 +30,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;

@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.p2lib.guitools.P2LDatePicker;
-import de.p2tools.p2lib.guitools.pcheckcombobox.P2CheckComboBox;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxBool;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
@@ -200,8 +200,8 @@ public class FilmFilterControllerFilter extends VBox {
     }
 
     private void addCheckFilter() {
-        P2CheckComboBox checkOnly = new P2CheckComboBox();
-        P2CheckComboBox checkNot = new P2CheckComboBox();
+        P2CboCheckBoxBool checkOnly = new P2CboCheckBoxBool();
+        P2CboCheckBoxBool checkNot = new P2CboCheckBoxBool();
         Label lblOnly = new Label("Anzeigen:");
         Label lblNot = new Label("Ausschließen:");
 

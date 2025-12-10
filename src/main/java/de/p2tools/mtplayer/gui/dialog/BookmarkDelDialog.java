@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
@@ -78,8 +78,8 @@ public class BookmarkDelDialog extends P2DialogExtra {
         gridPane1.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane1.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane1.setPadding(new Insets(P2LibConst.PADDING));
-        gridPane1.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane1.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
 
         int row1 = 0;
         gridPane1.add(tglAll, 0, row1, 2, 1);
@@ -89,9 +89,9 @@ public class BookmarkDelDialog extends P2DialogExtra {
         gridPane2.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane2.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane2.setPadding(new Insets(P2LibConst.PADDING));
-        gridPane2.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane2.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
 
         int row2 = 0;
         gridPane2.add(tglShown, 0, row2, 3, 1);

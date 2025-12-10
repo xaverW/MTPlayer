@@ -25,8 +25,8 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistCountFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import de.p2tools.p2lib.guitools.P2MenuButton;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,7 +51,7 @@ public class AddBlackListDialogController extends P2DialogExtra {
     public final RadioButton rbFilmAudio = new RadioButton("Film und Audio");
     private final Button btnList = new Button();
 
-    private final P2MenuButton mbChannel;
+    private final P2CboCheckBoxListString mbChannel;
     private final TextField txtTheme = new TextField();
     private final P2ToggleSwitch tgTheme = new P2ToggleSwitch("exakt:");
     private final TextField txtTitle = new TextField();
@@ -80,7 +80,7 @@ public class AddBlackListDialogController extends P2DialogExtra {
         this.theme = blackData.getTheme();
         this.title = blackData.getTitle();
         this.blackData = blackData;
-        mbChannel = new P2MenuButton(this.blackData.channelProperty(),
+        mbChannel = new P2CboCheckBoxListString(this.blackData.channelProperty(),
                 ThemeListFactory.allChannelListFilm, true);
 
         init(true);
@@ -176,10 +176,10 @@ public class AddBlackListDialogController extends P2DialogExtra {
         txtTitle.textProperty().bindBidirectional(blackData.titleProperty());
         txtThemeTitle.textProperty().bindBidirectional(blackData.themeTitleProperty());
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize());
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);

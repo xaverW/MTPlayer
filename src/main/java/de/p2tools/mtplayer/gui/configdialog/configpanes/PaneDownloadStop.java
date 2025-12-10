@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -126,8 +126,8 @@ public class PaneDownloadStop {
         gridPane.add(vBox, 0, ++row);
         gridPane.add(btnHelpContinue, 1, row, 1, 2);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
     }
 
     private void initRadio() {

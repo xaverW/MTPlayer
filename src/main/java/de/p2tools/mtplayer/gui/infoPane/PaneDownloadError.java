@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorStreamDialogController;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -70,9 +70,9 @@ public class PaneDownloadError extends VBox {
                 gridPane.setHgap(5);
                 gridPane.setVgap(5);
                 gridPane.setPadding(new Insets(5));
-                gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                        P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                        P2ColumnConstraints.getCcPrefSize());
+                gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                        P2GridConstraints.getCcComputedSizeAndHgrow(),
+                        P2GridConstraints.getCcPrefSize());
                 gridPane.setStyle("-fx-border-width: 2px; -fx-border-color: black;");
 
                 TextField txtTitle = new TextField(d.getTitle());

@@ -25,7 +25,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.P2MenuButton;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -36,7 +36,7 @@ import javafx.scene.layout.VBox;
 
 public class AboFilterController extends FilterController {
 
-    private P2MenuButton mbChannel;
+    private P2CboCheckBoxListString mbChannel;
     private final ComboBox<String> cboState = new ComboBox<>(); // Abo ein-/ausgeschaltet
     private PCboString cboName;
     private PCboString cboSearchText;
@@ -71,7 +71,7 @@ public class AboFilterController extends FilterController {
     }
 
     private void initFilter() {
-        mbChannel = new P2MenuButton(ProgConfig.FILTER_ABO_CHANNEL,
+        mbChannel = new P2CboCheckBoxListString(ProgConfig.FILTER_ABO_CHANNEL,
                 ThemeListFactory.channelsForAbosList);
 
         cboState.getItems().addAll(AboConstants.ALL, AboConstants.ABO_ON, AboConstants.ABO_OFF);

@@ -29,8 +29,8 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -126,8 +126,8 @@ public class ImportMVDialog extends P2DialogExtra {
         gridPane.add(txtMVPath, 0, ++row);
         gridPane.add(btnFile, 1, row);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
     }
 
     private void addLoad(VBox vBox) {
@@ -165,8 +165,8 @@ public class ImportMVDialog extends P2DialogExtra {
         gridPane.add(new Label("Gefundene Blacks:"), 0, ++row);
         gridPane.add(lblBlack, 1, row);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize(), P2GridConstraints.getCcPrefSize());
     }
 
     private void importLoads(VBox vBox) {
@@ -213,7 +213,7 @@ public class ImportMVDialog extends P2DialogExtra {
         gridPane.add(new Label("Blacks eingefügt:"), 0, ++row);
         gridPane.add(lblFoundBlacks, 1, row);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize(), P2GridConstraints.getCcPrefSize());
     }
 }

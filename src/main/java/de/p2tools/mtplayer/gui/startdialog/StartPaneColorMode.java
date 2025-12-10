@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -90,8 +90,8 @@ public class StartPaneColorMode {
         gridPaneGui.add(hBoxImage2, 0, 1);
         gridPaneGui.add(hBoxImage3, 1, 1);
 
-        gridPaneGui.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPaneGui.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize());
 
         HBox hBoxColor = new HBox();
         hBoxColor.setAlignment(Pos.CENTER);

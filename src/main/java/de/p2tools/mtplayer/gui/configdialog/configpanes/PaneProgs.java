@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.tools.P2ShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -72,7 +72,7 @@ public class PaneProgs {
         addVideoPlayer(gridPane, 1);
         addWebbrowser(gridPane, 2);
         addSystemCall(gridPane, 3);
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow());
     }
 
     private void addFilemanager(GridPane gridPane, int row) {

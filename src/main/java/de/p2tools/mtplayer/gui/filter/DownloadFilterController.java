@@ -26,7 +26,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.P2MenuButton;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -39,7 +39,7 @@ public class DownloadFilterController extends FilterController {
     private final ComboBox<String> cboList = new ComboBox<>(); //Downloadquelle: Filme/Audios
     private final ComboBox<String> cboSrc = new ComboBox<>(); //Downloadquelle: Abo, manuell gestartet
     private final ComboBox<String> cboKind = new ComboBox<>(); //Download über Programm / direkter Downlaod, http
-    private final P2MenuButton mbChannel;
+    private final P2CboCheckBoxListString mbChannel;
     private final ComboBox<String> cboAbo = new ComboBox<>();
     private final ComboBox<String> cboState = new ComboBox<>();
 
@@ -55,7 +55,7 @@ public class DownloadFilterController extends FilterController {
         ProgData progData = ProgData.getInstance();
         progData.downloadFilterController = this;
 
-        mbChannel = new P2MenuButton(ProgConfig.FILTER_DOWNLOAD_CHANNEL,
+        mbChannel = new P2CboCheckBoxListString(ProgConfig.FILTER_DOWNLOAD_CHANNEL,
                 ThemeListFactory.allChannelListFilm);
 
         initLayout();

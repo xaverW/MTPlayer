@@ -26,7 +26,7 @@ import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.P2MenuButton;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.mediathek.filter.Filter;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
@@ -43,7 +43,7 @@ import java.util.function.Predicate;
 
 public class PanelFilterGrid {
     private final BlackList list;
-    private final P2MenuButton mbFilterChannel;
+    private final P2CboCheckBoxListString mbFilterChannel;
     private final StringProperty mbFilterChannelProp = new SimpleStringProperty();
 
     private final TextField txtFilterThema = new TextField();
@@ -66,7 +66,7 @@ public class PanelFilterGrid {
         this.tableView = tableView;
         this.list = list;
         this.blackListFilterBlackList = blackListFilterBlackList;
-        this.mbFilterChannel = new P2MenuButton(mbFilterChannelProp, ThemeListFactory.allChannelListFilm);
+        this.mbFilterChannel = new P2CboCheckBoxListString(mbFilterChannelProp, ThemeListFactory.allChannelListFilm);
 
         bind();
         addPredicate();

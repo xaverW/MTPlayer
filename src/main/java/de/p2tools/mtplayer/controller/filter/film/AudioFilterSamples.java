@@ -18,7 +18,7 @@ package de.p2tools.mtplayer.controller.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
-import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
+import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 
 public class AudioFilterSamples {
 
@@ -113,7 +113,7 @@ public class AudioFilterSamples {
         progData.filterWorkerAudio.getFilmFilterList().add(sf);
 
         //========================================================
-        progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+        progData.filterWorkerAudio.getFilmFilterList().add(new FilmFilter(P2CboSeparator.SEPARATOR));
 
         //========================================================
         sf = new FilmFilter("aktuelle Nachrichten");

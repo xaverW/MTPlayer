@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -45,11 +45,11 @@ public class PaneAboInfoList extends VBox {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
         gridPane.getStyleClass().add("downloadInfoGrid");
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSizeRight(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSizeRight(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
 
         VBox vBoxAll = new VBox();
         vBoxAll.setSpacing(10);

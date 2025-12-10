@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
-import de.p2tools.p2lib.guitools.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellLocalDate;
+import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

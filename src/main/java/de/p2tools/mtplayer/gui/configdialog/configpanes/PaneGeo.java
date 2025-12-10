@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -119,9 +119,9 @@ public class PaneGeo {
         gridPane.add(rbEu, 1, ++row);
         gridPane.add(rbSonst, 1, ++row);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
 
         TitledPane tpConfig = new TitledPane("Geogeblockte Filme", gridPane);
         if (result != null) {

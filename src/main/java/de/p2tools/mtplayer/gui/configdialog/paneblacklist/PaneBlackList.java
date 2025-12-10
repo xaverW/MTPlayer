@@ -30,8 +30,13 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableBlacklist;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.*;
+import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2Text;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.guitools.table.P2RowFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -71,7 +76,7 @@ public class PaneBlackList {
     private final GridPane gridPane = new GridPane();
     private final P2ToggleSwitch tglActive = new P2ToggleSwitch("Aktiv:");
 
-    private final P2MenuButton mbChannel;
+    private final P2CboCheckBoxListString mbChannel;
     private final StringProperty mbChannelProp = new SimpleStringProperty();
     private final P2ToggleSwitch tgThemeExact = new P2ToggleSwitch("exakt:");
     private final TextField txtTheme = new TextField();
@@ -109,7 +114,7 @@ public class PaneBlackList {
         this.blackDataChanged = blackDataChanged;
         this.panelButton = new PanelButton();
 
-        mbChannel = new P2MenuButton(mbChannelProp,
+        mbChannel = new P2CboCheckBoxListString(mbChannelProp,
                 ThemeListFactory.allChannelListFilm, true);
 
         if (controlBlackListNotFilmFilter) {
@@ -219,11 +224,11 @@ public class PaneBlackList {
         GridPane gridPaneBlack = new GridPane();
         gridPaneBlack.setHgap(20);
         gridPaneBlack.setVgap(10);
-        gridPaneBlack.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPaneBlack.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
 
         GridPane.setValignment(btnHelp, VPos.TOP);
         GridPane.setHalignment(btnHelp, HPos.RIGHT);
@@ -338,9 +343,9 @@ public class PaneBlackList {
         gridPane.add(new Label("Thema-Titel:"), 0, ++row);
         gridPane.add(txtThemeTitle, 1, row);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
         gridPane.setDisable(true);
         gridPane.disableProperty().bind(tableView.getSelectionModel().selectedItemProperty().isNull());
 

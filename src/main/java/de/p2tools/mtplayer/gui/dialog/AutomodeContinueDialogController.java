@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.HPos;
@@ -83,7 +83,7 @@ public class AutomodeContinueDialogController extends P2DialogExtra {
         int row = 0;
         gridPane.add(lblHeader1, 0, row);
         gridPane.add(lblHeader2, 0, ++row);
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow());
 
         vBoxCont.setPadding(new Insets(15));
         vBoxCont.getChildren().addAll(gridPane);

@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.mtplayer.gui.filter.helper.PCboThemeExact;
-import de.p2tools.p2lib.guitools.P2MenuButton;
+import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
@@ -33,7 +33,7 @@ import java.util.function.BooleanSupplier;
 
 public class FilmFilterControllerTextFilter extends VBox {
 
-    private final P2MenuButton mbChannel;
+    private final P2CboCheckBoxListString mbChannel;
     private final PCboThemeExact cboThemeExact;
     private final PCboString cboTheme;
     private final PCboString cboThemeTitle;
@@ -48,7 +48,7 @@ public class FilmFilterControllerTextFilter extends VBox {
         super();
         this.filterDto = filterDto;
         progData = ProgData.getInstance();
-        mbChannel = new P2MenuButton(filterDto.filterWorker.getActFilterSettings().channelProperty(),
+        mbChannel = new P2CboCheckBoxListString(filterDto.filterWorker.getActFilterSettings().channelProperty(),
                 (filterDto.audio ? ThemeListFactory.allChannelListAudio : ThemeListFactory.allChannelListFilm));
 
         final BooleanSupplier supplierReportReturn = () -> {

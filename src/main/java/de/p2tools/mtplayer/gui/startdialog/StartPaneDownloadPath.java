@@ -22,8 +22,8 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -84,7 +84,7 @@ public class StartPaneDownloadPath {
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnFile, 2, row);
         gridPane.add(btnHelp, 3, row);
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(), P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(), P2GridConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().add(gridPane);
 
         return new TitledPane("Pfad für die Downloads", vBox);

@@ -20,7 +20,7 @@ package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -80,8 +80,8 @@ public class PaneSetName {
             rowC.setValignment(VPos.CENTER);
             gridPane.getRowConstraints().add(rowC);
         }
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
 
         setDataObjectProperty.addListener((u, o, n) -> {
             tpConfig.setDisable(setDataObjectProperty.getValue() == null);

@@ -32,7 +32,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
+import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
@@ -45,7 +45,7 @@ import java.util.Optional;
 
 public class FilmFilterControllerProfiles extends VBox {
 
-    private final ComboBox<FilmFilter> cboFilterProfiles = new P2SeparatorComboBox<>();
+    private final ComboBox<FilmFilter> cboFilterProfiles = new P2CboSeparator<>();
     private final MenuButton mbFilterTools = new MenuButton("");
     private final Button btnLoadFilter = new Button("");
     private final Button btnSaveFilter = new Button("");
@@ -239,8 +239,8 @@ public class FilmFilterControllerProfiles extends VBox {
 
         } else if (!filterDto.filterWorker.getFilmFilterList().isEmpty()) {
             // dann eine Markierung
-            filterDto.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
-            filterDto.filterWorker.getFilmFilterList().add(new FilmFilter(P2SeparatorComboBox.SEPARATOR));
+            filterDto.filterWorker.getFilmFilterList().add(new FilmFilter(P2CboSeparator.SEPARATOR));
+            filterDto.filterWorker.getFilmFilterList().add(new FilmFilter(P2CboSeparator.SEPARATOR));
         }
 
         if (filterDto.audio) {
@@ -313,7 +313,7 @@ public class FilmFilterControllerProfiles extends VBox {
                         return;
                     }
 
-                    if (P2SeparatorComboBox.isSeparator(item.toString())) {
+                    if (P2CboSeparator.isSeparator(item.toString())) {
                         setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR_WIDTH.getImageView());
                         setText(null);
                         setStyle("-fx-alignment: center;");

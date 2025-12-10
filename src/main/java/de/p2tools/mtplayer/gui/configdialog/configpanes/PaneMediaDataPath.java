@@ -27,9 +27,9 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.P2RowFactory;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.guitools.table.P2RowFactory;
 import javafx.beans.binding.Bindings;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -227,8 +227,8 @@ public class PaneMediaDataPath {
         gridPane.add(new Label("Pfad:"), 0, ++row);
         gridPane.add(txtPath, 1, row);
         gridPane.add(btnPath, 2, row);
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().addAll(gridPane);
     }

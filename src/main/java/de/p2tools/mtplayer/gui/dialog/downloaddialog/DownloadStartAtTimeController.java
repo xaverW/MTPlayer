@@ -23,8 +23,8 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2TimePicker;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -233,8 +233,8 @@ public class DownloadStartAtTimeController extends P2DialogExtra {
     }
 
     private void initGridPane() {
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize());
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);

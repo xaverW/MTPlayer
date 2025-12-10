@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.gui.mediacleaningdialog;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -90,7 +90,7 @@ public class PaneCleaningConfigController {
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(0));
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(), P2GridConstraints.getCcPrefSize());
         vBox.getChildren().addAll(gridPane);
 
         //Suchen was: Medien/Abo

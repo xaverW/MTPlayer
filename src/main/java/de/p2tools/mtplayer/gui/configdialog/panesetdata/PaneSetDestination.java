@@ -26,8 +26,8 @@ import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import de.p2tools.p2lib.guitools.P2ComboBoxObject;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.guitools.pcbo.P2CboObject;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
@@ -42,7 +42,7 @@ import java.util.Collection;
 
 public class PaneSetDestination {
     private final P2ToggleSwitch tglSubdir = new P2ToggleSwitch("Bei Abos Unterordner anlegen:");
-    private final P2ComboBoxObject<AboSubDir.ENSubDir> cboDest = new P2ComboBoxObject();
+    private final P2CboObject<AboSubDir.ENSubDir> cboDest = new P2CboObject<>();
     private final TextField txtDestPath = new TextField();
     private final TextField txtDestName = new TextField();
     private final Slider slCut = new Slider();
@@ -114,9 +114,9 @@ public class PaneSetDestination {
         gridPane.add(txtDestName, 1, row);
         gridPane.add(btnHelpDestName, 2, row);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
 
         makeCut(vBox);
 
@@ -183,9 +183,9 @@ public class PaneSetDestination {
         gridPane.add(slCutField, 1, row);
         gridPane.add(lblSizeField, 2, row);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(), P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(), P2GridConstraints.getCcPrefSize());
     }
 
     private void setValueSlider(Slider sl, Label lb, String pre) {

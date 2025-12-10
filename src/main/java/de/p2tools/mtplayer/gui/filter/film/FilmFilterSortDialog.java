@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2SeparatorComboBox;
+import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -157,7 +157,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
 
     private void addSeparator() {
         final int sel = tableView.getSelectionModel().getSelectedIndex();
-        FilmFilter sf = new FilmFilter(P2SeparatorComboBox.SEPARATOR);
+        FilmFilter sf = new FilmFilter(P2CboSeparator.SEPARATOR);
         if (sel < 0) {
             filterDto.filterWorker.getFilmFilterList().add(sf);
         } else {
@@ -178,7 +178,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
                     return;
                 }
 
-                if (P2SeparatorComboBox.isSeparator(item)) {
+                if (P2CboSeparator.isSeparator(item)) {
                     setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR_WIDTH.getImageView());
                     setText(null);
                     setStyle("-fx-alignment: center;");

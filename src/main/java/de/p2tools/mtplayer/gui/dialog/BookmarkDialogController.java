@@ -31,7 +31,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;

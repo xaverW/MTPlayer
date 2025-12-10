@@ -23,7 +23,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.QuitDialogController;
 import de.p2tools.p2lib.dialogs.ProgInfoDialog;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
@@ -61,7 +61,7 @@ public class MTPTester {
             gridPane.setHgap(5);
             gridPane.setVgap(5);
             gridPane.setPadding(new Insets(10));
-            gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow());
+            gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow());
 
             final StackPane stackPane = new StackPane();
             stackPane.getChildren().addAll(gridPane);

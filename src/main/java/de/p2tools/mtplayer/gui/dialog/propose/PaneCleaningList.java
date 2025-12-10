@@ -23,8 +23,8 @@ import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningData;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -167,8 +167,8 @@ public class PaneCleaningList {
         gridPane.add(new Label("Immer:"), 0, ++row);
         gridPane.add(chkExact, 1, row);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
 
         vBox.getChildren().add(gridPane);
     }

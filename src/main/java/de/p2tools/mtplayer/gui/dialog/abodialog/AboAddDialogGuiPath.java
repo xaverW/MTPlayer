@@ -24,8 +24,8 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -75,9 +75,9 @@ public class AboAddDialogGuiPath extends VBox {
         grid.setMinWidth(Control.USE_PREF_SIZE);
         grid.setMaxWidth(Double.MAX_VALUE);
         grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSizeCenter());
+        grid.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSizeCenter());
         getChildren().add(grid);
 
         int row = 0;
@@ -104,11 +104,11 @@ public class AboAddDialogGuiPath extends VBox {
         grid.setMinWidth(Control.USE_PREF_SIZE);
         grid.setMaxWidth(Double.MAX_VALUE);
         grid.setPadding(new Insets(0, 10, 0, 10));
-        grid.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSizeCenter());
+        grid.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSizeCenter());
         getChildren().add(grid);
 
 
@@ -179,10 +179,10 @@ public class AboAddDialogGuiPath extends VBox {
         grid.setMinWidth(Control.USE_PREF_SIZE);
         grid.setMaxWidth(Double.MAX_VALUE);
         grid.setPadding(new Insets(0, 10, 10, 25));
-        grid.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSizeCenter());
+        grid.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSizeCenter());
         getChildren().add(grid);
 
         addAboDto.cboAboFileName.disableProperty().bind(addAboDto.rbOwnFileName.selectedProperty().not());
@@ -228,9 +228,9 @@ public class AboAddDialogGuiPath extends VBox {
         grid.setMinWidth(Control.USE_PREF_SIZE);
         grid.setMaxWidth(Double.MAX_VALUE);
         grid.setPadding(new Insets(0, 10, 10, 10));
-        grid.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        grid.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
         getChildren().add(grid);
 
         Text txtPath = DownloadAddDialogFactory.getTextBlack("Pfad:");

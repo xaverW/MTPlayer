@@ -21,8 +21,8 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.colordata.P2ColorData;
 import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
-import de.p2tools.p2lib.guitools.P2TableFactory;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.tools.P2ColorFactory;
 import javafx.geometry.HPos;
@@ -107,8 +107,8 @@ public class PaneColor {
         gridPane.add(button, 0, ++row, 2, 1);
         GridPane.setHalignment(button, HPos.RIGHT);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcComputedSizeAndHgrow(),
-                P2ColumnConstraints.getCcPrefSize());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
 
         TitledPane tpColor = new TitledPane("Farben", gridPane);
         result.add(tpColor);

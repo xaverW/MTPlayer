@@ -18,13 +18,13 @@ package de.p2tools.mtplayer.gui.dialog.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.data.propose.ProposeFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.propose.ProposeFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.tools.table.TableFilmFactory;
 import de.p2tools.mtplayer.gui.tools.table.TableRowFilm;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2ColumnConstraints;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.guitools.ptable.P2CellIntNull;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
@@ -158,8 +158,8 @@ public class PanePropFilmList {
         gridPane.add(new Label(), 0, ++row, 2, 1);
         gridPane.add(slDur, 0, ++row, 2, 1);
 
-        gridPane.getColumnConstraints().addAll(P2ColumnConstraints.getCcPrefSize(),
-                P2ColumnConstraints.getCcComputedSizeAndHgrow());
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow());
         vBox.getChildren().addAll(gridPane);
     }
 }
