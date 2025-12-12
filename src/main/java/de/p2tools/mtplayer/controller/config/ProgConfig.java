@@ -33,6 +33,7 @@ import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.P2ShutDown;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import javafx.beans.property.*;
+import javafx.scene.paint.Color;
 import org.apache.commons.lang3.SystemUtils;
 
 import java.time.LocalDate;
@@ -298,6 +299,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_FONT_SIZE_CHANGE = addBoolProp("system-font-size-change", Boolean.FALSE); // für die Schriftgröße
     public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE);
     public static BooleanProperty SYSTEM_BLACK_WHITE_ICON = addBoolProp("system-black-white-icon", Boolean.FALSE);
+    public static StringProperty SYSTEM_ICON_COLOR = addStrProp("system-icon-color", Color.BLUE.toString());
     public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");
     public static BooleanProperty SYSTEM_DARK_THEME_START = addBoolProp("system-dark-theme-start", Boolean.FALSE);
     public static BooleanProperty SYSTEM_BLACK_WHITE_ICON_START = addBoolProp("system-black-white-icon-start", Boolean.FALSE);

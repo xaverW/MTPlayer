@@ -96,6 +96,7 @@ public class ProgStartBeforeGui {
                 ProgConfig.SYSTEM_THEME_CHANGED,
                 ProgConfig.SYSTEM_DARK_THEME,
                 ProgConfig.SYSTEM_BLACK_WHITE_ICON,
+                ProgConfig.SYSTEM_ICON_COLOR,
 
                 new String[]{ProgConst.CSS_FILE},
                 new String[]{ProgConst.CSS_FILE_DARK_THEME},
