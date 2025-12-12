@@ -18,7 +18,10 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
-import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.config.PShortKeyFactory;
+import de.p2tools.mtplayer.controller.config.PShortcut;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
@@ -99,7 +102,7 @@ public class LiveFilmMenu {
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Live-Filmmenü anzeigen"));
-        mb.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
+        mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-0");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");

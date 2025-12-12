@@ -41,8 +41,9 @@ public class PIconFactory {
         TABLE_START("mdomz-play_arrow", 20),
 
         ATTENTION("mdomz-report", 80),
-
-        MENU("fltfal-line-horizontal-3-20", 25);
+        SEARCH("gmi-search", 20),
+        PROG_MENU("gmi-menu", 25),
+        TAB_MENU("gmi-menu", 20);
 
         private final String literal;
         private int size = 18;

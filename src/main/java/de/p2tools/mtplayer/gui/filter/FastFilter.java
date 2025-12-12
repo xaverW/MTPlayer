@@ -18,6 +18,7 @@
 package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -113,7 +114,7 @@ public class FastFilter extends HBox {
             vBox.managedProperty().bind(ProgConfig.FAST_FILM_SEARCH_ON);
         }
 
-        btnSearch.setGraphic(ProgIcons.ICON_TOOLBAR_BUTTON_SEARCH.getImageView());
+        btnSearch.setGraphic(PIconFactory.PICON.SEARCH.getFontIcon());
         btnSearch.getStyleClass().addAll("btnFunction", "btnFunc-1");
         btnSelectWhere.setGraphic(ProgIcons.ICON_BUTTON_UP_DOWN_H.getImageView());
         btnSelectWhere.getStyleClass().addAll("selectButton");

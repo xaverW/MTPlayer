@@ -20,6 +20,7 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
@@ -34,6 +35,7 @@ import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Region;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class MTPlayerMenu extends MenuButton {
     public MTPlayerMenu() {
@@ -78,9 +80,11 @@ public class MTPlayerMenu extends MenuButton {
 
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);
-        getStyleClass().addAll("btnFunction", "btnFunc-2");
+        getStyleClass().addAll("btnProgMenu");
         setText("");
-        setGraphic(ProgIcons.ICON_TOOLBAR_MENU_TOP.getImageView());
+        FontIcon node = PIconFactory.PICON.PROG_MENU.getFontIcon();
+        node.setScaleX(1.5);
+        setGraphic(node);
 
         getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode);
         addMenuButton();

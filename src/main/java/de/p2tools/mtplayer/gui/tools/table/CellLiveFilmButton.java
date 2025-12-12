@@ -56,11 +56,11 @@ public class CellLiveFilmButton<S, T> extends TableCell<S, T> {
                 final Button btnSave;
 
                 btnPlay = new Button("");
-                btnPlay.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                btnPlay.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
                 btnPlay.setGraphic(ProgIcons.IMAGE_TABLE_FILM_PLAY.getImageView());
 
                 btnSave = new Button("");
-                btnSave.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                btnSave.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
                 btnSave.setGraphic(ProgIcons.IMAGE_TABLE_FILM_SAVE.getImageView());
 
                 if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_LIVE.get()) {

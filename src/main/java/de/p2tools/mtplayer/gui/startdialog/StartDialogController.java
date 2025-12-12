@@ -145,7 +145,7 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void initTopButton(Button btn, State state) {
-        btn.getStyleClass().addAll("btnFunction", "btnFuncStartDialog");
+        btn.getStyleClass().addAll("btnProgMenu", "btnFuncStartDialog");
         btn.setAlignment(Pos.CENTER);
         btn.setMaxWidth(Double.MAX_VALUE);
         btn.setOnAction(a -> {
@@ -363,16 +363,16 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void setButtonStyle(Button btnSel) {
-        btnStart1.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnStart2.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnColorMode.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnUpdate.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnGeo.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnFilm.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnStation.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnDown.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnPath.getStyleClass().setAll("btnFunction", "btnFuncStartDialog");
-        btnSel.getStyleClass().setAll("btnFunction", "btnFuncStartDialogSel");
+        btnStart1.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnStart2.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnColorMode.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnUpdate.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnGeo.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnFilm.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnStation.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnDown.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnPath.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
+        btnSel.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialogSel");
     }
 
     private void initTooltip() {

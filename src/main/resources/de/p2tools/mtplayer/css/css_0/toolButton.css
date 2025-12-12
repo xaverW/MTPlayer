@@ -1,0 +1,107 @@
+
+/* Menü-Button */
+/* Func-Button */
+.btnProgMenu{
+    -fx-border-radius: 50;
+    -fx-border-width: 0;
+    -fx-background-radius: 50;
+    -fx-background-insets: 0,1,1;
+    -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;
+    /*-fx-text-fill: black;*/
+    -fx-alignment: center;
+    /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );*/
+    -fx-padding: 0 10 0 10;
+}
+.btnProgMenu > .arrow-button{
+    /*Pfeil ausblenden*/
+    -fx-padding: 0;
+}
+.btnProgMenu > .arrow-button > .arrow{
+    /*Pfeil ausblenden*/
+    -fx-padding: 0;
+}
+.btnProgMenu:pressed{
+    -fx-border-width: 0;
+    -fx-border-width: 0;
+}
+.btnProgMenu:focused{
+    -fx-background-color: #004b91, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.4,1,1;
+}
+.btnProgMenu:hover{
+    -fx-background-color: #005ab0, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.8,1,1;
+}
+.btnProgMenu:focused:hover{
+    -fx-background-color: #005ab0, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -1.2,1,1;
+}
+
+.btnFunc-0{
+    -fx-padding: 2;
+}
+.btnFunc-1{
+    -fx-padding: 3 10;
+}
+.btnFunc-2{
+    -fx-padding: 5 15;
+}
+.btnFunc-3{
+    -fx-padding: 5 20 5 20;
+    -fx-font-weight: bold;
+}
+.btnFunc-4{
+    -fx-padding: 5 25 5 25;
+    -fx-font-weight: bold;
+}
+.btnFunc-5{
+    -fx-padding: 3 5;
+}
+.btnFunction > .arrow-button{
+    /*Pfeil ausblenden*/
+    -fx-padding: 0;
+}
+.btnFunction > .arrow-button > .arrow{
+    /*Pfeil ausblenden*/
+    -fx-padding: 0;
+}
+.btnFunction:pressed{
+    -fx-border-width: 0;
+    -fx-padding: 5;
+}
+.btnFunc-0:pressed{
+    -fx-border-width: 0;
+    -fx-padding: 2;
+}
+.btnFunc-1:pressed{
+    -fx-border-width: 0;
+    -fx-padding: 3 10;
+}
+.btnFunc-2:pressed{
+    -fx-border-width: 0;
+    -fx-padding: 5 15;
+}
+.btnFunc-3:pressed{
+    -fx-border-width: 0;
+    -fx-padding: 5 20 5 20;
+}
+.btnFunc-4:pressed{
+    -fx-border-width: 0;
+    -fx-padding: 5 25 5 25;
+}
+.btnFunc-5:pressed{
+    -fx-border-width: 0;
+    -fx-padding: 3 5;
+}
+.btnFunction:focused{
+    -fx-background-color: #004b91, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.4,1,1;
+}
+.btnFunction:hover{
+    -fx-background-color: #005ab0, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.8,1,1;
+}
+.btnFunction:focused:hover{
+    -fx-background-color: #005ab0, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -1.2,1,1;
+}

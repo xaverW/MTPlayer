@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -96,7 +97,7 @@ public class AboMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Abomenü anzeigen"));
-        mb.setGraphic(ProgIcons.ICON_TOOLBAR_MENU.getImageView());
+        mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
         mb.getStyleClass().addAll("btnFunction", "btnFunc-0");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");
