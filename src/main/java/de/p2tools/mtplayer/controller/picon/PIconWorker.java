@@ -19,17 +19,27 @@ public class PIconWorker {
     }
 
     private void setColor() {
+        final String BLUE_LIGHT = "#376cb5";
+        final String BLUE_DARK = "#4b92f5";
+        final String DARK = Color.LIGHTGREY.toString();
+        final String LIGHT = "#444444";
         if (ProgConfig.SYSTEM_DARK_THEME.get()) {
             if (ProgConfig.SYSTEM_BLACK_WHITE_ICON.get()) {
-                ProgConfig.SYSTEM_ICON_COLOR.set(Color.LIGHTGREY.toString());
+                // dark - BW
+                ProgConfig.SYSTEM_ICON_COLOR.set(DARK);
+
             } else {
-                ProgConfig.SYSTEM_ICON_COLOR.set(Color.BLUE.toString());
+                // dark - blue
+                ProgConfig.SYSTEM_ICON_COLOR.set(BLUE_DARK);
             }
         } else {
             if (ProgConfig.SYSTEM_BLACK_WHITE_ICON.get()) {
-                ProgConfig.SYSTEM_ICON_COLOR.set(Color.BLACK.toString());
+                // light - BW
+                ProgConfig.SYSTEM_ICON_COLOR.set(LIGHT);
+
             } else {
-                ProgConfig.SYSTEM_ICON_COLOR.set(Color.BLUE.toString());
+                // light - blue
+                ProgConfig.SYSTEM_ICON_COLOR.set(BLUE_LIGHT);
             }
         }
         PIconFactory.setColor();

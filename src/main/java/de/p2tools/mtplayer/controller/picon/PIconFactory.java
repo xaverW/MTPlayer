@@ -30,11 +30,11 @@ public class PIconFactory {
         TOOL_BTN_PLAY_ALL("gmi-fast-forward", 25),
         TOOL_BTN_RECORDE("gmi-fiber-manual-record", 25),
 
-        TOOL_BTN_ADD_BOOKMARK("mdi2s-sticker-plus-outline", 25),
-        TOOL_BTN_DEL_BOOKMARK("mdi2s-sticker-minus-outline", 25),
-        TOOL_BTN_DEL_ALL_BOOKMARK("mdi2s-sticker-alert-outline", 25),
-        TOOL_BTN_SHOW_BOOKMARK("mdi2s-sticker-text-outline", 25),
-        TOOL_BTN_SHOW_BOOKMARK_DIALOG("gmi-format-indent-increase", 25),
+        TOOL_BTN_ADD_BOOKMARK("mdi-bookmark-plus-outline", 25),
+        TOOL_BTN_DEL_BOOKMARK("mdi2b-bookmark-minus-outline", 25),
+        TOOL_BTN_DEL_ALL_BOOKMARK("mdi2b-bookmark-off-outline", 25),
+        TOOL_BTN_SHOW_BOOKMARK("mdi2b-bookmark-outline", 25),
+        TOOL_BTN_SHOW_BOOKMARK_DIALOG("mdi2c-comment-bookmark-outline", 25),
 
         TABLE_FILE_DEL("gmi-clear", 15),
         TABLE_DIR_OPEN("mdi2f-folder-open-outline", 16),

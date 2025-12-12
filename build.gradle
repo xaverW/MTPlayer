@@ -118,6 +118,14 @@ tasks.register('fatJar', Jar) {
     archiveFileName = jarName
     with jar
 }
+tasks.shadowJar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE // Or WARN.
+    mergeServiceFiles()
+
+    destinationDirectory.set(file(fatJarDir))
+    archiveFileName = jarName
+}
+
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
