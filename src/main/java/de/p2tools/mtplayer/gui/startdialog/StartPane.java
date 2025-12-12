@@ -64,10 +64,9 @@ public class StartPane {
                 "und speichern." +
 
                 P2LibConst.LINE_SEPARATORx2 +
-                "6) Hier lassen sich einzelne Filme" + P2LibConst.LINE_SEPARATOR +
-                "vormerken, die Vormerkungen" + P2LibConst.LINE_SEPARATOR +
-                "wieder löschen, nur diese Anzeigen" + P2LibConst.LINE_SEPARATOR +
-                "und zuletzt öffnet sich ein Dialog" + P2LibConst.LINE_SEPARATOR +
+                "6) Hier lassen sich einzelne Filme vormerken," + P2LibConst.LINE_SEPARATOR +
+                "die Vormerkungen wieder löschen, nur diese" + P2LibConst.LINE_SEPARATOR +
+                "Anzeigen und zuletzt öffnet sich ein Dialog" + P2LibConst.LINE_SEPARATOR +
                 "mit den markierten Filmen.");
 
         hBox.getChildren().add(text);

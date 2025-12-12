@@ -81,9 +81,9 @@ public class StartPaneColorMode {
         vBox.getChildren().add(vTgl);
 
         final GridPane gridPaneGui = new GridPane();
-        gridPaneGui.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPaneGui.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPaneGui.setPadding(new Insets(P2LibConst.PADDING));
+        gridPaneGui.setHgap(3);
+        gridPaneGui.setVgap(3);
+//        gridPaneGui.setPadding(new Insets(P2LibConst.PADDING));
 
         gridPaneGui.add(hBoxImage0, 0, 0);
         gridPaneGui.add(hBoxImage1, 1, 0);
@@ -145,7 +145,7 @@ public class StartPaneColorMode {
     }
 
     private void makeImage() {
-        final int size = 350;
+        final int size = 300;
         ImageView iv0 = new ImageView();
         hBoxImage0.getChildren().add(iv0);
         String path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 0 + ".png";

@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -82,7 +83,8 @@ public class StartDialogController extends P2DialogExtra {
     private StartPanePath startPanePath;
 
     public StartDialogController() {
-        super(null, null, "Starteinstellungen");
+        super(null, null, "Starteinstellungen",
+                true, false, false, DECO.BORDER_VERY_SMALL);
 
         ProgData progData = ProgData.getInstance();
         init(true);
@@ -156,6 +158,7 @@ public class StartDialogController extends P2DialogExtra {
         StackPane stackpane = new StackPane();
         VBox.setVgrow(stackpane, Priority.ALWAYS);
         getVBoxCont().getChildren().add(stackpane);
+        getVBoxCont().setPadding(new Insets(5));
 
         //startPane 1
         startPane1 = new StartPane();
