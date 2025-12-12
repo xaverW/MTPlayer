@@ -20,10 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
@@ -109,7 +109,7 @@ public class StartPanePath {
                 addPlayer(PLAYER.FFMPEG);
         }
 
-        final Button btnHelp = P2Button.helpButton(stage,
+        final Button btnHelp = PIconFactory.getHelpButton(stage,
                 "Videoplayer", HelpText.PROG_PATHS);
         gridPane.add(btnHelp, 2, ++row);
         GridPane.setHalignment(btnHelp, HPos.RIGHT);

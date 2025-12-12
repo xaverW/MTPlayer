@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.gui.mediadialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -150,7 +150,7 @@ public class MediaDialogController extends P2DialogExtra {
             VBox.setVgrow(tabPane, Priority.ALWAYS);
             getVBoxCont().getChildren().add(tabPane);
 
-            Button btnHelp = P2Button.helpButton(getStage(),
+            Button btnHelp = PIconFactory.getHelpButton(getStage(),
                     "Suche in der Mediensammlung", HelpText.SEARCH_MEDIA_DIALOG);
             addOkButton(btnOk);
             addHlpButton(btnHelp);

@@ -20,10 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.tools.log.P2Logger;
@@ -150,7 +150,7 @@ public class DownloadErrorDialogController extends P2DialogExtra {
         VBox.setVgrow(hBox, Priority.ALWAYS);
 
         addOkButton(btnOk);
-        Button btnHelp = P2Button.helpButton(getStage(), "Download Fehler", HelpText.CONFIG_DOWNOAD_ERROR);
+        Button btnHelp = PIconFactory.getHelpButton(getStage(), "Download Fehler", HelpText.CONFIG_DOWNOAD_ERROR);
         addHlpButton(btnHelp);
 
         getHboxLeft().getChildren().addAll(btnErrorStream, btnLogFile, P2GuiTools.getHBoxGrower());

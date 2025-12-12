@@ -19,11 +19,11 @@ package de.p2tools.mtplayer.gui.filter.film;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.filter.helper.PCboTextFilter;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -76,7 +76,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         hBox1.getChildren().addAll(btnEditFilter, P2GuiTools.getHBoxGrower(), btnGoBack, btnGoForward,
                 P2GuiTools.getHBoxGrower(), btnClearFilter);
 
-        final Button btnHelp = P2Button.helpButton("Filter", HelpText.FILTER_INFO);
+        final Button btnHelp = PIconFactory.getHelpButton("Filter", HelpText.FILTER_INFO);
         HBox hBox2 = new HBox(P2LibConst.DIST_BUTTON);
         hBox2.getChildren().addAll(cboTextFilter, btnHelp);
         HBox.setHgrow(cboTextFilter, Priority.ALWAYS);

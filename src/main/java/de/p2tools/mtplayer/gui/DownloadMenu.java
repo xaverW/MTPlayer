@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.beans.binding.Bindings;
@@ -71,7 +72,7 @@ public class DownloadMenu {
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
-                "Film Starten", "Gespeicherten Film abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
+                "Film Starten", "Gespeicherten Film abspielen", PIconFactory.PICON.TOOL_BTN_PLAY.getFontIcon());
 
         btnRefresh.setOnAction(a -> {
             AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();

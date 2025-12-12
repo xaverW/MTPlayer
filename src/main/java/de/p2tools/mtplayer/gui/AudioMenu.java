@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.film.AudioFilterSamples;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
@@ -65,11 +66,11 @@ public class AudioMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markiertes Audio abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
+                "Abspielen", "Markiertes Audio abspielen", PIconFactory.PICON.TOOL_BTN_PLAY.getFontIcon());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
-                "Alle Abspielen", "Alle markierten Audios abspielen", ProgIcons.ICON_TOOLBAR_START_ALL.getImageView());
+                "Alle Abspielen", "Alle markierten Audios abspielen", PIconFactory.PICON.TOOL_BTN_PLAY_ALL.getFontIcon());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markiertes Audio speichern", ProgIcons.ICON_TOOLBAR_REC.getImageView());
+                "Speichern", "Markiertes Audio speichern", PIconFactory.PICON.TOOL_BTN_RECORDE.getFontIcon());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
@@ -96,15 +97,20 @@ public class AudioMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
-                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen", ProgIcons.ICON_TOOLBAR_BOOKMARK.getImageView());
+                "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen",
+                PIconFactory.PICON.TOOL_BTN_ADD_BOOKMARK.getFontIcon());
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
-                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen", ProgIcons.ICON_TOOLBAR_DEL_BOOKMARK.getImageView());
+                "Bookmarks löschen", "Bookmarks für die markierten Filme löschen",
+                PIconFactory.PICON.TOOL_BTN_DEL_BOOKMARK.getFontIcon());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
-                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen", ProgIcons.ICON_TOOLBAR_DEL_ALL_BOOKMARK.getImageView());
+                "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen",
+                PIconFactory.PICON.TOOL_BTN_DEL_ALL_BOOKMARK.getFontIcon());
         final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
-                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_FILTER.getImageView());
+                "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT,
+                PIconFactory.PICON.TOOL_BTN_SHOW_BOOKMARK.getFontIcon());
         final ToolBarButton btShowBookmark = new ToolBarButton(vBox,
-                "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT, ProgIcons.ICON_TOOLBAR_BOOKMARK_DIALOG.getImageView());
+                "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT,
+                PIconFactory.PICON.TOOL_BTN_SHOW_BOOKMARK_DIALOG.getFontIcon());
 
         btBookmark.setOnAction(a -> {
             BookmarkFactory.addBookmarkList(true, progData.audioGuiController.getSelList(true));

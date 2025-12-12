@@ -23,11 +23,11 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.utdata.UtData;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -122,11 +122,11 @@ public class PaneFilmUt {
         final Button btnHelpMark;
         if (ut) {
             tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_MARK_UT);
-            btnHelpMark = P2Button.helpButton(stage, "Filme mit Untertitel markieren",
+            btnHelpMark = PIconFactory.getHelpButton(stage, "Filme mit Untertitel markieren",
                     HelpText.LOAD_FILMLIST_MARK_UT);
         } else {
             tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_MARK);
-            btnHelpMark = P2Button.helpButton(stage, "Filme markieren",
+            btnHelpMark = PIconFactory.getHelpButton(stage, "Filme markieren",
                     HelpText.LOAD_FILMLIST_MARK);
         }
 

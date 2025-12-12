@@ -1,7 +1,7 @@
 plugins {
     id 'application'
     id "org.openjfx.javafxplugin" version "0.1.0"
-    id "org.beryx.runtime" version "1.13.1"
+    id 'com.gradleup.shadow' version '9.3.0'
 }
 javafx {
     version = "21.0.5"
@@ -24,10 +24,10 @@ def theMainClass = 'de/p2tools/mtplayer/Main'
 def jre_linux = '../../ADMIN/JDK/jre_linux/'
 def jre_windows = '../../ADMIN/JDK/jre_windows/'
 
-def res_all     = './res/res_all'
-def res_linux     = './res/res_linux'
-def res_windows     = './res/res_windows'
-def res_mac     = './res/res_mac'
+def res_all = './res/res_all'
+def res_linux = './res/res_linux'
+def res_windows = './res/res_windows'
+def res_mac = './res/res_mac'
 
 def fatJarDir = layout.buildDirectory.get().toString() + "/fatJar" + "/"
 def releaseDir = './release/'
@@ -64,7 +64,18 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.18.3'
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
     //<><><><><><><><><><><><><><><><><><><><>
+    implementation ':ikonli-core-12.4.0'
+    implementation ':ikonli-javafx-12.4.0'
+    implementation ':ikonli-fluentui-pack-12.4.0'
+
+    implementation 'org.kordamp.ikonli:ikonli-material-pack:12.4.0'
+    implementation 'org.kordamp.ikonli:ikonli-material2-pack:12.4.0'
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign-pack:12.4.0'
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign2-pack:12.4.0'
+    //<><><><><><><><><><><><><><><><><><><><>
+
 
     implementation ':p2lib'
     implementation ':controlsfx-11.2.2'
@@ -106,11 +117,6 @@ tasks.register('fatJar', Jar) {
     destinationDirectory.set(file(fatJarDir))
     archiveFileName = jarName
     with jar
-}
-
-runtime {
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
-    modules = ['java.naming', 'java.xml']
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -180,13 +186,13 @@ clean.dependsOn cleanDist, updateDate
 // build dist dir and zipFile
 // ============================================
 tasks.register("copyAll") {
-    dependsOn fatJar
+    dependsOn shadowJar
     doFirst {
         copy {
             from(res_all)
             from(res_linux)
             from(res_windows)
-            
+
             from file(fatJarDir + jarName)
             into file(buildDir_All)
         }
@@ -222,7 +228,7 @@ tasks.register("copyLinux") {
         copy {
             from(res_all)
             from(res_linux)
-            
+
             from file(fatJarDir + jarName)
             into file(buildDir_Linux)
         }
@@ -255,7 +261,7 @@ tasks.register("copyWindows") {
         copy {
             from(res_all)
             from(res_windows)
-            
+
             from file(fatJarDir + jarName)
             into file(buildDir_Win)
         }
@@ -287,7 +293,6 @@ tasks.register('buildZip_src', Zip) {
     archiveFileName = programName + '-' + versionNo + '-' + buildNo + '__SRC__' + new Date().format('yyyy.MM.dd') + '.zip'
     destinationDirectory = file(releaseDir)
 }
-
 
 
 // ============================================

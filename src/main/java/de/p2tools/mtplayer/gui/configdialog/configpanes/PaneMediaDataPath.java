@@ -22,11 +22,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.table.P2RowFactory;
@@ -159,7 +159,7 @@ public class PaneMediaDataPath {
     private void makeButton(VBox vBox) {
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
 
-        final Button btnHelp = P2Button.helpButton(stage,
+        final Button btnHelp = PIconFactory.getHelpButton(stage,
                 external ? "Externe Mediensammlungen verwalten" : "Interne Mediensammlungen verwalten",
                 external ? HelpText.EXTERN_MEDIA_COLLECTION : HelpText.INTERN_MEDIA_COLLECTION);
 

@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
@@ -68,14 +68,14 @@ public class PaneAbo {
         vBoxAll.getChildren().add(gridPane);
 
         tglSearchAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_SEARCH_NOW);
-        final Button btnHelpAbo = P2Button.helpButton(stage, "Downloads aus Abos automatisch suchen",
+        final Button btnHelpAbo = PIconFactory.getHelpButton(stage, "Downloads aus Abos automatisch suchen",
                 HelpText.SEARCH_ABOS_IMMEDIATELY);
 
         tglStartDownload.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_START_NOW);
-        final Button btnHelpDownload = P2Button.helpButton(stage, "Nach dem Suchen Downloads sofort starten",
+        final Button btnHelpDownload = PIconFactory.getHelpButton(stage, "Nach dem Suchen Downloads sofort starten",
                 HelpText.START_DOWNLOADS_FROM_ABOS_IMMEDIATELY);
 
-        final Button btnHelpStop = P2Button.helpButton(stage, "Abos löschen",
+        final Button btnHelpStop = PIconFactory.getHelpButton(stage, "Abos löschen",
                 HelpText.ABO_DELETE_CONFIG);
         GridPane.setValignment(btnHelpStop, VPos.TOP);
 

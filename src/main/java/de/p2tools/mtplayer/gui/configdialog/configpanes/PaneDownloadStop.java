@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -67,10 +67,10 @@ public class PaneDownloadStop {
         TitledPane tpConfig = new TitledPane("Download stoppen", gridPane);
         result.add(tpConfig);
 
-        final Button btnHelpStop = P2Button.helpButton(stage, "Download",
+        final Button btnHelpStop = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_STOP);
 
-        final Button btnHelpContinue = P2Button.helpButton(stage, "Download",
+        final Button btnHelpContinue = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_CONTINUE);
 
         GridPane.setHalignment(btnHelpStop, HPos.RIGHT);

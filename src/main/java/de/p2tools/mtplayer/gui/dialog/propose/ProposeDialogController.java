@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui.dialog.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -52,7 +52,7 @@ public class ProposeDialogController extends P2DialogExtra {
         getHBoxTitle().getChildren().add(lblHeader);
 
         final Button btnOk = new Button("_Ok");
-        final Button btnHelp = P2Button.helpButton(getStage(), "Medien", "");
+        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Medien", "");
         btnOk.setOnAction(a -> quit());
         addOkButton(btnOk);
         addHlpButton(btnHelp);

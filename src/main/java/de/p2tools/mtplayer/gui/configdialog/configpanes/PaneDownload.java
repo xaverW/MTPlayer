@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
@@ -68,32 +68,32 @@ public class PaneDownload {
         result.add(tpConfig);
 
         tglFinished.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_SHOW_NOTIFICATION);
-        final Button btnHelpFinished = P2Button.helpButton(stage, "Download",
+        final Button btnHelpFinished = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_FINISHED);
 
         tglError.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW);
-        final Button btnHelpError = P2Button.helpButton(stage, "Download",
+        final Button btnHelpError = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_ERROR);
 
         tglHistory.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_ONLY_HISTORY);
-        final Button btnHelpHistory = P2Button.helpButton(stage, "Download",
+        final Button btnHelpHistory = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_ONLY_HISTORY);
 
-        final Button btnHelpStop = P2Button.helpButton(stage, "Download",
+        final Button btnHelpStop = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_STOP);
 
-        final Button btnHelpContinue = P2Button.helpButton(stage, "Download",
+        final Button btnHelpContinue = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_CONTINUE);
 
         tglSSL.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SSL_ALWAYS_TRUE);
-        final Button btnHelpSSL = P2Button.helpButton(stage, "Download",
+        final Button btnHelpSSL = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_SSL_ALWAYS_TRUE);
 
         tglBeep.selectedProperty().bindBidirectional(ProgConfig.DOWNLOAD_BEEP);
         final Button btnBeep = new Button("_Test");
         btnBeep.setOnAction(a -> Toolkit.getDefaultToolkit().beep());
 
-        final Button btnBandwidth = P2Button.helpButton(stage, "Download",
+        final Button btnBandwidth = PIconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_BANDWIDTH);
 
 

@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaSearchFactory;
 import de.p2tools.mtplayer.gui.mediacleaningdialog.MediaCleaningDialogController;
@@ -33,7 +34,6 @@ import de.p2tools.mtplayer.gui.mediadialog.PaneMediaContextMenu;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
@@ -115,7 +115,7 @@ public class PaneMedia extends VBox {
     }
 
     private void init() {
-        final Button btnHelpMedia = P2Button.helpButton("Mediensammlung", HelpText.DOWNLOAD_GUI_MEDIA);
+        final Button btnHelpMedia = PIconFactory.getHelpButton("Mediensammlung", HelpText.DOWNLOAD_GUI_MEDIA);
         HBox hBoxTop = new HBox(P2LibConst.PADDING);
         hBoxTop.setPadding(new Insets(0));
         hBoxTop.setAlignment(Pos.CENTER);

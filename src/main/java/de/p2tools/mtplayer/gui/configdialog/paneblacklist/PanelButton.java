@@ -24,11 +24,11 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistCountFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -81,7 +81,7 @@ public class PanelButton {
             tableView.scrollTo(blackData);
         });
 
-        final Button btnHelpCount = P2Button.helpButton(stage, "Treffer zählen",
+        final Button btnHelpCount = PIconFactory.getHelpButton(stage, "Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
         Button btnCountHits = new Button("_Treffer zählen");

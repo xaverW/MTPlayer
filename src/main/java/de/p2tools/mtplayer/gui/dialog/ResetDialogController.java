@@ -20,12 +20,12 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2BigButton;
-import de.p2tools.p2lib.guitools.P2Button;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -66,7 +66,7 @@ public class ResetDialogController extends P2DialogExtra {
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
-        final Button btnHelp = P2Button.helpButton(this.getStage(), "Programm zurücksetzen",
+        final Button btnHelp = PIconFactory.getHelpButton(this.getStage(), "Programm zurücksetzen",
                 HelpText.RESET_DIALOG);
 
         P2BigButton setButton = new P2BigButton(ProgIcons.ICON_BUTTON_QUIT.getImageView(),

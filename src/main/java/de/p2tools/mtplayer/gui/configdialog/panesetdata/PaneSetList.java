@@ -21,10 +21,10 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Pos;
@@ -217,7 +217,7 @@ public class PaneSetList extends VBox {
         btnCheck.setOnAction(event -> SetFactory.checkPrograms(stage, progData, true));
         btnCheck.setMaxWidth(Double.MAX_VALUE);
 
-        final Button btnHelp = P2Button.helpButton(stage, "Set", HelpTextPset.HELP_PSET);
+        final Button btnHelp = PIconFactory.getHelpButton(stage, "Set", HelpTextPset.HELP_PSET);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
         hBoxButton.getChildren().addAll(btnNew, btnDel, P2GuiTools.getHBoxGrower(), btnUp, btnDown);

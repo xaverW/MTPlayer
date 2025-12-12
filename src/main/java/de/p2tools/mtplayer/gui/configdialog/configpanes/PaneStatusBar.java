@@ -17,8 +17,8 @@
 package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
@@ -69,7 +69,7 @@ public class PaneStatusBar {
         tglDotOn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_STATUS_BAR_FIELD_DOT);
         tglRightOn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_STATUS_BAR_FIELD_RIGHT);
 
-        final Button btnHelp = P2Button.helpButton(stage, "Statusleiste anpassen",
+        final Button btnHelp = PIconFactory.getHelpButton(stage, "Statusleiste anpassen",
                 "Hier kann die Statusleiste ein-/ausgeschaltet werden. Die angezeigten " +
                         "Infos können ein-/ausgeschaltet werden." +
                         "\n\n" +

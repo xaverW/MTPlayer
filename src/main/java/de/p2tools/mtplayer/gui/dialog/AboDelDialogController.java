@@ -20,10 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -101,7 +101,7 @@ public class AboDelDialogController extends P2DialogExtra {
             state = STATE.STATE_CANCEL;
             quit();
         });
-        Button btnHelp = P2Button.helpButton(getStage(),
+        Button btnHelp = PIconFactory.getHelpButton(getStage(),
                 "Abo löschen", HelpText.ABO_DELETE_DIALOG);
         addHlpButton(btnHelp);
         addOkCancelButtons(btnDelDl, btnCancel);

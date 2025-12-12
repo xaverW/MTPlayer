@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui.startdialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -77,9 +77,9 @@ public class StartPaneFilm {
         hBox.getChildren().add(lbl);
         vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
 
-        final Button btnHelpDouble = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
+        final Button btnHelpDouble = PIconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_ONLY_MARK_DOUBLE);
-        final Button btnHelpDays = P2Button.helpButton(stage, "Filmliste beim Laden filtern",
+        final Button btnHelpDays = PIconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_ONLY_FILMS_STARTDIALOG);
 
         final GridPane gridPane = new GridPane();

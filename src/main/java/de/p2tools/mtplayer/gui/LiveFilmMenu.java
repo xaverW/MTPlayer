@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
@@ -60,11 +61,13 @@ public class LiveFilmMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markierten Film abspielen", ProgIcons.ICON_TOOLBAR_START.getImageView());
+                "Abspielen", "Markierten Film abspielen",
+                PIconFactory.PICON.TOOL_BTN_PLAY.getFontIcon());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
-                "Alle Abspielen", "Alle markierten Filme abspielen", ProgIcons.ICON_TOOLBAR_START_ALL.getImageView());
+                "Alle Abspielen", "Alle markierten Filme abspielen",
+                PIconFactory.PICON.TOOL_BTN_PLAY_ALL.getFontIcon());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", ProgIcons.ICON_TOOLBAR_REC.getImageView());
+                "Speichern", "Markierte Filme speichern", PIconFactory.PICON.TOOL_BTN_RECORDE.getFontIcon());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);

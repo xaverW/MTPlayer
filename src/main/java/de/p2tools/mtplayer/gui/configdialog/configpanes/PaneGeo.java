@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
@@ -55,7 +55,7 @@ public class PaneGeo {
 
     public TitledPane make(Collection<TitledPane> result) {
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
-        final Button btnHelpGeo = P2Button.helpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
+        final Button btnHelpGeo = PIconFactory.getHelpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbDe, rbFr, rbCh, rbAt, rbEu, rbSonst);

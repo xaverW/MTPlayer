@@ -26,11 +26,11 @@ import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.filter.FilterFactory;
 import de.p2tools.mtplayer.controller.filter.film.AudioFilterSamples;
 import de.p2tools.mtplayer.controller.filter.film.FilmFilterSamples;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -190,7 +190,7 @@ public class FilmFilterControllerProfiles extends VBox {
         vBox.getChildren().addAll(new Label("Filterprofile:"), cboFilterProfiles);
         getChildren().add(vBox);
 
-        final Button btnHelp = P2Button.helpButton("Filter", HelpText.FILTER_INFO_PROFILE);
+        final Button btnHelp = PIconFactory.getHelpButton("Filter", HelpText.FILTER_INFO_PROFILE);
         hBox = new HBox(10);
         hBox.getChildren().addAll(mbFilterTools, P2GuiTools.getHBoxGrower(), btnHelp);
         getChildren().add(hBox);

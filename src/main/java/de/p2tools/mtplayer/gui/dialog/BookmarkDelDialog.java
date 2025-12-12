@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -148,7 +148,7 @@ public class BookmarkDelDialog extends P2DialogExtra {
         btnCancel.setOnAction(a -> {
             quit(false);
         });
-        Button btnHelp = P2Button.helpButton(getStage(), "Bookmarks löschen",
+        Button btnHelp = PIconFactory.getHelpButton(getStage(), "Bookmarks löschen",
                 "Hier kann vorgegeben werden, welche Bookmarks gelöscht werden sollen." +
                         "\n\n" +
                         "* Alle löschen:\n" +

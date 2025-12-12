@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
@@ -81,7 +81,7 @@ public class PaneSetDownload {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpPrefix = P2Button.helpButton(stage, "Direkt speichern",
+        final Button btnHelpPrefix = PIconFactory.getHelpButton(stage, "Direkt speichern",
                 HelpText.SETDATA_PREFIX);
         final Label lbl = new Label("Direkt Speichern (Download durch dieses Programm):");
 
@@ -116,7 +116,7 @@ public class PaneSetDownload {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelpRes = P2Button.helpButton(stage, "Auflösung",
+        final Button btnHelpRes = PIconFactory.getHelpButton(stage, "Auflösung",
                 HelpText.SETDATA_RES);
 
         int row = 0;

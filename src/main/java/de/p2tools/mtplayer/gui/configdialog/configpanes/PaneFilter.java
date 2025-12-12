@@ -22,10 +22,10 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.offer.OfferData;
 import de.p2tools.mtplayer.controller.data.offer.PCellCheckBoxOfferData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -89,9 +89,9 @@ public class PaneFilter {
     }
 
     private void make(VBox vBox) {
-        final Button btnHelp = P2Button.helpButton(stage, "Filtervorschläge",
+        final Button btnHelp = PIconFactory.getHelpButton(stage, "Filtervorschläge",
                 HelpText.FILTER_OFFER_TABLE);
-        final Button btnHelpRegEx = P2Button.helpButton(stage, "Suche mit RegEx",
+        final Button btnHelpRegEx = PIconFactory.getHelpButton(stage, "Suche mit RegEx",
                 HelpText.FILTER_REG_EX_ONLY_CONTAIN);
         tglOffer.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_OFFERTABLE);
         tglRegEx.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);

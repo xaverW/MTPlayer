@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2TimePicker;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
@@ -80,7 +80,7 @@ public class DownloadStartAtTimeController extends P2DialogExtra {
     @Override
     public void make() {
         addOkCancelButtons(btnOk, btnCancel);
-        Button btnHelp = P2Button.helpButton(getStage(), "Downloads starten",
+        Button btnHelp = PIconFactory.getHelpButton(getStage(), "Downloads starten",
                 HelpText.DOWNLOAD_ADD_AT_TIME);
         addHlpButton(btnHelp);
 

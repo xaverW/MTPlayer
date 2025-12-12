@@ -21,11 +21,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -71,7 +71,7 @@ public class PaneFilmDouble {
     public TitledPane make(Collection<TitledPane> result) {
         tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE);
         tglTT.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE);
-        final Button btnHelpMark = P2Button.helpButton(stage, "Doppelte Filme markieren",
+        final Button btnHelpMark = PIconFactory.getHelpButton(stage, "Doppelte Filme markieren",
                 HelpText.LOAD_FILMLIST_MARK_DOUBLE);
 
 

@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.gui.filter.live;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -50,7 +50,7 @@ public class LiveFilmFilterController extends FilterController {
         tabPane.getTabs().addAll(liveFilterTabArd, liveFilterTabZdf);
         vBoxFilter.getChildren().add(tabPane);
 
-        final Button btnHelp = P2Button.helpButton(progData.primaryStage, "Live-Suche",
+        final Button btnHelp = PIconFactory.getHelpButton(progData.primaryStage, "Live-Suche",
                 HelpText.LIVE_SEARCH);
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);

@@ -18,11 +18,11 @@ package de.p2tools.mtplayer.gui.mediacleaningdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.dialog.propose.PaneCleaningList;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -57,7 +57,7 @@ public class MediaCleaningDialogController extends P2DialogExtra {
     @Override
     public void make() {
         VBox.setVgrow(tabPane, Priority.ALWAYS);
-        final Button btnHelp = P2Button.helpButton(getStage(), "Medien", HelpText.MEDIA_CLEANING_CONFIG_DIALOG);
+        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Medien", HelpText.MEDIA_CLEANING_CONFIG_DIALOG);
         btnOk.setOnAction(a -> close());
 
         addOkButton(btnOk);

@@ -20,10 +20,10 @@ package de.p2tools.mtplayer.gui.configdialog.panesetdata;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
@@ -97,19 +97,19 @@ public class PaneSetFunction {
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(hBox, 1, row);
-        gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
+        gridPane.add(PIconFactory.getHelpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_PLAY), 2, row);
 
         gridPane.add(tglSave, 1, ++row);
-        gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
+        gridPane.add(PIconFactory.getHelpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_SAVE), 2, row);
 
         gridPane.add(tglAbo, 1, ++row);
-        gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
+        gridPane.add(PIconFactory.getHelpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_ABO), 2, row);
 
         gridPane.add(tglButton, 1, ++row);
-        gridPane.add(P2Button.helpButton(stage, "Funktion des Sets",
+        gridPane.add(PIconFactory.getHelpButton(stage, "Funktion des Sets",
                 HelpTextPset.HELP_PSET_BUTTON), 2, row);
 
         colorPicker.setOnAction(a -> {
@@ -122,7 +122,7 @@ public class PaneSetFunction {
             setDataObjectProperty.getValue().setColor(SetData.RESET_COLOR);
             progData.pEventHandler.notifyListener(PEvents.EVENT_SET_DATA_BUTTON_CHANGED);
         });
-        final Button btnHelpColor = P2Button.helpButton(stage, "Schriftfarbe auswählen",
+        final Button btnHelpColor = PIconFactory.getHelpButton(stage, "Schriftfarbe auswählen",
                 HelpText.SETDATA_RESET_COLOR);
 
         lblColor.disableProperty().bind(tglButton.selectedProperty().not());

@@ -24,13 +24,13 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.table.Table;
 import de.p2tools.mtplayer.gui.tools.table.TableBlacklist;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
@@ -194,7 +194,7 @@ public class PaneBlackList {
     }
 
     private void makeConfigBlackList(VBox vBox) {
-        final Button btnHelp = P2Button.helpButton(stage, "Blacklist / Whitelist",
+        final Button btnHelp = PIconFactory.getHelpButton(stage, "Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST);
 
         final ToggleGroup toggleGroupFilm = new ToggleGroup();

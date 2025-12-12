@@ -20,9 +20,9 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
@@ -77,16 +77,16 @@ public class PaneFilmLoad {
                 tglLoadNewList.setSelected(false);
             }
         });
-        final Button btnHelpLive = P2Button.helpButton(stage, "Live-Suche im Programm verwenden",
+        final Button btnHelpLive = PIconFactory.getHelpButton(stage, "Live-Suche im Programm verwenden",
                 HelpText.USE_LIVE);
 
-        final Button btnHelpUse = P2Button.helpButton(stage, "Audioliste im Programm verwenden",
+        final Button btnHelpUse = PIconFactory.getHelpButton(stage, "Audioliste im Programm verwenden",
                 HelpText.USE_AUDIOLIST);
 
-        final Button btnHelpLoadFilm = P2Button.helpButton(stage, "Filmliste/Audioliste laden",
+        final Button btnHelpLoadFilm = PIconFactory.getHelpButton(stage, "Filmliste/Audioliste laden",
                 HelpText.LOAD_FILMLIST_PROGRAMSTART);
 
-        final Button btnHelpNewList = P2Button.helpButton(stage, "Filmliste laden",
+        final Button btnHelpNewList = PIconFactory.getHelpButton(stage, "Filmliste laden",
                 HelpText.LOAD_FILMLIST_IMMEDIATELY);
 
         //Diacritic
@@ -94,7 +94,7 @@ public class PaneFilmLoad {
         tglRemoveDiacritic.setMaxWidth(Double.MAX_VALUE);
         tglRemoveDiacritic.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_REMOVE_DIACRITICS);
         tglRemoveDiacritic.selectedProperty().addListener((u, o, n) -> diacriticChanged.setValue(true));
-        final Button btnHelpDia = P2Button.helpButton(stage, "Diakritische Zeichen",
+        final Button btnHelpDia = PIconFactory.getHelpButton(stage, "Diakritische Zeichen",
                 HelpText.DIAKRITISCHE_ZEICHEN);
 
 

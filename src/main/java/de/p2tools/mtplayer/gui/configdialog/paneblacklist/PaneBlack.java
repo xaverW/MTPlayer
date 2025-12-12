@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.BooleanProperty;
@@ -87,30 +87,30 @@ public class PaneBlack {
 
         tglAbo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_ABO);
         tglAbo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        final Button btnHelp = P2Button.helpButton(stage, "Blacklist",
+        final Button btnHelp = PIconFactory.getHelpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_ABO);
 
         tglFuture.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_FUTURE);
         tglFuture.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        final Button btnHelpFuture = P2Button.helpButton(stage, "Blacklist",
+        final Button btnHelpFuture = PIconFactory.getHelpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_FUTURE);
 
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_GEO);
         tglGeo.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        final Button btnHelpGeo = P2Button.helpButton(stage, "Blacklist",
+        final Button btnHelpGeo = PIconFactory.getHelpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_GEO);
 
         tglDouble.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACKLIST_SHOW_NO_DOUBLE);
         tglDouble.selectedProperty().addListener((observable, oldValue, newValue) -> blackChanged.set(true));
-        final Button btnHelpDouble = P2Button.helpButton(stage, "Blacklist",
+        final Button btnHelpDouble = PIconFactory.getHelpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_DOUBLE);
 
         initDays();
 
-        final Button btnHelpSize = P2Button.helpButton(stage, "Blacklist",
+        final Button btnHelpSize = PIconFactory.getHelpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_SIZE);
 
-        final Button btnHelpDays = P2Button.helpButton(stage, "Blacklist",
+        final Button btnHelpDays = PIconFactory.getHelpButton(stage, "Blacklist",
                 HelpText.BLACKLIST_DAYS);
 
         lblDays.setMinWidth(Region.USE_PREF_SIZE);

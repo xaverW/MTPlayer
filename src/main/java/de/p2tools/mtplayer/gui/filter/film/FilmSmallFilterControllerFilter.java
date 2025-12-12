@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.gui.filter.film;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -48,7 +48,7 @@ public class FilmSmallFilterControllerFilter extends HBox {
         final Button btnClearFilter = P2ButtonClearFilterFactory.getPButtonClearFilter();
         btnClearFilter.setOnAction(a -> clearFilter());
 
-        final Button btnHelp = P2Button.helpButton("Filter", HelpText.FILTER_SMALL_INFO);
+        final Button btnHelp = PIconFactory.getHelpButton("Filter", HelpText.FILTER_SMALL_INFO);
 
         setAlignment(Pos.CENTER_RIGHT);
         getChildren().addAll(btnSmall, P2GuiTools.getHBoxGrower(), btnHelp, btnClearFilter);

@@ -21,12 +21,12 @@ import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.checkforactinfos.FoundHttpDownload;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2BigButton;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
 import de.p2tools.p2lib.tools.P2ShutDown;
@@ -104,7 +104,7 @@ public class QuitDialogController extends P2DialogExtra {
         ProgConfig.SYSTEM_SHUT_DOWN_CALL.addListener((u, o, n) -> {
             setSystemCallText();
         });
-        final Button btnHelp = P2Button.helpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
+        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
         final Button btnEdit = new Button();
         btnEdit.setGraphic(ProgIcons.ICON_BUTTON_EDIT.getImageView());
         btnEdit.setOnAction(a -> new ChangeShutDownCallDialog(getStageProp().getValue()));

@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -66,7 +66,7 @@ public class CheckSetDialogController extends P2DialogExtra {
             quit();
         });
 
-        Button btnHelp = P2Button.helpButton(getStage(),
+        Button btnHelp = PIconFactory.getHelpButton(getStage(),
                 "Download-Einstellungen prüfen", HelpText.CHECK_SET_PROGRAM_DIALOG);
         addHlpButton(btnHelp);
         addOkButton(btnOk);

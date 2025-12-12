@@ -18,10 +18,10 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.tools.log.P2Log;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutKey;
 import javafx.application.Platform;
@@ -55,7 +55,7 @@ public class PaneShortcut {
     }
 
     public void make(Collection<TitledPane> result) {
-        final Button btnHelp = P2Button.helpButton(stage, "Tastenkürzel ändern",
+        final Button btnHelp = PIconFactory.getHelpButton(stage, "Tastenkürzel ändern",
                 HelpText.SHORTCUT);
 
         SplitPane splitPane = new SplitPane();

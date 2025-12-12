@@ -21,9 +21,9 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.offer.OfferData;
 import de.p2tools.mtplayer.controller.data.offer.OfferFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -64,7 +64,7 @@ public class OfferFilterDialog extends P2DialogExtra {
         getHboxLeft().getChildren().add(chkShow);
         getHboxLeft().setAlignment(Pos.CENTER_LEFT);
 
-        final Button btnHelp = P2Button.helpButton(getStage(), "Filtervorschläge",
+        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Filtervorschläge",
                 HelpText.FILTER_OFFER_TABLE);
         addHlpButton(btnHelp);
 

@@ -21,11 +21,11 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.pcbo.P2CboObject;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -75,9 +75,9 @@ public class PaneSetDestination {
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen"));
         btnFile.setOnAction(event -> P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
 
-        final Button btnHelSubDir = P2Button.helpButton(stage, "Unterordner anlegen",
+        final Button btnHelSubDir = PIconFactory.getHelpButton(stage, "Unterordner anlegen",
                 HelpText.SETDATA_ABO_SUBDIR);
-        final Button btnHelpDestName = P2Button.helpButton(stage, "Zieldateiname",
+        final Button btnHelpDestName = PIconFactory.getHelpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_PARAMETER_FILE_NAME);
 
         cboDest.init(FXCollections.observableArrayList(AboSubDir.ENSubDir.values()));
@@ -135,7 +135,7 @@ public class PaneSetDestination {
         Label lblTxtField = new Label("Länge\neinzelne Felder:");
         Label lblSizeField = new Label();
 
-        final Button btnHelpDestSize = P2Button.helpButton(stage, "Länge des Zieldateinamens",
+        final Button btnHelpDestSize = PIconFactory.getHelpButton(stage, "Länge des Zieldateinamens",
                 HelpTextPset.PSET_DEST_FILE_SIZE);
 
         slCut.setMin(0);

@@ -20,10 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
@@ -73,7 +73,7 @@ public class DownloadFilterController extends FilterController {
         addCont("Abo", cboAbo, vBoxFilter);
         addCont("Status", cboState, vBoxFilter);
 
-        final Button btnHelpFilter = P2Button.helpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
+        final Button btnHelpFilter = PIconFactory.getHelpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
 
         HBox hBoxClear = new HBox(P2LibConst.SPACING_HBOX);
         hBoxClear.setAlignment(Pos.CENTER_RIGHT);

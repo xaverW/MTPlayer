@@ -20,10 +20,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.HPos;
@@ -62,7 +62,7 @@ public class FilmFilterEditDialog extends P2DialogExtra {
     public void make() {
         init();
 
-        final Button btnHelp = P2Button.helpButton(getStage(), "Filtereinstellungen", HelpText.GUI_FILMS_EDIT_FILTER);
+        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Filtereinstellungen", HelpText.GUI_FILMS_EDIT_FILTER);
         final Button btnOk = new Button("_Ok");
         btnOk.setOnAction(event -> close());
         addOkButton(btnOk);

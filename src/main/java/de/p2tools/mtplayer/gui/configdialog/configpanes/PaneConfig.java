@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.tools.P2StringUtils;
@@ -68,26 +68,26 @@ public class PaneConfig {
         result.add(tpConfig);
 
         tglOnlyOneInstance.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ONE_INSTANCE);
-        final Button btnHelpOnlyOneInstance = P2Button.helpButton(stage, "Nur eine Instanz des Programms öffnen",
+        final Button btnHelpOnlyOneInstance = PIconFactory.getHelpButton(stage, "Nur eine Instanz des Programms öffnen",
                 HelpText.ONLY_ONE_INSTANCE);
         GridPane.setHalignment(btnHelpOnlyOneInstance, HPos.RIGHT);
 
         tglStartMaximised.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED);
-        final Button btnHelpStartMaximised = P2Button.helpButton(stage, "Programm immer \"Maximiert\" starten",
+        final Button btnHelpStartMaximised = PIconFactory.getHelpButton(stage, "Programm immer \"Maximiert\" starten",
                 HelpText.START_MAXIMISED);
         GridPane.setHalignment(btnHelpStartMaximised, HPos.RIGHT);
 
         tglCheckStart.selectedProperty().bindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
 
-        final Button btnHelpCheck = P2Button.helpButton(stage, "Download-Einstellungen prüfen",
+        final Button btnHelpCheck = PIconFactory.getHelpButton(stage, "Download-Einstellungen prüfen",
                 HelpText.CHECK_SET_PROGRAM_START);
 
         tglTipOfDay.selectedProperty().bindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
-        final Button btnHelpTipOfDay = P2Button.helpButton(stage, "Tip des Tages anzeigen",
+        final Button btnHelpTipOfDay = PIconFactory.getHelpButton(stage, "Tip des Tages anzeigen",
                 HelpText.TIP_OF_DAY);
         GridPane.setHalignment(btnHelpTipOfDay, HPos.RIGHT);
 
-        final Button btnHelpUserAgent = P2Button.helpButton(stage, "User Agent festlegen",
+        final Button btnHelpUserAgent = PIconFactory.getHelpButton(stage, "User Agent festlegen",
                 HelpText.USER_AGENT);
         GridPane.setHalignment(btnHelpUserAgent, HPos.RIGHT);
         txtUserAgent = new TextField() {

@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.BookmarkTableContextMenu;
 import de.p2tools.mtplayer.gui.infoPane.PaneBookmarkInfo;
 import de.p2tools.mtplayer.gui.tools.table.Table;
@@ -29,7 +30,6 @@ import de.p2tools.mtplayer.gui.tools.table.TableRowBookmark;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
@@ -117,7 +117,7 @@ public class BookmarkDialogController extends P2DialogExtra {
         btnOk.setOnAction(a -> {
             close();
         });
-        Button btnHelp = P2Button.helpButton(getStage(), "Bookmarks", "Hier werden alle Bookmarks angezeigt. " +
+        Button btnHelp = PIconFactory.getHelpButton(getStage(), "Bookmarks", "Hier werden alle Bookmarks angezeigt. " +
                 "Sie können gelöscht werden, es können die Filme angesehen oder gespeichert werden. Für rot markierte Bookmarks " +
                 "gibt es keinen Film mehr in der Filmliste.");
         addHlpButton(btnHelp);

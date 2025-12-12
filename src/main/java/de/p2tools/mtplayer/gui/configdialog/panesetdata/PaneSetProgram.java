@@ -21,11 +21,11 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
@@ -192,7 +192,7 @@ public class PaneSetProgram {
             }
         });
 
-        final Button btnHelpProg = P2Button.helpButton(stage, "Hilfsprogramme",
+        final Button btnHelpProg = PIconFactory.getHelpButton(stage, "Hilfsprogramme",
                 HelpTextPset.PSET_FILE_HELP_PROG);
 
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
@@ -212,9 +212,9 @@ public class PaneSetProgram {
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 
-        final Button btnHelpDest = P2Button.helpButton(stage, "Zieldateiname",
+        final Button btnHelpDest = PIconFactory.getHelpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_PARAMETER_FILE_NAME);
-        final Button btnHelpSwitch = P2Button.helpButton(stage, "Programmschalter",
+        final Button btnHelpSwitch = PIconFactory.getHelpButton(stage, "Programmschalter",
                 HelpTextPset.PSET_SWITCH);
 
         int row = 0;

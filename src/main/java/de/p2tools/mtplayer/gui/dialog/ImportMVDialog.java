@@ -24,11 +24,11 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.mv.LoadMV;
 import de.p2tools.mtplayer.controller.mv.MVFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.collections.FXCollections;
@@ -117,7 +117,7 @@ public class ImportMVDialog extends P2DialogExtra {
         });
         btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
 
-        final Button btnHelp = P2Button.helpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
+        final Button btnHelp = PIconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
 
         int row = 0;
         gridPane.add(new Label("Den Pfad zum MediathekView Konfig-Ordner auswählen"), 0, row);
@@ -136,7 +136,7 @@ public class ImportMVDialog extends P2DialogExtra {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelp = P2Button.helpButton(getStageProp(), "Konfigordner", HelpText.MV_SEARCH);
+        final Button btnHelp = PIconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_SEARCH);
 
         final Button btnLoad = new Button();
         btnLoad.setTooltip(new Tooltip("Die Einstellungen suchen"));
@@ -175,7 +175,7 @@ public class ImportMVDialog extends P2DialogExtra {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelp = P2Button.helpButton(getStageProp(), "Config-Ordner", HelpText.MV_IMPORT);
+        final Button btnHelp = PIconFactory.getHelpButton(getStageProp(), "Config-Ordner", HelpText.MV_IMPORT);
 
         final Label lblFoundAbos = new Label("");
         final Button btnAddAbo = new Button();

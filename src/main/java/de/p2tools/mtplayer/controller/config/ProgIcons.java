@@ -73,9 +73,9 @@ public class ProgIcons {
     public static P2Image ICON_TOOLBAR_DOWNLOAD_START_ALL = new P2Image(ICON_PATH_LONG, "toolbar-download-start-all.png", 26, 26);
     public static P2Image ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME = new P2Image(ICON_PATH_LONG, "toolbar-download-start-time.png", 26, 26);
 
-    public static P2Image ICON_TOOLBAR_START = new P2Image(ICON_PATH_LONG, "toolbar-start.png", 26, 26);
-    public static P2Image ICON_TOOLBAR_START_ALL = new P2Image(ICON_PATH_LONG, "toolbar-start-all.png", 26, 26);
-    public static P2Image ICON_TOOLBAR_REC = new P2Image(ICON_PATH_LONG, "toolbar-rec.png", 26, 26);
+    //    public static P2Image ICON_TOOLBAR_START = new P2Image(ICON_PATH_LONG, "toolbar-start.png", 26, 26);
+//    public static P2Image ICON_TOOLBAR_START_ALL = new P2Image(ICON_PATH_LONG, "toolbar-start-all.png", 26, 26);
+//    public static P2Image ICON_TOOLBAR_REC = new P2Image(ICON_PATH_LONG, "toolbar-rec.png", 26, 26);
     public static P2Image ICON_TOOLBAR_BOOKMARK = new P2Image(ICON_PATH_LONG, "toolbar-bookmark.png", 26, 26);
     public static P2Image ICON_TOOLBAR_BOOKMARK_FILTER = new P2Image(ICON_PATH_LONG, "toolbar-bookmark-filter.png", 26, 26);
     public static P2Image ICON_TOOLBAR_BOOKMARK_DIALOG = new P2Image(ICON_PATH_LONG, "toolbar-bookmark-dialog.png", 26, 26);

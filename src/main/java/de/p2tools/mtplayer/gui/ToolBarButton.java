@@ -16,9 +16,9 @@
 
 package de.p2tools.mtplayer.gui;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class ToolBarButton extends Button {
@@ -26,12 +26,12 @@ public class ToolBarButton extends Button {
     /**
      *
      */
-    private final ImageView imageIcon;
+    private final Node imageIcon;
     private boolean vis = true;
     private String name = "";
     private final VBox vbox;
 
-    public ToolBarButton(VBox vbox, String name, String toolTip, ImageView imageIcon) {
+    public ToolBarButton(VBox vbox, String name, String toolTip, Node imageIcon) {
 
         this.vbox = vbox;
         setName(name);
