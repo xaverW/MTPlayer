@@ -38,7 +38,7 @@ public class FilmFilterControllerClearFilter extends VBox {
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
-    private final PCboTextFilter cboTextFilter = new PCboTextFilter(false);
+    private final PCboTextFilter cboTextFilter;
 
     private final ProgData progData;
     private final FilterDto filterDto;
@@ -47,6 +47,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         super();
         this.filterDto = filterDto;
         progData = ProgData.getInstance();
+        cboTextFilter = new PCboTextFilter(filterDto.audio);
 //        progData.filmFilterControllerClearFilter = this;
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
