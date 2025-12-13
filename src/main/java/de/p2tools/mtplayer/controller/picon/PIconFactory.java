@@ -15,16 +15,21 @@ public class PIconFactory {
 
     public enum PICON implements P2IconFactory.P2Icon {
         BTN_HELP("mdi-help"),
-        BTN_FILE_OPEN("fltral-folder-24", 18),
         BTN_DIR_OPEN("mdi2f-folder-open-outline", 18),
         BTN_PLUS("mdi-plus-circle-outline", 18),
         BTN_MINUS("mdi-minus-circle-outline", 18),
         BTN_NEXT("mdi-chevron-double-right", 18),
         BTN_PREV("mdi-chevron-double-left", 18),
-        BTN_QUITT("gmi-power-settings-new", 18),
+        BTN_QUIT("gmi-power-settings-new", 18),
         BTN_CLEAR("gmi-clear", 18),
         BTN_RESET_1("gmi-radio-button-on", 25),
         BTN_RESET_2("gmi-rotate-right", 30),
+        BTN_RESET("mdi-rotate-3d", 18),
+        BTN_SEARCH("gmi-search", 20),
+        BTN_EDIT("mdomz-settings", 20),
+
+
+        ICON_BOOLEAN_ON("mdral-done_outline", 20),
 
         TOOL_BTN_PLAY("mdmz-play_arrow", 25),
         TOOL_BTN_PLAY_ALL("gmi-fast-forward", 25),
@@ -41,7 +46,6 @@ public class PIconFactory {
         TABLE_START("mdomz-play_arrow", 20),
 
         ATTENTION("mdomz-report", 80),
-        SEARCH("gmi-search", 20),
         PROG_MENU("gmi-menu", 25),
         TAB_MENU("gmi-menu", 20);
 

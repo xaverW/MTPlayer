@@ -17,7 +17,7 @@
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.Insets;
@@ -123,7 +123,7 @@ public class DownloadAddDialogGui {
 
         // -> oder für Downloads über ein Programm
         addDownloadDto.btnProgramCallReset.setTooltip(new Tooltip("Reset"));
-        addDownloadDto.btnProgramCallReset.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
+        addDownloadDto.btnProgramCallReset.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
 
         HBox hBoxArray1 = new HBox(P2LibConst.PADDING_HBOX);
         HBox.setHgrow(addDownloadDto.textAreaProg, Priority.ALWAYS);

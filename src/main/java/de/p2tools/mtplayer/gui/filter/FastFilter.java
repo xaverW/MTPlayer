@@ -114,7 +114,7 @@ public class FastFilter extends HBox {
             vBox.managedProperty().bind(ProgConfig.FAST_FILM_SEARCH_ON);
         }
 
-        btnSearch.setGraphic(PIconFactory.PICON.SEARCH.getFontIcon());
+        btnSearch.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
         btnSearch.getStyleClass().addAll("btnFunction", "btnFunc-1");
         btnSelectWhere.setGraphic(ProgIcons.ICON_BUTTON_UP_DOWN_H.getImageView());
         btnSelectWhere.getStyleClass().addAll("selectButton");

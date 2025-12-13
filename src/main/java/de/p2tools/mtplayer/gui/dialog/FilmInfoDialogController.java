@@ -18,8 +18,8 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
@@ -27,7 +27,6 @@ import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.ContextMenuEvent;
@@ -36,6 +35,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class FilmInfoDialogController extends P2DialogExtra {
     private static FilmInfoDialogController instance;
@@ -47,9 +47,9 @@ public class FilmInfoDialogController extends P2DialogExtra {
     private final GridPane gridPane = new GridPane();
     private final Button btnOk = new Button("_Ok");
 
-    private final ImageView ivHD = new ImageView();
-    private final ImageView ivUT = new ImageView();
-    private final ImageView ivNew = new ImageView();
+    private final FontIcon ivHD = PIconFactory.PICON.ICON_BOOLEAN_ON.getFontIcon();
+    private final FontIcon ivUT = PIconFactory.PICON.ICON_BOOLEAN_ON.getFontIcon();
+    private final FontIcon ivNew = PIconFactory.PICON.ICON_BOOLEAN_ON.getFontIcon();
 
     private final P2Hyperlink p2HyperlinkUrlSmall = new P2Hyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL);
@@ -79,9 +79,9 @@ public class FilmInfoDialogController extends P2DialogExtra {
                 if (film == null) {
                     lblCont[i].setText("");
                     textArea.setText("");
-                    ivHD.setImage(null);
-                    ivUT.setImage(null);
-                    ivNew.setImage(null);
+//                    ivHD.setImage(null);
+//                    ivUT.setImage(null);
+//                    ivNew.setImage(null);
                     p2HyperlinkUrlSmall.setUrl("");
                     p2HyperlinkUrlHeight.setUrl("");
                     p2HyperlinkUrlHd.setUrl("");
@@ -108,23 +108,23 @@ public class FilmInfoDialogController extends P2DialogExtra {
                             break;
                         case FilmDataXml.FILM_HD:
                             if (film.isHd()) {
-                                ivHD.setImage(ProgIcons.ICON_BOOLEAN_IS_ON.getImage());
+                                ivHD.setVisible(true);
                             } else {
-                                ivHD.setImage(null);
+                                ivHD.setVisible(false);
                             }
                             break;
                         case FilmDataXml.FILM_UT:
                             if (film.isUt()) {
-                                ivUT.setImage(ProgIcons.ICON_BOOLEAN_IS_ON.getImage());
+                                ivUT.setVisible(true);
                             } else {
-                                ivUT.setImage(null);
+                                ivUT.setVisible(false);
                             }
                             break;
                         case FilmDataXml.FILM_NEW:
                             if (film.isNewFilm()) {
-                                ivNew.setImage(ProgIcons.ICON_BOOLEAN_IS_ON.getImage());
+                                ivNew.setVisible(true);
                             } else {
-                                ivNew.setImage(null);
+                                ivNew.setVisible(false);
                             }
                             break;
 

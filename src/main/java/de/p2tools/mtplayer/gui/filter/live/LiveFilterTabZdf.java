@@ -7,6 +7,7 @@ import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.P2LibConst;
 import javafx.geometry.Insets;
@@ -51,7 +52,7 @@ public class LiveFilterTabZdf extends Tab {
                 ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF);
 
         Button btnSearchZdf = new Button();
-        btnSearchZdf.setGraphic(ProgIcons.ICON_BUTTON_SEARCH.getImageView());
+        btnSearchZdf.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
         btnSearchZdf.setTooltip(new Tooltip("Suche starten"));
         btnSearchZdf.setOnAction(a -> searchZdf(false));
         btnSearchZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(LiveConst.MIN_SEARCH_LENGTH))
@@ -91,7 +92,7 @@ public class LiveFilterTabZdf extends Tab {
         });
 
         Button btnSearchUrlZdf = new Button();
-        btnSearchUrlZdf.setGraphic(ProgIcons.ICON_BUTTON_SEARCH.getImageView());
+        btnSearchUrlZdf.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
         btnSearchUrlZdf.setTooltip(new Tooltip("Suche starten"));
         btnSearchUrlZdf.setOnAction(a -> searchUrl());
         btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.isEmpty())

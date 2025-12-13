@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Pos;
@@ -42,7 +42,7 @@ public class FilmFilterControllerBlacklist extends HBox {
 
         Button btnBlack = new Button("");
         btnBlack.getStyleClass().add("buttonSmall");
-        btnBlack.setGraphic(ProgIcons.ICON_BUTTON_EDIT.getImageView());
+        btnBlack.setGraphic(PIconFactory.PICON.BTN_EDIT.getFontIcon());
         btnBlack.setOnAction(a -> new ConfigDialogController(ProgData.getInstance(), true));
         btnBlack.disableProperty().bind(ConfigDialogController.dialogIsRunning);
         btnBlack.setTooltip(new Tooltip("Blacklist-Einstellungen anzeigen - " +

@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaSearchFactory;
 import de.p2tools.p2lib.P2LibConst;
@@ -168,7 +169,7 @@ public class PaneDialogScrollPane extends ScrollPane {
     private VBox getVBoxSearch() {
         // Suchen was
         final Button btnReset = new Button("");
-        btnReset.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
+        btnReset.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
         btnReset.setOnAction(a -> txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle));
 

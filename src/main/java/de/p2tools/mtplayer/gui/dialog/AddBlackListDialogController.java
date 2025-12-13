@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistCountFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
@@ -141,19 +142,19 @@ public class AddBlackListDialogController extends P2DialogExtra {
             rbFilm.setSelected(list == ProgConst.LIST_FILM);
             rbAudio.setSelected(list == ProgConst.LIST_AUDIO);
         });
-        btnList.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
+        btnList.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
 
         btnChannel.setOnAction(a -> blackData.setChannel(channel));
         btnChannel.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnChannel.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
+        btnChannel.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
 
         btnTheme.setOnAction(a -> blackData.setTheme(theme));
         btnTheme.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnTheme.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
+        btnTheme.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
 
         btnTitel.setOnAction(a -> blackData.setTitle(title));
         btnTitel.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnTitel.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
+        btnTitel.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
 
         btnClearChannel.setOnAction(a -> blackData.channelProperty().setValue(""));
         btnClearChannel.setTooltip(new Tooltip("Feld löschen"));

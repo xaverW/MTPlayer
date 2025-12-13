@@ -23,12 +23,12 @@ public class ProgIcons {
     public static String ICON_PATH_LONG = "de/p2tools/mtplayer/res/program/";
     // public static String ICON_PATH_LONG = "de/p2tools/p2lib/progicons/";
 
-    public static P2Image ICON_BOOLEAN_IS_ON = new P2Image(ICON_PATH_LONG, "boolean-is-on.png", 16, 16);
-    public static P2Image ICON_ATTENTION_64 = new P2Image(ICON_PATH_LONG, "attention-64.png", 64, 64);
+    //    public static P2Image ICON_BOOLEAN_IS_ON = new P2Image(ICON_PATH_LONG, "boolean-is-on.png", 16, 16);
+//    public static P2Image ICON_ATTENTION_64 = new P2Image(ICON_PATH_LONG, "attention-64.png", 64, 64);
 
-    public static P2Image ICON_BUTTON_SEARCH = new P2Image(ICON_PATH_LONG, "button-search.png", 16, 16);
-    public static P2Image ICON_BUTTON_RESET = new P2Image(ICON_PATH_LONG, "button-reset.png", 16, 16);
-    public static P2Image ICON_BUTTON_EDIT = new P2Image(ICON_PATH_LONG, "button-edit.png", 16, 16);
+    //    public static P2Image ICON_BUTTON_SEARCH = new P2Image(ICON_PATH_LONG, "button-search.png", 16, 16);
+//    public static P2Image ICON_BUTTON_RESET = new P2Image(ICON_PATH_LONG, "button-reset.png", 16, 16);
+//    public static P2Image ICON_BUTTON_EDIT = new P2Image(ICON_PATH_LONG, "button-edit.png", 16, 16);
     public static P2Image ICON_BUTTON_BACKWARD = new P2Image(ICON_PATH_LONG, "button-backward.png", 16, 16);
     public static P2Image ICON_BUTTON_FORWARD = new P2Image(ICON_PATH_LONG, "button-forward.png", 16, 16);
     public static P2Image ICON_BUTTON_QUIT = new P2Image(ICON_PATH_LONG, "button-quit.png", 16, 16);

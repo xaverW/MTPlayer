@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.starter.LogMsgFactory;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -157,7 +158,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
             addDownloadDto.initPathName.pathChanged();
         });
 
-        addDownloadDto.btnPropose.setGraphic(ProgIcons.ICON_BUTTON_RESET.getImageView());
+        addDownloadDto.btnPropose.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
         addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen"));
         addDownloadDto.btnPropose.setOnAction(event ->
                 addDownloadDto.initPathName.proposeDestination());
