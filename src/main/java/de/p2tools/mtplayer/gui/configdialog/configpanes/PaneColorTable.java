@@ -38,27 +38,24 @@ import javafx.util.Callback;
 
 import java.util.Collection;
 
-public class PaneColor {
+public class PaneColorTable {
     private final Stage stage;
     private final P2ToggleSwitch tglDarkTheme = new P2ToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
-    private final P2ToggleSwitch tglBlackWhiteIcon = new P2ToggleSwitch("Schwarz-Weiße Icons");
     private final TableView<P2ColorData> tableViewFont = new TableView<>();
     private final TableView<P2ColorData> tableViewBackground = new TableView<>();
 
-    public PaneColor(Stage stage) {
+    public PaneColorTable(Stage stage) {
         this.stage = stage;
     }
 
     public void close() {
-        tglDarkTheme.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
-        tglBlackWhiteIcon.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACK_WHITE_ICON);
+        tglDarkTheme.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK);
     }
 
     public void make(Collection<TitledPane> result) {
-        tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
+        tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK);
         final Button btnHelpTheme = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
-        tglBlackWhiteIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACK_WHITE_ICON);
         final Button btnHelpIcon = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.BLACK_WHITE_ICON);
 
@@ -70,7 +67,7 @@ public class PaneColor {
         tableViewBackground.setPrefHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableViewBackground.setItems(ProgColorList.getColorListBackground());
 
-        ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_COLOR_THEME_DARK.addListener((u, o, n) -> {
             ProgColorList.setColorTheme();
             P2TableFactory.refreshTable(tableViewFont);
             P2TableFactory.refreshTable(tableViewBackground);
@@ -93,10 +90,6 @@ public class PaneColor {
         gridPane.add(btnHelpTheme, 1, row);
         GridPane.setHalignment(btnHelpTheme, HPos.RIGHT);
 
-        gridPane.add(tglBlackWhiteIcon, 0, ++row);
-        gridPane.add(btnHelpIcon, 1, row);
-        GridPane.setHalignment(btnHelpIcon, HPos.RIGHT);
-
         gridPane.add(new Label("Schriftfarben"), 0, ++row, 2, 1);
         gridPane.add(tableViewFont, 0, ++row, 2, 1);
 
@@ -110,7 +103,7 @@ public class PaneColor {
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
                 P2GridConstraints.getCcPrefSize());
 
-        TitledPane tpColor = new TitledPane("Farben", gridPane);
+        TitledPane tpColor = new TitledPane("Farbe Tabellen-Zeilen", gridPane);
         result.add(tpColor);
     }
 

@@ -37,7 +37,6 @@ public class PIconFactory {
         BTN_PLUS("mdal-add", 20),
         BTN_SEPARATOR("mdi2t-tilde", 20),
         BTN_SEPARATOR_WIDTH("mdi-ray-start-end", 20),
-
         BTN_TOP("gmi-vertical-align-top", 20),
         BTN_UP("mdoal-arrow_upward", 20),
         BTN_DOWN("mdoal-arrow_downward", 20),
@@ -45,17 +44,14 @@ public class PIconFactory {
 
         ICON_BOOLEAN_ON("mdral-done_outline", 20),
 
-
         TABLE_ABO_ON("gmi-play-arrow", 18),
         TABLE_ABO_OFF("gmi-pause", 18),
         TABLE_ABO_DEL("gmi-clear", 18),
         TABLE_FILM_PLAY("gmi-play-arrow", 18),
-        TABLE_FILM_SAVE("mdmz-radio_button_unchecked", 18),
-
+        TABLE_FILM_SAVE("gmi-fiber-manual-record", 16),
         TABLE_BOOKMARK_ADD("mdi-bookmark-plus-outline", 18),
         TABLE_BOOKMARK_DEL("mdi2b-bookmark-minus-outline", 18),
-
-        TABLE_DOWNLOAD_START("gmi-arrow-drop-down", 18),
+        TABLE_DOWNLOAD_START("mdi2t-triangle-down", 15),
         TABLE_DOWNLOAD_DEL("gmi-clear", 18),
         TABLE_DOWNLOAD_STOP("gmi-pause", 18),
         TABLE_DOWNLOAD_OPEN_DIR("mdi2f-folder-open-outline", 18),
@@ -64,21 +60,17 @@ public class PIconFactory {
         TOOLBAR_BTN_PLAY_ALL("gmi-fast-forward", 25),
         TOOLBAR_BTN_RECORDE("gmi-fiber-manual-record", 25),
         TOOLBAR_BTN_DOWNLOAD_CLEAN("mdal-cleaning_services", 25),
-        TOOLBAR_BTN_DOWNLOAD_START("gmi-arrow-drop-down", 25),
+        TOOLBAR_BTN_DOWNLOAD_START("mdi2t-triangle-down", 20),
         TOOLBAR_BTN_DOWNLOAD_DEL("gmi-clear", 25),
-
         TOOLBAR_BTN_DOWNLOAD_UNDO("mdi2a-arrow-left-top-bold", 25),
         TOOLBAR_BTN_DOWNLOAD_REFRESH("mdi-rotate-3d", 25),
         TOOLBAR_BTN_DOWNLOAD_START_ALL("mdi2t-transfer-down", 25),
         TOOLBAR_BTN_DOWNLOAD_START_TIME("mdi2t-timer-sand", 25),
-
         TOOLBAR_BTN_ABO_CONFIG("mdomz-settings", 25),
         TOOLBAR_BTN_ABO_ADD("gmi-add", 25),
         TOOLBAR_BTN_ABO_ON("gmi-play-arrow", 25),
         TOOLBAR_BTN_ABO_OFF("gmi-pause", 25),
         TOOLBAR_BTN_ABO_DEL("gmi-clear", 25),
-
-
         TOOLBAR_BTN_BOOKMARK_ADD("mdi-bookmark-plus-outline", 25),
         TOOLBAR_BTN_BOOKMARK_DEL("mdi2b-bookmark-minus-outline", 25),
         TOOLBAR_BTN_BOOKMARK_DAL_ALL("mdi2b-bookmark-off-outline", 25),
@@ -88,10 +80,6 @@ public class PIconFactory {
         OWN_FILTER_LOAD("mdi2t-tray-arrow-up", 25),
         OWN_FILTER_SAVE("mdi2t-tray-arrow-down", 25),
         OWN_FILTER_NEW("gmi-add", 25),
-
-        TABLE_FILE_DEL("gmi-clear", 15),
-        TABLE_DIR_OPEN("mdi2f-folder-open-outline", 16),
-        TABLE_START("mdomz-play_arrow", 20),
 
         ATTENTION("mdomz-report", 80),
         PROG_MENU("gmi-menu", 25),

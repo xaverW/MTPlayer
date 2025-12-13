@@ -351,11 +351,11 @@ public class StatusBarController extends AnchorPane {
             circleAbo.setFill(Paint.valueOf("green"));
 
         } else {
-            circleFilm.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
-            circleAudio.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
-            circleLive.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
-            circleDownload.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
-            circleAbo.setFill(Paint.valueOf(ProgConfig.SYSTEM_DARK_THEME.getValue() ? "#c1c1c1" : "#666666"));
+            circleFilm.setFill(Paint.valueOf(ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue() ? "#c1c1c1" : "#666666"));
+            circleAudio.setFill(Paint.valueOf(ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue() ? "#c1c1c1" : "#666666"));
+            circleLive.setFill(Paint.valueOf(ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue() ? "#c1c1c1" : "#666666"));
+            circleDownload.setFill(Paint.valueOf(ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue() ? "#c1c1c1" : "#666666"));
+            circleAbo.setFill(Paint.valueOf(ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue() ? "#c1c1c1" : "#666666"));
         }
     }
 

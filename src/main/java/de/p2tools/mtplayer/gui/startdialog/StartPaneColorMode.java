@@ -48,8 +48,8 @@ public class StartPaneColorMode {
     }
 
     public void close() {
-        tglDarkTheme.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_DARK_THEME_START);
-        tglBlackWhiteIcon.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_BLACK_WHITE_ICON_START);
+        tglDarkTheme.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK_START);
+        tglBlackWhiteIcon.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START);
     }
 
     public TitledPane make() {
@@ -66,13 +66,13 @@ public class StartPaneColorMode {
         hBox.getChildren().add(lbl);
         vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox);
 
-        tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME_START);
-        tglBlackWhiteIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_BLACK_WHITE_ICON_START);
+        tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK_START);
+        tglBlackWhiteIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START);
 
-        ProgConfig.SYSTEM_DARK_THEME_START.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_COLOR_THEME_DARK_START.addListener((u, o, n) -> {
             setHBox();
         });
-        ProgConfig.SYSTEM_BLACK_WHITE_ICON_START.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.addListener((u, o, n) -> {
             setHBox();
         });
 
@@ -103,11 +103,11 @@ public class StartPaneColorMode {
 
     private void setHBox() {
         int i;
-        if (!ProgConfig.SYSTEM_BLACK_WHITE_ICON_START.get() && !ProgConfig.SYSTEM_DARK_THEME_START.get()) {
+        if (!ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.get() && !ProgConfig.SYSTEM_COLOR_THEME_DARK_START.get()) {
             i = 0;
-        } else if (ProgConfig.SYSTEM_BLACK_WHITE_ICON_START.get() && !ProgConfig.SYSTEM_DARK_THEME_START.get()) {
+        } else if (ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.get() && !ProgConfig.SYSTEM_COLOR_THEME_DARK_START.get()) {
             i = 1;
-        } else if (!ProgConfig.SYSTEM_BLACK_WHITE_ICON_START.get() && ProgConfig.SYSTEM_DARK_THEME_START.get()) {
+        } else if (!ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.get() && ProgConfig.SYSTEM_COLOR_THEME_DARK_START.get()) {
             i = 2;
         } else {
             i = 3;
