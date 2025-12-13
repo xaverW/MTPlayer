@@ -1,11 +1,15 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
-import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgColorList;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.geometry.Insets;
@@ -125,15 +129,15 @@ public class TableBookmarkFactory {
 
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
-                btnPlay.setGraphic(ProgIcons.IMAGE_TABLE_FILM_PLAY.getImageView());
+                btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
-                btnSave.setGraphic(ProgIcons.IMAGE_TABLE_FILM_SAVE.getImageView());
+                btnSave.setGraphic(PIconFactory.PICON.TABLE_FILM_SAVE.getFontIcon());
 
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
-                btnBookmark.setGraphic(ProgIcons.IMAGE_TABLE_BOOKMARK_DEL.getImageView());
+                btnBookmark.setGraphic(PIconFactory.PICON.TABLE_BOOKMARK_DEL.getFontIcon());
 
                 if (ProgConfig.BOOKMARK_DIALOG_SMALL_TABLE_ROW.get()) {
                     btnPlay.setMaxHeight(18);

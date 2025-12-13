@@ -2,11 +2,11 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.mediathek.film.FilmSize;
 import de.p2tools.p2lib.tools.date.P2Date;
 import javafx.geometry.Insets;
@@ -158,7 +158,7 @@ public class TableFilmFactory {
 
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
-                btnPlay.setGraphic(ProgIcons.IMAGE_TABLE_FILM_PLAY.getImageView());
+                btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
                 btnPlay.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
@@ -171,7 +171,7 @@ public class TableFilmFactory {
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
-                btnSave.setGraphic(ProgIcons.IMAGE_TABLE_FILM_SAVE.getImageView());
+                btnSave.setGraphic(PIconFactory.PICON.TABLE_FILM_SAVE.getFontIcon());
                 btnSave.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
@@ -185,9 +185,9 @@ public class TableFilmFactory {
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
                 if (film.isBookmark()) {
-                    btnBookmark.setGraphic(ProgIcons.IMAGE_TABLE_BOOKMARK_DEL.getImageView());
+                    btnBookmark.setGraphic(PIconFactory.PICON.TABLE_BOOKMARK_DEL.getFontIcon());
                 } else {
-                    btnBookmark.setGraphic(ProgIcons.IMAGE_TABLE_BOOKMARK.getImageView());
+                    btnBookmark.setGraphic(PIconFactory.PICON.TABLE_BOOKMARK_ADD.getFontIcon());
                 }
                 btnBookmark.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();

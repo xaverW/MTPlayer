@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -269,7 +268,7 @@ public class DownloadStartAtTimeController extends P2DialogExtra {
                 final Button btnDownDel;
                 btnDownDel = new Button("");
                 btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                btnDownDel.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
+                btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
                 btnDownDel.setOnAction(event -> {
                     DownloadData download = getTableView().getItems().get(getIndex());
                     if (rbAll.isSelected()) {

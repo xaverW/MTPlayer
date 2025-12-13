@@ -49,11 +49,11 @@ public class ProgIcons {
 //    public static P2Image ICON_BUTTON_DEL_SW = new P2Image(ICON_PATH_LONG, "button-del-sw.png", 12, 12);
 //    public static P2Image ICON_BUTTON_SEPARATOR_WIDTH = new P2Image(ICON_PATH_LONG, "button-separator-width.png", 100, 16);
 
-    public static P2Image IMAGE_TABLE_ABO_ON = new P2Image(ICON_PATH_LONG, "table-abo-on.png", 14, 14);
-    public static P2Image IMAGE_TABLE_ABO_OFF = new P2Image(ICON_PATH_LONG, "table-abo-off.png", 14, 14);
-    public static P2Image IMAGE_TABLE_ABO_DEL = new P2Image(ICON_PATH_LONG, "table-abo-del.png", 14, 14);
-    public static P2Image IMAGE_TABLE_FILM_PLAY = new P2Image(ICON_PATH_LONG, "table-film-play.png", 14, 14);
-    public static P2Image IMAGE_TABLE_FILM_SAVE = new P2Image(ICON_PATH_LONG, "table-film-save.png", 14, 14);
+    //    public static P2Image IMAGE_TABLE_ABO_ON = new P2Image(ICON_PATH_LONG, "table-abo-on.png", 14, 14);
+//    public static P2Image IMAGE_TABLE_ABO_OFF = new P2Image(ICON_PATH_LONG, "table-abo-off.png", 14, 14);
+//    public static P2Image IMAGE_TABLE_ABO_DEL = new P2Image(ICON_PATH_LONG, "table-abo-del.png", 14, 14);
+//    public static P2Image IMAGE_TABLE_FILM_PLAY = new P2Image(ICON_PATH_LONG, "table-film-play.png", 14, 14);
+//    public static P2Image IMAGE_TABLE_FILM_SAVE = new P2Image(ICON_PATH_LONG, "table-film-save.png", 14, 14);
     public static P2Image IMAGE_TABLE_BOOKMARK = new P2Image(ICON_PATH_LONG, "table-bookmark.png", 14, 14);
     public static P2Image IMAGE_TABLE_BOOKMARK_DEL = new P2Image(ICON_PATH_LONG, "table-bookmark-del.png", 14, 14);
     public static P2Image IMAGE_TABLE_DOWNLOAD_START = new P2Image(ICON_PATH_LONG, "table-download-start.png", 14, 14);

@@ -43,18 +43,33 @@ public class PIconFactory {
         BTN_DOWN("mdoal-arrow_downward", 20),
         BTN_BOTTOM("gmi-vertical-align-bottom", 20),
 
-
         ICON_BOOLEAN_ON("mdral-done_outline", 20),
+
+
+        TABLE_ABO_ON("gmi-play-arrow", 18),
+        TABLE_ABO_OFF("gmi-pause", 18),
+        TABLE_ABO_DEL("gmi-clear", 18),
+        TABLE_FILM_PLAY("gmi-play-arrow", 18),
+        TABLE_FILM_SAVE("mdmz-radio_button_unchecked", 18),
+
+        TABLE_BOOKMARK_ADD("mdi-bookmark-plus-outline", 18),
+        TABLE_BOOKMARK_DEL("mdi2b-bookmark-minus-outline", 18),
+
+        TABLE_DOWNLOAD_START("gmi-arrow-drop-down", 18),
+        TABLE_DOWNLOAD_DEL("gmi-clear", 18),
+        TABLE_DOWNLOAD_STOP("gmi-pause", 18),
+        TABLE_DOWNLOAD_OPEN_DIR("mdi2f-folder-open-outline", 18),
 
         TOOL_BTN_PLAY("mdmz-play_arrow", 25),
         TOOL_BTN_PLAY_ALL("gmi-fast-forward", 25),
         TOOL_BTN_RECORDE("gmi-fiber-manual-record", 25),
 
-        TOOL_BTN_ADD_BOOKMARK("mdi-bookmark-plus-outline", 25),
-        TOOL_BTN_DEL_BOOKMARK("mdi2b-bookmark-minus-outline", 25),
-        TOOL_BTN_DEL_ALL_BOOKMARK("mdi2b-bookmark-off-outline", 25),
-        TOOL_BTN_SHOW_BOOKMARK("mdi2b-bookmark-outline", 25),
-        TOOL_BTN_SHOW_BOOKMARK_DIALOG("mdi2c-comment-bookmark-outline", 25),
+
+        TOOL_BTN_BOOKMARK_ADD("mdi-bookmark-plus-outline", 25),
+        TOOL_BTN_BOOKMARK_DEL("mdi2b-bookmark-minus-outline", 25),
+        TOOL_BTN_BOOKMARK_DAL_ALL("mdi2b-bookmark-off-outline", 25),
+        TOOL_BTN_BOOKMARK_SHOW("mdi2b-bookmark-outline", 25),
+        TOOL_BTN_BOOKMARK_SHOW_DIALOG("mdi2c-comment-bookmark-outline", 25),
 
         TABLE_FILE_DEL("gmi-clear", 15),
         TABLE_DIR_OPEN("mdi2f-folder-open-outline", 16),

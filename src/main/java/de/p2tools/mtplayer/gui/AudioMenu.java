@@ -101,19 +101,19 @@ public class AudioMenu {
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
                 "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen",
-                PIconFactory.PICON.TOOL_BTN_ADD_BOOKMARK.getFontIcon());
+                PIconFactory.PICON.TOOL_BTN_BOOKMARK_ADD.getFontIcon());
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
                 "Bookmarks löschen", "Bookmarks für die markierten Filme löschen",
-                PIconFactory.PICON.TOOL_BTN_DEL_BOOKMARK.getFontIcon());
+                PIconFactory.PICON.TOOL_BTN_BOOKMARK_DEL.getFontIcon());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
                 "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen",
-                PIconFactory.PICON.TOOL_BTN_DEL_ALL_BOOKMARK.getFontIcon());
+                PIconFactory.PICON.TOOL_BTN_BOOKMARK_DAL_ALL.getFontIcon());
         final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
                 "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT,
-                PIconFactory.PICON.TOOL_BTN_SHOW_BOOKMARK.getFontIcon());
+                PIconFactory.PICON.TOOL_BTN_BOOKMARK_SHOW.getFontIcon());
         final ToolBarButton btShowBookmark = new ToolBarButton(vBox,
                 "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT,
-                PIconFactory.PICON.TOOL_BTN_SHOW_BOOKMARK_DIALOG.getFontIcon());
+                PIconFactory.PICON.TOOL_BTN_BOOKMARK_SHOW_DIALOG.getFontIcon());
 
         btBookmark.setOnAction(a -> {
             BookmarkFactory.addBookmarkList(true, progData.audioGuiController.getSelList(true));

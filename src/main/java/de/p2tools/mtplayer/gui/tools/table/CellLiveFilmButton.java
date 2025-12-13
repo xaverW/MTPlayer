@@ -18,10 +18,10 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -57,11 +57,11 @@ public class CellLiveFilmButton<S, T> extends TableCell<S, T> {
 
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
-                btnPlay.setGraphic(ProgIcons.IMAGE_TABLE_FILM_PLAY.getImageView());
+                btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
-                btnSave.setGraphic(ProgIcons.IMAGE_TABLE_FILM_SAVE.getImageView());
+                btnSave.setGraphic(PIconFactory.PICON.TABLE_FILM_SAVE.getFontIcon());
 
                 if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_LIVE.get()) {
                     btnPlay.setMaxHeight(18);

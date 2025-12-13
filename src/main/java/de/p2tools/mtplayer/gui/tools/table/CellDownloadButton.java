@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryStopDownload;
@@ -71,7 +70,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStart = new Button("");
                     btnDownStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStart.setTooltip(new Tooltip("Download starten"));
-                    btnDownStart.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_START.getImageView());
+                    btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START.getFontIcon());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -86,7 +85,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
+                    btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
                     btnDownDel.setOnAction(event -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -111,7 +110,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStop = new Button("");
                     btnDownStop.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStop.setTooltip(new Tooltip("Download stoppen"));
-                    btnDownStop.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_STOP.getImageView());
+                    btnDownStop.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_STOP.getFontIcon());
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -126,7 +125,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
+                    btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
                     btnDownDel.setOnAction(event -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -151,7 +150,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnFilmStart = new Button("");
                     btnFilmStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
-                    btnFilmStart.setGraphic(ProgIcons.IMAGE_TABLE_FILM_PLAY.getImageView());
+                    btnFilmStart.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -167,7 +166,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnOpenDirectory = new Button();
                     btnOpenDirectory.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-                    btnOpenDirectory.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_OPEN_DIR.getImageView());
+                    btnOpenDirectory.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_OPEN_DIR.getFontIcon());
                     btnOpenDirectory.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -193,7 +192,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStart = new Button("");
                     btnDownStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownStart.setTooltip(new Tooltip("Download wieder starten"));
-                    btnDownStart.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_START.getImageView());
+                    btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START.getFontIcon());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -210,7 +209,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(ProgIcons.IMAGE_TABLE_DOWNLOAD_DEL.getImageView());
+                    btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
                     btnDownDel.setOnAction(event -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
