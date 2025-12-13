@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.utdata.UtData;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
@@ -178,7 +177,7 @@ public class PaneFilmUt {
     private void initButton(VBox vBox) {
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Eintrag löschen"));
-        btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(event -> {
             final ObservableList<UtData> sels = tableView.getSelectionModel().getSelectedItems();
             if (sels == null || sels.isEmpty()) {
@@ -197,7 +196,7 @@ public class PaneFilmUt {
 
         Button btnNew = new Button("");
         btnNew.setTooltip(new Tooltip("Einen neuen Eintrag erstellen"));
-        btnNew.setGraphic(ProgIcons.ICON_BUTTON_ADD.getImageView());
+        btnNew.setGraphic(PIconFactory.PICON.BTN_PLUS.getFontIcon());
         btnNew.setOnAction(event -> {
             UtData utData = new UtData();
             if (ut) {
@@ -212,7 +211,7 @@ public class PaneFilmUt {
 
         Button btnUp = new Button("");
         btnUp.setTooltip(new Tooltip("Eintrag nach oben schieben"));
-        btnUp.setGraphic(ProgIcons.ICON_BUTTON_MOVE_UP.getImageView());
+        btnUp.setGraphic(PIconFactory.PICON.BTN_UP.getFontIcon());
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
@@ -232,7 +231,7 @@ public class PaneFilmUt {
 
         Button btnDown = new Button("");
         btnDown.setTooltip(new Tooltip("Eintrag nach unten schieben"));
-        btnDown.setGraphic(ProgIcons.ICON_BUTTON_MOVE_DOWN.getImageView());
+        btnDown.setGraphic(PIconFactory.PICON.BTN_DOWN.getFontIcon());
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {

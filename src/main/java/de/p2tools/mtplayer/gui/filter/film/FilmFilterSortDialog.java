@@ -18,9 +18,9 @@ package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
@@ -83,15 +83,15 @@ public class FilmFilterSortDialog extends P2DialogExtra {
 
         // Button
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
-        btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(e -> delFilter());
 
         btnAddSeparator.setTooltip(new Tooltip("einen Trenner einfügen"));
-        btnAddSeparator.setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR.getImageView());
+        btnAddSeparator.setGraphic(PIconFactory.PICON.BTN_SEPARATOR.getFontIcon());
         btnAddSeparator.setOnAction(e -> addSeparator());
 
         btnTop.setTooltip(new Tooltip("aktuelles Filterprofil an den Anfang verschieben"));
-        btnTop.setGraphic(ProgIcons.ICON_BUTTON_MOVE_TOP.getImageView());
+        btnTop.setGraphic(PIconFactory.PICON.BTN_TOP.getFontIcon());
         btnTop.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -104,7 +104,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         });
 
         btnBottom.setTooltip(new Tooltip("aktuelles Filterprofil an das Ende verschieben"));
-        btnBottom.setGraphic(ProgIcons.ICON_BUTTON_MOVE_BOTTOM.getImageView());
+        btnBottom.setGraphic(PIconFactory.PICON.BTN_BOTTOM.getFontIcon());
         btnBottom.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -117,7 +117,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         });
 
         btnUp.setTooltip(new Tooltip("aktuelles Filterprofil nach oben verschieben"));
-        btnUp.setGraphic(ProgIcons.ICON_BUTTON_MOVE_UP.getImageView());
+        btnUp.setGraphic(PIconFactory.PICON.BTN_UP.getFontIcon());
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -130,7 +130,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         });
 
         btnDown.setTooltip(new Tooltip("aktuelles Filterprofil nach unten verschieben"));
-        btnDown.setGraphic(ProgIcons.ICON_BUTTON_MOVE_DOWN.getImageView());
+        btnDown.setGraphic(PIconFactory.PICON.BTN_DOWN.getFontIcon());
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -179,7 +179,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
                 }
 
                 if (P2CboSeparator.isSeparator(item)) {
-                    setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR_WIDTH.getImageView());
+                    setGraphic(PIconFactory.PICON.BTN_SEPARATOR_WIDTH.getFontIcon());
                     setText(null);
                     setStyle("-fx-alignment: center;");
                 } else {

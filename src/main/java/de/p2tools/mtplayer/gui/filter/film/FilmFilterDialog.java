@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui.filter.film;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 import javafx.scene.control.*;
@@ -127,7 +127,7 @@ public class FilmFilterDialog extends P2DialogExtra {
                 }
 
                 if (P2CboSeparator.isSeparator(item)) {
-                    setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR_WIDTH.getImageView());
+                    setGraphic(PIconFactory.PICON.BTN_SEPARATOR_WIDTH.getFontIcon());
                     setText(null);
                     setStyle("-fx-alignment: center;");
                     setDisable(true);

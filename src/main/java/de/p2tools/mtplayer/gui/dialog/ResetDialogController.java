@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -62,14 +61,14 @@ public class ResetDialogController extends P2DialogExtra {
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
         // Set zurücksetzen
-        P2BigButton cancelButton = new P2BigButton(ProgIcons.ICON_BUTTON_QUIT.getImageView(),
+        P2BigButton cancelButton = new P2BigButton(PIconFactory.PICON.BTN_QUIT_DIALOG.getFontIcon(),
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
         final Button btnHelp = PIconFactory.getHelpButton(this.getStage(), "Programm zurücksetzen",
                 HelpText.RESET_DIALOG);
 
-        P2BigButton setButton = new P2BigButton(ProgIcons.ICON_BUTTON_QUIT.getImageView(),
+        P2BigButton setButton = new P2BigButton(PIconFactory.PICON.BTN_QUIT_DIALOG.getFontIcon(),
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",
                 "Es werden alle Programmsets (auch eigene)" + P2LibConst.LINE_SEPARATOR +
                         "zum Abspielen und Aufzeichnen gelöscht" + P2LibConst.LINE_SEPARATOR +
@@ -85,7 +84,7 @@ public class ResetDialogController extends P2DialogExtra {
         });
 
         // alle Einstellungen
-        P2BigButton allButton = new P2BigButton(ProgIcons.ICON_BUTTON_QUIT.getImageView(), "" +
+        P2BigButton allButton = new P2BigButton(PIconFactory.PICON.BTN_QUIT_DIALOG.getFontIcon(), "" +
                 "Alle Einstellungen zurücksetzen!",
                 "Alle Einstellungen gehen verloren." + P2LibConst.LINE_SEPARATORx2 +
                         "ACHTUNG" + P2LibConst.LINE_SEPARATOR +

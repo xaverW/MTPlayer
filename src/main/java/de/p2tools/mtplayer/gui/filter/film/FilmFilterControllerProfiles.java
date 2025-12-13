@@ -314,7 +314,7 @@ public class FilmFilterControllerProfiles extends VBox {
                     }
 
                     if (P2CboSeparator.isSeparator(item.toString())) {
-                        setGraphic(ProgIcons.ICON_BUTTON_SEPARATOR_WIDTH.getImageView());
+                        setGraphic(PIconFactory.PICON.BTN_SEPARATOR_WIDTH.getFontIcon());
                         setText(null);
                         setStyle("-fx-alignment: center;");
                         setDisable(true);

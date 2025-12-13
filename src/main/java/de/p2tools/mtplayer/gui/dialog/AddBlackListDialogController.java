@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistCountFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
@@ -158,19 +157,19 @@ public class AddBlackListDialogController extends P2DialogExtra {
 
         btnClearChannel.setOnAction(a -> blackData.channelProperty().setValue(""));
         btnClearChannel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearChannel.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnClearChannel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
 
         btnClearTheme.setOnAction(a -> blackData.setTheme(""));
         btnClearTheme.setTooltip(new Tooltip("Feld löschen"));
-        btnClearTheme.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnClearTheme.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
 
         btnClearTitel.setOnAction(a -> blackData.setTitle(""));
         btnClearTitel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearTitel.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnClearTitel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
 
         btnClearThemeTitel.setOnAction(a -> blackData.setThemeTitle(""));
         btnClearThemeTitel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearThemeTitel.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnClearThemeTitel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
 
         txtTheme.textProperty().bindBidirectional(blackData.themeProperty());
         tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());

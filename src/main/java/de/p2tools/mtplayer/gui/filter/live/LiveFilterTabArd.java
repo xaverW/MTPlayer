@@ -2,7 +2,6 @@ package de.p2tools.mtplayer.gui.filter.live;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
@@ -41,7 +40,7 @@ public class LiveFilterTabArd extends Tab {
         vBoxTab.setAlignment(Pos.TOP_CENTER);
 
         Button btnClear = new Button();
-        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         btnClear.setTooltip(new Tooltip("Suche löschen"));
         btnClear.setOnAction(a -> {
             ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.set("");
@@ -55,7 +54,7 @@ public class LiveFilterTabArd extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnArd = new Button("Weitersuchen");
-        btnKeepOnArd.setGraphic(ProgIcons.ICON_BUTTON_FORWARD.getImageView());
+        btnKeepOnArd.setGraphic(PIconFactory.PICON.BTN_FORWARD.getFontIcon());
         btnKeepOnArd.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnArd.setOnAction(a -> searchArd(true));
         btnKeepOnArd.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
@@ -85,7 +84,7 @@ public class LiveFilterTabArd extends Tab {
 
         // Search URL
         Button btnClearUrl = new Button();
-        btnClearUrl.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnClearUrl.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         btnClearUrl.setTooltip(new Tooltip("Suche löschen"));
         btnClearUrl.setOnAction(a -> {
             ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.set("");

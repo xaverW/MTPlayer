@@ -17,7 +17,10 @@
 
 package de.p2tools.mtplayer.gui.filter;
 
-import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import javafx.geometry.Insets;
@@ -116,9 +119,9 @@ public class FastFilter extends HBox {
 
         btnSearch.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
         btnSearch.getStyleClass().addAll("btnFunction", "btnFunc-1");
-        btnSelectWhere.setGraphic(ProgIcons.ICON_BUTTON_UP_DOWN_H.getImageView());
+        btnSelectWhere.setGraphic(PIconFactory.PICON.BTN_UP_DOWN_H.getFontIcon());
         btnSelectWhere.getStyleClass().addAll("selectButton");
-        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         lblTitel.setFont(new Font(10));
 
         setAlignment(Pos.CENTER_RIGHT);

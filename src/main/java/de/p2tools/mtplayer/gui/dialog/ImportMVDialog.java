@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.mv.LoadMV;
@@ -115,7 +114,7 @@ public class ImportMVDialog extends P2DialogExtra {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.DirChooser(getStage(), txtMVPath);
         });
-        btnFile.setGraphic(ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+        btnFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
 
         final Button btnHelp = PIconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
 
@@ -141,7 +140,7 @@ public class ImportMVDialog extends P2DialogExtra {
         final Button btnLoad = new Button();
         btnLoad.setTooltip(new Tooltip("Die Einstellungen suchen"));
         btnLoad.setOnAction(event -> new LoadMV(aboList, blackList).readConfiguration(Path.of(txtMVPath.getText())));
-        btnLoad.setGraphic(ProgIcons.ICON_BUTTON_PLAY.getImageView());
+        btnLoad.setGraphic(PIconFactory.PICON.BTN_PLAY.getFontIcon());
         GridPane.setHalignment(btnLoad, HPos.RIGHT);
 
         final Label lblAbo = new Label();

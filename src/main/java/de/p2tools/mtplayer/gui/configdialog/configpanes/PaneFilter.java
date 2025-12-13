@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.offer.OfferData;
 import de.p2tools.mtplayer.controller.data.offer.PCellCheckBoxOfferData;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
@@ -144,7 +143,7 @@ public class PaneFilter {
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Eintrag löschen"));
-        btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(event -> {
             final ObservableList<OfferData> sels = tableView.getSelectionModel().getSelectedItems();
             if (sels == null || sels.isEmpty()) {
@@ -158,7 +157,7 @@ public class PaneFilter {
 
         Button btnNew = new Button("");
         btnNew.setTooltip(new Tooltip("Einen neuen Eintrag erstellen"));
-        btnNew.setGraphic(ProgIcons.ICON_BUTTON_ADD.getImageView());
+        btnNew.setGraphic(PIconFactory.PICON.BTN_PLUS.getFontIcon());
         btnNew.setOnAction(event -> {
             OfferData offerData = new OfferData();
             ProgData.getInstance().offerList.add(offerData);
@@ -170,7 +169,7 @@ public class PaneFilter {
 
         Button btnUp = new Button("");
         btnUp.setTooltip(new Tooltip("Eintrag nach oben schieben"));
-        btnUp.setGraphic(ProgIcons.ICON_BUTTON_MOVE_UP.getImageView());
+        btnUp.setGraphic(PIconFactory.PICON.BTN_UP.getFontIcon());
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
@@ -185,7 +184,7 @@ public class PaneFilter {
 
         Button btnDown = new Button("");
         btnDown.setTooltip(new Tooltip("Eintrag nach unten schieben"));
-        btnDown.setGraphic(ProgIcons.ICON_BUTTON_MOVE_DOWN.getImageView());
+        btnDown.setGraphic(PIconFactory.PICON.BTN_DOWN.getFontIcon());
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
@@ -200,7 +199,7 @@ public class PaneFilter {
 
         Button btnTop = new Button();
         btnTop.setTooltip(new Tooltip("Eintrag an den Anfang verschieben"));
-        btnTop.setGraphic(ProgIcons.ICON_BUTTON_MOVE_TOP.getImageView());
+        btnTop.setGraphic(PIconFactory.PICON.BTN_TOP.getFontIcon());
         btnTop.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {
@@ -215,7 +214,7 @@ public class PaneFilter {
 
         Button btnBottom = new Button();
         btnBottom.setTooltip(new Tooltip("Eintrag an das Ende verschieben"));
-        btnBottom.setGraphic(ProgIcons.ICON_BUTTON_MOVE_BOTTOM.getImageView());
+        btnBottom.setGraphic(PIconFactory.PICON.BTN_BOTTOM.getFontIcon());
         btnBottom.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
             if (sel < 0) {

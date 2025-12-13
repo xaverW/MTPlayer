@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryStopDownload;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.tools.P2GetList;
 import javafx.event.ActionEvent;
@@ -157,7 +158,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
 
                         DownloadData download = getTableView().getItems().get(getIndex());
                         P2Open.playStoredFilm(download.getDestPathFile(),
-                                ProgConfig.SYSTEM_PROG_PLAY_FILME, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+                                ProgConfig.SYSTEM_PROG_PLAY_FILME, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
 
                         getTableView().refresh();
                         getTableView().requestFocus();
@@ -173,7 +174,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
 
                         DownloadData download = getTableView().getItems().get(getIndex());
                         P2Open.openDir(download.getDestPath(),
-                                ProgConfig.SYSTEM_PROG_OPEN_DIR, ProgIcons.ICON_BUTTON_FILE_OPEN.getImageView());
+                                ProgConfig.SYSTEM_PROG_OPEN_DIR, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
 
                         getTableView().refresh();
                         getTableView().requestFocus();

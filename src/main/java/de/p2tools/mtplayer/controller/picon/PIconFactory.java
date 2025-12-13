@@ -16,8 +16,8 @@ public class PIconFactory {
     public enum PICON implements P2IconFactory.P2Icon {
         BTN_HELP("mdi-help"),
         BTN_DIR_OPEN("mdi2f-folder-open-outline", 18),
-        BTN_PLUS("mdi-plus-circle-outline", 18),
-        BTN_MINUS("mdi-minus-circle-outline", 18),
+        BTN_PLUS_OUTLINE("mdi-plus-circle-outline", 18),
+        BTN_MINUS_OUTLINE("mdi-minus-circle-outline", 18),
         BTN_NEXT("mdi-chevron-double-right", 18),
         BTN_PREV("mdi-chevron-double-left", 18),
         BTN_QUIT("gmi-power-settings-new", 18),
@@ -27,6 +27,21 @@ public class PIconFactory {
         BTN_RESET("mdi-rotate-3d", 18),
         BTN_SEARCH("gmi-search", 20),
         BTN_EDIT("mdomz-settings", 20),
+        BTN_BACK("gmi-arrow-back-ios", 20),
+        BTN_FORWARD("gmi-arrow-forward-ios", 20),
+        BTN_QUIT_DIALOG("mdoal-forward", 20),
+        BTN_PLAY("gmi-play-arrow", 20),
+        BTN_UP_DOWN_H("mdi2p-pan-horizontal", 20),
+        BTN_STOP("gmi-clear", 20),
+        BTN_MINUS("mdmz-minus", 20),
+        BTN_PLUS("mdal-add", 20),
+        BTN_SEPARATOR("mdi2t-tilde", 20),
+        BTN_SEPARATOR_WIDTH("mdi-ray-start-end", 20),
+
+        BTN_TOP("gmi-vertical-align-top", 20),
+        BTN_UP("mdoal-arrow_upward", 20),
+        BTN_DOWN("mdoal-arrow_downward", 20),
+        BTN_BOTTOM("gmi-vertical-align-bottom", 20),
 
 
         ICON_BOOLEAN_ON("mdral-done_outline", 20),

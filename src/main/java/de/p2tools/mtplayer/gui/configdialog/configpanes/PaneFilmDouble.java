@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
@@ -147,7 +146,7 @@ public class PaneFilmDouble {
 
         Button btnAdd = new Button("");
         btnAdd.setTooltip(new Tooltip("Einen neuen Sender hinzufügen"));
-        btnAdd.setGraphic(ProgIcons.ICON_BUTTON_ADD.getImageView());
+        btnAdd.setGraphic(PIconFactory.PICON.BTN_PLUS.getFontIcon());
         btnAdd.setOnAction(event -> {
             String str = cboSender.getSelectionModel().getSelectedItem();
             if (str != null && !str.isEmpty() && !selList.contains(str)) {
@@ -159,7 +158,7 @@ public class PaneFilmDouble {
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Markierten Sender löschen"));
-        btnDel.setGraphic(ProgIcons.ICON_BUTTON_REMOVE.getImageView());
+        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(event -> {
             String str = lvSender.getSelectionModel().getSelectedItem();
             if (str != null) {
@@ -170,7 +169,7 @@ public class PaneFilmDouble {
 
         Button btnUp = new Button("");
         btnUp.setTooltip(new Tooltip("Markierten Sender nach oben schieben"));
-        btnUp.setGraphic(ProgIcons.ICON_BUTTON_MOVE_UP.getImageView());
+        btnUp.setGraphic(PIconFactory.PICON.BTN_UP.getFontIcon());
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -182,7 +181,7 @@ public class PaneFilmDouble {
 
         Button btnDown = new Button("");
         btnDown.setTooltip(new Tooltip("Markierten Sender nach unten schieben"));
-        btnDown.setGraphic(ProgIcons.ICON_BUTTON_MOVE_DOWN.getImageView());
+        btnDown.setGraphic(PIconFactory.PICON.BTN_DOWN.getFontIcon());
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {

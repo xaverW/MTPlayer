@@ -19,8 +19,8 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.load.LoadFactory;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.filter.FastFilter;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
@@ -137,7 +137,7 @@ public class MTPlayerController extends StackPane {
         progData.maskerPane.toFront();
         Button btnStop = progData.maskerPane.getButton();
         progData.maskerPane.setButtonText("");
-        btnStop.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnStop.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         btnStop.setOnAction(a -> P2LoadConst.stop.set(true));
     }
 

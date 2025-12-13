@@ -1,6 +1,6 @@
 package de.p2tools.mtplayer.controller.worker;
 
-import de.p2tools.mtplayer.controller.config.ProgIcons;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.geometry.Insets;
@@ -68,7 +68,7 @@ public class Busy {
         final Button busyBtnStop = new Button();
 
         // busy
-        busyBtnStop.setGraphic(ProgIcons.ICON_BUTTON_WORKER_STOP.getImageView());
+        busyBtnStop.setGraphic(PIconFactory.PICON.BTN_STOP.getFontIcon());
         busyBtnStop.getStyleClass().add("buttonVeryLow");
         busyBtnStop.setOnAction(a -> stopPropProperty().set(true));
         busyBtnStop.visibleProperty().bind(stopBtn);

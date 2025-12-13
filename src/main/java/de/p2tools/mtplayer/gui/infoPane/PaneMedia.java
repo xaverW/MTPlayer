@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningMediaFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.history.HistoryData;
@@ -179,7 +178,7 @@ public class PaneMedia extends VBox {
         });
 
         btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
-        btnClear.setGraphic(ProgIcons.ICON_BUTTON_CLEAR.getImageView());
+        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         btnClear.setOnAction(a -> {
             txtSearchMedia.clear();
             txtSearchAbo.clear();

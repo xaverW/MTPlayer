@@ -2,10 +2,10 @@ package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.TextFilter;
 import de.p2tools.mtplayer.controller.filter.TextFilterList;
+import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -103,7 +103,7 @@ public class PCboTextFilter extends HBox {
             final Label lblSomewhere = new Label();
 
             {
-                btnDel.setGraphic(ProgIcons.ICON_BUTTON_DEL_SW.getImageView());
+                btnDel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
                 btnDel.getStyleClass().add("buttonVerySmall");
                 hBox.setPadding(new Insets(0));
                 hBox.setSpacing(5);
