@@ -18,7 +18,10 @@ package de.p2tools.mtplayer.gui;
 
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
-import de.p2tools.mtplayer.controller.config.*;
+import de.p2tools.mtplayer.controller.config.PShortKeyFactory;
+import de.p2tools.mtplayer.controller.config.PShortcut;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
@@ -49,30 +52,38 @@ public class DownloadMenu {
         // Button
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnRefresh = new ToolBarButton(vBox,
-                "Downloads aktualisieren", "Liste der Downloads aktualisieren", ProgIcons.ICON_TOOLBAR_DOWNLOAD_REFRESH.getImageView());
+                "Downloads aktualisieren", "Liste der Downloads aktualisieren",
+                PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_REFRESH.getFontIcon());
         btnRefresh.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnStart = new ToolBarButton(vBox,
-                "Downloads Starten", "Markierte Downloads starten", ProgIcons.ICON_TOOLBAR_DOWNLOAD_START.getImageView());
+                "Downloads Starten", "Markierte Downloads starten",
+                PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_START.getFontIcon());
         final ToolBarButton btnStartAll = new ToolBarButton(vBox,
-                "Alle Downloads starten", "Alle Downloads starten", ProgIcons.ICON_TOOLBAR_DOWNLOAD_START_ALL.getImageView());
+                "Alle Downloads starten", "Alle Downloads starten",
+                PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_START_ALL.getFontIcon());
         final ToolBarButton btStartAllTime = new ToolBarButton(vBox,
-                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten", ProgIcons.ICON_TOOLBAR_DOWNLOAD_START_ALL_TIME.getImageView());
+                "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten",
+                PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_START_TIME.getFontIcon());
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnBack = new ToolBarButton(vBox,
-                "Downloads zurückstellen", "Markierte Downloads zurückstellen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_UNDO.getImageView());
+                "Downloads zurückstellen", "Markierte Downloads zurückstellen",
+                PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_UNDO.getFontIcon());
         final ToolBarButton btnDel = new ToolBarButton(vBox,
-                "Downloads löschen", "Markierte Downloads löschen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_DEL.getImageView());
+                "Downloads löschen", "Markierte Downloads löschen",
+                PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_DEL.getFontIcon());
         final ToolBarButton btnChange = new ToolBarButton(vBox,
-                "Downloads ändern", "Markierte Downloads ändern", ProgIcons.ICON_TOOLBAR_CONFIG.getImageView());
+                "Downloads ändern", "Markierte Downloads ändern",
+                PIconFactory.PICON.TOOLBAR_BTN_ABO_CONFIG.getFontIcon());
         final ToolBarButton btnClear = new ToolBarButton(vBox,
-                "Downloads aufräumen", "Liste der Downloads aufräumen", ProgIcons.ICON_TOOLBAR_DOWNLOAD_CLEAN.getImageView());
+                "Downloads aufräumen", "Liste der Downloads aufräumen",
+                PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_CLEAN.getFontIcon());
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
-                "Film Starten", "Gespeicherten Film abspielen", PIconFactory.PICON.TOOL_BTN_PLAY.getFontIcon());
+                "Film Starten", "Gespeicherten Film abspielen", PIconFactory.PICON.TOOLBAR_BTN_PLAY.getFontIcon());
 
         btnRefresh.setOnAction(a -> {
             AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();

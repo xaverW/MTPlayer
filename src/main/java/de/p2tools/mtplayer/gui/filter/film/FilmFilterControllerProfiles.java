@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.filter.film;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgIcons;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
@@ -86,7 +85,7 @@ public class FilmFilterControllerProfiles extends VBox {
     private void initButton() {
         btnLoadFilter.setOnAction(a -> loadFilter());
         btnLoadFilter.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
-        btnLoadFilter.setGraphic(ProgIcons.ICON_FILTER_LOAD.getImageView());
+        btnLoadFilter.setGraphic(PIconFactory.PICON.OWN_FILTER_LOAD.getFontIcon());
         btnLoadFilter.setTooltip(new Tooltip("Filterprofil wieder laden"));
 
         btnSaveFilter.setOnAction(a -> {
@@ -96,11 +95,11 @@ public class FilmFilterControllerProfiles extends VBox {
                 saveFilter();
             }
         });
-        btnSaveFilter.setGraphic(ProgIcons.ICON_FILTER_SAVE.getImageView());
+        btnSaveFilter.setGraphic(PIconFactory.PICON.OWN_FILTER_SAVE.getFontIcon());
         btnSaveFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung im Filterprofil speichern"));
 
         btnNewFilter.setOnAction(a -> newFilter());
-        btnNewFilter.setGraphic(ProgIcons.ICON_FILTER_NEW.getImageView());
+        btnNewFilter.setGraphic(PIconFactory.PICON.OWN_FILTER_NEW.getFontIcon());
         btnNewFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als neues Filterprofil anlegen"));
     }
 

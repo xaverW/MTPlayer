@@ -60,16 +60,34 @@ public class PIconFactory {
         TABLE_DOWNLOAD_STOP("gmi-pause", 18),
         TABLE_DOWNLOAD_OPEN_DIR("mdi2f-folder-open-outline", 18),
 
-        TOOL_BTN_PLAY("mdmz-play_arrow", 25),
-        TOOL_BTN_PLAY_ALL("gmi-fast-forward", 25),
-        TOOL_BTN_RECORDE("gmi-fiber-manual-record", 25),
+        TOOLBAR_BTN_PLAY("mdmz-play_arrow", 25),
+        TOOLBAR_BTN_PLAY_ALL("gmi-fast-forward", 25),
+        TOOLBAR_BTN_RECORDE("gmi-fiber-manual-record", 25),
+        TOOLBAR_BTN_DOWNLOAD_CLEAN("mdal-cleaning_services", 25),
+        TOOLBAR_BTN_DOWNLOAD_START("gmi-arrow-drop-down", 25),
+        TOOLBAR_BTN_DOWNLOAD_DEL("gmi-clear", 25),
+
+        TOOLBAR_BTN_DOWNLOAD_UNDO("mdi2a-arrow-left-top-bold", 25),
+        TOOLBAR_BTN_DOWNLOAD_REFRESH("mdi-rotate-3d", 25),
+        TOOLBAR_BTN_DOWNLOAD_START_ALL("mdi2t-transfer-down", 25),
+        TOOLBAR_BTN_DOWNLOAD_START_TIME("mdi2t-timer-sand", 25),
+
+        TOOLBAR_BTN_ABO_CONFIG("mdomz-settings", 25),
+        TOOLBAR_BTN_ABO_ADD("gmi-add", 25),
+        TOOLBAR_BTN_ABO_ON("gmi-play-arrow", 25),
+        TOOLBAR_BTN_ABO_OFF("gmi-pause", 25),
+        TOOLBAR_BTN_ABO_DEL("gmi-clear", 25),
 
 
-        TOOL_BTN_BOOKMARK_ADD("mdi-bookmark-plus-outline", 25),
-        TOOL_BTN_BOOKMARK_DEL("mdi2b-bookmark-minus-outline", 25),
-        TOOL_BTN_BOOKMARK_DAL_ALL("mdi2b-bookmark-off-outline", 25),
-        TOOL_BTN_BOOKMARK_SHOW("mdi2b-bookmark-outline", 25),
-        TOOL_BTN_BOOKMARK_SHOW_DIALOG("mdi2c-comment-bookmark-outline", 25),
+        TOOLBAR_BTN_BOOKMARK_ADD("mdi-bookmark-plus-outline", 25),
+        TOOLBAR_BTN_BOOKMARK_DEL("mdi2b-bookmark-minus-outline", 25),
+        TOOLBAR_BTN_BOOKMARK_DAL_ALL("mdi2b-bookmark-off-outline", 25),
+        TOOLBAR_BTN_BOOKMARK_SHOW("mdi2b-bookmark-outline", 25),
+        TOOLBAR_BTN_BOOKMARK_SHOW_DIALOG("mdi2c-comment-bookmark-outline", 25),
+
+        OWN_FILTER_LOAD("mdi2t-tray-arrow-up", 25),
+        OWN_FILTER_SAVE("mdi2t-tray-arrow-down", 25),
+        OWN_FILTER_NEW("gmi-add", 25),
 
         TABLE_FILE_DEL("gmi-clear", 15),
         TABLE_DIR_OPEN("mdi2f-folder-open-outline", 16),

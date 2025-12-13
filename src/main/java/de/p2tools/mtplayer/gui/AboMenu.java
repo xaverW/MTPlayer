@@ -50,7 +50,8 @@ public class AboMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btNew = new ToolBarButton(vBox,
-                "Neues Abo", "Neus Abo anlegen", ProgIcons.ICON_TOOLBAR_ABO_NEW.getImageView());
+                "Neues Abo", "Neus Abo anlegen",
+                PIconFactory.PICON.TOOLBAR_BTN_ABO_ADD.getFontIcon());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -58,13 +59,17 @@ public class AboMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btOn = new ToolBarButton(vBox,
-                "Abos einschalten", "Markierte Abos einschalten", ProgIcons.ICON_TOOLBAR_ABO_ON.getImageView());
+                "Abos einschalten", "Markierte Abos einschalten",
+                PIconFactory.PICON.TOOLBAR_BTN_ABO_ON.getFontIcon());
         final ToolBarButton btOff = new ToolBarButton(vBox,
-                "Abos ausschalten", "Markierte Abos ausschalten", ProgIcons.ICON_TOOLBAR_ABO_OFF.getImageView());
+                "Abos ausschalten", "Markierte Abos ausschalten",
+                PIconFactory.PICON.TOOLBAR_BTN_ABO_OFF.getFontIcon());
         final ToolBarButton btDel = new ToolBarButton(vBox,
-                "Abos löschen", "Markierte Abos löschen", ProgIcons.ICON_TOOLBAR_ABO_DEL.getImageView());
+                "Abos löschen", "Markierte Abos löschen",
+                PIconFactory.PICON.TOOLBAR_BTN_ABO_DEL.getFontIcon());
         final ToolBarButton btChange = new ToolBarButton(vBox,
-                "Abos ändern", "Markierte Abos ändern", ProgIcons.ICON_TOOLBAR_CONFIG.getImageView());
+                "Abos ändern", "Markierte Abos ändern",
+                PIconFactory.PICON.TOOLBAR_BTN_ABO_CONFIG.getFontIcon());
 
         btNew.setOnAction(a -> {
             AboListFactory.addNewAbo(ProgConst.LIST_FILM_AUDIO, "Neu", "", "", "");
