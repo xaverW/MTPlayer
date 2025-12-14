@@ -98,7 +98,9 @@ public class ProgStartBeforeGui {
                 ProgConfig.SYSTEM_ICON_COLOR_THEME_1,
                 ProgConfig.SYSTEM_ICON_COLOR,
 
-                new String[]{"de/p2tools/mtplayer/css/css_0/mtfx.css", "de/p2tools/mtplayer/css/css_0/toolButton.css"},
+                new String[]{"de/p2tools/mtplayer/css/css_0/mtfx.css",
+                        "de/p2tools/mtplayer/css/css_0/buttonTool.css",
+                        "de/p2tools/mtplayer/css/css_0/buttonStartMenu.css"},
                 new String[]{"de/p2tools/mtplayer/css/css_0/mtfx-dark.css"},
                 ProgData.getInstance().cssProp,
                 ProgConfig.SYSTEM_FONT_SIZE,

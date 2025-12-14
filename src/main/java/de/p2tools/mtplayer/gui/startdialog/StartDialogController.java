@@ -58,7 +58,10 @@ public class StartDialogController extends P2DialogExtra {
     private static final String STR_DOWN = "Ziel";
     private static final String STR_PATH = "Pfade";
 
-    private enum State {START_1, START_2, COLOR_MODE, UPDATE, GEO, FILM, STATION, DOWN, PATH}
+    private enum State {
+        START_1, START_2,
+        COLOR_MODE, UPDATE, GEO, FILM, STATION, DOWN, PATH
+    }
 
     private State aktState = State.START_1;
 
@@ -145,7 +148,7 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void initTopButton(Button btn, State state) {
-        btn.getStyleClass().addAll("btnProgMenu", "btnFuncStartDialog");
+        btn.getStyleClass().addAll("btnStartMenu");
         btn.setAlignment(Pos.CENTER);
         btn.setMaxWidth(Double.MAX_VALUE);
         btn.setOnAction(a -> {
@@ -363,16 +366,16 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void setButtonStyle(Button btnSel) {
-        btnStart1.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnStart2.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnColorMode.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnUpdate.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnGeo.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnFilm.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnStation.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnDown.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnPath.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialog");
-        btnSel.getStyleClass().setAll("btnProgMenu", "btnFuncStartDialogSel");
+        btnStart1.getStyleClass().setAll("btnStartMenu");
+        btnStart2.getStyleClass().setAll("btnStartMenu");
+        btnColorMode.getStyleClass().setAll("btnStartMenu");
+        btnUpdate.getStyleClass().setAll("btnStartMenu");
+        btnGeo.getStyleClass().setAll("btnStartMenu");
+        btnFilm.getStyleClass().setAll("btnStartMenu");
+        btnStation.getStyleClass().setAll("btnStartMenu");
+        btnDown.getStyleClass().setAll("btnStartMenu");
+        btnPath.getStyleClass().setAll("btnStartMenu");
+        btnSel.getStyleClass().setAll("btnStartMenu", "btnStartMenuSel");
     }
 
     private void initTooltip() {
