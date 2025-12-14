@@ -98,11 +98,21 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     });
 
                     if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.get()) {
-                        btnDownStart.setMinHeight(18);
-                        btnDownStart.setMaxHeight(18);
-                        btnDownDel.setMinHeight(18);
-                        btnDownDel.setMaxHeight(18);
+                        btnDownStart.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownStart.setMinHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownDel.setMinHeight(Table.ROW_HEIGHT_MIN);
+
+                    } else {
+                        btnDownStart.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownStart.setMinHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
+
+                        btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START_BIG.getFontIcon());
+                        btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL_BIG.getFontIcon());
                     }
+
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);
                     setGraphic(hbox);
 
@@ -138,11 +148,21 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     });
 
                     if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.get()) {
-                        btnDownStop.setMinHeight(18);
-                        btnDownStop.setMaxHeight(18);
-                        btnDownDel.setMinHeight(18);
-                        btnDownDel.setMaxHeight(18);
+                        btnDownStop.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownStop.setMinHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownDel.setMinHeight(Table.ROW_HEIGHT_MIN);
+
+                    } else {
+                        btnDownStop.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownStop.setMinHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
+
+                        btnDownStop.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_STOP_BIG.getFontIcon());
+                        btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL_BIG.getFontIcon());
                     }
+
                     hbox.getChildren().addAll(btnDownStop, btnDownDel);
                     setGraphic(hbox);
 
@@ -180,11 +200,21 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     });
 
                     if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.get()) {
-                        btnFilmStart.setMinHeight(18);
-                        btnFilmStart.setMaxHeight(18);
-                        btnOpenDirectory.setMinHeight(18);
-                        btnOpenDirectory.setMaxHeight(18);
+                        btnFilmStart.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                        btnFilmStart.setMinHeight(Table.ROW_HEIGHT_MIN);
+                        btnOpenDirectory.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                        btnOpenDirectory.setMinHeight(Table.ROW_HEIGHT_MIN);
+
+                    } else {
+                        btnFilmStart.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                        btnFilmStart.setMinHeight(Table.ROW_HEIGHT_MAX);
+                        btnOpenDirectory.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                        btnOpenDirectory.setMinHeight(Table.ROW_HEIGHT_MAX);
+
+                        btnFilmStart.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY_BIG.getFontIcon());
+                        btnOpenDirectory.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_OPEN_DIR_BIG.getFontIcon());
                     }
+
                     hbox.getChildren().addAll(btnFilmStart, btnOpenDirectory);
                     setGraphic(hbox);
 
@@ -222,11 +252,21 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     });
 
                     if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_DOWNLOAD.get()) {
-                        btnDownStart.setMinHeight(18);
-                        btnDownStart.setMaxHeight(18);
-                        btnDownDel.setMinHeight(18);
-                        btnDownDel.setMaxHeight(18);
+                        btnDownStart.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownStart.setMinHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                        btnDownDel.setMinHeight(Table.ROW_HEIGHT_MIN);
+
+                    } else {
+                        btnDownStart.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownStart.setMinHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                        btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
+
+                        btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START_BIG.getFontIcon());
+                        btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL_BIG.getFontIcon());
                     }
+
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);
                     setGraphic(hbox);
 

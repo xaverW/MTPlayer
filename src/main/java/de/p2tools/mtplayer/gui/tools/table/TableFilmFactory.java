@@ -204,15 +204,28 @@ public class TableFilmFactory {
                 });
 
                 if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_FILM.get()) {
-                    btnPlay.setMaxHeight(18);
-                    btnPlay.setMinHeight(18);
-                    btnSave.setMaxHeight(18);
-                    btnSave.setMinHeight(18);
-                    btnBookmark.setMaxHeight(18);
-                    btnBookmark.setMinHeight(18);
-                    btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
+                    btnPlay.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                    btnPlay.setMinHeight(Table.ROW_HEIGHT_MIN);
+                    btnSave.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                    btnSave.setMinHeight(Table.ROW_HEIGHT_MIN);
+                    btnBookmark.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                    btnBookmark.setMinHeight(Table.ROW_HEIGHT_MIN);
+
                 } else {
+                    btnPlay.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                    btnPlay.setMinHeight(Table.ROW_HEIGHT_MAX);
+                    btnSave.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                    btnSave.setMinHeight(Table.ROW_HEIGHT_MAX);
+                    btnBookmark.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                    btnBookmark.setMinHeight(Table.ROW_HEIGHT_MAX);
+
                     btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY_BIG.getFontIcon());
+                    btnSave.setGraphic(PIconFactory.PICON.TABLE_FILM_SAVE_BIG.getFontIcon());
+                    if (film.isBookmark()) {
+                        btnBookmark.setGraphic(PIconFactory.PICON.TABLE_BOOKMARK_DEL_BIG.getFontIcon());
+                    } else {
+                        btnBookmark.setGraphic(PIconFactory.PICON.TABLE_BOOKMARK_ADD_BIG.getFontIcon());
+                    }
                 }
 
                 hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);

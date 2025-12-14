@@ -25,6 +25,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class Table {
+    public static int ROW_HEIGHT_MIN = 18;
+    public static final int ROW_HEIGHT_MAX = 22;
+
     public enum TABLE_ENUM {
         FILM, AUDIO, LIVE_FILM, DOWNLOAD, ABO, BLACKLIST, FILMFILTER, BOOKMARK
     }

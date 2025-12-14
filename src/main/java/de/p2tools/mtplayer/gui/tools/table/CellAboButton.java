@@ -90,10 +90,24 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 });
 
                 if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_ABO.get()) {
-                    btnActivate.setMaxHeight(18);
-                    btnActivate.setMinHeight(18);
-                    btnDel.setMaxHeight(18);
-                    btnDel.setMinHeight(18);
+                    btnActivate.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                    btnActivate.setMinHeight(Table.ROW_HEIGHT_MIN);
+                    btnDel.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                    btnDel.setMinHeight(Table.ROW_HEIGHT_MIN);
+
+                } else {
+                    btnActivate.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                    btnActivate.setMinHeight(Table.ROW_HEIGHT_MAX);
+                    btnDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                    btnDel.setMinHeight(Table.ROW_HEIGHT_MAX);
+
+                    if (aboData.isActive()) {
+                        // dann ausschalen
+                        btnActivate.setGraphic(PIconFactory.PICON.TABLE_ABO_OFF_BIG.getFontIcon());
+                    } else {
+                        btnActivate.setGraphic(PIconFactory.PICON.TABLE_ABO_ON_BIG.getFontIcon());
+                    }
+                    btnDel.setGraphic(PIconFactory.PICON.TABLE_ABO_DEL_BIG.getFontIcon());
                 }
 
                 hbox.getChildren().addAll(btnActivate, btnDel/*, btnBookmark*/);

@@ -64,10 +64,19 @@ public class CellLiveFilmButton<S, T> extends TableCell<S, T> {
                 btnSave.setGraphic(PIconFactory.PICON.TABLE_FILM_SAVE.getFontIcon());
 
                 if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_LIVE.get()) {
-                    btnPlay.setMaxHeight(18);
-                    btnPlay.setMinHeight(18);
-                    btnSave.setMaxHeight(18);
-                    btnSave.setMinHeight(18);
+                    btnPlay.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                    btnPlay.setMinHeight(Table.ROW_HEIGHT_MIN);
+                    btnSave.setMaxHeight(Table.ROW_HEIGHT_MIN);
+                    btnSave.setMinHeight(Table.ROW_HEIGHT_MIN);
+
+                } else {
+                    btnPlay.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                    btnPlay.setMinHeight(Table.ROW_HEIGHT_MAX);
+                    btnSave.setMaxHeight(Table.ROW_HEIGHT_MAX);
+                    btnSave.setMinHeight(Table.ROW_HEIGHT_MAX);
+
+                    btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY_BIG.getFontIcon());
+                    btnSave.setGraphic(PIconFactory.PICON.TABLE_FILM_SAVE_BIG.getFontIcon());
                 }
 
                 btnPlay.setOnAction(e -> {
