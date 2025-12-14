@@ -1,0 +1,82 @@
+.btnStartMenu{
+    -fx-padding: 2 25 2 25;
+    -fx-border-width: 1;
+    -fx-border-color: #4d4d4d;
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+.btnStartMenu:focused{
+    -fx-padding: 2 25 2 25;
+    -fx-border-width: 1;
+    -fx-border-color: #4d4d4d;
+}
+.btnStartMenu:hover{
+    -fx-padding: 1 24 1 24;
+    -fx-border-width: 2;
+    -fx-border-color: #0052d6;
+}
+.btnStartMenu:focused:hover{
+    -fx-padding: 1 24 1 24;
+    -fx-border-width: 2;
+    -fx-border-color: #0052d6;
+}
+.btnStartMenu:pressed{
+    -fx-padding: 0 23 0 23;
+    -fx-border-width: 3;
+    -fx-border-color: #0052d6;
+}
+.btnStartMenu:focused:pressed{
+    -fx-padding: 0 23 0 23;
+    -fx-border-width: 3;
+    -fx-border-color: #0052d6;
+}
+
+.btnStartMenuSel{
+    -fx-padding: 1 24 1 24;
+    -fx-border-width: 2;
+    -fx-border-color: #0052d6;
+    -fx-background-color: #dddddd;
+    -fx-text-fill: -text-color-blue;
+}
+.btnStartMenuSel:focused{
+    -fx-padding: 1 24 1 24;
+    -fx-border-width: 2;
+    -fx-border-color: #0052d6;
+    -fx-background-color: #dddddd;
+}
+.btnStartMenuSel:hover{
+    -fx-padding: 1 24 1 24;
+    -fx-border-width: 2;
+    -fx-border-color: #0052d6;
+    -fx-background-color: #dddddd;
+}
+.btnStartMenuSel:focused:hover{
+    -fx-padding: 1 24 1 24;
+    -fx-border-width: 2;
+    -fx-border-color: #0052d6;
+    -fx-background-color: #dddddd;
+}
+.btnStartMenuSel:pressed{
+    -fx-padding: 0 23 0 23;
+    -fx-border-width: 3;
+    -fx-border-color: #0052d6;
+    -fx-background-color: #dddddd;
+}
+.btnStartMenuSel:focused:pressed{
+    -fx-padding: 0 23 0 23;
+    -fx-border-width: 3;
+    -fx-border-color: #0052d6;
+    -fx-background-color: #dddddd;
+}
+
+.btnStartMenu > .arrow-button{
+    /*Pfeil ausblenden*/
+    -fx-padding: 0;
+}
+.btnStartMenu > .arrow-button > .arrow{
+    /*Pfeil ausblenden*/
+    -fx-padding: 0;
+}

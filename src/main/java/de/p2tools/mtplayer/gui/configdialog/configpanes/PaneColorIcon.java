@@ -52,27 +52,30 @@ public class PaneColorIcon {
     }
 
     public void close() {
-        rbDark.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK);
-        rb1.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ICON_COLOR_THEME_1);
+        rbDark.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
+        rb1.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ICON_THEME_1);
     }
 
     public void make(Collection<TitledPane> result) {
         ToggleGroup tgDark = new ToggleGroup();
         rbDark.setToggleGroup(tgDark);
         rbLight.setToggleGroup(tgDark);
-        rbDark.setSelected(true);
+        rbDark.setSelected(ProgConfig.SYSTEM_THEME_DARK.get());
+        rbLight.setSelected(!ProgConfig.SYSTEM_THEME_DARK.get());
+
         ToggleGroup tg1 = new ToggleGroup();
         rb1.setToggleGroup(tg1);
         rb2.setToggleGroup(tg1);
-        rb1.setSelected(true);
+        rb1.setSelected(ProgConfig.SYSTEM_ICON_THEME_1.get());
+        rb2.setSelected(!ProgConfig.SYSTEM_ICON_THEME_1.get());
 
-        rbDark.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK);
+        rbDark.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
         final Button btnHelpTheme = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
-        rb1.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ICON_COLOR_THEME_1);
+
+        rb1.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ICON_THEME_1);
         final Button btnHelpIcon = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.BLACK_WHITE_ICON);
-
 
         btnReset.setOnAction(a -> reset());
 
@@ -99,12 +102,12 @@ public class PaneColorIcon {
         gridPane.add(new Label("Dark:"), 0, ++row);
 
         gridPane.add(new Label("Icon-Theme 1"), 1, row);
-        HBox hBoxD1 = addColor(ProgConfig.SYSTEM_ICON_COLOR_THEME_DARK_1);
+        HBox hBoxD1 = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_1);
         gridPane.add(hBoxD1, 2, row, 2, 1);
         GridPane.setHalignment(hBoxD1, HPos.RIGHT);
 
         gridPane.add(new Label("Icon-Theme 2"), 1, ++row);
-        HBox hBoxD2 = addColor(ProgConfig.SYSTEM_ICON_COLOR_THEME_DARK_2);
+        HBox hBoxD2 = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_2);
         gridPane.add(hBoxD2, 2, row, 2, 1);
         GridPane.setHalignment(hBoxD2, HPos.RIGHT);
 
@@ -113,12 +116,12 @@ public class PaneColorIcon {
         gridPane.add(new Label("Light:"), 0, ++row);
 
         gridPane.add(new Label("Icon-Theme 1"), 1, row);
-        HBox hBoxL1 = addColor(ProgConfig.SYSTEM_ICON_COLOR_THEME_LIGHT_1);
+        HBox hBoxL1 = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_1);
         gridPane.add(hBoxL1, 2, row, 2, 1);
         GridPane.setHalignment(hBoxL1, HPos.RIGHT);
 
         gridPane.add(new Label("Icon-Theme 2"), 1, ++row);
-        HBox hBoxL2 = addColor(ProgConfig.SYSTEM_ICON_COLOR_THEME_LIGHT_2);
+        HBox hBoxL2 = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2);
         gridPane.add(hBoxL2, 2, row, 2, 1);
         GridPane.setHalignment(hBoxL2, HPos.RIGHT);
 
@@ -139,10 +142,10 @@ public class PaneColorIcon {
     }
 
     private void reset() {
-        ProgConfig.SYSTEM_ICON_COLOR_THEME_DARK_1.setValue(ProgConst.COLOR_DARK_1);
-        ProgConfig.SYSTEM_ICON_COLOR_THEME_DARK_2.setValue(ProgConst.COLOR_DARK_1);
-        ProgConfig.SYSTEM_ICON_COLOR_THEME_LIGHT_1.setValue(ProgConst.COLOR_LIGHT_1);
-        ProgConfig.SYSTEM_ICON_COLOR_THEME_LIGHT_2.setValue(ProgConst.COLOR_LIGHT_2);
+        ProgConfig.SYSTEM_ICON_THEME_DARK_1.setValue(ProgConst.COLOR_DARK_1);
+        ProgConfig.SYSTEM_ICON_THEME_DARK_2.setValue(ProgConst.COLOR_DARK_2);
+        ProgConfig.SYSTEM_ICON_THEME_LIGHT_1.setValue(ProgConst.COLOR_LIGHT_1);
+        ProgConfig.SYSTEM_ICON_THEME_LIGHT_2.setValue(ProgConst.COLOR_LIGHT_2);
         ProgData.getInstance().pIconWorker.setColor();
     }
 
@@ -151,8 +154,10 @@ public class PaneColorIcon {
         colorPicker.getStyleClass().add("split-button");
         colorPicker.setMinHeight(Region.USE_PREF_SIZE);
 
-        Color c = Color.web(stringProperty.get());
-        colorPicker.setValue(c);
+        stringProperty.addListener((u, o, n) -> {
+            colorPicker.setValue(Color.web(stringProperty.get()));
+        });
+        colorPicker.setValue(Color.web(stringProperty.get()));
         colorPicker.setOnAction(a -> {
             Color color = colorPicker.getValue();
             stringProperty.setValue(color.toString());

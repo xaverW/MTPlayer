@@ -20,8 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
-import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -35,21 +33,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class StartPaneColorMode {
-    private final Stage stage;
-    private final P2ToggleSwitch tglDarkTheme = new P2ToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
-    private final P2ToggleSwitch tglBlackWhiteIcon = new P2ToggleSwitch("Schwarz-Weiße Icons");
-    private final HBox hBoxImage0 = new HBox(); // !weiß / !dark
-    private final HBox hBoxImage1 = new HBox(); // weiß / !dark
-    private final HBox hBoxImage2 = new HBox(); // !weiß / dark
-    private final HBox hBoxImage3 = new HBox(); // weiß / dark
+    private final HBox hBoxDark1 = new HBox();
+    private final HBox hBoxDark2 = new HBox();
+    private final HBox hBoxLight1 = new HBox();
+    private final HBox hBoxLight2 = new HBox();
 
     public StartPaneColorMode(Stage stage) {
-        this.stage = stage;
     }
 
     public void close() {
-        tglDarkTheme.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK_START);
-        tglBlackWhiteIcon.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START);
     }
 
     public TitledPane make() {
@@ -66,29 +58,21 @@ public class StartPaneColorMode {
         hBox.getChildren().add(lbl);
         vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox);
 
-        tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK_START);
-        tglBlackWhiteIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START);
-
-        ProgConfig.SYSTEM_COLOR_THEME_DARK_START.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_THEME_DARK_START.addListener((u, o, n) -> {
             setHBox();
         });
-        ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_ICON_THEME_1_START.addListener((u, o, n) -> {
             setHBox();
         });
-
-        VBox vTgl = new VBox(P2LibConst.SPACING_VBOX);
-        vTgl.getChildren().addAll(tglDarkTheme, tglBlackWhiteIcon);
-        vBox.getChildren().add(vTgl);
 
         final GridPane gridPaneGui = new GridPane();
         gridPaneGui.setHgap(3);
         gridPaneGui.setVgap(3);
-//        gridPaneGui.setPadding(new Insets(P2LibConst.PADDING));
 
-        gridPaneGui.add(hBoxImage0, 0, 0);
-        gridPaneGui.add(hBoxImage1, 1, 0);
-        gridPaneGui.add(hBoxImage2, 0, 1);
-        gridPaneGui.add(hBoxImage3, 1, 1);
+        gridPaneGui.add(hBoxLight1, 0, 0);
+        gridPaneGui.add(hBoxLight2, 1, 0);
+        gridPaneGui.add(hBoxDark1, 0, 1);
+        gridPaneGui.add(hBoxDark2, 1, 1);
 
         gridPaneGui.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcPrefSize());
@@ -102,112 +86,84 @@ public class StartPaneColorMode {
     }
 
     private void setHBox() {
-        int i;
-        if (!ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.get() && !ProgConfig.SYSTEM_COLOR_THEME_DARK_START.get()) {
-            i = 0;
-        } else if (ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.get() && !ProgConfig.SYSTEM_COLOR_THEME_DARK_START.get()) {
-            i = 1;
-        } else if (!ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.get() && ProgConfig.SYSTEM_COLOR_THEME_DARK_START.get()) {
-            i = 2;
-        } else {
-            i = 3;
-        }
-
         final String colorSel = "#4682B4;";
         final String color = "transparent;";
 
-        switch (i) {
-            case 0 -> {
-                hBoxImage0.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage3.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-            }
-            case 1 -> {
-                hBoxImage0.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage1.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage3.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-            }
-            case 2 -> {
-                hBoxImage0.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage2.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage3.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-            }
-            case 3 -> {
-                hBoxImage0.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-                hBoxImage3.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
-            }
+        if (ProgConfig.SYSTEM_THEME_DARK_START.get() && ProgConfig.SYSTEM_ICON_THEME_1_START.get()) {
+            hBoxDark1.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxDark2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxLight1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxLight2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+        } else if (ProgConfig.SYSTEM_THEME_DARK_START.get() && !ProgConfig.SYSTEM_ICON_THEME_1_START.get()) {
+            hBoxDark1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxDark2.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxLight1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxLight2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+        } else if (!ProgConfig.SYSTEM_THEME_DARK_START.get() && ProgConfig.SYSTEM_ICON_THEME_1_START.get()) {
+            hBoxDark1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxDark2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxLight1.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxLight2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+        } else {
+            hBoxDark1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxDark2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxLight1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
+            hBoxLight2.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
         }
     }
 
     private void makeImage() {
         final int size = 300;
         ImageView iv0 = new ImageView();
-        hBoxImage0.getChildren().add(iv0);
-        String path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 0 + ".png";
+        String path = "/de/p2tools/mtplayer/res/startdialog/gui_dark_1.png";
         Image image = new Image(path, size, size, true, true);
         iv0.setSmooth(true);
         iv0.setImage(image);
-        iv0.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                tglBlackWhiteIcon.setSelected(false);
-                tglDarkTheme.setSelected(false);
-                setHBox();
-                event.consume();
-            }
+        iv0.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ProgConfig.SYSTEM_THEME_DARK_START.setValue(true);
+            ProgConfig.SYSTEM_ICON_THEME_1_START.setValue(true);
+            setHBox();
+            event.consume();
         });
+        hBoxDark1.getChildren().add(iv0);
 
         ImageView iv1 = new ImageView();
-        hBoxImage1.getChildren().add(iv1);
-        path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 1 + ".png";
+        hBoxDark2.getChildren().add(iv1);
+        path = "/de/p2tools/mtplayer/res/startdialog/gui_dark_2.png";
         image = new Image(path, size, size, true, true);
         iv1.setSmooth(true);
         iv1.setImage(image);
-        iv1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                tglBlackWhiteIcon.setSelected(true);
-                tglDarkTheme.setSelected(false);
-                setHBox();
-                event.consume();
-            }
+        iv1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ProgConfig.SYSTEM_THEME_DARK_START.setValue(true);
+            ProgConfig.SYSTEM_ICON_THEME_1_START.setValue(false);
+            setHBox();
+            event.consume();
         });
 
         ImageView iv2 = new ImageView();
-        hBoxImage2.getChildren().add(iv2);
-        path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 2 + ".png";
+        hBoxLight1.getChildren().add(iv2);
+        path = "/de/p2tools/mtplayer/res/startdialog/gui_light_1.png";
         image = new Image(path, size, size, true, true);
         iv2.setSmooth(true);
         iv2.setImage(image);
-        iv2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                tglBlackWhiteIcon.setSelected(false);
-                tglDarkTheme.setSelected(true);
-                setHBox();
-                event.consume();
-            }
+        iv2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ProgConfig.SYSTEM_THEME_DARK_START.setValue(false);
+            ProgConfig.SYSTEM_ICON_THEME_1_START.setValue(true);
+            setHBox();
+            event.consume();
         });
 
         ImageView iv3 = new ImageView();
-        hBoxImage3.getChildren().add(iv3);
-        path = "/de/p2tools/mtplayer/res/startdialog/gui_color_" + 3 + ".png";
+        hBoxLight2.getChildren().add(iv3);
+        path = "/de/p2tools/mtplayer/res/startdialog/gui_light_2.png";
         image = new Image(path, size, size, true, true);
         iv3.setSmooth(true);
         iv3.setImage(image);
-        iv3.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                tglBlackWhiteIcon.setSelected(true);
-                tglDarkTheme.setSelected(true);
-                setHBox();
-                event.consume();
-            }
+        iv3.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ProgConfig.SYSTEM_THEME_DARK_START.setValue(false);
+            ProgConfig.SYSTEM_ICON_THEME_1_START.setValue(false);
+            setHBox();
+            event.consume();
         });
     }
 }

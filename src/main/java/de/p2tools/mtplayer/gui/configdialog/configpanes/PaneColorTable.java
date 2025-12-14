@@ -49,11 +49,11 @@ public class PaneColorTable {
     }
 
     public void close() {
-        tglDarkTheme.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK);
+        tglDarkTheme.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
     }
 
     public void make(Collection<TitledPane> result) {
-        tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK);
+        tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
         final Button btnHelpTheme = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
         final Button btnHelpIcon = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
@@ -67,7 +67,7 @@ public class PaneColorTable {
         tableViewBackground.setPrefHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableViewBackground.setItems(ProgColorList.getColorListBackground());
 
-        ProgConfig.SYSTEM_COLOR_THEME_DARK.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_THEME_DARK.addListener((u, o, n) -> {
             ProgColorList.setColorTheme();
             P2TableFactory.refreshTable(tableViewFont);
             P2TableFactory.refreshTable(tableViewBackground);
