@@ -206,6 +206,7 @@ public class TableDownload extends PTable<DownloadData> {
 
         nrColumn.setPrefWidth(50);
         filmNrColumn.setPrefWidth(70);
+        buttonColumn.setPrefWidth(110);
         senderColumn.setPrefWidth(80);
         themeColumn.setPrefWidth(180);
         titleColumn.setPrefWidth(230);

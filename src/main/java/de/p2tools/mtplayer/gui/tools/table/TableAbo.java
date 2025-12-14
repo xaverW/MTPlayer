@@ -163,6 +163,8 @@ public class TableAbo extends PTable<AboData> {
         genDateColumn.setCellValueFactory(new PropertyValueFactory<>("genDate"));
         genDateColumn.getStyleClass().add("alignCenter");
 
+        startColumn.setPrefWidth(110);
+
         getColumns().addAll(
                 nrColumn, activeColumn, listColumn,
                 hitColumn, nameColumn, startColumn, resColumn, senderColumn,

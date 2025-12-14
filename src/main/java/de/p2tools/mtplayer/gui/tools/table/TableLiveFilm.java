@@ -147,9 +147,9 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
 
         nrColumn.setPrefWidth(50);
         channelColumn.setPrefWidth(80);
+        startColumn.setPrefWidth(110);
         themeColumn.setPrefWidth(180);
-        titleColumn.setPrefWidth(230);
-        startColumn.setPrefWidth(150);
+        titleColumn.setPrefWidth(180);
 
         getColumns().addAll(
                 nrColumn,
