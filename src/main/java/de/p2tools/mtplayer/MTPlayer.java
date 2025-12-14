@@ -122,7 +122,7 @@ public class MTPlayer extends Application {
                 ProgQuit.quit(false);
             });
 
-            ProgConfig.SYSTEM_COLOR_THEME_DARK.addListener((u, o, n) -> ProgColorList.setColorTheme());
+            ProgConfig.SYSTEM_THEME_DARK.addListener((u, o, n) -> ProgColorList.setColorTheme());
             PShortKeyFactory.addShortKey(scene);
             P2CssFactory.addP2CssToScene(scene); // und jetzt noch CSS einstellen
 
@@ -135,11 +135,10 @@ public class MTPlayer extends Application {
             });
 
             primaryStage.show();
-
             if (ProgData.firstProgramStart) {
                 // dann gabs den Startdialog
-                ProgConfig.SYSTEM_COLOR_THEME_DARK.set(ProgConfig.SYSTEM_COLOR_THEME_DARK_START.get());
-                ProgConfig.SYSTEM_ICON_COLOR_THEME_1.set(ProgConfig.SYSTEM_ICON_COLOR_THEME_1_START.get());
+                ProgConfig.SYSTEM_THEME_DARK.set(ProgConfig.SYSTEM_THEME_DARK_START.get());
+                ProgConfig.SYSTEM_ICON_THEME_1.set(ProgConfig.SYSTEM_ICON_THEME_1_START.get());
             }
         } catch (final Exception e) {
             e.printStackTrace();

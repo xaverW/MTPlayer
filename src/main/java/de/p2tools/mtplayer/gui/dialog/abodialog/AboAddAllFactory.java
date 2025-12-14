@@ -227,7 +227,7 @@ public class AboAddAllFactory {
             addAboDto.btnAll.setStyle("-fx-text-fill: " + c);
 
         } else {
-            if (ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue()) {
+            if (ProgConfig.SYSTEM_THEME_DARK.getValue()) {
                 addAboDto.btnAll.setStyle("-fx-text-fill: white");
             } else {
                 addAboDto.btnAll.setStyle("-fx-text-fill: black");

@@ -344,28 +344,28 @@ public class HelpText {
             """
                     "Sender" und "Thema"
                     Hier kann man auswählen, welche Sender und welches Thema angezeigt werden soll.
-
+                    
                     Das Textfeld [Thema oder Titel] durchsucht THEMA und TITEL der Filmliste. \
                     Der Suchtext muss im Thema ODER Titel vorkommen.
-
+                    
                     "Zeitraum" und "Filmlänge" finden Filme die in dem vorgegebenem Zeitraum liefen und die vorgegebene \
                     Länge haben.
-
+                    
                     ==================================================
                     Groß- und Kleinschreibung wird beim Suchen nicht unterschieden.
-
+                    
                     Um mehrere Begriffe zu suchen müssen diese durch Komma oder Doppelpunkt \
                     getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe \
                     muss vorkommen), der Doppelpunkt mit UND (=> alle Begriffe müssen vorkommen).
-
+                    
                     'Tagesschau' findet u.a. 'Tagesschau, 12:00 Uhr', 'ARD Tagesschau Livestream', 'Bei Logo und der Tagesschau'.
-                                        
+                    
                     'Sport,Fussball' (Komma-getrennt) findet Filme bei denen 'Sport' oder 'Fussball' \
                     oder beides vorkommt, u.a. 'Wintersport im Mumintal' und 'Wie wird man Fussballprofi?'.
-
+                    
                     'Sport:Fussball' (Doppelpunkt-getrennt) findet nur Dateien bei denen \
                     beides ('Sport' und 'Fussball') vorkommt, z.B. 'Wintersport, Fussball und Formel 1'.
-
+                    
                     """;
 
     public static final String SEARCH_SPECIAL =
@@ -990,15 +990,30 @@ public class HelpText {
                     "\n";
 
     public static final String DARK_THEME =
-            "Das Programm wird damit mit einer dunklen Programmoberfläche angezeigt. " +
+            "Das Programm kann damit mit einer dunklen oder hellen Programmoberfläche " +
+                    "angezeigt werden.\n" +
+                    "Umschalten kann man das hier in dem " +
+                    "Dialog oder mit einem Mausklick mit der rechten Maustaste " +
+                    "auf den Programm-Einstellungs-Button.\n" +
                     "Für einige Elemente kann ein " +
                     "Programmneustart notwendig sein." +
                     "\n";
 
-    public static final String BLACK_WHITE_ICON =
-            "Die Programmicons werden in Schwarz-Weiß angezeigt. " +
+    public static final String THEME_ICON =
+            "Die Programmicons können in verschiedenen Farben angezeigt werden.\n" +
+                    "Es können 2 Icon-Themes für das Dark-Theme und 2 für das " +
+                    "Light-Theme eingestellt werden.\n" +
+                    "Umschalten kann man das hier in dem " +
+                    "Dialog oder mit einem Mausklick mit der rechten Maustaste " +
+                    "auf den Programm-Einstellungs-Button.\n" +
                     "Für einige Elemente kann ein " +
                     "Programmneustart notwendig sein." +
+                    "\n";
+
+    public static final String DARK_THEME_TABLE =
+            "Die Farben in den Tabellen Filme/Downloads für z.B. neue Filme " +
+                    "können hier eingestellt werden. Getrennt für das Dark-Theme und " +
+                    "das Light-Theme." +
                     "\n";
 
     public static final String SHORTCUT =

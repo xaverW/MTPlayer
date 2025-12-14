@@ -297,19 +297,20 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty SYSTEM_FONT_SIZE = addIntProp("system-font-size", 0);
     public static BooleanProperty SYSTEM_FONT_SIZE_CHANGE = addBoolProp("system-font-size-change", Boolean.FALSE); // für die Schriftgröße
 
-    public static BooleanProperty SYSTEM_COLOR_THEME_DARK = addBoolProp("system-color-theme-dark", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_ICON_COLOR_THEME_1 = addBoolProp("system-color-theme-1", Boolean.TRUE);
 
-    public static BooleanProperty SYSTEM_COLOR_THEME_DARK_START = addBoolProp("system-color-theme-dark-start", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_ICON_COLOR_THEME_1_START = addBoolProp("system-color-theme-1-start", Boolean.TRUE);
+    public static BooleanProperty SYSTEM_THEME_DARK = addBoolProp("system-theme-dark", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_ICON_THEME_1 = addBoolProp("system-icon-theme-1", Boolean.TRUE);
+
+    public static BooleanProperty SYSTEM_THEME_DARK_START = addBoolProp("system-theme-dark-start", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_ICON_THEME_1_START = addBoolProp("system-icon-theme-1-start", Boolean.TRUE);
 
     public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed");
     public static StringProperty SYSTEM_ICON_COLOR = addStrProp("system-icon-color", ProgConst.COLOR_LIGHT_1);
 
-    public static StringProperty SYSTEM_ICON_COLOR_THEME_DARK_1 = addStrProp("system-icon-color-theme-dark-1", ProgConst.COLOR_DARK_1);
-    public static StringProperty SYSTEM_ICON_COLOR_THEME_DARK_2 = addStrProp("system-icon-color-theme-dark-2", ProgConst.COLOR_DARK_2);
-    public static StringProperty SYSTEM_ICON_COLOR_THEME_LIGHT_1 = addStrProp("system-icon-color-theme-light-1", ProgConst.COLOR_LIGHT_1);
-    public static StringProperty SYSTEM_ICON_COLOR_THEME_LIGHT_2 = addStrProp("system-icon-color-theme-light2", ProgConst.COLOR_LIGHT_2);
+    public static StringProperty SYSTEM_ICON_THEME_DARK_1 = addStrProp("system-icon-theme-dark-1", ProgConst.COLOR_DARK_1);
+    public static StringProperty SYSTEM_ICON_THEME_DARK_2 = addStrProp("system-icon-theme-dark-2", ProgConst.COLOR_DARK_2);
+    public static StringProperty SYSTEM_ICON_THEME_LIGHT_1 = addStrProp("system-icon-theme-light-1", ProgConst.COLOR_LIGHT_1);
+    public static StringProperty SYSTEM_ICON_THEME_LIGHT_2 = addStrProp("system-icon-theme-light2", ProgConst.COLOR_LIGHT_2);
 
     // Einstellungen Filmliste
     static {

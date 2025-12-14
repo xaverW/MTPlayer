@@ -48,6 +48,7 @@ public class PIconFactory {
         TABLE_ABO_OFF("gmi-pause", 18),
         TABLE_ABO_DEL("gmi-clear", 18),
         TABLE_FILM_PLAY("gmi-play-arrow", 18),
+        TABLE_FILM_PLAY_BIG("gmi-play-arrow", 22),
         TABLE_FILM_SAVE("gmi-fiber-manual-record", 16),
         TABLE_BOOKMARK_ADD("mdi-bookmark-plus-outline", 18),
         TABLE_BOOKMARK_DEL("mdi2b-bookmark-minus-outline", 18),
@@ -74,7 +75,7 @@ public class PIconFactory {
         TOOLBAR_BTN_BOOKMARK_ADD("mdi-bookmark-plus-outline", 25),
         TOOLBAR_BTN_BOOKMARK_DEL("mdi2b-bookmark-minus-outline", 25),
         TOOLBAR_BTN_BOOKMARK_DAL_ALL("mdi2b-bookmark-off-outline", 25),
-        TOOLBAR_BTN_BOOKMARK_SHOW("mdi2b-bookmark-outline", 25),
+        TOOLBAR_BTN_BOOKMARK_SHOW("mdoal-collections_bookmark", 25),
         TOOLBAR_BTN_BOOKMARK_SHOW_DIALOG("mdi2c-comment-bookmark-outline", 25),
 
         OWN_FILTER_LOAD("mdi2t-tray-arrow-up", 25),

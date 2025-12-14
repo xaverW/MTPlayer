@@ -17,7 +17,6 @@
 package de.p2tools.mtplayer.controller.config;
 
 import de.p2tools.p2lib.mediathek.filter.Filter;
-import javafx.scene.paint.Color;
 
 public class ProgConst {
 
@@ -131,10 +130,10 @@ public class ProgConst {
 
     public static final String THEME_LIVE = "Livestream";
 
-    public static final String COLOR_DARK_1 = "#376cb5";
-    public static final String COLOR_DARK_2 = "#4b92f5";
-    public static final String COLOR_LIGHT_1 = Color.LIGHTGREY.toString();
-    public static final String COLOR_LIGHT_2 = "#444444";
+    public static final String COLOR_DARK_1 = "#f2f2f2";
+    public static final String COLOR_DARK_2 = "#2080fd";
+    public static final String COLOR_LIGHT_1 = "#333333";
+    public static final String COLOR_LIGHT_2 = "#043ba5";
 
 
 }

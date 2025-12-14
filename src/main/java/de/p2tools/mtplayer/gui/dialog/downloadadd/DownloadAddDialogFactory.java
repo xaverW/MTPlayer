@@ -47,7 +47,7 @@ public class DownloadAddDialogFactory {
     }
 
     public static Color getBlue() {
-        if (ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue()) {
+        if (ProgConfig.SYSTEM_THEME_DARK.getValue()) {
             return Color.rgb(31, 162, 206);
         } else {
             return Color.BLUE;
@@ -55,7 +55,7 @@ public class DownloadAddDialogFactory {
     }
 
     public static Color getBlack() {
-        if (ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue()) {
+        if (ProgConfig.SYSTEM_THEME_DARK.getValue()) {
             return Color.WHITE;
         } else {
             return Color.BLACK;

@@ -16,10 +16,7 @@
 
 package de.p2tools.mtplayer.controller;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.load.LoadFactory;
 import de.p2tools.mtplayer.gui.filter.film.FilmFilterDialog;
@@ -50,6 +47,9 @@ public class ProgStartAfterGui {
         ProgData.getInstance().filterWorkerFilm.getActFilterSettings().switchFilterOff(false);
         ProgData.getInstance().filterWorkerAudio.getActFilterSettings().switchFilterOff(false);
         LoadFactory.loadProgStart(); // Filmliste/Audioliste laden
+
+        ProgColorList.setColorTheme(); // Farben einrichten
+        ProgData.getInstance().pIconWorker.setColor(); // Farben einrichten
     }
 
     public static void startMsg(boolean showAll) {

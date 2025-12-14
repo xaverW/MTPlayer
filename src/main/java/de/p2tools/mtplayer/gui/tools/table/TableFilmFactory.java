@@ -210,6 +210,9 @@ public class TableFilmFactory {
                     btnSave.setMinHeight(18);
                     btnBookmark.setMaxHeight(18);
                     btnBookmark.setMinHeight(18);
+                    btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
+                } else {
+                    btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY_BIG.getFontIcon());
                 }
 
                 hbox.getChildren().addAll(btnPlay, btnSave, btnBookmark);

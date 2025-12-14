@@ -202,7 +202,7 @@ public class ProgStartBeforeGui {
         }
 
         ProgConfigUpdate.update(); // falls es ein Programmupdate gab, Configs anpassen
-        ProgColorList.setColorTheme(); // Farben einrichten
+//        ProgColorList.setColorTheme(); // Farben einrichten
         ProxyFactory.initProxy(); // wenn gewollt, einen Proxy einrichten
     }
 }

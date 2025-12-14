@@ -40,8 +40,8 @@ import java.util.Collection;
 
 public class PaneColorIcon {
     private final Stage stage;
-    private final RadioButton rbLight = new RadioButton("Light-Theme");
     private final RadioButton rbDark = new RadioButton("Dark-Theme");
+    private final RadioButton rbLight = new RadioButton("Light-Theme");
     private final RadioButton rb1 = new RadioButton("Icon-Theme 1");
     private final RadioButton rb2 = new RadioButton("Icon-Theme 2");
 
@@ -60,22 +60,34 @@ public class PaneColorIcon {
         ToggleGroup tgDark = new ToggleGroup();
         rbDark.setToggleGroup(tgDark);
         rbLight.setToggleGroup(tgDark);
-        rbDark.setSelected(ProgConfig.SYSTEM_THEME_DARK.get());
-        rbLight.setSelected(!ProgConfig.SYSTEM_THEME_DARK.get());
+
+        rbDark.selectedProperty().setValue(ProgConfig.SYSTEM_THEME_DARK.getValue());
+        rbLight.selectedProperty().setValue(ProgConfig.SYSTEM_THEME_DARK.not().getValue());
+        rbDark.selectedProperty().addListener((u, o, n) -> ProgConfig.SYSTEM_THEME_DARK.set(rbDark.isSelected()));
+        ProgConfig.SYSTEM_THEME_DARK.addListener((u, o, n) -> {
+            rbDark.setSelected(ProgConfig.SYSTEM_THEME_DARK.get());
+            rbLight.setSelected(!ProgConfig.SYSTEM_THEME_DARK.get());
+        });
+
 
         ToggleGroup tg1 = new ToggleGroup();
         rb1.setToggleGroup(tg1);
         rb2.setToggleGroup(tg1);
-        rb1.setSelected(ProgConfig.SYSTEM_ICON_THEME_1.get());
-        rb2.setSelected(!ProgConfig.SYSTEM_ICON_THEME_1.get());
 
-        rbDark.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
+        rb1.selectedProperty().setValue(ProgConfig.SYSTEM_ICON_THEME_1.getValue());
+        rb2.selectedProperty().setValue(ProgConfig.SYSTEM_ICON_THEME_1.not().getValue());
+        rb1.selectedProperty().addListener((u, o, n) -> ProgConfig.SYSTEM_ICON_THEME_1.set(rb1.isSelected()));
+        ProgConfig.SYSTEM_ICON_THEME_1.addListener((u, o, n) -> {
+            rb1.setSelected(ProgConfig.SYSTEM_ICON_THEME_1.get());
+            rb2.setSelected(!ProgConfig.SYSTEM_ICON_THEME_1.get());
+        });
+
+
         final Button btnHelpTheme = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME);
 
-        rb1.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ICON_THEME_1);
-        final Button btnHelpIcon = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
-                HelpText.BLACK_WHITE_ICON);
+        final Button btnHelpIcon = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Icons",
+                HelpText.THEME_ICON);
 
         btnReset.setOnAction(a -> reset());
 

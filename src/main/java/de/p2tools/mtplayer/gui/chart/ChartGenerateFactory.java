@@ -166,8 +166,8 @@ public class ChartGenerateFactory {
     }
 
     private static synchronized void setColor(LineChart<Number, Number> lineChart, BandwidthData bandwidthData) {
-        final String cRed = ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue() ? "#ff0000" : "#de0000";
-        final String cGreen = ProgConfig.SYSTEM_COLOR_THEME_DARK.getValue() ? "#00ff00" : "#00aa00";
+        final String cRed = ProgConfig.SYSTEM_THEME_DARK.getValue() ? "#ff0000" : "#de0000";
+        final String cGreen = ProgConfig.SYSTEM_THEME_DARK.getValue() ? "#00ff00" : "#00aa00";
         Set<Node> items = lineChart.lookupAll("Label.chart-legend-item");
         for (Node item : items) {
             Label label = (Label) item;

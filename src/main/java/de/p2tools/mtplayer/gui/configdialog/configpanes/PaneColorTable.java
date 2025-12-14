@@ -21,17 +21,15 @@ import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.colordata.P2ColorData;
-import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
-import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.tools.P2ColorFactory;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -40,7 +38,8 @@ import java.util.Collection;
 
 public class PaneColorTable {
     private final Stage stage;
-    private final P2ToggleSwitch tglDarkTheme = new P2ToggleSwitch("Dunkles Erscheinungsbild der Programmoberfläche");
+    private final RadioButton rbDark = new RadioButton("Farben für das Dark-Them");
+    private final RadioButton rbLight = new RadioButton("Farben für das Light-Them");
     private final TableView<P2ColorData> tableViewFont = new TableView<>();
     private final TableView<P2ColorData> tableViewBackground = new TableView<>();
 
@@ -49,15 +48,24 @@ public class PaneColorTable {
     }
 
     public void close() {
-        tglDarkTheme.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
+        rbDark.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
+        rbLight.selectedProperty().unbind();
     }
 
     public void make(Collection<TitledPane> result) {
-        tglDarkTheme.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
+        ToggleGroup tg = new ToggleGroup();
+        rbDark.setToggleGroup(tg);
+        rbLight.setToggleGroup(tg);
+        rbDark.selectedProperty().setValue(ProgConfig.SYSTEM_THEME_DARK.getValue());
+        rbLight.selectedProperty().setValue(ProgConfig.SYSTEM_THEME_DARK.not().getValue());
+        rbDark.selectedProperty().addListener((u, o, n) -> ProgConfig.SYSTEM_THEME_DARK.set(rbDark.isSelected()));
+        ProgConfig.SYSTEM_THEME_DARK.addListener((u, o, n) -> {
+            rbDark.setSelected(ProgConfig.SYSTEM_THEME_DARK.get());
+            rbLight.setSelected(!ProgConfig.SYSTEM_THEME_DARK.get());
+        });
+
         final Button btnHelpTheme = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
-                HelpText.DARK_THEME);
-        final Button btnHelpIcon = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
-                HelpText.BLACK_WHITE_ICON);
+                HelpText.DARK_THEME_TABLE);
 
         initTableColor(tableViewFont);
         tableViewFont.setPrefHeight(ProgConst.MIN_TABLE_HEIGHT);
@@ -67,43 +75,32 @@ public class PaneColorTable {
         tableViewBackground.setPrefHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableViewBackground.setItems(ProgColorList.getColorListBackground());
 
+        Button btnReset = new Button("Alle _Farben zurücksetzen");
+        btnReset.setOnAction(event -> {
+            ProgColorList.resetAllColor();
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_REFRESH_TABLE);
+        });
+
         ProgConfig.SYSTEM_THEME_DARK.addListener((u, o, n) -> {
             ProgColorList.setColorTheme();
             P2TableFactory.refreshTable(tableViewFont);
             P2TableFactory.refreshTable(tableViewBackground);
         });
 
-        Button button = new Button("Alle _Farben zurücksetzen");
-        button.setOnAction(event -> {
-            ProgColorList.resetAllColor();
-//            PListener.notify(PListener.EVENT_REFRESH_TABLE, PaneColor.class.getSimpleName());
-            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_REFRESH_TABLE);
-        });
+        VBox vBox = new VBox(P2LibConst.SPACING_VBOX);
 
-        int row = 0;
-        final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
-        gridPane.setPadding(new Insets(P2LibConst.PADDING));
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().addAll(rbDark, P2GuiTools.getHDistance(10), rbLight,
+                P2GuiTools.getHBoxGrower(), btnReset, btnHelpTheme);
+        vBox.getChildren().add(hBox);
 
-        gridPane.add(tglDarkTheme, 0, row);
-        gridPane.add(btnHelpTheme, 1, row);
-        GridPane.setHalignment(btnHelpTheme, HPos.RIGHT);
+        vBox.getChildren().add(new Label("Schriftfarben"));
+        vBox.getChildren().add(tableViewFont);
+        vBox.getChildren().add(new Label("Hintergrundfarben"));
+        vBox.getChildren().add(tableViewBackground);
 
-        gridPane.add(new Label("Schriftfarben"), 0, ++row, 2, 1);
-        gridPane.add(tableViewFont, 0, ++row, 2, 1);
-
-        ++row;
-        gridPane.add(new Label("Hintergrundfarben"), 0, row, 2, 1);
-        gridPane.add(tableViewBackground, 0, ++row, 2, 1);
-
-        gridPane.add(button, 0, ++row, 2, 1);
-        GridPane.setHalignment(button, HPos.RIGHT);
-
-        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
-                P2GridConstraints.getCcPrefSize());
-
-        TitledPane tpColor = new TitledPane("Farbe Tabellen-Zeilen", gridPane);
+        TitledPane tpColor = new TitledPane("Farbe Tabellen-Zeilen", vBox);
         result.add(tpColor);
     }
 
@@ -167,7 +164,6 @@ public class PaneColorTable {
             colorPicker.setOnAction(a -> {
                 Color color = colorPicker.getValue();
                 pColorData.setColor(color);
-//                PListener.notify(PListener.EVENT_REFRESH_TABLE, PaneColor.class.getSimpleName());
                 ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_REFRESH_TABLE);
             });
             hbox.getChildren().addAll(colorPicker);

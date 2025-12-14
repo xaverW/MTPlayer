@@ -46,19 +46,21 @@ public class MTPlayerMenu extends MenuButton {
         makeButton();
         setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                if (!ProgConfig.SYSTEM_COLOR_THEME_DARK.get() && !ProgConfig.SYSTEM_ICON_COLOR_THEME_1.get()) {
-                    ProgConfig.SYSTEM_COLOR_THEME_DARK.set(true);
+                if (ProgConfig.SYSTEM_THEME_DARK.get() && ProgConfig.SYSTEM_ICON_THEME_1.get()) {
+                    ProgConfig.SYSTEM_THEME_DARK.set(true);
+                    ProgConfig.SYSTEM_ICON_THEME_1.set(false);
 
-                } else if (ProgConfig.SYSTEM_COLOR_THEME_DARK.get() && !ProgConfig.SYSTEM_ICON_COLOR_THEME_1.get()) {
-                    ProgConfig.SYSTEM_COLOR_THEME_DARK.set(false);
-                    ProgConfig.SYSTEM_ICON_COLOR_THEME_1.set(true);
+                } else if (ProgConfig.SYSTEM_THEME_DARK.get() && !ProgConfig.SYSTEM_ICON_THEME_1.get()) {
+                    ProgConfig.SYSTEM_THEME_DARK.set(false);
+                    ProgConfig.SYSTEM_ICON_THEME_1.set(true);
 
-                } else if (!ProgConfig.SYSTEM_COLOR_THEME_DARK.get() && ProgConfig.SYSTEM_ICON_COLOR_THEME_1.get()) {
-                    ProgConfig.SYSTEM_COLOR_THEME_DARK.set(true);
+                } else if (!ProgConfig.SYSTEM_THEME_DARK.get() && ProgConfig.SYSTEM_ICON_THEME_1.get()) {
+                    ProgConfig.SYSTEM_THEME_DARK.set(false);
+                    ProgConfig.SYSTEM_ICON_THEME_1.set(false);
 
-                } else if (ProgConfig.SYSTEM_COLOR_THEME_DARK.get() && ProgConfig.SYSTEM_ICON_COLOR_THEME_1.get()) {
-                    ProgConfig.SYSTEM_COLOR_THEME_DARK.set(false);
-                    ProgConfig.SYSTEM_ICON_COLOR_THEME_1.set(false);
+                } else if (!ProgConfig.SYSTEM_THEME_DARK.get() && !ProgConfig.SYSTEM_ICON_THEME_1.get()) {
+                    ProgConfig.SYSTEM_THEME_DARK.set(true);
+                    ProgConfig.SYSTEM_ICON_THEME_1.set(true);
                 }
             }
         });
@@ -76,7 +78,7 @@ public class MTPlayerMenu extends MenuButton {
         P2ShortcutWorker.addShortCut(miSearchMediaCollection, PShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
         final CheckMenuItem miDarkMode = new CheckMenuItem("Dark Mode");
-        miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_COLOR_THEME_DARK);
+        miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
