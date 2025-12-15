@@ -39,7 +39,7 @@ public class NotificationDownFinished {
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
         Button btnFilmStart = new Button();
-        btnFilmStart.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
+        btnFilmStart.getStyleClass().addAll("pFuncBtn");
         btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
         btnFilmStart.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
         btnFilmStart.setOnAction((ActionEvent event) -> {
@@ -48,7 +48,7 @@ public class NotificationDownFinished {
         });
 
         Button btnOpenDirectory = new Button();
-        btnOpenDirectory.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
+        btnOpenDirectory.getStyleClass().addAll("pFuncBtn");
         btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
         btnOpenDirectory.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_OPEN_DIR.getFontIcon());
         btnOpenDirectory.setOnAction((ActionEvent event) -> {

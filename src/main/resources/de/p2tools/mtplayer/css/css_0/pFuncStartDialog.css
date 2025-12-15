@@ -1,4 +1,5 @@
-.btnStartMenu{
+
+.btnStartDialog{
     -fx-padding: 2 25 2 25;
     -fx-border-width: 1;
     -fx-border-color: #4d4d4d;
@@ -8,71 +9,71 @@
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
-.btnStartMenu:focused{
+.btnStartDialog:focused{
     -fx-padding: 2 25 2 25;
     -fx-border-width: 1;
     -fx-border-color: #4d4d4d;
 }
-.btnStartMenu:hover{
+.btnStartDialog:hover{
     -fx-padding: 1 24 1 24;
     -fx-border-width: 2;
     -fx-border-color: #0052d6;
 }
-.btnStartMenu:focused:hover{
+.btnStartDialog:focused:hover{
     -fx-padding: 1 24 1 24;
     -fx-border-width: 2;
     -fx-border-color: #0052d6;
 }
-.btnStartMenu:pressed{
+.btnStartDialog:pressed{
     -fx-padding: 0 23 0 23;
     -fx-border-width: 3;
     -fx-border-color: #0052d6;
 }
-.btnStartMenu:focused:pressed{
+.btnStartDialog:focused:pressed{
     -fx-padding: 0 23 0 23;
     -fx-border-width: 3;
     -fx-border-color: #0052d6;
 }
 
-.btnStartMenuSel{
+.btnStartDialogSel{
     -fx-padding: 1 24 1 24;
     -fx-border-width: 2;
     -fx-border-color: #0052d6;
     -fx-background-color: #dddddd;
     -fx-text-fill: -text-color-blue;
 }
-.btnStartMenuSel:focused{
+.btnStartDialogSel:focused{
     -fx-padding: 1 24 1 24;
     -fx-border-width: 2;
     -fx-border-color: #0052d6;
     -fx-background-color: #dddddd;
 }
-.btnStartMenuSel:hover{
+.btnStartDialogSel:hover{
     -fx-padding: 1 24 1 24;
     -fx-border-width: 2;
     -fx-border-color: #0052d6;
     -fx-background-color: #dddddd;
 }
-.btnStartMenuSel:focused:hover{
+.btnStartDialogSel:focused:hover{
     -fx-padding: 1 24 1 24;
     -fx-border-width: 2;
     -fx-border-color: #0052d6;
     -fx-background-color: #dddddd;
 }
-.btnStartMenuSel:pressed{
+.btnStartDialogSel:pressed{
     -fx-padding: 0 23 0 23;
     -fx-border-width: 3;
     -fx-border-color: #0052d6;
     -fx-background-color: #dddddd;
 }
-.btnStartMenuSel:focused:pressed{
+.btnStartDialogSel:focused:pressed{
     -fx-padding: 0 23 0 23;
     -fx-border-width: 3;
     -fx-border-color: #0052d6;
     -fx-background-color: #dddddd;
 }
 
-.btnStartMenu > .arrow-button{
+.btnStartDialog > .arrow-button{
     /*Pfeil ausblenden*/
     -fx-padding: 0;
 }

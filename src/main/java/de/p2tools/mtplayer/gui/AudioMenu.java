@@ -178,7 +178,7 @@ public class AudioMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Audiomenü anzeigen"));
         mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
-        mb.getStyleClass().addAll("btnFunction", "btnFunc-0");
+        mb.getStyleClass().addAll("pFuncBtn");
 
         final MenuItem mbPlay = new MenuItem("Audio abspielen");
         mbPlay.setOnAction(a -> {

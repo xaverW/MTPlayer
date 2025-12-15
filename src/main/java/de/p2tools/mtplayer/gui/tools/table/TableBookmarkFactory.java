@@ -128,15 +128,15 @@ public class TableBookmarkFactory {
                 final Button btnBookmark;
 
                 btnPlay = new Button("");
-                btnPlay.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
+                btnPlay.getStyleClass().addAll("pFuncBtn");
                 btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
 
                 btnSave = new Button("");
-                btnSave.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
+                btnSave.getStyleClass().addAll("pFuncBtn");
                 btnSave.setGraphic(PIconFactory.PICON.TABLE_FILM_SAVE.getFontIcon());
 
                 btnBookmark = new Button("");
-                btnBookmark.getStyleClass().addAll("btnProgMenu", "btnFuncTable");
+                btnBookmark.getStyleClass().addAll("pFuncBtn");
                 btnBookmark.setGraphic(PIconFactory.PICON.TABLE_BOOKMARK_DEL.getFontIcon());
 
                 if (ProgConfig.BOOKMARK_DIALOG_SMALL_TABLE_ROW.get()) {

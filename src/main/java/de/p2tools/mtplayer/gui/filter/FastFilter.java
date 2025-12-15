@@ -118,7 +118,7 @@ public class FastFilter extends HBox {
         }
 
         btnSearch.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
-        btnSearch.getStyleClass().addAll("btnFunction", "btnFunc-1");
+        btnSearch.getStyleClass().addAll("pFuncBtn");
         btnSelectWhere.setGraphic(PIconFactory.PICON.BTN_UP_DOWN_H.getFontIcon());
         btnSelectWhere.getStyleClass().addAll("selectButton");
         btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());

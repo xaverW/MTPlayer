@@ -103,7 +103,7 @@ public class LiveFilmMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Live-Filmmenü anzeigen"));
         mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
-        mb.getStyleClass().addAll("btnFunction", "btnFunc-0");
+        mb.getStyleClass().addAll("pFuncBtn");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> {

@@ -148,7 +148,7 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void initTopButton(Button btn, State state) {
-        btn.getStyleClass().addAll("btnStartMenu");
+        btn.getStyleClass().addAll("btnStartDialog");
         btn.setAlignment(Pos.CENTER);
         btn.setMaxWidth(Double.MAX_VALUE);
         btn.setOnAction(a -> {
@@ -366,16 +366,16 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void setButtonStyle(Button btnSel) {
-        btnStart1.getStyleClass().setAll("btnStartMenu");
-        btnStart2.getStyleClass().setAll("btnStartMenu");
-        btnColorMode.getStyleClass().setAll("btnStartMenu");
-        btnUpdate.getStyleClass().setAll("btnStartMenu");
-        btnGeo.getStyleClass().setAll("btnStartMenu");
-        btnFilm.getStyleClass().setAll("btnStartMenu");
-        btnStation.getStyleClass().setAll("btnStartMenu");
-        btnDown.getStyleClass().setAll("btnStartMenu");
-        btnPath.getStyleClass().setAll("btnStartMenu");
-        btnSel.getStyleClass().setAll("btnStartMenu", "btnStartMenuSel");
+        btnStart1.getStyleClass().setAll("btnStartDialog");
+        btnStart2.getStyleClass().setAll("btnStartDialog");
+        btnColorMode.getStyleClass().setAll("btnStartDialog");
+        btnUpdate.getStyleClass().setAll("btnStartDialog");
+        btnGeo.getStyleClass().setAll("btnStartDialog");
+        btnFilm.getStyleClass().setAll("btnStartDialog");
+        btnStation.getStyleClass().setAll("btnStartDialog");
+        btnDown.getStyleClass().setAll("btnStartDialog");
+        btnPath.getStyleClass().setAll("btnStartDialog");
+        btnSel.getStyleClass().setAll("btnStartDialog", "btnStartDialogSel");
     }
 
     private void initTooltip() {

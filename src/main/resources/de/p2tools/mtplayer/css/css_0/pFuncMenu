@@ -1,0 +1,24 @@
+/*  ========================= */
+/*  Menü */
+
+.btnProgMenu{
+}
+.btnProgMenu > .arrow-button{
+    /*Pfeil ausblenden*/
+    -fx-padding: 0;
+}
+.btnProgMenu > .arrow-button > .arrow{
+    /*Pfeil ausblenden*/
+    -fx-padding: 0;
+}
+.btnProgMenu:pressed{
+}
+.btnProgMenu:focused{
+}
+.btnProgMenu:hover{
+}
+.btnProgMenu:focused:hover{
+}
+
+.btnProgMenuSmall{
+}

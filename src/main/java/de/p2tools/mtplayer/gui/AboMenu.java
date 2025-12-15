@@ -103,7 +103,7 @@ public class AboMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Abomenü anzeigen"));
         mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
-        mb.getStyleClass().addAll("btnFunction", "btnFunc-0");
+        mb.getStyleClass().addAll("pFuncBtn");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");
         mbOn.setOnAction(a -> AboListFactory.setAboActive(true));

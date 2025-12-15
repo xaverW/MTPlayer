@@ -1,0 +1,32 @@
+/* Button Sender/Favoriten/History */
+/* sind die blauen TabButton */
+
+.btnTabGui{
+}
+.btnTabGui:focused{
+}
+.btnTabGui:hover{
+}
+.btnTabGui:focused:hover{
+}
+.btnTabGui:pressed{
+}
+.btnTabGui:focused:pressed{
+}
+
+.btnTabGuiSel{
+}
+.btnTabGuiSel:focused{
+}
+.btnTabGuiSel:hover{
+}
+.btnTabGuiSel:focused:hover{
+}
+.btnTabGuiSel:pressed{
+}
+.btnTabGuiSel:focused:pressed{
+}
+
+.btnTabGuiS{
+}
+

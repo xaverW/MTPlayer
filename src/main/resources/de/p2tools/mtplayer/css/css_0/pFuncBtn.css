@@ -1,0 +1,103 @@
+/* Func-Button */
+
+.btnSize{
+    -fx-padding: 5 15 5 15;
+    -fx-border-width: 1;
+    -fx-font-size: 1.3em;
+}
+
+.pFuncBtn{
+    -fx-padding: 5 15 5 15;
+    -fx-border-width: 1;
+    -fx-border-color: #4d4d4d;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-font-size: 1em;
+}
+.pFuncBtn:focused{
+    -fx-border-color: grey;
+    -fx-background-color: transparent;
+}
+.pFuncBtn:hover{
+    -fx-padding: 4 14 4 14;
+    -fx-border-width: 2px;
+    -fx-border-color: #00344c;
+    -fx-background-color: lightgrey;
+    -fx-font-size: 1.2em;
+}
+.pFuncBtn:focused:hover{
+    -fx-padding: 4 14 4 14;
+    -fx-border-width: 2px;
+    -fx-border-color: #00344c;
+    -fx-background-color: lightgrey;
+    -fx-font-size: 1.2em;
+ }
+.pFuncBtn:pressed:focused:hover{
+    -fx-padding: 3 13 3 13;
+    -fx-border-width: 3px;
+    -fx-border-color: #004a6c;
+    -fx-background-color: lightgrey;
+    -fx-font-size: 1.2em;
+}
+
+.pFuncBtnSel{
+    -fx-border-color: black;
+    -fx-background-color: #3492c4;
+    -fx-font-size: 1.3em;
+}
+.pFuncBtnSel:focused{
+    -fx-border-color: black;
+    -fx-background-color: #3492c4;
+    -fx-font-size: 1.3em;
+}
+.pFuncBtnSel:hover{
+    -fx-border-color: #00344c;
+    -fx-background-color: lightgrey;
+    -fx-font-size: 1.3em;
+}
+.pFuncBtnSel:focused:hover{
+    -fx-border-color: #00344c;
+    -fx-background-color: lightgrey;
+    -fx-font-size: 1.3em;
+ }
+.pFuncBtnSel:pressed:focused:hover{
+    -fx-border-color: #004a6c;
+    -fx-background-color: lightgrey;
+    -fx-font-size: 1.3em;
+}
+
+
+/* SmallSearch */
+.btnPFuncSearch{
+}
+.btnPFuncSearch:pressed{
+}
+
+/* LoadFilmlist*/
+.btnPFuncFilmList{
+}
+.btnPFuncFilmList:pressed{
+}
+
+
+/*  ========================= */
+/*  Table */
+.btnPFuncTable{
+}
+.btnPFuncTable:pressed{
+}
+
+
+/*  ========================= */
+/*  Table */
+.btnPFuncStartDialog{
+}
+.btnPFuncStartDialogSel{
+}
+.btnPFuncStartDialog:pressed{
+}
+.btnPFuncStartDialogSel:pressed{
+}

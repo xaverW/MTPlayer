@@ -68,7 +68,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
 
                 if (item <= DownloadConstants.STATE_STOPPED) {
                     btnDownStart = new Button("");
-                    btnDownStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                    btnDownStart.getStyleClass().addAll("pFuncBtn");
                     btnDownStart.setTooltip(new Tooltip("Download starten"));
                     btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START.getFontIcon());
                     btnDownStart.setOnAction((ActionEvent event) -> {
@@ -83,7 +83,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     });
 
                     btnDownDel = new Button("");
-                    btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                    btnDownDel.getStyleClass().addAll("pFuncBtn");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
                     btnDownDel.setOnAction(event -> {
@@ -118,7 +118,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
 
                 } else if (item < DownloadConstants.STATE_FINISHED) {
                     btnDownStop = new Button("");
-                    btnDownStop.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                    btnDownStop.getStyleClass().addAll("pFuncBtn");
                     btnDownStop.setTooltip(new Tooltip("Download stoppen"));
                     btnDownStop.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_STOP.getFontIcon());
                     btnDownStop.setOnAction((ActionEvent event) -> {
@@ -133,7 +133,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     });
 
                     btnDownDel = new Button("");
-                    btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                    btnDownDel.getStyleClass().addAll("pFuncBtn");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
                     btnDownDel.setOnAction(event -> {
@@ -168,7 +168,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
 
                 } else if (item == DownloadConstants.STATE_FINISHED) {
                     btnFilmStart = new Button("");
-                    btnFilmStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                    btnFilmStart.getStyleClass().addAll("pFuncBtn");
                     btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
                     btnFilmStart.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
                     btnFilmStart.setOnAction((ActionEvent event) -> {
@@ -184,7 +184,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     });
 
                     btnOpenDirectory = new Button();
-                    btnOpenDirectory.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                    btnOpenDirectory.getStyleClass().addAll("pFuncBtn");
                     btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
                     btnOpenDirectory.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_OPEN_DIR.getFontIcon());
                     btnOpenDirectory.setOnAction((ActionEvent event) -> {
@@ -220,7 +220,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
 
                 } else if (item == DownloadConstants.STATE_ERROR) {
                     btnDownStart = new Button("");
-                    btnDownStart.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                    btnDownStart.getStyleClass().addAll("pFuncBtn");
                     btnDownStart.setTooltip(new Tooltip("Download wieder starten"));
                     btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START.getFontIcon());
                     btnDownStart.setOnAction((ActionEvent event) -> {
@@ -237,7 +237,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     });
 
                     btnDownDel = new Button("");
-                    btnDownDel.getStyleClass().addAll("btnFunction", "btnFuncTable");
+                    btnDownDel.getStyleClass().addAll("pFuncBtn");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
                     btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
                     btnDownDel.setOnAction(event -> {
