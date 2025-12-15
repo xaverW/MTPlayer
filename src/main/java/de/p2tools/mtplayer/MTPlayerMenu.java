@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.picon.IconRunner;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
@@ -164,6 +165,9 @@ public class MTPlayerMenu extends MenuButton {
             final MenuItem miIcon = new MenuItem("Icons");
             miIcon.setOnAction(a -> new P2IconShow());
 
+            final MenuItem miIconRunner = new MenuItem("Icon-Zirkus");
+            miIconRunner.setOnAction(a -> IconRunner.run());
+
             final MenuItem miResetTodayDone = new MenuItem("<SYSTEM_SEARCH_UPDATE_TODAY_DONE> zurücksetzen");
             miResetTodayDone.setOnAction(a -> {
                 ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.set("2020.01.01"); // heute noch nicht gemacht
@@ -182,7 +186,7 @@ public class MTPlayerMenu extends MenuButton {
             final MenuItem miSave = new MenuItem("Alles Speichern");
             miSave.setOnAction(a -> ProgSave.saveAll());
 
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSearchAllUpdate, miIcon,
+            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSearchAllUpdate, miIcon, miIconRunner,
                     miResetTodayDone, miResetLastSearch, miResetUpdate, miSave);
         }
         return mHelp;
