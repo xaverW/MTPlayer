@@ -57,7 +57,7 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 final Button btnActivate;
                 btnActivate = new Button("");
                 btnActivate.setTooltip(new Tooltip("Abo ein- oder ausschalten"));
-                btnActivate.getStyleClass().addAll("pFuncBtn");
+                btnActivate.getStyleClass().addAll("pFuncBtn", "btnTable");
                 if (aboData.isActive()) {
                     // dann ausschalen
                     btnActivate.setGraphic(PIconFactory.PICON.TABLE_ABO_OFF.getFontIcon());
@@ -77,7 +77,7 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 final Button btnDel;
                 btnDel = new Button("");
                 btnDel.setTooltip(new Tooltip("Abo löschen"));
-                btnDel.getStyleClass().addAll("pFuncBtn");
+                btnDel.getStyleClass().addAll("pFuncBtn", "btnTable");
                 btnDel.setGraphic(PIconFactory.PICON.TABLE_ABO_DEL.getFontIcon());
                 btnDel.setOnAction(a -> {
                     getTableView().getSelectionModel().clearSelection();

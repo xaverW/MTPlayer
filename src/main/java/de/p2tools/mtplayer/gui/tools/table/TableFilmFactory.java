@@ -157,7 +157,7 @@ public class TableFilmFactory {
                 final Button btnBookmark;
 
                 btnPlay = new Button("");
-                btnPlay.getStyleClass().addAll("pFuncBtn");
+                btnPlay.getStyleClass().addAll("pFuncBtn", "btnTable");
                 btnPlay.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
                 btnPlay.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
@@ -170,7 +170,7 @@ public class TableFilmFactory {
                 });
 
                 btnSave = new Button("");
-                btnSave.getStyleClass().addAll("pFuncBtn");
+                btnSave.getStyleClass().addAll("pFuncBtn", "btnTable");
                 btnSave.setGraphic(PIconFactory.PICON.TABLE_FILM_SAVE.getFontIcon());
                 btnSave.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
@@ -183,7 +183,7 @@ public class TableFilmFactory {
                 });
 
                 btnBookmark = new Button("");
-                btnBookmark.getStyleClass().addAll("pFuncBtn");
+                btnBookmark.getStyleClass().addAll("pFuncBtn", "btnTable");
                 if (film.isBookmark()) {
                     btnBookmark.setGraphic(PIconFactory.PICON.TABLE_BOOKMARK_DEL.getFontIcon());
                 } else {

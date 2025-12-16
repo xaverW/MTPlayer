@@ -35,6 +35,8 @@
 .btnProgMenuSmall{
     -fx-padding: 1 1;
     -fx-border-width: 1;
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
     -fx-font-weight: normal;
 }
 .btnProgMenuSmall:focused{
