@@ -106,6 +106,7 @@ public class ProgStartBeforeGui {
                         "de/p2tools/mtplayer/css/css_0/pFuncToolBar.css",
                         "de/p2tools/mtplayer/css/css_0/pFuncGuiTab.css",
                         "de/p2tools/mtplayer/css/css_0/pFuncMenu.css",
+                        "de/p2tools/mtplayer/css/css_0/pTabPane.css",
                         "de/p2tools/mtplayer/css/css_0/pFuncStartDialog.css"},
 
                 new String[]{"de/p2tools/mtplayer/css/css_0/mtfx-dark.css"},

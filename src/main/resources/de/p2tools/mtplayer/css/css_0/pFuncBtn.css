@@ -5,6 +5,7 @@
     -fx-border-width: 1;
     -fx-border-color: -pGuiColor;
     -fx-border-radius: 10;
+    -fx-background-color: -pBackgroundColor;
     -fx-background-radius: 10;
 
     -fx-alignment: center;
@@ -15,25 +16,25 @@
     -fx-padding: 5 15 5 15;
     -fx-border-width: 1;
     -fx-border-color: grey;
-    -fx-background-color: transparent;
+    -fx-background-color: -pBackgroundColor;
 }
 .pFuncBtn:hover{
     -fx-padding: 4 14 4 14;
     -fx-border-width: 2px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
+    -fx-background-color: -pBackgroundColor;
 }
 .pFuncBtn:focused:hover{
     -fx-padding: 4 14 4 14;
     -fx-border-width: 2px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
+    -fx-background-color: -pBackgroundColor;
  }
 .pFuncBtn:pressed:focused:hover{
     -fx-padding: 3 13 3 13;
     -fx-border-width: 3px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
+    -fx-background-color: -pBackgroundColor;
 }
 
 .pFuncBtnSel{

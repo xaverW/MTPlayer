@@ -3,6 +3,7 @@
     -fx-padding: 5 10;
     -fx-border-radius: 50;
     -fx-background-radius: 50;
+    -fx-background-color: -pBackgroundColor;
     -fx-font-weight: normal;
 }
 .btnTable:focused{

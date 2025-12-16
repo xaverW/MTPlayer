@@ -1,5 +1,8 @@
 /*  Programmweites style sheet */
 .root {
+    -pBackgroundColor: #dddddd;
+    -pBackgroundColorSel: #cccccc;
+
 }
 
 /*ist der Text in Downloads unten im Tab Mediensammlung*/

@@ -1,0 +1,27 @@
+
+
+/* tabs of the tabpane*/
+
+.tab .tab-label {
+      -fx-text-fill: black;
+    -fx-background-color: -pBackgroundColor;
+}
+.tab:selected .tab-label {
+    -fx-text-fill: -pGuiColor;
+    -fx-background-color: -pBackgroundColor;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-border-radius: 7 7 0 0;
+    -fx-background-radius: 7 7 0 0;
+    -fx-background-color: -pBackgroundColor;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-border-color: -pGuiColor;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:hover {
+    -fx-border-color: -pGuiColor;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:pressed {
+    -fx-border-color: -pGuiColor;
+}

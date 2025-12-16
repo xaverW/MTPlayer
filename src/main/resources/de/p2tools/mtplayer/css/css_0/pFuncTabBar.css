@@ -7,16 +7,20 @@
 }
 
 .pFuncBtnTabBar{
+    -fx-background-color: -pBackgroundColor;
 }
 .pFuncBtnTabBar:focused{
 }
 .pFuncBtnTabBar:hover{
+    -fx-background-color: -pBackgroundColorSel;
     -fx-font-size: 1.2em;
 }
 .pFuncBtnTabBar:focused:hover{
+    -fx-background-color: -pBackgroundColorSel;
     -fx-font-size: 1.2em;
  }
 .pFuncBtnTabBar:pressed:focused:hover{
+    -fx-background-color: -pBackgroundColorSel;
     -fx-font-size: 1.2em;
 }
 
@@ -40,7 +44,7 @@
     -fx-padding: 4 14 4 14;
     -fx-border-width: 2px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
+    -fx-background-color: -pGuiColor;
     -fx-text-fill: black;
     -fx-font-size: 1.3em;
 }
@@ -48,7 +52,7 @@
     -fx-padding: 4 14 4 14;
     -fx-border-width: 2px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
+    -fx-background-color: -pGuiColor;
     -fx-text-fill: black;
     -fx-font-size: 1.3em;
  }
@@ -57,7 +61,7 @@
     -fx-padding: 3 13 3 13;
     -fx-border-width: 3px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
+    -fx-background-color: -pGuiColor;
     -fx-text-fill: black;
     -fx-font-size: 1.3em;
 }
