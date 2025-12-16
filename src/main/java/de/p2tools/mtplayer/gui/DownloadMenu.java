@@ -137,7 +137,7 @@ public class DownloadMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
         mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
-        mb.getStyleClass().addAll("pFuncBtn");
+        mb.getStyleClass().addAll("pFuncBtn", "btnProgMenu", "btnProgMenuSmall");
 
         // Submenü "Downloads"
         addSubMenuDownload(mb);

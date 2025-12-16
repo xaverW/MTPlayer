@@ -133,10 +133,10 @@ public class ProgConst {
     public static final String ICON_COLOR_DARK_1 = "#f2f2f2";
     public static final String ICON_COLOR_DARK_2 = "#2080fd";
     public static final String ICON_COLOR_LIGHT_1 = "#333333";
-    public static final String ICON_COLOR_LIGHT_2 = "#043ba5";
+    public static final String ICON_COLOR_LIGHT_2 = "#0008cc";
 
     public static final String GUI_COLOR_DARK_1 = "#f2f2f2";
     public static final String GUI_COLOR_DARK_2 = "#2080fd";
     public static final String GUI_COLOR_LIGHT_1 = "#333333";
-    public static final String GUI_COLOR_LIGHT_2 = "#043ba5";
+    public static final String GUI_COLOR_LIGHT_2 = "#0039a8";
 }

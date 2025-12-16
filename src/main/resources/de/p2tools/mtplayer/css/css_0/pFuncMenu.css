@@ -1,8 +1,28 @@
 /*  ========================= */
 /*  Menü */
 
+
 .btnProgMenu{
+    -fx-padding: 1 10;
+    -fx-font-weight: normal;
 }
+.btnProgMenu:focused{
+    -fx-padding: 1 10;
+    -fx-border-width: 1;
+}
+.btnProgMenu:hover{
+    -fx-padding: 0 9;
+    -fx-border-width: 2px;
+}
+.btnProgMenu:focused:hover{
+    -fx-padding: 0 9;
+    -fx-border-width: 2px;
+ }
+.btnProgMenu:pressed:focused:hover{
+    -fx-padding: 0 9;
+    -fx-border-width: 2px;
+}
+
 .btnProgMenu > .arrow-button{
     /*Pfeil ausblenden*/
     -fx-padding: 0;
@@ -11,14 +31,26 @@
     /*Pfeil ausblenden*/
     -fx-padding: 0;
 }
-.btnProgMenu:pressed{
-}
-.btnProgMenu:focused{
-}
-.btnProgMenu:hover{
-}
-.btnProgMenu:focused:hover{
-}
 
 .btnProgMenuSmall{
+    -fx-padding: 1 1;
+    -fx-border-width: 1;
+    -fx-font-weight: normal;
 }
+.btnProgMenuSmall:focused{
+    -fx-padding: 1 1;
+    -fx-border-width: 1;
+}
+.btnProgMenuSmall:hover{
+    -fx-padding: 0 0;
+    -fx-border-width: 2px;
+}
+.btnProgMenuSmall:focused:hover{
+    -fx-padding: 0 0;
+    -fx-border-width: 2px;
+ }
+.btnProgMenuSmall:pressed:focused:hover{
+    -fx-padding: 0 0;
+    -fx-border-width: 2px;
+}
+

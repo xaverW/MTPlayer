@@ -87,7 +87,7 @@ public class MTPlayerMenu extends MenuButton {
 
         setTooltip(new Tooltip("Programmeinstellungen anzeigen"));
         setMinWidth(Region.USE_PREF_SIZE);
-        getStyleClass().addAll("pFuncBtn");
+        getStyleClass().addAll("pFuncBtn", "btnProgMenu");
         setText("");
         FontIcon node = PIconFactory.PICON.PROG_MENU.getFontIcon();
         node.setScaleX(1.5);

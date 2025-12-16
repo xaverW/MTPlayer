@@ -182,7 +182,7 @@ public class FilmMenu {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Filmmenü anzeigen"));
         mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
-        mb.getStyleClass().addAll("pFuncBtn");
+        mb.getStyleClass().addAll("pFuncBtn", "btnProgMenu", "btnProgMenuSmall");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");
         mbPlay.setOnAction(a -> {
