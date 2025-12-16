@@ -139,9 +139,4 @@ public class ProgConst {
     public static final String GUI_COLOR_DARK_2 = "#2080fd";
     public static final String GUI_COLOR_LIGHT_1 = "#333333";
     public static final String GUI_COLOR_LIGHT_2 = "#043ba5";
-
-    // Gui-Root-Color
-    // -pGuiColor: red;
-    public static final String GUI_COLOR_ROOT_1 = "-pGuiColor: ";
-    public static final String GUI_COLOR_ROOT_2 = ";";
 }

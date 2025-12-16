@@ -1,9 +1,7 @@
 package de.p2tools.mtplayer.controller.picon;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.tools.P2ColorFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 
 public class PIconWorker {
@@ -44,9 +42,6 @@ public class PIconWorker {
                 ProgConfig.SYSTEM_ICON_COLOR.set(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2.get());
             }
         }
-        gui = P2ColorFactory.getColor(gui);
-        gui = ProgConst.GUI_COLOR_ROOT_1 + gui + ProgConst.GUI_COLOR_ROOT_2;
-
         PIconFactory.setColor();
         P2Log.sysLog("GUI-Color setzen: " + gui);
         ProgConfig.SYSTEM_GUI_COLOR.set(gui); // damit wird dann das CSS neu geladen
