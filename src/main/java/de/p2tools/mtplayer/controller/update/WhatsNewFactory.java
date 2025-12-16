@@ -64,7 +64,7 @@ public class WhatsNewFactory {
             if (!list.isEmpty()) {
                 Platform.runLater(() -> new WhatsNewDialog(ProgData.getInstance().primaryStage, ProgConst.PROGRAM_NAME,
                         ProgConst.URL_WEBSITE, ProgConfig.SYSTEM_PROG_OPEN_URL,
-                        ProgConfig.SYSTEM_THEME_DARK.getValue(), list).make());
+                        ProgConfig.SYSTEM_DARK_THEME.getValue(), list).make());
             }
         } catch (Exception ignore) {
         }

@@ -3,13 +3,14 @@
 .btnSize{
     -fx-padding: 5 15 5 15;
     -fx-border-width: 1;
+    -fx-font-weight: bold;
     -fx-font-size: 1.3em;
 }
 
 .pFuncBtn{
     -fx-padding: 5 15 5 15;
     -fx-border-width: 1;
-    -fx-border-color: #4d4d4d;
+    -fx-border-color: -pGuiColor;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
 
@@ -18,6 +19,8 @@
     -fx-font-size: 1em;
 }
 .pFuncBtn:focused{
+    -fx-padding: 5 15 5 15;
+    -fx-border-width: 1;
     -fx-border-color: grey;
     -fx-background-color: transparent;
 }
@@ -44,26 +47,36 @@
 }
 
 .pFuncBtnSel{
+    -fx-padding: 5 15 5 15;
+    -fx-border-width: 1;
     -fx-border-color: black;
     -fx-background-color: #3492c4;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnSel:focused{
+    -fx-padding: 5 15 5 15;
+    -fx-border-width: 1;
     -fx-border-color: black;
     -fx-background-color: #3492c4;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnSel:hover{
+    -fx-padding: 4 14 4 14;
+    -fx-border-width: 2px;
     -fx-border-color: #00344c;
     -fx-background-color: lightgrey;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnSel:focused:hover{
+    -fx-padding: 4 14 4 14;
+    -fx-border-width: 2px;
     -fx-border-color: #00344c;
     -fx-background-color: lightgrey;
     -fx-font-size: 1.3em;
  }
 .pFuncBtnSel:pressed:focused:hover{
+    -fx-padding: 3 13 3 13;
+    -fx-border-width: 3px;
     -fx-border-color: #004a6c;
     -fx-background-color: lightgrey;
     -fx-font-size: 1.3em;

@@ -66,6 +66,12 @@ public class MTPlayer extends Application {
         initRootLayout();
         ProgStartAfterGui.doWorkAfterGui();
 
+//        P2LibConst.guiColor.set("-pGuiColor: yellow;");
+//        P2CssFactory.addP2CssToScene();
+        ProgData.getInstance().mtPlayerController.setStyle(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe());
+//        P2LibConst.primaryStage.getScene().getRoot().setStyle("-pGuiColor: green;");
+
+
         P2Duration.onlyPing("Gui steht!");
         P2Duration.counterStop("start");
     }
@@ -122,7 +128,7 @@ public class MTPlayer extends Application {
                 ProgQuit.quit(false);
             });
 
-            ProgConfig.SYSTEM_THEME_DARK.addListener((u, o, n) -> ProgColorList.setColorTheme());
+            ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> ProgColorList.setColorTheme());
             PShortKeyFactory.addShortKey(scene);
             P2CssFactory.addP2CssToScene(scene); // und jetzt noch CSS einstellen
 
@@ -135,10 +141,12 @@ public class MTPlayer extends Application {
             });
 
             primaryStage.show();
+            MTPlayerFactory.setProgramIcon();
+
             if (ProgData.firstProgramStart) {
                 // dann gabs den Startdialog
-                ProgConfig.SYSTEM_THEME_DARK.set(ProgConfig.SYSTEM_THEME_DARK_START.get());
-                ProgConfig.SYSTEM_ICON_THEME_1.set(ProgConfig.SYSTEM_ICON_THEME_1_START.get());
+                ProgConfig.SYSTEM_DARK_THEME.set(ProgConfig.SYSTEM_DARK_START.get());
+                ProgConfig.SYSTEM_GUI_THEME_1.set(ProgConfig.SYSTEM_GUI_THEME_1_START.get());
             }
         } catch (final Exception e) {
             e.printStackTrace();

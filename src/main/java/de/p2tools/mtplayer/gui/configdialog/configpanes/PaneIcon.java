@@ -58,7 +58,7 @@ public class PaneIcon {
     public void make(Collection<TitledPane> result) {
         final GridPane gridPane = new GridPane();
 
-        TitledPane tpConfig = new TitledPane("Programm Icons", gridPane);
+        TitledPane tpConfig = new TitledPane("Programm-Icon", gridPane);
         result.add(tpConfig);
 
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);

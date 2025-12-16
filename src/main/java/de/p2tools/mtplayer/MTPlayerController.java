@@ -84,7 +84,6 @@ public class MTPlayerController extends StackPane {
 
             final Button btnSize = new Button("Downloads");
             btnSize.setVisible(false);
-//            btnSize.setManaged(false);
             btnSize.getStyleClass().add("btnSize");
             Platform.runLater(() -> {
                 double size = btnSize.getWidth();
@@ -97,17 +96,16 @@ public class MTPlayerController extends StackPane {
 
             // Toolbar
             TilePane tilePaneButton = new TilePane();
-            tilePaneButton.setPrefColumns(4);
+//            tilePaneButton.setPrefColumns(5);
             tilePaneButton.setHgap(5);
             tilePaneButton.setPadding(new Insets(0));
             tilePaneButton.setAlignment(Pos.CENTER);
-            tilePaneButton.getChildren().addAll(btnSize, btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
+            tilePaneButton.getChildren().addAll(btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
 
             StackPane stackPane = new StackPane();
             stackPane.setAlignment(Pos.CENTER);
             stackPane.getChildren().addAll(btnSize, tilePaneButton);
             HBox.setHgrow(stackPane, Priority.ALWAYS);
-
 
             HBox hBoxTop = new HBox();
             hBoxTop.setPadding(new Insets(5, 10, 5, 10));

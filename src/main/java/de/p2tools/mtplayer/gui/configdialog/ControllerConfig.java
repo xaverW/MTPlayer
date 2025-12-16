@@ -32,7 +32,7 @@ public class ControllerConfig extends P2AccordionPane {
     private PaneAbo paneAbo;
     private PaneFilter paneFilter;
     private PaneIcon paneIcon;
-    private PaneColorIcon paneColorIcon;
+    private PaneColorGui paneColorGui;
     private PaneColorTable paneColorTable;
     private PaneStatusBar paneStatusBar;
     private PaneShortcut paneShortcut;
@@ -59,7 +59,7 @@ public class ControllerConfig extends P2AccordionPane {
         paneAbo.close();
         paneFilter.close();
         paneIcon.close();
-        paneColorIcon.close();
+        paneColorGui.close();
         paneColorTable.close();
         paneStatusBar.close();
         paneShortcut.close();
@@ -91,8 +91,8 @@ public class ControllerConfig extends P2AccordionPane {
         paneLogFile = new PaneLogFile(stage);
         paneLogFile.make(result);
 
-        paneColorIcon = new PaneColorIcon(stage);
-        paneColorIcon.make(result);
+        paneColorGui = new PaneColorGui(stage);
+        paneColorGui.make(result);
 
         paneColorTable = new PaneColorTable(stage);
         paneColorTable.make(result);

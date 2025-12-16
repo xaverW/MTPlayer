@@ -126,7 +126,7 @@ public class DownloadAddAllFactory {
             addDownloadDto.btnAll.setStyle("-fx-text-fill: " + c);
 
         } else {
-            if (ProgConfig.SYSTEM_THEME_DARK.getValue()) {
+            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
                 addDownloadDto.btnAll.setStyle("-fx-text-fill: white");
             } else {
                 addDownloadDto.btnAll.setStyle("-fx-text-fill: black");

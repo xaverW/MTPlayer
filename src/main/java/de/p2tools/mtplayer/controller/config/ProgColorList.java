@@ -80,7 +80,7 @@ public class ProgColorList extends P2ColorList {
     }
 
     public static void setColorTheme() {
-        final boolean dark = ProgConfig.SYSTEM_THEME_DARK.get();
+        final boolean dark = ProgConfig.SYSTEM_DARK_THEME.get();
         for (int i = 0; i < getInstance().size(); ++i) {
             getInstance().get(i).setColorTheme(dark);
         }

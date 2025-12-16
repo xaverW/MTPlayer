@@ -158,6 +158,7 @@ public class ConfigDialogController extends P2DialogExtra {
         controllerSet.close();
 
         dialogIsRunning.setValue(false);
+
         super.close();
     }
 

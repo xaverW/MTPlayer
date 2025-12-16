@@ -58,10 +58,10 @@ public class StartPaneColorMode {
         hBox.getChildren().add(lbl);
         vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox);
 
-        ProgConfig.SYSTEM_ICON_THEME_1_START.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_GUI_THEME_1_START.addListener((u, o, n) -> {
             setHBox();
         });
-        ProgConfig.SYSTEM_THEME_DARK_START.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_DARK_START.addListener((u, o, n) -> {
             setHBox();
         });
 
@@ -89,17 +89,17 @@ public class StartPaneColorMode {
         final String colorSel = "#4682B4;";
         final String color = "transparent;";
 
-        if (!ProgConfig.SYSTEM_THEME_DARK_START.get() && ProgConfig.SYSTEM_ICON_THEME_1_START.get()) {
+        if (!ProgConfig.SYSTEM_DARK_START.get() && ProgConfig.SYSTEM_GUI_THEME_1_START.get()) {
             hBoxLight1.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
             hBoxLight2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
             hBoxDark1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
             hBoxDark2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-        } else if (!ProgConfig.SYSTEM_THEME_DARK_START.get() && !ProgConfig.SYSTEM_ICON_THEME_1_START.get()) {
+        } else if (!ProgConfig.SYSTEM_DARK_START.get() && !ProgConfig.SYSTEM_GUI_THEME_1_START.get()) {
             hBoxLight1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
             hBoxLight2.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
             hBoxDark1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
             hBoxDark2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
-        } else if (ProgConfig.SYSTEM_THEME_DARK_START.get() && ProgConfig.SYSTEM_ICON_THEME_1_START.get()) {
+        } else if (ProgConfig.SYSTEM_DARK_START.get() && ProgConfig.SYSTEM_GUI_THEME_1_START.get()) {
             hBoxLight1.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
             hBoxLight2.setStyle("-fx-border-color: " + color + " -fx-border-style: solid; -fx-border-width: 8;");
             hBoxDark1.setStyle("-fx-border-color: " + colorSel + " -fx-border-style: solid; -fx-border-width: 8;");
@@ -121,8 +121,8 @@ public class StartPaneColorMode {
         ivLight1.setSmooth(true);
         ivLight1.setImage(image);
         ivLight1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            ProgConfig.SYSTEM_THEME_DARK_START.setValue(false);
-            ProgConfig.SYSTEM_ICON_THEME_1_START.setValue(true);
+            ProgConfig.SYSTEM_DARK_START.setValue(false);
+            ProgConfig.SYSTEM_GUI_THEME_1_START.setValue(true);
             setHBox();
             event.consume();
         });
@@ -134,8 +134,8 @@ public class StartPaneColorMode {
         ivLight2.setSmooth(true);
         ivLight2.setImage(image);
         ivLight2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            ProgConfig.SYSTEM_THEME_DARK_START.setValue(false);
-            ProgConfig.SYSTEM_ICON_THEME_1_START.setValue(false);
+            ProgConfig.SYSTEM_DARK_START.setValue(false);
+            ProgConfig.SYSTEM_GUI_THEME_1_START.setValue(false);
             setHBox();
             event.consume();
         });
@@ -146,8 +146,8 @@ public class StartPaneColorMode {
         ivDark1.setSmooth(true);
         ivDark1.setImage(image);
         ivDark1.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            ProgConfig.SYSTEM_THEME_DARK_START.setValue(true);
-            ProgConfig.SYSTEM_ICON_THEME_1_START.setValue(true);
+            ProgConfig.SYSTEM_DARK_START.setValue(true);
+            ProgConfig.SYSTEM_GUI_THEME_1_START.setValue(true);
             setHBox();
             event.consume();
         });
@@ -160,8 +160,8 @@ public class StartPaneColorMode {
         ivDark2.setSmooth(true);
         ivDark2.setImage(image);
         ivDark2.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            ProgConfig.SYSTEM_THEME_DARK_START.setValue(true);
-            ProgConfig.SYSTEM_ICON_THEME_1_START.setValue(false);
+            ProgConfig.SYSTEM_DARK_START.setValue(true);
+            ProgConfig.SYSTEM_GUI_THEME_1_START.setValue(false);
             setHBox();
             event.consume();
         });

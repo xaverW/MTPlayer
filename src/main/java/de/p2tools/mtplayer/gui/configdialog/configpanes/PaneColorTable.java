@@ -48,7 +48,7 @@ public class PaneColorTable {
     }
 
     public void close() {
-        rbDark.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_THEME_DARK);
+        rbDark.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
         rbLight.selectedProperty().unbind();
     }
 
@@ -56,12 +56,12 @@ public class PaneColorTable {
         ToggleGroup tg = new ToggleGroup();
         rbDark.setToggleGroup(tg);
         rbLight.setToggleGroup(tg);
-        rbDark.selectedProperty().setValue(ProgConfig.SYSTEM_THEME_DARK.getValue());
-        rbLight.selectedProperty().setValue(ProgConfig.SYSTEM_THEME_DARK.not().getValue());
-        rbDark.selectedProperty().addListener((u, o, n) -> ProgConfig.SYSTEM_THEME_DARK.set(rbDark.isSelected()));
-        ProgConfig.SYSTEM_THEME_DARK.addListener((u, o, n) -> {
-            rbDark.setSelected(ProgConfig.SYSTEM_THEME_DARK.get());
-            rbLight.setSelected(!ProgConfig.SYSTEM_THEME_DARK.get());
+        rbDark.selectedProperty().setValue(ProgConfig.SYSTEM_DARK_THEME.getValue());
+        rbLight.selectedProperty().setValue(ProgConfig.SYSTEM_DARK_THEME.not().getValue());
+        rbDark.selectedProperty().addListener((u, o, n) -> ProgConfig.SYSTEM_DARK_THEME.set(rbDark.isSelected()));
+        ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
+            rbDark.setSelected(ProgConfig.SYSTEM_DARK_THEME.get());
+            rbLight.setSelected(!ProgConfig.SYSTEM_DARK_THEME.get());
         });
 
         final Button btnHelpTheme = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
@@ -81,7 +81,7 @@ public class PaneColorTable {
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_REFRESH_TABLE);
         });
 
-        ProgConfig.SYSTEM_THEME_DARK.addListener((u, o, n) -> {
+        ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
             ProgColorList.setColorTheme();
             P2TableFactory.refreshTable(tableViewFont);
             P2TableFactory.refreshTable(tableViewBackground);
