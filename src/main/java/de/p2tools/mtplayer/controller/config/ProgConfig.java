@@ -320,6 +320,11 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_GUI_THEME_LIGHT_1 = addStrProp("system-gui-theme-light-1", ProgConst.GUI_COLOR_LIGHT_1);
     public static StringProperty SYSTEM_GUI_THEME_LIGHT_2 = addStrProp("system-gui-theme-light2", ProgConst.GUI_COLOR_LIGHT_2);
 
+    public static BooleanProperty SYSTEM_GUI_BACKGROUND_TRANSPARENT_DARK_1 = addBoolProp("system-gui-background-transparent-dark-1", false);
+    public static BooleanProperty SYSTEM_GUI_BACKGROUND_TRANSPARENT_DARK_2 = addBoolProp("system-gui-background-transparent-dark-2", false);
+    public static BooleanProperty SYSTEM_GUI_BACKGROUND_TRANSPARENT_LIGHT_1 = addBoolProp("system-gui-background-transparent-light-1", false);
+    public static BooleanProperty SYSTEM_GUI_BACKGROUND_TRANSPARENT_LIGHT_2 = addBoolProp("system-gui-background-transparent-light-2", false);
+    
     public static StringProperty SYSTEM_GUI_BACKGROUND_DARK_1 = addStrProp("system-gui-background-dark-1", ProgConst.GUI_BACKGROUND_DARK_1);
     public static StringProperty SYSTEM_GUI_BACKGROUND_DARK_2 = addStrProp("system-gui-background-dark-2", ProgConst.GUI_BACKGROUND_DARK_2);
     public static StringProperty SYSTEM_GUI_BACKGROUND_LIGHT_1 = addStrProp("system-gui-background-light-1", ProgConst.GUI_BACKGROUND_LIGHT_1);

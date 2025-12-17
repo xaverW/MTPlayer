@@ -28,17 +28,19 @@ public class ColorWorker {
 
         String gui;
         String background;
+        boolean transparent;
         if (ProgConfig.SYSTEM_DARK_THEME.get()) {
             // DARK
             if (ProgConfig.SYSTEM_GUI_THEME_1.get()) {
                 gui = ProgConfig.SYSTEM_GUI_THEME_DARK_1.get();
                 background = ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_1.get();
                 ProgConfig.SYSTEM_ICON_COLOR.set(ProgConfig.SYSTEM_ICON_THEME_DARK_1.get());
-
+                transparent = ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_DARK_1.get();
             } else {
                 gui = ProgConfig.SYSTEM_GUI_THEME_DARK_2.get();
                 background = ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_2.get();
                 ProgConfig.SYSTEM_ICON_COLOR.set(ProgConfig.SYSTEM_ICON_THEME_DARK_2.get());
+                transparent = ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_DARK_2.get();
             }
 
         } else {
@@ -47,38 +49,41 @@ public class ColorWorker {
                 gui = ProgConfig.SYSTEM_GUI_THEME_LIGHT_1.get();
                 background = ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_1.get();
                 ProgConfig.SYSTEM_ICON_COLOR.set(ProgConfig.SYSTEM_ICON_THEME_LIGHT_1.get());
-
+                transparent = ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_LIGHT_1.get();
             } else {
                 gui = ProgConfig.SYSTEM_GUI_THEME_LIGHT_2.get();
                 background = ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_2.get();
                 ProgConfig.SYSTEM_ICON_COLOR.set(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2.get());
+                transparent = ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_LIGHT_2.get();
             }
         }
         PIconFactory.setColor();
         ProgConfig.SYSTEM_GUI_COLOR.set(gui); // damit wird dann das CSS neu geladen
         ProgConfig.SYSTEM_BACKGROUND_COLOR.set(background); // damit wird dann das CSS neu geladen
-        setCss();
+        setCss(transparent);
     }
 
-    private static void setCss() {
-
-
+    private static void setCss(boolean transparent) {
         // Gui-Color
         String guiColor = P2ColorFactory.getColor(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe());
         if (!guiColor.isEmpty()) {
             guiColor = "-pGuiColor: " + guiColor + "; ";
         }
 
-        String guiBackup = P2ColorFactory.getColor(ProgConfig.SYSTEM_BACKGROUND_COLOR.getValueSafe());
-        if (!guiBackup.isEmpty()) {
-            guiBackup = "-pBackgroundColor: " + guiBackup + "; ";
+        String guiBackground = P2ColorFactory.getColor(ProgConfig.SYSTEM_BACKGROUND_COLOR.getValueSafe());
+        if (!guiBackground.isEmpty() && !transparent) {
+            guiBackground = "-pBackgroundColor: " + guiBackground + "; ";
+        } else {
+            guiBackground = "-pBackgroundColor: transparent; ";
         }
 
         String guiBackupSel = P2ColorFactory.changeColor(ProgConfig.SYSTEM_BACKGROUND_COLOR.getValueSafe(), 0.8);
-        if (!guiColor.isEmpty()) {
+        if (!guiBackupSel.isEmpty() && !transparent) {
             guiBackupSel = "-pBackgroundColorSel: " + guiBackupSel + ";";
+        } else {
+            guiBackupSel = "-pBackgroundColorSel: transparent; ";
         }
 
-        ProgConfig.SYSTEM_CSS_ADDER.set(guiColor + guiBackup + guiBackupSel);
+        ProgConfig.SYSTEM_CSS_ADDER.set(guiColor + guiBackground + guiBackupSel);
     }
 }

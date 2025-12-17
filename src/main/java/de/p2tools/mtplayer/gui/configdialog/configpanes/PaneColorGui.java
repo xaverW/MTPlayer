@@ -47,6 +47,10 @@ public class PaneColorGui {
     private final GridPane gridDark2 = new GridPane();
     private final GridPane gridLight1 = new GridPane();
     private final GridPane gridLight2 = new GridPane();
+    private final CheckBox chkEmptyDark1 = new CheckBox("Transparent");
+    private final CheckBox chkEmptyDark2 = new CheckBox("Transparent");
+    private final CheckBox chkEmptyLight1 = new CheckBox("Transparent");
+    private final CheckBox chkEmptyLight2 = new CheckBox("Transparent");
 
     private final VBox vBox = new VBox(P2LibConst.SPACING_VBOX);
 
@@ -57,6 +61,11 @@ public class PaneColorGui {
     public void close() {
         rbDark.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
         rbIcon1.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_THEME_1);
+
+        chkEmptyDark1.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_DARK_1);
+        chkEmptyDark2.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_DARK_2);
+        chkEmptyLight1.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_LIGHT_1);
+        chkEmptyLight2.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_LIGHT_2);
     }
 
     public void make(Collection<TitledPane> result) {
@@ -129,7 +138,8 @@ public class PaneColorGui {
         gridDark1.setMinHeight(200);
         gridDark1.getColumnConstraints().addAll(
                 P2GridConstraints.getCcPrefSize(),
-                P2GridConstraints.getCcComputedSizeAndHgrow());
+                P2GridConstraints.getCcComputedSizeAndHgrowRight(),
+                P2GridConstraints.getCcPrefSize());
 
         gridDark2.setHgap(20);
         gridDark2.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
@@ -137,7 +147,8 @@ public class PaneColorGui {
         gridDark2.setMinHeight(200);
         gridDark2.getColumnConstraints().addAll(
                 P2GridConstraints.getCcPrefSize(),
-                P2GridConstraints.getCcComputedSizeAndHgrow());
+                P2GridConstraints.getCcComputedSizeAndHgrowRight(),
+                P2GridConstraints.getCcPrefSize());
 
 
         gridLight1.setHgap(20);
@@ -146,7 +157,8 @@ public class PaneColorGui {
         gridLight1.setMinHeight(200);
         gridLight1.getColumnConstraints().addAll(
                 P2GridConstraints.getCcPrefSize(),
-                P2GridConstraints.getCcComputedSizeAndHgrow());
+                P2GridConstraints.getCcComputedSizeAndHgrowRight(),
+                P2GridConstraints.getCcPrefSize());
 
         gridLight2.setHgap(20);
         gridLight2.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
@@ -154,8 +166,13 @@ public class PaneColorGui {
         gridLight2.setMinHeight(200);
         gridLight2.getColumnConstraints().addAll(
                 P2GridConstraints.getCcPrefSize(),
-                P2GridConstraints.getCcComputedSizeAndHgrow());
+                P2GridConstraints.getCcComputedSizeAndHgrowRight(),
+                P2GridConstraints.getCcPrefSize());
 
+        chkEmptyDark1.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_DARK_1);
+        chkEmptyDark2.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_DARK_2);
+        chkEmptyLight1.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_LIGHT_1);
+        chkEmptyLight2.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_BACKGROUND_TRANSPARENT_LIGHT_2);
 
         // ======
         // add Dark1
@@ -164,18 +181,20 @@ public class PaneColorGui {
 
         gridDark1.add(P2Text.getTextBoldUnderline("Dark-Theme 1", "white"), 0, 0);
         gridDark1.add(new Label("Icon-Theme"), 0, 1);
-        HBox hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_1);
-        gridDark1.add(hBox, 1, 1);
+        HBox hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_1, null);
+        gridDark1.add(hBox, 2, 1);
 
         gridDark1.add(new Label("Gui-Theme"), 0, 2);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_1);
-        gridDark1.add(hBox, 1, 2);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_1, null);
+        gridDark1.add(hBox, 2, 2);
 
         gridDark1.add(new Label("Background-Theme"), 0, 3);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_1);
-        gridDark1.add(hBox, 1, 3);
+        gridDark1.add(chkEmptyDark1, 1, 3);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_1, chkEmptyDark1);
+        gridDark1.add(hBox, 2, 3);
 
-        gridDark1.add(btnReset, 1, 4);
+        gridDark1.add(new Label(), 0, 4);
+        gridDark1.add(btnReset, 2, 5);
         GridPane.setHalignment(btnReset, HPos.RIGHT);
 
         ScrollPane scrollPane = new ScrollPane();
@@ -194,18 +213,20 @@ public class PaneColorGui {
 
         gridDark2.add(P2Text.getTextBoldUnderline("Dark-Theme 2", "white"), 0, 0);
         gridDark2.add(new Label("Icon-Theme"), 0, 1);
-        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_2);
-        gridDark2.add(hBox, 1, 1);
+        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_2, null);
+        gridDark2.add(hBox, 2, 1);
 
         gridDark2.add(new Label("Gui-Theme"), 0, 2);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_2);
-        gridDark2.add(hBox, 1, 2);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_2, null);
+        gridDark2.add(hBox, 2, 2);
 
         gridDark2.add(new Label("Background-Theme"), 0, 3);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_2);
-        gridDark2.add(hBox, 1, 3);
+        gridDark2.add(chkEmptyDark2, 1, 3);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_2, chkEmptyDark2);
+        gridDark2.add(hBox, 2, 3);
 
-        gridDark2.add(btnReset, 1, 4);
+        gridDark2.add(new Label(), 0, 4);
+        gridDark2.add(btnReset, 2, 5);
         GridPane.setHalignment(btnReset, HPos.RIGHT);
 
         scrollPane = new ScrollPane();
@@ -225,18 +246,20 @@ public class PaneColorGui {
         gridLight1.add(P2Text.getTextBoldUnderline("Light-Theme 1"), 0, 0);
         gridLight1.visibleProperty().bind(rbIcon1.selectedProperty());
         gridLight1.add(new Label("Icon-Theme"), 0, 1);
-        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_1);
-        gridLight1.add(hBox, 1, 1);
+        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_1, null);
+        gridLight1.add(hBox, 2, 1);
 
         gridLight1.add(new Label("Gui-Theme"), 0, 2);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_1);
-        gridLight1.add(hBox, 1, 2);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_1, null);
+        gridLight1.add(hBox, 2, 2);
 
         gridLight1.add(new Label("Background-Theme"), 0, 3);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_1);
-        gridLight1.add(hBox, 1, 3);
+        gridLight1.add(chkEmptyLight1, 1, 3);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_1, chkEmptyLight1);
+        gridLight1.add(hBox, 2, 3);
 
-        gridLight1.add(btnReset, 1, 4);
+        gridLight1.add(new Label(), 0, 4);
+        gridLight1.add(btnReset, 2, 5);
         GridPane.setHalignment(btnReset, HPos.RIGHT);
 
         scrollPane = new ScrollPane();
@@ -256,18 +279,20 @@ public class PaneColorGui {
         gridLight2.add(P2Text.getTextBoldUnderline("Light-Theme 2"), 0, 0);
         gridLight2.visibleProperty().bind(rbIcon2.selectedProperty());
         gridLight2.add(new Label("Icon-Theme"), 0, 1);
-        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2);
-        gridLight2.add(hBox, 1, 1);
+        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2, null);
+        gridLight2.add(hBox, 2, 1);
 
         gridLight2.add(new Label("Gui-Theme"), 0, 2);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_2);
-        gridLight2.add(hBox, 1, 2);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_2, null);
+        gridLight2.add(hBox, 2, 2);
 
         gridLight2.add(new Label("Background-Theme"), 0, 3);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_2);
-        gridLight2.add(hBox, 1, 3);
+        gridLight2.add(chkEmptyLight2, 1, 3);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_2, chkEmptyLight2);
+        gridLight2.add(hBox, 2, 3);
 
-        gridLight2.add(btnReset, 1, 4);
+        gridLight2.add(new Label(), 0, 4);
+        gridLight2.add(btnReset, 2, 5);
         GridPane.setHalignment(btnReset, HPos.RIGHT);
 
         scrollPane = new ScrollPane();
@@ -313,15 +338,24 @@ public class PaneColorGui {
         ProgData.getInstance().colorWorker.setColor();
     }
 
-    private HBox addColor(StringProperty stringProperty) {
+    private HBox addColor(StringProperty stringProperty, CheckBox checkBox) {
         final ColorPicker colorPicker = new ColorPicker();
         colorPicker.getStyleClass().add("split-button");
         colorPicker.setMinHeight(Region.USE_PREF_SIZE);
-
+        if (checkBox != null) {
+            colorPicker.disableProperty().bind(checkBox.selectedProperty());
+        }
         stringProperty.addListener((u, o, n) -> {
-            colorPicker.setValue(Color.web(stringProperty.get()));
+            if (!stringProperty.getValueSafe().isEmpty()) {
+                colorPicker.setValue(Color.web(stringProperty.get()));
+            }
         });
         colorPicker.setValue(Color.web(stringProperty.get()));
+        if (checkBox != null) {
+            checkBox.setOnAction(a -> {
+                ProgData.getInstance().colorWorker.setColor();
+            });
+        }
         colorPicker.setOnAction(a -> {
             Color color = colorPicker.getValue();
             stringProperty.setValue(color.toString());
