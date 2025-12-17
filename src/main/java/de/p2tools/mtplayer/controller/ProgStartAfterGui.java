@@ -49,7 +49,7 @@ public class ProgStartAfterGui {
         LoadFactory.loadProgStart(); // Filmliste/Audioliste laden
 
         ProgColorList.setColorTheme(); // Farben einrichten
-        ProgData.getInstance().pIconWorker.setColor(); // Farben einrichten
+        ProgData.getInstance().colorWorker.setColor(); // Farben einrichten
     }
 
     public static void startMsg(boolean showAll) {

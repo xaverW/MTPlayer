@@ -18,12 +18,13 @@ package de.p2tools.mtplayer;
 import de.p2tools.mtplayer.controller.ProgQuit;
 import de.p2tools.mtplayer.controller.ProgStartAfterGui;
 import de.p2tools.mtplayer.controller.ProgStartBeforeGui;
-import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.mtplayer.controller.config.PShortKeyFactory;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.p2lib.css.P2CssFactory;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiSize;
-import de.p2tools.p2lib.tools.P2ColorFactory;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import de.p2tools.p2lib.tools.P2Lock;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -124,14 +125,16 @@ public class MTPlayer extends Application {
                 ProgQuit.quit(false);
             });
 
-            ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> ProgColorList.setColorTheme());
+//            ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> ProgColorList.setColorTheme());
             PShortKeyFactory.addShortKey(scene);
 
+//             ProgConfig.SYSTEM_GUI_COLOR.set("-pGuiColor: yellow;");
+//            String gui = P2ColorFactory.getColor(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe());
+
             P2CssFactory.addP2CssToScene(scene); // und jetzt noch CSS einstellen
-            // P2LibConst.guiColor.set("-pGuiColor: yellow;");
-            String gui = P2ColorFactory.getColor(P2LibConst.guiColor.getValueSafe());
-            gui = "-pGuiColor: " + gui + ";";
-            ProgData.getInstance().mtPlayerController.setStyle(gui);
+//            String gui = "-pGuiColor: yellow;";
+//            ProgData.getInstance().mtPlayerController.setStyle(gui);
+
 
             if (ProgData.startMinimized) {
                 primaryStage.setIconified(true);

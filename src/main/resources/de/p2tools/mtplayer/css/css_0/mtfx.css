@@ -1,8 +1,8 @@
 /*  Programmweites style sheet */
 .root {
-    -pBackgroundColor: #dddddd;
-    -pBackgroundColorSel: #cccccc;
-
+    -pGuiColor: #658fff;
+    -pBackgroundColor: red;
+    -pBackgroundColorSel: #ffffff;
 }
 
 /*ist der Text in Downloads unten im Tab Mediensammlung*/

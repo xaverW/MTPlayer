@@ -97,7 +97,6 @@ public class ProgStartBeforeGui {
                 ProgConfig.SYSTEM_DARK_THEME,
                 ProgConfig.SYSTEM_GUI_THEME_1,
                 ProgConfig.SYSTEM_ICON_COLOR,
-                ProgConfig.SYSTEM_GUI_COLOR,
 
                 new String[]{"de/p2tools/mtplayer/css/css_0/mtfx.css",
                         "de/p2tools/mtplayer/css/css_0/pFuncBtn.css",

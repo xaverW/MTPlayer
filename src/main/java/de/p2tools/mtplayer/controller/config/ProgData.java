@@ -42,10 +42,10 @@ import de.p2tools.mtplayer.controller.load.LoadAudioListWorker;
 import de.p2tools.mtplayer.controller.load.LoadFilmListWorker;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionDataList;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataList;
-import de.p2tools.mtplayer.controller.picon.PIconWorker;
 import de.p2tools.mtplayer.controller.starter.StartDownload;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.controller.worker.CheckForNewFilmlist;
+import de.p2tools.mtplayer.controller.worker.ColorWorker;
 import de.p2tools.mtplayer.controller.worker.Worker;
 import de.p2tools.mtplayer.gui.*;
 import de.p2tools.mtplayer.gui.chart.ChartData;
@@ -156,7 +156,7 @@ public class ProgData {
     public ProposeList proposeList;
     public final BlackListFilter blackListFilterFilmList;
     public final BlackListFilter blackListFilterBlackList;
-    public PIconWorker pIconWorker = null;
+    public ColorWorker colorWorker = null;
 
     private ProgData() {
         pEventHandler = new P2EventHandler(false);
@@ -217,7 +217,7 @@ public class ProgData {
         checkForNewFilmlist = new CheckForNewFilmlist(this);
 
         worker = new Worker(this);
-        pIconWorker = new PIconWorker(this);
+        colorWorker = new ColorWorker(this);
     }
 
     public synchronized static ProgData getInstance() {

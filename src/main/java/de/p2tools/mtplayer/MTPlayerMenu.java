@@ -46,23 +46,14 @@ public class MTPlayerMenu extends MenuButton {
     public MTPlayerMenu() {
         makeButton();
         setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                if (ProgConfig.SYSTEM_DARK_THEME.get() && ProgConfig.SYSTEM_GUI_THEME_1.get()) {
-                    ProgConfig.SYSTEM_DARK_THEME.set(true);
-                    ProgConfig.SYSTEM_GUI_THEME_1.set(false);
-
-                } else if (ProgConfig.SYSTEM_DARK_THEME.get() && !ProgConfig.SYSTEM_GUI_THEME_1.get()) {
-                    ProgConfig.SYSTEM_DARK_THEME.set(false);
-                    ProgConfig.SYSTEM_GUI_THEME_1.set(true);
-
-                } else if (!ProgConfig.SYSTEM_DARK_THEME.get() && ProgConfig.SYSTEM_GUI_THEME_1.get()) {
-                    ProgConfig.SYSTEM_DARK_THEME.set(false);
-                    ProgConfig.SYSTEM_GUI_THEME_1.set(false);
-
-                } else if (!ProgConfig.SYSTEM_DARK_THEME.get() && !ProgConfig.SYSTEM_GUI_THEME_1.get()) {
-                    ProgConfig.SYSTEM_DARK_THEME.set(true);
-                    ProgConfig.SYSTEM_GUI_THEME_1.set(true);
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                if (mouseEvent.getClickCount() > 1) {
+                    ProgConfig.SYSTEM_GUI_THEME_1.set(!ProgConfig.SYSTEM_GUI_THEME_1.get());
                 }
+            }
+
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+                ProgConfig.SYSTEM_DARK_THEME.set(!ProgConfig.SYSTEM_DARK_THEME.get());
             }
         });
     }

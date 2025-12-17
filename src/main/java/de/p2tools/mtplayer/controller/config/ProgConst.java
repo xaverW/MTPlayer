@@ -139,4 +139,9 @@ public class ProgConst {
     public static final String GUI_COLOR_DARK_2 = "#2080fd";
     public static final String GUI_COLOR_LIGHT_1 = "#333333";
     public static final String GUI_COLOR_LIGHT_2 = "#0039a8";
+
+    public static final String GUI_BACKGROUND_DARK_1 = "#e1e1e1";
+    public static final String GUI_BACKGROUND_DARK_2 = "#e1e1e1";
+    public static final String GUI_BACKGROUND_LIGHT_1 = "#e1e1e1";
+    public static final String GUI_BACKGROUND_LIGHT_2 = "#e1e1e1";
 }
