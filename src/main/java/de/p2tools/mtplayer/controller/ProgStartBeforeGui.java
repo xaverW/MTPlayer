@@ -97,14 +97,14 @@ public class ProgStartBeforeGui {
                 ProgConfig.SYSTEM_DARK_THEME,
                 ProgConfig.SYSTEM_GUI_THEME_1,
                 ProgConfig.SYSTEM_ICON_COLOR,
+                ProgConfig.SYSTEM_CSS_ADDER,
 
                 new String[]{"de/p2tools/mtplayer/css/css_0/mtfx.css",
                         "de/p2tools/mtplayer/css/css_0/pFuncBtn.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncTable.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncTabBar.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncToolBar.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncGuiTab.css",
                         "de/p2tools/mtplayer/css/css_0/pFuncMenu.css",
+                        "de/p2tools/mtplayer/css/css_0/pFuncTabBar.css",
+                        "de/p2tools/mtplayer/css/css_0/pFuncTable.css",
+                        "de/p2tools/mtplayer/css/css_0/pFuncToolBar.css",
                         "de/p2tools/mtplayer/css/css_0/pTabPane.css",
                         "de/p2tools/mtplayer/css/css_0/pFuncStartDialog.css"},
 

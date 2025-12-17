@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -160,19 +161,21 @@ public class PaneColorGui {
         // add Dark1
         Button btnReset = new Button("Zurücksetzen");
         btnReset.setOnAction(a -> reset());
-        gridDark1.add(new Label("Dark-Icon-Theme 1"), 0, 0);
-        HBox hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_1);
-        gridDark1.add(hBox, 1, 0);
 
-        gridDark1.add(new Label("Dark-Gui-Theme 1"), 0, 1);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_1);
+        gridDark1.add(P2Text.getTextBoldUnderline("Dark-Theme 1", "white"), 0, 0);
+        gridDark1.add(new Label("Icon-Theme"), 0, 1);
+        HBox hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_1);
         gridDark1.add(hBox, 1, 1);
 
-        gridDark1.add(new Label("Dark-Background-Theme 1"), 0, 2);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_1);
+        gridDark1.add(new Label("Gui-Theme"), 0, 2);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_1);
         gridDark1.add(hBox, 1, 2);
 
-        gridDark1.add(btnReset, 1, 3);
+        gridDark1.add(new Label("Background-Theme"), 0, 3);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_1);
+        gridDark1.add(hBox, 1, 3);
+
+        gridDark1.add(btnReset, 1, 4);
         GridPane.setHalignment(btnReset, HPos.RIGHT);
 
         ScrollPane scrollPane = new ScrollPane();
@@ -188,19 +191,21 @@ public class PaneColorGui {
         // add Dark2
         btnReset = new Button("Zurücksetzen");
         btnReset.setOnAction(a -> reset());
-        gridDark2.add(new Label("Dark-Icon-Theme 2"), 0, 0);
-        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_2);
-        gridDark2.add(hBox, 1, 0);
 
-        gridDark2.add(new Label("Dark-Gui-Theme 2"), 0, 1);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_2);
+        gridDark2.add(P2Text.getTextBoldUnderline("Dark-Theme 2", "white"), 0, 0);
+        gridDark2.add(new Label("Icon-Theme"), 0, 1);
+        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_2);
         gridDark2.add(hBox, 1, 1);
 
-        gridDark2.add(new Label("Dark-Background-Theme 2"), 0, 2);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_2);
+        gridDark2.add(new Label("Gui-Theme"), 0, 2);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_2);
         gridDark2.add(hBox, 1, 2);
 
-        gridDark2.add(btnReset, 1, 3);
+        gridDark2.add(new Label("Background-Theme"), 0, 3);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_2);
+        gridDark2.add(hBox, 1, 3);
+
+        gridDark2.add(btnReset, 1, 4);
         GridPane.setHalignment(btnReset, HPos.RIGHT);
 
         scrollPane = new ScrollPane();
@@ -216,20 +221,22 @@ public class PaneColorGui {
         // add Light1
         btnReset = new Button("Zurücksetzen");
         btnReset.setOnAction(a -> reset());
-        gridLight1.visibleProperty().bind(rbIcon1.selectedProperty());
-        gridLight1.add(new Label("Light-Icon-Theme 1"), 0, 0);
-        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_1);
-        gridLight1.add(hBox, 1, 0);
 
-        gridLight1.add(new Label("Light-Gui-Theme 1"), 0, 1);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_1);
+        gridLight1.add(P2Text.getTextBoldUnderline("Light-Theme 1"), 0, 0);
+        gridLight1.visibleProperty().bind(rbIcon1.selectedProperty());
+        gridLight1.add(new Label("Icon-Theme"), 0, 1);
+        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_1);
         gridLight1.add(hBox, 1, 1);
 
-        gridLight1.add(new Label("Light-Background-Theme 1"), 0, 2);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_1);
+        gridLight1.add(new Label("Gui-Theme"), 0, 2);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_1);
         gridLight1.add(hBox, 1, 2);
 
-        gridLight1.add(btnReset, 1, 3);
+        gridLight1.add(new Label("Background-Theme"), 0, 3);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_1);
+        gridLight1.add(hBox, 1, 3);
+
+        gridLight1.add(btnReset, 1, 4);
         GridPane.setHalignment(btnReset, HPos.RIGHT);
 
         scrollPane = new ScrollPane();
@@ -245,20 +252,22 @@ public class PaneColorGui {
         // add Light2
         btnReset = new Button("Zurücksetzen");
         btnReset.setOnAction(a -> reset());
-        gridLight2.visibleProperty().bind(rbIcon2.selectedProperty());
-        gridLight2.add(new Label("Light-Icon-Theme 2"), 0, 0);
-        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2);
-        gridLight2.add(hBox, 1, 0);
 
-        gridLight2.add(new Label("Light-Gui-Theme 2"), 0, 1);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_2);
+        gridLight2.add(P2Text.getTextBoldUnderline("Light-Theme 2"), 0, 0);
+        gridLight2.visibleProperty().bind(rbIcon2.selectedProperty());
+        gridLight2.add(new Label("Icon-Theme"), 0, 1);
+        hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2);
         gridLight2.add(hBox, 1, 1);
 
-        gridLight2.add(new Label("Light-Background-Theme 2"), 0, 2);
-        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_2);
+        gridLight2.add(new Label("Gui-Theme"), 0, 2);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_2);
         gridLight2.add(hBox, 1, 2);
 
-        gridLight2.add(btnReset, 1, 3);
+        gridLight2.add(new Label("Background-Theme"), 0, 3);
+        hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_2);
+        gridLight2.add(hBox, 1, 3);
+
+        gridLight2.add(btnReset, 1, 4);
         GridPane.setHalignment(btnReset, HPos.RIGHT);
 
         scrollPane = new ScrollPane();

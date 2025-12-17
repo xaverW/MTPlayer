@@ -4,8 +4,6 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
-import de.p2tools.p2lib.dialogs.dialog.P2Dialog;
-import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.tools.P2ColorFactory;
 
 public class ColorWorker {
@@ -13,7 +11,6 @@ public class ColorWorker {
 
     public ColorWorker(ProgData progData) {
         this.progData = progData;
-
         ProgConfig.SYSTEM_DARK_THEME.addListener((u, o, n) -> {
             ProgColorList.setColorTheme();
             setColor();
@@ -24,6 +21,11 @@ public class ColorWorker {
     }
 
     public void setColor() {
+        if (ProgData.getInstance().mtPlayerController == null) {
+            // beim Laden der Config!!
+            return;
+        }
+
         String gui;
         String background;
         if (ProgConfig.SYSTEM_DARK_THEME.get()) {
@@ -59,10 +61,7 @@ public class ColorWorker {
     }
 
     private static void setCss() {
-        if (ProgData.getInstance().mtPlayerController == null) {
-            // beim Laden der Config!!
-            return;
-        }
+
 
         // Gui-Color
         String guiColor = P2ColorFactory.getColor(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe());
@@ -80,9 +79,6 @@ public class ColorWorker {
             guiBackupSel = "-pBackgroundColorSel: " + guiBackupSel + ";";
         }
 
-        ProgData.getInstance().mtPlayerController.setStyle(guiColor + guiBackup + guiBackupSel);
-        for (P2Dialog d : P2DialogExtra.getDialogList()) {
-            d.getStage().getScene().getRoot().setStyle(guiBackupSel);
-        }
+        ProgConfig.SYSTEM_CSS_ADDER.set(guiColor + guiBackup + guiBackupSel);
     }
 }
