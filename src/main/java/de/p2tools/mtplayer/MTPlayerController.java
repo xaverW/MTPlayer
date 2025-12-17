@@ -365,34 +365,34 @@ public class MTPlayerController extends StackPane {
 
         if (TAB_FILM_ON.get()) {
             fastFilterFilm.setVisible(true);
-            btnFilm.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBarSel");
+            btnFilm.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
         } else {
-            btnFilm.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBar");
+            btnFilm.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
         }
 
         if (TAB_AUDIO_ON.get()) {
             fastFilterAudio.setVisible(true);
-            btnAudio.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBarSel");
+            btnAudio.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
         } else {
-            btnAudio.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBar");
+            btnAudio.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
         }
 
         if (TAB_LIVE_ON.get()) {
-            btnLive.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBarSel");
+            btnLive.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
         } else {
-            btnLive.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBar");
+            btnLive.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
         }
 
         if (TAB_DOWNLOAD_ON.get()) {
-            btnDownload.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBarSel");
+            btnDownload.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
         } else {
-            btnDownload.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBar");
+            btnDownload.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
         }
 
         if (TAB_ABO_ON.get()) {
-            btnAbo.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBarSel");
+            btnAbo.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
         } else {
-            btnAbo.getStyleClass().addAll("pFuncBtn", "pFuncBtnTabBar");
+            btnAbo.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
         }
 
         if (ProgConfig.FAST_FILM_SEARCH_ON.get() ||

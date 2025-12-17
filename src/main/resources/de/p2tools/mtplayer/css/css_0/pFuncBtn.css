@@ -5,7 +5,7 @@
     -fx-border-width: 1;
     -fx-border-color: -pGuiColor;
     -fx-border-radius: 8;
-        -fx-background-radius: 8;
+    -fx-background-radius: 8;
     -fx-background-color: -pBackgroundColor;
 
     -fx-alignment: center;
@@ -22,54 +22,43 @@
     -fx-padding: 4 14 4 14;
     -fx-border-width: 2px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: -pBackgroundColor;
+    /*-fx-background-color: -pBackgroundColor;*/
+    -fx-background-color: -pBackgroundColorSel;
 }
 .pFuncBtn:focused:hover{
     -fx-padding: 4 14 4 14;
     -fx-border-width: 2px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: -pBackgroundColor;
+    /*-fx-background-color: -pBackgroundColor;*/
+    -fx-background-color: -pBackgroundColorSel;
  }
 .pFuncBtn:pressed:focused:hover{
     -fx-padding: 3 13 3 13;
     -fx-border-width: 3px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: -pBackgroundColor;
+    /*-fx-background-color: -pBackgroundColor;*/
+    -fx-background-color: -pBackgroundColorSel;
 }
 
-.pFuncBtnSel{
-    -fx-padding: 5 15 5 15;
+
+.button{
     -fx-border-width: 1;
-    -fx-border-color: black;
-    -fx-background-color: -pGuiColor;
-    -fx-text-fill: lightgrey;
-}
-.pFuncBtnSel:focused{
-    -fx-padding: 5 15 5 15;
-    -fx-border-width: 1;
-    -fx-border-color: black;
-    -fx-background-color: -pGuiColor;
-}
-.pFuncBtnSel:hover{
-    -fx-padding: 4 14 4 14;
-    -fx-border-width: 2px;
     -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
-    -fx-text-fill: black;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-background-color: -pBackgroundColor;
 }
-.pFuncBtnSel:focused:hover{
-    -fx-padding: 4 14 4 14;
-    -fx-border-width: 2px;
-    -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
-    -fx-text-fill: black;
+.button:hover{
+    /*-fx-background-color: -pBackgroundColor;*/
+    -fx-background-color: -pBackgroundColorSel;
+}
+.button:focused:hover{
+    /*-fx-background-color: -pBackgroundColor;*/
+    -fx-background-color: -pBackgroundColorSel;
  }
-.pFuncBtnSel:pressed:focused:hover{
-    -fx-padding: 3 13 3 13;
-    -fx-border-width: 3px;
-    -fx-border-color: -pGuiColor;
-    -fx-background-color: lightgrey;
-    -fx-text-fill: black;
+.button:pressed:focused:hover{
+    /*-fx-background-color: -pBackgroundColor;*/
+    -fx-background-color: -pBackgroundColorSel;
 }
 
 /*LoadFilmlistButton wenn neue Liste verfügbar*/
