@@ -1,0 +1,94 @@
+/*
+ * P2Tools Copyright (C) 2023 W. Xaver W.Xaver[at]googlemail.com
+ * https://www.p2tools.de/
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+.pToggleSwitch  * {
+    -fx-background-color: transparent;
+}
+
+.pToggleSwitch .check-box {
+    -fx-pref-width: 50;
+    -fx-pref-height: 18;
+
+    -fx-min-width: -fx-pref-width;
+    -fx-max-width: -fx-pref-width;
+    -fx-min-height: -fx-pref-height;
+    -fx-max-height: -fx-pref-height;
+
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+    -fx-border-insets: -1;
+    -fx-border-color: darkgrey;
+
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
+                            -fx-inner-border,
+                            -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
+}
+.pToggleSwitch .check-box:selected {
+    -fx-padding: 32;
+    -fx-background-color: linear-gradient(to bottom, derive(#0b99c9, 50%), derive(#0b99c9, 30%)), -fx-body-color;
+    -fx-background-insets: 0, 1;
+}
+.pToggleSwitch .check-box:indeterminate {
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
+                                -fx-inner-border,
+                                -fx-body-color;
+    -fx-background-insets: 0, 0, 0;
+}
+.pToggleSwitch .check-box:focused {
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: -0.9, 1, 2, -2.5, 2.6;
+}
+.pToggleSwitch .check-box:selected:focused {
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: -1.2, 1, 2, -2.5, 2.6;
+}
+.pToggleSwitch .check-box:indeterminate:focused {
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: -0.9, 1, 2, -2.5, 2.6;
+}
+.pToggleSwitch .check-box:hover {
+    -fx-color: -fx-hover-base;
+}
+
+.pToggleSwitch .check-box .box{
+    -fx-background-radius: 15;
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)), #f5f5f5;
+    -fx-background-insets: 0, 1;
+}
+.pToggleSwitch .check-box:selected .box{
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
+                            linear-gradient(to bottom, derive(#0b99c9, 30%), #0b99c9);
+    -fx-background-insets: 0, 1;
+}
+
+.pToggleSwitch .check-box:indeterminate .box{
+    -fx-background-color: transparent;
+}
+
+.pToggleSwitch .check-box .mark {
+    -fx-background-color: transparent;
+}
+
+.pToggleSwitch .tooltip {
+    -fx-background-color: black;
+}
+
+.pToggleSwitchBold .label{
+    -fx-font-weight: bold;
+}

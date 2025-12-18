@@ -1,0 +1,174 @@
+/*  Programmweites style sheet */
+
+.alignCenter {
+  -fx-alignment: center;
+}
+.alignCenterPadding_10 {
+  -fx-alignment: center;
+  -fx-padding: 0 10 0 10;
+}
+.alignCenterPadding_5 {
+  -fx-alignment: center;
+  -fx-padding: 0 5 0 5;
+}
+.alignCenterRight {
+  -fx-alignment: center-right;
+}
+.alignCenterRightPadding_10 {
+  -fx-alignment: center-right;
+  -fx-padding: 0 10 0 0;
+}
+.alignCenterRightPadding_25 {
+  -fx-alignment: center-right;
+  -fx-padding: 0 25 0 0;
+}
+.alignCenterLeft {
+  -fx-alignment: center-left;
+}
+.alignCenterLeftPadding_10 {
+  -fx-alignment: center-left;
+  -fx-padding: 0 0 0 10;
+}
+
+/* PFilterTextField */
+.PFilterTextField .button{
+    -fx-border-radius: 0 5 5 0;
+    -fx-background-radius: 0 5 5 0;
+}
+
+.PFilterTextField .text-field{
+    -fx-border-radius: 5 0 0 5;
+    -fx-background-radius: 5 0 0 5;
+}
+
+/* PFilterComboBoxObject */
+.PFilterComboBoxObject .button{
+    -fx-border-radius: 0 5 5 0;
+    -fx-background-radius: 0 5 5 0;
+}
+
+.PFilterComboBoxObject .combo-box-base{
+    -fx-border-radius: 5 0 0 5;
+    -fx-background-radius: 5 0 0 5;
+}
+
+.PYearPicker > * {
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+}
+
+/* CheckBoxCell */
+.checkbox-table * {
+    -fx-background-color: transparent;
+}
+.checkbox-table:disabled {
+    -fx-opacity: 1;
+}
+.checkbox-table .box {
+    -fx-border-radius: 10px;
+    -fx-border-color: lightgray;
+}
+.checkbox-table:selected .box {
+    -fx-border-color: steelblue;
+}
+.checkbox-table:selected .mark {
+    -fx-background-color: black;
+}
+
+/* farblich abgesetzter Bereich in vielen Panes/Dialogen*/
+.extra-pane {
+    -fx-background-color: -style-extra-pane-color;
+    -fx-background-radius: 3px;
+    -fx-border-color: #939a9f;
+}
+
+/* ist nur ein Strich als Trenner: im FilmFilter*/
+ .pseperator1 .line {
+     -fx-border-style: solid;
+     -fx-border-width: 0 0 1 0; /* makes really one-pixel-border */
+     -fx-border-color: -p2-color-blue1;
+ }
+
+ .pseperator2 .line {
+     -fx-border-style: solid;
+     -fx-border-width: 0 0 2 0; /* makes really one-pixel-border */
+     -fx-border-color: -p2-color-blue1;
+ }
+
+ .pseperator3 .line {
+     -fx-border-style: solid;
+     -fx-border-width: 0 0 3 0; /* makes really one-pixel-border */
+     -fx-border-color: -p2-color-blue1;
+ }
+
+/* farblich abgesetzter Bereich in vielen Panes/Dialogen mit dem close-button*/
+.close-pane {
+    -fx-padding: 3;
+    -fx-background-color: -style-extra-pane-color;
+}
+.close-button  {
+    -fx-background-radius: 18;
+    -fx-min-width: 18;
+    -fx-min-height: 18;
+    -fx-max-width: 18;
+    -fx-max-height: 18;
+
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+    -fx-border-color: #7e7e7e;
+
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    /*-fx-background-image: url("/de/p2tools/p2lib/icons/button-close.png");*/
+}
+.close-button:hover {
+    -fx-effect: innershadow(gaussian, #646464, 15, 0, 0, 0);
+}
+.rip-button  {
+    -fx-background-radius: 18;
+    -fx-min-width: 18;
+    -fx-min-height: 18;
+    -fx-max-width: 18;
+    -fx-max-height: 18;
+
+    -fx-border-radius: 20;
+    -fx-border-width: 1;
+    -fx-border-color: #7e7e7e;
+
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    /*-fx-background-image: url("/de/p2tools/p2lib/icons/button-rip.png");*/
+}
+.rip-button:hover {
+    -fx-effect: innershadow(gaussian, #646464, 15, 0, 0, 0);
+}
+
+/* combobox mit button */
+.cbo-menu{
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 1;
+}
+.cbo-menu > .arrow-button > .arrow {
+    -fx-background-color: #0b99c9;
+}
+.cbo-menu-item{
+   -fx-padding: 3;
+ }
+
+.cbo-menu-button {
+    -fx-padding: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 0.9em;
+}
+
+.cbo-menu-button:pressed {
+    -fx-padding: 0 11 0 11;
+}
+
+/* RangeSlider*/
+.range-slider .range-bar {
+    /*-fx-background-color: -fx-text-base-color;*/
+    -fx-background-color: #a1a1a1;
+}

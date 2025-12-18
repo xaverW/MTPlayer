@@ -1,0 +1,60 @@
+/* Rahmen für die Dialoge */
+.dialog-border-big {
+    /*-fx-background-insets: 10, 40;*/
+    -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
+    -fx-border-insets: 0, 15;
+    -fx-border-width: 20 5, 10 3;
+}
+
+.dialog-border {
+    /*-fx-background-insets: 10, 40;*/
+    -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
+    -fx-border-insets: 0, 7;
+    -fx-border-width: 10 5, 5 3;
+}
+
+.dialog-border-small {
+    /*-fx-background-insets: 10, 40;*/
+    -fx-border-color: lightgray, -p2-color-blue1;
+    -fx-border-insets: 0, 5;
+    -fx-border-width: 5, 1;
+}
+
+.dialog-border-very-small {
+    -fx-border-color: gray;
+    -fx-border-width: 2;
+}
+
+.dialog-title {
+    -fx-background-color: lightgray;
+    -fx-background-insets: 0;
+    -fx-border-color: -p2-color-blue1 transparent;
+    -fx-border-insets: 0;
+    -fx-border-width: 2 0;
+    -fx-padding: 5px;
+    -fx-alignment: center ;
+}
+.dialog-title .label{
+    -fx-text-alignment: center;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.3em;
+}
+
+.dialog-about {
+    -fx-background-insets: 100, 40;
+    -fx-border-color: -p2-color-blue1, -p2-color-blue2;
+    -fx-border-insets: 0, 3;
+    -fx-padding: 10;
+    -fx-border-width: 3, 2;
+ }
+
+.dialog-whats-new {
+    -fx-border-color: -p2-color-blue2;
+    -fx-border-width: 3;
+ }
+.dialog-whats-new-list {
+    -fx-border-color: -p2-color-blue1;
+    -fx-border-width: 1;
+    -fx-padding: 5;
+ }

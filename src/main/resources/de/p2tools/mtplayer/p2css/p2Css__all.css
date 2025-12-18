@@ -1,0 +1,123 @@
+/*
+ * P2Tools Copyright (C) 2023 W. Xaver W.Xaver[at]googlemail.com
+ * https://www.p2tools.de/
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
+ */
+
+.root{
+    -pGuiColor: lightgrey;
+
+    -pGuiTextColor: black;
+    -pBackgroundTextColor: black;
+    -pBackgroundSelTextColor: black;
+
+    -pBackgroundColor: lightgrey;
+    -pBackgroundColorSel: lightgrey;
+
+
+    -p2-color-blue1: #4682B4;
+    -p2-color-blue2: #1d364b;
+    -text-color-blue: #002fbe;
+    -p2-color-border: #b5b5b5;
+
+    -tab-button-1: #d6d6d6;
+    -tab-button-2: #e6e6e6;
+    -tab-button-3: rgba(230,230,230,0);
+
+    -lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 50%, white 100%);
+    -rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -tab-button-2 45%, -tab-button-3 50%);
+
+    -style-tab-border-color-1: #4169E1; /*royalblue*/
+    -style-tab-border-color-2: #4a77ff;
+
+    -style-extra-pane-color: derive(-fx-base,-10%);
+
+    -lblSelectedLines-color-1: derive(-fx-base, -40%);
+    -lblSelectedLines-color-2: derive(-fx-base, -10%);
+
+
+     /*für den FilterClear-Button*/
+    -clear-filter-tab-button-1: #d6d6d6;
+    -clear-filter-tab-button-2: #e6e6e6;
+    -clear-filter-tab-button-3: #d6d6d6;
+    -clear-filter-lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -clear-filter-tab-button-1 50%, white 100%);
+    -clear-filter-rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -clear-filter-tab-button-2 45%, -clear-filter-tab-button-3 50%);
+
+
+}
+
+/* ========================================================================== */
+ /* sind javafx gui Elemente */
+ /* ========================================================================== */
+
+ /* sind alle Context-Menüs */
+ .context-menu {
+     -fx-border-radius: 5px;
+     -fx-background-radius: 5px;
+     -fx-border-color: #939a9f;
+ }
+ .menu-item  {
+     -fx-background-radius: 5px;
+ }
+ .titled-pane > .title {
+     -fx-font-weight: bold;
+ }
+ .titled-pane:collapsed > .title {
+     -fx-font-weight: normal;
+ }
+ .combo-box-base{
+     -fx-border-radius: 5;
+     -fx-background-radius: 5;
+ }
+ .combo-box .arrow-button{
+     -fx-border-radius: 0 5 5 0;
+     -fx-background-radius: 0 5 5 0;
+ }
+ .combo-box > .list-cell{
+     -fx-border-radius: 5 0 0 5;
+     -fx-background-radius: 5 0 0 5;
+ }
+ .combo-box .text-input{
+     -fx-border-radius: 5 0 0 5;
+     -fx-background-radius: 5 0 0 5;
+ }
+
+ .pProgressBar .bar {
+     -fx-border-insets: 2 2 3 2;
+     -fx-border-radius: 5;
+     -fx-border-color: #0085be;
+
+     -fx-background-insets: 2 2 3 2;
+     -fx-background-radius: 5;
+     -fx-background-color: #5d5e8c,
+         linear-gradient(to bottom, #0085be 10%, white 100% );
+ }
+
+/* CheckBoxCell: CheckBoxen in der Tabelle*/
+.checkbox-table * {
+    -fx-background-color: transparent;
+}
+.checkbox-table:disabled {
+    -fx-opacity: 1;
+}
+.checkbox-table .box {
+    -fx-border-radius: 10px;
+    -fx-border-color: lightgray;
+}
+.checkbox-table:selected .box {
+    -fx-border-color: -p2-color-blue1;
+}
+.checkbox-table:selected .mark {
+    -fx-background-color: black;
+}
+

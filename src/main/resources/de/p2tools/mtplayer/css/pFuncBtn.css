@@ -41,7 +41,7 @@
 }
 
 
-.button{
+/*.button{
     -fx-border-width: 1;
     -fx-border-color: -pGuiColor;
     -fx-border-radius: 8;
@@ -49,17 +49,17 @@
     -fx-background-color: -pBackgroundColor;
 }
 .button:hover{
-    /*-fx-background-color: -pBackgroundColor;*/
+    *//*-fx-background-color: -pBackgroundColor;*//*
     -fx-background-color: -pBackgroundColorSel;
 }
 .button:focused:hover{
-    /*-fx-background-color: -pBackgroundColor;*/
+    *//*-fx-background-color: -pBackgroundColor;*//*
     -fx-background-color: -pBackgroundColorSel;
  }
 .button:pressed:focused:hover{
-    /*-fx-background-color: -pBackgroundColor;*/
+    *//*-fx-background-color: -pBackgroundColor;*//*
     -fx-background-color: -pBackgroundColorSel;
-}
+}*/
 
 /*LoadFilmlistButton wenn neue Liste verfügbar*/
 .btnFilmlist {

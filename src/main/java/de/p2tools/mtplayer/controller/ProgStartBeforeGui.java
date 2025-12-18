@@ -99,16 +99,35 @@ public class ProgStartBeforeGui {
                 ProgConfig.SYSTEM_ICON_COLOR,
                 ProgConfig.SYSTEM_CSS_ADDER,
 
-                new String[]{"de/p2tools/mtplayer/css/css_0/mtfx.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncBtn.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncMenu.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncTitleBar.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncTable.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncToolBar.css",
-                        "de/p2tools/mtplayer/css/css_0/pTabPane.css",
-                        "de/p2tools/mtplayer/css/css_0/pFuncStartDialog.css"},
+                new String[]{
+                        // p2css
+                        "de/p2tools/mtplayer/p2css/p2Css__all.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___gui.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___button.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___toolButton.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___maskerPane.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___toggleSwitch.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___table.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___tabPane.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___p2Notify.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___smallGui.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___dialog.css",
 
-                new String[]{"de/p2tools/mtplayer/css/css_0/mtfx-dark.css"},
+                        "de/p2tools/mtplayer/css/mtfx.css",
+                        "de/p2tools/mtplayer/css/pFuncBtn.css",
+                        "de/p2tools/mtplayer/css/pFuncMenu.css",
+                        "de/p2tools/mtplayer/css/pFuncTitleBar.css",
+                        "de/p2tools/mtplayer/css/pFuncTable.css",
+                        "de/p2tools/mtplayer/css/pFuncToolBar.css",
+                        "de/p2tools/mtplayer/css/pFuncStartDialog.css"
+
+                },
+
+                new String[]{
+                        "de/p2tools/mtplayer/css/mtfx-dark.css",
+
+                        "de/p2tools/mtplayer/p2css/p2Css__dark___all.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__dark___table.css"},
 
                 ProgData.getInstance().cssProp,
                 ProgConfig.SYSTEM_FONT_SIZE,

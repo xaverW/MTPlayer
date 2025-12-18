@@ -1,0 +1,58 @@
+/*  ogrammweites style sheet */
+
+.button{
+    -fx-padding: 4 12 4 12;
+    -fx-border-color: -pGuiColor;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-background-color: -pBackgroundColor;
+    -fx-background-radius: 6;
+    -fx-background-insets: 0;
+    -fx-text-fill: -pBackgroundTextColor;
+}
+.button:pressed{
+    -fx-padding: 3 11 3 11;
+    -fx-background-color: -pBackgroundColorSel;
+    -fx-border-color: -pGuiColor;
+    -fx-border-width: 2;
+    -fx-text-fill: -pBackgroundSelTextColor;
+}
+.button:focused{
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: -pBackgroundColor;
+    -fx-background-insets: 0,0,0;
+}
+.button:hover{
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: -pBackgroundColorSel;
+    -fx-background-insets: 0,0,0;
+}
+.button:focused:hover{
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: -pBackgroundColorSel;
+    -fx-background-insets: 0,0,0;
+}
+.pFuncBtn:pressed:focused:hover{
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: -pBackgroundColorSel;
+    -fx-background-insets: 0,0,0;
+}
+
+.buttonSmall{
+    -fx-padding: 4
+}
+.buttonVerySmall{
+    -fx-padding: 1
+}
+.buttonVeryLow{
+    -fx-padding: 1 12 1 12;
+}
+.buttonSmall:pressed{
+    -fx-padding: 3;
+}
+.buttonVerySmall:pressed{
+    -fx-padding: 0;
+}
+.buttonVeryLow:pressed{
+    -fx-padding: 0 11 0 11;
+}

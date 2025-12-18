@@ -1,9 +1,4 @@
 /*  Programmweites style sheet */
-.root {
--pGuiColor: lightgrey;
--pBackgroundColor: lightgrey;
--pBackgroundColorSel: lightgrey;
-}
 
 /*ist der Text in Downloads unten im Tab Mediensammlung*/
 .downloadGuiMediaText{

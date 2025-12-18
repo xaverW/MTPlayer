@@ -1,0 +1,37 @@
+/*SmallGui*/
+.smallGui{
+    /*ist der ganze Dialog*/
+    -fx-background-color: #2166a3, #c20000, -lin-grad-1;
+    -fx-background-insets: 0, 10, 13;
+    -fx-background-radius: 0, 20, 20;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+.btnSmallGui{
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,1;
+    -fx-background-color: #c3c4c4, -lin-grad-1, -rad-grad-1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-padding: 5 10;
+
+    -fx-alignment: center ;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+.btnSmallGui:pressed{
+    -fx-border-width: 1;
+    -fx-padding: 5 10;
+}
+.btnSmallGui:focused{
+    -fx-background-color: #8d8d8d, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.5,1,1;
+}
+.btnSmallGui:hover{
+    -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -0.8,1,1;
+}
+.btnSmallGui:focused:hover{
+    -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
+    -fx-background-insets: -1.4,1,1;
+}

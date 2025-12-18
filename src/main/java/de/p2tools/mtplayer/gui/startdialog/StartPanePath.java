@@ -152,7 +152,7 @@ public class StartPanePath {
                 break;
         }
 
-        text.setStyle("-fx-font-weight: bold");
+        text.setStyle("-fx-font-weight: bold;");
 
         txtPlayer.textProperty().addListener((observable, oldValue, newValue) -> {
             File file = new File(txtPlayer.getText());
