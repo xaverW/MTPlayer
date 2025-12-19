@@ -71,26 +71,46 @@ public class ColorWorker {
         if (!guiColor.isEmpty()) {
             guiColor = "-pGuiColor: " + guiColor + "; ";
         }
+        String guiColorDark = P2ColorFactory.changeColor(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe(), 0.5);
+        if (!guiColorDark.isEmpty()) {
+            guiColorDark = "-pGuiColorDark: " + guiColorDark + "; ";
+        }
+
+        String guiColorLight = P2ColorFactory.changeColor(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe(), 1.5);
+        if (!guiColorLight.isEmpty()) {
+            guiColorLight = "-pGuiColorLight: " + guiColorLight + "; ";
+        }
 
         // ================
         // Text
         String guiTextColor = P2ColorFactory.getMaxColor(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe());
+        String guiTextColorLight = P2ColorFactory.getMaxColor(P2ColorFactory.changeColor(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe(), 1.3));
+        String guiTextColorDark = P2ColorFactory.getMaxColor(P2ColorFactory.changeColor(ProgConfig.SYSTEM_GUI_COLOR.getValueSafe(), 0.7));
         String backgroundTextColor = P2ColorFactory.getMaxColor(ProgConfig.SYSTEM_BACKGROUND_COLOR.getValueSafe());
-        String backgroundSelTextColor = P2ColorFactory.getMaxColor(
-                P2ColorFactory.changeColor(ProgConfig.SYSTEM_BACKGROUND_COLOR.getValueSafe(), 0.8));
+        String backgroundSelTextColor = P2ColorFactory.getMaxColor(P2ColorFactory.changeColor(ProgConfig.SYSTEM_BACKGROUND_COLOR.getValueSafe(), 0.8));
 
         if (transparent && ProgConfig.SYSTEM_DARK_THEME.get()) {
             guiTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
+            guiTextColorLight = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
+            guiTextColorDark = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
             backgroundTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
             backgroundSelTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
         } else if (transparent) {
             guiTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
+            guiTextColorLight = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
+            guiTextColorDark = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
             backgroundTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
             backgroundSelTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
 
         } else {
             if (!guiTextColor.isEmpty()) {
                 guiTextColor = "-pGuiTextColor: " + guiTextColor + "; ";
+            }
+            if (!guiTextColorLight.isEmpty()) {
+                guiTextColorLight = "-pGuiTextColorLight: " + guiTextColorLight + "; ";
+            }
+            if (!guiTextColorDark.isEmpty()) {
+                guiTextColorDark = " -pGuiTextColorDark: " + guiTextColorDark + "; ";
             }
             if (!backgroundTextColor.isEmpty()) {
                 backgroundTextColor = "-pBackgroundTextColor: " + backgroundTextColor + "; ";
@@ -116,8 +136,8 @@ public class ColorWorker {
             guiBackupSel = "-pBackgroundColorSel: transparent; ";
         }
 
-        ProgConfig.SYSTEM_CSS_ADDER.set(guiColor +
-                guiTextColor + backgroundTextColor + backgroundSelTextColor +
+        ProgConfig.SYSTEM_CSS_ADDER.set(guiColor + guiColorDark + guiColorLight +
+                guiTextColor + guiTextColorLight + guiTextColorDark + backgroundTextColor + backgroundSelTextColor +
                 guiBackground + guiBackupSel);
     }
 }

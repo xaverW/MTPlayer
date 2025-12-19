@@ -16,8 +16,12 @@
 
 .root{
     -pGuiColor: lightgrey;
+    -pGuiColorLight: lightgrey;
+    -pGuiColorDark: lightgrey;
 
     -pGuiTextColor: black;
+    -pGuiTextColorLight: black;
+    -pGuiTextColorDark: black;
     -pBackgroundTextColor: black;
     -pBackgroundSelTextColor: black;
 

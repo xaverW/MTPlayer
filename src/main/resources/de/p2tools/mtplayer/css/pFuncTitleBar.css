@@ -1,68 +1,74 @@
 
 .btnSize{
     -fx-padding: 5 15 5 15;
-    -fx-border-width: 1;
+    -fx-border-width: 3px;
     -fx-font-weight: bold;
     -fx-font-size: 1.3em;
 }
 
 .pFuncBtnTitleBar{
     -fx-background-color: -pBackgroundColor;
+    -fx-text-fill: -pBackgroundTextColor;
 }
 .pFuncBtnTitleBar:focused{
+    -fx-text-fill: -pBackgroundTextColor;
 }
 .pFuncBtnTitleBar:hover{
     -fx-background-color: -pBackgroundColorSel;
     -fx-font-size: 1.2em;
+    -fx-text-fill: -pBackgroundTextColor;
 }
 .pFuncBtnTitleBar:focused:hover{
     -fx-background-color: -pBackgroundColorSel;
     -fx-font-size: 1.2em;
+    -fx-text-fill: -pBackgroundTextColor;
  }
 .pFuncBtnTitleBar:pressed:focused:hover{
     -fx-background-color: -pBackgroundColorSel;
     -fx-font-size: 1.2em;
+    -fx-text-fill: -pBackgroundTextColor;
 }
 
 
 .pFuncBtnTitleBarSel{
     -fx-padding: 5 15 5 15;
-    -fx-border-width: 1;
-    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-border-color: -pGuiColorLight;
     -fx-background-color: -pGuiColor;
-    -fx-text-fill: lightgrey;
+    -fx-text-fill: -pGuiTextColor;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnTitleBarSel:focused{
     -fx-padding: 5 15 5 15;
-    -fx-border-width: 1;
-    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-border-color: -pGuiColorLight;
     -fx-background-color: -pGuiColor;
+    -fx-text-fill: -pGuiTextColor;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnTitleBarSel:hover{
-    -fx-padding: 4 14 4 14;
-    -fx-border-width: 2px;
-    -fx-border-color: -pGuiColor;
+    -fx-padding: 5 15 5 15;
+    -fx-border-width: 3px;
+    -fx-border-color: -pGuiColorLight;
     -fx-background-color: -pGuiColor;
-    -fx-text-fill: black;
+    -fx-text-fill: -pGuiTextColor;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnTitleBarSel:focused:hover{
-    -fx-padding: 4 14 4 14;
-    -fx-border-width: 2px;
-    -fx-border-color: -pGuiColor;
+    -fx-padding: 5 15 5 15;
+    -fx-border-width: 3px;
+    -fx-border-color: -pGuiColorLight;
     -fx-background-color: -pGuiColor;
-    -fx-text-fill: black;
+    -fx-text-fill: -pGuiTextColor;
     -fx-font-size: 1.3em;
  }
 
 .pFuncBtnSel:pressed:focused:hover{
-    -fx-padding: 3 13 3 13;
+    -fx-padding: 5 15 5 15;
     -fx-border-width: 3px;
-    -fx-border-color: -pGuiColor;
+    -fx-border-color: -pGuiColorLight;
     -fx-background-color: -pGuiColor;
-    -fx-text-fill: black;
+    -fx-text-fill:  -pGuiTextColor;
     -fx-font-size: 1.3em;
 }
 
