@@ -15,6 +15,14 @@
  */
 
 .root{
+    -pTitleBarColor: lightgrey;
+    -pTitleBarBorderColor: lightgrey;
+    -pTitleBarText: lightgrey;
+
+    -pTitleBarSelColor: lightgrey;
+    -pTitleBarSelBorderColor: lightgrey;
+    -pTitleBarSelText: lightgrey;
+
     -pGuiColor: lightgrey;
     -pGuiColorLight: lightgrey;
     -pGuiColorDark: lightgrey;
@@ -64,15 +72,25 @@
  /* sind javafx gui Elemente */
  /* ========================================================================== */
 
- /* sind alle Context-Menüs */
- .context-menu {
+/* sind Rahmen im Programm */
+.pBorder-1 {
+    -fx-border-color: -pGuiColor;
+    -fx-border-width: 1px;
+}
+.pBorder-2 {
+    -fx-border-color: -pGuiColor;
+    -fx-border-width: 2px;
+}
+
+/* sind alle Context-Menüs */
+.context-menu {
      -fx-border-radius: 5px;
      -fx-background-radius: 5px;
      -fx-border-color: #939a9f;
- }
- .menu-item  {
+}
+.menu-item  {
      -fx-background-radius: 5px;
- }
+}
  .titled-pane > .title {
      -fx-font-weight: bold;
  }

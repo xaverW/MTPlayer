@@ -2,6 +2,7 @@ package de.p2tools.mtplayer.controller.picon;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.ikonli.IkonlyFactory;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
@@ -142,6 +143,7 @@ public class PIconFactory {
 
     public static void setColor() {
         IkonlyFactory.getAllNodes(ProgData.getInstance().mtPlayerController);
+        P2DialogExtra.getDialogList().forEach(d -> IkonlyFactory.getAllNodes(d.getStage().getScene().getRoot()));
     }
 
     public static FontIcon getIcon(String literal, int size) {
