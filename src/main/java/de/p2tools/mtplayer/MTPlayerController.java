@@ -46,6 +46,7 @@ public class MTPlayerController extends StackPane {
     public static BooleanProperty TAB_ABO_ON = new SimpleBooleanProperty(Boolean.FALSE);
 
     private final Button btnFilmlist = new Button("Filmliste");
+    private final Button btnFilmlistMax = new Button("Filmliste");
     private final Button btnFilm = new Button("Filme");
     private final Button btnAudio = new Button("Audios");
     private final Button btnLive = new Button("Live");
@@ -92,16 +93,18 @@ public class MTPlayerController extends StackPane {
                 btnLive.setMinWidth(size);
                 btnDownload.setMinWidth(size);
                 btnAbo.setMinWidth(size);
-                btnFilmlist.setMinWidth(size);
+                btnFilmlist.setMinWidth(btnFilmlistMax.getWidth());
             });
 
             // Toolbar
             TilePane tilePaneButton = new TilePane();
-//            tilePaneButton.setPrefColumns(5);
             tilePaneButton.setHgap(5);
             tilePaneButton.setPadding(new Insets(0));
             tilePaneButton.setAlignment(Pos.CENTER);
             tilePaneButton.getChildren().addAll(btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
+
+            StackPane stackPaneFilmlist = new StackPane();
+            stackPaneFilmlist.getChildren().addAll(btnFilmlistMax, btnFilmlist);
 
             StackPane stackPane = new StackPane();
             stackPane.setAlignment(Pos.CENTER);
@@ -112,7 +115,7 @@ public class MTPlayerController extends StackPane {
             hBoxTop.setPadding(new Insets(5, 10, 5, 10));
             hBoxTop.setSpacing(5);
             hBoxTop.setAlignment(Pos.CENTER);
-            hBoxTop.getChildren().addAll(btnFilmlist, stackPane, stackPaneFast, new MTPlayerMenu());
+            hBoxTop.getChildren().addAll(stackPaneFilmlist, stackPane, stackPaneFast, new MTPlayerMenu());
             HBox.setHgrow(stackPane, Priority.ALWAYS);
             HBox.setHgrow(stackPaneFast, Priority.NEVER);
 
@@ -161,6 +164,8 @@ public class MTPlayerController extends StackPane {
     }
 
     private void initButtonFilmList() {
+        btnFilmlistMax.getStyleClass().addAll("pFuncBtn", "btnFilmlistMax");
+        btnFilmlistMax.setVisible(false);
         btnFilmlist.setMinWidth(Region.USE_PREF_SIZE);
         btnFilmlist.getStyleClass().addAll("pFuncBtn", "btnFilmlist");
         btnFilmlist.setTooltip(new Tooltip("Eine neue Filmliste laden.\n" +

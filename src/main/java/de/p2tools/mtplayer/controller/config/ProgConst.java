@@ -130,17 +130,17 @@ public class ProgConst {
 
     public static final String THEME_LIVE = "Livestream";
 
-    public static final String ICON_COLOR_DARK_1 = "#1a1a1a";
+    public static final String ICON_COLOR_DARK_1 = "#e6e6e6";
     public static final String ICON_COLOR_DARK_2 = "#000080";
     public static final String ICON_COLOR_LIGHT_1 = "#333333";
     public static final String ICON_COLOR_LIGHT_2 = "#000080";
 
-    public static final String GUI_COLOR_DARK_1 = "#808080";
+    public static final String GUI_COLOR_DARK_1 = "#cccccc";
     public static final String GUI_COLOR_DARK_2 = "#000080";
     public static final String GUI_COLOR_LIGHT_1 = "#666666";
     public static final String GUI_COLOR_LIGHT_2 = "#000080";
 
-    public static final String GUI_BACKGROUND_DARK_1 = "#b3b3b3";
+    public static final String GUI_BACKGROUND_DARK_1 = "#333333";
     public static final String GUI_BACKGROUND_DARK_2 = "#a1a1a1";
     public static final String GUI_BACKGROUND_LIGHT_1 = "#cccccc";
     public static final String GUI_BACKGROUND_LIGHT_2 = "#d8d8d8";

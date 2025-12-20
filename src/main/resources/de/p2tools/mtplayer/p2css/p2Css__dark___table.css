@@ -6,25 +6,23 @@
    -fx-background-color: transparent;
 }
 .table-view .table-cell{
-    -fx-border-color: #9a9a9a;
+    -fx-text-fill: black;
 }
-
 .table-row-cell:odd{
-    -fx-background-color: derive(-fx-control-inner-background, 20%);
+    -fx-background-color: derive(-fx-control-inner-background, -20%);
 }
 .table-row-cell:even{
-    -fx-background-color: derive(-fx-control-inner-background, 30%);
+    -fx-background-color: derive(-fx-control-inner-background, -10%);
 }
 
 .table-row-cell:hover {
-    -fx-background-color: derive(-fx-control-inner-background, 75%);
+    -fx-background-color: derive(-fx-control-inner-background, 25%);
 }
 .table-row-cell:selected{
-    -fx-background-color: #8ebae1;
+    -fx-background-color: derive(-fx-control-inner-background, 30%);
 }
 .table-row-cell:selected:hover{
-    -fx-background-color: derive(-fx-control-inner-background, 200%);
-    -fx-text-background-color: black;
+    -fx-background-color: derive(-fx-control-inner-background, 40%);
 }
 
 /* damit leere Tabellenzeilen nicht angezeigt werden */

@@ -8,8 +8,10 @@
 
 .pFuncBtnTitleBar{
     -fx-background-color: -pTitleBarColor;
+    -fx-background-radius: 12;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-border-width: 2px;
+    -fx-border-radius: 12;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:focused{
@@ -41,7 +43,9 @@
     -fx-padding: 5 15 5 15;
     -fx-border-width: 3;
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-radius: 15;
     -fx-background-color: -pTitleBarSelColor;
+    -fx-background-radius: 15;
     -fx-text-fill: -pTitleBarSelText;
     -fx-font-size: 1.3em;
 }
@@ -80,33 +84,40 @@
 }
 
 /* LoadFilmlistButton wenn neue Liste verfügbar */
+.btnFilmlistMax {
+    -fx-border-width: 2px;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+}
 .btnFilmlist {
-    -fx-background-color: -pTitleBarColor;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-border-width: 2px;
+    -fx-border-radius: 12;
+    -fx-background-color: -pTitleBarColor;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
     -fx-font-weight: normal;
 }
 .btnFilmlist:focused{
-    -fx-background-color: -pTitleBarColor;
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-background-color: -pTitleBarColor;
     -fx-text-fill: -pTitleBarText;
 }
 .btnFilmlist:hover{
-    -fx-background-color: -pTitleBarColor;
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-background-color: -pTitleBarColor;
     -fx-font-size: 1.2em;
     -fx-text-fill: -pTitleBarText;
 }
 .btnFilmlist:focused:hover{
-    -fx-background-color: -pTitleBarColor;
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-background-color: -pTitleBarColor;
     -fx-font-size: 1.2em;
     -fx-text-fill: -pTitleBarText;
  }
 .btnFilmlist:pressed:focused:hover{
-    -fx-background-color: -pTitleBarColor;
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-background-color: -pTitleBarColor;
     -fx-font-size: 1.2em;
     -fx-text-fill: -pTitleBarText;
 }

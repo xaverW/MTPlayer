@@ -15,16 +15,59 @@
  */
 
 
+
 /* Tabelle */
-.table-row-cell:hover {
-    -fx-background-color: #e2e2e2;
+.table-view{
+   -fx-background-color: transparent;
+}
+.table-view .table-cell{
+    -fx-text-fill: black;
+}
+.table-row-cell:odd{
+    -fx-background-color: derive(-fx-control-inner-background, -20%);
+}
+.table-row-cell:even{
+    -fx-background-color: derive(-fx-control-inner-background, -10%);
+}
+
+.table-row-cell:focused{
+}
+.table-row-cell:pressed{
+    -fx-background-color: derive(-fx-control-inner-background, -30%);
+}
+.table-row-cell:hover{
+    -fx-background-color: derive(-fx-control-inner-background, -30%);
+}
+.table-row-cell:focused:hover{
+    -fx-background-color: derive(-fx-control-inner-background, -30%);
+}
+.table-row-cell:pressed:focused:hover{
+    -fx-background-color: derive(-fx-control-inner-background, -30%);
 }
 .table-row-cell:selected{
-    -fx-background-color: #18c1ff;
+    -fx-background-color: derive(-fx-control-inner-background, -40%);
 }
-.table-row-cell:hover:selected{
-    -fx-background-color: #989898;
+.table-row-cell:selected:hover{
+    -fx-background-color: derive(-fx-control-inner-background, -40%);
 }
+
+/*
+.table-row-cell:hover .text {
+       -fx-fill: black ;
+}
+.table-row-cell:pressed .text {
+       -fx-fill: black ;
+}
+.table-row-cell:selected:hover .text {
+       -fx-fill: black ;
+}
+.table-row-cell:selected .text {
+       -fx-fill: black ;
+}
+*/
+
+
+
 
 /* damit leere Tabellenzeilen nicht angezeigt werden */
 .table-row-cell:empty {
@@ -33,6 +76,10 @@
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
  }
+
+
+
+
 
 /* damit leere ListView-Zeilen nicht angezeigt werden */
 .list-cell:empty {
