@@ -39,10 +39,10 @@ import java.util.Collection;
 public class PaneColorGui {
     private final Stage stage;
 
-    private final RadioButton rbDark = new RadioButton("Dark-Theme");
-    private final RadioButton rbLight = new RadioButton("Light-Theme");
-    private final RadioButton rbIcon1 = new RadioButton("Icon-Theme 1");
-    private final RadioButton rbIcon2 = new RadioButton("Icon-Theme 2");
+    private final RadioButton rbDark = new RadioButton("Dunkel");
+    private final RadioButton rbLight = new RadioButton("Hell");
+    private final RadioButton rbIcon1 = new RadioButton("Gui-Farben 1");
+    private final RadioButton rbIcon2 = new RadioButton("Gui-Farben 2");
 
     private final GridPane gridDark1 = new GridPane();
     private final GridPane gridDark2 = new GridPane();
@@ -63,11 +63,21 @@ public class PaneColorGui {
     private final CheckBox chkTitleBarSelEmptyLight1 = new CheckBox("Transparent");
     private final CheckBox chkTitleBarSelEmptyLight2 = new CheckBox("Transparent");
 
-    Button btnReset = new Button("Zurücksetzen");
-    Button btnResetAll = new Button("Alles Zurücksetzen");
-    Button btnHelp = PIconFactory.getHelpButton("Zurücksetzen", "\"Zurücksetzen\" sets die " +
-            "aktuellen Einstellungen zurücksetzen\n\n" +
-            "\"Alles zurücksetzen\" löscht alle Einstellungen.");
+    private final String ICONS = "Icons";
+    private final String GUI = "Programmfarbe";
+    private final String BACKGROUND = "Hintergrund";
+    private final String TITLE_BAR = "Schalter Titelzeile";
+    private final String TITLE_BAR_SEL = "Schalter Titelzeile, ausgewählt";
+
+    private final String DARK_1 = "Dunkel, Gui-Farben 1";
+    private final String DARK_2 = "Dunkel, Gui-Farben 2";
+    private final String LIGHT_1 = "Hell, Gui-Farben 1";
+    private final String LIGHT_2 = "Hell, Gui-Farben 2";
+
+
+    private final Button btnReset = new Button("Zurücksetzen");
+    private final Button btnResetAll = new Button("Alles Zurücksetzen");
+    private Button btnHelp;
 
     private final VBox vBox = new VBox(P2LibConst.SPACING_VBOX);
 
@@ -96,6 +106,9 @@ public class PaneColorGui {
     }
 
     public void make(Collection<TitledPane> result) {
+        btnHelp = PIconFactory.getHelpButton(stage, "Zurücksetzen", "\"Zurücksetzen\" sets die " +
+                "aktuellen Einstellungen zurücksetzen\n\n" +
+                "\"Alles zurücksetzen\" löscht alle Einstellungen.");
         btnReset.setOnAction(a -> reset());
         btnResetAll.setOnAction(a -> resetAll());
         makeSelGrid();
@@ -233,26 +246,26 @@ public class PaneColorGui {
 
         // ======
         // add Dark1
-        gridDark1.add(P2Text.getTextBoldUnderline("Dark-Theme 1", "white"), 0, 0);
-        gridDark1.add(new Label("Icon-Theme"), 0, 1);
+        gridDark1.add(P2Text.getTextBoldUnderline(DARK_1, "white"), 0, 0);
+        gridDark1.add(new Label(ICONS), 0, 1);
         HBox hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_1, null);
         gridDark1.add(hBox, 2, 1);
 
-        gridDark1.add(new Label("Gui-Theme"), 0, 2);
+        gridDark1.add(new Label(GUI), 0, 2);
         hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_1, null);
         gridDark1.add(hBox, 2, 2);
 
-        gridDark1.add(new Label("Background-Theme"), 0, 3);
+        gridDark1.add(new Label(BACKGROUND), 0, 3);
         gridDark1.add(chkBackgroundEmptyDark1, 1, 3);
         hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_1, chkBackgroundEmptyDark1);
         gridDark1.add(hBox, 2, 3);
 
-        gridDark1.add(new Label("Title-Bar-Theme"), 0, 4);
+        gridDark1.add(new Label(TITLE_BAR), 0, 4);
         gridDark1.add(chkTitleBarEmptyDark1, 1, 4);
         hBox = addColor(ProgConfig.SYSTEM_GUI_TITLE_BAR_DARK_1, chkTitleBarEmptyDark1);
         gridDark1.add(hBox, 2, 4);
 
-        gridDark1.add(new Label("Title-Bar-Sel-Theme"), 0, 5);
+        gridDark1.add(new Label(TITLE_BAR_SEL), 0, 5);
         gridDark1.add(chkTitleBarSelEmptyDark1, 1, 5);
         hBox = addColor(ProgConfig.SYSTEM_GUI_TITLE_BAR_SEL_DARK_1, chkTitleBarSelEmptyDark1);
         gridDark1.add(hBox, 2, 5);
@@ -265,26 +278,26 @@ public class PaneColorGui {
 
         // ======
         // add Dark2
-        gridDark2.add(P2Text.getTextBoldUnderline("Dark-Theme 2", "white"), 0, 0);
-        gridDark2.add(new Label("Icon-Theme"), 0, 1);
+        gridDark2.add(P2Text.getTextBoldUnderline(DARK_2, "white"), 0, 0);
+        gridDark2.add(new Label(ICONS), 0, 1);
         hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_2, null);
         gridDark2.add(hBox, 2, 1);
 
-        gridDark2.add(new Label("Gui-Theme"), 0, 2);
+        gridDark2.add(new Label(GUI), 0, 2);
         hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_DARK_2, null);
         gridDark2.add(hBox, 2, 2);
 
-        gridDark2.add(new Label("Background-Theme"), 0, 3);
+        gridDark2.add(new Label(BACKGROUND), 0, 3);
         gridDark2.add(chkBackgroundEmptyDark2, 1, 3);
         hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_DARK_2, chkBackgroundEmptyDark2);
         gridDark2.add(hBox, 2, 3);
 
-        gridDark2.add(new Label("Title-Bar-Theme"), 0, 4);
+        gridDark2.add(new Label(TITLE_BAR), 0, 4);
         gridDark2.add(chkTitleBarEmptyDark2, 1, 4);
         hBox = addColor(ProgConfig.SYSTEM_GUI_TITLE_BAR_DARK_2, chkTitleBarEmptyDark2);
         gridDark2.add(hBox, 2, 4);
 
-        gridDark2.add(new Label("Title-Bar-Sel-Theme"), 0, 5);
+        gridDark2.add(new Label(TITLE_BAR_SEL), 0, 5);
         gridDark2.add(chkTitleBarSelEmptyDark2, 1, 5);
         hBox = addColor(ProgConfig.SYSTEM_GUI_TITLE_BAR_SEL_DARK_2, chkTitleBarSelEmptyDark2);
         gridDark2.add(hBox, 2, 5);
@@ -297,27 +310,27 @@ public class PaneColorGui {
 
         // ======
         // add Light1
-        gridLight1.add(P2Text.getTextBoldUnderline("Light-Theme 1"), 0, 0);
+        gridLight1.add(P2Text.getTextBoldUnderline(LIGHT_1), 0, 0);
         gridLight1.visibleProperty().bind(rbIcon1.selectedProperty());
-        gridLight1.add(new Label("Icon-Theme"), 0, 1);
+        gridLight1.add(new Label(ICONS), 0, 1);
         hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_1, null);
         gridLight1.add(hBox, 2, 1);
 
-        gridLight1.add(new Label("Gui-Theme"), 0, 2);
+        gridLight1.add(new Label(GUI), 0, 2);
         hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_1, null);
         gridLight1.add(hBox, 2, 2);
 
-        gridLight1.add(new Label("Background-Theme"), 0, 3);
+        gridLight1.add(new Label(BACKGROUND), 0, 3);
         gridLight1.add(chkBackgroundEmptyLight1, 1, 3);
         hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_1, chkBackgroundEmptyLight1);
         gridLight1.add(hBox, 2, 3);
 
-        gridLight1.add(new Label("Title-Bar-Theme"), 0, 4);
+        gridLight1.add(new Label(TITLE_BAR), 0, 4);
         gridLight1.add(chkTitleBarEmptyLight1, 1, 4);
         hBox = addColor(ProgConfig.SYSTEM_GUI_TITLE_BAR_LIGHT_1, chkTitleBarEmptyLight1);
         gridLight1.add(hBox, 2, 4);
 
-        gridLight1.add(new Label("Title-Bar-Sel-Theme"), 0, 5);
+        gridLight1.add(new Label(TITLE_BAR_SEL), 0, 5);
         gridLight1.add(chkTitleBarSelEmptyLight1, 1, 5);
         hBox = addColor(ProgConfig.SYSTEM_GUI_TITLE_BAR_SEL_LIGHT_1, chkTitleBarSelEmptyLight1);
         gridLight1.add(hBox, 2, 5);
@@ -330,27 +343,27 @@ public class PaneColorGui {
 
         // ======
         // add Light2
-        gridLight2.add(P2Text.getTextBoldUnderline("Light-Theme 2"), 0, 0);
+        gridLight2.add(P2Text.getTextBoldUnderline(LIGHT_2), 0, 0);
         gridLight2.visibleProperty().bind(rbIcon2.selectedProperty());
-        gridLight2.add(new Label("Icon-Theme"), 0, 1);
+        gridLight2.add(new Label(ICONS), 0, 1);
         hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2, null);
         gridLight2.add(hBox, 2, 1);
 
-        gridLight2.add(new Label("Gui-Theme"), 0, 2);
+        gridLight2.add(new Label(GUI), 0, 2);
         hBox = addColor(ProgConfig.SYSTEM_GUI_THEME_LIGHT_2, null);
         gridLight2.add(hBox, 2, 2);
 
-        gridLight2.add(new Label("Background-Theme"), 0, 3);
+        gridLight2.add(new Label(BACKGROUND), 0, 3);
         gridLight2.add(chkBackgroundEmptyLight2, 1, 3);
         hBox = addColor(ProgConfig.SYSTEM_GUI_BACKGROUND_LIGHT_2, chkBackgroundEmptyLight2);
         gridLight2.add(hBox, 2, 3);
 
-        gridLight2.add(new Label("Title-Bar-Theme"), 0, 4);
+        gridLight2.add(new Label(TITLE_BAR), 0, 4);
         gridLight2.add(chkTitleBarEmptyLight2, 1, 4);
         hBox = addColor(ProgConfig.SYSTEM_GUI_TITLE_BAR_LIGHT_2, chkTitleBarEmptyLight2);
         gridLight2.add(hBox, 2, 4);
 
-        gridLight2.add(new Label("Title-Bar-Sel-Theme"), 0, 5);
+        gridLight2.add(new Label(TITLE_BAR_SEL), 0, 5);
         gridLight2.add(chkTitleBarSelEmptyLight2, 1, 5);
         hBox = addColor(ProgConfig.SYSTEM_GUI_TITLE_BAR_SEL_LIGHT_2, chkTitleBarSelEmptyLight2);
         gridLight2.add(hBox, 2, 5);

@@ -92,6 +92,7 @@ public class MTPlayerController extends StackPane {
                 btnLive.setMinWidth(size);
                 btnDownload.setMinWidth(size);
                 btnAbo.setMinWidth(size);
+                btnFilmlist.setMinWidth(size);
             });
 
             // Toolbar

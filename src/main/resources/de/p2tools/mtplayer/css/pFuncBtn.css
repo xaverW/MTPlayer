@@ -41,40 +41,6 @@
 }
 
 
-/*.button{
-    -fx-border-width: 1;
-    -fx-border-color: -pGuiColor;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-background-color: -pBackgroundColor;
-}
-.button:hover{
-    *//*-fx-background-color: -pBackgroundColor;*//*
-    -fx-background-color: -pBackgroundColorSel;
-}
-.button:focused:hover{
-    *//*-fx-background-color: -pBackgroundColor;*//*
-    -fx-background-color: -pBackgroundColorSel;
- }
-.button:pressed:focused:hover{
-    *//*-fx-background-color: -pBackgroundColor;*//*
-    -fx-background-color: -pBackgroundColorSel;
-}*/
-
-/*LoadFilmlistButton wenn neue Liste verfügbar*/
-.btnFilmlist {
-}
-.btnFilmlistNewList {
-    -fx-padding: 3 13 3 13;
-    -fx-border-width: 3px;
-    -fx-border-color: -pGuiColor;
-    -fx-text-fill: -pGuiColor;
-}
-
-
-
-
-
 /* SmallSearch */
 .btnPFuncSearch{
 }

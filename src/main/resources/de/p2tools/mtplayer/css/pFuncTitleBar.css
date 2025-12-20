@@ -79,3 +79,40 @@
     -fx-font-size: 1.3em;
 }
 
+/* LoadFilmlistButton wenn neue Liste verfügbar */
+.btnFilmlist {
+    -fx-background-color: -pTitleBarColor;
+    -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-width: 2px;
+    -fx-text-fill: -pTitleBarText;
+    -fx-font-weight: normal;
+}
+.btnFilmlist:focused{
+    -fx-background-color: -pTitleBarColor;
+    -fx-border-color: -pTitleBarBorderColor;
+    -fx-text-fill: -pTitleBarText;
+}
+.btnFilmlist:hover{
+    -fx-background-color: -pTitleBarColor;
+    -fx-border-color: -pTitleBarBorderColor;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: -pTitleBarText;
+}
+.btnFilmlist:focused:hover{
+    -fx-background-color: -pTitleBarColor;
+    -fx-border-color: -pTitleBarBorderColor;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: -pTitleBarText;
+ }
+.btnFilmlist:pressed:focused:hover{
+    -fx-background-color: -pTitleBarColor;
+    -fx-border-color: -pTitleBarBorderColor;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: -pTitleBarText;
+}
+
+.btnFilmlistNewList {
+    -fx-font-weight: bold;
+    -fx-underline: true;
+}
+

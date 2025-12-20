@@ -23,9 +23,9 @@
     -pTitleBarSelBorderColor: lightgrey;
     -pTitleBarSelText: lightgrey;
 
-    -pGuiColor: lightgrey;
-    -pGuiColorLight: lightgrey;
-    -pGuiColorDark: lightgrey;
+    -pGuiColor: #4d4d4d;
+    -pGuiColorLight: #4d4d4d;
+    -pGuiColorDark: #4d4d4d;
 
     -pGuiTextColor: black;
     -pGuiTextColorLight: black;

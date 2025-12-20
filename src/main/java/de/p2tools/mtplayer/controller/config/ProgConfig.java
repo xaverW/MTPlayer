@@ -313,7 +313,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_TITLE_BAR_SEL_COLOR = addStrProp("system-backup-color", ProgConst.GUI_TITLE_BAR_SEL_LIGHT_1); // die aktuelle Hintergrund-Farbe
 
     public static StringProperty SYSTEM_ICON_THEME_DARK_1 = addStrProp("system-icon-theme-dark-1", ProgConst.ICON_COLOR_DARK_1);
-    public static StringProperty SYSTEM_ICON_THEME_DARK_2 = addStrProp("system-icon-theme-dark-2", ProgConst.ICON_COLOR_DARK_1);
+    public static StringProperty SYSTEM_ICON_THEME_DARK_2 = addStrProp("system-icon-theme-dark-2", ProgConst.ICON_COLOR_DARK_2);
     public static StringProperty SYSTEM_ICON_THEME_LIGHT_1 = addStrProp("system-icon-theme-light-1", ProgConst.ICON_COLOR_LIGHT_1);
     public static StringProperty SYSTEM_ICON_THEME_LIGHT_2 = addStrProp("system-icon-theme-light2", ProgConst.ICON_COLOR_LIGHT_2);
 
