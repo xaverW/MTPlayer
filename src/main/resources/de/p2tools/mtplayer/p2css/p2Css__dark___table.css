@@ -9,10 +9,10 @@
     -fx-text-fill: black;
 }
 .table-row-cell:odd{
-    -fx-background-color: derive(-fx-control-inner-background, -20%);
+    -fx-background-color: derive(-fx-control-inner-background, 0%);
 }
 .table-row-cell:even{
-    -fx-background-color: derive(-fx-control-inner-background, -10%);
+    -fx-background-color: derive(-fx-control-inner-background, 10%);
 }
 
 .table-row-cell:hover {

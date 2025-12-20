@@ -21,7 +21,7 @@
 
 .pToggleSwitch .check-box {
     -fx-pref-width: 50;
-    -fx-pref-height: 18;
+    -fx-pref-height: 15;
 
     -fx-min-width: -fx-pref-width;
     -fx-max-width: -fx-pref-width;
@@ -29,52 +29,44 @@
     -fx-max-height: -fx-pref-height;
 
     -fx-border-radius: 15;
-    -fx-border-width: 1;
-    -fx-border-insets: -1;
-    -fx-border-color: darkgrey;
-
-    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
-                            -fx-inner-border,
-                            -fx-body-color;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 1.0em; /* large value to make sure this remains circular */
+    -fx-border-width: 2;
+    -fx-border-insets: -3;
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: derive(-fx-text-box-border, 20%);
+    -fx-background-radius: 15;
 }
 .pToggleSwitch .check-box:selected {
     -fx-padding: 32;
-    -fx-background-color: linear-gradient(to bottom, derive(#0b99c9, 50%), derive(#0b99c9, 30%)), -fx-body-color;
-    -fx-background-insets: 0, 1;
-}
-.pToggleSwitch .check-box:indeterminate {
-    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
-                                -fx-inner-border,
-                                -fx-body-color;
-    -fx-background-insets: 0, 0, 0;
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: derive(-fx-text-box-border, 20%);
 }
 .pToggleSwitch .check-box:focused {
-    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
-    -fx-background-insets: -0.9, 1, 2, -2.5, 2.6;
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: derive(-fx-text-box-border, 20%);
 }
 .pToggleSwitch .check-box:selected:focused {
-    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
-    -fx-background-insets: -1.2, 1, 2, -2.5, 2.6;
-}
-.pToggleSwitch .check-box:indeterminate:focused {
-    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
-    -fx-background-insets: -0.9, 1, 2, -2.5, 2.6;
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: derive(-fx-text-box-border, 20%);
 }
 .pToggleSwitch .check-box:hover {
-    -fx-color: -fx-hover-base;
+    -fx-background-color: derive(-fx-text-box-border, 20%);
 }
+.pToggleSwitch .check-box:indeterminate {
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: derive(-fx-text-box-border, -40%);
+}
+.pToggleSwitch .check-box:indeterminate:focused {
+    -fx-border-color: -pGuiColor;
+    -fx-background-color: derive(-fx-text-box-border, -40%);
+}
+
 
 .pToggleSwitch .check-box .box{
     -fx-background-radius: 15;
-    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)), #f5f5f5;
-    -fx-background-insets: 0, 1;
+    -fx-background-color: white;
 }
 .pToggleSwitch .check-box:selected .box{
-    -fx-background-color: linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
-                            linear-gradient(to bottom, derive(#0b99c9, 30%), #0b99c9);
-    -fx-background-insets: 0, 1;
+    -fx-background-color: -pGuiColor;
 }
 
 .pToggleSwitch .check-box:indeterminate .box{

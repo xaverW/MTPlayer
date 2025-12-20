@@ -1,21 +1,21 @@
 /* Rahmen für die Dialoge */
 .dialog-border-big {
     /*-fx-background-insets: 10, 40;*/
-    -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
+    -fx-border-color: lightgray transparent lightgray transparent, -pGuiColor;
     -fx-border-insets: 0, 15;
     -fx-border-width: 20 5, 10 3;
 }
 
 .dialog-border {
     /*-fx-background-insets: 10, 40;*/
-    -fx-border-color: lightgray transparent lightgray transparent, -p2-color-blue1;
+    -fx-border-color: lightgray transparent lightgray transparent, -pGuiColor;
     -fx-border-insets: 0, 7;
     -fx-border-width: 10 5, 5 3;
 }
 
 .dialog-border-small {
     /*-fx-background-insets: 10, 40;*/
-    -fx-border-color: lightgray, -p2-color-blue1;
+    -fx-border-color: lightgray, -pGuiColor;
     -fx-border-insets: 0, 5;
     -fx-border-width: 5, 1;
 }
@@ -28,7 +28,7 @@
 .dialog-title {
     -fx-background-color: lightgray;
     -fx-background-insets: 0;
-    -fx-border-color: -p2-color-blue1 transparent;
+    -fx-border-color: -pGuiColor transparent;
     -fx-border-insets: 0;
     -fx-border-width: 2 0;
     -fx-padding: 5px;
@@ -43,18 +43,18 @@
 
 .dialog-about {
     -fx-background-insets: 100, 40;
-    -fx-border-color: -p2-color-blue1, -p2-color-blue2;
+    -fx-border-color: -pGuiColor, -pGuiColorLight;
     -fx-border-insets: 0, 3;
     -fx-padding: 10;
     -fx-border-width: 3, 2;
  }
 
 .dialog-whats-new {
-    -fx-border-color: -p2-color-blue2;
+    -fx-border-color: -pGuiColorLight;
     -fx-border-width: 3;
  }
 .dialog-whats-new-list {
-    -fx-border-color: -p2-color-blue1;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 1;
     -fx-padding: 5;
  }

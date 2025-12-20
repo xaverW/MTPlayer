@@ -24,10 +24,10 @@
     -fx-text-fill: black;
 }
 .table-row-cell:odd{
-    -fx-background-color: derive(-fx-control-inner-background, -20%);
+    -fx-background-color: derive(-fx-control-inner-background, -1%);
 }
 .table-row-cell:even{
-    -fx-background-color: derive(-fx-control-inner-background, -10%);
+    -fx-background-color: derive(-fx-control-inner-background, -4%);
 }
 
 .table-row-cell:focused{

@@ -122,7 +122,7 @@ public class FilmFilterController extends FilterController {
             vBox.getChildren().addAll(filmFilterControllerTextFilter);
 
             Separator sp = new Separator();
-            sp.getStyleClass().add("pseperator1");
+            sp.getStyleClass().add("pseperator2");
             sp.setMinHeight(0);
             sp.setMaxHeight(1);
             sp.visibleProperty().bind(filmFilterControllerTextFilter.visibleProperty());

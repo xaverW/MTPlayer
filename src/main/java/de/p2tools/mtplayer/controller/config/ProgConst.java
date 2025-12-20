@@ -130,7 +130,7 @@ public class ProgConst {
 
     public static final String THEME_LIVE = "Livestream";
 
-    public static final String ICON_COLOR_DARK_1 = "#e6e6e6";
+    public static final String ICON_COLOR_DARK_1 = "#ffffff";
     public static final String ICON_COLOR_DARK_2 = "#000080";
     public static final String ICON_COLOR_LIGHT_1 = "#333333";
     public static final String ICON_COLOR_LIGHT_2 = "#000080";

@@ -47,8 +47,10 @@
     -fx-border-color: #939a9f;
 }
 .menu-item  {
-    -fx-background-radius: 5px;
+    -fx-background-radius: 3px;
 }
+
+
 /* ComboBox */
 .combo-box-popup .list-view .list-cell:hover {
     /* ist der markierte Eintrag in der Liste beim Auswählen mit der Maus*/
@@ -124,5 +126,4 @@
 .button-menu {
     -fx-border-color: #6f6f6f;
 }
-
 

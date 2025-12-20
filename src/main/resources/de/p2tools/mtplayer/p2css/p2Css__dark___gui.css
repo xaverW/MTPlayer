@@ -1,0 +1,23 @@
+/*  style sheet for the dark-theme */
+
+/* ========================================================================== */
+/* sind javafx gui Elemente */
+/* ========================================================================== */
+
+/* combobox mit button */
+.cbo-menu > .arrow-button > .arrow {
+    -fx-background-color: #ffffff;
+}
+.cbo-menu-item:hover {
+    -fx-text-fill: black;
+}
+
+.cbo-menu-button {
+    -fx-text-fill: white;
+}
+.cbo-menu-button:hover {
+    -fx-text-fill: black;
+}
+.cbo-menu-button:pressed {
+    -fx-text-fill: white;
+}

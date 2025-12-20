@@ -57,14 +57,13 @@
     -lblSelectedLines-color-1: derive(-fx-base, -40%);
     -lblSelectedLines-color-2: derive(-fx-base, -10%);
 
-
-     /*für den FilterClear-Button*/
-    -clear-filter-tab-button-1: #d6d6d6;
+/*für den FilterClear-Button*/
+/*  -clear-filter-tab-button-1: #d6d6d6;
     -clear-filter-tab-button-2: #e6e6e6;
     -clear-filter-tab-button-3: #d6d6d6;
     -clear-filter-lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -clear-filter-tab-button-1 50%, white 100%);
     -clear-filter-rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -clear-filter-tab-button-2 45%, -clear-filter-tab-button-3 50%);
-
+*/
 
 }
 
@@ -72,60 +71,53 @@
  /* sind javafx gui Elemente */
  /* ========================================================================== */
 
-/* sind Rahmen im Programm */
-.pBorder-1 {
-    -fx-border-color: -pGuiColor;
-    -fx-border-width: 1px;
-}
-.pBorder-2 {
-    -fx-border-color: -pGuiColor;
-    -fx-border-width: 2px;
-}
-
 /* sind alle Context-Menüs */
 .context-menu {
-     -fx-border-radius: 5px;
-     -fx-background-radius: 5px;
-     -fx-border-color: #939a9f;
+    -fx-border-radius: 3px;
+    -fx-border-color: -pGuiColor;
+    -fx-background-radius: 3px;
 }
 .menu-item  {
-     -fx-background-radius: 5px;
+    -fx-background-radius: 3px;
 }
- .titled-pane > .title {
+
+.titled-pane > .title {
      -fx-font-weight: bold;
- }
- .titled-pane:collapsed > .title {
+}
+.titled-pane:collapsed > .title {
      -fx-font-weight: normal;
- }
- .combo-box-base{
+}
+
+.combo-box-base{
      -fx-border-radius: 5;
      -fx-background-radius: 5;
- }
- .combo-box .arrow-button{
+}
+.combo-box .arrow-button{
      -fx-border-radius: 0 5 5 0;
      -fx-background-radius: 0 5 5 0;
- }
- .combo-box > .list-cell{
+}
+.combo-box > .list-cell{
      -fx-border-radius: 5 0 0 5;
      -fx-background-radius: 5 0 0 5;
- }
- .combo-box .text-input{
+}
+.combo-box .text-input{
      -fx-border-radius: 5 0 0 5;
      -fx-background-radius: 5 0 0 5;
- }
+}
 
- .pProgressBar .bar {
+.pProgressBar .bar {
      -fx-border-insets: 2 2 3 2;
      -fx-border-radius: 5;
-     -fx-border-color: #0085be;
+     -fx-border-color: -pGuiColor;
 
      -fx-background-insets: 2 2 3 2;
      -fx-background-radius: 5;
-     -fx-background-color: #5d5e8c,
-         linear-gradient(to bottom, #0085be 10%, white 100% );
- }
+     -fx-background-color: -pGuiColor;
+}
 
-/* CheckBoxCell: CheckBoxen in der Tabelle*/
+
+/* =========================================== */
+/* CheckBoxCell */
 .checkbox-table * {
     -fx-background-color: transparent;
 }
@@ -137,9 +129,8 @@
     -fx-border-color: lightgray;
 }
 .checkbox-table:selected .box {
-    -fx-border-color: -p2-color-blue1;
+    -fx-border-color: -pGuiColor;
 }
 .checkbox-table:selected .mark {
-    -fx-background-color: black;
+    -fx-background-color: -pGuiColor;
 }
-

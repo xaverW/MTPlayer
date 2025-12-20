@@ -1,6 +1,10 @@
 /*SmallGui*/
+
+/*
 .smallGui{
-    /*ist der ganze Dialog*/
+    */
+/*ist der ganze Dialog*//*
+
     -fx-background-color: #2166a3, #c20000, -lin-grad-1;
     -fx-background-insets: 0, 10, 13;
     -fx-background-radius: 0, 20, 20;
@@ -35,3 +39,4 @@
     -fx-background-color: #98abc4, -lin-grad-1, -rad-grad-1;
     -fx-background-insets: -1.4,1,1;
 }
+*/
