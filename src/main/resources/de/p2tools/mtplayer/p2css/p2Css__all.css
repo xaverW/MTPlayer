@@ -115,6 +115,10 @@
      -fx-background-color: -pGuiColor;
 }
 
+.check-box:selected .mark {
+    -fx-background-color: -pGuiColor;
+}
+
 
 /* =========================================== */
 /* CheckBoxCell */

@@ -19,9 +19,6 @@
     -tab-button-2: #545454;
     -tab-button-3: rgba(50,50,50,0);
 
-    -lin-grad-1: linear-gradient(from 0% 0% to 100% 100%, -tab-button-1 50%, #616161 100%);
-    -rad-grad-1: radial-gradient(center 50% -40%, radius 200%, -tab-button-2 45%, -tab-button-3 50%);
-
     -style-tab-border-color-1: #003ca0;
     -style-tab-border-color-2: #003cff;
 
@@ -40,7 +37,6 @@
 /* ========================================================================== */
 
 
-
 /* sind alle Context-Menüs */
 .context-menu {
     -fx-background-color: #44484a;
@@ -52,18 +48,18 @@
 
 
 /* ComboBox */
-.combo-box-popup .list-view .list-cell:hover {
-    /* ist der markierte Eintrag in der Liste beim Auswählen mit der Maus*/
+/*.combo-box-popup .list-view .list-cell:hover {
+    *//* ist der markierte Eintrag in der Liste beim Auswählen mit der Maus*//*
     -fx-background-color: #b7bccf;
-    -fx-text-fill: black;
-}
-.podder-button:selected .podder .dot {
+    -fx-text-fill: red;
+}*/
+/*.podder-button:selected .podder .dot {
     -fx-background-color: #0b99c9;
     -fx-background-insets: 0;
-}
-.check-box:selected .mark {
-    -fx-background-color: #0b99c9;
-}
+}*/
+
+
+/* Text in Eingabefeldern */
 .text-input:focused {
     -fx-highlight-text-fill: ladder(
         -fx-highlight-fill,
@@ -73,6 +69,7 @@
         -fx-mid-text-color   60%
     );
 }
+
 
 /* The main scrollbar **thumb** CSS class which we drag every time (movable) */
 .scroll-bar:horizontal .thumb {
@@ -95,25 +92,28 @@
 }
 
 
+/*
 .button-accordion {
     -fx-background-color: linear-gradient(from 15% 53% to 15% 120% , #9B9B9B, #DBDBDB 100% );
+    -fx-background-color: red;
 }
+*/
 
 /* und eigenen Sachen */
-.btnTab, .btnTab-sel{
-    -fx-text-fill: white;
+/*.btnTab, .btnTab-sel{
+    -fx-text-fill: red;
 }
 .btnTab-sel{
     -fx-text-fill: -text-color-blue;
-}
+}*/
 
-.btnFunction{
+/*.btnFunction{
     -fx-background-color: #c3c4c4,
         linear-gradient(from 0% 0% to 100% 100%, #6a6a6a 50%, #6d6d6d 100%),
         radial-gradient(center 50% -40%, radius 200%, #545454 45%, rgba(50,50,50,0) 50%);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
     -fx-text-fill: white;
-}
+}*/
 
 /* RangeSlider*/
 .range-slider .range-bar {
@@ -123,7 +123,9 @@
 
 /* Menü-Button */
 /* farblich abgesetzter Bereich mit den Menü-Button rechts */
+/*
 .button-menu {
     -fx-border-color: #6f6f6f;
 }
+*/
 

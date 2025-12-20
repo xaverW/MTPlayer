@@ -6,6 +6,7 @@
    -fx-background-color: transparent;
 }
 .table-view .table-cell{
+    -fx-border-color: #8b8b8b;
     -fx-text-fill: black;
 }
 .table-row-cell:odd{
@@ -16,13 +17,13 @@
 }
 
 .table-row-cell:hover {
-    -fx-background-color: derive(-fx-control-inner-background, 25%);
+    -fx-background-color: derive(-fx-control-inner-background, 50%);
 }
 .table-row-cell:selected{
-    -fx-background-color: derive(-fx-control-inner-background, 30%);
+    -fx-background-color: derive(-fx-control-inner-background, 50%);
 }
 .table-row-cell:selected:hover{
-    -fx-background-color: derive(-fx-control-inner-background, 40%);
+    -fx-background-color: derive(-fx-control-inner-background, 50%);
 }
 
 /* damit leere Tabellenzeilen nicht angezeigt werden */

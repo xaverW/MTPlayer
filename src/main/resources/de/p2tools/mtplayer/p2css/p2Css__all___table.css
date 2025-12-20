@@ -16,11 +16,13 @@
 
 
 
+/* ================ */
 /* Tabelle */
 .table-view{
    -fx-background-color: transparent;
 }
 .table-view .table-cell{
+    -fx-border-color: #dfdfdf;
     -fx-text-fill: black;
 }
 .table-row-cell:odd{
@@ -66,9 +68,6 @@
 }
 */
 
-
-
-
 /* damit leere Tabellenzeilen nicht angezeigt werden */
 .table-row-cell:empty {
     -fx-background-color: transparent;
@@ -79,8 +78,7 @@
 
 
 
-
-
+/* ================= */
 /* damit leere ListView-Zeilen nicht angezeigt werden */
 .list-cell:empty {
     -fx-background-color: transparent;
@@ -89,6 +87,7 @@
     -fx-border-width: 0px;
  }
 
+/* ============== */
 /* damit leere TreeTable-Zeilen nicht angezeigt werden */
  .tree-table-row-cell:empty {
      -fx-border-width: 0;

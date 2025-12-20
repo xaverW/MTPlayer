@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class LiveSearchZdf {
     private static final String ATTRIBUTE_HREF = "href";
-    private static final String URL_BASE = "https://www.zdf.de";
+    private static final String URL_BASE = "https://www.zdf.de/suche";
     private static final String URL_API_BASE = "https://api.zdf.de";
 
     public LiveSearchZdf() {
