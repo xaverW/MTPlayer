@@ -1,20 +1,33 @@
-/* Rahmen für die Dialoge */
+/*
+ * P2Tools Copyright (C) 2023 W. Xaver W.Xaver[at]googlemail.com
+ * https://www.p2tools.de/
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
+ */
+
+ /* Rahmen für die Dialoge */
 .dialog-border-big {
-    /*-fx-background-insets: 10, 40;*/
     -fx-border-color: lightgray transparent lightgray transparent, -pGuiColor;
     -fx-border-insets: 0, 15;
     -fx-border-width: 20 5, 10 3;
 }
 
 .dialog-border {
-    /*-fx-background-insets: 10, 40;*/
     -fx-border-color: lightgray transparent lightgray transparent, -pGuiColor;
     -fx-border-insets: 0, 7;
     -fx-border-width: 10 5, 5 3;
 }
 
 .dialog-border-small {
-    /*-fx-background-insets: 10, 40;*/
     -fx-border-color: lightgray, -pGuiColor;
     -fx-border-insets: 0, 5;
     -fx-border-width: 5, 1;

@@ -102,9 +102,9 @@ public class ProgStartBeforeGui {
                 new String[]{
                         // p2css
                         "de/p2tools/mtplayer/p2css/p2Css__all.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__all___fx.css",
                         "de/p2tools/mtplayer/p2css/p2Css__all___button.css",
                         "de/p2tools/mtplayer/p2css/p2Css__all___gui.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___toolButton.css",
                         "de/p2tools/mtplayer/p2css/p2Css__all___maskerPane.css",
                         "de/p2tools/mtplayer/p2css/p2Css__all___toggleSwitch.css",
                         "de/p2tools/mtplayer/p2css/p2Css__all___table.css",
@@ -126,7 +126,7 @@ public class ProgStartBeforeGui {
                         "de/p2tools/mtplayer/css/mtfx-dark.css",
 
                         "de/p2tools/mtplayer/p2css/p2Css__dark___all.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__dark___gui.css",
+                        "de/p2tools/mtplayer/p2css/p2Css__dark___fx.css",
                         "de/p2tools/mtplayer/p2css/p2Css__dark___table.css"},
 
                 ProgData.getInstance().cssProp,

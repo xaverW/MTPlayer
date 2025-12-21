@@ -53,21 +53,6 @@
     -fx-background-color: derive(-fx-control-inner-background, -40%);
 }
 
-/*
-.table-row-cell:hover .text {
-       -fx-fill: black ;
-}
-.table-row-cell:pressed .text {
-       -fx-fill: black ;
-}
-.table-row-cell:selected:hover .text {
-       -fx-fill: black ;
-}
-.table-row-cell:selected .text {
-       -fx-fill: black ;
-}
-*/
-
 /* damit leere Tabellenzeilen nicht angezeigt werden */
 .table-row-cell:empty {
     -fx-background-color: transparent;

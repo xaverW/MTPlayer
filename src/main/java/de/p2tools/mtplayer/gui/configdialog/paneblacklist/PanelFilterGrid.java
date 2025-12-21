@@ -168,7 +168,7 @@ public class PanelFilterGrid {
         VBox vAll = new VBox(SPACE_VBOX);
         vAll.getChildren().addAll(vb1, vb2, vb3);
 
-        tableView.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
+//        tableView.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
 
         splitPane.getItems().addAll(tableView, vAll);
         SplitPane.setResizableWithParent(vAll, false);

@@ -1,9 +1,27 @@
-/*  style sheet for the dark-theme */
+/*
+ * P2Tools Copyright (C) 2023 W. Xaver W.Xaver[at]googlemail.com
+ * https://www.p2tools.de/
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
+ */
+
 
 .root {
+    -style-extra-pane-color: derive(-fx-base, 45%);
+    -lblSelectedLines-color-1: derive(-fx-base, 70%);
+    -lblSelectedLines-color-2: derive(-fx-base, 40%);
 }
 
-/*ist der Text in Downloads unten in den Tabs*/
+/* ist der Text in Downloads unten in den Tabs */
 .downloadGuiMediaText{
     -fx-fill: #e7e7e7;
 }
@@ -17,14 +35,6 @@
     -fx-background-color: #64696b;
 }
 
-.update-grid-cell {
-    -fx-background-color: #46494c ;
-}
-
-/*LoadFilmlistButton wenn neue Liste verfügbar*/
-.buttonLoadFilmlistNewList {
-    -fx-text-fill: #cce0ea;
-}
 
 /* sind die Label in der Statusleiste */
 .lblSelectedLines {
@@ -34,6 +44,8 @@
     -fx-background-color: #3a3a3a;
 }
 
+
+/* Download/Abo Add-Dialog */
 .checkBoxAll:selected .mark {
     -fx-background-color: #1fa2ce;
 }

@@ -1,4 +1,25 @@
-/*  Programmweites style sheet */
+/*
+ * P2Tools Copyright (C) 2023 W. Xaver W.Xaver[at]googlemail.com
+ * https://www.p2tools.de/
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+.root{
+    -style-extra-pane-color: derive(-fx-base,-10%);
+    -lblSelectedLines-color-1: derive(-fx-base, -40%);
+    -lblSelectedLines-color-2: derive(-fx-base, -10%);
+}
 
 /*ist der Text in Downloads unten im Tab Mediensammlung*/
 .downloadGuiMediaText{
@@ -43,50 +64,43 @@
     -fx-padding: 5;
 }
 
-/* ist der abgesetzte Bereich im Download Dialog*/
+/* ist der abgesetzten Bereich im Download Dialog*/
 .downloadDialog {
     -fx-background-color: gainsboro;
 }
 
+/* Download-Chart */
 .thick-chart .chart-series-line {
     -fx-stroke-width: 1px;
 }
 
+/* Info-Bereich unter Download/Abo */
 .downloadInfoGrid {
     -fx-border-width: 1;
     -fx-border-radius: 5;
-    -fx-border-color: -text-color-blue;
+    -fx-border-color: -pGuiColor;
     -fx-background-radius: 5;
 }
 
-.update-grid-cell {
-    -fx-background-color: white ;
-}
-
-/*Button unter der Tabelle Filme*/
-.setButton{
-    -fx-border-width: 2;
-    -fx-padding: 3 11 3 11;
-}
-.setButton:pressed{
-    -fx-border-width: 1;
-    -fx-padding: 4 12 4 12;
-}
-
+/* Info-Pane unter Filme */
 .extra-pane-info {
     -fx-border-width: 2; /* makes really one-pixel-border */
-    -fx-border-color: -p2-color-border;
+    -fx-border-color: -pGuiColor;
 }
+
+/* Pane im Filter-Pane */
 .extra-pane-filter {
     -fx-background-color: -style-extra-pane-color;
    /* -fx-border-width: 1 0 0 0; *//* makes really one-pixel-border *//*
     -fx-border-color: #939a9f;*/
 }
 
+/* Tabellen-Spalten */
 .special-column-style .label {
   -fx-alignment: CENTER_LEFT;
 }
 
+/* Box-Fast-Filter */
 .fast-search-on {
     -fx-background-color: -style-extra-pane-color;
     -fx-border-width: 1;
@@ -96,7 +110,7 @@
     -fx-padding: 10 2 10 2;
 }
 
-/*Button im fastSearch im Tab Filme*/
+/* Button im FastSearch im Tab Filme */
 .selectButton{
     -fx-border-width: 1;
     -fx-padding: 1 5;
@@ -106,19 +120,16 @@
     -fx-padding: 0 4;
 }
 
+/* Add-Download/Abo-Dialog */
 .checkBoxAll:selected .mark {
     -fx-background-color: blue;
 }
 
-/* Label Filmfilter in der CBO */
+/* Label Filmfilter in der PCboTextFilter */
 .lblFilmFilter {
     -fx-border-color: #313131;
     -fx-border-width: 1;
     -fx-padding: 0 5;
 }
 
-/*
 
-.cbo-menu-button {
-    -fx-padding: 1;
-}*/

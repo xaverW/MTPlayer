@@ -142,8 +142,8 @@ public class PaneMedia extends VBox {
             filter(mediaDataDtoAbo);
         });
 
-        tableMedia.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
-        tableAbo.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
+//        tableMedia.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
+//        tableAbo.setStyle("-fx-border-width: 1px; -fx-border-color: -text-color-blue;");
         VBox.setVgrow(tableMedia, Priority.ALWAYS);
         VBox.setVgrow(tableAbo, Priority.ALWAYS);
 

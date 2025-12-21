@@ -1,4 +1,19 @@
-/*  Programmweites style sheet */
+/*
+ * P2Tools Copyright (C) 2023 W. Xaver W.Xaver[at]googlemail.com
+ * https://www.p2tools.de/
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
+ */
+
 
 /* =========================================== */
 .alignCenter {
@@ -43,6 +58,7 @@
     -fx-background-radius: 5 0 0 5;
 }
 
+
 /* =========================================== */
 /* PFilterComboBoxObject */
 .PFilterComboBoxObject .button{
@@ -61,7 +77,6 @@
 }
 
 
-
 /* =========================================== */
 /* farblich abgesetzter Bereich in vielen Panes/Dialogen*/
 .extra-pane {
@@ -69,6 +84,7 @@
     -fx-background-radius: 3px;
     -fx-border-color: #939a9f;
 }
+
 
 /* =========================================== */
 /* ist nur ein Strich als Trenner: im FilmFilter*/
@@ -90,6 +106,8 @@
      -fx-border-color: -pGuiColor;
  }
 
+
+/* =========================================== */
 /* sind Rahmen im Programm */
 .pBorder-1 {
     -fx-border-color: -pGuiColor;
@@ -176,11 +194,3 @@
     -fx-background-color: #939393;
 }
 
-
-
-/* =========== */
-/* RangeSlider*/
-.range-slider .range-bar {
-    -fx-background-color: -fx-text-base-color;
-    -fx-background-color: #a1a1a1;
-}

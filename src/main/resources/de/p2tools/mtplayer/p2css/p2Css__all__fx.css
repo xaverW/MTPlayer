@@ -1,0 +1,95 @@
+/*
+ * P2Tools Copyright (C) 2023 W. Xaver W.Xaver[at]googlemail.com
+ * https://www.p2tools.de/
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+/* ========================================================================== */
+ /* sind javafx gui Elemente */
+ /* ========================================================================== */
+
+.context-menu {
+    -fx-border-radius: 3px;
+    -fx-border-color: -pGuiColor;
+    -fx-background-radius: 3px;
+}
+.menu-item  {
+    -fx-background-radius: 3px;
+}
+
+.titled-pane > .title {
+     -fx-font-weight: bold;
+}
+.titled-pane:collapsed > .title {
+     -fx-font-weight: normal;
+}
+
+.combo-box-base{
+     -fx-border-radius: 5;
+     -fx-background-radius: 5;
+}
+.combo-box .arrow-button{
+     -fx-border-radius: 0 5 5 0;
+     -fx-background-radius: 0 5 5 0;
+}
+.combo-box > .list-cell{
+     -fx-border-radius: 5 0 0 5;
+     -fx-background-radius: 5 0 0 5;
+}
+.combo-box .text-input{
+     -fx-border-radius: 5 0 0 5;
+     -fx-background-radius: 5 0 0 5;
+}
+
+.pProgressBar .bar {
+     -fx-border-insets: 2 2 3 2;
+     -fx-border-radius: 5;
+     -fx-border-color: -pGuiColor;
+
+     -fx-background-insets: 2 2 3 2;
+     -fx-background-radius: 5;
+     -fx-background-color: -pGuiColor;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: -pGuiColor;
+}
+
+
+/* =========================================== */
+/* CheckBoxCell */
+.checkbox-table * {
+    -fx-background-color: transparent;
+}
+.checkbox-table:disabled {
+    -fx-opacity: 1;
+}
+.checkbox-table .box {
+    -fx-border-radius: 10px;
+    -fx-border-color: lightgray;
+}
+.checkbox-table:selected .box {
+    -fx-border-color: -pGuiColor;
+}
+.checkbox-table:selected .mark {
+    -fx-background-color: -pGuiColor;
+}
+
+
+/* ========================= */
+/* RangeSlider*/
+.range-slider .range-bar {
+    -fx-background-color: -fx-text-base-color;
+    -fx-background-color: #a1a1a1;
+}
