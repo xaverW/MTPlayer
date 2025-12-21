@@ -54,7 +54,7 @@ public class CheckDownloadFileExists {
         }
 
         // und das wird dann danach wieder gesetzt, wenn weitergeführt wird
-        download.getDownloadStartDto().setDownloaded(0);
+        download.getStartDownloadDto().setDownloaded(0);
 
         if (!download.getFile().exists()) {
             // dann ist alles OK
@@ -123,12 +123,12 @@ public class CheckDownloadFileExists {
 
             case CONTINUE:
                 // aktuelle File Größe setzen
-                download.getDownloadStartDto().setDownloaded(download.getFile().length());
+                download.getStartDownloadDto().setDownloaded(download.getFile().length());
                 break;
 
             case RESTART:
                 // dann bei Null beginnen
-                download.getDownloadStartDto().setDownloaded(0);
+                download.getStartDownloadDto().setDownloaded(0);
                 if (isNewName) {
                     if (!httpDownload) {
                         // wenn Name geändert den Programmaufruf nochmal mit dem geänderten Dateinamen bauen

@@ -104,12 +104,12 @@ public class RuntimeExecDownload {
         } catch (final IOException ex) {
             P2Log.errorLog(958454789, ex, "IOFehler beim Starten");
             String error = "Das Programm: [" + download.getProgramName() + "] konnte nicht gestartet werden.";
-            download.getDownloadStartDto().addErrMsg(error);
+            download.getStartDownloadDto().addErrMsg(error);
 
         } catch (final Exception ex) {
             P2Log.errorLog(450028932, ex, "Fehler beim Starten");
             String error = ex.getLocalizedMessage();
-            download.getDownloadStartDto().addErrMsg(error);
+            download.getStartDownloadDto().addErrMsg(error);
         }
         return process;
     }
@@ -134,7 +134,7 @@ public class RuntimeExecDownload {
         @Override
         public void run() {
             // da wird nur hier aufgezeichnet, deswegen vor jedem Start löschen
-            download.getDownloadStartDto().getErrStreamList().clear();
+            download.getStartDownloadDto().getErrStreamList().clear();
 
             String title = "";
             try {
@@ -160,7 +160,7 @@ public class RuntimeExecDownload {
                         getFromErrorStreamYtDlp(inStr);
                     }
 
-                    download.getDownloadStartDto().addErrStream(inStr); // für den Fehlerdialog
+                    download.getStartDownloadDto().addErrStream(inStr); // für den Fehlerdialog
                     playerMessage.playerMessage(title + ": " + inStr); // und fürs log
                 }
 
@@ -181,7 +181,7 @@ public class RuntimeExecDownload {
             try {
                 // 404
                 if (input.contains("HTTP error 404 Not Found")) {
-                    download.getDownloadStartDto().addErrMsg("Die URL wurde nicht gefunden.");
+                    download.getStartDownloadDto().addErrMsg("Die URL wurde nicht gefunden.");
                 }
 
                 // Gesamtzeit ffmpeg
@@ -223,7 +223,7 @@ public class RuntimeExecDownload {
                         try {
                             final long actSize = Integer.parseInt(size.replace("kB", ""));
                             mVFilmSize.setActuallySize(actSize * 1_000);
-                            final long akt = download.getDownloadStartDto().getStartTime().diffInSeconds();
+                            final long akt = download.getStartDownloadDto().getStartTime().diffInSeconds();
                             if (oldSecs < akt - 5) {
                                 // nur alle 5s machen
                                 download.setBandwidth((actSize - oldSize) * 1_000 / (akt - oldSecs)); // bytes per second
@@ -292,7 +292,7 @@ public class RuntimeExecDownload {
                     if (!bandwidth.isEmpty()) {
                         try {
                             final long b = Long.parseLong(bandwidth);
-                            final long akt = download.getDownloadStartDto().getStartTime().diffInSeconds();
+                            final long akt = download.getStartDownloadDto().getStartTime().diffInSeconds();
                             if (oldSecs < akt - 5) {
                                 // nur alle 5s machen
                                 download.setBandwidth(b * 1_000 * 1_000); // bytes per second
@@ -331,10 +331,10 @@ public class RuntimeExecDownload {
                 }
                 if (percent > (percent_start + 5 * DownloadConstants.PROGRESS_1_PERCENT)) {
                     // sonst macht es noch keinen Sinn
-                    final int diffTime = download.getDownloadStartDto().getStartTime().diffInSeconds();
+                    final int diffTime = download.getStartDownloadDto().getStartTime().diffInSeconds();
                     final double diffPercent = percent - percent_start;
                     final double restPercent = DownloadConstants.PROGRESS_FINISHED - percent;
-                    download.getDownloadStartDto().setTimeLeftSeconds((int) (diffTime * restPercent / diffPercent));
+                    download.getStartDownloadDto().setTimeLeftSeconds((int) (diffTime * restPercent / diffPercent));
                 }
             }
         }

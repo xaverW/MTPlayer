@@ -26,6 +26,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.tools.P2InfoFactory;
+import de.p2tools.p2lib.tools.date.P2Date;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import de.p2tools.p2lib.tools.net.PUrlTools;
@@ -38,7 +39,7 @@ import java.util.List;
 
 public final class DownloadData extends DownloadDataProps {
 
-    private StartDownloadDto downloadStartDto = new StartDownloadDto(this);
+    private StartDownloadDto startDownloadDto = new StartDownloadDto(this);
     private FilmDataMTP film = null;
     private SetData setData = null;
     private AboData abo = null;
@@ -140,11 +141,12 @@ public final class DownloadData extends DownloadDataProps {
 
     public void setStateFinished() {
         setState(DownloadConstants.STATE_FINISHED);
+        startDownloadDto.setEndTime(new P2Date());
     }
 
     public void setStateError(String error) {
         if (!error.isEmpty()) {
-            getDownloadStartDto().addErrMsg(error);
+            getStartDownloadDto().addErrMsg(error);
         }
         setState(DownloadConstants.STATE_ERROR);
     }
@@ -250,8 +252,8 @@ public final class DownloadData extends DownloadDataProps {
 
     public void initStartDownload() {
         // Download zum Start vorbereiten
-        getDownloadStartDto().setDeleteAfterStop(false);
-        getDownloadStartDto().setStartCounter(0);
+        getStartDownloadDto().setDeleteAfterStop(false);
+        getStartDownloadDto().setStartCounter(0);
         setBandwidth(0);
         setStateStartedWaiting();
         setErrorMessage("");
@@ -271,7 +273,7 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public void stopDownload(boolean deleteAfterStop) {
-        getDownloadStartDto().setDeleteAfterStop(deleteAfterStop);
+        getStartDownloadDto().setDeleteAfterStop(deleteAfterStop);
         stopDownload();
     }
 
@@ -290,12 +292,12 @@ public final class DownloadData extends DownloadDataProps {
     //==============================================
     // Get/Set
     //==============================================
-    public StartDownloadDto getDownloadStartDto() {
-        return downloadStartDto;
+    public StartDownloadDto getStartDownloadDto() {
+        return startDownloadDto;
     }
 
-    public void setDownloadStartDto(StartDownloadDto startDownloadDto) {
-        this.downloadStartDto = startDownloadDto;
+    public void setStartDownloadDto(StartDownloadDto startDownloadDto) {
+        this.startDownloadDto = startDownloadDto;
     }
 
     public FilmDataMTP getFilm() {
@@ -376,11 +378,11 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public File getFile() {
-        return downloadStartDto.getFile();
+        return startDownloadDto.getFile();
     }
 
     public void setFile(File file) {
-        this.downloadStartDto.setFile(file);
+        this.startDownloadDto.setFile(file);
         destFileNameProperty().setValue(file.getName());
         destPathProperty().setValue(file.getParent());
         destPathFileProperty().setValue(file.getAbsolutePath());
@@ -391,10 +393,10 @@ public final class DownloadData extends DownloadDataProps {
     }
 
     public void setFile(String file) {
-        downloadStartDto.setFile(Path.of(file).toFile());
-        String name = downloadStartDto.getFile().getName();
-        String path = downloadStartDto.getFile().getParent();
-        String pathFile = downloadStartDto.getFile().getAbsolutePath();
+        startDownloadDto.setFile(Path.of(file).toFile());
+        String name = startDownloadDto.getFile().getName();
+        String path = startDownloadDto.getFile().getParent();
+        String pathFile = startDownloadDto.getFile().getAbsolutePath();
         destFileNameProperty().setValue(name == null ? "" : name);
         destPathProperty().setValue(path == null ? "" : path);
         destPathFileProperty().setValue(pathFile == null ? "" : pathFile);
@@ -446,7 +448,7 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         downloadData.film = film;
-        downloadData.setDownloadStartDto(getDownloadStartDto());
+        downloadData.setStartDownloadDto(getStartDownloadDto());
         downloadData.setData = setData;
         downloadData.abo = abo;
         downloadData.getUrlList().setAll(getUrl());
@@ -459,7 +461,7 @@ public final class DownloadData extends DownloadDataProps {
         }
 
         film = downloadData.film;
-        setDownloadStartDto(downloadData.getDownloadStartDto());
+        setStartDownloadDto(downloadData.getStartDownloadDto());
         setData = downloadData.setData;
         abo = downloadData.abo;
         getUrlList().setAll(downloadData.getUrlList());

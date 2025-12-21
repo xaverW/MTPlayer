@@ -121,10 +121,10 @@ public class DownloadExternal extends Thread {
         // versuch das Programm zu starten
         // die Reihenfolge: startCounter - startmeldung ist wichtig!
         int retStat;
-        download.getDownloadStartDto().addStartCounter();
+        download.getStartDownloadDto().addStartCounter();
         final RuntimeExecDownload runtimeExecDownload = new RuntimeExecDownload(download);
-        download.getDownloadStartDto().setProcess(runtimeExecDownload.exec(true /* log */));
-        if (download.getDownloadStartDto().getProcess() != null) {
+        download.getStartDownloadDto().setProcess(runtimeExecDownload.exec(true /* log */));
+        if (download.getStartDownloadDto().getProcess() != null) {
 
             if (download.isProgramDownloadmanager()) {
                 // Downloadmanager, dann wars das
@@ -155,13 +155,13 @@ public class DownloadExternal extends Thread {
             if (download.isStateStopped()) {
                 // abbrechen
                 retStatus = stat_finished_abort;
-                if (download.getDownloadStartDto().getProcess() != null) {
-                    download.getDownloadStartDto().getProcess().destroy();
+                if (download.getStartDownloadDto().getProcess() != null) {
+                    download.getStartDownloadDto().getProcess().destroy();
                 }
                 download.stopDownload(); // nochmal da RUNTIME_EXEC ja weiter läuft
 
             } else {
-                Process process = download.getDownloadStartDto().getProcess();
+                Process process = download.getStartDownloadDto().getProcess();
                 final int exitV = process.exitValue(); //liefert ex wenn noch nicht fertig
                 if (exitV != 0) {
                     retStatus = stat_restart;
@@ -190,7 +190,7 @@ public class DownloadExternal extends Thread {
         }
 
         // counter prüfen und bei einem Maxwert checkIfCancelDownload, sonst endlos
-        if (download.getDownloadStartDto().getStartCounter() < StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART) {
+        if (download.getStartDownloadDto().getStartCounter() < StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART) {
             // dann nochmal von vorne
             retStatus = stat_start;
         } else {

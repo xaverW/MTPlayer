@@ -36,6 +36,7 @@ public class StartDownloadDto {
 
     private Process process = null; // Prozess des Downloads
     private P2Date startTime = null; // Zeit, zu der der Download tatsächlich gestartet wurde
+    private P2Date endTime = null; // Zeit, wann der Download fertig ist
     private MtInputStream inputStream = null;
     private File file = null;
     private final List<String> errMsgList = new ArrayList<>();
@@ -77,6 +78,7 @@ public class StartDownloadDto {
     }
 
     public void startDownload() {
+        // wird beim Start eines Downloads aufgerufen
         setStartTime(new P2Date());
         errMsgList.clear(); // sonst bei mehrfach gestarteten noch die alten MSGs drin
         errStreamList.clear(); // sonst bei mehrfach gestarteten noch die alten MSGs drin
@@ -96,6 +98,14 @@ public class StartDownloadDto {
 
     public void setStartTime(P2Date startTime) {
         this.startTime = startTime;
+    }
+
+    public P2Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(P2Date endTime) {
+        this.endTime = endTime;
     }
 
     public MtInputStream getInputStream() {

@@ -84,7 +84,7 @@ public class LogMsgFactory {
         list.add("Titel: " + (download.getTitle()));
         list.add("URL: " + download.getUrl());
         list.add("Vorgegebene Startzeit: " + download.getStartTime());
-        list.add("Download Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(download.getDownloadStartDto().getStartTime()));
+        list.add("Download Startzeit: " + P2DateConst.F_FORMAT_HH__mm__ss.format(download.getStartDownloadDto().getStartTime()));
         if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             list.add(DownloadConstants.TYPE_DOWNLOAD);
         } else {
@@ -99,14 +99,14 @@ public class LogMsgFactory {
     public static void restartMsg(DownloadData download) {
         P2Log.sysLog("");
         final ArrayList<String> text = new ArrayList<>();
-        text.add("Fehlerhaften Download neu starten - Restart (Summe Starts: " + download.getDownloadStartDto().getStartCounter() + ')');
+        text.add("Fehlerhaften Download neu starten - Restart (Summe Starts: " + download.getStartDownloadDto().getStartCounter() + ')');
         text.add("Ziel: " + download.getDestPathFile());
         text.add("URL: " + download.getUrl());
         P2Log.sysLog(text.toArray(new String[text.size()]));
     }
 
     public static void finishedMsg(final DownloadData download) {
-        final StartDownloadDto startDownloadDto = download.getDownloadStartDto();
+        final StartDownloadDto startDownloadDto = download.getStartDownloadDto();
         if (ProgConfig.DOWNLOAD_BEEP.getValue()) {
             try {
                 Toolkit.getDefaultToolkit().beep();

@@ -100,7 +100,7 @@ public class DownloadDirectHttp extends Thread {
                     return;
                 }
 
-                download.getDownloadStartDto().addStartCounter();
+                download.getStartDownloadDto().addStartCounter();
                 openConnForDownload(restartWithOutSSL);
                 if (download.isStateStartedRun()) {
                     // dann passts, und der Download startet
@@ -111,7 +111,7 @@ public class DownloadDirectHttp extends Thread {
                 P2Log.errorLog(316598941, ex, "Fehler");
                 if (ex instanceof javax.net.ssl.SSLHandshakeException) {
                     //dann gabs Probleme bei https
-                    if (download.getDownloadStartDto().getStartCounter() == 1 && !restartWithOutSSL.getValue()) {
+                    if (download.getStartDownloadDto().getStartCounter() == 1 && !restartWithOutSSL.getValue()) {
                         //nur beim ersten mal fragen, ob beim neuen Versuch ohne SSL
                         restartWithOutSSL.setValue(restartHttps());
                     }
@@ -124,7 +124,7 @@ public class DownloadDirectHttp extends Thread {
                 }
             }
             if (download.isStateError() &&
-                    download.getDownloadStartDto().getStartCounter() <
+                    download.getStartDownloadDto().getStartCounter() <
                             StartDownloadFactory.SYSTEM_PARAMETER_DOWNLOAD_MAX_RESTART) {
                 // dann nochmal starten
                 restart = true;
@@ -141,8 +141,8 @@ public class DownloadDirectHttp extends Thread {
 
     private void closeConn() {
         try {
-            if (download.getDownloadStartDto().getInputStream() != null) {
-                download.getDownloadStartDto().getInputStream().close();
+            if (download.getStartDownloadDto().getInputStream() != null) {
+                download.getStartDownloadDto().getInputStream().close();
             }
             if (fos != null) {
                 fos.close();
@@ -183,7 +183,7 @@ public class DownloadDirectHttp extends Thread {
 //                httpURLConn = (HttpURLConnection) url.openConnection();
                 httpURLConn = ProxyFactory.getUrlConnection(url);
 
-                download.getDownloadStartDto().setDownloaded(0);
+                download.getStartDownloadDto().setDownloaded(0);
                 setupHttpConnection(httpURLConn);
                 httpURLConn.connect();
                 // hier wars es dann nun wirklich...
@@ -243,7 +243,7 @@ public class DownloadDirectHttp extends Thread {
      * @param conn The active connection.
      */
     private void setupHttpConnection(HttpURLConnection conn) {
-        conn.setRequestProperty("Range", "bytes=" + download.getDownloadStartDto().getDownloaded() + '-');
+        conn.setRequestProperty("Range", "bytes=" + download.getStartDownloadDto().getDownloaded() + '-');
         conn.setRequestProperty("User-Agent", ProgInfos.getUserAgent());
         conn.setDoInput(true);
         conn.setDoOutput(true);
@@ -255,18 +255,18 @@ public class DownloadDirectHttp extends Thread {
      * @throws Exception
      */
     private void downloadContent() throws Exception {
-        download.getDownloadStartDto().setInputStream(new MtInputStream(httpURLConn.getInputStream(),
+        download.getStartDownloadDto().setInputStream(new MtInputStream(httpURLConn.getInputStream(),
                 bandwidthCalculationTimer,
                 ProgConfig.DOWNLOAD_MAX_BANDWIDTH_BYTE,
                 ProgData.FILMLIST_IS_DOWNLOADING));
 
-        fos = new FileOutputStream(download.getDownloadStartDto().getFile(), (download.getDownloadStartDto().getDownloaded() != 0));
-        download.getDownloadSize().setActuallySize(download.getDownloadStartDto().getDownloaded());
+        fos = new FileOutputStream(download.getStartDownloadDto().getFile(), (download.getStartDownloadDto().getDownloaded() != 0));
+        download.getDownloadSize().setActuallySize(download.getStartDownloadDto().getDownloaded());
         final byte[] buffer = new byte[MtBandwidthTokenBucket.DEFAULT_BUFFER_SIZE];
         int len;
 
-        while ((len = download.getDownloadStartDto().getInputStream().read(buffer)) != -1 && (!download.isStateStopped())) {
-            download.getDownloadStartDto().setDownloaded(download.getDownloadStartDto().getDownloaded() + len);
+        while ((len = download.getStartDownloadDto().getInputStream().read(buffer)) != -1 && (!download.isStateStopped())) {
+            download.getStartDownloadDto().setDownloaded(download.getStartDownloadDto().getDownloaded() + len);
             fos.write(buffer, 0, len);
 
             // die Infos zum Download aktualisieren
@@ -309,7 +309,7 @@ public class DownloadDirectHttp extends Thread {
 
         } else {
             // schnell nur das was geladen wurde nehmen
-            download.getDownloadSize().setActuallySize(download.getDownloadStartDto().getDownloaded());
+            download.getDownloadSize().setActuallySize(download.getStartDownloadDto().getDownloaded());
         }
 
         if (fileSizeLoaded == download.getDownloadSize().getActuallySize()) {
@@ -317,7 +317,7 @@ public class DownloadDirectHttp extends Thread {
             return;
         }
 
-        long aktBandwidth = download.getDownloadStartDto().getInputStream().getBandwidth(); // bytes per second
+        long aktBandwidth = download.getStartDownloadDto().getInputStream().getBandwidth(); // bytes per second
         if (aktBandwidth != download.getBandwidth()) {
             download.setBandwidth(aktBandwidth);
         }
@@ -350,7 +350,7 @@ public class DownloadDirectHttp extends Thread {
                     if (sizeLeft > 0 && aktBandwidth > 0) {
                         timeLeft = sizeLeft / aktBandwidth;
                     }
-                    download.getDownloadStartDto().setTimeLeftSeconds((int) timeLeft);
+                    download.getStartDownloadDto().setTimeLeftSeconds((int) timeLeft);
 
                     // anfangen zum Schauen kann man, wenn die Restzeit kürzer ist
                     // als die bereits geladene Spielzeit des Films

@@ -45,7 +45,14 @@ public class TableRowDownload<T> extends TableRow<T> {
         } else {
             DownloadData download = (DownloadData) item;
             if (ProgConfig.DOWNLOAD_GUI_SHOW_TABLE_TOOL_TIP.getValue()) {
-                setTooltip(new Tooltip(download.getTheme() + "\n" + download.getTitle()));
+                setTooltip(new Tooltip("Thema: " + download.getTheme() + "\n" +
+                        "Titel: " + download.getTitle() +
+
+                        (download.getStartDownloadDto().getStartTime() == null ?
+                                "" : "\nGestartet: " + download.getStartDownloadDto().getStartTime().getDateTime()) +
+
+                        (download.getStartDownloadDto().getEndTime() == null ?
+                                "" : "\nBeendet: " + download.getStartDownloadDto().getEndTime().getDateTime())));
             }
 
             if (geoMelden.get() && download.getGeoBlocked()) {

@@ -116,7 +116,7 @@ public class StarterThread {
      * @param download The {@link DownloadData} info object for download.
      */
     public void startDownload(DownloadData download) {
-        download.getDownloadStartDto().startDownload();
+        download.getStartDownloadDto().startDownload();
         Thread downloadThread;
 
         switch (download.getType()) {

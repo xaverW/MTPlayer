@@ -57,3 +57,24 @@
     -fx-background-color: -pBackgroundColorSel;
 }
 
+.pFuncBtnSmall{
+    -fx-padding: 2 10 2 10;
+    -fx-border-width: 1;
+}
+.pFuncBtnSmall:focused{
+    -fx-padding: 2 10 2 10;
+    -fx-border-width: 1;
+}
+.pFuncBtnSmall:hover{
+    -fx-padding: 2 10 2 10;
+    -fx-border-width: 1;
+}
+.pFuncBtnSmall:focused:hover{
+    -fx-padding: 2 10 2 10;
+    -fx-border-width: 1;
+ }
+.pFuncBtnSmall:pressed:focused:hover{
+    -fx-padding: 2 10 2 10;
+    -fx-border-width: 1;
+}
+

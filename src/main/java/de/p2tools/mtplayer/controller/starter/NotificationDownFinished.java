@@ -39,18 +39,18 @@ public class NotificationDownFinished {
                 (error ? "Download war fehlerhaft" : "Download war erfolgreich"));
 
         Button btnFilmStart = new Button();
-        btnFilmStart.getStyleClass().addAll("pFuncBtn");
+        btnFilmStart.getStyleClass().addAll("pFuncBtn", "pFuncBtnSmall");
         btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
-        btnFilmStart.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
+        btnFilmStart.setGraphic(PIconFactory.PICON.BTN_ALERT_FILM_PLAY.getFontIcon());
         btnFilmStart.setOnAction((ActionEvent event) -> {
             P2Open.playStoredFilm(download.getDestPathFile(),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
         });
 
         Button btnOpenDirectory = new Button();
-        btnOpenDirectory.getStyleClass().addAll("pFuncBtn");
+        btnOpenDirectory.getStyleClass().addAll("pFuncBtn", "pFuncBtnSmall");
         btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-        btnOpenDirectory.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_OPEN_DIR.getFontIcon());
+        btnOpenDirectory.setGraphic(PIconFactory.PICON.BTN_ALERT_DOWNLOAD_OPEN_DIR.getFontIcon());
         btnOpenDirectory.setOnAction((ActionEvent event) -> {
             P2Open.openDir(download.getDestPath(),
                     ProgConfig.SYSTEM_PROG_OPEN_DIR, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());

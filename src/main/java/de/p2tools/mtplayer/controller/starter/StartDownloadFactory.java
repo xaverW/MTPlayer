@@ -102,7 +102,7 @@ public class StartDownloadFactory {
     }
 
     static void finalizeDownload(DownloadData download) {
-        final StartDownloadDto startDownloadDto = download.getDownloadStartDto();
+        final StartDownloadDto startDownloadDto = download.getStartDownloadDto();
         cleanUpDestFile(download);
 
         if (download.isStateError()) {
@@ -110,8 +110,8 @@ public class StartDownloadFactory {
                 ProgData.getInstance().downloadErrorList.add(new DownloadErrorData(download.getTitle(),
                         download.getUrl(),
                         download.getDestPathFile(),
-                        download.getDownloadStartDto().getErrorMsg(),
-                        download.getDownloadStartDto().getErrorStream()));
+                        download.getStartDownloadDto().getErrorMsg(),
+                        download.getStartDownloadDto().getErrorStream()));
 
                 if (!ProgData.autoMode && ProgConfig.DOWNLOAD_DIALOG_ERROR_SHOW.getValue()) {
                     // nur wenn gewollt und nicht AutoMode
@@ -143,7 +143,7 @@ public class StartDownloadFactory {
         ProgData.getInstance().downloadGuiController.tableRefresh();
         startDownloadDto.setProcess(null);
         startDownloadDto.setInputStream(null);
-        startDownloadDto.setStartTime(null);
+//        startDownloadDto.setStartTime(null);
 
         checkMediaList(download);
     }
@@ -169,7 +169,7 @@ public class StartDownloadFactory {
         }
 
         // die Dateien der gestoppten/gelöschten Downloads evtl. noch löschen
-        if (download.isStateStopped() && download.getDownloadStartDto().isDeleteAfterStop()) {
+        if (download.isStateStopped() && download.getStartDownloadDto().isDeleteAfterStop()) {
             P2Log.sysLog(new String[]{"Gestoppter Download, auch die Datei löschen: ", destFile.getAbsolutePath()});
             DownloadFactoryDelDownloadFiles.deleteDownloadFiles(download, true);
             return;
@@ -237,7 +237,7 @@ public class StartDownloadFactory {
         if (downloadData.isStateStartedRun()) {
 
             if (downloadData.getDurationMinute() > 0
-                    && downloadData.getDownloadStartDto().getTimeLeftSeconds() > 0
+                    && downloadData.getStartDownloadDto().getTimeLeftSeconds() > 0
                     && downloadData.getDownloadSize().getActuallySize() > 0
                     && downloadData.getDownloadSize().getTargetSize() > 0) {
 
@@ -247,8 +247,8 @@ public class StartDownloadFactory {
                         / downloadData.getDownloadSize().getTargetSize();
 
                 if (alreadyLoadedSeconds >
-                        (downloadData.getDownloadStartDto().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {
-                    downloadData.getDownloadStartDto().setStartViewing(true);
+                        (downloadData.getStartDownloadDto().getTimeLeftSeconds() * 1.1 /* plus 10% zur Sicherheit */)) {
+                    downloadData.getStartDownloadDto().setStartViewing(true);
                 }
             }
         }

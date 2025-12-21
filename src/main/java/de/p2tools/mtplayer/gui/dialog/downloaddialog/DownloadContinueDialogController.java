@@ -71,7 +71,7 @@ public class DownloadContinueDialogController extends P2DialogExtra {
     public DownloadContinueDialogController(StringProperty conf, ProgData progData,
                                             DownloadData download, boolean httpDownload) {
         super(progData.primaryStage, conf,
-                download.getDownloadStartDto().getStartCounter() == 1 ? "Download starten" : "Download abgebrochen",
+                download.getStartDownloadDto().getStartCounter() == 1 ? "Download starten" : "Download abgebrochen",
                 true, true, true, DECO.BORDER_SMALL);
 
         this.download = download;

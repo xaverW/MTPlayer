@@ -93,16 +93,16 @@ public class DownloadErrorDialogController extends P2DialogExtra {
 
         txtCont.setEditable(false);
         txtCont.setWrapText(true);
-        txtCont.setText("Fehler:" + "\n" + download.getDownloadStartDto().getErrorMsg());
+        txtCont.setText("Fehler:" + "\n" + download.getStartDownloadDto().getErrorMsg());
 
         btnOk.setOnAction(event -> {
             stopCounter();
             quit();
         });
-        btnErrorStream.setOnAction(a -> new DownloadErrorStreamDialogController(download.getDownloadStartDto().getErrorStream()));
+        btnErrorStream.setOnAction(a -> new DownloadErrorStreamDialogController(download.getStartDownloadDto().getErrorStream()));
         btnLogFile.setOnAction(a -> P2Logger.openLogFile());
 
-        btnErrorStream.setVisible(!download.getDownloadStartDto().getErrStreamList().isEmpty());
+        btnErrorStream.setVisible(!download.getStartDownloadDto().getErrStreamList().isEmpty());
         btnErrorStream.setManaged(btnErrorStream.isVisible());
 
 //        fontIcon.setImage( PIconFactory.PICON.ATTENTION.getFontIcon());
