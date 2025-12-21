@@ -165,6 +165,10 @@ public class DownloadInfos {
         return timeLeftLoadingDownloads;
     }
 
+    public long getTimeLeftLoadingAndWaitingDownloads() {
+        return timeLeftLoadingDownloads + timeLeftWaitingDownloads;
+    }
+
     public long getBandwidth() {
         return bandwidth;
     }

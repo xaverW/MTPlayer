@@ -76,17 +76,17 @@ public class PaneDownloadInfoList extends VBox {
         getInfoText();
 
         // Beschriftung erste Zeile
-        text1 = new Text("laufende Downloads: " + progData.downloadInfos.getLoading());
+        text1 = new Text("Laufende Downloads: " + progData.downloadInfos.getLoading());
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
         text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 1, row);
 
-        text1 = new Text("wartende Downloads: " + progData.downloadInfos.getStartedNotLoading());
+        text1 = new Text("Wartende Downloads: " + progData.downloadInfos.getStartedNotLoading());
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
         text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 2, row);
 
-        text1 = new Text("nicht gestartete Downloads: " + progData.downloadInfos.getNotStarted());
+        text1 = new Text("Nicht gestartete Downloads: " + progData.downloadInfos.getNotStarted());
         text1.setFont(Font.font(null, FontWeight.BOLD, -1));
         text1.getStyleClass().add("downloadGuiMediaText");
         gridPane.add(text1, 3, row);

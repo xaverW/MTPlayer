@@ -203,6 +203,13 @@ public class DownloadInfosFactory {
             textLinks += SEPARATOR;
             textLinks += "Max. Bandbreite: " + getTextBandwidth();
         }
+
+        long time = progData.downloadInfos.getTimeLeftLoadingAndWaitingDownloads();
+        if (time > 0) {
+            textLinks += SEPARATOR;
+            textLinks += "Restzeit: " + DownloadConstants.getTextTimeLeft(time);
+        }
+
         return textLinks;
     }
 
