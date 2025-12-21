@@ -132,4 +132,14 @@
     -fx-padding: 0 5;
 }
 
+/* Filmlänge */
+.slider .track{
+    -fx-background-color: #9c9c9c, linear-gradient(from 50% 100% to 50% 50% , repeat, #aaaaaa, #bfbfbf 100% );
+    -fx-background-color: #a7a7a7, linear-gradient(from 50% 100% to 50% 50% , repeat, #bdbdbd, #d5d5d5 100% );
+}
+
+.range-slider .range-bar {
+    -fx-background-color: #9c9c9c, linear-gradient(from 50% 100% to 50% 50% , repeat, #aaaaaa, #bfbfbf 100% );
+}
+
 

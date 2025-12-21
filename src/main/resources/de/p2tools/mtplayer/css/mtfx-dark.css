@@ -49,3 +49,12 @@
 .checkBoxAll:selected .mark {
     -fx-background-color: #1fa2ce;
 }
+
+/* Filmlänge */
+.slider .track{
+    -fx-background-color: #9c9c9c, linear-gradient(from 50% 100% to 50% 50% , repeat, #aaaaaa, #bfbfbf 100% );
+}
+
+.range-slider .range-bar {
+    -fx-background-color: #9c9c9c, linear-gradient(from 50% 100% to 50% 50% , repeat, #aaaaaa, #bfbfbf 100% );
+}
