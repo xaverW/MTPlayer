@@ -69,8 +69,11 @@ public class MTPlayerMenu extends MenuButton {
         miSearchMediaCollection.setOnAction(a -> new MediaDialogController("", ""));
         P2ShortcutWorker.addShortCut(miSearchMediaCollection, PShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
-        final CheckMenuItem miDarkMode = new CheckMenuItem("Dark Mode");
+        final CheckMenuItem miDarkMode = new CheckMenuItem("Dunkle Oberfläche");
         miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
+
+        final CheckMenuItem miColorMode = new CheckMenuItem("Farb-Modus-1");
+        miColorMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_THEME_1);
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
@@ -84,7 +87,7 @@ public class MTPlayerMenu extends MenuButton {
         node.setScaleX(1.5);
         setGraphic(node);
 
-        getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode);
+        getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode, miColorMode);
         addMenuButton();
         getItems().addAll(addHelp(progData), new SeparatorMenuItem(), miQuit);
     }

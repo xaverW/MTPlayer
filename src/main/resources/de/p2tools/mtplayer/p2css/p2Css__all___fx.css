@@ -77,7 +77,7 @@
 }
 .checkbox-table .box {
     -fx-border-radius: 10px;
-    -fx-border-color: lightgray;
+    -fx-border-color: #b1b1b1;
 }
 .checkbox-table:selected .box {
     -fx-border-color: -pGuiColor;
