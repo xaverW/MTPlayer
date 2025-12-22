@@ -198,11 +198,11 @@ public class ColorWorker {
         String backgroundSelTextColor = P2ColorFactory.getMaxColor(P2ColorFactory.changeColor(ProgConfig.SYSTEM_BACKGROUND_COLOR.getValueSafe(), 0.8));
         if (transparent && ProgConfig.SYSTEM_DARK_THEME.get()) {
             backgroundTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
-            backgroundSelTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
+            backgroundSelTextColor = "-pBackgroundSelTextColor: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
 
         } else if (transparent) {
             backgroundTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
-            backgroundSelTextColor = "-pBackgroundTextColor: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
+            backgroundSelTextColor = "-pBackgroundSelTextColor: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
 
         } else {
             if (!backgroundTextColor.isEmpty()) {

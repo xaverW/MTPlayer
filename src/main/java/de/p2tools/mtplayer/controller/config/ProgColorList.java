@@ -38,7 +38,7 @@ public class ProgColorList extends P2ColorList {
     public static final P2ColorData FILM_LIVESTREAM = addNewKey("COLOR_FILM_LIVESTREAM",
             Color.rgb(130, 0, 0), Color.rgb(100, 0, 0), "Tabelle Filme, Livestreams");
     public static final P2ColorData FILM_HISTORY = addNewKey("COLOR_FILM_HISTORY",
-            Color.rgb(223, 223, 223), Color.rgb(102, 102, 102), "Tabelle Filme, gesehen");
+            Color.rgb(211, 211, 211), Color.rgb(102, 102, 102), "Tabelle Filme, gesehen");
     public static final P2ColorData FILM_NEW = addNewKey("COLOR_FILM_NEW",
             Color.rgb(0, 0, 240), Color.rgb(0, 0, 240), "Tabelle Filme, neue");
     public static final P2ColorData FILM_GEOBLOCK = addNewKey("COLOR_FILM_GEOBLOCK_BACKGROUND",

@@ -25,51 +25,117 @@
     -fx-background-insets: 0;
     -fx-text-fill: -pBackgroundTextColor;
 }
-.button:pressed{
-    -fx-padding: 3 11 3 11;
-    -fx-background-color: -pBackgroundColorSel;
-    -fx-border-color: -pGuiColor;
-    -fx-border-width: 2;
-    -fx-text-fill: -pBackgroundSelTextColor;
-}
 .button:focused{
+    -fx-padding: 4 12 4 12;
+    -fx-border-width: 1;
     -fx-border-color: -pGuiColor;
     -fx-background-color: -pBackgroundColor;
     -fx-background-insets: 0,0,0;
 }
+.button:pressed{
+    -fx-padding: 3 11 3 11;
+    -fx-background-color: -pBackgroundColorSel;
+    -fx-border-width: 2;
+    -fx-border-color: -pGuiColor;
+    -fx-text-fill: -pBackgroundSelTextColor;
+}
 .button:hover{
+    -fx-padding: 3 11 3 11;
+    -fx-border-width: 2;
     -fx-border-color: -pGuiColor;
     -fx-background-color: -pBackgroundColorSel;
     -fx-background-insets: 0,0,0;
 }
 .button:focused:hover{
+    -fx-padding: 3 11 3 11;
+    -fx-border-width: 2;
     -fx-border-color: -pGuiColor;
     -fx-background-color: -pBackgroundColorSel;
     -fx-background-insets: 0,0,0;
 }
 .pFuncBtn:pressed:focused:hover{
+    -fx-padding: 3 11 3 11;
+    -fx-border-width: 2;
     -fx-border-color: -pGuiColor;
     -fx-background-color: -pBackgroundColorSel;
     -fx-background-insets: 0,0,0;
 }
 
 .buttonSmall{
-    -fx-padding: 4
+    -fx-padding: 4;
+    -fx-border-width: 1;
 }
-.buttonVerySmall{
-    -fx-padding: 1
-}
-.buttonVeryLow{
-    -fx-padding: 1 12 1 12;
+.buttonSmall:focused{
+    -fx-padding: 4;
+    -fx-border-width: 1;
 }
 .buttonSmall:pressed{
     -fx-padding: 3;
+    -fx-border-width: 2;
+}
+.buttonSmall:hover{
+    -fx-padding: 3;
+    -fx-border-width: 2;
+}
+.buttonSmall:focused:hover{
+    -fx-padding: 3;
+    -fx-border-width: 2;
+}
+.buttonSmall:pressed:focused:hover{
+    -fx-padding: 3;
+    -fx-border-width: 2;
+}
+
+
+.buttonVerySmall{
+    -fx-padding: 1;
+    -fx-border-width: 1;
+}
+.buttonVerySmall:focused{
+    -fx-padding: 1;
+    -fx-border-width: 1;
 }
 .buttonVerySmall:pressed{
     -fx-padding: 0;
+    -fx-border-width: 2;
+}
+.buttonVerySmall:hover{
+    -fx-padding: 0;
+    -fx-border-width: 2;
+}
+.buttonVerySmall:focused:hover{
+    -fx-padding: 0;
+    -fx-border-width: 2;
+}
+.buttonVerySmall:pressed:focused:hover{
+    -fx-padding: 0;
+    -fx-border-width: 2;
+}
+
+
+.buttonVeryLow{
+    -fx-padding: 1 12 1 12;
+    -fx-border-width: 1;
+}
+.buttonVeryLow:focused{
+    -fx-padding: 1 12 1 12;
+    -fx-border-width: 1;
 }
 .buttonVeryLow:pressed{
     -fx-padding: 0 11 0 11;
+    -fx-border-width: 2;
+}
+.buttonVeryLow:hover{
+    -fx-padding: 0 11 0 11;
+    -fx-border-width: 2;
+}
+.buttonVeryLow:focused:hover{
+    -fx-padding: 0 11 0 11;
+    -fx-border-width: 2;
+}
+.buttonVeryLow:pressed:focused:hover{
+    -fx-padding: 0 11 0 11;
+    -fx-border-width: 2;
 }
 
 
@@ -77,16 +143,52 @@
 /* Button zum löschen der Filter */
 .btnClearFilter {
     -fx-padding: 3 20 3 20;
+    -fx-border-width: 1;
+}
+.btnClearFilter:focused{
+    -fx-padding: 3 20 3 20;
+    -fx-border-width: 1;
 }
 .btnClearFilter:pressed{
-    -fx-border-width: 2;
     -fx-padding: 2 19 2 19;
+    -fx-border-width: 2;
 }
+.btnClearFilter:hover{
+    -fx-padding: 2 19 2 19;
+    -fx-border-width: 2;
+}
+.btnClearFilter:focused:hover{
+    -fx-padding: 2 19 2 19;
+    -fx-border-width: 2;
+}
+.btnClearFilter:pressed:focused:hover{
+    -fx-padding: 2 19 2 19;
+    -fx-border-width: 2;
+}
+
+
 .btnClearFilterSmall {
     -fx-padding: 3 10;
+    -fx-border-width: 1;
+}
+.btnClearFilterSmall:focused{
+    -fx-padding: 3 10;
+    -fx-border-width: 1;
 }
 .btnClearFilterSmall:pressed{
-    -fx-border-width: 2;
     -fx-padding: 2 9;
+    -fx-border-width: 2;
+}
+.btnClearFilterSmall:hover{
+    -fx-padding: 2 9;
+    -fx-border-width: 2;
+}
+.btnClearFilterSmall:focused:hover{
+    -fx-padding: 2 9;
+    -fx-border-width: 2;
+}
+.btnClearFilterSmall:pressed:focused:hover{
+    -fx-padding: 2 9;
+    -fx-border-width: 2;
 }
 

@@ -56,7 +56,7 @@
     -fx-border-width: 2;
     -fx-border-color: #0052d6;
     -fx-background-color: #dddddd;
-    -fx-text-fill: -text-color-blue;
+    -fx-text-fill: #0000e8;
 }
 .btnStartDialogSel:focused{
     -fx-padding: 1 24 1 24;

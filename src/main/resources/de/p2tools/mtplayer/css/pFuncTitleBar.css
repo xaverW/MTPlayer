@@ -15,41 +15,55 @@
  */
 
 .btnSize{
-    -fx-padding: 5 15 5 15;
+    -fx-padding: 4 14 4 14;
     -fx-border-width: 4;
     -fx-font-weight: bold;
     -fx-font-size: 1.3em;
 }
 
 .pFuncBtnTitleBar{
+    -fx-padding: 6 16 6 16;
+    -fx-border-width: 2px;
+    -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-radius: 12;
     -fx-background-color: -pTitleBarColor;
     -fx-background-radius: 12;
-    -fx-border-color: -pTitleBarBorderColor;
-    -fx-border-width: 2px;
-    -fx-border-radius: 12;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:focused{
-    -fx-background-color: -pTitleBarColor;
+    -fx-padding: 6 16 6 16;
+    -fx-border-width: 2px;
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-radius: 12;
+    -fx-background-color: -pTitleBarColor;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:hover{
-    -fx-background-color: -pTitleBarColor;
+    -fx-padding: 4 14 4 14;
+    -fx-border-width: 4px;
     -fx-border-color: -pTitleBarBorderColor;
-    -fx-font-size: 1.2em;
+    -fx-border-radius: 12;
+    -fx-background-color: -pTitleBarColor;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:focused:hover{
-    -fx-background-color: -pTitleBarColor;
+    -fx-padding: 4 14 4 14;
+    -fx-border-width: 4px;
     -fx-border-color: -pTitleBarBorderColor;
-    -fx-font-size: 1.2em;
+    -fx-border-radius: 12;
+    -fx-background-color: -pTitleBarColor;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
  }
 .pFuncBtnTitleBar:pressed:focused:hover{
-    -fx-background-color: -pTitleBarColor;
+    -fx-padding: 4 14 4 14;
+    -fx-border-width: 4px;
     -fx-border-color: -pTitleBarBorderColor;
-    -fx-font-size: 1.2em;
+    -fx-border-radius: 12;
+    -fx-background-color: -pTitleBarColor;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
 }
 
@@ -73,7 +87,7 @@
     -fx-font-size: 1.3em;
 }
 .pFuncBtnTitleBarSel:hover{
-    -fx-padding: 5 15 5 15;
+    -fx-padding: 4 14 4 14;
     -fx-border-width: 4;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-background-color: -pTitleBarSelColor;
@@ -81,7 +95,7 @@
     -fx-font-size: 1.3em;
 }
 .pFuncBtnTitleBarSel:focused:hover{
-    -fx-padding: 5 15 5 15;
+    -fx-padding: 4 14 4 14;
     -fx-border-width: 4;
     -fx-border-color: -pTitleBarSelBorderColor;
     -fx-background-color: -pTitleBarSelColor;
@@ -90,7 +104,7 @@
  }
 
 .pFuncBtnSel:pressed:focused:hover{
-    -fx-padding: 5 15 5 15;
+    -fx-padding: 4 14 4 14;
     -fx-border-width: 4;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-background-color: -pTitleBarSelColor;
@@ -98,10 +112,13 @@
     -fx-font-size: 1.3em;
 }
 
+
+/* ============================================ */
 /* LoadFilmlistButton wenn neue Liste verfügbar */
 .btnFilmlistMax {
-    -fx-border-width: 2px;
+    -fx-border-width: 5px;
     -fx-font-weight: bold;
+    -fx-underline: true;
     -fx-font-size: 1.2em;
 }
 .btnFilmlist {
@@ -115,30 +132,85 @@
 }
 .btnFilmlist:focused{
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-width: 2px;
+    -fx-border-radius: 12;
     -fx-background-color: -pTitleBarColor;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
+    -fx-font-weight: normal;
+}
+.btnFilmlist:pressed{
+    -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-width: 4px;
+    -fx-border-radius: 12;
+    -fx-background-color: -pTitleBarColor;
+    -fx-background-radius: 12;
+    -fx-text-fill: -pTitleBarText;
+    -fx-font-weight: normal;
 }
 .btnFilmlist:hover{
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-width: 4px;
+    -fx-border-radius: 12;
     -fx-background-color: -pTitleBarColor;
-    -fx-font-size: 1.2em;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
+    -fx-font-weight: normal;
 }
 .btnFilmlist:focused:hover{
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-width: 4px;
+    -fx-border-radius: 12;
     -fx-background-color: -pTitleBarColor;
-    -fx-font-size: 1.2em;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
+    -fx-font-weight: normal;
  }
 .btnFilmlist:pressed:focused:hover{
     -fx-border-color: -pTitleBarBorderColor;
+    -fx-border-width: 4px;
+    -fx-border-radius: 12;
     -fx-background-color: -pTitleBarColor;
-    -fx-font-size: 1.2em;
+    -fx-background-radius: 12;
     -fx-text-fill: -pTitleBarText;
+    -fx-font-weight: normal;
 }
 
+/* wenn neue vorhanden*/
 .btnFilmlistNewList {
+    -fx-border-width: 4px;
     -fx-font-weight: bold;
     -fx-underline: true;
+    -fx-font-size: 1.2em;
+}
+.btnFilmlistNewList:focused{
+    -fx-border-width: 4px;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-font-size: 1.2em;
+}
+.btnFilmlistNewList:pressed{
+    -fx-border-width: 5px;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-font-size: 1.2em;
+}
+.btnFilmlistNewList:hover{
+    -fx-border-width: 5px;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-font-size: 1.2em;
+}
+.btnFilmlistNewList:focused:hover{
+    -fx-border-width: 5px;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-font-size: 1.2em;
+ }
+.btnFilmlistNewList:pressed:focused:hover{
+    -fx-border-width: 5px;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-font-size: 1.2em;
 }
 

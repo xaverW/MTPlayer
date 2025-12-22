@@ -17,10 +17,7 @@
 
 package de.p2tools.mtplayer.gui.dialog.abodialog;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
-import de.p2tools.p2lib.guitools.P2Color;
 
 public class AboAddAllFactory {
     private AboAddAllFactory() {
@@ -223,15 +220,16 @@ public class AboAddAllFactory {
 
     private static void addCheckAllCss(AddAboDto addAboDto) {
         if (isAllSelected(addAboDto)) {
-            final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
-            addAboDto.btnAll.setStyle("-fx-text-fill: " + c);
+//            final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
+            addAboDto.btnAll.setStyle("-fx-text-fill: -pBackgroundSelTextColor");
 
         } else {
-            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-                addAboDto.btnAll.setStyle("-fx-text-fill: white");
-            } else {
-                addAboDto.btnAll.setStyle("-fx-text-fill: black");
-            }
+            addAboDto.btnAll.setStyle("-fx-text-fill: -pBackgroundTextColor");
+//            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+//                addAboDto.btnAll.setStyle("-fx-text-fill: white");
+//            } else {
+//                addAboDto.btnAll.setStyle("-fx-text-fill: black");
+//            }
         }
     }
 

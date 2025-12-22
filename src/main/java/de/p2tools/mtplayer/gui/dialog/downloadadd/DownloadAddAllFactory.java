@@ -17,9 +17,7 @@
 
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.guitools.P2Color;
 
 public class DownloadAddAllFactory {
     private DownloadAddAllFactory() {
@@ -122,15 +120,16 @@ public class DownloadAddAllFactory {
 
     private static void addCheckAllCss(AddDownloadDto addDownloadDto) {
         if (isAllSelected(addDownloadDto)) {
-            final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
-            addDownloadDto.btnAll.setStyle("-fx-text-fill: " + c);
+//            final String c = P2Color.getCssColor(DownloadAddDialogFactory.getBlue());
+            addDownloadDto.btnAll.setStyle("-fx-text-fill: -pBackgroundSelTextColor");
 
         } else {
-            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-                addDownloadDto.btnAll.setStyle("-fx-text-fill: white");
-            } else {
-                addDownloadDto.btnAll.setStyle("-fx-text-fill: black");
-            }
+            addDownloadDto.btnAll.setStyle("-fx-text-fill: -pBackgroundTextColor");
+//            if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+//                addDownloadDto.btnAll.setStyle("-fx-text-fill: white");
+//            } else {
+//                addDownloadDto.btnAll.setStyle("-fx-text-fill: black");
+//            }
         }
     }
 

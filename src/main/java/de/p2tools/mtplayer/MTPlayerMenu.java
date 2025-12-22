@@ -152,6 +152,10 @@ public class MTPlayerMenu extends MenuButton {
                 MTPTester mtpTester = new MTPTester(progData);
                 mtpTester.showDialog();
             });
+            final MenuItem miFilmlist = new MenuItem("Filmliste");
+            miFilmlist.setOnAction(a -> progData.checkForNewFilmlist.foundNewListProperty()
+                    .set(!progData.checkForNewFilmlist.foundNewListProperty().get()));
+
             final MenuItem miSearchAllUpdate = new MenuItem("Alle Programm-Downloads anzeigen");
             miSearchAllUpdate.setOnAction(a -> new SearchProgramUpdate(progData)
                     .searchNewProgramVersion());
@@ -180,7 +184,7 @@ public class MTPlayerMenu extends MenuButton {
             final MenuItem miSave = new MenuItem("Alles Speichern");
             miSave.setOnAction(a -> ProgSave.saveAll());
 
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miSearchAllUpdate, miIcon, miIconRunner,
+            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miFilmlist, miSearchAllUpdate, miIcon, miIconRunner,
                     miResetTodayDone, miResetLastSearch, miResetUpdate, miSave);
         }
         return mHelp;

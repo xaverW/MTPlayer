@@ -21,14 +21,14 @@
     -lblSelectedLines-color-2: derive(-fx-base, -10%);
 }
 
-/*ist der Text in Downloads unten im Tab Mediensammlung*/
+/* ist "Text" in vielen Bereichen */
 .downloadGuiMediaText{
-    -fx-fill: #000000;
+    -fx-fill: -pBackgroundTextColor;
 }
 
 /*Tabelle Sets: Set ist "Abspielen" */
 .markSetPlay{
-    -fx-text-fill: #ff0000;
+    -fx-text-fill:  -pBackgroundSelTextColor;
     -fx-underline: true;
 }
 
@@ -52,13 +52,13 @@
 
 /*Checkbox edit all abo*/
 .chk-edit-all > .box {
-    -fx-border-color: cornflowerblue;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
  }
 .chk-edit-all-text {
-    -fx-border-color: cornflowerblue;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-padding: 5;
@@ -122,12 +122,12 @@
 
 /* Add-Download/Abo-Dialog */
 .checkBoxAll:selected .mark {
-    -fx-background-color: blue;
+    -fx-background-color: -pGuiColor;
 }
 
 /* Label Filmfilter in der PCboTextFilter */
 .lblFilmFilter {
-    -fx-border-color: #313131;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 1;
     -fx-padding: 0 5;
 }

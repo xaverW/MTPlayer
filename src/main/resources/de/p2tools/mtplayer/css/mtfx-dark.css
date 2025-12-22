@@ -47,7 +47,7 @@
 
 /* Download/Abo Add-Dialog */
 .checkBoxAll:selected .mark {
-    -fx-background-color: #1fa2ce;
+    -fx-background-color: -pGuiColor;
 }
 
 /* Filmlänge */

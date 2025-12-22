@@ -45,7 +45,7 @@ def buildDir_Win = layout.buildDirectory.get().toString() + "/" + programName + 
 // ===========================================
 // build project
 // ===========================================
-group 'de.p2tools'
+group = 'de.p2tools'
 application {
     mainClass = theMainClass
 }

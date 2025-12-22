@@ -17,13 +17,11 @@
 
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.SizeTools;
 import de.p2tools.mtplayer.controller.data.replace.ReplaceFactory;
 import de.p2tools.p2lib.tools.date.P2DateConst;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -41,46 +39,48 @@ public class DownloadAddDialogFactory {
     private DownloadAddDialogFactory() {
     }
 
-    public static String getBlueStr() {
-        Color c = getBlue();
-        return c.getRed() + "," + c.getGreen() + "," + c.getBlue();
-    }
+//    public static String getBlueStr() {
+//        Color c = getBlue();
+//        return c.getRed() + "," + c.getGreen() + "," + c.getBlue();
+//    }
+//
+//    public static Color getBlue() {
+//        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+//            return Color.rgb(31, 162, 206);
+//        } else {
+//            return Color.BLUE;
+//        }
+//    }
 
-    public static Color getBlue() {
-        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-            return Color.rgb(31, 162, 206);
-        } else {
-            return Color.BLUE;
-        }
-    }
-
-    public static Color getBlack() {
-        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
-            return Color.WHITE;
-        } else {
-            return Color.BLACK;
-        }
-    }
+//    public static Color getBlack() {
+//        if (ProgConfig.SYSTEM_DARK_THEME.getValue()) {
+//            return Color.WHITE;
+//        } else {
+//            return Color.BLACK;
+//        }
+//    }
 
     public static Text getText(String text) {
         Text t = new Text(text);
         t.setFont(Font.font(null, FontWeight.BOLD, -1));
-        t.setFill(getBlue());
+        t.setStyle("-pBackgroundTextColor");
+//        t.setFill(getBlue());
         return t;
     }
 
     public static Text getTextBlack(String text) {
         Text t = new Text(text);
         t.setFont(Font.font(null, FontWeight.BOLD, -1));
-        t.setFill(getBlack());
+        t.setStyle("-pBackgroundTextColor");
+//        t.setFill(getBlack());
         return t;
     }
 
     public static Text getTextBig(String text) {
         Text t = new Text(text);
         t.setFont(Font.font(null, FontWeight.BOLD, -1));
-        t.setFill(getBlue());
-        t.setStyle("-fx-font-size: 1.2em;");
+//        t.setFill(getBlue());
+        t.setStyle("-pBackgroundTextColor; -fx-font-size: 1.2em;");
         return t;
     }
 
