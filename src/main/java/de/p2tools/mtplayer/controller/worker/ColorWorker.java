@@ -124,9 +124,9 @@ public class ColorWorker {
         } else {
             guiTitleBarSel = "-pTitleBarSelColor: transparent; ";
         }
-        String guiTitleBarBorerSel = P2ColorFactory.getHalfMaxColor(ProgConfig.SYSTEM_TITLE_BAR_SEL_COLOR.getValueSafe(), 0.2);
-        if (!guiTitleBarBorerSel.isEmpty()) {
-            guiTitleBarBorerSel = "-pTitleBarSelBorderColor: " + guiTitleBarBorerSel + "; ";
+        String guiTitleBarBorderSel = P2ColorFactory.getHalfMaxColor(ProgConfig.SYSTEM_TITLE_BAR_SEL_COLOR.getValueSafe(), 0.2);
+        if (!guiTitleBarBorderSel.isEmpty()) {
+            guiTitleBarBorderSel = "-pTitleBarSelBorderColor: " + guiTitleBarBorderSel + "; ";
 //            guiTitleBarBorerSel = "-pTitleBarSelBorderColor: green; ";
         }
 
@@ -216,7 +216,7 @@ public class ColorWorker {
         ProgConfig.SYSTEM_CSS_ADDER.set(guiColor + guiColorDark + guiColorLight +
                 guiTextColor + guiTextColorLight + guiTextColorDark +
                 guiTitleBar + guiTitleBarText + guiTitleBarSel + guiTitleBarSelText +
-                guiTitleBarBorder + guiTitleBarBorerSel + backgroundTextColor + backgroundSelTextColor +
+                guiTitleBarBorder + guiTitleBarBorderSel + backgroundTextColor + backgroundSelTextColor +
                 guiBackground + guiBackupSel);
     }
 }

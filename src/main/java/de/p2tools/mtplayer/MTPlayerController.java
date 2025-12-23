@@ -87,13 +87,16 @@ public class MTPlayerController extends StackPane {
             btnSize.setVisible(false);
             btnSize.getStyleClass().add("btnSize");
             Platform.runLater(() -> {
-                double size = btnSize.getWidth();
-                btnFilm.setMinWidth(size);
-                btnAudio.setMinWidth(size);
-                btnLive.setMinWidth(size);
-                btnDownload.setMinWidth(size);
-                btnAbo.setMinWidth(size);
-                btnFilmlist.setMinWidth(btnFilmlistMax.getWidth());
+                double sizeW = btnSize.getWidth();
+                double sizeH = btnSize.getHeight();
+                btnFilm.setMinSize(sizeW, sizeH);
+                btnAudio.setMinSize(sizeW, sizeH);
+                btnLive.setMinSize(sizeW, sizeH);
+                btnDownload.setMinSize(sizeW, sizeH);
+                btnAbo.setMinSize(sizeW, sizeH);
+
+                btnFilmlist.setMinSize(btnFilmlistMax.getWidth(), btnFilmlistMax.getHeight());
+                btnFilmlist.setMinSize(btnFilmlistMax.getWidth(), btnFilmlistMax.getHeight());
             });
 
             // Toolbar
@@ -220,6 +223,12 @@ public class MTPlayerController extends StackPane {
                 selPanelFilm();
             }
         });
+
+        btnFilm.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+        btnAudio.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+        btnLive.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+        btnDownload.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+        btnAbo.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
 
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
         btnFilm.setOnAction(e -> selPanelFilm());
@@ -359,56 +368,52 @@ public class MTPlayerController extends StackPane {
     }
 
     private void setButtonStyle() {
-        btnFilm.getStyleClass().clear();
-        btnAudio.getStyleClass().clear();
-        btnLive.getStyleClass().clear();
-        btnDownload.getStyleClass().clear();
-        btnAbo.getStyleClass().clear();
+//        btnFilm.getStyleClass().clear();
+//        btnAudio.getStyleClass().clear();
+//        btnLive.getStyleClass().clear();
+//        btnDownload.getStyleClass().clear();
+//        btnAbo.getStyleClass().clear();
 
 
         fastFilterFilm.setVisible(false);
         fastFilterAudio.setVisible(false);
 
+        btnFilm.getStyleClass().remove("pFuncBtnTitleBarSel");
+        btnAudio.getStyleClass().remove("pFuncBtnTitleBarSel");
+        btnLive.getStyleClass().remove("pFuncBtnTitleBarSel");
+        btnDownload.getStyleClass().remove("pFuncBtnTitleBarSel");
+        btnAbo.getStyleClass().remove("pFuncBtnTitleBarSel");
+
         if (TAB_FILM_ON.get()) {
             fastFilterFilm.setVisible(true);
-            btnFilm.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
-        } else {
-            btnFilm.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+            btnFilm.getStyleClass().add("pFuncBtnTitleBarSel");
         }
 
         if (TAB_AUDIO_ON.get()) {
             fastFilterAudio.setVisible(true);
-            btnAudio.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
-        } else {
-            btnAudio.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+            btnAudio.getStyleClass().addAll("pFuncBtnTitleBarSel");
         }
 
         if (TAB_LIVE_ON.get()) {
-            btnLive.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
-        } else {
-            btnLive.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+            btnLive.getStyleClass().addAll("pFuncBtnTitleBarSel");
         }
 
         if (TAB_DOWNLOAD_ON.get()) {
-            btnDownload.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
-        } else {
-            btnDownload.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+            btnDownload.getStyleClass().addAll("pFuncBtnTitleBarSel");
         }
 
         if (TAB_ABO_ON.get()) {
-            btnAbo.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBarSel");
-        } else {
-            btnAbo.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
+            btnAbo.getStyleClass().addAll("pFuncBtnTitleBarSel");
         }
 
-        if (ProgConfig.FAST_FILM_SEARCH_ON.get() ||
-                ProgConfig.FAST_AUDIO_SEARCH_ON.get() && ProgConfig.SYSTEM_USE_AUDIOLIST.get()) {
-            btnFilm.getStyleClass().addAll("pFuncBtn");
-            btnAudio.getStyleClass().addAll("pFuncBtn");
-            btnLive.getStyleClass().addAll("pFuncBtn");
-            btnDownload.getStyleClass().addAll("pFuncBtn");
-            btnAbo.getStyleClass().addAll("pFuncBtn");
-        }
+//        if (ProgConfig.FAST_FILM_SEARCH_ON.get() ||
+//                ProgConfig.FAST_AUDIO_SEARCH_ON.get() && ProgConfig.SYSTEM_USE_AUDIOLIST.get()) {
+//            btnFilm.getStyleClass().addAll("pFuncBtn");
+//            btnAudio.getStyleClass().addAll("pFuncBtn");
+//            btnLive.getStyleClass().addAll("pFuncBtn");
+//            btnDownload.getStyleClass().addAll("pFuncBtn");
+//            btnAbo.getStyleClass().addAll("pFuncBtn");
+//        }
     }
 
     public void setFocus() {
