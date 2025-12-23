@@ -143,3 +143,28 @@
 }
 
 
+/* Button unter der Tabelle Filme */
+.setButton{
+    -fx-border-width: 2;
+    -fx-padding: 3 10 3 10;
+}
+.setButton:focused{
+    -fx-border-width: 2;
+    -fx-padding: 3 10 3 10;
+}
+.setButton:pressed{
+    -fx-border-width: 3;
+    -fx-padding: 2 9 2 9;
+}
+.setButton:hover{
+    -fx-border-width: 3;
+    -fx-padding: 2 9 2 9;
+}
+.setButton:focused:hover{
+    -fx-border-width: 3;
+    -fx-padding: 2 9 2 9;
+}
+.setButton:pressed:focused:hover{
+    -fx-border-width: 3;
+    -fx-padding: 2 9 2 9;
+}

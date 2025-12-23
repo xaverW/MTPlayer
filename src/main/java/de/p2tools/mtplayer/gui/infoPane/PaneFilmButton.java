@@ -20,7 +20,6 @@ package de.p2tools.mtplayer.gui.infoPane;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
-import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetDataList;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Color;
@@ -72,12 +71,10 @@ public class PaneFilmButton extends VBox {
             btn.textProperty().bind(setData.visibleNameProperty());
             btn.setMinWidth(P2LibConst.MIN_BUTTON_WIDTH);
             btn.setMaxWidth(Double.MAX_VALUE);
-            if (!setData.getColor().equals(SetData.RESET_COLOR)) {
-                final String c = P2Color.getCssColor(setData.getColor());
-                final String css = "-fx-border-color: " + c + "; " /*+ " -fx-text-fill: #" + c + "; "*/;
-                btn.setStyle(css);
-                btn.getStyleClass().add("setButton");
-            }
+            final String c = P2Color.getCssColor(setData.getColor());
+            final String css = "-fx-border-color: " + c + "; " /*+ " -fx-text-fill: #" + c + "; "*/;
+            btn.setStyle(css);
+            btn.getStyleClass().add("setButton");
 
             btn.setOnAction(a -> {
                 switch (pane) {
