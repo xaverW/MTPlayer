@@ -17,6 +17,7 @@
 
 package de.p2tools.mtplayer.controller.update;
 
+import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
@@ -39,6 +40,7 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_SMALL_FILTER.setValue(true); // für Version 20
         ProgConfig.SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART.setValue(true); // für Version 20
         ProgConfig.SYSTEM_UPDATE_OFFER_FILTER.setValue(true); // für Version 20
+        ProgConfig.SYSTEM_RESET_COLOR_LIST.setValue(true); // für Version 20
     }
 
     public static void update() {
@@ -141,6 +143,11 @@ public class ProgConfigUpdate {
         if (!ProgConfig.SYSTEM_UPDATE_OFFER_FILTER.getValue()) {
             // dann gleich mit den INIT füllen
             ProgData.getInstance().offerList.init();
+        }
+
+        if (!ProgConfig.SYSTEM_RESET_COLOR_LIST.getValue()) {
+            // die ProgColorList zurücksetzen -> wegen neuem Icon/Colorset
+            ProgColorList.resetAllColorDarkLight();
         }
 
         setUpdateDone();

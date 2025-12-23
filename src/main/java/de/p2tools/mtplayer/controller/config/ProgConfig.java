@@ -201,6 +201,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_SMALL_FILTER = addBoolProp("system-small-filter", Boolean.FALSE);
     public static BooleanProperty SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART = addBoolProp("system-update-load-filmlist-programstart", Boolean.FALSE);
     public static BooleanProperty SYSTEM_UPDATE_OFFER_FILTER = addBoolProp("system-update-offer-filter", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_RESET_COLOR_LIST = addBoolProp("system-reset-color-list", Boolean.FALSE);
 
     // Fenstereinstellungen
     static {
