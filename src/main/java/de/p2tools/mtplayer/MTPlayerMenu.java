@@ -125,7 +125,7 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miShortCut = new MenuItem("Tastaturbefehle festlegen");
         miShortCut.setOnAction(event -> {
             ProgConfig.SYSTEM_CONFIG_DIALOG_TAB.setValue(0);
-            ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG.setValue(5);
+            ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG.setValue(8);
             new ConfigDialogController(ProgData.getInstance());
         });
         final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
