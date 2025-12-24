@@ -30,6 +30,7 @@ import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
+import de.p2tools.p2lib.css.P2CssFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -252,6 +253,7 @@ public class FilmFilterControllerProfiles extends VBox {
 
     private void newFilter() {
         final TextInputDialog dialog = new TextInputDialog(filterDto.filterWorker.getFilmFilterList().getNextName());
+        P2CssFactory.addP2CssToScene(dialog.getEditor().getScene());
         dialog.setTitle("Filterprofilname");
         dialog.setHeaderText("Den Namen des Filterprofils vorgeben");
         dialog.setContentText("Name:");

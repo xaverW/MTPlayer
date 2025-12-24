@@ -95,9 +95,9 @@ public class PIconFactory {
         TOOLBAR_BTN_BOOKMARK_SHOW("mdoal-collections_bookmark", 25),
         TOOLBAR_BTN_BOOKMARK_SHOW_DIALOG("mdi2c-comment-bookmark-outline", 25),
 
-        OWN_FILTER_LOAD("mdi2t-tray-arrow-up", 25),
-        OWN_FILTER_SAVE("mdi2t-tray-arrow-down", 25),
-        OWN_FILTER_NEW("gmi-add", 25),
+        OWN_FILTER_LOAD("mdi2t-tray-arrow-up", 20),
+        OWN_FILTER_SAVE("mdi2t-tray-arrow-down", 20),
+        OWN_FILTER_NEW("gmi-add", 20),
 
         ATTENTION("mdomz-report", 80),
         PROG_MENU("gmi-menu", 25),
