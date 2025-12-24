@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.picon.IconRunner;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
+import de.p2tools.mtplayer.controller.picon.PIconShow;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
@@ -34,7 +35,6 @@ import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.mtplayer.gui.tools.ProgTipOfDayFactory;
 import de.p2tools.p2lib.guitools.P2Open;
-import de.p2tools.p2lib.ikonli.P2IconShow;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
@@ -161,7 +161,7 @@ public class MTPlayerMenu extends MenuButton {
                     .searchNewProgramVersion());
 
             final MenuItem miIcon = new MenuItem("Icons");
-            miIcon.setOnAction(a -> new P2IconShow());
+            miIcon.setOnAction(a -> new PIconShow());
 
             final MenuItem miIconRunner = new MenuItem("Icon-Zirkus");
             miIconRunner.setOnAction(a -> IconRunner.run());
