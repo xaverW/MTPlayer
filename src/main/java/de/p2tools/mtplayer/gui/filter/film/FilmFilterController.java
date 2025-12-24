@@ -21,7 +21,8 @@ import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.p2lib.guitools.P2GuiTools;
-import javafx.scene.control.Separator;
+import javafx.beans.property.BooleanProperty;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class FilmFilterController extends FilterController {
@@ -51,18 +52,19 @@ public class FilmFilterController extends FilterController {
         if (filterDto.audio) {
             ProgConfig.AUDIOFILTER_SMALL_FILTER.addListener((u, o, n) -> {
                 setFilter();
-                setGui();
+//                setGui();
             });
 
         } else {
             ProgConfig.FILMFILTER_SMALL_FILTER.addListener((u, o, n) -> {
                 setFilter();
-                setGui();
+//                setGui();
             });
         }
 
         setFilterStart();
-        setGui();
+        initGui();
+//        setGui();
     }
 
     private void setFilterStart() {
@@ -100,41 +102,86 @@ public class FilmFilterController extends FilterController {
         }
     }
 
-    private void setGui() {
-        boolean small = filterDto.audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER.get() : ProgConfig.FILMFILTER_SMALL_FILTER.get();
-        if (small) {
-            getChildren().clear();
-            final VBox vBox = getVBoxFilter();
-            vBox.getChildren().addAll(filmFilterControllerTextFilter);
-            vBox.getChildren().add(P2GuiTools.getHDistance(10));
-            vBox.getChildren().addAll(filmFilterControllerFilter);
-            vBox.getChildren().add(P2GuiTools.getHDistance(10));
-            vBox.getChildren().addAll(filmFilterControllerOnlyNew);
+//    private void setGui() {
+//        boolean small = filterDto.audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER.get() : ProgConfig.FILMFILTER_SMALL_FILTER.get();
+//        if (small) {
+//            getChildren().clear();
+//            final VBox vBox = getVBoxFilter();
+//            vBox.getChildren().addAll(filmFilterControllerTextFilter);
+//            vBox.getChildren().add(P2GuiTools.getHDistance(10));
+//            vBox.getChildren().addAll(filmFilterControllerFilter);
+//            vBox.getChildren().add(P2GuiTools.getHDistance(10));
+//            vBox.getChildren().addAll(filmFilterControllerOnlyNew);
+//
+//            vBox.getChildren().add(P2GuiTools.getVBoxGrower());
+//            vBox.getChildren().addAll(filmSmallFilterControllerFilter);
+//            getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
+//
+//        } else {
+//            // dann alle Filter
+//            getChildren().clear();
+//            final VBox vBox = getVBoxFilter();
+//            vBox.getChildren().addAll(filmFilterControllerTextFilter);
+//
+//            Separator sp = new Separator();
+//            sp.getStyleClass().add("pseperator2");
+//            sp.setMinHeight(0);
+//            sp.setMaxHeight(1);
+//            sp.visibleProperty().bind(filmFilterControllerTextFilter.visibleProperty());
+//            sp.managedProperty().bind(filmFilterControllerTextFilter.visibleProperty());
+//            vBox.getChildren().add(sp);
+//
+//            vBox.getChildren().addAll(filmFilterControllerFilter,
+//                    P2GuiTools.getVBoxGrower(),
+//                    filmFilterControllerClearFilter);
+//
+//            getVBoxBlack().getChildren().add(filmFilterControllerProfiles);
+//            getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
+//        }
+//    }
 
-            vBox.getChildren().add(P2GuiTools.getVBoxGrower());
-            vBox.getChildren().addAll(filmSmallFilterControllerFilter);
-            getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
+    private void initGui() {
+        BooleanProperty small = filterDto.audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER : ProgConfig.FILMFILTER_SMALL_FILTER;
 
-        } else {
-            // dann alle Filter
-            getChildren().clear();
-            final VBox vBox = getVBoxFilter();
-            vBox.getChildren().addAll(filmFilterControllerTextFilter);
+        final VBox vBox = getVBoxFilter();
+        vBox.getChildren().addAll(filmFilterControllerTextFilter);
 
-            Separator sp = new Separator();
-            sp.getStyleClass().add("pseperator2");
-            sp.setMinHeight(0);
-            sp.setMaxHeight(1);
-            sp.visibleProperty().bind(filmFilterControllerTextFilter.visibleProperty());
-            sp.managedProperty().bind(filmFilterControllerTextFilter.visibleProperty());
-            vBox.getChildren().add(sp);
+        Region reg1 = P2GuiTools.getHDistance(10);
+        vBox.getChildren().add(reg1);
 
-            vBox.getChildren().addAll(filmFilterControllerFilter,
-                    P2GuiTools.getVBoxGrower(),
-                    filmFilterControllerClearFilter);
+        vBox.getChildren().addAll(filmFilterControllerFilter);
 
-            getVBoxBlack().getChildren().add(filmFilterControllerProfiles);
-            getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
-        }
+        Region reg2 = P2GuiTools.getHDistance(10); // small
+        reg2.visibleProperty().bind(small);
+        reg2.managedProperty().bind(small);
+        vBox.getChildren().add(reg2); // small
+
+        Region reg3 = P2GuiTools.getVBoxGrower(); // all
+        reg3.visibleProperty().bind(small.not());
+        reg3.managedProperty().bind(small.not());
+        vBox.getChildren().add(reg3); // all
+
+        vBox.getChildren().addAll(filmFilterControllerClearFilter); //  all
+        filmFilterControllerClearFilter.visibleProperty().bind(small.not());
+        filmFilterControllerClearFilter.managedProperty().bind(small.not());
+
+        getVBoxBlack().getChildren().add(filmFilterControllerProfiles); // all
+        filmFilterControllerProfiles.visibleProperty().bind(small.not());
+        filmFilterControllerProfiles.managedProperty().bind(small.not());
+
+        vBox.getChildren().addAll(filmFilterControllerOnlyNew); // small
+        filmFilterControllerOnlyNew.visibleProperty().bind(small);
+        filmFilterControllerOnlyNew.managedProperty().bind(small);
+
+        Region reg4 = P2GuiTools.getVBoxGrower(); // small
+        reg4.visibleProperty().bind(small);
+        reg4.managedProperty().bind(small);
+        vBox.getChildren().add(reg4); // small
+
+        vBox.getChildren().addAll(filmSmallFilterControllerFilter); // small
+        filmSmallFilterControllerFilter.visibleProperty().bind(small);
+        filmSmallFilterControllerFilter.managedProperty().bind(small);
+
+        getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
     }
 }
