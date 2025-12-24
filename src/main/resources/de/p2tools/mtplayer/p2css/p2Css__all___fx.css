@@ -67,29 +67,17 @@
 }
 
 
-/* =========================================== */
-/* CheckBoxCell */
-.checkbox-table * {
-    -fx-background-color: transparent;
-}
-.checkbox-table:disabled {
-    -fx-opacity: 1;
-}
-.checkbox-table .box {
-    -fx-border-radius: 10px;
-    -fx-border-color: #b1b1b1;
-}
-.checkbox-table:selected .box {
-    -fx-border-color: -pGuiColor;
-}
-.checkbox-table:selected .mark {
-    -fx-background-color: -pGuiColor;
-}
-
-
 /* ========================= */
 /* RangeSlider*/
 .range-slider .range-bar {
     -fx-background-color: -fx-text-base-color;
     -fx-background-color: #a1a1a1;
+}
+
+
+/* =============================== */
+/* RadioButton */
+.radio-button:selected .radio .dot {
+    -fx-background-color: -pGuiColor;
+    -fx-background-insets: 0;
 }

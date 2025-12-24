@@ -87,3 +87,23 @@
      -fx-border-color: -fx-table-cell-border-color;
  }
 
+
+/* =========================================== */
+/* CheckBoxCell */
+.checkbox-table * {
+    -fx-background-color: transparent;
+}
+.checkbox-table:disabled {
+    -fx-opacity: 1;
+}
+.checkbox-table .box {
+    -fx-border-radius: 10px;
+    -fx-border-color: #b1b1b1;
+}
+.checkbox-table:selected .box {
+    -fx-border-color: -pGuiColor;
+}
+.checkbox-table:selected .mark {
+    -fx-background-color: -pGuiColor;
+}
+

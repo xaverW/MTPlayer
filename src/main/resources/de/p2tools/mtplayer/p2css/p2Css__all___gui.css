@@ -166,14 +166,24 @@
 .cbo-menu > .arrow-button > .arrow {
     -fx-background-color: #575757;
 }
+
 .cbo-menu-item{
+    -fx-padding: 2;
+    -fx-border-width: 0;
     -fx-background-color: transparent;
 }
-.cbo-menu-button {
+
+.cbo-menu-button{
     -fx-padding: 0;
+    -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-font-size: 0.9em;
+}
+.cbo-menu-button:focused{
+    -fx-padding: 0;
+    -fx-border-width: 1;
+    -fx-background-color: #939393;
 }
 .cbo-menu-button:pressed{
     -fx-padding: 0;
@@ -181,16 +191,20 @@
     -fx-background-color: #939393;
     -fx-font-weight: bold;
 }
-.cbo-menu-button:focused{
-    -fx-background-color: #939393;
-}
 .cbo-menu-button:hover{
+    -fx-padding: 0;
+    -fx-border-width: 1;
     -fx-background-color: #939393;
 }
 .cbo-menu-button:focused:hover{
+    -fx-padding: 0;
+    -fx-border-width: 1;
     -fx-background-color: #939393;
+    -fx-font-weight: bold;
 }
 .cbo-menu-button:pressed:focused:hover{
+    -fx-padding: 0;
+    -fx-border-width: 1;
     -fx-background-color: #939393;
+    -fx-font-weight: bold;
 }
-

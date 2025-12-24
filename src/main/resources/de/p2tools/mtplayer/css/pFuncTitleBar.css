@@ -27,7 +27,7 @@
     -fx-border-color: -pTitleBarBorderColor;
     -fx-border-radius: 8;
     -fx-background-color: -pTitleBarColor;
-    -fx-background-radius: 15;
+    -fx-background-radius: 8;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:focused{
