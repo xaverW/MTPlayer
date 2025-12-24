@@ -100,7 +100,6 @@ public class MediaSearchFactory {
         }
 
         Button btnChange = new Button();
-//        btnChange.getStyleClass().add("buttonVerySmall");
         if (buildSearchFrom) {
             btnChange.setTooltip(new Tooltip("Einstellung wie der Suchtext gebaut wird"));
         } else {

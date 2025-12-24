@@ -74,7 +74,7 @@
 .combo-box .list-cell{
 }
 .combo-box .list-cell:focused{
-    -fx-background-color: -pBackgroundColorGray;
+    -fx-background-color: transparent;
 }
 .combo-box .list-cell:hover{
     -fx-background-color: -pBackgroundColorGray;
@@ -83,6 +83,9 @@
     -fx-background-color: -pBackgroundColorGray;
 }
 /* textLabel */
+.combo-box .list-cell:focused .label{
+	-fx-text-fill: -pTextColorMax;
+}
 .combo-box .list-cell:hover .label{
 	-fx-text-fill: -pTextColorMax;
 }

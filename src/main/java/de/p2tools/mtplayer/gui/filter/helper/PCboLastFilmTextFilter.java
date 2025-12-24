@@ -16,14 +16,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.StringConverter;
 
-public class PCboTextFilter extends HBox {
+public class PCboLastFilmTextFilter extends HBox {
 
     private ComboBox<TextFilter> cbo = new ComboBox<>();
     private boolean itsMe = false;
     private final TextFilterList textFilterList;
     boolean audio;
 
-    public PCboTextFilter(boolean audio) {
+    public PCboLastFilmTextFilter(boolean audio) {
         this.audio = audio;
         this.textFilterList = audio ? ProgData.getInstance().textFilterListAudio : ProgData.getInstance().textFilterListFilm;
         cbo.setMaxWidth(Double.MAX_VALUE);
@@ -103,8 +103,10 @@ public class PCboTextFilter extends HBox {
             final Label lblSomewhere = new Label();
 
             {
-                btnDel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+                btnDel.setGraphic(PIconFactory.PICON.BTN_CLEAR_CBO.getFontIcon());
                 btnDel.getStyleClass().add("buttonVerySmall");
+                btnDel.setMaxSize(16, 16);
+                btnDel.setMinSize(16, 16);
                 hBox.setPadding(new Insets(0));
                 hBox.setSpacing(5);
                 hBox.getChildren().addAll(btnDel, lblChannel, lblTheme, lblThemeTitle, lblTitle, lblSomewhere);

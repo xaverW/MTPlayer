@@ -43,6 +43,7 @@ public class PIconFactory {
         BTN_DOWN("mdoal-arrow_downward", 20),
         BTN_BOTTOM("gmi-vertical-align-bottom", 20),
 
+        BTN_CLEAR_CBO("gmi-clear", 14),
         BTN_ALERT_FILM_PLAY("gmi-play-arrow", 14),
         BTN_ALERT_DOWNLOAD_OPEN_DIR("mdi2f-folder-open-outline", 14),
 

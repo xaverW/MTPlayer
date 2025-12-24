@@ -117,7 +117,7 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
             if (newValue == null) {
                 return;
             }
-            System.out.println("==> Editor");
+//            System.out.println("==> Editor");
             addToStoredList(getEditor().getText());
             strSearchProperty.setValue(getEditor().getText());
         });
@@ -126,7 +126,7 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
         this.showingProperty().addListener((u, o, n) -> {
             if (isShowing()) {
                 // beim Aufmachen
-                System.out.println("showingProperty");
+//                System.out.println("showingProperty");
                 fillItemListWithStoredList();
             }
         });
@@ -134,7 +134,7 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
         // wenn aus Combo was ausgewählt wird und RETURN dann melden
         getSelectionModel().selectedItemProperty().addListener(
                 (ChangeListener<Object>) (observable, oldValue, newValue) -> {
-                    System.out.println("Aus Combo ausgewählt");
+//                    System.out.println("Aus Combo ausgewählt");
                     // kann auch ein String!!!! sein
                     if (ProgConfig.SYSTEM_FILTER_RETURN.getValue()) { // nuss nicht sein
                         // dann melden, wenn ein Label und nicht der gleiche Text drin steht
@@ -161,8 +161,10 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
             final Label lblFilter = new Label();
 
             {
-                btnDel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+                btnDel.setGraphic(PIconFactory.PICON.BTN_CLEAR_CBO.getFontIcon());
                 btnDel.getStyleClass().add("buttonVerySmall");
+                btnDel.setMaxSize(16, 16);
+                btnDel.setMinSize(16, 16);
                 btnDel.visibleProperty().bind(Bindings.size(itemList).greaterThan(1));
 
                 hBox.setPadding(new Insets(0));

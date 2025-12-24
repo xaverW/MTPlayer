@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.FilterController;
-import de.p2tools.mtplayer.gui.filter.helper.PCboTextFilter;
+import de.p2tools.mtplayer.gui.filter.helper.PCboLastFilmTextFilter;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
@@ -38,7 +38,7 @@ public class FilmFilterControllerClearFilter extends VBox {
     private final Button btnEditFilter = new Button("");
     private final Button btnGoBack = new Button("");
     private final Button btnGoForward = new Button("");
-    private final PCboTextFilter cboTextFilter;
+    private final PCboLastFilmTextFilter pCboLastFilmTextFilter;
 
     private final ProgData progData;
     private final FilterDto filterDto;
@@ -47,7 +47,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         super();
         this.filterDto = filterDto;
         progData = ProgData.getInstance();
-        cboTextFilter = new PCboTextFilter(filterDto.audio);
+        pCboLastFilmTextFilter = new PCboLastFilmTextFilter(filterDto.audio);
 //        progData.filmFilterControllerClearFilter = this;
 
         setSpacing(FilterController.FILTER_SPACING_TEXTFILTER);
@@ -78,8 +78,8 @@ public class FilmFilterControllerClearFilter extends VBox {
 
         final Button btnHelp = PIconFactory.getHelpButton("Filter", HelpText.FILTER_INFO);
         HBox hBox2 = new HBox(P2LibConst.DIST_BUTTON);
-        hBox2.getChildren().addAll(cboTextFilter, btnHelp);
-        HBox.setHgrow(cboTextFilter, Priority.ALWAYS);
+        hBox2.getChildren().addAll(pCboLastFilmTextFilter, btnHelp);
+        HBox.setHgrow(pCboLastFilmTextFilter, Priority.ALWAYS);
 
         getChildren().addAll(hBox1, hBox2);
     }
