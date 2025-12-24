@@ -35,5 +35,8 @@
 
     -pBackgroundColor: lightgrey;
     -pBackgroundColorSel: lightgrey;
+
+    -pTextColorMax: black;
+    -pBackgroundColorGray: #646464;
 }
 

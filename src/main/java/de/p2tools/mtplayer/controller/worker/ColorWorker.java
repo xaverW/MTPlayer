@@ -168,6 +168,7 @@ public class ColorWorker {
         if (!guiTextColor.isEmpty()) {
             guiTextColor = "-pGuiTextColor: " + guiTextColor + "; ";
         }
+
         if (!guiTextColorLight.isEmpty()) {
             guiTextColorLight = "-pGuiTextColorLight: " + guiTextColorLight + "; ";
         }
@@ -213,10 +214,22 @@ public class ColorWorker {
             }
         }
 
+        // ================
+        // Text Max
+        String textColorMax = "";
+        String backgroundColorGray = "";
+        if (ProgConfig.SYSTEM_DARK_THEME.get()) {
+            textColorMax = "-pTextColorMax: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
+            backgroundColorGray = "-pBackgroundColorGray: #646464; ";
+        } else {
+            textColorMax = "-pTextColorMax: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
+            backgroundColorGray = "-pBackgroundColorGray: #d4d4d4; ";
+        }
+
         ProgConfig.SYSTEM_CSS_ADDER.set(guiColor + guiColorDark + guiColorLight +
                 guiTextColor + guiTextColorLight + guiTextColorDark +
                 guiTitleBar + guiTitleBarText + guiTitleBarSel + guiTitleBarSelText +
                 guiTitleBarBorder + guiTitleBarBorderSel + backgroundTextColor + backgroundSelTextColor +
-                guiBackground + guiBackupSel);
+                guiBackground + guiBackupSel + textColorMax + backgroundColorGray);
     }
 }

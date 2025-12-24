@@ -115,10 +115,23 @@
     -fx-border-width: 1;
     -fx-padding: 1 5;
 }
-.selectButton:pressed{
+.selectButton:focused{
+    -fx-border-width: 1;
+    -fx-padding: 1 5;
+}
+.selectButton:hover{
     -fx-border-width: 2;
     -fx-padding: 0 4;
 }
+.selectButton:focused:hover{
+    -fx-border-width: 2;
+    -fx-padding: 0 4;
+ }
+.selectButton:pressed:focused:hover{
+    -fx-border-width: 2;
+    -fx-padding: 0 4;
+}
+
 
 /* Add-Download/Abo-Dialog */
 .checkBoxAll:selected .mark {
