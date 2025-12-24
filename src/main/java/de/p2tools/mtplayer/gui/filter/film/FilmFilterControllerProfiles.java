@@ -169,7 +169,7 @@ public class FilmFilterControllerProfiles extends VBox {
         });
 
         ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) ->
-                cboFilterProfiles.setCellFactory(new ListViewListCellCallback()));
+                cboFilterProfiles.setCellFactory(new ListViewListCellCallback())); // todo notwendig??
         cboFilterProfiles.setCellFactory(new ListViewListCellCallback());
     }
 
