@@ -28,7 +28,7 @@
 
 /*Tabelle Sets: Set ist "Abspielen" */
 .markSetPlay{
-    -fx-text-fill:  -pBackgroundSelTextColor;
+    -fx-text-fill: -pBackgroundSelTextColor;
     -fx-underline: true;
 }
 
