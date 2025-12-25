@@ -127,7 +127,8 @@ public class ProgStartBeforeGui {
 
                         "de/p2tools/mtplayer/p2css/p2Css__dark___all.css",
                         "de/p2tools/mtplayer/p2css/p2Css__dark___fx.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__dark___table.css"},
+                        "de/p2tools/mtplayer/p2css/p2Css__dark___table.css"
+                },
 
                 ProgData.getInstance().cssProp,
                 ProgConfig.SYSTEM_FONT_SIZE,
