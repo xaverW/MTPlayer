@@ -62,16 +62,6 @@
  }
 
 
-
-/* ================= */
-/* damit leere ListView-Zeilen nicht angezeigt werden */
-.list-cell:empty {
-    -fx-background-color: transparent;
- }
-.list-cell:empty .list-cell {
-    -fx-border-width: 0px;
- }
-
 /* ============== */
 /* damit leere TreeTable-Zeilen nicht angezeigt werden */
  .tree-table-row-cell:empty {
