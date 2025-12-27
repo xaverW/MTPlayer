@@ -993,8 +993,8 @@ public class HelpText {
             "Das Programm kann damit mit einer dunklen oder hellen Programmoberfläche " +
                     "angezeigt werden.\n" +
                     "Umschalten kann man das hier in dem " +
-                    "Dialog oder mit einem Mausklick mit der rechten Maustaste " +
-                    "auf den Programm-Einstellungs-Button.\n" +
+                    "Dialog, mit einem Mausklick mit der RECHTEN Maustaste " +
+                    "auf den Programm-Einstellungs-Button oder im Programm-Menü.\n" +
                     "Für einige Elemente kann ein " +
                     "Programmneustart notwendig sein." +
                     "\n";
@@ -1002,10 +1002,10 @@ public class HelpText {
     public static final String THEME_ICON =
             "Die Programmicons können in verschiedenen Farben angezeigt werden.\n" +
                     "Es können 2 Icon-Themes für das Dark-Theme und 2 für das " +
-                    "Light-Theme eingestellt werden.\n" +
+                    "Light-Theme vorgegeben werden.\n" +
                     "Umschalten kann man das hier in dem " +
-                    "Dialog oder mit einem Mausklick mit der rechten Maustaste " +
-                    "auf den Programm-Einstellungs-Button.\n" +
+                    "Dialog, mit einem DOPPEL-KLICK " +
+                    "auf den Programm-Einstellungs-Button oder im Programm-Menü.\n" +
                     "Für einige Elemente kann ein " +
                     "Programmneustart notwendig sein." +
                     "\n";

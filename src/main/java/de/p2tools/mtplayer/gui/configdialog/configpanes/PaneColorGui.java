@@ -106,9 +106,31 @@ public class PaneColorGui {
     }
 
     public void make(Collection<TitledPane> result) {
-        btnHelp = PIconFactory.getHelpButton(stage, "Zurücksetzen", "\"Zurücksetzen\" sets die " +
-                "aktuellen Einstellungen zurücksetzen\n\n" +
-                "\"Alles zurücksetzen\" löscht alle Einstellungen.");
+        btnHelp = PIconFactory.getHelpButton(stage, "Zurücksetzen", "\"Zurücksetzen\" setzt die " +
+                "aktuellen Einstellungen zurück.\n\n" +
+                "\"Alles zurücksetzen\" löscht alle Einstellungen (Dark/Light, Gui-Farben 1/Gui-Farben 2." +
+                "\n\n\n" +
+                "===================================\n" +
+                "Bedeutung der Auswahlmöglichkeiten:\n" +
+                "===================================" +
+                "\n" +
+                "** Icons **\n" +
+                "Hier kann die Farbe aller Icons im Programm eingestellt werden." +
+                "\n\n" +
+                "** Programmfarbe **\n" +
+                "Damit wird die verwendete Farbe für z.B.: Rahmen, die Umrandung der Icons, .. ausgewählt." +
+                "\n\n" +
+                "** Hintergrund **\n" +
+                " Die Hintergrundfarbe der Icons, Buttons, .. wird damit eingestellt." +
+                "\n\n" +
+                "** Schalter Titelzeile **\n" +
+                "Das sind die Schalter ganz oben mit denen die Ansicht der \"Filmliste\", \"Audios\", .. umgeschaltet wird. " +
+                "Die Hintergrundfarbe kann damit eingestellt werden." +
+                "\n\n" +
+                "** Schalter Titelzeile, ausgewählt **\n" +
+                "Das ist der jeweils aktive/ausgewählte Schalter. Dessen Hintergrundfarbe " +
+                "kann damit separat eingestellt werden." +
+                "\n\n");
         btnReset.setOnAction(a -> reset());
         btnResetAll.setOnAction(a -> resetAll());
         makeSelGrid();
