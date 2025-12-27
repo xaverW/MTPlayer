@@ -215,21 +215,27 @@ public class ColorWorker {
         }
 
         // ================
-        // Text Max
+        // GREY
         String textColorMax = "";
         String backgroundColorGray = "";
+        String backgroundColorGraySel = "";
         if (ProgConfig.SYSTEM_DARK_THEME.get()) {
+            // DARK
             textColorMax = "-pTextColorMax: " + P2ColorFactory.getColor(Color.WHITE) + "; ";
             backgroundColorGray = "-pBackgroundColorGray: #646464; ";
+            backgroundColorGraySel = "-pBackgroundColorGraySel: #434343; ";
+
         } else {
+            // LIGHT
             textColorMax = "-pTextColorMax: " + P2ColorFactory.getColor(Color.BLACK) + "; ";
             backgroundColorGray = "-pBackgroundColorGray: #d4d4d4; ";
+            backgroundColorGraySel = "-pBackgroundColorGraySel: #b1b1b1; ";
         }
 
         ProgConfig.SYSTEM_CSS_ADDER.set(guiColor + guiColorDark + guiColorLight +
                 guiTextColor + guiTextColorLight + guiTextColorDark +
                 guiTitleBar + guiTitleBarText + guiTitleBarSel + guiTitleBarSelText +
                 guiTitleBarBorder + guiTitleBarBorderSel + backgroundTextColor + backgroundSelTextColor +
-                guiBackground + guiBackupSel + textColorMax + backgroundColorGray);
+                guiBackground + guiBackupSel + textColorMax + backgroundColorGray + backgroundColorGraySel);
     }
 }

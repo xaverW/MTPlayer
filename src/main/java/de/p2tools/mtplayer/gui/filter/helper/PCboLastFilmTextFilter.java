@@ -1,6 +1,7 @@
 package de.p2tools.mtplayer.gui.filter.helper;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.TextFilter;
@@ -92,7 +93,11 @@ public class PCboLastFilmTextFilter extends HBox {
                 return null;
             }
         });
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> setCellFact());
+        setCellFact();
+    }
 
+    private void setCellFact() {
         cbo.setCellFactory(cell -> new ListCell<>() {
             final Button btnDel = new Button("");
             final HBox hBox = new HBox();

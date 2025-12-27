@@ -79,6 +79,7 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
     }
 
     private void initListener() {
+        ProgConfig.SYSTEM_THEME_CHANGED.addListener((u, o, n) -> setCellFact());
         // Anzeige wenn RegEx fehlerhaft
         new FilterCheckRegEx(getEditor());
 
@@ -153,8 +154,10 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
                 doSomething.getAsBoolean();
             }
         });
+        setCellFact();
+    }
 
-        // steuert die Anzeige der Zellen im Combo (Button + Label mit Text)
+    private void setCellFact() {
         this.setCellFactory(cell -> new ListCell<>() {
             final Button btnDel = new Button();
             final HBox hBox = new HBox();

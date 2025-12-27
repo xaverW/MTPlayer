@@ -94,6 +94,48 @@
 }
 
 
+/* ================= */
+/* damit leere ListView-Zeilen nicht angezeigt werden */
+/* brauchts ned */
+/*
+.list-cell:empty {
+    -fx-background-color: transparent;
+ }
+.list-cell:empty .list-cell {
+    -fx-border-width: 0px;
+ }
+*/
+
+
+
+/* Rahmen um die ausgeklappte ListView */
+/*
+.list-view {
+    -fx-background-color: red;
+    -fx-padding: 1;
+    }
+*/
+
+
+/* ist der Ausgewählte */
+.list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected,
+.list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected:hover {
+    -fx-background-color: -pBackgroundColorGraySel;
+    -fx-text-fill: -pTextColorMax;
+}
+/* Maus hover */
+.list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:hover {
+    -fx-background-color: -pBackgroundColorGraySel;
+    -fx-text-fill: -pTextColorMax;
+}
+/* der Ausgewählte wenn Maus hover */
+.list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:focused:selected:hover {
+    -fx-background-color: -pBackgroundColorGray;
+    -fx-text-fill: -pTextColorMax;
+}
+
+
+
 /* ============================ */
 /* checkBox */
 /* sieht nicht gut aus */
