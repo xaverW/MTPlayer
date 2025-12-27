@@ -44,8 +44,9 @@ public class BookmarkLoadSaveFactory {
         final Path xmlFilePath = FileFactory.getUrlFilePath(settingsDir, fileName);
 
         try {
-            if (!Files.exists(xmlFilePath)) {
-                //dann gibts das File gar nicht
+            if (!Files.exists(xmlFilePath) || xmlFilePath.toFile().length() == 0) {
+//            if (!Files.exists(xmlFilePath)) {
+                //dann gibts das File gar nicht oder ist leer
                 return;
             }
 
