@@ -89,45 +89,64 @@ public class MTPlayerController extends StackPane {
             Platform.runLater(() -> {
                 double sizeW = btnSize.getWidth();
                 double sizeH = btnSize.getHeight();
-                btnFilm.setMinSize(sizeW, sizeH);
-                btnAudio.setMinSize(sizeW, sizeH);
-                btnLive.setMinSize(sizeW, sizeH);
-                btnDownload.setMinSize(sizeW, sizeH);
-                btnAbo.setMinSize(sizeW, sizeH);
+                btnFilm.setMinWidth(sizeW);
+                btnAudio.setMinWidth(sizeW);
+                btnLive.setMinWidth(sizeW);
+                btnDownload.setMinWidth(sizeW);
+                btnAbo.setMinWidth(sizeW);
 
                 btnFilmlist.setMinSize(btnFilmlistMax.getWidth(), btnFilmlistMax.getHeight());
                 btnFilmlist.setMinSize(btnFilmlistMax.getWidth(), btnFilmlistMax.getHeight());
             });
 
             // Toolbar
-            TilePane tilePaneButton = new TilePane();
-            tilePaneButton.setHgap(5);
-            tilePaneButton.setPadding(new Insets(0));
-            tilePaneButton.setAlignment(Pos.CENTER);
-            tilePaneButton.getChildren().addAll(btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
+//            TilePane tilePaneButton = new TilePane();
+//            tilePaneButton.setStyle("-fx-border-color: red;");
+//            tilePaneButton.setHgap(5);
+//            tilePaneButton.setPrefRows(1);
+//            tilePaneButton.setPrefColumns(5);
+//            tilePaneButton.setAlignment(Pos.BOTTOM_CENTER);
+//            btnFilm.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+//            tilePaneButton.getChildren().addAll(btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
+            HBox hBoxBtn = new HBox(5);
+            hBoxBtn.setAlignment(Pos.BOTTOM_CENTER);
+            hBoxBtn.getChildren().addAll(btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
+//            hBoxBtn.setStyle("-fx-border-color: red;");
 
             StackPane stackPaneFilmlist = new StackPane();
             stackPaneFilmlist.getChildren().addAll(btnFilmlistMax, btnFilmlist);
 
-            StackPane stackPane = new StackPane();
-            stackPane.setAlignment(Pos.CENTER);
-            stackPane.getChildren().addAll(btnSize, tilePaneButton);
-            HBox.setHgrow(stackPane, Priority.ALWAYS);
+            StackPane stackPaneTitleButton = new StackPane();
+//            stackPaneTitleButton.setStyle("-fx-border-color: blue;");
+            stackPaneTitleButton.setAlignment(Pos.BOTTOM_CENTER);
+            stackPaneTitleButton.setPadding(new Insets(0));
+            stackPaneTitleButton.getChildren().addAll(btnSize, hBoxBtn);
+            HBox.setHgrow(stackPaneTitleButton, Priority.ALWAYS);
 
             HBox hBoxTop = new HBox();
-            hBoxTop.setPadding(new Insets(5, 10, 5, 10));
+            hBoxTop.setPadding(new Insets(5, 10, 0, 10));
             hBoxTop.setSpacing(5);
             hBoxTop.setAlignment(Pos.CENTER);
-            hBoxTop.getChildren().addAll(stackPaneFilmlist, stackPane, stackPaneFast, new MTPlayerMenu());
-            HBox.setHgrow(stackPane, Priority.ALWAYS);
+            hBoxTop.getChildren().addAll(stackPaneFilmlist, stackPaneTitleButton, stackPaneFast, new MTPlayerMenu());
+            HBox.setHgrow(stackPaneTitleButton, Priority.ALWAYS);
             HBox.setHgrow(stackPaneFast, Priority.NEVER);
 
             // Center
             splitPaneFilm = filmGui.pack();
+            splitPaneFilm.getStyleClass().add("splitPaneTab");
+
             splitPaneAudio = audioGui.pack();
+            splitPaneAudio.getStyleClass().add("splitPaneTab");
+
             splitPaneLiveFilm = liveFilmGui.pack();
+            splitPaneLiveFilm.getStyleClass().add("splitPaneTab");
+
             splitPaneDownload = downloadGui.pack();
+            splitPaneDownload.getStyleClass().add("splitPaneTab");
+
             splitPaneAbo = aboGui.pack();
+            splitPaneAbo.getStyleClass().add("splitPaneTab");
+
             stackPaneCont.getChildren().addAll(splitPaneFilm, splitPaneAudio, splitPaneLiveFilm, splitPaneDownload, splitPaneAbo);
 
             // Statusbar

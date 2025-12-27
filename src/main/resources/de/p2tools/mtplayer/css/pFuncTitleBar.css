@@ -16,51 +16,51 @@
 
 .btnSize{
     -fx-padding: 5;
-    -fx-border-width: 2;
+    -fx-border-width: 5 5 0 5;
     -fx-font-weight: bold;
     -fx-font-size: 1.3em;
 }
 
 .pFuncBtnTitleBar{
     -fx-padding: 5;
-    -fx-border-width: 2;
+    -fx-border-width: 2 2 0 2;
     -fx-border-color: -pTitleBarBorderColor;
-    -fx-border-radius: 8;
+    -fx-border-radius: 8 8 0 0;
     -fx-background-color: -pTitleBarColor;
-    -fx-background-radius: 8;
+    -fx-background-radius: 8 8 0 0;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:focused{
     -fx-padding: 5;
-    -fx-border-width: 2;
+    -fx-border-width: 2 2 0 2;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-background-color: -pTitleBarColor;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:pressed{
-    -fx-padding: 3;
-    -fx-border-width: 4;
+    -fx-padding: 5;
+    -fx-border-width: 4 4 0 4;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-background-color: -pTitleBarColor;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:hover{
-    -fx-padding: 3;
-    -fx-border-width: 4;
+    -fx-padding: 5;
+    -fx-border-width: 4 4 0 4;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-background-color: -pTitleBarColor;
     -fx-text-fill: -pTitleBarText;
 }
 .pFuncBtnTitleBar:focused:hover{
-    -fx-padding: 3;
-    -fx-border-width: 4;
+    -fx-padding: 5;
+    -fx-border-width: 4 4 0 4;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-background-color: -pTitleBarColor;
     -fx-text-fill: -pTitleBarText;
  }
 .pFuncBtnTitleBar:pressed:focused:hover{
-    -fx-padding: 3;
-    -fx-border-width: 4;
+    -fx-padding: 5;
+    -fx-border-width: 4 4 0 4;
     -fx-border-color: -pTitleBarBorderColor;
     -fx-background-color: -pTitleBarColor;
     -fx-text-fill: -pTitleBarText;
@@ -68,39 +68,38 @@
 
 
 .pFuncBtnTitleBarSel{
-    -fx-padding: 4;
-    -fx-border-width: 3;
+    -fx-padding: 5;
+    -fx-border-width: 3 3 0 3;
     -fx-background-color: -pTitleBarSelColor;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnTitleBarSel:focused{
-    -fx-padding: 4;
-    -fx-border-width: 3;
+    -fx-padding: 5;
+    -fx-border-width: 3 3 0 3;
     -fx-background-color: -pTitleBarSelColor;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnSel:pressed{
-    -fx-padding: 2;
-    -fx-border-width: 5;
+    -fx-padding: 5;
+    -fx-border-width: 5 5 0 5;
     -fx-background-color: -pTitleBarSelColor;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnTitleBarSel:hover{
-    -fx-padding: 2;
-    -fx-border-width: 5;
+    -fx-padding: 5;
+    -fx-border-width: 5 5 0 5;
     -fx-background-color: -pTitleBarSelColor;
     -fx-font-size: 1.3em;
 }
 .pFuncBtnTitleBarSel:focused:hover{
-    -fx-padding: 2;
-    -fx-border-width: 5;
+    -fx-padding: 5;
+    -fx-border-width: 5 5 0 5;
     -fx-background-color: -pTitleBarSelColor;
     -fx-font-size: 1.3em;
  }
-
 .pFuncBtnSel:pressed:focused:hover{
-    -fx-padding: 2;
-    -fx-border-width: 5;
+    -fx-padding: 5;
+    -fx-border-width: 5 5 0 5;
     -fx-background-color: -pTitleBarSelColor;
     -fx-font-size: 1.3em;
 }
@@ -121,7 +120,7 @@
     -fx-border-color: -pTitleBarBorderColor;
     -fx-border-radius: 8;
     -fx-background-color: -pTitleBarColor;
-    -fx-background-radius: 15;
+    -fx-background-radius: 8;
     -fx-text-fill: -pTitleBarText;
     -fx-font-weight: normal;
 }
@@ -210,3 +209,7 @@
     -fx-font-size: 1.2em;
 }
 
+.splitPaneTab{
+    -fx-border-color: -pTitleBarSelColor;
+    -fx-border-width: 10 5 5 5;
+}
