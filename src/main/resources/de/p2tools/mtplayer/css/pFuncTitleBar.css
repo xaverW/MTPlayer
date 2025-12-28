@@ -211,5 +211,5 @@
 
 .splitPaneTab{
     -fx-border-color: -pTitleBarSelColor;
-    -fx-border-width: 12 5 5 5;
+    -fx-border-width: 14 5 5 5;
 }

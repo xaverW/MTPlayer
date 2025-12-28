@@ -68,7 +68,6 @@ dependencies {
     //<><><><><><><><><><><><><><><><><><><><>
     implementation ':ikonli-core-12.4.0'
     implementation ':ikonli-javafx-12.4.0'
-    implementation ':ikonli-fluentui-pack-12.4.0'
 
     implementation 'org.kordamp.ikonli:ikonli-material-pack:12.4.0'
     implementation 'org.kordamp.ikonli:ikonli-material2-pack:12.4.0'
@@ -214,6 +213,14 @@ tasks.register("copyAll") {
             into file(distDir)
         }
     }
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    // Makes file order non deterministic
+    // reproducibleFileOrder = false
+    // Use file timestamps from the file system
+    preserveFileTimestamps = true
+    // Use permissions from the file system
+    useFileSystemPermissions()
 }
 tasks.register('buildZip_all', Zip) {
     dependsOn clean, copyAll
