@@ -29,14 +29,13 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class StartPaneFilm {
+public class StartPaneFilm extends VBox {
 
     private final Slider slDays = new Slider();
     private final Slider slDuration = new Slider();
@@ -53,18 +52,14 @@ public class StartPaneFilm {
         slDuration.valueProperty().unbindBidirectional(ProgConfig.SYSTEM_LOAD_FILMLIST_MIN_DURATION);
     }
 
-    public TitledPane make() {
+    public void make() {
         initSlider();
-        final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(P2LibConst.PADDING));
-        makeOnly(vBox);
-
-        return new TitledPane("Filmliste bereits beim Laden filtern", vBox);
+        makeOnly();
     }
 
-    private void makeOnly(VBox vBox) {
+    private void makeOnly() {
         HBox hBox = new HBox();
-        hBox.getStyleClass().add("extra-pane");
+        hBox.getStyleClass().add("startInfo_2");
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
@@ -75,7 +70,7 @@ public class StartPaneFilm {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Filmliste bereits beim Laden filtern"), hBox, P2GuiTools.getHDistance(20));
 
         final Button btnHelpDouble = PIconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_ONLY_MARK_DOUBLE);
@@ -83,7 +78,7 @@ public class StartPaneFilm {
                 HelpText.LOAD_ONLY_FILMS_STARTDIALOG);
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setHgap(15);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(0));
 
@@ -113,7 +108,7 @@ public class StartPaneFilm {
                 P2GridConstraints.getCcComputedSizeAndHgrow(),
                 P2GridConstraints.getCcPrefSize());
 
-        vBox.getChildren().add(gridPane);
+        getChildren().add(gridPane);
     }
 
     private void initSlider() {

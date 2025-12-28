@@ -25,7 +25,10 @@ import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.TilePane;
@@ -34,7 +37,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class StartPaneStation {
+public class StartPaneStation extends VBox {
 
     private final Button btnClearAll = new Button("_Wieder alle Sender laden");
     private final Stage stage;
@@ -46,17 +49,13 @@ public class StartPaneStation {
     public void close() {
     }
 
-    public TitledPane make() {
-        final VBox vBox = new VBox(10);
-        vBox.setPadding(new Insets(P2LibConst.PADDING));
-        makeSender(vBox);
-
-        return new TitledPane("Filmliste bereits beim Laden filtern", vBox);
+    public void make() {
+        makeSender();
     }
 
-    private void makeSender(VBox vBox) {
+    private void makeSender() {
         HBox hBox = new HBox();
-        hBox.getStyleClass().add("extra-pane");
+        hBox.getStyleClass().add("startInfo_2");
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
@@ -65,19 +64,19 @@ public class StartPaneStation {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Filmliste bereits beim Laden filtern"), hBox, P2GuiTools.getHDistance(20));
 
 
         final Button btnHelpSender = PIconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_SENDER_STARTDIALOG);
-        HBox hBoxStation = new HBox(P2LibConst.DIST_BUTTON);
+        HBox hBoxStation = new HBox(15);
         hBoxStation.setAlignment(Pos.CENTER_LEFT);
         Label lblStation = new Label("Diese Sender  *nicht*  laden:");
         hBoxStation.getChildren().addAll(lblStation, P2GuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
-        vBox.getChildren().add(hBoxStation);
 
         final TilePane tilePaneSender = getTilePaneSender();
-        vBox.getChildren().addAll(tilePaneSender);
+
+        getChildren().addAll(hBoxStation, P2GuiTools.getHDistance(20), tilePaneSender);
     }
 
     private TilePane getTilePaneSender() {

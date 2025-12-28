@@ -27,13 +27,12 @@ import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-public class StartPaneUpdate {
+public class StartPaneUpdate extends VBox {
     private final P2Dialog pDialog;
     private final P2ToggleSwitch tglSearch = new P2ToggleSwitch("einmal am Tag nach einer neuen Programmversion suchen");
 
@@ -45,11 +44,9 @@ public class StartPaneUpdate {
         tglSearch.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SEARCH_UPDATE);
     }
 
-    public TitledPane makeStart() {
-        VBox vBox = new VBox(10);
-
+    public void makeStart() {
         HBox hBox = new HBox();
-        hBox.getStyleClass().add("extra-pane");
+        hBox.getStyleClass().add("startInfo_2");
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
@@ -59,10 +56,10 @@ public class StartPaneUpdate {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Programmupdate"), hBox, P2GuiTools.getHDistance(20));
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setHgap(15);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         //einmal am Tag Update suchen
@@ -76,8 +73,6 @@ public class StartPaneUpdate {
         gridPane.add(tglSearch, 0, 0);
         gridPane.add(btnHelp, 1, 0);
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow());
-        vBox.getChildren().add(gridPane);
-
-        return new TitledPane("Programmupdate", vBox);
+        getChildren().add(gridPane);
     }
 }

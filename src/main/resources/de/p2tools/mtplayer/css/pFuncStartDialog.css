@@ -89,11 +89,19 @@
     -fx-background-color: #dddddd;
 }
 
-.btnStartDialog > .arrow-button{
-    /*Pfeil ausblenden*/
-    -fx-padding: 0;
+.startInfo_1 {
+    -fx-padding: 2 20 2 20;
+    -fx-border-color: #939a9f;
+    -fx-border-width: 2 0 2 0;
+    -fx-background-color: -style-extra-pane-color;
+    -fx-background-radius: 3px;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
 }
-.btnStartMenu > .arrow-button > .arrow{
-    /*Pfeil ausblenden*/
-    -fx-padding: 0;
+.startInfo_2 {
+    -fx-padding: 2 20 2 20;
+    -fx-border-color: #939a9f;
+    -fx-border-width: 2 0 2 0;
+    -fx-background-color: -style-extra-pane-color;
+    -fx-background-radius: 3px;
 }

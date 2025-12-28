@@ -20,14 +20,13 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
@@ -65,16 +64,6 @@ public class StartDialogController extends P2DialogExtra {
 
     private State aktState = State.START_1;
 
-    private TitledPane tStart1;
-    private TitledPane tStart2;
-    private TitledPane tColorMode;
-    private TitledPane tUpdate;
-    private TitledPane tGeo;
-    private TitledPane tFilm;
-    private TitledPane tStation;
-    private TitledPane tDown;
-    private TitledPane tPath;
-
     private StartPane startPane1;
     private StartPane startPane2;
     private StartPaneColorMode startPaneColorMode;
@@ -84,6 +73,7 @@ public class StartDialogController extends P2DialogExtra {
     private StartPaneStation startPaneStation;
     private StartPaneDownloadPath startPaneDownloadPath;
     private StartPanePath startPanePath;
+    private VBox vBoxCont = new VBox();
 
     public StartDialogController() {
         super(null, null, "Starteinstellungen",
@@ -95,7 +85,7 @@ public class StartDialogController extends P2DialogExtra {
 
     @Override
     public void make() {
-        initTopButton();
+        init();
         initStack();
         initButton();
         initTooltip();
@@ -120,18 +110,16 @@ public class StartDialogController extends P2DialogExtra {
         return ok;
     }
 
-    private void initTopButton() {
+    private void init() {
         final TilePane tilePane1 = new TilePane();
         tilePane1.setAlignment(Pos.CENTER);
         tilePane1.setHgap(10);
         tilePane1.setVgap(10);
-        getVBoxCont().getChildren().add(tilePane1);
 
         final TilePane tilePane2 = new TilePane();
         tilePane2.setAlignment(Pos.CENTER);
         tilePane2.setHgap(10);
         tilePane2.setVgap(10);
-        getVBoxCont().getChildren().add(tilePane2);
 
         tilePane1.getChildren().addAll(btnStart1, btnStart2);
         tilePane2.getChildren().addAll(btnColorMode, btnUpdate, btnGeo, btnFilm, btnStation, btnDown, btnPath);
@@ -145,6 +133,10 @@ public class StartDialogController extends P2DialogExtra {
         initTopButton(btnStation, State.STATION);
         initTopButton(btnDown, State.DOWN);
         initTopButton(btnPath, State.PATH);
+
+        VBox.setVgrow(vBoxCont, Priority.ALWAYS);
+        getVBoxCont().setPadding(new Insets(5));
+        getVBoxCont().getChildren().addAll(tilePane1, tilePane2, P2GuiTools.getHDistance(5), vBoxCont);
     }
 
     private void initTopButton(Button btn, State state) {
@@ -158,66 +150,32 @@ public class StartDialogController extends P2DialogExtra {
     }
 
     private void initStack() {
-        StackPane stackpane = new StackPane();
-        VBox.setVgrow(stackpane, Priority.ALWAYS);
-        getVBoxCont().getChildren().add(stackpane);
-        getVBoxCont().setPadding(new Insets(5));
-
-        //startPane 1
         startPane1 = new StartPane();
-        tStart1 = startPane1.makeStart1();
-        tStart1.setMaxHeight(Double.MAX_VALUE);
-        tStart1.setCollapsible(false);
+        startPane1.makeStart1();
 
-        //startPane 2
         startPane2 = new StartPane();
-        tStart2 = startPane2.makeStart2();
-        tStart2.setMaxHeight(Double.MAX_VALUE);
-        tStart2.setCollapsible(false);
+        startPane2.makeStart2();
 
-        //colorModePane
         startPaneColorMode = new StartPaneColorMode(this.getStage());
-        tColorMode = startPaneColorMode.make();
-        tColorMode.setMaxHeight(Double.MAX_VALUE);
-        tColorMode.setCollapsible(false);
+        startPaneColorMode.make();
 
-        //updatePane
         startPaneUpdate = new StartPaneUpdate(this);
-        tUpdate = startPaneUpdate.makeStart();
-        tUpdate.setMaxHeight(Double.MAX_VALUE);
-        tUpdate.setCollapsible(false);
+        startPaneUpdate.makeStart();
 
-        //geoPane
         paneGeo = new StartPaneGeo(this.getStage());
-        tGeo = paneGeo.make();
-        tGeo.setMaxHeight(Double.MAX_VALUE);
-        tGeo.setCollapsible(false);
+        paneGeo.make();
 
-        //filmPane
         startPaneFilm = new StartPaneFilm(this.getStage());
-        tFilm = startPaneFilm.make();
-        tFilm.setMaxHeight(Double.MAX_VALUE);
-        tFilm.setCollapsible(false);
+        startPaneFilm.make();
 
-        //stationPane
         startPaneStation = new StartPaneStation(this.getStage());
-        tStation = startPaneStation.make();
-        tStation.setMaxHeight(Double.MAX_VALUE);
-        tStation.setCollapsible(false);
+        startPaneStation.make();
 
-        //downPane
         startPaneDownloadPath = new StartPaneDownloadPath(this.getStage());
-        tDown = startPaneDownloadPath.makePath();
-        tDown.setMaxHeight(Double.MAX_VALUE);
-        tDown.setCollapsible(false);
+        startPaneDownloadPath.makePath();
 
-        //pathPane
         startPanePath = new StartPanePath(this.getStage());
-        tPath = startPanePath.makePath();
-        tPath.setMaxHeight(Double.MAX_VALUE);
-        tPath.setCollapsible(false);
-
-        stackpane.getChildren().addAll(tStart1, tStart2, tColorMode, tUpdate, tGeo, tFilm, tStation, tDown, tPath);
+        startPanePath.makePath();
     }
 
     private void initButton() {
@@ -308,56 +266,66 @@ public class StartDialogController extends P2DialogExtra {
             case START_1:
                 btnPrev.setDisable(true);
                 btnNext.setDisable(false);
-                tStart1.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(startPane1);
                 setButtonStyle(btnStart1);
                 break;
             case START_2:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                tStart2.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(startPane2);
                 setButtonStyle(btnStart2);
                 break;
             case COLOR_MODE:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                tColorMode.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(startPaneColorMode);
                 setButtonStyle(btnColorMode);
                 break;
             case UPDATE:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                tUpdate.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(startPaneUpdate);
                 setButtonStyle(btnUpdate);
                 break;
             case GEO:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                tGeo.toFront();
+                paneGeo.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(paneGeo);
                 setButtonStyle(btnGeo);
                 break;
             case FILM:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                tFilm.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(startPaneFilm);
                 setButtonStyle(btnFilm);
                 break;
             case STATION:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                tStation.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(startPaneStation);
                 setButtonStyle(btnStation);
                 break;
             case DOWN:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(false);
-                tDown.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(startPaneDownloadPath);
                 setButtonStyle(btnDown);
                 break;
             case PATH:
                 btnPrev.setDisable(false);
                 btnNext.setDisable(true);
                 btnOk.setDisable(false);
-                tPath.toFront();
+                vBoxCont.getChildren().clear();
+                vBoxCont.getChildren().add(startPanePath);
                 setButtonStyle(btnPath);
                 break;
             default:

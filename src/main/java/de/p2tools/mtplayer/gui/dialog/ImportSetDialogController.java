@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.gui.startdialog.StartPanePath;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import javafx.scene.control.Button;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -73,16 +72,14 @@ public class ImportSetDialogController extends P2DialogExtra {
         });
 
         // vor Import
-        TitledPane tpDownPath = new StartPaneDownloadPath(this.getStage()).makePath();
-        tpDownPath.setMaxHeight(Double.MAX_VALUE);
-        tpDownPath.setCollapsible(false);
+        StartPaneDownloadPath startPaneDownloadPath = new StartPaneDownloadPath(this.getStage());
+        startPaneDownloadPath.makePath();
 
-        TitledPane tpPath = new StartPanePath(this.getStage()).makePath();
-        tpPath.setMaxHeight(Double.MAX_VALUE);
-        tpPath.setCollapsible(false);
+        StartPanePath startPanePath = new StartPanePath(this.getStage());
+        startPanePath.makePath();
 
-        vBoxPath.setSpacing(10);
-        vBoxPath.getChildren().addAll(tpDownPath, tpPath);
+        vBoxPath.setSpacing(25);
+        vBoxPath.getChildren().addAll(startPaneDownloadPath, startPanePath);
         vBoxPath.setStyle("-fx-background-color: -fx-background;");
 
         // nach Import

@@ -25,14 +25,17 @@ import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class StartPaneGeo {
+public class StartPaneGeo extends VBox {
     private final RadioButton rbDe = new RadioButton("DE - Deutschland");
     private final RadioButton rbFr = new RadioButton("FR - Frankreich");
     private final RadioButton rbCh = new RadioButton("CH - Schweiz");
@@ -50,11 +53,9 @@ public class StartPaneGeo {
         tglGeo.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
     }
 
-    public TitledPane make() {
-        VBox vBox = new VBox(10);
-
+    public void make() {
         HBox hBox = new HBox();
-        hBox.getStyleClass().add("extra-pane");
+        hBox.getStyleClass().add("startInfo_2");
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
@@ -65,7 +66,7 @@ public class StartPaneGeo {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox, P2GuiTools.getVDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Geogeblockte Filme"), hBox, P2GuiTools.getHDistance(20));
 
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
         final Button btnHelpGeo = PIconFactory.getHelpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
@@ -112,7 +113,7 @@ public class StartPaneGeo {
         });
 
         final GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
+        gridPane.setHgap(15);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
 
         int row = 0;
@@ -134,8 +135,6 @@ public class StartPaneGeo {
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcComputedSizeAndHgrow(),
                 P2GridConstraints.getCcPrefSize());
-        vBox.getChildren().add(gridPane);
-
-        return new TitledPane("Geogeblockte Filme", vBox);
+        getChildren().add(gridPane);
     }
 }

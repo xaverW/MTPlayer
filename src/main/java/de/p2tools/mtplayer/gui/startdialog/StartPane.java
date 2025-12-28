@@ -19,12 +19,14 @@ package de.p2tools.mtplayer.gui.startdialog;
 import de.p2tools.p2lib.P2LibConst;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class StartPane {
+public class StartPane extends VBox {
+
+    final int picSize = 450;
 
     public StartPane() {
     }
@@ -32,17 +34,16 @@ public class StartPane {
     public void close() {
     }
 
-    public TitledPane makeStart1() {
+    public void makeStart1() {
         HBox hBox = new HBox();
         hBox.setSpacing(25);
-        hBox.setPadding(new Insets(20));
+        hBox.setPadding(new Insets(20, 10, 0, 10));
 
         ImageView iv = new ImageView();
         Image im = getHelpScreen1();
         iv.setSmooth(true);
         iv.setImage(im);
 
-        hBox.getChildren().addAll(iv);
         Label text = new Label("1) Hier wird die Filmliste" + P2LibConst.LINE_SEPARATOR +
                 "aktualisiert." +
 
@@ -55,36 +56,29 @@ public class StartPane {
                 "die Programmeinstellungen." +
 
                 P2LibConst.LINE_SEPARATORx2 +
-                "4) Mit dem Pluszeichen können" + P2LibConst.LINE_SEPARATOR +
-                "Spalten in der Tabelle" + P2LibConst.LINE_SEPARATOR +
-                "ein- und ausgeblendet werden." +
-
-                P2LibConst.LINE_SEPARATORx2 +
-                "5) Damit kann man Filme ansehen" + P2LibConst.LINE_SEPARATOR +
+                "4) Damit kann man Filme ansehen" + P2LibConst.LINE_SEPARATOR +
                 "und speichern." +
 
                 P2LibConst.LINE_SEPARATORx2 +
-                "6) Hier lassen sich einzelne Filme vormerken," + P2LibConst.LINE_SEPARATOR +
-                "die Vormerkungen wieder löschen, nur diese" + P2LibConst.LINE_SEPARATOR +
-                "Anzeigen und zuletzt öffnet sich ein Dialog" + P2LibConst.LINE_SEPARATOR +
+                "5) Hier lassen sich einzelne Filme vormerken" + P2LibConst.LINE_SEPARATOR +
+                "und die Vormerkungen wieder löschen." + P2LibConst.LINE_SEPARATOR +
+                "Und zuletzt öffnet sich hier ein Dialog" + P2LibConst.LINE_SEPARATOR +
                 "mit den markierten Filmen.");
 
-        hBox.getChildren().add(text);
-
-        return new TitledPane("Infos zur Programmoberfläche", hBox);
+        hBox.getChildren().addAll(iv, text);
+        getChildren().addAll(StartFactory.getTitle("Infos zur Programmoberfläche"), hBox);
     }
 
-    public TitledPane makeStart2() {
+
+    public void makeStart2() {
         HBox hBox = new HBox();
         hBox.setSpacing(25);
-        hBox.setPadding(new Insets(20));
+        hBox.setPadding(new Insets(20, 10, 0, 10));
 
         ImageView iv = new ImageView();
         Image im = getHelpScreen2();
         iv.setSmooth(true);
         iv.setImage(im);
-
-        hBox.getChildren().addAll(iv);
 
         Label text = new Label(
                 "1) In dem Bereich sind die" + P2LibConst.LINE_SEPARATOR +
@@ -95,36 +89,29 @@ public class StartPane {
                         "Filter ein- und ausgeblendet werden." +
                         P2LibConst.LINE_SEPARATORx2 +
 
-                        "3) Damit werden die oben eingestellten" + P2LibConst.LINE_SEPARATOR +
-                        "Filter in dem darunter ausgewählten" + P2LibConst.LINE_SEPARATOR +
-                        "Filterprofil gespeichert oder wieder" + P2LibConst.LINE_SEPARATOR +
-                        "hergestellt (auch ein neues Profil" + P2LibConst.LINE_SEPARATOR +
-                        "kann damit angelegt werden)." +
+                        "3) Damit können die oben eingestellten" + P2LibConst.LINE_SEPARATOR +
+                        "Filter in einem Filterprofil gespeichert " + P2LibConst.LINE_SEPARATOR +
+                        "und auch wieder abgerufen werden." +
 
                         P2LibConst.LINE_SEPARATORx2 +
-                        "4) Hier können die gespeicherten" + P2LibConst.LINE_SEPARATOR +
-                        "Filterprofile verwaltet werden." +
-
-                        P2LibConst.LINE_SEPARATORx2 +
-                        "5) Damit kann eine vereinfachte" + P2LibConst.LINE_SEPARATOR +
+                        "5) Hier kann eine vereinfachte" + P2LibConst.LINE_SEPARATOR +
                         "Suche ausgewählt werden.");
 
-        hBox.getChildren().add(text);
-
-        return new TitledPane("Infos zum Filmfilter", hBox);
+        hBox.getChildren().addAll(iv, text);
+        getChildren().addAll(StartFactory.getTitle("Infos zum Filmfilter"), hBox);
     }
 
     private javafx.scene.image.Image getHelpScreen1() {
-        final String path = "/de/p2tools/mtplayer/res/mtplayer-startpage-1.png";
-        return new javafx.scene.image.Image(path, 500,
-                500,
+        final String path = "/de/p2tools/mtplayer/res/startdialog/mtplayer-startpage-1.png";
+        return new javafx.scene.image.Image(path, picSize,
+                picSize,
                 true, true);
     }
 
     private javafx.scene.image.Image getHelpScreen2() {
-        final String path = "/de/p2tools/mtplayer/res/mtplayer-startpage-2.png";
-        return new javafx.scene.image.Image(path, 500,
-                500,
+        final String path = "/de/p2tools/mtplayer/res/startdialog/mtplayer-startpage-2.png";
+        return new javafx.scene.image.Image(path, picSize,
+                picSize,
                 true, true);
     }
 }

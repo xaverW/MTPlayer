@@ -23,7 +23,6 @@ import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,7 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class StartPaneColorMode {
+public class StartPaneColorMode extends VBox {
     private final HBox hBoxLight1 = new HBox();
     private final HBox hBoxLight2 = new HBox();
     private final HBox hBoxDark1 = new HBox();
@@ -44,19 +43,18 @@ public class StartPaneColorMode {
     public void close() {
     }
 
-    public TitledPane make() {
+    public void make() {
         makeImage();
         setHBox();
-        VBox vBox = new VBox(10);
 
         HBox hBox = new HBox();
-        hBox.getStyleClass().add("extra-pane");
+        hBox.getStyleClass().add("startInfo_2");
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         Label lbl = new Label("Wie soll die Programmoberfläche aussehen?");
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(5), hBox);
+        getChildren().addAll(StartFactory.getTitle("Farbe"), hBox, P2GuiTools.getHDistance(20));
 
         ProgConfig.SYSTEM_GUI_THEME_1_START.addListener((u, o, n) -> {
             setHBox();
@@ -80,9 +78,7 @@ public class StartPaneColorMode {
         HBox hBoxColor = new HBox();
         hBoxColor.setAlignment(Pos.CENTER);
         hBoxColor.getChildren().add(gridPaneGui);
-        vBox.getChildren().add(hBoxColor);
-
-        return new TitledPane("Farbe", vBox);
+        getChildren().add(hBoxColor);
     }
 
     private void setHBox() {
@@ -113,7 +109,7 @@ public class StartPaneColorMode {
     }
 
     private void makeImage() {
-        final int size = 300;
+        final int size = 250;
         ImageView ivLight1 = new ImageView();
         hBoxLight1.getChildren().add(ivLight1);
         String path = "/de/p2tools/mtplayer/res/startdialog/gui_light_1.png";

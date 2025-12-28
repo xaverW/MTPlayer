@@ -188,6 +188,7 @@ public class SetFactory {
         // prüfen, ob die eingestellten Programmsets passen
         if (data.setDataList.isEmpty()) {
             // dann gibts nix
+            // todo beim Programmstart kommt das doppelt, wenn nach Downloads gesucht wird nämlich auch???
             P2Alert.showErrorAlert(stage, "Set", "Sets prüfen", "Es sind keine Sets vorhanden! " +
                     "Bitte die Standardsets importieren.");
             return;
