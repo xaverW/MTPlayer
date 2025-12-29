@@ -466,6 +466,14 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty BOOKMARK_DEL_OLD = addBoolProp("bookmark-del-old", Boolean.FALSE);
     public static IntegerProperty BOOKMARK_DEL_OLD_COUNT_DAYS = addIntProp("bookmark-del-count-old-days", 10);
 
+    // Tips
+    static {
+        addComment("Tips");
+    }
+
+    public static StringProperty TIPPS_DIALOG_SIZE = addStrProp("tips-dialog-size");
+
+
     // ===============================================================
     // ====== GUI Filme ===============================================
     // ===============================================================

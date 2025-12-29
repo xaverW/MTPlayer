@@ -21,6 +21,8 @@ public class PIconFactory {
         BTN_MINUS_OUTLINE("mdi-minus-circle-outline", 18),
         BTN_NEXT("mdi-chevron-double-right", 18),
         BTN_PREV("mdi-chevron-double-left", 18),
+        BTN_FIRST("gmi-first-page", 18),
+        BTN_LAST("gmi-last-page", 18),
         BTN_QUIT("gmi-power-settings-new", 18),
         BTN_CLEAR("gmi-clear", 18),
         BTN_RESET_1("gmi-radio-button-on", 25),
@@ -42,6 +44,11 @@ public class PIconFactory {
         BTN_UP("mdoal-arrow_upward", 20),
         BTN_DOWN("mdoal-arrow_downward", 20),
         BTN_BOTTOM("gmi-vertical-align-bottom", 20),
+
+        BTN_TIP_FIRST("mdi-chevron-double-left", 18),
+        BTN_TIP_LAST("mdi-chevron-double-right", 18),
+        BTN_TIP_PREV("gmi-arrow-left", 18),
+        BTN_TIP_NEXT("gmi-arrow-right", 18),
 
         BTN_CLEAR_CBO("gmi-clear", 14),
         BTN_ALERT_FILM_PLAY("gmi-play-arrow", 14),

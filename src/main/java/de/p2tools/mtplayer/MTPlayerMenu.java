@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.controller.picon.IconRunner;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.picon.PIconShow;
 import de.p2tools.mtplayer.controller.tips.ProgTipOfDayFactory;
+import de.p2tools.mtplayer.controller.tips.TipsDialog;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
@@ -135,6 +136,8 @@ public class MTPlayerMenu extends MenuButton {
 
         final MenuItem miToolTip = new MenuItem("Tip des Tages");
         miToolTip.setOnAction(a -> ProgTipOfDayFactory.showDialog(progData, true));
+        final MenuItem miTipps = new MenuItem("Tipps");
+        miTipps.setOnAction(a -> new TipsDialog(progData));
         final MenuItem miWhatsNew = new MenuItem("Was ist neu?");
         miWhatsNew.setOnAction(a -> WhatsNewFactory.showWhatsNew(true));
         final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
@@ -144,7 +147,7 @@ public class MTPlayerMenu extends MenuButton {
 
         final Menu mHelp = new Menu("Hilfe");
         mHelp.getItems().addAll(miUrlHelp, miLog, miShortCut, miReset, miImportMV,
-                miToolTip, new SeparatorMenuItem(), miWhatsNew, miSearchUpdate, miAbout);
+                miTipps, miToolTip, new SeparatorMenuItem(), miWhatsNew, miSearchUpdate, miAbout);
 
         if (ProgData.debug) {
             final MenuItem miDebug = new MenuItem("Debugtools");
