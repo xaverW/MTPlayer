@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.tools;
+package de.p2tools.mtplayer.controller.tools;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFieldNames;

@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.gui.tools;
+package de.p2tools.mtplayer.controller.tips;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;

@@ -103,6 +103,8 @@ jar {
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+
 tasks.register('fatJar', Jar) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest.from jar.manifest

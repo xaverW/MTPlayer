@@ -15,7 +15,7 @@
  */
 
 
-package de.p2tools.mtplayer.gui.tools;
+package de.p2tools.mtplayer.controller.tools;
 
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.config.ProxyFactory;

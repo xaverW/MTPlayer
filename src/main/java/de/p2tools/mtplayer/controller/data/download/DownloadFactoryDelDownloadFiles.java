@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
+import de.p2tools.mtplayer.controller.tools.MTInfoFile;
+import de.p2tools.mtplayer.controller.tools.MTSubtitle;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadOnlyStopDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadStopDialogController;
-import de.p2tools.mtplayer.gui.tools.MTInfoFile;
-import de.p2tools.mtplayer.gui.tools.MTSubtitle;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
