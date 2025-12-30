@@ -17,7 +17,6 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
 
 import java.util.ArrayList;
@@ -36,32 +35,32 @@ public class TipListDownload {
         List<TipData> pToolTipList = new ArrayList<>();
 
         String text = START;
-        text += "Im Download-Filter Panel können\n" +
-                "auch noch weitere Einstellungen\n" +
-                "vorgenommen werden:\n\n" +
-                "* Die maximale Anzahl der\n" +
-                "   gleichzeitigen Downloads kann\n" +
-                "   hier vorgegeben werden.\n\n" +
-                "* Die maximale Bandbreite pro\n" +
-                "   Download kann hier\n" +
-                "   vorgegeben werden.";
-        String image = "/de/p2tools/mtplayer/res/tips/Bandbreite.png";
+        text += "Im Tab Download werden alle aktuellen " +
+                "Downloads angezeigt. Hier können " +
+                "Downloads gestartet und gelöscht " +
+                "oder geändert werden." +
+                "\n\n" +
+                "In dem Infobereich unter der Tabelle " +
+                "werden Infos dazu angezeigt. " +
+                "Links neben der Tabelle kann dieselbe " +
+                "gefiltert werden. " +
+                "Unter den Filtern sind noch ein " +
+                "paar Einstellungen für die Downloads: " +
+                "Z.B.: Die Download-Bandbreite.";
+        String image = "/de/p2tools/mtplayer/res/tips/download/download-1.png";
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        pToolTipList.add(TipData.getTipWebsite(ProgConfig.SYSTEM_PROG_OPEN_URL));
-
-
         text = START;
-        text += "In den Einstellungen\n" +
-                "(erreichbar über das Menü)\n" +
-                "wird der Downloadpfad\n" +
-                "und -name für Downloads\n" +
-                "vorgegeben. Der Hilfebutton\n" +
-                "verrät die Möglichkeiten.";
-        image = "/de/p2tools/mtplayer/res/tips/Einstellungen_SetSpeicherziel.png";
+        text += "In dem Infobereich unter der Tabelle " +
+                "kann z.B.: die Mediensammlung " +
+                "durchsucht werden. In einem Diagramm " +
+                "wird die laufende Bandbreite der " +
+                "Downloads angezeigt.";
+        image = "/de/p2tools/mtplayer/res/tips/download/download-2.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
+
 
         return pToolTipList;
     }

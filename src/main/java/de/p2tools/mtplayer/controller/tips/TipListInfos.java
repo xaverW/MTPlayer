@@ -34,35 +34,28 @@ public class TipListInfos {
     public static List<TipData> getTips() {
         List<TipData> pToolTipList = new ArrayList<>();
 
-
         pToolTipList.add(TipData.getTipWebsite(ProgConfig.SYSTEM_PROG_OPEN_URL));
 
         String text = START;
-        text += "Über das Menü ist die\n" +
-                "Funktion zum Zurücksetzen\n" +
-                "von Programmeinstellungen\n" +
-                "erreichbar.\n\n" +
-                "Zuerst sollten nur die\n" +
-                "Einstellungen zum Abspielen\n" +
-                "und Aufzeichnen zurückgesetzt\n" +
-                "werden.";
-        String image = "/de/p2tools/mtplayer/res/tips/Ruecksetzen.png";
-        TipData pToolTip = new TipData(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "Über das Menü ist die\n" +
-                "Funktion zum Zurücksetzen\n" +
-                "von Programmeinstellungen\n" +
-                "erreichbar.\n\n" +
-                "Wenn gar nichts mehr geht,\n" +
-                "kann das Programm komplett\n" +
-                "zurückgesetzt werden.\n\n" +
-                "Es werden alle Einstellungen\n" +
-                "zurückgesetzt und gehen\n" +
+        text += "Über das Menü ist die " +
+                "Funktion zum Zurücksetzen " +
+                "von Programmeinstellungen " +
+                "erreichbar." +
+                "\n\n" +
+                "Zuerst sollten nur die " +
+                "Einstellungen zum Abspielen " +
+                "und Aufzeichnen zurückgesetzt " +
+                "werden." +
+                "\n\n" +
+                "Wenn gar nichts mehr geht, " +
+                "kann das Programm komplett " +
+                "zurückgesetzt werden." +
+                "\n\n" +
+                "Es werden alle Einstellungen " +
+                "zurückgesetzt und gehen " +
                 "verloren!";
-        image = "/de/p2tools/mtplayer/res/tips/Ruecksetzen_alles.png";
-        pToolTip = new TipData(text, image);
+        String image = "/de/p2tools/mtplayer/res/tips/info/info-1.png";
+        TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
 

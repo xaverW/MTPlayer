@@ -36,61 +36,18 @@ public class TipListAbo {
 
 
         String text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch die maximale Zeit,\n" +
-                "die zurück gesucht wird,\n" +
-                "vorgegeben werden.\n\n" +
-                "Es werden also nur Filme der\n" +
-                "letzten xx Tage gesucht wenn\n" +
-                "xx Tage dort vorgegeben sind.";
-        String image = "/de/p2tools/mtplayer/res/tips/AboEinstellungen_Zeit.png";
+        text += "Im Tab Abo werden die angelegten " +
+                "Abos angezeigt. Abos können hier " +
+                "angelegt, geändert und auch " +
+                "ein- und ausgeschaltet werden." +
+                "\n\n" +
+                "Links neben der Tabelle, können " +
+                "die Abos in der Tabelle " +
+                "gefiltert werden.";
+        String image = "/de/p2tools/mtplayer/res/tips/abo/abo-1.png";
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch die Filmlänge\n" +
-                "eines Films (min, max)\n" +
-                "vorgegeben werden.\n\n" +
-                "Es werden dann nur Filme\n" +
-                "gefunden, deren Dauer zu\n" +
-                "den Vorgaben passt.";
-        image = "/de/p2tools/mtplayer/res/tips/AboEinstellungen_Dauer.png";
-        pToolTip = new TipData(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch vorgeben werden,\n" +
-                "ob ein Beitrag in der\n" +
-                "Filmliste/Audioliste oder\n" +
-                "beiden gesucht werden soll.";
-        image = "/de/p2tools/mtplayer/res/tips/AboEinstellungen_Quelle.png";
-        pToolTip = new TipData(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch die Startzeit\n" +
-                "der Downloads aus diesem\n" +
-                "Abo vorgegeben werden.\n\n" +
-                "Downloads aus diesem Abo\n" +
-                "haben dann automatisch\n" +
-                "diese Startzeit.";
-        image = "/de/p2tools/mtplayer/res/tips/AboEinstellungen_Startzeit.png";
-        pToolTip = new TipData(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch ein eigener Pfad\n" +
-                "und auch ein eigener Dateiname\n" +
-                "für Downloads aus diesem Abo\n" +
-                "vorgegeben werden. Die Einstellungen\n" +
-                "des Sets werden dann überschrieben.";
-        image = "/de/p2tools/mtplayer/res/tips/AboEinstellungen_Pfad.png";
-        pToolTip = new TipData(text, image);
-        pToolTipList.add(pToolTip);
 
         return pToolTipList;
     }

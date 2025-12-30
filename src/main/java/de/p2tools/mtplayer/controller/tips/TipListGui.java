@@ -35,86 +35,82 @@ public class TipListGui {
         List<TipData> pToolTipList = new ArrayList<>();
 
         String text = START;
-        text += "Gui";
-        TipData pToolTip = new TipData(text);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "Alle Infofelder und Filter können\n" +
-                "mit dem Symbol \"x\" ausgeblendet\n" +
-                "werden. Mit dem Symbol \"Dreieck\"\n" +
-                "kann man sie \"abreißen\" und\n" +
-                "in einem Extrafenster anzeigen.";
+        text += "Das Programm kann in verschiedenen " +
+                "Farben angezeigt werden." +
+                "\n\n" +
+                "In den Programm-Einstellungen " +
+                "(->Farben des Programms) sind die " +
+                "Einstellungen dafür. " +
+                "Die Farben können frei ausgewählt " +
+                "werden.";
         String image = "/de/p2tools/mtplayer/res/tips/gui/gui-1.png";
-        pToolTip = new TipData(text, image);
+        TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
-        text += "Mit dem Button, wird eine\n" +
-                "neue Filmliste geladen.\n" +
-                "Ist der Text unterstrichen\n" +
-                "signalisiert das, dass es\n" +
-                "eine neue Filmliste gibt.";
+        text += "Alle Infofelder und Filter können " +
+                "mit dem Symbol \"x\" ausgeblendet " +
+                "werden. Mit dem Symbol \"Dreieck\" " +
+                "kann man sie \"abreißen\" und " +
+                "in einem Extrafenster anzeigen.";
         image = "/de/p2tools/mtplayer/res/tips/gui/gui-2.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
-        text += "Im Programm sind immer zwei\n" +
-                "Menüs sichtbar.\n\n" +
-                "Das obere enthält Menüpunkte,\n" +
-                "die für das ganze Programm\n" +
-                "wichtig sind.\n\n" +
-                "Das untere Menü ist immer\n" +
-                "für den jeweils angezeigten\n" +
-                "Tab (Filme, Audios,\n" +
-                "Live, Downloads, Abos).";
+        text += "Mit dem Button, wird eine " +
+                "neue Filmliste geladen. " +
+                "Ist der Text unterstrichen " +
+                "signalisiert das, dass es " +
+                "eine neue Filmliste gibt.";
         image = "/de/p2tools/mtplayer/res/tips/gui/gui-3.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
-        text += "Mit einem Klick\n" +
-                "(RECHTE-Maustaste) kann das\n" +
-                "Gui zwischen Hell- und\n" +
-                "Dunkel umgeschaltet werden.\n" +
-                "Ein Doppelklick schaltet\n" +
-                "zwischen den beiden Farbmodi um.\n" +
-                "Im Menü selbst, gibt es auch\n" +
-                "zwei Menüpunkte zum Uschalten.";
+        text += "Im Programm sind immer zwei " +
+                "Menüs sichtbar." +
+                "\n\n" +
+                "Das obere enthält Menüpunkte, " +
+                "die für das ganze Programm " +
+                "wichtig sind." +
+                "\n\n" +
+                "Das untere Menü ist immer " +
+                "für den jeweils angezeigten " +
+                "Tab (Filme, Audios, " +
+                "Live, Downloads, Abos).";
         image = "/de/p2tools/mtplayer/res/tips/gui/gui-4.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-
         text = START;
-        text += "In den Einstellungen\n" +
-                "(erreichbar über das Menü)\n" +
-                "kann das Systemtray\n" +
-                "ein- und ausgeschaltet werden.\n\n" +
-                "Im Systemtray werden Infos\n" +
-                "zur aktuellen Situation des\n" +
-                "Programms angezeigt.";
-        image = "/de/p2tools/mtplayer/res/tips/Einstellungen_Systemtray.png";
-        pToolTip = new TipData(text, image);
-        pToolTipList.add(pToolTip);
-
-
-        text = START;
-        text += "In den Einstellungen\n" +
-                "(erreichbar über das Menü)\n" +
-                "kann die verwendete\n" +
-                "Schriftgröße im Programm\n" +
-                "vorgegeben werden.";
-        image = "/de/p2tools/mtplayer/res/tips/Einstellungen_Schriftgroesse.png";
+        text += "Mit einem Klick " +
+                "(RECHTE-Maustaste) kann das " +
+                "Gui zwischen Hell- und " +
+                "Dunkel umgeschaltet werden. " +
+                "Ein Doppelklick schaltet " +
+                "zwischen den beiden Farbmodi um. " +
+                "Im Menü selbst, gibt es auch" +
+                "zwei Menüpunkte zum Umschalten.";
+        image = "/de/p2tools/mtplayer/res/tips/gui/gui-5.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
-        text += "In den Tabellen kann\n" +
-                "mit der Leertaste nach\n" +
-                "unten \"geblättert\" werden.";
-        image = "/de/p2tools/mtplayer/res/tips/Leertaste.png";
+        text += "In den Tabellen können mit der " +
+                "Maus Zeilen selektiert werden. " +
+                "Dazu einfach in die erste " +
+                "Zeile klicken (Maustaste geklickt " +
+                "halten) und dann die Maus " +
+                "nach unten ziehen." +
+                "\n\n" +
+                "In den Tabellen kann " +
+                "mit der Leertaste nach " +
+                "unten \"geblättert\" werden. " +
+                "Jeder Klick auf die Leertaste " +
+                "schiebt den Tabelleninhalt " +
+                "um eine Seite nach unten.";
+        image = "/de/p2tools/mtplayer/res/tips/gui/gui-6.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 

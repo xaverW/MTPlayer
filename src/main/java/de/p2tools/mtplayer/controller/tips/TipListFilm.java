@@ -36,49 +36,112 @@ public class TipListFilm {
 
 
         String text = START;
-        text += "Live-Suche in den\n" +
-                "ARD/ZDF Mediatheken:\n\n" +
-                "Ist die Live-Suche eingeschaltet,\n" +
-                "kann damit in den Mediatheken\n" +
-                "von ARD und ZDF gesucht werden.\n" +
-                "Es ist auch möglich, mit der URL\n" +
-                "einer Filmseite den Film zu suchen.\n" +
-                "Die Filme können dann ganz normal\n" +
-                "angesehen oder gespeichert werden.\n" +
-                "In den Einstellungen kann die \n" +
-                "Live-Suche ausgeblendet werden.";
-        String image = "/de/p2tools/mtplayer/res/tips/Live_Suche.png";
+        text += "Im Tab \"Filme\" wird die Liste " +
+                "aller Filme angezeigt. Links neben " +
+                "der Tabelle sind die Filter, mit " +
+                "denen die Filme gefiltert werden " +
+                "können. In der Tabelle und rechts " +
+                "daneben, können Filme gestartet " +
+                "und gespeichert werden. Unter der " +
+                "Tabelle sind Infos zum " +
+                "ausgewählten Film.";
+        String image = "/de/p2tools/mtplayer/res/tips/film/film-1.png";
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
-        text += "Suche in der Mediensammlung:\n\n" +
-                "Ein Doppelklick auf einen\n" +
-                "Suchbegriff stellt diesen frei.\n\n" +
-                "Der Button (Kreis) wählt aus, wo\n" +
-                "(Dateiname/Pfad) gesucht werden\n" +
-                "soll.";
-        image = "/de/p2tools/mtplayer/res/tips/Mediensammlung.png";
+        text += "Hier können Bookmarks angelegt " +
+                "werden. Das sind Lesezeichen " +
+                "um sich Filme zu merken, die " +
+                "dann später angesehen oder " +
+                "gespeichert werden sollen." +
+                "\n\n" +
+                "Die unteren zwei Button sind " +
+                "ein Filter, der dann nur " +
+                "Bookmarks in der Tabelle " +
+                "anzeigt. Der letzte Button " +
+                "öffnet einen Dialog, um " +
+                "Bookmarks zu verwalten.";
+        image = "/de/p2tools/mtplayer/res/tips/film/film-2.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
+        text += "Das Programm kann eine Mediensammlung " +
+                "verwalten. Dort kann man seine Ordner " +
+                "mit den gespeicherten Filmen " +
+                "angeben." +
+                "\n\n" +
+                "In dem Infobereich unter der " +
+                "Tabelle, kann man dann diese " +
+                "Sammlung mit den gespeicherten Filmen " +
+                "durchsuchen und einen doppelten " +
+                "Download vermeiden.";
+        image = "/de/p2tools/mtplayer/res/tips/film/film-3.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
+        text += "Im Infotab der Mediensammlung kann " +
+                "die angelegte Liste der eigenen " +
+                "Medien und auch die Liste der " +
+                "bereits gespeicherten Abos (rechte " +
+                "Spalte) durchsucht werden." +
+                "\n\n" +
+                "Das Suchfeld links sucht in der " +
+                "Liste der eigenen Medien und das " +
+                "rechte Suchfeld sucht in den " +
+                "erledigten Abos." +
+                "\n\n" +
+                "Ein Doppelklick auf ein Wort im " +
+                "Suchfeld, stellt dieses frei. " +
+                "Die Button mit den gedrehten " +
+                "Kreisen, wählen aus, ob das " +
+                "Film-Thema/der Film-Titel oder " +
+                "beides zum Suchen verwendet wird.";
+        image = "/de/p2tools/mtplayer/res/tips/film/film-4.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
 
         text = START;
-        text += "In den Einstellungen\n" +
-                "(erreichbar über das Menü)\n" +
-                "kann die Filmliste beim\n" +
-                "Laden beschränkt werden:\n\n" +
-                "Z.B. können nur die letzten\n" +
-                "50 Tage geladen werden. Filme\n" +
-                "die kein Datum haben, werden\n" +
-                "immer geladen.\n\n" +
-                "Das hat den Vorteil, dass die\n" +
-                "Filmliste deutlich kleiner ist\n" +
-                "und das Programm schneller\n" +
-                "reagiert (vor allem wenn der\n" +
-                "Rechner mit wenig Speicher\n" +
+        text += "Die Mediensammlung kann " +
+                "in den Programmeinstellungen " +
+                "verwaltet werden. Man kann " +
+                "angeben, welche Ordner nach " +
+                "Filmen durchsucht werden sollen." +
+                "\n\n" +
+                "Es gibt eine Liste min \"internen\"" +
+                "Medien, diese Liste wird bei jedem " +
+                "Programmstart durchsucht." +
+                "\n\n" +
+                "Die andere List mit Medien wird nur " +
+                "beim Einrichten durchsucht. Hier " +
+                "kann man also z.B.: Medien auf einer " +
+                "USB-Platte die nicht immer am Rechner " +
+                "angeschlossen ist, vorgeben.";
+        image = "/de/p2tools/mtplayer/res/tips/film/film-5.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+        text = START;
+        text += "In den Einstellungen " +
+                "(erreichbar über das Menü) " +
+                "kann die Filmliste beim " +
+                "Laden beschränkt werden:" +
+                "\n\n" +
+                "Z.B. können nur die letzten " +
+                "50 Tage geladen werden. Filme " +
+                "die kein Datum haben, werden " +
+                "immer geladen." +
+                "\n\n" +
+                "Das hat den Vorteil, dass die " +
+                "Filmliste deutlich kleiner ist " +
+                "und das Programm schneller " +
+                "reagiert (vor allem wenn der " +
+                "Rechner mit wenig Speicher " +
                 "ausgestattet ist).";
-        image = "/de/p2tools/mtplayer/res/tips/Einstellungen_Filmliste.png";
+        image = "/de/p2tools/mtplayer/res/tips/film/film-6.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 

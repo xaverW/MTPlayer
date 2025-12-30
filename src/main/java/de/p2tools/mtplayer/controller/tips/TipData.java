@@ -54,13 +54,14 @@ public class TipData {
         final String URL_WEBSITE = "https://www.p2tools.de";
         String text = START;
         text = START;
-        text += "Weiter Tips und Infos\n" +
-                "finden sich auch auf der\n" +
-                "Website. Dort gibt es\n" +
-                "auch eine Anleitung zum\n" +
-                "Programm.\n\n" +
-                "Fragen zum Programm und\n" +
-                "Ideen gerne auch per Mail.\n\n";
+        text += "Weiter Tips und Infos " +
+                "finden sich auch auf der " +
+                "Website. Dort gibt es " +
+                "auch eine Anleitung zum " +
+                "Programm." +
+                "\n\n" +
+                "Fragen zum Programm und " +
+                "Ideen gerne auch per Mail.";
 
         return new TipData(text, P2ProgIcons.ICON_TOOLTIP_WEBSITE, URL_WEBSITE, progOpenUrl);
     }

@@ -34,13 +34,23 @@ public class TipListSet {
         List<TipData> pToolTipList = new ArrayList<>();
 
         String text = START;
-        text += "In den Filmen/Audios kann ein\n" +
-                "einfacher Filter über das\n" +
-                "Menü eingestellt werden. Er\n" +
-                "enthält nur das nötigste und\n" +
-                "ist dadurch etwas leichter\n" +
-                "zu bedienen.";
-        String image = "/de/p2tools/mtplayer/res/tips/EinfacherFilter.png";
+        text += "Sets sind die Einstellungen " +
+                "die zum Aufzeichnen und Abspielen " +
+                "der Filme gebraucht werden." +
+                "\n\n" +
+                "Es muss mindestens ein Set zum Abspielen " +
+                "und eins zum Aufzeichnen vorhanden sein.\n\n" +
+                "In den Programm-Einstellungen können die Sets " +
+                "angelegt und geändert werden. " +
+                "\n\n" +
+                "Ein Set hat einen Namen (nur zur eigenen Info) und eine " +
+                "Funktion (Abspielen, Speichern, ...) " +
+                "Die Sets zum Speichern haben ein Speicherziel " +
+                "(wo, wie und welchen Namen der gespeicherte Film haben soll." +
+                "\n\n" +
+                "In den Hilfsprogrammen wird aufgeführt, welches Programms " +
+                "den Film abspielen oder speichern soll.";
+        String image = "/de/p2tools/mtplayer/res/tips/set/set-1.png";
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 

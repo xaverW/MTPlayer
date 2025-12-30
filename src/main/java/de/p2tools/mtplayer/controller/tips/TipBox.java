@@ -46,12 +46,13 @@ public class TipBox extends VBox {
 
     private void initTop() {
         imageView.setSmooth(true);
+        lblText.setWrapText(true);
 
         VBox vBoxL = new VBox(0);
         VBox vBoxR = new VBox(0);
         vBoxL.getChildren().add(imageView);
         vBoxR.getChildren().add(lblText);
-
+        vBoxL.setPadding(new Insets(20, 0, 0, 5));
         hBoxHyper.setPadding(new Insets(0));
         vBoxR.getChildren().add(hBoxHyper);
 
