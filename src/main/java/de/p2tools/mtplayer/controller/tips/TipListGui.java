@@ -83,7 +83,7 @@ public class TipListGui {
                 "Dunkel umgeschaltet werden. " +
                 "Ein Doppelklick schaltet " +
                 "zwischen den beiden Farbmodi um. " +
-                "Im Menü selbst, gibt es auch" +
+                "Im Menü selbst, gibt es auch " +
                 "zwei Menüpunkte zum Umschalten.";
         image = "/de/p2tools/mtplayer/res/tips/gui/gui-5.png";
         pToolTip = new TipData(text, image);

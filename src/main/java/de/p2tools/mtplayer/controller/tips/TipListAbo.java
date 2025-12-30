@@ -50,7 +50,7 @@ public class TipListAbo {
                 "des Films kann vorgegeben werden. Auch kann man vorgeben, wie weit " +
                 "zurück, nach Filmen gesucht werden soll (keine Filme älter als ..). " +
                 "\n\n" +
-                "Es kann auch ein Startzeit des Downloads ausgewählt werden. Der " +
+                "Es kann auch eine Startzeit des Downloads ausgewählt werden. Der " +
                 "Download wird dann erst zu der Uhrzeit (z.B.: nur Nachts) gestartet.";
         image = "/de/p2tools/mtplayer/res/tips/abo/abo-2.png";
         pToolTip = new TipData(text, image);
@@ -58,7 +58,7 @@ public class TipListAbo {
 
 
         text = "Im zweiten Tab werden die Suchbegriffe die im Film vorkommen müssen, " +
-                "vorgegeben (z.B.: Der Titel muss \"abc\" enthalten).";
+                "vorgegeben (z.B.: der Titel muss \"abc\" enthalten).";
         image = "/de/p2tools/mtplayer/res/tips/abo/abo-3.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);

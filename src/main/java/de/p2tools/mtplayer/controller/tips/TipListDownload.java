@@ -39,7 +39,7 @@ public class TipListDownload {
                 "gefiltert werden. " +
                 "Unter den Filtern sind noch ein " +
                 "paar Einstellungen für die Downloads: " +
-                "Z.B.: Die Download-Bandbreite.";
+                "Z.B.: die Download-Bandbreite.";
         String image = "/de/p2tools/mtplayer/res/tips/download/download-1.png";
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);

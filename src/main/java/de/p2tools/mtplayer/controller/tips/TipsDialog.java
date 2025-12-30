@@ -62,7 +62,7 @@ public class TipsDialog extends P2DialogExtra {
 
     public TipsDialog(ProgData progData) {
         super(progData.primaryStage, ProgConfig.TIPS_DIALOG_SIZE, "Tipps",
-                true, true, false, DECO.BORDER_VERY_SMALL);
+                false, true, false, DECO.BORDER_VERY_SMALL);
         this.progData = progData;
 
         this.btnFirst = P2Button.getButton(PIconFactory.PICON.BTN_TIP_FIRST.getFontIcon(), "ErsteSeite");
