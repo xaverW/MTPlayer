@@ -63,7 +63,7 @@ public class DownloadAddDialogFactory {
     public static Text getText(String text) {
         Text t = new Text(text);
         t.setFont(Font.font(null, FontWeight.BOLD, -1));
-        t.setStyle("-pBackgroundTextColor");
+        t.setStyle("-fx-text-fill: -pBackgroundTextColor");
 //        t.setFill(getBlue());
         return t;
     }
@@ -71,7 +71,7 @@ public class DownloadAddDialogFactory {
     public static Text getTextBlack(String text) {
         Text t = new Text(text);
         t.setFont(Font.font(null, FontWeight.BOLD, -1));
-        t.setStyle("-pBackgroundTextColor");
+        t.setStyle("-fx-text-fill: -pBackgroundTextColor");
 //        t.setFill(getBlack());
         return t;
     }
@@ -80,7 +80,7 @@ public class DownloadAddDialogFactory {
         Text t = new Text(text);
         t.setFont(Font.font(null, FontWeight.BOLD, -1));
 //        t.setFill(getBlue());
-        t.setStyle("-pBackgroundTextColor; -fx-font-size: 1.2em;");
+        t.setStyle("-fx-text-fill: -pBackgroundTextColor; -fx-font-size: 1.2em;");
         return t;
     }
 
