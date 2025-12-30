@@ -304,7 +304,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_CSS_ADDER = addStrProp("system-css-adder");
 
     public static BooleanProperty SYSTEM_DARK_START = addBoolProp("system-dark-theme-start", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_GUI_THEME_1_START = addBoolProp("system-gui-theme-1-start", Boolean.TRUE);
+    public static BooleanProperty SYSTEM_GUI_THEME_1_START = addBoolProp("system-gui-theme-1-start", Boolean.FALSE);
 
     public static BooleanProperty SYSTEM_THEME_CHANGED = addBoolProp("system-theme-changed"); // hat sich geändert
     public static StringProperty SYSTEM_ICON_COLOR = addStrProp("system-icon-color", ProgConst.ICON_COLOR_LIGHT_1); // die aktuelle Icon-Farbe
