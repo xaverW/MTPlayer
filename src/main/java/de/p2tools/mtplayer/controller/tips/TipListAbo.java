@@ -17,16 +17,10 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.p2lib.P2LibConst;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class TipListAbo {
-
-    private static final String START = "                                                     " +
-            P2LibConst.LINE_SEPARATOR;
-    private static final int listSize = 17;
 
     private TipListAbo() {
     }
@@ -35,8 +29,7 @@ public class TipListAbo {
         List<TipData> pToolTipList = new ArrayList<>();
 
 
-        String text = START;
-        text += "Im Tab Abo werden die angelegten " +
+        String text = "Im Tab Abo werden die angelegten " +
                 "Abos angezeigt. Abos können hier " +
                 "angelegt, geändert und auch " +
                 "ein- und ausgeschaltet werden." +
@@ -46,6 +39,52 @@ public class TipListAbo {
                 "gefiltert werden.";
         String image = "/de/p2tools/mtplayer/res/tips/abo/abo-1.png";
         TipData pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "Beim Anlegen eines neuen Abos, erscheint " +
+                "dieser Dialog. Im ersten Tab (Abo), wird vorgegeben " +
+                "wo gesucht werden soll (Filme, Audios oder beidem)." +
+                "\n\n" +
+                "Die Auflösung " +
+                "des Films kann vorgegeben werden. Auch kann man vorgeben, wie weit " +
+                "zurück, nach Filmen gesucht werden soll (keine Filme älter als ..). " +
+                "\n\n" +
+                "Es kann auch ein Startzeit des Downloads ausgewählt werden. Der " +
+                "Download wird dann erst zu der Uhrzeit (z.B.: nur Nachts) gestartet.";
+        image = "/de/p2tools/mtplayer/res/tips/abo/abo-2.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "Im zweiten Tab werden die Suchbegriffe die im Film vorkommen müssen, " +
+                "vorgegeben (z.B.: Der Titel muss \"abc\" enthalten).";
+        image = "/de/p2tools/mtplayer/res/tips/abo/abo-3.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "Im letzten Tab wird das Ziel des Downloads ausgewählt. Im Speichern-Set " +
+                "ist auch schon ein Ziel-Pfad vorgegeben. Standardmäßig wird " +
+                "der genommen, er kann aber " +
+                "im Abo auch überschrieben werden." +
+                "\n\n" +
+                "Beim Dateinamen ist es genauso: Standardmäßig werde die Vorgaben des Sets " +
+                "genommen, auch diese können aber überschrieben werden" +
+                "\n\n" +
+                "Zuletzt wird unter \"Ergebnis\" angezeigt, wie der ausgewählte Pfad und " +
+                "Dateiname aussehen.";
+        image = "/de/p2tools/mtplayer/res/tips/abo/abo-4.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "In der Tabelle \"Filme\" kann mit einem \"Rechts-Klick\" " +
+                "auf einen Film, direkt ein Abo dafür angelegt werden. " +
+                "Film-Titel, Film-Thema oder beides werden dann schon in den " +
+                "\"Abo-Anlegen-Dialog\" eingetragen.";
+        image = "/de/p2tools/mtplayer/res/tips/abo/abo-5.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
 

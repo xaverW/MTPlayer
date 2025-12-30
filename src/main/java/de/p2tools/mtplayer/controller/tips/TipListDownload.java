@@ -17,16 +17,10 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.p2lib.P2LibConst;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class TipListDownload {
-
-    private static final String START = "                                                     " +
-            P2LibConst.LINE_SEPARATOR;
-    private static final int listSize = 17;
 
     private TipListDownload() {
     }
@@ -34,8 +28,7 @@ public class TipListDownload {
     public static List<TipData> getTips() {
         List<TipData> pToolTipList = new ArrayList<>();
 
-        String text = START;
-        text += "Im Tab Download werden alle aktuellen " +
+        String text = "Im Tab Download werden alle aktuellen " +
                 "Downloads angezeigt. Hier können " +
                 "Downloads gestartet und gelöscht " +
                 "oder geändert werden." +
@@ -51,8 +44,8 @@ public class TipListDownload {
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "In dem Infobereich unter der Tabelle " +
+
+        text = "In dem Infobereich unter der Tabelle " +
                 "kann z.B.: die Mediensammlung " +
                 "durchsucht werden. In einem Diagramm " +
                 "wird die laufende Bandbreite der " +

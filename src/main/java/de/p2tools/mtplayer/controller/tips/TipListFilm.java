@@ -17,16 +17,10 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.p2lib.P2LibConst;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class TipListFilm {
-
-    private static final String START = "                                                     " +
-            P2LibConst.LINE_SEPARATOR;
-    private static final int listSize = 17;
 
     private TipListFilm() {
     }
@@ -35,8 +29,7 @@ public class TipListFilm {
         List<TipData> pToolTipList = new ArrayList<>();
 
 
-        String text = START;
-        text += "Im Tab \"Filme\" wird die Liste " +
+        String text = "Im Tab \"Filme\" wird die Liste " +
                 "aller Filme angezeigt. Links neben " +
                 "der Tabelle sind die Filter, mit " +
                 "denen die Filme gefiltert werden " +
@@ -49,8 +42,8 @@ public class TipListFilm {
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Hier können Bookmarks angelegt " +
+
+        text = "Hier können Bookmarks angelegt " +
                 "werden. Das sind Lesezeichen " +
                 "um sich Filme zu merken, die " +
                 "dann später angesehen oder " +
@@ -66,8 +59,8 @@ public class TipListFilm {
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Das Programm kann eine Mediensammlung " +
+
+        text = "Das Programm kann eine Mediensammlung " +
                 "verwalten. Dort kann man seine Ordner " +
                 "mit den gespeicherten Filmen " +
                 "angeben." +
@@ -81,8 +74,8 @@ public class TipListFilm {
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Im Infotab der Mediensammlung kann " +
+
+        text = "Im Infotab der Mediensammlung kann " +
                 "die angelegte Liste der eigenen " +
                 "Medien und auch die Liste der " +
                 "bereits gespeicherten Abos (rechte " +
@@ -104,8 +97,7 @@ public class TipListFilm {
         pToolTipList.add(pToolTip);
 
 
-        text = START;
-        text += "Die Mediensammlung kann " +
+        text = "Die Mediensammlung kann " +
                 "in den Programmeinstellungen " +
                 "verwaltet werden. Man kann " +
                 "angeben, welche Ordner nach " +
@@ -124,8 +116,8 @@ public class TipListFilm {
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "In den Einstellungen " +
+
+        text = "In den Einstellungen " +
                 "(erreichbar über das Menü) " +
                 "kann die Filmliste beim " +
                 "Laden beschränkt werden:" +

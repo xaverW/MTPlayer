@@ -17,16 +17,10 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.p2lib.P2LibConst;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class TipListFilter {
-
-    private static final String START = "                                                     " +
-            P2LibConst.LINE_SEPARATOR;
-    private static final int listSize = 17;
 
     private TipListFilter() {
     }
@@ -34,8 +28,7 @@ public class TipListFilter {
     public static List<TipData> getTips() {
         List<TipData> pToolTipList = new ArrayList<>();
 
-        String text = START;
-        text += "Der Filter der Filme ist in " +
+        String text = "Der Filter der Filme ist in " +
                 "mehrere Bereiche geteilt. " +
                 "Oben sind die Textfilter " +
                 "(z.B.: Thema oder Titel). Danach " +
@@ -56,8 +49,8 @@ public class TipListFilter {
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Welche Filter angezeigt werden " +
+
+        text = "Welche Filter angezeigt werden " +
                 "sollen, kann mit dem \"Zahnrad\" " +
                 "ausgewählt werden." +
                 "\n\n" +
@@ -82,6 +75,23 @@ public class TipListFilter {
                 "die aktuellen Filtereinstellungen in " +
                 "dem ausgewählten Profile.";
         image = "/de/p2tools/mtplayer/res/tips/filter/filter-2.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "Im Menü (Filmmenü) kann ein vereinfachter " +
+                "Filter eingestellt werden. Er enthält nur das " +
+                "nötigste und ist dadurch übersichtlicher.";
+        image = "/de/p2tools/mtplayer/res/tips/filter/filter-3.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "Hier kann ein einfaches Filterfeld " +
+                "eingestellt werden, wenn man nur einen Textfilter " +
+                "zum Suchen braucht. Mit dem Button (zwei Pfeile) " +
+                "kann ausgewählt werden, wo gesucht wird (Thema, Titel).";
+        image = "/de/p2tools/mtplayer/res/tips/filter/filter-4.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 

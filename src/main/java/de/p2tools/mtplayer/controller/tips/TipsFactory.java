@@ -3,6 +3,7 @@ package de.p2tools.mtplayer.controller.tips;
 import java.util.List;
 
 public class TipsFactory {
+
     public enum TIPPS {
         INFOS("Infos", TipListInfos.getTips()),
         GUI("Gui", TipListGui.getTips()),

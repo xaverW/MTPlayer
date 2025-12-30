@@ -18,15 +18,11 @@
 package de.p2tools.mtplayer.controller.tips;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.p2lib.P2LibConst;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TipListInfos {
-
-    private static final String START = "                                                     " +
-            P2LibConst.LINE_SEPARATOR;
 
     private TipListInfos() {
     }
@@ -36,8 +32,7 @@ public class TipListInfos {
 
         pToolTipList.add(TipData.getTipWebsite(ProgConfig.SYSTEM_PROG_OPEN_URL));
 
-        String text = START;
-        text += "Über das Menü ist die " +
+        String text = "Über das Menü ist die " +
                 "Funktion zum Zurücksetzen " +
                 "von Programmeinstellungen " +
                 "erreichbar." +

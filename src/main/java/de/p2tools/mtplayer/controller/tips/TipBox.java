@@ -19,7 +19,7 @@ package de.p2tools.mtplayer.controller.tips;
 
 import de.p2tools.p2lib.guitools.P2Hyperlink;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -30,9 +30,9 @@ public class TipBox extends VBox {
 
     private TipData tip = null;
     private final ImageView imageView = new ImageView();
-    private final Label lblText = new Label();
+    private final TextArea taText = new TextArea();
     private final HBox hBoxHyper = new HBox();
-    private int imageSize = 350;
+    private int imageSize = 450;
     private VBox vBoxButton = new VBox();
 
     public TipBox() {
@@ -46,15 +46,18 @@ public class TipBox extends VBox {
 
     private void initTop() {
         imageView.setSmooth(true);
-        lblText.setWrapText(true);
+        taText.setWrapText(true);
+        taText.setEditable(false);
 
         VBox vBoxL = new VBox(0);
-        VBox vBoxR = new VBox(0);
-        vBoxL.getChildren().add(imageView);
-        vBoxR.getChildren().add(lblText);
         vBoxL.setPadding(new Insets(20, 0, 0, 5));
+        vBoxL.getChildren().add(imageView);
+
+        VBox vBoxR = new VBox(0);
+        vBoxR.setPadding(new Insets(20, 5, 0, 0));
+        VBox.setVgrow(taText, Priority.ALWAYS);
         hBoxHyper.setPadding(new Insets(0));
-        vBoxR.getChildren().add(hBoxHyper);
+        vBoxR.getChildren().addAll(taText, hBoxHyper);
 
         HBox hBox = new HBox(20);
         HBox.setHgrow(vBoxR, Priority.ALWAYS);
@@ -76,7 +79,7 @@ public class TipBox extends VBox {
         } else {
             imageView.setImage(null);
         }
-        lblText.setText(tip.getText());
+        taText.setText(tip.getText());
 
         hBoxHyper.getChildren().clear();
         if (tip.getHyperlinkWeb() != null) {

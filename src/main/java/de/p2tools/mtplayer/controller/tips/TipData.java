@@ -17,12 +17,10 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.P2ProgIcons;
 import javafx.beans.property.StringProperty;
 
 public class TipData {
-    public static final String START = "                                                     " + P2LibConst.LINE_SEPARATOR;
     private final String text;
     private final String image;
     private final String hyperlinkWeb;
@@ -52,9 +50,7 @@ public class TipData {
 
     public static TipData getTipWebsite(StringProperty progOpenUrl) {
         final String URL_WEBSITE = "https://www.p2tools.de";
-        String text = START;
-        text = START;
-        text += "Weiter Tips und Infos " +
+        String text = "Weiter Tips und Infos " +
                 "finden sich auch auf der " +
                 "Website. Dort gibt es " +
                 "auch eine Anleitung zum " +

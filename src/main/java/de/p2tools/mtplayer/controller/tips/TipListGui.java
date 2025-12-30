@@ -17,16 +17,10 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.p2lib.P2LibConst;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class TipListGui {
-
-    private static final String START = "                                                     " +
-            P2LibConst.LINE_SEPARATOR;
-    private static final int listSize = 17;
 
     private TipListGui() {
     }
@@ -34,8 +28,7 @@ public class TipListGui {
     public static List<TipData> getTips() {
         List<TipData> pToolTipList = new ArrayList<>();
 
-        String text = START;
-        text += "Das Programm kann in verschiedenen " +
+        String text = "Das Programm kann in verschiedenen " +
                 "Farben angezeigt werden." +
                 "\n\n" +
                 "In den Programm-Einstellungen " +
@@ -47,8 +40,8 @@ public class TipListGui {
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Alle Infofelder und Filter können " +
+
+        text = "Alle Infofelder und Filter können " +
                 "mit dem Symbol \"x\" ausgeblendet " +
                 "werden. Mit dem Symbol \"Dreieck\" " +
                 "kann man sie \"abreißen\" und " +
@@ -57,8 +50,8 @@ public class TipListGui {
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Mit dem Button, wird eine " +
+
+        text = "Mit dem Button, wird eine " +
                 "neue Filmliste geladen. " +
                 "Ist der Text unterstrichen " +
                 "signalisiert das, dass es " +
@@ -67,8 +60,8 @@ public class TipListGui {
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Im Programm sind immer zwei " +
+
+        text = "Im Programm sind immer zwei " +
                 "Menüs sichtbar." +
                 "\n\n" +
                 "Das obere enthält Menüpunkte, " +
@@ -83,8 +76,8 @@ public class TipListGui {
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Mit einem Klick " +
+
+        text = "Mit einem Klick " +
                 "(RECHTE-Maustaste) kann das " +
                 "Gui zwischen Hell- und " +
                 "Dunkel umgeschaltet werden. " +
@@ -96,8 +89,8 @@ public class TipListGui {
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "In den Tabellen können mit der " +
+
+        text = "In den Tabellen können mit der " +
                 "Maus Zeilen selektiert werden. " +
                 "Dazu einfach in die erste " +
                 "Zeile klicken (Maustaste geklickt " +

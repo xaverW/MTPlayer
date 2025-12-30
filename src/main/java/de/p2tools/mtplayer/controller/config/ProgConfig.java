@@ -469,7 +469,7 @@ public class ProgConfig extends P2DataProgConfig {
     }
 
     public static BooleanProperty SYSTEM_SHOW_TIPS = addBoolProp("system-show-tips", Boolean.TRUE); // Dialog Tips wurde schon mal gezeigt
-    public static StringProperty TIPS_DIALOG_SIZE = addStrProp("tips-dialog-size");
+    public static StringProperty TIPS_DIALOG_SIZE = addStrProp("tips-dialog-size", "800:600");
 
     // ===============================================================
     // ====== GUI Filme ===============================================

@@ -133,9 +133,7 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miImportMV = new MenuItem("MediathekView Einstellungen importieren");
         miImportMV.setOnAction(event -> new ImportMVDialog(progData));
 
-//        final MenuItem miToolTip = new MenuItem("Tip des Tages");
-//        miToolTip.setOnAction(a -> ProgTipOfDayFactory.showDialog(progData, true));
-        final MenuItem miTipps = new MenuItem("Tipps");
+        final MenuItem miTipps = new MenuItem("Hilfedialog");
         miTipps.setOnAction(a -> new TipsDialog(progData));
         final MenuItem miWhatsNew = new MenuItem("Was ist neu?");
         miWhatsNew.setOnAction(a -> WhatsNewFactory.showWhatsNew(true));
@@ -145,8 +143,11 @@ public class MTPlayerMenu extends MenuButton {
         miAbout.setOnAction(event -> new AboutDialogController(progData).showDialog());
 
         final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miUrlHelp, miLog, miShortCut, miReset, miImportMV,
-                miTipps, new SeparatorMenuItem(), miWhatsNew, miSearchUpdate, miAbout);
+        mHelp.getItems().addAll(miTipps,
+                new SeparatorMenuItem(),
+                miUrlHelp, miLog, miShortCut, miReset, miImportMV,
+                new SeparatorMenuItem(), new SeparatorMenuItem(),
+                miWhatsNew, miSearchUpdate, miAbout);
 
         if (ProgData.debug) {
             final MenuItem miDebug = new MenuItem("Debugtools");

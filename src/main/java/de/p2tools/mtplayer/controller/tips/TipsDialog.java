@@ -45,6 +45,8 @@ public class TipsDialog extends P2DialogExtra {
     private final Button btnNext;
     private final Button btnPrev;
     private final Label lblTipsName = new Label();
+    private final CheckBox chkShow = new CheckBox("Hilfe beim Programmstart anzeigen");
+
 
     private final Button btnInfo = new Button(TipsFactory.TIPPS.INFOS.getName());
     private final Button btnGui = new Button(TipsFactory.TIPPS.GUI.getName());
@@ -93,7 +95,6 @@ public class TipsDialog extends P2DialogExtra {
 
         getVBoxCont().getChildren().add(hBoxAll);
 
-        CheckBox chkShow = new CheckBox("Hilfe beim Programmstart anzeigen");
         chkShow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
         getHboxLeft().getChildren().add(chkShow);
         getHboxLeft().setAlignment(Pos.CENTER_LEFT);
@@ -105,9 +106,14 @@ public class TipsDialog extends P2DialogExtra {
         addOkButton(btnOk);
         addHlpButton(btnHelp);
         btnOk.setOnAction(a -> {
-            chkShow.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
             close();
         });
+    }
+
+    @Override
+    public void close() {
+        chkShow.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
+        super.close();
     }
 
     private void initButton() {
