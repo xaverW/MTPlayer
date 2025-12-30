@@ -15,65 +15,35 @@
  */
 
 
-.btnTipsDialog{
-    -fx-padding: 5 20;
-    -fx-border-width: 1;
-    -fx-border-color: #4d4d4d;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-
-    -fx-alignment: center;
-    -fx-font-weight: bold;
-}
-.btnTipsDialog:focused{
-    -fx-padding: 5 20;
-    -fx-border-width: 1;
-    -fx-border-color: #4d4d4d;
-}
-.btnTipsDialog:hover{
-    -fx-padding: 4 19;
-    -fx-border-width: 2;
-    -fx-border-color: #0052d6;
-}
-.btnTipsDialog:focused:hover{
-    -fx-padding: 4 19;
-    -fx-border-width: 2;
-    -fx-border-color: #0052d6;
-}
-.btnTipsDialog:pressed{
-    -fx-padding: 3 18;
-    -fx-border-width: 3;
-    -fx-border-color: #0052d6;
-}
-.btnTipsDialog:focused:pressed{
-    -fx-padding: 3 18;
-    -fx-border-width: 3;
-    -fx-border-color: #0052d6;
-}
-
 .btnTipsDialogSel{
     -fx-padding: 3 18;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 3;
 }
 .btnTipsDialogSel:focused{
     -fx-padding: 3 18;
     -fx-border-width: 3;
+    -fx-border-color: -pGuiColor;
 }
 .btnTipsDialogSel:hover{
     -fx-padding: 3 18;
     -fx-border-width: 3;
+    -fx-border-color: -pGuiColor;
 }
 .btnTipsDialogSel:focused:hover{
     -fx-padding: 3 18;
     -fx-border-width: 3;
+    -fx-border-color: -pGuiColor;
 }
 .btnTipsDialogSel:pressed{
     -fx-padding: 3 18;
     -fx-border-width: 3;
+    -fx-border-color: -pGuiColor;
 }
 .btnTipsDialogSel:focused:pressed{
     -fx-padding: 3 18;
     -fx-border-width: 3;
+    -fx-border-color: -pGuiColor;
 }
 
 

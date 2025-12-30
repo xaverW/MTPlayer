@@ -120,7 +120,7 @@ public class TipsDialog extends P2DialogExtra {
         lblTipsName.setText(tips.getName());
 
         setSel(btnInfo);
-        btnInfo.getStyleClass().add("btnTipsDialog");
+        btnInfo.getStyleClass().add("pFuncBtn");
         btnInfo.setOnAction(a -> {
             tips = TipsFactory.TIPPS.INFOS;
             lblTipsName.setText(tips.getName());
@@ -131,7 +131,7 @@ public class TipsDialog extends P2DialogExtra {
         });
         btnInfo.setMaxWidth(Double.MAX_VALUE);
 
-        btnGui.getStyleClass().add("btnTipsDialog");
+        btnGui.getStyleClass().add("pFuncBtn");
         btnGui.setOnAction(a -> {
             tips = TipsFactory.TIPPS.GUI;
             lblTipsName.setText(tips.getName());
@@ -142,7 +142,7 @@ public class TipsDialog extends P2DialogExtra {
         });
         btnGui.setMaxWidth(Double.MAX_VALUE);
 
-        btnFilm.getStyleClass().add("btnTipsDialog");
+        btnFilm.getStyleClass().add("pFuncBtn");
         btnFilm.setOnAction(a -> {
             tips = TipsFactory.TIPPS.FILME;
             lblTipsName.setText(tips.getName());
@@ -153,7 +153,7 @@ public class TipsDialog extends P2DialogExtra {
         });
         btnFilm.setMaxWidth(Double.MAX_VALUE);
 
-        btnDownload.getStyleClass().add("btnTipsDialog");
+        btnDownload.getStyleClass().add("pFuncBtn");
         btnDownload.setOnAction(a -> {
             tips = TipsFactory.TIPPS.DOWNLOAD;
             lblTipsName.setText(tips.getName());
@@ -164,7 +164,7 @@ public class TipsDialog extends P2DialogExtra {
         });
         btnDownload.setMaxWidth(Double.MAX_VALUE);
 
-        btnAbo.getStyleClass().add("btnTipsDialog");
+        btnAbo.getStyleClass().add("pFuncBtn");
         btnAbo.setOnAction(a -> {
             tips = TipsFactory.TIPPS.ABO;
             lblTipsName.setText(tips.getName());
@@ -175,7 +175,7 @@ public class TipsDialog extends P2DialogExtra {
         });
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
-        btnFilter.getStyleClass().add("btnTipsDialog");
+        btnFilter.getStyleClass().add("pFuncBtn");
         btnFilter.setOnAction(a -> {
             tips = TipsFactory.TIPPS.FILTER;
             lblTipsName.setText(tips.getName());
@@ -186,7 +186,7 @@ public class TipsDialog extends P2DialogExtra {
         });
         btnFilter.setMaxWidth(Double.MAX_VALUE);
 
-        btnSet.getStyleClass().add("btnTipsDialog");
+        btnSet.getStyleClass().add("pFuncBtn");
         btnSet.setOnAction(a -> {
             tips = TipsFactory.TIPPS.SET;
             lblTipsName.setText(tips.getName());
