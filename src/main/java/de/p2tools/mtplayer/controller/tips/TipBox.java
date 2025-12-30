@@ -28,18 +28,18 @@ import javafx.scene.layout.VBox;
 
 public class TipBox extends VBox {
 
-    private PTipOfDay tip = null;
+    private TipData tip = null;
     private final ImageView imageView = new ImageView();
     private final Label lblText = new Label();
     private final HBox hBoxHyper = new HBox();
-    private int imageSize = 0;
+    private int imageSize = 350;
     private VBox vBoxButton = new VBox();
 
     public TipBox() {
         initTop();
     }
 
-    public void setTips(PTipOfDay tip) {
+    public void setTips(TipData tip) {
         this.tip = tip;
         setTipOfDay();
     }
@@ -65,12 +65,16 @@ public class TipBox extends VBox {
 
     private void setTipOfDay() {
         Image im;
-        if (imageSize > 0) {
-            im = new Image(tip.getImage(), imageSize, imageSize, true, true);
+        if (tip.getImage() != null) {
+            if (imageSize > 0) {
+                im = new Image(tip.getImage(), imageSize, imageSize, true, true);
+            } else {
+                im = new Image(tip.getImage(), 400, 400, true, true);
+            }
+            imageView.setImage(im);
         } else {
-            im = new Image(tip.getImage(), 400, 400, true, true);
+            imageView.setImage(null);
         }
-        imageView.setImage(im);
         lblText.setText(tip.getText());
 
         hBoxHyper.getChildren().clear();

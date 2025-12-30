@@ -21,7 +21,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.P2ProgIcons;
 import javafx.beans.property.StringProperty;
 
-public class PTipOfDay {
+public class TipData {
     public static final String START = "                                                     " + P2LibConst.LINE_SEPARATOR;
     private final String text;
     private final String image;
@@ -29,21 +29,28 @@ public class PTipOfDay {
     private final StringProperty openUrlWithProg;
     private boolean wasShown = false;
 
-    public PTipOfDay(String text, String image) {
+    public TipData(String text) {
+        this.text = text;
+        this.image = null;
+        this.hyperlinkWeb = null;
+        this.openUrlWithProg = null;
+    }
+
+    public TipData(String text, String image) {
         this.text = text;
         this.image = image;
         this.hyperlinkWeb = null;
         this.openUrlWithProg = null;
     }
 
-    public PTipOfDay(String text, String image, String pHyperlink, StringProperty openUrlWithProg) {
+    public TipData(String text, String image, String pHyperlink, StringProperty openUrlWithProg) {
         this.text = text;
         this.image = image;
         this.hyperlinkWeb = pHyperlink;
         this.openUrlWithProg = openUrlWithProg;
     }
 
-    public static PTipOfDay getTipWebsite(StringProperty progOpenUrl) {
+    public static TipData getTipWebsite(StringProperty progOpenUrl) {
         final String URL_WEBSITE = "https://www.p2tools.de";
         String text = START;
         text = START;
@@ -55,7 +62,7 @@ public class PTipOfDay {
                 "Fragen zum Programm und\n" +
                 "Ideen gerne auch per Mail.\n\n";
 
-        return new PTipOfDay(text, P2ProgIcons.ICON_TOOLTIP_WEBSITE, URL_WEBSITE, progOpenUrl);
+        return new TipData(text, P2ProgIcons.ICON_TOOLTIP_WEBSITE, URL_WEBSITE, progOpenUrl);
     }
 
     public String getText() {

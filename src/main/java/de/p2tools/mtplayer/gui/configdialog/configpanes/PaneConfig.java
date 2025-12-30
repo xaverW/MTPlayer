@@ -41,7 +41,7 @@ public class PaneConfig {
     private final P2ToggleSwitch tglOnlyOneInstance = new P2ToggleSwitch("Nur eine Instanz des Programms öffnen");
     private final P2ToggleSwitch tglStartMaximised = new P2ToggleSwitch("Programm immer \"Maximiert\" starten");
     private final P2ToggleSwitch tglCheckStart = new P2ToggleSwitch("Einstellungen zum Speichern beim Programmstart prüfen");
-    private final P2ToggleSwitch tglTipOfDay = new P2ToggleSwitch("Tip des Tages anzeigen");
+    private final P2ToggleSwitch tglShowTips = new P2ToggleSwitch("Tipps beim Programmstart anzeigen");
     private TextField txtUserAgent;
 
     private final Stage stage;
@@ -54,7 +54,7 @@ public class PaneConfig {
         tglOnlyOneInstance.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_ONLY_ONE_INSTANCE);
         tglStartMaximised.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED);
         tglCheckStart.selectedProperty().unbindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
-        tglTipOfDay.selectedProperty().unbindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
+        tglShowTips.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT);
     }
 
@@ -82,9 +82,9 @@ public class PaneConfig {
         final Button btnHelpCheck = PIconFactory.getHelpButton(stage, "Download-Einstellungen prüfen",
                 HelpText.CHECK_SET_PROGRAM_START);
 
-        tglTipOfDay.selectedProperty().bindBidirectional(ProgConfig.TIP_OF_DAY_SHOW);
+        tglShowTips.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
         final Button btnHelpTipOfDay = PIconFactory.getHelpButton(stage, "Tip des Tages anzeigen",
-                HelpText.TIP_OF_DAY);
+                HelpText.SHOW_TIPS);
         GridPane.setHalignment(btnHelpTipOfDay, HPos.RIGHT);
 
         final Button btnHelpUserAgent = PIconFactory.getHelpButton(stage, "User Agent festlegen",
@@ -131,7 +131,7 @@ public class PaneConfig {
         GridPane.setHalignment(btnHelpCheck, HPos.RIGHT);
         GridPane.setValignment(btnHelpCheck, VPos.CENTER);
 
-        gridPane.add(tglTipOfDay, 0, ++row, 2, 1);
+        gridPane.add(tglShowTips, 0, ++row, 2, 1);
         gridPane.add(btnHelpTipOfDay, 2, row);
 
         gridPane.add(new Label("User Agent:"), 0, ++row);

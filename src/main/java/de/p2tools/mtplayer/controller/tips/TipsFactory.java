@@ -6,14 +6,16 @@ public class TipsFactory {
     public enum TIPPS {
         INFOS("Infos", TipListInfos.getTips()),
         GUI("Gui", TipListGui.getTips()),
+        FILME("Filme", TipListFilm.getTips()),
+        DOWNLOAD("Downloads", TipListDownload.getTips()),
+        ABO("Abos", TipListAbo.getTips()),
         FILTER("Filter", TipListFilter.getTips()),
-        ABO("Abo", TipListAbo.getTips()),
-        ALL("Alles", TipListAll.getTips());
+        SET("Sets", TipListSet.getTips());
 
         private final String name;
-        private final List<PTipOfDay> tipsList;
+        private final List<TipData> tipsList;
 
-        TIPPS(String name, List<PTipOfDay> tipsList) {
+        TIPPS(String name, List<TipData> tipsList) {
             this.name = name;
             this.tipsList = tipsList;
         }
@@ -22,7 +24,7 @@ public class TipsFactory {
             return name;
         }
 
-        public List<PTipOfDay> getTipsList() {
+        public List<TipData> getTipsList() {
             return tipsList;
         }
 

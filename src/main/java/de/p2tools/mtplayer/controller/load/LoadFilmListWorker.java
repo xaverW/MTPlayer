@@ -29,7 +29,6 @@ import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
-import de.p2tools.mtplayer.controller.tips.ProgTipOfDayFactory;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.mediathek.film.P2FilmlistFactory;
@@ -146,7 +145,7 @@ public class LoadFilmListWorker {
                     // sonst macht es ja keinen Sinn
                     WhatsNewFactory.checkUpdate();
                     Platform.runLater(() -> {
-                        ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false);
+//                        ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false);
                         if (ProgConfig.CHECK_SET_PROGRAM_START.get()) {
                             SetFactory.checkPrograms(progData.primaryStage, progData, false);
                         }

@@ -244,7 +244,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_SHUT_DOWN_CALL = addStrProp("system-shut-down-call", P2ShutDown.getShutDownCommand()); // shutDown call
     public static BooleanProperty SYSTEM_SHUT_DOWN_CALL_ON = addBoolProp("system-shut-down-call-on", false); // das shutDown ist aktiv
     public static BooleanProperty SYSTEM_QUITT_DIALOG_MINIMIZE = addBoolProp("system-quitt-dialog-minimize", false); // Programm minimize nach "Warten"
-    public static BooleanProperty CHECK_SET_PROGRAM_START = addBoolProp("check-set-program-start", Boolean.TRUE);
+    public static BooleanProperty CHECK_SET_PROGRAM_START = addBoolProp("check-set-program-start", Boolean.TRUE); // die Sets prüfen
     public static StringProperty CHECK_SET_DIALOG_SIZE = addStrProp("check-set-dialog-size", "400:500");
 
     //Configs Statusbar
@@ -285,9 +285,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_LOG_ON = addBoolProp("system-log-on", Boolean.TRUE);
     public static BooleanProperty SYSTEM_ONLY_ONE_INSTANCE = addBoolProp("system-only-one-instance", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SSL_ALWAYS_TRUE = addBoolProp("system-ssl-always-true");
-    public static BooleanProperty TIP_OF_DAY_SHOW = addBoolProp("tip-of-day-show", Boolean.TRUE); //Tips anzeigen
-    public static StringProperty TIP_OF_DAY_WAS_SHOWN = addStrProp("tip-of-day-was-shown"); //bereits angezeigte Tips
-    public static StringProperty TIP_OF_DAY_DATE = addStrProp("tip-of-day-date"); //Datum des letzten Tips
     public static IntegerProperty SYSTEM_FILTER_WAIT_TIME = addIntProp("system-filter-wait-time", 250);
     public static BooleanProperty SYSTEM_FILTER_RETURN = addBoolProp("system-filter-return", Boolean.FALSE);
     public static BooleanProperty SYSTEM_FILTER_FIRST_ROW = addBoolProp("system-filter-first-row", Boolean.FALSE);
@@ -471,8 +468,8 @@ public class ProgConfig extends P2DataProgConfig {
         addComment("Tips");
     }
 
-    public static StringProperty TIPPS_DIALOG_SIZE = addStrProp("tips-dialog-size");
-
+    public static BooleanProperty SYSTEM_SHOW_TIPS = addBoolProp("system-show-tips", Boolean.TRUE); // Dialog Tips wurde schon mal gezeigt
+    public static StringProperty TIPS_DIALOG_SIZE = addStrProp("tips-dialog-size");
 
     // ===============================================================
     // ====== GUI Filme ===============================================

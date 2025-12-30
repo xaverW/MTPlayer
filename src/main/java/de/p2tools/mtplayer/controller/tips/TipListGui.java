@@ -17,7 +17,6 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
 
 import java.util.ArrayList;
@@ -32,151 +31,32 @@ public class TipListGui {
     private TipListGui() {
     }
 
-    public static List<PTipOfDay> getTips() {
-        List<PTipOfDay> pToolTipList = new ArrayList<>();
+    public static List<TipData> getTips() {
+        List<TipData> pToolTipList = new ArrayList<>();
 
         String text = START;
-        text += "Die Filteransicht kann über einen\n" +
-                "zweiten Klick mit der rechten\n" +
-                "Maustaste auf den Tab-Button\n" +
-                "(Filme, Downloads oder Abos)\n" +
-                "ein- und ausgeblendet werden.\n\n" +
-                "Ein Klick mit der linken\n" +
-                "Maustaste blendet den\n" +
-                "Infobereich unter der\n" +
-                "Tabelle ein und aus.\n\n" +
-                "Beides ist auch über das\n" +
-                "Menü möglich";
-        String image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_ein_aus.png";
-        PTipOfDay pToolTip = new PTipOfDay(text, image);
+        text += "Gui";
+        TipData pToolTip = new TipData(text);
         pToolTipList.add(pToolTip);
 
         text = START;
-        text += "Live-Suche in den\n" +
-                "ARD/ZDF Mediatheken:\n\n" +
-                "Ist die Live-Suche eingeschaltet,\n" +
-                "kann damit in den Mediatheken\n" +
-                "von ARD und ZDF gesucht werden.\n" +
-                "Es ist auch möglich, mit der URL\n" +
-                "einer Filmseite den Film zu suchen.\n" +
-                "Die Filme können dann ganz normal\n" +
-                "angesehen oder gespeichert werden.\n" +
-                "In den Einstellungen kann die \n" +
-                "Live-Suche ausgeblendet werden.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Live_Suche.png";
-        pToolTip = new PTipOfDay(text, image);
+        text += "Alle Infofelder und Filter können\n" +
+                "mit dem Symbol \"x\" ausgeblendet\n" +
+                "werden. Mit dem Symbol \"Dreieck\"\n" +
+                "kann man sie \"abreißen\" und\n" +
+                "in einem Extrafenster anzeigen.";
+        String image = "/de/p2tools/mtplayer/res/tips/gui/gui-1.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
-        text += "Suche in der Mediensammlung:\n\n" +
-                "Ein Doppelklick auf einen\n" +
-                "Suchbegriff stellt diesen frei.\n\n" +
-                "Der Button (Kreis) wählt aus, wo\n" +
-                "(Dateiname/Pfad) gesucht werden\n" +
-                "soll.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Mediensammlung.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "Über das Menü ist die\n" +
-                "Funktion zum Zurücksetzen\n" +
-                "von Programmeinstellungen\n" +
-                "erreichbar.\n\n" +
-                "Zuerst sollten nur die\n" +
-                "Einstellungen zum Abspielen\n" +
-                "und Aufzeichnen zurückgesetzt\n" +
-                "werden.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Ruecksetzen.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "Über das Menü ist die\n" +
-                "Funktion zum Zurücksetzen\n" +
-                "von Programmeinstellungen\n" +
-                "erreichbar.\n\n" +
-                "Wenn gar nichts mehr geht,\n" +
-                "kann das Programm komplett\n" +
-                "zurückgesetzt werden.\n\n" +
-                "Es werden alle Einstellungen\n" +
-                "zurückgesetzt und gehen\n" +
-                "verloren!";
-        image = "/de/p2tools/mtplayer/res/tooltips/Ruecksetzen_alles.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "Im Download-Filter Panel können\n" +
-                "auch noch weitere Einstellungen\n" +
-                "vorgenommen werden:\n\n" +
-                "* Die maximale Anzahl der\n" +
-                "   gleichzeitigen Downloads kann\n" +
-                "   hier vorgegeben werden.\n\n" +
-                "* Die maximale Bandbreite pro\n" +
-                "   Download kann hier\n" +
-                "   vorgegeben werden.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Bandbreite.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        pToolTipList.add(PTipOfDay.getTipWebsite(ProgConfig.SYSTEM_PROG_OPEN_URL));
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch die maximale Zeit,\n" +
-                "die zurück gesucht wird,\n" +
-                "vorgegeben werden.\n\n" +
-                "Es werden also nur Filme der\n" +
-                "letzten xx Tage gesucht wenn\n" +
-                "xx Tage dort vorgegeben sind.";
-        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Zeit.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch die Filmlänge\n" +
-                "eines Films (min, max)\n" +
-                "vorgegeben werden.\n\n" +
-                "Es werden dann nur Filme\n" +
-                "gefunden, deren Dauer zu\n" +
-                "den Vorgaben passt.";
-        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Dauer.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch vorgeben werden,\n" +
-                "ob ein Beitrag in der\n" +
-                "Filmliste/Audioliste oder\n" +
-                "beiden gesucht werden soll.";
-        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Quelle.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch die Startzeit\n" +
-                "der Downloads aus diesem\n" +
-                "Abo vorgegeben werden.\n\n" +
-                "Downloads aus diesem Abo\n" +
-                "haben dann automatisch\n" +
-                "diese Startzeit.";
-        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Startzeit.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen des Abos\n" +
-                "kann auch ein eigener Pfad\n" +
-                "und auch ein eigener Dateiname\n" +
-                "für Downloads aus diesem Abo\n" +
-                "vorgegeben werden. Die Einstellungen\n" +
-                "des Sets werden dann überschrieben.";
-        image = "/de/p2tools/mtplayer/res/tooltips/AboEinstellungen_Pfad.png";
-        pToolTip = new PTipOfDay(text, image);
+        text += "Mit dem Button, wird eine\n" +
+                "neue Filmliste geladen.\n" +
+                "Ist der Text unterstrichen\n" +
+                "signalisiert das, dass es\n" +
+                "eine neue Filmliste gibt.";
+        image = "/de/p2tools/mtplayer/res/tips/gui/gui-2.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
@@ -189,9 +69,23 @@ public class TipListGui {
                 "für den jeweils angezeigten\n" +
                 "Tab (Filme, Audios,\n" +
                 "Live, Downloads, Abos).";
-        image = "/de/p2tools/mtplayer/res/tooltips/Menue.png";
-        pToolTip = new PTipOfDay(text, image);
+        image = "/de/p2tools/mtplayer/res/tips/gui/gui-3.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
+
+        text = START;
+        text += "Mit einem Klick\n" +
+                "(RECHTE-Maustaste) kann das\n" +
+                "Gui zwischen Hell- und\n" +
+                "Dunkel umgeschaltet werden.\n" +
+                "Ein Doppelklick schaltet\n" +
+                "zwischen den beiden Farbmodi um.\n" +
+                "Im Menü selbst, gibt es auch\n" +
+                "zwei Menüpunkte zum Uschalten.";
+        image = "/de/p2tools/mtplayer/res/tips/gui/gui-4.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
 
         text = START;
         text += "In den Einstellungen\n" +
@@ -201,53 +95,10 @@ public class TipListGui {
                 "Im Systemtray werden Infos\n" +
                 "zur aktuellen Situation des\n" +
                 "Programms angezeigt.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_Systemtray.png";
-        pToolTip = new PTipOfDay(text, image);
+        image = "/de/p2tools/mtplayer/res/tips/Einstellungen_Systemtray.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "In den Einstellungen\n" +
-                "(erreichbar über das Menü)\n" +
-                "kann die Filmliste beim\n" +
-                "Laden beschränkt werden:\n\n" +
-                "Z.B. können nur die letzten\n" +
-                "50 Tage geladen werden. Filme\n" +
-                "die kein Datum haben, werden\n" +
-                "immer geladen.\n\n" +
-                "Das hat den Vorteil, dass die\n" +
-                "Filmliste deutlich kleiner ist\n" +
-                "und das Programm schneller\n" +
-                "reagiert (vor allem wenn der\n" +
-                "Rechner mit wenig Speicher\n" +
-                "ausgestattet ist).";
-        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_Filmliste.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen\n" +
-                "(erreichbar über das Menü)\n" +
-                "wird der Downloadpfad\n" +
-                "und -name für Downloads\n" +
-                "vorgegeben. Der Hilfebutton\n" +
-                "verrät die Möglichkeiten.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_SetSpeicherziel.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Einstellungen\n" +
-                "(erreichbar über das Menü)\n" +
-                "können für Downloads die ein\n" +
-                "Hilfsprogramm brauchen, die\n" +
-                "entsprechenden Programme\n" +
-                "und Einstellungen vorgegeben\n" +
-                "werden.\n\n" +
-                "Es wird auch angegeben, für\n" +
-                "welche Downloads das zutrifft.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_SetHilfsprogramme.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
 
         text = START;
         text += "In den Einstellungen\n" +
@@ -255,61 +106,18 @@ public class TipListGui {
                 "kann die verwendete\n" +
                 "Schriftgröße im Programm\n" +
                 "vorgegeben werden.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Einstellungen_Schriftgroesse.png";
-        pToolTip = new PTipOfDay(text, image);
+        image = "/de/p2tools/mtplayer/res/tips/Einstellungen_Schriftgroesse.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
         text += "In den Tabellen kann\n" +
                 "mit der Leertaste nach\n" +
                 "unten \"geblättert\" werden.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Leertaste.png";
-        pToolTip = new PTipOfDay(text, image);
+        image = "/de/p2tools/mtplayer/res/tips/Leertaste.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
-        text = START;
-        text += "Einstellungen zum Filtern\n" +
-                "im Tab Filme/Audios können\n" +
-                "hier erreicht werden.";
-        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_1.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Filtereinstellungen bei\n" +
-                "den Filmen/Audios können Filter\n" +
-                "ein- und ausgeschaltet werden.\n" +
-                "Beim Suchen werden nur\n" +
-                "die eingeschalteten Filter\n" +
-                "verwendet. Das Suchen ist schneller\n" +
-                "wenn nicht alle Filter eingeschaltet sind.";
-        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_2.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Filtereinstellungen bei\n" +
-                "den Filmen/Audios kann eine\n" +
-                "Wartezeit vorgegeben werden.\n\n" +
-                "Diese wird dann bei der Suche\n" +
-                "in den Textfeldern abgewartet,\n" +
-                "bis die Suche beginnt.\n\n" +
-                "Es wird dann nicht bei jedem\n" +
-                "Buchstaben die Suche gestartet.";
-        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_3.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "In den Filmen/Audios kann ein\n" +
-                "einfacher Filter über das\n" +
-                "Menü eingestellt werden. Er\n" +
-                "enthält nur das nötigste und\n" +
-                "ist dadurch etwas leichter\n" +
-                "zu bedienen.";
-        image = "/de/p2tools/mtplayer/res/tooltips/EinfacherFilter.png";
-        pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
 
         return pToolTipList;
     }

@@ -17,54 +17,32 @@
 
 package de.p2tools.mtplayer.controller.tips;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.p2lib.P2LibConst;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TipListInfos {
+public class TipListSet {
 
     private static final String START = "                                                     " +
             P2LibConst.LINE_SEPARATOR;
 
-    private TipListInfos() {
+    private TipListSet() {
     }
 
     public static List<TipData> getTips() {
         List<TipData> pToolTipList = new ArrayList<>();
 
-
-        pToolTipList.add(TipData.getTipWebsite(ProgConfig.SYSTEM_PROG_OPEN_URL));
-
         String text = START;
-        text += "Über das Menü ist die\n" +
-                "Funktion zum Zurücksetzen\n" +
-                "von Programmeinstellungen\n" +
-                "erreichbar.\n\n" +
-                "Zuerst sollten nur die\n" +
-                "Einstellungen zum Abspielen\n" +
-                "und Aufzeichnen zurückgesetzt\n" +
-                "werden.";
-        String image = "/de/p2tools/mtplayer/res/tips/Ruecksetzen.png";
+        text += "In den Filmen/Audios kann ein\n" +
+                "einfacher Filter über das\n" +
+                "Menü eingestellt werden. Er\n" +
+                "enthält nur das nötigste und\n" +
+                "ist dadurch etwas leichter\n" +
+                "zu bedienen.";
+        String image = "/de/p2tools/mtplayer/res/tips/EinfacherFilter.png";
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "Über das Menü ist die\n" +
-                "Funktion zum Zurücksetzen\n" +
-                "von Programmeinstellungen\n" +
-                "erreichbar.\n\n" +
-                "Wenn gar nichts mehr geht,\n" +
-                "kann das Programm komplett\n" +
-                "zurückgesetzt werden.\n\n" +
-                "Es werden alle Einstellungen\n" +
-                "zurückgesetzt und gehen\n" +
-                "verloren!";
-        image = "/de/p2tools/mtplayer/res/tips/Ruecksetzen_alles.png";
-        pToolTip = new TipData(text, image);
-        pToolTipList.add(pToolTip);
-
 
         return pToolTipList;
     }

@@ -22,6 +22,8 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
+import de.p2tools.mtplayer.controller.tips.TipsDialog;
+import de.p2tools.p2lib.p2event.P2Events;
 import de.p2tools.p2lib.p2event.P2Listener;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
@@ -39,6 +41,17 @@ public class Worker {
     public Worker(ProgData progData) {
         this.progData = progData;
         getAboNames();
+
+        progData.pEventHandler.addListener(new P2Listener(P2Events.EVENT_TIMER_ONE_MINUTE) {
+            @Override
+            public void pingGui() {
+                // startet alles das einmal nach dem Start laufen soll
+                if (ProgConfig.SYSTEM_SHOW_TIPS.get()) {
+                    // dann sollen Tipps angezeigt werden
+                    new TipsDialog(progData);
+                }
+            }
+        });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_BLACKLIST_CHANGED) {
             @Override
             public void pingGui() {

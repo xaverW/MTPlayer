@@ -23,48 +23,45 @@ import de.p2tools.p2lib.P2LibConst;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TipListInfos {
+public class TipListDownload {
 
     private static final String START = "                                                     " +
             P2LibConst.LINE_SEPARATOR;
+    private static final int listSize = 17;
 
-    private TipListInfos() {
+    private TipListDownload() {
     }
 
     public static List<TipData> getTips() {
         List<TipData> pToolTipList = new ArrayList<>();
 
-
-        pToolTipList.add(TipData.getTipWebsite(ProgConfig.SYSTEM_PROG_OPEN_URL));
-
         String text = START;
-        text += "Über das Menü ist die\n" +
-                "Funktion zum Zurücksetzen\n" +
-                "von Programmeinstellungen\n" +
-                "erreichbar.\n\n" +
-                "Zuerst sollten nur die\n" +
-                "Einstellungen zum Abspielen\n" +
-                "und Aufzeichnen zurückgesetzt\n" +
-                "werden.";
-        String image = "/de/p2tools/mtplayer/res/tips/Ruecksetzen.png";
+        text += "Im Download-Filter Panel können\n" +
+                "auch noch weitere Einstellungen\n" +
+                "vorgenommen werden:\n\n" +
+                "* Die maximale Anzahl der\n" +
+                "   gleichzeitigen Downloads kann\n" +
+                "   hier vorgegeben werden.\n\n" +
+                "* Die maximale Bandbreite pro\n" +
+                "   Download kann hier\n" +
+                "   vorgegeben werden.";
+        String image = "/de/p2tools/mtplayer/res/tips/Bandbreite.png";
         TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
+        pToolTipList.add(TipData.getTipWebsite(ProgConfig.SYSTEM_PROG_OPEN_URL));
+
+
         text = START;
-        text += "Über das Menü ist die\n" +
-                "Funktion zum Zurücksetzen\n" +
-                "von Programmeinstellungen\n" +
-                "erreichbar.\n\n" +
-                "Wenn gar nichts mehr geht,\n" +
-                "kann das Programm komplett\n" +
-                "zurückgesetzt werden.\n\n" +
-                "Es werden alle Einstellungen\n" +
-                "zurückgesetzt und gehen\n" +
-                "verloren!";
-        image = "/de/p2tools/mtplayer/res/tips/Ruecksetzen_alles.png";
+        text += "In den Einstellungen\n" +
+                "(erreichbar über das Menü)\n" +
+                "wird der Downloadpfad\n" +
+                "und -name für Downloads\n" +
+                "vorgegeben. Der Hilfebutton\n" +
+                "verrät die Möglichkeiten.";
+        image = "/de/p2tools/mtplayer/res/tips/Einstellungen_SetSpeicherziel.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
-
 
         return pToolTipList;
     }

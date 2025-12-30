@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.picon.IconRunner;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.picon.PIconShow;
-import de.p2tools.mtplayer.controller.tips.ProgTipOfDayFactory;
 import de.p2tools.mtplayer.controller.tips.TipsDialog;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
@@ -134,8 +133,8 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miImportMV = new MenuItem("MediathekView Einstellungen importieren");
         miImportMV.setOnAction(event -> new ImportMVDialog(progData));
 
-        final MenuItem miToolTip = new MenuItem("Tip des Tages");
-        miToolTip.setOnAction(a -> ProgTipOfDayFactory.showDialog(progData, true));
+//        final MenuItem miToolTip = new MenuItem("Tip des Tages");
+//        miToolTip.setOnAction(a -> ProgTipOfDayFactory.showDialog(progData, true));
         final MenuItem miTipps = new MenuItem("Tipps");
         miTipps.setOnAction(a -> new TipsDialog(progData));
         final MenuItem miWhatsNew = new MenuItem("Was ist neu?");
@@ -147,7 +146,7 @@ public class MTPlayerMenu extends MenuButton {
 
         final Menu mHelp = new Menu("Hilfe");
         mHelp.getItems().addAll(miUrlHelp, miLog, miShortCut, miReset, miImportMV,
-                miTipps, miToolTip, new SeparatorMenuItem(), miWhatsNew, miSearchUpdate, miAbout);
+                miTipps, new SeparatorMenuItem(), miWhatsNew, miSearchUpdate, miAbout);
 
         if (ProgData.debug) {
             final MenuItem miDebug = new MenuItem("Debugtools");

@@ -26,6 +26,7 @@ import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -45,11 +46,20 @@ public class TipsDialog extends P2DialogExtra {
     private final Button btnPrev;
     private final Label lblTipsName = new Label();
 
+    private final Button btnInfo = new Button(TipsFactory.TIPPS.INFOS.getName());
+    private final Button btnGui = new Button(TipsFactory.TIPPS.GUI.getName());
+    private final Button btnFilm = new Button(TipsFactory.TIPPS.FILME.getName());
+    private final Button btnDownload = new Button(TipsFactory.TIPPS.DOWNLOAD.getName());
+    private final Button btnAbo = new Button(TipsFactory.TIPPS.ABO.getName());
+    private final Button btnFilter = new Button(TipsFactory.TIPPS.FILTER.getName());
+    private final Button btnSet = new Button(TipsFactory.TIPPS.SET.getName());
+
+
     private TipsFactory.TIPPS tips = TipsFactory.TIPPS.INFOS;
     private int actTipNo = 0;
 
     public TipsDialog(ProgData progData) {
-        super(progData.primaryStage, ProgConfig.TIPPS_DIALOG_SIZE, "Tipps",
+        super(progData.primaryStage, ProgConfig.TIPS_DIALOG_SIZE, "Tipps",
                 true, true, false, DECO.BORDER_VERY_SMALL);
         this.progData = progData;
 
@@ -58,8 +68,11 @@ public class TipsDialog extends P2DialogExtra {
         this.btnNext = P2Button.getButton(PIconFactory.PICON.BTN_TIP_NEXT.getFontIcon(), "Nächste Seite");
         this.btnPrev = P2Button.getButton(PIconFactory.PICON.BTN_TIP_PREV.getFontIcon(), "Vorherige Seite");
 
+        tipBox.getStyleClass().add("tipsTipBox");
+//        vBoxButton.getStyleClass().add("tipsButtonBox");
+
         initButton();
-        PTipOfDay to = tips.getTipsList().get(actTipNo);
+        TipData to = tips.getTipsList().get(actTipNo);
         tipBox.setTips(to);
         init(true);
     }
@@ -67,7 +80,7 @@ public class TipsDialog extends P2DialogExtra {
     @Override
     public void make() {
         HBox hBoxTop = new HBox(P2LibConst.SPACING_HBOX);
-        hBoxTop.getStyleClass().add("startInfoTop");
+        hBoxTop.getStyleClass().add("tipsInfoTop");
         hBoxTop.setAlignment(Pos.CENTER);
         hBoxTop.getChildren().addAll(P2GuiTools.getHBoxGrower(), lblTipsName,
                 P2GuiTools.getHBoxGrower());
@@ -79,64 +92,104 @@ public class TipsDialog extends P2DialogExtra {
         VBox.setVgrow(hBoxAll, Priority.ALWAYS);
 
         getVBoxCont().getChildren().add(hBoxAll);
+
+        CheckBox chkShow = new CheckBox("Hilfe beim Programmstart anzeigen");
+        chkShow.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
+        getHboxLeft().getChildren().add(chkShow);
+        getHboxLeft().setAlignment(Pos.CENTER_LEFT);
+
+        Button btnOk = new Button("OK");
+        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Hilfe-Dialog",
+                "In dem Dialog werden Tipps zum Programm angezeigt. Wenn nicht " +
+                        "abgeschaltet, wird der Dialog beim Start angezeigt.");
+        addOkButton(btnOk);
+        addHlpButton(btnHelp);
+        btnOk.setOnAction(a -> {
+            chkShow.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
+            close();
+        });
     }
 
     private void initButton() {
         lblTipsName.setText(tips.getName());
-        Button btnInfo = new Button(TipsFactory.TIPPS.INFOS.getName());
+
+        setSel(btnInfo);
         btnInfo.getStyleClass().add("btnTipsDialog");
         btnInfo.setOnAction(a -> {
             tips = TipsFactory.TIPPS.INFOS;
             lblTipsName.setText(tips.getName());
             actTipNo = 0;
-            PTipOfDay to = tips.getTipsList().get(actTipNo);
+            TipData to = tips.getTipsList().get(actTipNo);
             tipBox.setTips(to);
+            setSel(btnInfo);
         });
         btnInfo.setMaxWidth(Double.MAX_VALUE);
 
-        Button btnGui = new Button(TipsFactory.TIPPS.GUI.getName());
         btnGui.getStyleClass().add("btnTipsDialog");
         btnGui.setOnAction(a -> {
             tips = TipsFactory.TIPPS.GUI;
             lblTipsName.setText(tips.getName());
             actTipNo = 0;
-            PTipOfDay to = tips.getTipsList().get(actTipNo);
+            TipData to = tips.getTipsList().get(actTipNo);
             tipBox.setTips(to);
+            setSel(btnGui);
         });
         btnGui.setMaxWidth(Double.MAX_VALUE);
 
-        Button btnAbo = new Button(TipsFactory.TIPPS.ABO.getName());
+        btnFilm.getStyleClass().add("btnTipsDialog");
+        btnFilm.setOnAction(a -> {
+            tips = TipsFactory.TIPPS.FILME;
+            lblTipsName.setText(tips.getName());
+            actTipNo = 0;
+            TipData to = tips.getTipsList().get(actTipNo);
+            tipBox.setTips(to);
+            setSel(btnFilm);
+        });
+        btnFilm.setMaxWidth(Double.MAX_VALUE);
+
+        btnDownload.getStyleClass().add("btnTipsDialog");
+        btnDownload.setOnAction(a -> {
+            tips = TipsFactory.TIPPS.DOWNLOAD;
+            lblTipsName.setText(tips.getName());
+            actTipNo = 0;
+            TipData to = tips.getTipsList().get(actTipNo);
+            tipBox.setTips(to);
+            setSel(btnDownload);
+        });
+        btnDownload.setMaxWidth(Double.MAX_VALUE);
+
         btnAbo.getStyleClass().add("btnTipsDialog");
         btnAbo.setOnAction(a -> {
             tips = TipsFactory.TIPPS.ABO;
             lblTipsName.setText(tips.getName());
             actTipNo = 0;
-            PTipOfDay to = tips.getTipsList().get(actTipNo);
+            TipData to = tips.getTipsList().get(actTipNo);
             tipBox.setTips(to);
+            setSel(btnAbo);
         });
         btnAbo.setMaxWidth(Double.MAX_VALUE);
 
-        Button btnFilter = new Button(TipsFactory.TIPPS.FILTER.getName());
         btnFilter.getStyleClass().add("btnTipsDialog");
         btnFilter.setOnAction(a -> {
             tips = TipsFactory.TIPPS.FILTER;
             lblTipsName.setText(tips.getName());
             actTipNo = 0;
-            PTipOfDay to = tips.getTipsList().get(actTipNo);
+            TipData to = tips.getTipsList().get(actTipNo);
             tipBox.setTips(to);
+            setSel(btnFilter);
         });
         btnFilter.setMaxWidth(Double.MAX_VALUE);
 
-        Button btnAll = new Button(TipsFactory.TIPPS.ALL.getName());
-        btnAll.getStyleClass().add("btnTipsDialog");
-        btnAll.setOnAction(a -> {
-            tips = TipsFactory.TIPPS.ALL;
+        btnSet.getStyleClass().add("btnTipsDialog");
+        btnSet.setOnAction(a -> {
+            tips = TipsFactory.TIPPS.SET;
             lblTipsName.setText(tips.getName());
             actTipNo = 0;
-            PTipOfDay to = tips.getTipsList().get(actTipNo);
+            TipData to = tips.getTipsList().get(actTipNo);
             tipBox.setTips(to);
+            setSel(btnSet);
         });
-        btnAll.setMaxWidth(Double.MAX_VALUE);
+        btnSet.setMaxWidth(Double.MAX_VALUE);
 
 
         GridPane gridPane1 = new GridPane();
@@ -147,9 +200,11 @@ public class TipsDialog extends P2DialogExtra {
         int row = 0;
         gridPane1.add(btnInfo, 0, row, 2, 1);
         gridPane1.add(btnGui, 0, ++row, 2, 1);
-        gridPane1.add(btnFilter, 0, ++row, 2, 1);
+        gridPane1.add(btnFilm, 0, ++row, 2, 1);
+        gridPane1.add(btnDownload, 0, ++row, 2, 1);
         gridPane1.add(btnAbo, 0, ++row, 2, 1);
-        gridPane1.add(btnAll, 0, ++row, 2, 1);
+        gridPane1.add(btnFilter, 0, ++row, 2, 1);
+        gridPane1.add(btnSet, 0, ++row, 2, 1);
 
 
         btnPrev.getStyleClass().add("btnTipsNext");
@@ -158,6 +213,7 @@ public class TipsDialog extends P2DialogExtra {
         btnLast.getStyleClass().add("btnTipsNext");
 
         GridPane gridPane2 = new GridPane();
+        gridPane2.getStyleClass().add("tipsButtonBoxTop");
         gridPane2.setHgap(2);
         gridPane2.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcPrefSize(),
@@ -174,10 +230,30 @@ public class TipsDialog extends P2DialogExtra {
         vBoxButton.getChildren().addAll(gridPane2, P2GuiTools.getHDistance(10), gridPane1);
         HBox.setHgrow(vBoxButton, Priority.ALWAYS);
 
-        btnFirst.setOnAction(a -> tipBox.setTips(tips.getTipsList().get(0)));
-        btnLast.setOnAction(a -> tipBox.setTips(tips.getTipsList().get(tips.getTipsList().size() - 1)));
+        btnFirst.setOnAction(a -> {
+            actTipNo = 0;
+            tipBox.setTips(tips.getTipsList().get(actTipNo));
+            setName();
+        });
+        btnLast.setOnAction(a -> {
+            actTipNo = tips.getTipsList().size() - 1;
+            tipBox.setTips(tips.getTipsList().get(actTipNo));
+            setName();
+        });
         btnNext.setOnAction(a -> selectActToolTip(true));
         btnPrev.setOnAction(a -> selectActToolTip(false));
+    }
+
+    private void setSel(Button btn) {
+        btnInfo.getStyleClass().remove("btnTipsDialogSel");
+        btnGui.getStyleClass().remove("btnTipsDialogSel");
+        btnFilm.getStyleClass().remove("btnTipsDialogSel");
+        btnDownload.getStyleClass().remove("btnTipsDialogSel");
+        btnAbo.getStyleClass().remove("btnTipsDialogSel");
+        btnFilter.getStyleClass().remove("btnTipsDialogSel");
+        btnSet.getStyleClass().remove("btnTipsDialogSel");
+
+        btn.getStyleClass().add("btnTipsDialogSel");
     }
 
     private void selectActToolTip(boolean next) {
@@ -198,7 +274,14 @@ public class TipsDialog extends P2DialogExtra {
             }
         }
 
-        PTipOfDay to = tips.getTipsList().get(actTipNo);
+        TipData to = tips.getTipsList().get(actTipNo);
         tipBox.setTips(to);
+        setName();
+    }
+
+    private void setName() {
+        lblTipsName.setText(tips.getName() +
+                (actTipNo == 0 ? "" : "  -  " + (actTipNo + 1) + " von " + tips.getTipsList().size()));
+
     }
 }

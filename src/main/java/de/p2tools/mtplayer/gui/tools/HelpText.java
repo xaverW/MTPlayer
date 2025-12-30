@@ -983,10 +983,9 @@ public class HelpText {
                     "Damit kann ein eigens Bild dafür verwendet werden." +
                     "\n";
 
-    public static final String TIP_OF_DAY =
-            "Beim Programmstart wird (einmal täglich) ein Tip zur Verwendung " +
-                    "des Programms angezeigt. Das passiert so oft, bis alle Tips " +
-                    "einmal angezeigt wurden." +
+    public static final String SHOW_TIPS =
+            "Beim Programmstart wird der Hilfe-Dialog mit Tipps zur Verwendung " +
+                    "des Programms angezeigt." +
                     "\n";
 
     public static final String DARK_THEME =

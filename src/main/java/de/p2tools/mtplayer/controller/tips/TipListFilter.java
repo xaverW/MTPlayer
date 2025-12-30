@@ -31,8 +31,8 @@ public class TipListFilter {
     private TipListFilter() {
     }
 
-    public static List<PTipOfDay> getTips() {
-        List<PTipOfDay> pToolTipList = new ArrayList<>();
+    public static List<TipData> getTips() {
+        List<TipData> pToolTipList = new ArrayList<>();
 
         String text = START;
         text += "Die Filteransicht kann über einen\n" +
@@ -46,30 +46,16 @@ public class TipListFilter {
                 "Tabelle ein und aus.\n\n" +
                 "Beides ist auch über das\n" +
                 "Menü möglich";
-        String image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_ein_aus.png";
-        PTipOfDay pToolTip = new PTipOfDay(text, image);
-        pToolTipList.add(pToolTip);
-
-        text = START;
-        text += "Im Download-Filter Panel können\n" +
-                "auch noch weitere Einstellungen\n" +
-                "vorgenommen werden:\n\n" +
-                "* Die maximale Anzahl der\n" +
-                "   gleichzeitigen Downloads kann\n" +
-                "   hier vorgegeben werden.\n\n" +
-                "* Die maximale Bandbreite pro\n" +
-                "   Download kann hier\n" +
-                "   vorgegeben werden.";
-        image = "/de/p2tools/mtplayer/res/tooltips/Bandbreite.png";
-        pToolTip = new PTipOfDay(text, image);
+        String image = "/de/p2tools/mtplayer/res/tips/GuiFilme_Filter_ein_aus.png";
+        TipData pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
         text += "Einstellungen zum Filtern\n" +
                 "im Tab Filme/Audios können\n" +
                 "hier erreicht werden.";
-        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_1.png";
-        pToolTip = new PTipOfDay(text, image);
+        image = "/de/p2tools/mtplayer/res/tips/GuiFilme_Filter_1.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
@@ -80,8 +66,8 @@ public class TipListFilter {
                 "die eingeschalteten Filter\n" +
                 "verwendet. Das Suchen ist schneller\n" +
                 "wenn nicht alle Filter eingeschaltet sind.";
-        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_2.png";
-        pToolTip = new PTipOfDay(text, image);
+        image = "/de/p2tools/mtplayer/res/tips/GuiFilme_Filter_2.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
@@ -93,8 +79,8 @@ public class TipListFilter {
                 "bis die Suche beginnt.\n\n" +
                 "Es wird dann nicht bei jedem\n" +
                 "Buchstaben die Suche gestartet.";
-        image = "/de/p2tools/mtplayer/res/tooltips/GuiFilme_Filter_3.png";
-        pToolTip = new PTipOfDay(text, image);
+        image = "/de/p2tools/mtplayer/res/tips/GuiFilme_Filter_3.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         text = START;
@@ -104,8 +90,8 @@ public class TipListFilter {
                 "enthält nur das nötigste und\n" +
                 "ist dadurch etwas leichter\n" +
                 "zu bedienen.";
-        image = "/de/p2tools/mtplayer/res/tooltips/EinfacherFilter.png";
-        pToolTip = new PTipOfDay(text, image);
+        image = "/de/p2tools/mtplayer/res/tips/EinfacherFilter.png";
+        pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 
         return pToolTipList;
