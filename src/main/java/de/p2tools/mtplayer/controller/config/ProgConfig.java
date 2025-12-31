@@ -297,7 +297,7 @@ public class ProgConfig extends P2DataProgConfig {
 
 
     public static BooleanProperty SYSTEM_DARK_THEME = addBoolProp("system-dark-theme", Boolean.FALSE); // DARK oder LIGHT
-    public static BooleanProperty SYSTEM_GUI_THEME_1 = addBoolProp("system-gui-theme-1", Boolean.TRUE); // Theme 1 oder 2
+    public static BooleanProperty SYSTEM_GUI_THEME_1 = addBoolProp("system-gui-theme-1", Boolean.FALSE); // Theme 1 oder 2
     public static StringProperty SYSTEM_CSS_ADDER = addStrProp("system-css-adder");
 
     public static BooleanProperty SYSTEM_DARK_START = addBoolProp("system-dark-theme-start", Boolean.FALSE);
