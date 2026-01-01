@@ -100,19 +100,6 @@ public class ProgStartBeforeGui {
                 ProgConfig.SYSTEM_CSS_ADDER,
 
                 new String[]{
-                        // p2css
-                        "de/p2tools/mtplayer/p2css/p2Css__all.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___fx.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___button.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___gui.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___maskerPane.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___toggleSwitch.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___table.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___tabPane.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___p2Notify.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___smallGui.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__all___dialog.css",
-
                         "de/p2tools/mtplayer/css/mtfx.css",
                         "de/p2tools/mtplayer/css/pFuncBtn.css",
                         "de/p2tools/mtplayer/css/pFuncMenu.css",
@@ -124,11 +111,7 @@ public class ProgStartBeforeGui {
                 },
 
                 new String[]{
-                        "de/p2tools/mtplayer/css/mtfx-dark.css",
-
-                        "de/p2tools/mtplayer/p2css/p2Css__dark___all.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__dark___fx.css",
-                        "de/p2tools/mtplayer/p2css/p2Css__dark___table.css"
+                        "de/p2tools/mtplayer/css/mtfx-dark.css"
                 },
 
                 ProgData.getInstance().cssProp,
