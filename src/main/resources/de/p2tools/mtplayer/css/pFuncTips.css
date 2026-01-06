@@ -16,73 +16,73 @@
 
 
 .btnTipsDialogSel{
-    -fx-padding: 3 18;
+    -fx-padding: 2 17;
     -fx-border-color: -pGuiColor;
-    -fx-border-width: 3;
+    -fx-border-width: 4;
 }
 .btnTipsDialogSel:focused{
-    -fx-padding: 3 18;
-    -fx-border-width: 3;
+    -fx-padding: 2 17;
     -fx-border-color: -pGuiColor;
+    -fx-border-width: 4;
 }
 .btnTipsDialogSel:hover{
-    -fx-padding: 3 18;
-    -fx-border-width: 3;
+    -fx-padding: 2 17;
     -fx-border-color: -pGuiColor;
+    -fx-border-width: 4;
 }
 .btnTipsDialogSel:focused:hover{
-    -fx-padding: 3 18;
-    -fx-border-width: 3;
+    -fx-padding: 2 17;
     -fx-border-color: -pGuiColor;
+    -fx-border-width: 4;
 }
 .btnTipsDialogSel:pressed{
-    -fx-padding: 3 18;
-    -fx-border-width: 3;
+    -fx-padding: 2 17;
     -fx-border-color: -pGuiColor;
+    -fx-border-width: 4;
 }
 .btnTipsDialogSel:focused:pressed{
-    -fx-padding: 3 18;
-    -fx-border-width: 3;
+    -fx-padding: 2 17;
     -fx-border-color: -pGuiColor;
+    -fx-border-width: 4;
 }
 
 
 .btnTipsNext{
     -fx-padding: 2;
     -fx-border-width: 1;
-    -fx-border-color: #4d4d4d;
+    -fx-border-color: -pGuiColor;
     -fx-border-radius: 25;
     -fx-background-radius: 25;
 }
 .btnTipsNext:focused{
     -fx-padding: 2;
     -fx-border-width: 1;
-    -fx-border-color: #4d4d4d;
+    -fx-border-color: -pGuiColor;
 }
 .btnTipsNext:hover{
     -fx-padding: 1;
     -fx-border-width: 2;
-    -fx-border-color: #0052d6;
+    -fx-border-color: -pGuiColor;
 }
 .btnTipsNext:focused:hover{
     -fx-padding: 1;
     -fx-border-width: 2;
-    -fx-border-color: #0052d6;
+    -fx-border-color: -pGuiColor;
 }
 .btnTipsNext:pressed{
     -fx-padding: 0;
     -fx-border-width: 3;
-    -fx-border-color: #0052d6;
+    -fx-border-color: -pGuiColor;
 }
 .btnTipsNext:focused:pressed{
     -fx-padding: 0;
     -fx-border-width: 3;
-    -fx-border-color: #0052d6;
+    -fx-border-color: -pGuiColor;
 }
 
 .tipsInfoTop {
     -fx-padding: 2 20 2 20;
-    -fx-border-color: #939a9f;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 2 0 2 0;
     -fx-background-color: -style-extra-pane-color;
     -fx-background-radius: 3px;
@@ -92,21 +92,21 @@
 
 .tipsTipBox {
     -fx-padding: 2;
-    -fx-border-color: #939a9f;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 2;
     -fx-background-radius: 3px;
 }
 
 .tipsButtonBoxTop {
     -fx-padding: 5;
-    -fx-border-color: #939a9f;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 2;
     -fx-background-color: -style-extra-pane-color;
 }
 
 .startInfoTop {
     -fx-padding: 2 20 2 20;
-    -fx-border-color: #939a9f;
+    -fx-border-color: -pGuiColor;
     -fx-border-width: 2 0 2 0;
     -fx-background-color: -style-extra-pane-color;
     -fx-background-radius: 3px;

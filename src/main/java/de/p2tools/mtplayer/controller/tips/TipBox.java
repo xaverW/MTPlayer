@@ -33,7 +33,6 @@ public class TipBox extends VBox {
     private final TextArea taText = new TextArea();
     private final HBox hBoxHyper = new HBox();
     private int imageSize = 450;
-    private VBox vBoxButton = new VBox();
 
     public TipBox() {
         initTop();
@@ -49,22 +48,13 @@ public class TipBox extends VBox {
         taText.setWrapText(true);
         taText.setEditable(false);
 
-        VBox vBoxL = new VBox(0);
-        vBoxL.setPadding(new Insets(20, 0, 0, 5));
-        vBoxL.getChildren().add(imageView);
-
-        VBox vBoxR = new VBox(0);
-        vBoxR.setPadding(new Insets(20, 5, 0, 0));
-        VBox.setVgrow(taText, Priority.ALWAYS);
-        hBoxHyper.setPadding(new Insets(0));
-        vBoxR.getChildren().addAll(taText, hBoxHyper);
-
         HBox hBox = new HBox(20);
-        HBox.setHgrow(vBoxR, Priority.ALWAYS);
-        hBox.getChildren().addAll(vBoxL, vBoxR);
-
+        hBox.setPadding(new Insets(20, 5, 0, 5));
+        hBox.getChildren().addAll(imageView, taText);
+        HBox.setHgrow(taText, Priority.ALWAYS);
         VBox.setVgrow(hBox, Priority.ALWAYS);
-        getChildren().add(hBox);
+
+        getChildren().addAll(hBox, hBoxHyper);
     }
 
     private void setTipOfDay() {

@@ -35,10 +35,11 @@ import javafx.scene.layout.VBox;
 
 public class TipsDialog extends P2DialogExtra {
 
+    public static boolean TIPS_DIALOG_OPEN = false; // Dialog ist schon geöffnet
+
     private final ProgData progData;
     private final HBox hBoxAll = new HBox(P2LibConst.SPACING_HBOX);
     private final VBox vBoxButton = new VBox(P2LibConst.SPACING_VBOX);
-    private final VBox vBoxTipps = new VBox(P2LibConst.SPACING_VBOX);
     private final TipBox tipBox = new TipBox();
     private final Button btnFirst;
     private final Button btnLast;
@@ -64,6 +65,7 @@ public class TipsDialog extends P2DialogExtra {
         super(progData.primaryStage, ProgConfig.TIPS_DIALOG_SIZE, "Tipps",
                 false, true, false, DECO.BORDER_VERY_SMALL);
         this.progData = progData;
+        TIPS_DIALOG_OPEN = true;
 
         this.btnFirst = P2Button.getButton(PIconFactory.PICON.BTN_TIP_FIRST.getFontIcon(), "ErsteSeite");
         this.btnLast = P2Button.getButton(PIconFactory.PICON.BTN_TIP_LAST.getFontIcon(), "Letzte Seite");
@@ -71,7 +73,6 @@ public class TipsDialog extends P2DialogExtra {
         this.btnPrev = P2Button.getButton(PIconFactory.PICON.BTN_TIP_PREV.getFontIcon(), "Vorherige Seite");
 
         tipBox.getStyleClass().add("tipsTipBox");
-//        vBoxButton.getStyleClass().add("tipsButtonBox");
 
         initButton();
         TipData to = tips.getTipsList().get(actTipNo);
@@ -113,6 +114,7 @@ public class TipsDialog extends P2DialogExtra {
     @Override
     public void close() {
         chkShow.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
+        TIPS_DIALOG_OPEN = false;
         super.close();
     }
 
@@ -225,7 +227,6 @@ public class TipsDialog extends P2DialogExtra {
                 P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcPrefSize());
-//        gridPane2.setGridLinesVisible(true);
 
         gridPane2.add(btnFirst, 0, 0);
         gridPane2.add(btnPrev, 1, 0);

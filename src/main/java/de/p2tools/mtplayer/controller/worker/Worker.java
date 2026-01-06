@@ -46,8 +46,8 @@ public class Worker {
             @Override
             public void pingGui() {
                 // startet alles das einmal nach dem Start laufen soll
-                if (ProgConfig.SYSTEM_SHOW_TIPS.get()) {
-                    // dann sollen Tipps angezeigt werden
+                if (ProgConfig.SYSTEM_SHOW_TIPS.get() && !TipsDialog.TIPS_DIALOG_OPEN) {
+                    // dann sollen Tipps angezeigt werden, und nur wenn noch nicht offen
                     new TipsDialog(progData);
                 }
             }
