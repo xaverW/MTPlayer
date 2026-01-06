@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import javafx.geometry.Insets;
@@ -42,7 +43,8 @@ public class PaneFilmSender {
     private final Slider slDuration = new Slider();
     private final Label lblDays = new Label("");
     private final Label lblDuration = new Label("");
-    final Button btnClearAll = new Button("_Wieder alle Sender laden");
+    final Button btnSetAll = new Button("_Alle Sender laden");
+    final Button btnClearAll = new Button("_Keinen Sender laden");
     private final Stage stage;
 
     public PaneFilmSender(Stage stage) {
@@ -104,15 +106,13 @@ public class PaneFilmSender {
                 HelpText.LOAD_FILMLIST_SENDER);
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_LEFT);
-        Label lbl = new Label("Diese Sender  *nicht*  laden:");
-        hBox.getChildren().addAll(lbl, P2GuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
+        hBox.getChildren().addAll(P2Text.getLblTextBold("Sender auswählen die geladen werden sollen:"), P2GuiTools.getHBoxGrower(), btnHelpSender);
 
-        vBox.getChildren().add(new Label(" "));
-        vBox.getChildren().add(hBox);
+        HBox hBoxB = new HBox(P2LibConst.DIST_BUTTON);
+        hBoxB.setAlignment(Pos.CENTER_LEFT);
+        hBoxB.getChildren().addAll(P2GuiTools.getHBoxGrower(), btnClearAll, btnSetAll);
 
-        final TilePane tilePaneSender = getTilePaneSender();
-        vBox.getChildren().addAll(tilePaneSender);
-
+        vBox.getChildren().addAll(P2GuiTools.getHDistance(5), hBox, getTilePaneSender(), hBoxB);
 
         Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
         btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
@@ -137,7 +137,6 @@ public class PaneFilmSender {
         hBoxBtn.setAlignment(Pos.CENTER_RIGHT);
         hBoxBtn.getChildren().addAll(btnLoadAudio, btnLoadFilm);
 
-
         vBox.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBoxBtn);
     }
 
@@ -155,19 +154,24 @@ public class PaneFilmSender {
             final CheckBox cb = new CheckBox(s);
             cb.setTooltip(new Tooltip(s_));
             aListCb.add(cb);
-            cb.setSelected(aListChannel.contains(s));
+            cb.setSelected(!aListChannel.contains(s));
             cb.setOnAction(a -> {
                 makePropSender(aListCb);
                 // und noch prüfen, dass nicht alle ausgeschaltet sind
-                FilmToolsFactory.checkAllSenderSelectedNotToLoad(stage);
+                // FilmToolsFactory.checkAllSenderSelectedNotToLoad(stage);
             });
 
             tilePaneSender.getChildren().add(cb);
             TilePane.setAlignment(cb, Pos.CENTER_LEFT);
         }
+        btnSetAll.setMinWidth(Region.USE_PREF_SIZE);
+        btnSetAll.setOnAction(a -> {
+            aListCb.forEach(checkBox -> checkBox.setSelected(true));
+            makePropSender(aListCb);
+        });
         btnClearAll.setMinWidth(Region.USE_PREF_SIZE);
         btnClearAll.setOnAction(a -> {
-            aListCb.stream().forEach(checkBox -> checkBox.setSelected(false));
+            aListCb.forEach(checkBox -> checkBox.setSelected(false));
             makePropSender(aListCb);
         });
         checkPropSender(aListCb);
@@ -206,6 +210,15 @@ public class PaneFilmSender {
     }
 
     private void checkPropSender(ArrayList<CheckBox> aListCb) {
+        boolean allChecked = true;
+        for (CheckBox cb : aListCb) {
+            if (!cb.isSelected()) {
+                allChecked = false;
+                break;
+            }
+        }
+        btnSetAll.setDisable(allChecked);
+
         boolean noneChecked = true;
         for (CheckBox cb : aListCb) {
             if (cb.isSelected()) {
@@ -213,20 +226,20 @@ public class PaneFilmSender {
                 break;
             }
         }
-
         btnClearAll.setDisable(noneChecked);
     }
 
     private void makePropSender(ArrayList<CheckBox> aListCb) {
         String str = "";
         for (CheckBox cb : aListCb) {
-            if (!cb.isSelected()) {
+            if (cb.isSelected()) {
                 continue;
             }
 
             String s = cb.getText();
             str = str.isEmpty() ? s : str + "," + s;
         }
+
         ProgConfig.SYSTEM_LOAD_NOT_SENDER.setValue(str);
         checkPropSender(aListCb);
     }

@@ -813,7 +813,7 @@ public class HelpText {
                     "\n";
 
     public static final String LOAD_FILMLIST_SENDER_STARTDIALOG =
-            "Filme der markierten Sender werden beim Laden der Filmliste ausgeschlossen.\n" +
+            "Beim Laden der Filmliste sind dann nur Filme der markierten Sender enthalten.\n" +
                     "\n";
 
     public static final String LOAD_FILMLIST_SENDER =

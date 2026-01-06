@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -39,7 +40,8 @@ import java.util.ArrayList;
 
 public class StartPaneStation extends VBox {
 
-    private final Button btnClearAll = new Button("_Wieder alle Sender laden");
+    final Button btnSetAll = new Button("_Alle Sender laden");
+    final Button btnClearAll = new Button("_Keinen Sender laden");
     private final Stage stage;
 
     public StartPaneStation(Stage stage) {
@@ -59,8 +61,7 @@ public class StartPaneStation extends VBox {
         hBox.setPadding(new Insets(P2LibConst.PADDING));
         hBox.setMaxWidth(Double.MAX_VALUE);
         hBox.setMinHeight(Region.USE_PREF_SIZE);
-        Label lbl = new Label("Hier können Sender die *nicht* interessieren, beim Laden " +
-                "der Filmliste, ausgenommen werden.");
+        Label lbl = new Label("Hier können die Sender ausgewählt werden, die geladen werden sollen.");
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
@@ -71,12 +72,13 @@ public class StartPaneStation extends VBox {
                 HelpText.LOAD_FILMLIST_SENDER_STARTDIALOG);
         HBox hBoxStation = new HBox(15);
         hBoxStation.setAlignment(Pos.CENTER_LEFT);
-        Label lblStation = new Label("Diese Sender  *nicht*  laden:");
-        hBoxStation.getChildren().addAll(lblStation, P2GuiTools.getHBoxGrower(), btnClearAll, btnHelpSender);
+        hBoxStation.getChildren().addAll(P2Text.getLblTextBold("Sender die geladen werden:"), P2GuiTools.getHBoxGrower(), btnHelpSender);
 
-        final TilePane tilePaneSender = getTilePaneSender();
+        HBox hBoxB = new HBox(P2LibConst.DIST_BUTTON);
+        hBoxB.setAlignment(Pos.CENTER_LEFT);
+        hBoxB.getChildren().addAll(P2GuiTools.getHBoxGrower(), btnClearAll, btnSetAll);
 
-        getChildren().addAll(hBoxStation, P2GuiTools.getHDistance(20), tilePaneSender);
+        getChildren().addAll(hBoxStation, P2GuiTools.getHDistance(15), getTilePaneSender(), P2GuiTools.getHDistance(15), hBoxB);
     }
 
     private TilePane getTilePaneSender() {
@@ -92,19 +94,24 @@ public class StartPaneStation extends VBox {
             final CheckBox cb = new CheckBox(s);
             cb.setTooltip(new Tooltip(s_));
             aListCb.add(cb);
-            cb.setSelected(aListChannel.contains(s));
+            cb.setSelected(true); // beim Start alle Sender laden
             cb.setOnAction(a -> {
                 makePropSender(aListCb);
                 // und noch prüfen, dass nicht alle ausgeschaltet sind
-                FilmToolsFactory.checkAllSenderSelectedNotToLoad(stage);
+                // FilmToolsFactory.checkAllSenderSelectedNotToLoad(stage);
             });
 
             tilePaneSender.getChildren().add(cb);
             TilePane.setAlignment(cb, Pos.CENTER_LEFT);
         }
+        btnSetAll.setMinWidth(Region.USE_PREF_SIZE);
+        btnSetAll.setOnAction(a -> {
+            aListCb.forEach(checkBox -> checkBox.setSelected(true));
+            makePropSender(aListCb);
+        });
         btnClearAll.setMinWidth(Region.USE_PREF_SIZE);
         btnClearAll.setOnAction(a -> {
-            aListCb.stream().forEach(checkBox -> checkBox.setSelected(false));
+            aListCb.forEach(checkBox -> checkBox.setSelected(false));
             makePropSender(aListCb);
         });
         checkPropSender(aListCb);
@@ -113,6 +120,15 @@ public class StartPaneStation extends VBox {
     }
 
     private void checkPropSender(ArrayList<CheckBox> aListCb) {
+        boolean allChecked = true;
+        for (CheckBox cb : aListCb) {
+            if (!cb.isSelected()) {
+                allChecked = false;
+                break;
+            }
+        }
+        btnSetAll.setDisable(allChecked);
+
         boolean noneChecked = true;
         for (CheckBox cb : aListCb) {
             if (cb.isSelected()) {
@@ -120,20 +136,20 @@ public class StartPaneStation extends VBox {
                 break;
             }
         }
-
         btnClearAll.setDisable(noneChecked);
     }
 
     private void makePropSender(ArrayList<CheckBox> aListCb) {
         String str = "";
         for (CheckBox cb : aListCb) {
-            if (!cb.isSelected()) {
+            if (cb.isSelected()) {
                 continue;
             }
 
             String s = cb.getText();
             str = str.isEmpty() ? s : str + "," + s;
         }
+
         ProgConfig.SYSTEM_LOAD_NOT_SENDER.setValue(str);
         checkPropSender(aListCb);
     }

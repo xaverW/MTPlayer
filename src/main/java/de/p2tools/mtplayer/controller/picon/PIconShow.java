@@ -38,7 +38,7 @@ public class PIconShow extends P2DialogExtra {
         int row = 0;
         int col = 0;
 
-        Label t1 = P2Text.getTextBoldUnderline("P2ICON");
+        Label t1 = P2Text.getLblTextBoldUnderline("P2ICON");
         t1.setPadding(new Insets(5));
         gridPane.add(t1, 0, row++);
         for (P2IconFactory.P2ICON p2Icon : P2IconFactory.P2ICON.values()) {
@@ -51,7 +51,7 @@ public class PIconShow extends P2DialogExtra {
             }
         }
         gridPane.add(new Label(""), 0, ++row);
-        Label t2 = P2Text.getTextBoldUnderline("PICON");
+        Label t2 = P2Text.getLblTextBoldUnderline("PICON");
         t2.setPadding(new Insets(5));
         gridPane.add(t2, 0, ++row);
 

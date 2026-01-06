@@ -268,7 +268,7 @@ public class PaneColorGui {
 
         // ======
         // add Dark1
-        gridDark1.add(P2Text.getTextBoldUnderline(DARK_1, "white"), 0, 0);
+        gridDark1.add(P2Text.getLblTextBoldUnderline(DARK_1, "white"), 0, 0);
         gridDark1.add(new Label(ICONS), 0, 1);
         HBox hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_1, null);
         gridDark1.add(hBox, 2, 1);
@@ -300,7 +300,7 @@ public class PaneColorGui {
 
         // ======
         // add Dark2
-        gridDark2.add(P2Text.getTextBoldUnderline(DARK_2, "white"), 0, 0);
+        gridDark2.add(P2Text.getLblTextBoldUnderline(DARK_2, "white"), 0, 0);
         gridDark2.add(new Label(ICONS), 0, 1);
         hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_DARK_2, null);
         gridDark2.add(hBox, 2, 1);
@@ -332,7 +332,7 @@ public class PaneColorGui {
 
         // ======
         // add Light1
-        gridLight1.add(P2Text.getTextBoldUnderline(LIGHT_1), 0, 0);
+        gridLight1.add(P2Text.getLblTextBoldUnderline(LIGHT_1), 0, 0);
         gridLight1.visibleProperty().bind(rbIcon1.selectedProperty());
         gridLight1.add(new Label(ICONS), 0, 1);
         hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_1, null);
@@ -365,7 +365,7 @@ public class PaneColorGui {
 
         // ======
         // add Light2
-        gridLight2.add(P2Text.getTextBoldUnderline(LIGHT_2), 0, 0);
+        gridLight2.add(P2Text.getLblTextBoldUnderline(LIGHT_2), 0, 0);
         gridLight2.visibleProperty().bind(rbIcon2.selectedProperty());
         gridLight2.add(new Label(ICONS), 0, 1);
         hBox = addColor(ProgConfig.SYSTEM_ICON_THEME_LIGHT_2, null);
