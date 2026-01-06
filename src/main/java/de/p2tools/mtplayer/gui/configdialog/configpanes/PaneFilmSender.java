@@ -58,7 +58,7 @@ public class PaneFilmSender {
 
     public TitledPane make(Collection<TitledPane> result) {
         initSlider();
-        final VBox vBox = new VBox(20);
+        final VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(P2LibConst.PADDING));
 
         makeOnly(vBox);
@@ -106,13 +106,12 @@ public class PaneFilmSender {
                 HelpText.LOAD_FILMLIST_SENDER);
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_LEFT);
-        hBox.getChildren().addAll(P2Text.getLblTextBold("Sender auswählen die geladen werden sollen:"), P2GuiTools.getHBoxGrower(), btnHelpSender);
+        hBox.getChildren().addAll(P2Text.getLblTextBold("Sender auswählen die geladen werden sollen:"));
 
         HBox hBoxB = new HBox(P2LibConst.DIST_BUTTON);
-        hBoxB.setAlignment(Pos.CENTER_LEFT);
-        hBoxB.getChildren().addAll(P2GuiTools.getHBoxGrower(), btnClearAll, btnSetAll);
+        hBoxB.getChildren().addAll(btnClearAll, btnSetAll, P2GuiTools.getHBoxGrower(), btnHelpSender);
 
-        vBox.getChildren().addAll(P2GuiTools.getHDistance(5), hBox, getTilePaneSender(), hBoxB);
+        vBox.getChildren().addAll(P2GuiTools.getHDistance(5), hBox, getTilePaneSender(), P2GuiTools.getHDistance(5), hBoxB);
 
         Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
         btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +
@@ -140,10 +139,13 @@ public class PaneFilmSender {
         vBox.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBoxBtn);
     }
 
-    private TilePane getTilePaneSender() {
-        final TilePane tilePaneSender = new TilePane();
-        tilePaneSender.setHgap(5);
-        tilePaneSender.setVgap(5);
+    private GridPane getTilePaneSender() {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(20);
+        int row = 0;
+        int col = 0;
+
         ArrayList<String> aListChannel = FilmToolsFactory.getSenderListNotToLoad();
         ArrayList<CheckBox> aListCb = new ArrayList<>();
 
@@ -161,8 +163,12 @@ public class PaneFilmSender {
                 // FilmToolsFactory.checkAllSenderSelectedNotToLoad(stage);
             });
 
-            tilePaneSender.getChildren().add(cb);
-            TilePane.setAlignment(cb, Pos.CENTER_LEFT);
+            gridPane.add(cb, col, row);
+            ++col;
+            if (col > 5) {
+                col = 0;
+                ++row;
+            }
         }
         btnSetAll.setMinWidth(Region.USE_PREF_SIZE);
         btnSetAll.setOnAction(a -> {
@@ -176,7 +182,7 @@ public class PaneFilmSender {
         });
         checkPropSender(aListCb);
 
-        return tilePaneSender;
+        return gridPane;
     }
 
     private void initSlider() {
