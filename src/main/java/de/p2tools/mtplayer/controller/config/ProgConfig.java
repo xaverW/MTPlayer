@@ -421,10 +421,14 @@ public class ProgConfig extends P2DataProgConfig {
     // Filter Filme
     public static BooleanProperty FILMFILTER_SMALL_FILTER = addBoolProp("filmfilter-small-filter", Boolean.TRUE);
     public static IntegerProperty FILTER_FILM_SEL_FILTER = addIntProp("filter-film-sel-filter"); // das ausgewählte Filterprofiel
+    public static BooleanProperty FILTER_FILM_PROG_START_ON = addBoolProp("filter-film-prog-start-on", Boolean.FALSE);
+    public static StringProperty FILTER_FILM_PROG_START = addStrProp("filter-film-prog-start");
 
     // Filter Audio
     public static BooleanProperty AUDIOFILTER_SMALL_FILTER = addBoolProp("audiofilter-small-filter", Boolean.TRUE);
     public static IntegerProperty FILTER_AUDIO_SEL_FILTER = addIntProp("filter-audio-sel-filter"); // das ausgewählte Filterprofiel
+    public static BooleanProperty FILTER_AUDIO_PROG_START_ON = addBoolProp("filter-audio-prog-start-on", Boolean.FALSE);
+    public static StringProperty FILTER_AUDIO_PROG_START = addStrProp("filter-audio-prog-start");
 
     // Filter Abo
     public static StringProperty FILTER_ABO_CHANNEL = addStrProp("filter-abo-channel");

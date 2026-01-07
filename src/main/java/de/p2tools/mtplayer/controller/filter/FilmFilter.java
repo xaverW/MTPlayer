@@ -44,6 +44,7 @@ public class FilmFilter extends FilmFilterProps implements Filter {
     public FilmFilter(String tag, boolean audio) {
         this.TAG = tag;
         this.audio = audio;
+        setName("Filter");
         initFilter();
     }
 

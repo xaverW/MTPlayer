@@ -18,10 +18,7 @@ package de.p2tools.mtplayer.gui.configdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.configdialog.configpanes.PaneFilmDouble;
-import de.p2tools.mtplayer.gui.configdialog.configpanes.PaneFilmLoad;
-import de.p2tools.mtplayer.gui.configdialog.configpanes.PaneFilmSender;
-import de.p2tools.mtplayer.gui.configdialog.configpanes.PaneFilmUt;
+import de.p2tools.mtplayer.gui.configdialog.configpanes.*;
 import de.p2tools.mtplayer.gui.configdialog.paneblacklist.PaneBlackList;
 import de.p2tools.p2lib.dialogs.accordion.P2AccordionPane;
 import javafx.beans.property.BooleanProperty;
@@ -35,6 +32,8 @@ import java.util.Collection;
 public class ControllerLoad extends P2AccordionPane {
 
     private PaneFilmLoad paneFilmLoad;
+    private PaneFilter paneFilter;
+    private PaneFilterProfile paneFilterProfile;
     private PaneFilmDouble paneFilmDouble;
     private PaneFilmUt paneFilmUt;
     private PaneFilmUt paneFilmMark;
@@ -57,6 +56,8 @@ public class ControllerLoad extends P2AccordionPane {
     @Override
     public void close() {
         paneFilmLoad.close();
+        paneFilter.close();
+        paneFilterProfile.close();
         paneFilmDouble.close();
         paneFilmUt.close();
         paneFilmMark.close();
@@ -70,6 +71,12 @@ public class ControllerLoad extends P2AccordionPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         paneFilmLoad = new PaneFilmLoad(stage, progData, diacriticChanged);
         paneFilmLoad.make(result);
+
+        paneFilter = new PaneFilter(stage);
+        paneFilter.make(result);
+
+        paneFilterProfile = new PaneFilterProfile(stage);
+        paneFilterProfile.make(result);
 
         paneFilmDouble = new PaneFilmDouble(stage, progData);
         paneFilmDouble.make(result);

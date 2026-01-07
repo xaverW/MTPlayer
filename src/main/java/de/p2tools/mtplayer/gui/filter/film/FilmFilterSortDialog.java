@@ -96,7 +96,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(getStage());
             } else {
                 int res = filterDto.filterWorker.getFilmFilterList().top(sel, true);
                 tableView.getSelectionModel().select(res);
@@ -109,7 +109,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(getStage());
             } else {
                 int res = filterDto.filterWorker.getFilmFilterList().top(sel, false);
                 tableView.getSelectionModel().select(res);
@@ -122,7 +122,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(getStage());
             } else {
                 int res = filterDto.filterWorker.getFilmFilterList().up(sel, true);
                 tableView.getSelectionModel().select(res);
@@ -135,7 +135,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
             if (sel < 0) {
-                P2Alert.showInfoNoSelection();
+                P2Alert.showInfoNoSelection(getStage());
             } else {
                 int res = filterDto.filterWorker.getFilmFilterList().up(sel, false);
                 tableView.getSelectionModel().select(res);
@@ -146,11 +146,11 @@ public class FilmFilterSortDialog extends P2DialogExtra {
     private void delFilter() {
         FilmFilter sf = tableView.getSelectionModel().getSelectedItem();
         if (sf == null) {
-            P2Alert.showInfoNoSelection();
+            P2Alert.showInfoNoSelection(getStage());
             return;
         }
 
-        if (filterDto.filterWorker.getFilmFilterList().removeStoredFilter(sf)) {
+        if (filterDto.filterWorker.getFilmFilterList().removeStoredFilter(getStage(), sf)) {
             tableView.getSelectionModel().selectFirst();
         }
     }

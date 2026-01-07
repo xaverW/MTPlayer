@@ -17,10 +17,12 @@
 package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.stage.Stage;
 
 public class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2DataList<FilmFilter> {
     public String TAG;
@@ -123,12 +125,16 @@ public class FilmFilterList extends SimpleListProperty<FilmFilter> implements P2
     }
 
     public boolean removeStoredFilter(FilmFilter sf) {
+        return removeStoredFilter(ProgData.getInstance().primaryStage, sf);
+    }
+
+    public boolean removeStoredFilter(Stage stage, FilmFilter sf) {
         // delete stored filter
         if (sf == null) {
             return false;
         }
 
-        if (P2Alert.showAlertOkCancel("Löschen", "Filterprofil löschen",
+        if (P2Alert.showAlertOkCancel(stage, "Löschen", "Filterprofil löschen",
                 "Soll das Filterprofil: " +
                         sf.getName() + "\n" +
                         "gelöscht werden?")) {

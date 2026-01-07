@@ -156,10 +156,37 @@ public class FilmFilterControllerProfiles extends VBox {
         mbFilterTools.setTooltip(new Tooltip("Gespeicherte Filterprofile bearbeiten"));
 
         if (filterDto.audio) {
-            cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_AUDIO_SEL_FILTER.get());
+            // zuerst den ausgewählten suchen und nehmen
+            if (ProgConfig.FILTER_AUDIO_PROG_START_ON.get() &&
+                    !ProgConfig.FILTER_AUDIO_PROG_START.getValueSafe().isEmpty()) {
+
+                Optional<FilmFilter> opt = progData.filterWorkerAudio.getFilmFilterList()
+                        .stream()
+                        .filter(f -> f.getName().equals(ProgConfig.FILTER_AUDIO_PROG_START.get())).findAny();
+                opt.ifPresent(filmFilter -> {
+                    cboFilterProfiles.getSelectionModel().select(filmFilter);
+                    loadFilter();
+                });
+            } else {
+                cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_AUDIO_SEL_FILTER.get());
+            }
             ProgConfig.FILTER_AUDIO_SEL_FILTER.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
+
         } else {
-            cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_FILM_SEL_FILTER.get());
+            // zuerst den ausgewählten suchen und nehmen
+            if (ProgConfig.FILTER_FILM_PROG_START_ON.get() &&
+                    !ProgConfig.FILTER_FILM_PROG_START.getValueSafe().isEmpty()) {
+
+                Optional<FilmFilter> opt = progData.filterWorkerFilm.getFilmFilterList()
+                        .stream()
+                        .filter(f -> f.getName().equals(ProgConfig.FILTER_FILM_PROG_START.get())).findAny();
+                opt.ifPresent(filmFilter -> {
+                    cboFilterProfiles.getSelectionModel().select(filmFilter);
+                    loadFilter();
+                });
+            } else {
+                cboFilterProfiles.getSelectionModel().select(ProgConfig.FILTER_FILM_SEL_FILTER.get());
+            }
             ProgConfig.FILTER_FILM_SEL_FILTER.bind(cboFilterProfiles.getSelectionModel().selectedIndexProperty());
         }
 
