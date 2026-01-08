@@ -105,7 +105,7 @@ public class DownloadTableContextMenu {
                 miCopyUrl, miMediaDb);
 
 
-        final MenuItem miSelectAll = new MenuItem("Alles auswählen");
+        final MenuItem miSelectAll = new MenuItem("Alle auswählen");
         miSelectAll.setOnAction(a -> tableView.getSelectionModel().selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> downloadGuiController.invertSelection());

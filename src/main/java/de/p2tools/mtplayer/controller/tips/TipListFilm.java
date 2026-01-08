@@ -30,10 +30,14 @@ public class TipListFilm {
 
 
         String text = "Im Tab \"Filme\" wird die Liste " +
-                "aller Filme angezeigt. Links neben " +
+                "aller Filme angezeigt." +
+                "\n\n" +
+                "Links neben " +
                 "der Tabelle sind die Filter, mit " +
                 "denen die Filme gefiltert werden " +
-                "können. In der Tabelle und rechts " +
+                "können." +
+                "\n\n" +
+                "In der Tabelle und rechts " +
                 "daneben, können Filme gestartet " +
                 "und gespeichert werden. Unter der " +
                 "Tabelle sind Infos zum " +
@@ -103,13 +107,13 @@ public class TipListFilm {
                 "angeben, welche Ordner nach " +
                 "Filmen durchsucht werden sollen." +
                 "\n\n" +
-                "Es gibt eine Liste min \"internen\"" +
+                "Es gibt eine Liste mit \"internen\"" +
                 "Medien, diese Liste wird bei jedem " +
                 "Programmstart durchsucht." +
                 "\n\n" +
                 "Die andere List mit Medien wird nur " +
                 "beim Einrichten durchsucht. Hier " +
-                "kann man also z.B.: Medien auf einer " +
+                "kann man z.B.: Medien auf einer " +
                 "USB-Platte die nicht immer am Rechner " +
                 "angeschlossen ist, vorgeben.";
         image = "/de/p2tools/mtplayer/res/tips/film/film-5.png";
@@ -122,7 +126,7 @@ public class TipListFilm {
                 "kann die Filmliste beim " +
                 "Laden beschränkt werden:" +
                 "\n\n" +
-                "Z.B. können nur die letzten " +
+                "Z.B.: können nur die Filme der letzten " +
                 "50 Tage geladen werden. Filme " +
                 "die kein Datum haben, werden " +
                 "immer geladen." +
@@ -134,6 +138,25 @@ public class TipListFilm {
                 "Rechner mit wenig Speicher " +
                 "ausgestattet ist).";
         image = "/de/p2tools/mtplayer/res/tips/film/film-6.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "Das Programm verwaltet zwei Blacklists. Die eine (Filme) " +
+                "wird beim Laden der Filmliste bereits angewendet. Die Filme " +
+                "landen dann gar nicht in der Filmliste." +
+                "\n\n" +
+                "Die zweite (Backlist) wird auf die geladene Filmliste angewendet. Sie kann " +
+                "ein- und ausgeschaltet werden. So kann ich Filme mal ausblenden und auch wieder " +
+                "einblenden. Im Filmfilter kann sie ein- und ausgeschaltet werden." +
+                "\n\n" +
+                "In den Einstellungen können beide Listen verwaltet werden. Dort ist es auch " +
+                "möglich, die Blacklist als \"Whitelist\" zu verwenden. Es werden dann nur " +
+                "Filme die zur Liste passen angezeigt." +
+                "\n\n" +
+                "Es kann auch festgelegt werden, ob ein Eintrag für die Filmliste, Audioliste oder beide " +
+                "zuständig ist.";
+        image = "/de/p2tools/mtplayer/res/tips/film/film-7.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 

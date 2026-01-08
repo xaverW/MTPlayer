@@ -80,7 +80,7 @@ public class AboTableContextMenu {
 
 
         // Auswahl
-        final MenuItem miSelectAll = new MenuItem("alles auswählen");
+        final MenuItem miSelectAll = new MenuItem("Alle auswählen");
         miSelectAll.setOnAction(a -> tableView.getSelectionModel().selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> aboGuiController.invertSelection());

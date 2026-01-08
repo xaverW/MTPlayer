@@ -32,7 +32,8 @@ public class TipBox extends VBox {
     private final ImageView imageView = new ImageView();
     private final TextArea taText = new TextArea();
     private final HBox hBoxHyper = new HBox();
-    private int imageSize = 450;
+    private int imageSizeW = 450;
+    private int imageSizeH = -1;
 
     public TipBox() {
         initTop();
@@ -60,10 +61,10 @@ public class TipBox extends VBox {
     private void setTipOfDay() {
         Image im;
         if (tip.getImage() != null) {
-            if (imageSize > 0) {
-                im = new Image(tip.getImage(), imageSize, imageSize, true, true);
+            if (imageSizeW > 0) {
+                im = new Image(tip.getImage(), imageSizeW, -1, true, true);
             } else {
-                im = new Image(tip.getImage(), 400, 400, true, true);
+                im = new Image(tip.getImage(), 400, -1, true, true);
             }
             imageView.setImage(im);
         } else {

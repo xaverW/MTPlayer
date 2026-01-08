@@ -139,7 +139,7 @@ public class AboMenu {
         getSubMenuFilter(mb);
 
 
-        final MenuItem miSelectAll = new MenuItem("Alles auswählen");
+        final MenuItem miSelectAll = new MenuItem("Alle auswählen");
         miSelectAll.setOnAction(a -> progData.aboGuiController.selectAll());
         final MenuItem miSelection = new MenuItem("Auswahl umkehren");
         miSelection.setOnAction(a -> progData.aboGuiController.invertSelection());

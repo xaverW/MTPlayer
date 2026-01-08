@@ -36,7 +36,8 @@ public class TipListDownload {
                 "In dem Infobereich unter der Tabelle " +
                 "werden Infos dazu angezeigt. " +
                 "Links neben der Tabelle kann dieselbe " +
-                "gefiltert werden. " +
+                "gefiltert werden." +
+                "\n\n" +
                 "Unter den Filtern sind noch ein " +
                 "paar Einstellungen für die Downloads: " +
                 "Z.B.: die Download-Bandbreite.";
@@ -46,11 +47,29 @@ public class TipListDownload {
 
 
         text = "In dem Infobereich unter der Tabelle " +
-                "kann z.B.: die Mediensammlung " +
-                "durchsucht werden. In einem Diagramm " +
+                "können z.B.: die Mediensammlung und die erledigten " +
+                "Abos durchsucht werden." +
+                "\n\n" +
+                "In einem Diagramm " +
                 "wird die laufende Bandbreite der " +
                 "Downloads angezeigt.";
         image = "/de/p2tools/mtplayer/res/tips/download/download-2.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "Bein Anlegen oder Ändern eines Downloads, wird dieser Dialog " +
+                "angezeigt." +
+                "\n\n" +
+                "Hier können die Einstellungen für den Download vorgenommen werden." +
+                "\n\n" +
+                "Die Auflösung (HD, hoch, niedrig) kann festgelegt werden. Der Dateiname " +
+                "und der Speicherpfad können vorgegeben werden. Ob eine Infodatei oder die " +
+                "Untertitel gespeichert werden sollen, wird auch hier festgelegt." +
+                "\n\n" +
+                "Zuletzt kann auch noch ausgewählt werden, ob der Download sofort starten soll oder ob er erst " +
+                "zu einer bestimmten Uhrzeit starten soll (z.B.: erst nachts).";
+        image = "/de/p2tools/mtplayer/res/tips/download/download-3.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 

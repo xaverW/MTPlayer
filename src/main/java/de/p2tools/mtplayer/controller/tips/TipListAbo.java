@@ -29,7 +29,12 @@ public class TipListAbo {
         List<TipData> pToolTipList = new ArrayList<>();
 
 
-        String text = "Im Tab Abo werden die angelegten " +
+        String text = "Ein Abo ist ein Abonnement von Filmen die " +
+                "regelmäßig gespeichert werden sollen. Man kann angeben " +
+                "für welche Filme (Titel, Thema, ..) " +
+                "automatisch ein Download erstellt wird." +
+                "\n\n" +
+                "Im Tab Abo werden die angelegten " +
                 "Abos angezeigt. Abos können hier " +
                 "angelegt, geändert und auch " +
                 "ein- und ausgeschaltet werden." +
@@ -67,13 +72,13 @@ public class TipListAbo {
         text = "Im letzten Tab wird das Ziel des Downloads ausgewählt. Im Speichern-Set " +
                 "ist auch schon ein Ziel-Pfad vorgegeben. Standardmäßig wird " +
                 "der genommen, er kann aber " +
-                "im Abo auch überschrieben werden." +
+                "im Abo überschrieben werden." +
                 "\n\n" +
-                "Beim Dateinamen ist es genauso: Standardmäßig werde die Vorgaben des Sets " +
-                "genommen, auch diese können aber überschrieben werden" +
+                "Beim Dateinamen ist es genauso: Standardmäßig wird die Vorgaben des Sets " +
+                "genommen, auch diese kann überschrieben werden" +
                 "\n\n" +
                 "Zuletzt wird unter \"Ergebnis\" angezeigt, wie der ausgewählte Pfad und " +
-                "Dateiname aussehen.";
+                "Dateiname aussieht.";
         image = "/de/p2tools/mtplayer/res/tips/abo/abo-4.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
@@ -84,6 +89,16 @@ public class TipListAbo {
                 "Film-Titel, Film-Thema oder beides werden dann schon in den " +
                 "\"Abo-Anlegen-Dialog\" eingetragen.";
         image = "/de/p2tools/mtplayer/res/tips/abo/abo-5.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
+        text = "Abos können (Kontext-Menü der Tabelle) alphabetisch sortiert werden." +
+                "\n\n" +
+                "Abos können " +
+                "auch mit der Maus sortiert werden. STRG-Taste drücken, Zeile anklicken und " +
+                "mit der Maus ziehen.";
+        image = "/de/p2tools/mtplayer/res/tips/abo/abo-6.png";
         pToolTip = new TipData(text, image);
         pToolTipList.add(pToolTip);
 

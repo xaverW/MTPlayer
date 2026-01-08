@@ -56,8 +56,8 @@ public class TipData {
                 "auch eine Anleitung zum " +
                 "Programm." +
                 "\n\n" +
-                "Fragen zum Programm und " +
-                "Ideen gerne auch per Mail.";
+                "Fragen und Ideen zum Programm " +
+                "gerne auch per Mail.";
 
         return new TipData(text, P2ProgIcons.ICON_TOOLTIP_WEBSITE, URL_WEBSITE, progOpenUrl);
     }

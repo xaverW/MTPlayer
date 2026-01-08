@@ -11,6 +11,7 @@ public class TipsFactory {
         DOWNLOAD("Downloads", TipListDownload.getTips()),
         ABO("Abos", TipListAbo.getTips()),
         FILTER("Filter", TipListFilter.getTips()),
+        SEARCH("Suchen", TipListSearch.getTips()),
         SET("Sets", TipListSet.getTips());
 
         private final String name;
