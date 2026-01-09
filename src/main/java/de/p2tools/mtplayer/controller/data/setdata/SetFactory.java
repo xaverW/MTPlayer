@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller.data.setdata;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.dialog.CheckSetDialogController;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.P2Alert;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -186,13 +185,13 @@ public class SetFactory {
 
     public static void checkPrograms(Stage stage, ProgData data, boolean showWhenOk) {
         // prüfen, ob die eingestellten Programmsets passen
-        if (data.setDataList.isEmpty()) {
-            // dann gibts nix
-            // todo beim Programmstart kommt das doppelt, wenn nach Downloads gesucht wird nämlich auch???
-            P2Alert.showErrorAlert(stage, "Set", "Sets prüfen", "Es sind keine Sets vorhanden! " +
-                    "Bitte die Standardsets importieren.");
-            return;
-        }
+//        if (data.setDataList.isEmpty()) {
+//            // dann gibts nix
+//            // todo beim Programmstart kommt das doppelt, wenn nach Downloads gesucht wird nämlich auch???
+//            P2Alert.showErrorAlert(stage, "Set", "Sets prüfen", "Es sind keine Sets vorhanden! " +
+//                    "Bitte die Standardsets importieren.");
+//            return;
+//        }
 
         final String PIPE = "| ";
         final String LEER = "      ";
