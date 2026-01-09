@@ -48,31 +48,41 @@ public class LoadAudioListWorker {
             @Override
             public void pingGui(P2Event event) {
                 ProgData.AUDIOLIST_IS_DOWNLOADING.setValue(true);
-                if (event.getAct() == P2LoadFilmlist.PROGRESS_INDETERMINATE) {
-                    progData.maskerPane.setMaskerVisible(true, true, true);
+                if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
+                    // dann wird auch die Filmliste geladen, dann nix mit dem masker
+
+                    if (event.getAct() == P2LoadFilmlist.PROGRESS_INDETERMINATE) {
+                        progData.maskerPane.setMaskerVisible(true, true, true);
+                    }
+                    progData.maskerPane.setMaskerProgress(event.getAct(), event.getText());
                 }
-                progData.maskerPane.setMaskerProgress(event.getAct(), event.getText());
             }
         });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_AUDIO_LIST_LOAD_PROGRESS) {
             @Override
             public void pingGui(P2Event event) {
-                progData.maskerPane.setMaskerProgress(event.getAct(), event.getText());
+                if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
+                    // dann wird auch die Filmliste geladen, dann nix mit dem masker
+                    progData.maskerPane.setMaskerProgress(event.getAct(), event.getText());
+                }
             }
         });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_AUDIO_LIST_LOAD_LOADED) {
             @Override
             public void pingGui() {
                 // wird nach dem Laden mehrfach aufgerufen
-                progData.maskerPane.setMaskerVisible(true, true, false);
-                progData.maskerPane.setMaskerProgress(P2LoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
+                if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
+                    // dann wird auch die Filmliste geladen, dann nix mit dem masker
+                    progData.maskerPane.setMaskerVisible(true, true, false);
+                    progData.maskerPane.setMaskerProgress(P2LoadFilmlist.PROGRESS_INDETERMINATE, "Filmliste verarbeiten");
+                }
             }
         });
         progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_AUDIO_LIST_LOAD_FINISHED) {
             @Override
             public void pingGui() {
                 P2Duration.onlyPing("Filme geladen: Nachbearbeiten");
-                afterLoading();
+                afterLoadingAudioList();
                 ProgData.AUDIOLIST_IS_DOWNLOADING.setValue(false);
             }
         });
@@ -81,8 +91,8 @@ public class LoadAudioListWorker {
     /**
      * alles was nach einem Neuladen oder Einlesen einer gespeicherten Filmliste ansteht
      */
-    private void afterLoading() {
-        boolean search = !ProgData.FILMLIST_IS_DOWNLOADING.get();
+    private void afterLoadingAudioList() {
+        boolean search = !ProgData.FILMLIST_IS_DOWNLOADING.get(); // dann auch suchen, sonst machts die Filmliste
         new Thread(() -> {
             List<String> logList = new ArrayList<>();
 
@@ -93,20 +103,26 @@ public class LoadAudioListWorker {
             AboFactory.setAboForList(true, ProgData.getInstance().audioList);
 
             logList.add("Bookmarks eintragen");
-            BookmarkFactory.markBookmarks();
+            BookmarkFactory.markBookmarks(true);
 
             logList.add("Blacklist filtern");
-            progData.maskerPane.setMaskerText("Blacklist filtern");
+            if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
+                // dann wird auch die Filmliste geladen, dann nix mit dem masker
+                progData.maskerPane.setMaskerText("Blacklist filtern");
+            }
             BlacklistFilterFactory.markFilmsIfBlack(true, false);
 
-            logList.add("Filme in Downloads eingetragen");
-            progData.maskerPane.setMaskerText("Downloads eingetragen");
-            addFilmInDownloads();
+            logList.add("Audios in Downloads eingetragen");
+            if (!ProgData.FILMLIST_IS_DOWNLOADING.get()) {
+                // dann wird auch die Filmliste geladen, dann nix mit dem masker
+                progData.maskerPane.setMaskerText("Downloads eingetragen");
+            }
+            addAudioInDownloads();
 
             P2Log.sysLog(logList);
-            P2Duration.onlyPing("Filme nachbearbeiten: Ende");
+            P2Duration.onlyPing("Audios nachbearbeiten: Ende");
 
-            workOnFilmListLoadFinished(search);
+            workOnAudioListLoadFinished(search);
 
             progData.pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
 
@@ -118,7 +134,7 @@ public class LoadAudioListWorker {
         }).start();
     }
 
-    private void workOnFilmListLoadFinished(boolean search) {
+    private void workOnAudioListLoadFinished(boolean search) {
         Platform.runLater(() -> {
             // alle Sender laden
             ThemeListFactory.allChannelListAudio.setAll(Arrays.asList(progData.audioList.sender));
@@ -135,7 +151,7 @@ public class LoadAudioListWorker {
         });
     }
 
-    private static synchronized void addFilmInDownloads() {
+    private static synchronized void addAudioInDownloads() {
         // bei einmal Downloads nach einem Programmstart/Neuladen der Filmliste
         // den Film wieder eintragen
         P2Duration.counterStart("addFilmInList");

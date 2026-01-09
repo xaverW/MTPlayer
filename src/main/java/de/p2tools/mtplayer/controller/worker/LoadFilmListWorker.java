@@ -103,7 +103,7 @@ public class LoadFilmListWorker {
             AboFactory.setAboForList(false, ProgData.getInstance().filmList);
 
             logList.add("Bookmarks eintragen");
-            BookmarkFactory.markBookmarks();
+            BookmarkFactory.markBookmarks(false);
 
             logList.add("Blacklist filtern");
             progData.maskerPane.setMaskerText("Blacklist filtern");
@@ -144,7 +144,6 @@ public class LoadFilmListWorker {
                     // sonst macht es ja keinen Sinn
                     WhatsNewFactory.checkUpdate();
                     Platform.runLater(() -> {
-//                        ProgTipOfDayFactory.showDialog(ProgData.getInstance(), false);
                         if (ProgConfig.CHECK_SET_PROGRAM_START.get()) {
                             SetFactory.checkPrograms(progData.primaryStage, progData, false);
                         }

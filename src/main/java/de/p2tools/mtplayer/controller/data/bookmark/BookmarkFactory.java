@@ -202,7 +202,7 @@ public class BookmarkFactory {
         P2Duration.counterStop("addFilmDataToBookmark");
     }
 
-    public static void markBookmarks() {
+    public static void markBookmarks(boolean audio) {
         // beim Programmstart die Filme markieren
         if (ProgData.getInstance().bookmarkList.isEmpty()) {
             return;
@@ -214,20 +214,24 @@ public class BookmarkFactory {
         bookmarkList.forEach(b -> hash.put(b.getUrl(), b));
 
         P2Duration.counterStart("markBookmarks");
-        ProgData.getInstance().filmList.forEach(film -> {
-            BookmarkData bookmarkData = hash.get(film.getUrlHistory());
-            if (bookmarkData != null) {
-                film.setBookmark(true);
-                bookmarkData.setFilmData(film);
-            }
-        });
-        ProgData.getInstance().audioList.forEach(film -> {
-            BookmarkData bookmarkData = hash.get(film.getUrlHistory());
-            if (bookmarkData != null) {
-                film.setBookmark(true);
-                bookmarkData.setFilmData(film);
-            }
-        });
+        if (audio) {
+            ProgData.getInstance().audioList.forEach(film -> {
+                BookmarkData bookmarkData = hash.get(film.getUrlHistory());
+                if (bookmarkData != null) {
+                    film.setBookmark(true);
+                    bookmarkData.setFilmData(film);
+                }
+            });
+
+        } else {
+            ProgData.getInstance().filmList.forEach(film -> {
+                BookmarkData bookmarkData = hash.get(film.getUrlHistory());
+                if (bookmarkData != null) {
+                    film.setBookmark(true);
+                    bookmarkData.setFilmData(film);
+                }
+            });
+        }
         P2Duration.counterStop("markBookmarks");
     }
 }

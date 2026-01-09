@@ -66,7 +66,9 @@ public class BlacklistFilterFactory {
         final boolean maskerPane;
         if (ProgData.getInstance().maskerPane.isVisible()) {
             maskerPane = true;
-            ProgData.getInstance().maskerPane.setMaskerText("Blacklist filtern");
+            if (!audio) {
+                ProgData.getInstance().maskerPane.setMaskerText("Blacklist filtern");
+            }
         } else {
             maskerPane = false;
         }
@@ -80,6 +82,12 @@ public class BlacklistFilterFactory {
         act = 0;
         now = 0;
 
+        if (maskerPane) {
+            // intermediate, dauert norm. nicht lang, dann springt die Anzeige
+            if (!audio) {
+                ProgData.getInstance().maskerPane.setMaskerProgress(-1.0, "Blacklist filtern");
+            }
+        }
         list.forEach(film -> {
             ++act;
             ++now;
@@ -87,9 +95,11 @@ public class BlacklistFilterFactory {
                 now = 0;
                 final double percent = (double) act / sum;
                 ProgData.busy.setProgress(percent);
-                if (maskerPane) {
-                    ProgData.getInstance().maskerPane.setMaskerProgress(percent, "Blacklist filtern");
-                }
+//                if (maskerPane) {
+//                    if (!audio) {
+//                        ProgData.getInstance().maskerPane.setMaskerProgress(-1.0, "Blacklist filtern");
+//                    }
+//                }
             }
             film.setBlackBlocked(checkFilmIsBlackComplete(audio, film,
                     ProgData.getInstance().blackList, true));
@@ -100,7 +110,10 @@ public class BlacklistFilterFactory {
         makeBlackFilteredFilmlist(audio);
 
         if (maskerPane) {
-            ProgData.getInstance().maskerPane.setMaskerProgress(-1.0, "Blacklist filtern");
+            // sonst springt es beim ProgStart
+            if (!audio) {
+                ProgData.getInstance().maskerPane.setMaskerProgress(-1.0, "Blacklist filtern");
+            }
         }
         P2Log.sysLog("markFilmBlack " + (audio ? "Audio" : "Film") + " stop");
         P2Duration.counterStop("markFilmBlack" + (audio ? "-Audio" : "-Film"));
