@@ -37,6 +37,7 @@ public class InitResolutionButton {
     private void init() {
         onAction = (a) -> {
             setRes();
+            storeRes(); // wird nur beim Ändern der Radios gemacht
         };
 
         // und jetzt für den aktuellen Film das GUI setzen
@@ -48,17 +49,22 @@ public class InitResolutionButton {
     public void setRes() {
         if (addDownloadDto.rbHd.isSelected()) {
             setResolution(FilmDataMTP.RESOLUTION_HD);
-            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_HD);
-
         } else if (addDownloadDto.rbHigh.isSelected()) {
             setResolution(FilmDataMTP.RESOLUTION_NORMAL);
-            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_NORMAL);
-
         } else {
             setResolution(FilmDataMTP.RESOLUTION_SMALL);
-            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_SMALL);
         }
         addDownloadDto.updateAct();
+    }
+
+    private void storeRes() {
+        if (addDownloadDto.rbHd.isSelected()) {
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_HD);
+        } else if (addDownloadDto.rbHigh.isSelected()) {
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_NORMAL);
+        } else {
+            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.setValue(FilmDataMTP.RESOLUTION_SMALL);
+        }
     }
 
     private void setResolution(String resolution) {

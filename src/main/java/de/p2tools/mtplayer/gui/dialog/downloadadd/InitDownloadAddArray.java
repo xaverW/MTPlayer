@@ -72,7 +72,8 @@ public class InitDownloadAddArray {
                         aktPath, resolution, false);
             }
             // für den Fall, dass sie sich geändert hat
-            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.set(addDownloadData[i].download.getResolution());
+            // nur Ändern, wenn durch User geändert wird: radioButton!!
+//            ProgConfig.DOWNLOAD_DIALOG_HD_HEIGHT_LOW.set(addDownloadData[i].download.getResolution());
 
 
             // Start festlegen
