@@ -143,27 +143,31 @@ public class BlacklistFilterFactory {
         filmListFiltered.clear();
 
         if (filmList != null) {
-            filmListFiltered.setMeta(filmList);
-            Stream<FilmDataMTP> initialStream = filmList.parallelStream();
+            try {
+                filmListFiltered.setMeta(filmList);
+                Stream<FilmDataMTP> initialStream = filmList.parallelStream();
 
-            if (filterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
-                //blacklist ONLY
-                P2Log.sysLog("FilmlistBlackFilter - isBlacklistOnly");
-                initialStream = initialStream.filter(FilmDataProps::isBlackBlocked);
+                if (filterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_INVERS) {
+                    //blacklist ONLY
+                    P2Log.sysLog("FilmlistBlackFilter - isBlacklistOnly");
+                    initialStream = initialStream.filter(FilmDataProps::isBlackBlocked);
 
-            } else if (filterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
-                //blacklist ON
-                P2Log.sysLog("FilmlistBlackFilter - isBlacklistOn");
-                initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());
+                } else if (filterWorker.getActFilterSettings().getBlacklistOnOff() == BLACKLILST_FILTER_ON) {
+                    //blacklist ON
+                    P2Log.sysLog("FilmlistBlackFilter - isBlacklistOn");
+                    initialStream = initialStream.filter(filmDataMTP -> !filmDataMTP.isBlackBlocked());
 
-            } else {
-                //blacklist OFF
-                P2Log.sysLog("FilmlistBlackFilter - isBlacklistOff");
+                } else {
+                    //blacklist OFF
+                    P2Log.sysLog("FilmlistBlackFilter - isBlacklistOff");
+                }
+
+                filmListFiltered.addAll(initialStream.toList()); // das wirft die Exception beim Laden
+                // Array mit Sendernamen/Themen füllen
+                filmListFiltered.loadTheme();
+            } catch (Exception ex) {
+                P2Log.errorLog(956213487, ex);
             }
-
-            filmListFiltered.addAll(initialStream.toList());
-            // Array mit Sendernamen/Themen füllen
-            filmListFiltered.loadTheme();
         }
         P2Duration.counterStop("makeBlackFilteredFilmlist");
     }
