@@ -175,7 +175,7 @@ public class FilterWorker {
 
     private void postBlacklistChange() {
         // dann hat sich auch Blacklist-ein/aus geändert
-        System.out.println("=====> FilterWorker");
+//        System.out.println("=====> FilterWorker");
         BlacklistFilterFactory.makeBlackFilteredFilmlist(audio);
         if (audio) {
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);

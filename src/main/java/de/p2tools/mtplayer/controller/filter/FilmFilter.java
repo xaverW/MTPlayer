@@ -68,14 +68,14 @@ public class FilmFilter extends FilmFilterProps implements Filter {
             if (audio) {
                 ProgData.getInstance().filterWorkerAudio.getBackwardFilmFilter().addBackward();
                 ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_AUDIO_CHANGED);
-                System.out.println("=================================");
-                System.out.println("AUDIO FILTER MELDEN");
+//                System.out.println("=================================");
+//                System.out.println("AUDIO FILTER MELDEN");
 
             } else {
                 ProgData.getInstance().filterWorkerFilm.getBackwardFilmFilter().addBackward();
                 ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_FILTER_FILM_CHANGED);
-                System.out.println("=================================");
-                System.out.println("FILM FILTER MELDEN");
+//                System.out.println("=================================");
+//                System.out.println("FILM FILTER MELDEN");
             }
         }
     }
@@ -272,7 +272,7 @@ public class FilmFilter extends FilmFilterProps implements Filter {
     }
 
     private void reportBlacklistChange() {
-        System.out.println("====> FilmFilter");
+//        System.out.println("====> FilmFilter");
         if (!filterIsOff) { // todo ??
             BlacklistFilterFactory.makeBlackFilteredFilmlist(audio);
             if (audio) {
