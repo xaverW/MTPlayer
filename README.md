@@ -56,7 +56,7 @@ Diese Programmpakete bringen die Java-Laufzeitumgebung mit und sind nur für das
 Das ist ein Programmpaket für macOS (Apple Silicon). Es muss auch kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung ist enthalten).
 
 * **MTPlayer-XX__Raspberry__DATUM.zip**  
-Das ist ein Programmpaket, das auf einem Raspberry verwendet werden kann. Java muss installiert sein und muss ein aktueller Raspberry mit einer 64Bit CPU mit AArch64 Architektur sein. Zip entpacken und Programm Starten.
+Das ist ein Programmpaket, das auf einem Raspberry verwendet werden kann. Java muss installiert sein und es muss ein aktueller Raspberry mit einer 64Bit CPU mit AArch64 Architektur sein. Zip entpacken und Programm Starten.
 
 
 
