@@ -15,7 +15,7 @@ Ein besonderes Augenmerk waren die Filter zum Suche der Filmen. Es gibt jetzt me
 
 Im MTPlayer ist jetzt auch die ARD-Audiothek enthalten. Mit einer Live-Suche in den Mediatheken von ARD und ZDF können fehlende Beiträge vielleicht doch gefunden werden.  
 
-Es lassen sich Abos anlegen, die dann automatisch Filme/Audios suchen und speichern. Auch die Abos profitieren bei der Suche nach den Beiträgen, von den erweiterten Filtern. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen und mit einer Mediensammlung für bereits geladene Filme können doppelte Downloads zu vermeiden.
+Es lassen sich Abos anlegen, die dann automatisch Filme/Audios suchen und speichern. Auch die Abos profitieren bei der Suche nach den Beiträgen, von den erweiterten Filtern. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen und mit einer Mediensammlung für bereits geladene Filme können doppelte Downloads zu vermieden werden.
 <br />
 <br />
 
@@ -35,7 +35,7 @@ java -jar MTPlayer.jar ORDNER
 Unterstützt wird Linux, Windows und MacOs. 
 
 Das Programm benötigt eine aktuelle Java-VM ab Version: Java 17.
-Diese muss installiert sein oder es werden die Version mit enthaltenem Java verwendet. FX-Runtime bringt das Programm bereits mit und muss nicht installiert werden.
+Diese muss installiert sein oder man verwendet die Version mit enthaltenem Java. FX-Runtime bringt das Programm bereits mit und muss nicht installiert werden.
 
 <br />
 
@@ -56,7 +56,7 @@ Diese Programmpakete bringen die Java-Laufzeitumgebung mit und sind nur für das
 Das ist ein Programmpaket für macOS (Apple Silicon). Es muss auch kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung ist enthalten).
 
 * **MTPlayer-XX__Raspberry__DATUM.zip**  
-Das ist ein Programmpaket, das auf einem Raspberry verwendet werden kann. Es muss ein aktueller Raspberry mit einer 64Bit CPU mit AArch64 Architektur sein. Zip entpacken und Programm Starten.
+Das ist ein Programmpaket, das auf einem Raspberry verwendet werden kann. Java muss installiert sein us muss ein aktueller Raspberry mit einer 64Bit CPU mit AArch64 Architektur sein. Zip entpacken und Programm Starten.
 
 
 
@@ -71,7 +71,9 @@ Der VLC-Player (oder ein anderer Player) und ffmpeg müssen installiert sein.
 
 ## Installation
 MTPlayer-XX__Windows==SETUP__DATUM.exe wird durch einen Doppelklick darauf installiert.  
+
 Die Mac-Version ist ein DMG-Image, das eingebunden wird (mit Doppelklick) Die enthaltene App wird dann ins Programmverzeichnis kopiert.  
+
 Die anderen Versionen müssen nicht installiert werden, das Entpacken der heruntergeladenen ZIP-Datei ist quasi die Installation. Die heruntergeladene ZIP-Datei entpacken und den entpackten Ordner MTPlayer...” ins Benutzerverzeichnis verschieben. Das Programm kann dann mit Doppelklick auf:  
 Linux: “MTPlayer__Linux.sh” oder  
 Windows: “MTPlayer__Windows.exe”  
