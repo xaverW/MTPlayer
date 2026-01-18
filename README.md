@@ -15,7 +15,7 @@ Ein besonderes Augenmerk waren die Filter zum Suche der Filmen. Es gibt jetzt me
 
 Im MTPlayer ist jetzt auch die ARD-Audiothek enthalten. Mit einer Live-Suche in den Mediatheken von ARD und ZDF können fehlende Beiträge vielleicht doch gefunden werden.  
 
-Es lassen sich Abos anlegen, die dann automatisch Filme/Audios suchen und speichern. Auch die Abos profitieren bei der Suche nach den Beiträgen, von den erweiterten Filtern. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen und mit einer Mediensammlung für bereits geladene Filme können doppelte Downloads zu vermieden werden.
+Es lassen sich Abos anlegen, die dann automatisch Filme/Audios suchen und speichern. Auch die Abos profitieren bei der Suche nach den Beiträgen, von den erweiterten Filtern. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen und mit einer Mediensammlung für bereits geladene Filme können doppelte Downloads vermieden werden.
 <br />
 <br />
 
