@@ -1,5 +1,35 @@
 # MTPlayer
 
+** Version 21**
+
+* Neue Parameter für den Dateinamen beim Download: %m, %M für die Länge des Films in Minuten: 20 oder 020
+* Bookmarks wurden überarbeitet, es gibt einen eigenen Dialog in dem die Bookmarks angezeigt und verarbeitet werden können 
+* Im Bookmark-Dialog wird jetzt auch das Alter eines Bookmarks angezeigt
+* In den Tabellen können mehrere Zeilen mit der Maus markiert werden: Zeile anklicken und Maus ziehen
+* Zwei neue Tastenkürzel: Filmliste aktualisieren: alt+L, gesamte Filmliste neu laden: strg+L
+* Abo-Liste kann alphabetisch sortiert werde (Kontextmenü in der Tabelle)
+* Abo-Liste kann mit der Maus sortiert werden (STRG + rechte Maustaste und Zeile ziehen)
+* Menüs wurden überarbeitet
+* Im Log-File wird zur Uhrzeit jetzt auch das Datum angezeigt
+* Beim Testen der Sets (Programmstart oder Config-Dialog) wird auch geprüft, ob es eins zum Abspielen und mind. eins zum Download gibt.
+* Vom Filmfilter gibt es jetzt eine Minimal-Form mit nur dem nötigsten, kann im Film-Menü ausgewählt werden
+* Die Fortschrittsanzeige beim Suchen der Downloads lässt das GUI nicht mehr "springen"
+* Die ARD Audiothek wurde ins Programm integriert. Es können Beiträge geladen und angehört werden. Auch Abos/Blacklist können dafür angelegt werden. In den Einstellungen kann die Audiothek auch abgeschaltet werden.
+* In den Einstellungen der Sets kann in der Tabelle die Funktion angeklickt und damit eingestellt werden
+* Es kann ausgewählt werden, ob angesehene Filme/Downloads oder nur Downloads in der History landen (Einstellungen->Download)
+* Ein Doppelklick auf ein Filterfeld zeigt Vorschläge an. Die können in den Einstellungen vorgegeben werden und dort kann auch die Funktion abgeschaltet werden (Einstellungen->Filter)
+* Bei der Suche mit RegEx kann ausgewählt werden, ob das RegEx dem Suchtext entsprechen muss (wie bisher) oder nur im Suchtext enthalten sein muss (Einstellungen->Filter oder in den Filtereinstellungen unter den Filterfeldern: Zahnrad)
+* Anpassungen für eine MAC-Version
+* Start-Dialog beim ersten Start: Wurde für kleinere Bildschirme angepasst
+* Der Tooltip (Tabellenzeile in der Tabelle Download) zeigt jetzt die Start- und Endzeit eines Downloads an
+* In der Statuszeile wird die Restzeit aller gestarteten (wartende und laufende) Downloads angezeigt
+* Es gibt einen neuen Hilfe-Dialog -> Menü-Hilfe
+* Das Programm hat ein ganz neues Icon-Set bekommen. Das sind jetzt Vektorgrafiken. Diese lassen sich verlustfrei skalieren und farblich anpassen. So kann die Optik im Programm an vielen Stellen jetzt geändert werden (-> Einstellungen)
+* Einstellung der Sender die man laden will: Fehlende Sender hinzugefügt
+* Einstellung der Sender die man laden will: Jetzt wird ausgewählt, was man sehen will und nicht mehr was man nicht sehen will
+* Zum Programmstart kann ein Filterprofil ausgewählt werden, das dann geladen wird (Einstellungen)
+* ...
+
 **Version 20**
 
 * Live-Suche ZDF wurde an die geänderte Mediathek vom ZDF angepasst

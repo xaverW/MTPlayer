@@ -2,17 +2,20 @@
 
 # MTPlayer
 
-Das Programm MTPlayer ist eine Art Suchmaschine für Filme der Mediatheken der Öffentlich-Rechtlichen Sender. Das Programm stellt eine Liste mit Links zu den Filmen zur Verfügung. Es ist möglich, diese URLs an externe Programme weiterzugeben. Mit diesen Programmen können dann diese Filme angesehen oder aufgezeichnet werden.
+Das Programm MTPlayer ist eine Art Suchmaschine für Filme der Mediatheken der Öffentlich-Rechtlichen Sender. Es ist der Nachfolger meines Programms MediathekView.  Das Programm stellt eine Liste mit Links zu den Filmen zur Verfügung. Es ist möglich, diese URLs an externe Programme weiterzugeben. Mit diesen Programmen können dann diese Filme angesehen oder aufgezeichnet werden.
+<br />
+
+Die Arbeit dafür (Programm, Filmliste aktuell halten, ..) war für mich alleine nicht mehr zu leisten. Deswegen habe ich das Projekt als Community-Projekt gestartet. Die Filmlilste wird jetzt dort weiter gepflegt. MTPlayer verwendet auch diese Filmlilste.
 <br />
 
 ## Infos
-Die Arbeit für das Projekt (MediathekView), die über die Pflege des Programms hinaus, weiter nötig war (z.B. die Filmliste aktuell zu halten) war für mich alleine nicht mehr zu leisten. So habe ich mich entschlossen, das Projekt als Community-Projekt weiter laufen zu lassen, um die Filmliste wird sich seit dem super gekümmert. Ich habe dadurch wieder die Zeit gefunden, an anderen Programmen zu arbeiten.
-<br />
-<br />
-MTPlayer ist nun dabei herausgekommen. Es ist ein Nachfolger von MediathekView (das von MediathekView.de weiter gepflegt wird). Damit wird ebenfalls die Filmliste des Projekts MediathekView.de durchsucht. Es sind Online-Mediatheken verschiedener Sender enthalten und die Filme können aufgezeichnet und abgespielt werden.
-<br />
-<br />
-MTPlayer wurde ganz neu mit einem modernem GUI-Toolkit erstellt. Ein besonderes Augenmerk habe ich auf die Suche nach Filmen gelegt. Mit einem deutlich erweiterten Filter, auch mit der Möglichkeit einzelne Filtereinstellungen zu speichern und wieder abzurufen, wurden die Möglichkeiten des Suchens stark erweitert. Auch die angelegten Abos können die Filme nach vielen weiteren Kriterien auswählen. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen. Eine Mediensammlung für bereits geladene Filme kann mit dem Programm verwaltet werden. Damit ist es leicht möglich, doppelte Downloads zu vermeiden. Auch gibt es eine Live-Suche in den Mediatheken von ARD und ZDF. So können fehlende Beiträge vielleicht doch gefunden werden.
+MTPlayer wurde ganz neu mit einem modernem GUI-Toolkit erstellt. Viele Vorschläge die ich von Usern erhalten habe, konnten deswegen damit umgesetzt werden. Es wurde an vielen Stellen verbessert und erweitert.  
+
+Ein besonderes Augenmerk waren die Filter zum Suche der Filmen. Es gibt jetzt mehr Filter die man bei der Suche verwenden kann und die Filtereinstellungen können auf verschiedene Weise, gespeichert und wieder zurückgeholt werden. So kann viel gezielter nach Filmen gesucht werden.  
+
+Im MTPlayer ist jetzt auch die ARD-Audiothek enthalten. Mit einer Live-Suche in den Mediatheken von ARD und ZDF können fehlende Beiträge vielleicht doch gefunden werden.  
+
+Es lassen sich Abos anlegen, die dann automatisch Filme/Audios suchen und speichern. Auch die Abos profitieren bei der Suche nach den Beiträgen, von den erweiterten Filtern. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen und mit einer Mediensammlung für bereits geladene Filme können doppelte Downloads zu vermeiden.
 <br />
 <br />
 
@@ -29,15 +32,15 @@ java -jar MTPlayer.jar ORDNER
 
 ## Systemvoraussetzungen
 
-Unterstützt wird Windows und Linux. 
+Unterstützt wird Linux, Windows und MacOs. 
 
-Das Programm benötigt unter Windows und Linux eine aktuelle Java-VM ab Version: Java 17.
-Für Linux-Benutzer wird OpenJDK empfohlen. (FX-Runtime bringt das Programm bereits mit und muss nicht installiert werden).
+Das Programm benötigt eine aktuelle Java-VM ab Version: Java 17.
+Diese muss installiert sein oder es werden die Version mit enthaltenem Java verwendet. FX-Runtime bringt das Programm bereits mit und muss nicht installiert werden.
 
 <br />
 
 ## Download
-Das Programm wird in fünf Paketen angeboten. Diese unterscheiden sich nur im “Zubehör”, das Programm selbst ist in allen Paketen identisch: 
+Das Programm wird in verschiedenen Paketen angeboten. Diese unterscheiden sich nur im “Zubehör”, das Programm selbst ist in allen Paketen identisch: 
 
 * **MTPlayer-XX__Windows==SETUP__DATUM.exe**  
 Mit diesem Programmpaket kann das Programm auf Windows installiert werden: Doppelklick und alles wird eingerichtet, auch ein Startbutton auf dem Desktop. Es muss auch kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung ist enthalten).
@@ -49,20 +52,27 @@ Das Programmpaket bringt nur das Programm und die benötigten Hilfsprogramme abe
 **MTPlayer-XX__Win+Java__DATUM.zip**  
 Diese Programmpakete bringen die Java-Laufzeitumgebung mit und sind nur für das angegebene Betriebssystem: Linux oder Windows. Es muss kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung liegt im Ordner: "Java" und kommt von jdk.java.net). Zip entpacken und Programm starten.
 
+* **MTPlayer-XX__Mac=mit=Java__DATUM.dmg**  
+Das ist ein Programmpaket für macOS (Apple Silicon). Es muss auch kein Java auf dem System installiert sein. (Die Java-Laufzeitumgebung ist enthalten).
+
 * **MTPlayer-XX__Raspberry__DATUM.zip**  
 Das ist ein Programmpaket, das auf einem Raspberry verwendet werden kann. Es muss ein aktueller Raspberry mit einer 64Bit CPU mit AArch64 Architektur sein. Zip entpacken und Programm Starten.
+
+
 
 zum Download: [github.com/xaverW/MTPlayer/releases](https://github.com/xaverW/MTPlayer/releases)
 
 <br />
 
-Windows:  
-Der VLC-Player muss installiert sein.  
+Windows, MacOs:  
+Der VLC-Player (oder ein anderer Player) muss installiert sein.  
 Linux:  
-Der VLC-Player und ffmpeg müssen installiert sein.  
+Der VLC-Player (oder ein anderer Player) und ffmpeg müssen installiert sein.  
 
 ## Installation
-MTPlayer-XX__Windows==SETUP__DATUM.exe wird durch einen Doppelklick darauf installiert. Die anderen Versionen müssen nicht installiert werden, das Entpacken der heruntergeladenen ZIP-Datei ist quasi die Installation. Die heruntergeladene ZIP-Datei entpacken und den entpackten Ordner MTPlayer...” ins Benutzerverzeichnis verschieben. Das Programm kann dann mit Doppelklick auf:  
+MTPlayer-XX__Windows==SETUP__DATUM.exe wird durch einen Doppelklick darauf installiert.  
+Die Mac-Version ist ein DMG-Image, das eingebunden wird (mit Doppelklick) Die enthaltene App wird dann ins Programmverzeichnis kopiert.  
+Die anderen Versionen müssen nicht installiert werden, das Entpacken der heruntergeladenen ZIP-Datei ist quasi die Installation. Die heruntergeladene ZIP-Datei entpacken und den entpackten Ordner MTPlayer...” ins Benutzerverzeichnis verschieben. Das Programm kann dann mit Doppelklick auf:  
 Linux: “MTPlayer__Linux.sh” oder  
 Windows: “MTPlayer__Windows.exe”  
 gestartet werden.
