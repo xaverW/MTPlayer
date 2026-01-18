@@ -25,11 +25,14 @@ $ gradle init
 
 
 ==================================
+* Directory will be modified [yes, no]: y
 * beim gradle-init dann diese
   Parametern auswählen
 ==================================
 
-Select type of build to generate:
+* Directory will be modified [yes, no]: y
+
+* Select type of build to generate:
   1: Application
   2: Library
   3: Gradle plugin
@@ -62,7 +65,7 @@ $ cp ./build-infos/gitignore ./.gitignore
   Programm bauen
 ==================================
 
-$ ./gradlew fatJar
+$ ./gradlew shadowJar --no-build-cache --warning-mode all  --no-configuration-cache
 
 ==================================
 * im MTPlayer-Verzeichis kann dann
@@ -70,8 +73,7 @@ $ ./gradlew fatJar
   gestartet werden
 ==================================
 
-$ ./gradlew run
-
+$ ./gradlew run --no-build-cache --warning-mode all  --no-configuration-cache
 
 ==================================
 * im build-Verzeichniss liegt dann
@@ -94,5 +96,5 @@ $ java -jar MTPlayer.jar
 
 $ git status
 $ git pull
-$ ./gradlew fatJar
+$ ./gradlew shadowJar --no-build-cache --warning-mode all  --no-configuration-cache
 

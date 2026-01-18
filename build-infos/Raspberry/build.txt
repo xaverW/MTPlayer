@@ -25,11 +25,14 @@ $ gradle init
 
 
 ==================================
+* Directory will be modified [yes, no]: y
 * beim gradle-init dann diese
   Parametern auswählen
 ==================================
 
-Select type of build to generate:
+* Directory will be modified [yes, no]: y
+
+* Select type of build to generate:
   1: Application
   2: Library
   3: Gradle plugin
@@ -60,23 +63,25 @@ $ cp ./build-infos/gitignore ./.gitignore
 ==================================
 * im MTPlayer-Verzeichis dann das
   Programm bauen
+  (bauen geht auch auf einem X86)
 ==================================
 
-$ ./gradlew fatJar
+$ ./gradlew shadowJar --no-build-cache --warning-mode all  --no-configuration-cache
 
 ==================================
 * im MTPlayer-Verzeichis kann dann
   das Programm auch mit gradle
   gestartet werden
+  (das geht aber nur auf einem Raspberry)
 ==================================
 
-$ ./gradlew run
-
+$ ./gradlew run --no-build-cache --warning-mode all  --no-configuration-cache
 
 ==================================
 * im build-Verzeichniss liegt dann
   das fertige jar-File, das dann
   gestartet werden kann
+  (nur auf einem Raspberry)
 ==================================
 
 $ cd build/fatJar
@@ -94,5 +99,5 @@ $ java -jar MTPlayer.jar
 
 $ git status
 $ git pull
-$ ./gradlew fatJar
+$ ./gradlew shadowJar --no-build-cache --warning-mode all  --no-configuration-cache
 
