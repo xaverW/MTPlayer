@@ -58,7 +58,7 @@ public class TipListDownload {
         pToolTipList.add(pToolTip);
 
 
-        text = "Bein Anlegen oder Ändern eines Downloads, wird dieser Dialog " +
+        text = "Beim Anlegen oder Ändern eines Downloads, wird dieser Dialog " +
                 "angezeigt." +
                 "\n\n" +
                 "Hier können die Einstellungen für den Download vorgenommen werden." +

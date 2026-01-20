@@ -76,7 +76,7 @@ public class TipListSearch {
                 "\n" +
                 "\"#:Sport\" sucht nach Filmen deren Titel genau \"Sport\" ist." +
                 "\n\n" +
-                "Das Programm prüft, ob die Regex korrekt ist. Das Suchfeld hat dann einen " +
+                "Das Programm prüft, ob die RegEx korrekt ist. Das Suchfeld hat dann einen " +
                 "grünen Hintergrund, bei einem Fehler ist es rot.";
         image = "/de/p2tools/mtplayer/res/tips/search/search-4.png";
         pToolTip = new TipData(text, image);

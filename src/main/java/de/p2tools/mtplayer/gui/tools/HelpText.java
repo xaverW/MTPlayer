@@ -147,82 +147,41 @@ public class HelpText {
                     "\n";
 
     public static final String FILTER_FIELD =
-            "Mit den Textfeldern kann nach einem wörtlichen Suchtext (Suchtext muss enthalten sein/" +
-                    "oder darf nicht enthalten sein) " +
-                    "oder nach " +
-                    "regulären Ausdrücken (RegExp) gesucht werden.\n" +
+            "In den Textfeldern kann mit einem Suchbegriff oder mit " +
+                    "regulären Ausdrücken (RegEx) gesucht werden.\n" +
                     "\n" +
                     "Groß- und Kleinschreibung wird bei beiden Arten der Suche nicht unterschieden.\n" +
                     "\n" +
 
-                    "-- Wörtlicher Suchtext muss enthalten sein --\n" +
-                    "Ein wörtlicher Suchtext findet alle Dateien bei denen der Suchtext an beliebiger " +
-                    "Stelle im durchsuchten Bereich enthalten ist." +
-                    "\n" +
-                    "\n" +
-                    "Wörtlicher Suchtext muss in \" angegeben werden. Dann wird alles gefunden, was im durchsuchten " +
-                    "Bereich den Inhalt zwischen den \" enthält. Hier sind auch \",\" und \":\" erlaubt. Der gesamte Suchtext " +
-                    "muss aber in \" eingeschlossen werden, z.B." +
-                    "\n" +
-                    "\"das, das und das wird gesucht\"" +
-                    "\n" +
-                    "Dann muss der durchsuchte " +
-                    "Bereich genau das \"das, das und das wird gesucht\" enthalten (ohne die \")." +
-                    "\n" +
-                    "Eine Suche mit RegEx, z.B. \"#:.*pass,+.*\" kann damit verkürzt werden: \"pass,\". " +
-                    "Das ist kürzer und läuft im Programm auch schneller." +
-                    "\n\n" +
-
                     "Um mehrere Begriffe zu suchen müssen diese durch Komma oder Doppelpunkt " +
-                    "getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe " +
-                    "muss vorkommen), der Doppelpunkt mit UND (=> alle Begriffe müssen vorkommen).\n" +
+                    "getrennt werden. Das Komma verknüpft die Begriffe mit ODER , " +
+                    "der Doppelpunkt mit UND.\n" +
                     "\n" +
                     "\n" +
 
-                    "-- Wörtlicher Suchtext darf nicht enthalten sein --\n" +
-                    "Der Suchtext muss mit '!:' (ohne die ' ') beginnen.\n" +
-                    "Ein wörtlicher Suchtext schließt alle Dateien aus, bei denen der Suchtext an beliebiger " +
-                    "Stelle im durchsuchten Bereich enthalten ist.\n" +
-                    "\n" +
-                    "Um mehrere Begriffe auszuschließen, müssen diese durch Komma oder Doppelpunkt " +
-                    "getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe " +
-                    "muss enthalten sein) und der Doppelpunkt verknüpft die Begriffe mit UND " +
-                    "(=> alle Begriffe müssen enthalten sein, damit der Beitrag ausgeschlossen wird).\n" +
-                    "\n" +
-                    "\n" +
-
-                    "Suchtext und Suchbegriffe dürfen Leerzeichen enthalten, aber kein Komma und keinen Doppelpunkt " +
-                    "(wenn der gesamte Suchtext nicht in \" eingeschlossen ist.)" +
+                    "Suchtext und Suchbegriffe dürfen Leerzeichen enthalten, " +
+                    "aber kein Komma und keinen Doppelpunkt." +
                     "\n" +
                     "\n" +
                     "Beispiele:" +
                     "\n" +
-                    "'Tagesschau' findet u.a. 'Tagesschau, 12:00 Uhr', 'ARD Tagesschau Livestream', 'Bei Logo und der Tagesschau'.\n" +
-                    "'Sport,Fussball' (Komma-getrennt) findet Filme bei denen 'Sport' oder 'Fussball' " +
-                    "oder beides vorkommt, u.a. 'Wintersport im Mumintal' und 'Wie wird man Fussballprofi?'.\n" +
-                    "'Sport:Fussball' (Doppelpunkt-getrennt) findet nur Dateien bei denen " +
-                    "beides ('Sport' und 'Fussball') vorkommt, z.B. 'Wintersport, Fussball und Formel 1'.\n" +
-                    "\n" +
-                    "'!:Auto,Motorrad', es werden nur Beiträge gefunden, die weder \"Auto\" noch \"Motorrad\" " +
-                    "enthalten.\n" +
-                    "'!:Auto:Motorrad', es werden Beiträge gefunden, die \"Auto\" *und* \"Motorrad\" " +
-                    "*nicht* enthalten.\n" +
+                    "\"Tagesschau\" findet u.a. 'Tagesschau, 12:00 Uhr'." +
+                    "\n\n" +
+                    "\"Sport,Fussball\" (Komma) findet Filme bei denen 'Sport' oder 'Fussball' " +
+                    "oder beides vorkommt, u.a. 'Wintersport im Mumintal'." +
+                    "\n\n" +
+                    "'Sport:Fussball' (Doppelpunkt) findet nur Dateien bei denen " +
+                    "beides ('Sport' und 'Fussball') vorkommt, z.B. 'Wintersport, Fussball und Formel 1'." +
+                    "\n\n" +
 
+                    "RegEx müssen mit\"#:\" eingeleitet werden." +
                     "\n" +
-                    "-- Reguläre Ausdrücke --\n" +
-                    "Ein Suchtext aus regulären Ausdrücken (RegExp) muss mit '#:' (ohne die ' ') beginnen.\n" +
-                    "\n" +
-                    "Beliebige Zeichen mit in die Suche aufnehmen (als '.+', '.*' oder '.?'') macht einen Unterschied!\n" +
-                    "\n" +
-                    "Beispiele:\n" +
-                    "'#:Burger' oder '#:^burger$' -- beide finden 'Burger' und 'burger' und nichts sonst.\n" +
-                    "'#:Burger.+' findet nicht 'Burger', aber alles was nach 'Burger' noch Zeichen " +
-                    "enthält (z.B. 'Burger für die Straubing Tigers').\n" +
-                    "'#:.+burger' findet alles was auf 'burger' oder 'Burger' " +
-                    "endet (z.B. 'Der Hamburger' und '1. Burger').\n" +
-                    "\n" +
-                    "Mehr zu regulären Ausdrücken:\n" +
-                    "https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck" +
+                    "\"#:.+burger\" findet alles was auf 'burger' oder 'Burger' " +
+                    "endet (z.B. 'Der Hamburger')." +
+                    "\n\n" +
+                    "Auf der Website gibts eine genaue Beschreibung weiterer Möglichkeiten zum Suchen:" +
+                    "\n\n" +
+                    "https://www.p2tools.de/mtplayer/manual/filter/" +
                     "\n";
 
     public static final String SEARCH_MEDIA_DIALOG = "" +
@@ -290,15 +249,17 @@ public class HelpText {
                     "wird der Name des Profils unterstrichen." +
                     "\n";
 
+    private static final String FILTER_TEXT_CLEAR = "Der Button \"Löschen\" löscht mit dem ersten Klick " +
+            "zuerst die Textfilter oben, beim zweiten Klick dann auch die Filter darunter.\n\n";
+
     public static final String FILTER_INFO =
-            "Die Menüs, Textfelder und Schieberegler erlauben ein detailliertes " +
-                    "Durchsuchen und Filtern der vorhandenen Filme.\n" +
-                    "\n" +
-                    "Im Bereich darunter können ganze Such-/Filtereinstellungen als Profile " +
+            FILTER_TEXT_CLEAR +
+                    "Oben sind die Textfilter und Schieberegler zum Suchen.\n" +
+                    "Im Bereich darunter können Such-/Filtereinstellungen als Profile " +
                     "angelegt und verwaltet werden.\n" +
                     "\n" +
-                    "Darunter wird ein Schalter zum Ein/Ausschalten der Blacklist " +
-                    "angezeigt. (Aber nur wenn in den Programm-Einstellungen > Blacklist diese eingeschaltet ist)\n" +
+                    "Darunter ist ein Schalter zum Ein/Ausschalten der Blacklist. " +
+                    "(Nur wenn sie in den Programm-Einstellungen eingeschaltet ist)\n" +
                     "  - Blacklist aus: Alle Filme werden angezeigt.\n" +
                     "  - Blacklist ein: Von der Blacklist erfasste Filme werden nicht angezeigt.\n" +
                     "  - Blacklist invers: Nur von der Blacklist erfasste Filme werden angezeigt.\n" +
@@ -308,30 +269,14 @@ public class HelpText {
                     "damit wieder ausgewählt werden." +
                     "\n" +
                     "\n" +
-                    "Der Filter-Einstellungsbutton (das Zahnrad) öffnet einen Dialog in dem die einzelnen " +
-                    "Filter ein- oder ausgeschaltet werden können.\n" +
-                    "Z.B. kann dort das Suchfeld: \"Thema\" für freies Suchen " +
-                    "umgeschaltet werden. Angezeigt werden immer nur eingeschaltete Filter.\n" +
-                    "\n" +
-                    "-- Menüs \"Sender\" und \"Thema\" --\n" +
-                    "Die Einträge der Filtermenüs \"Sender\" und \"Thema\" werden automatisch aus der " +
-                    "Filmliste erstellt.\n" +
+                    "Der Einstellungsbutton (das Zahnrad) öffnet einen Dialog in dem die einzelnen " +
+                    "Filter ein- oder ausgeschaltet werden können. " +
+                    "Angezeigt werden immer nur eingeschaltete Filter.\n" +
                     "\n" +
                     "\n" +
-                    "-- Suchen und Filtern --\n" +
-                    "Mit den Textfeldern ([Thema] wenn freie Suche eingeschaltet, [Thema oder Titel], [Titel], [Irgendwo] " +
-                    "und [URL]) kann sehr detailliert gesucht werden. \"Zeitraum\", \"Filmlänge\", \"Sendezeit\" " +
-                    "(ein- oder ausschließen), \"anzeigen\" und \"ausschließen\" erlauben noch " +
-                    "weitergehende Filterung.\n" +
-                    "\n" +
-
                     "-- Besonderheiten --\n" +
-                    "[Thema oder Titel] durchsucht THEMA und TITEL der Filmliste. [Irgendwo] sucht " +
-                    "außerdem noch in BESCHREIBUNG und DATUM. \n" +
-                    "Bei einer Suche nach mehreren Suchbegriffen müssen hier alle Suchbegriffe im selben " +
-                    "Datenfeld vorkommen. Ein Film mit 'Sport' in THEMA und 'Fussball' in TITEL wird " +
-                    "von 'Sport:Fussball' nicht erfasst.\n" +
-                    "\n" +
+                    "[Thema oder Titel] durchsucht THEMA und TITEL der Filmliste.\n" +
+                    "[Irgendwo] sucht außerdem noch in BESCHREIBUNG und DATUM. \n" +
                     "[URL] sucht in der URL des Films sowie in der URL der Webseite des Films.\n" +
                     "\n" +
                     "\n" +
@@ -341,32 +286,33 @@ public class HelpText {
                     "\n";
 
     public static final String FILTER_SMALL_INFO =
-            """
-                    "Sender" und "Thema"
-                    Hier kann man auswählen, welche Sender und welches Thema angezeigt werden soll.
-                    
-                    Das Textfeld [Thema oder Titel] durchsucht THEMA und TITEL der Filmliste. \
-                    Der Suchtext muss im Thema ODER Titel vorkommen.
-                    
-                    "Zeitraum" und "Filmlänge" finden Filme die in dem vorgegebenem Zeitraum liefen und die vorgegebene \
-                    Länge haben.
-                    
-                    ==================================================
-                    Groß- und Kleinschreibung wird beim Suchen nicht unterschieden.
-                    
-                    Um mehrere Begriffe zu suchen müssen diese durch Komma oder Doppelpunkt \
-                    getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe \
-                    muss vorkommen), der Doppelpunkt mit UND (=> alle Begriffe müssen vorkommen).
-                    
-                    'Tagesschau' findet u.a. 'Tagesschau, 12:00 Uhr', 'ARD Tagesschau Livestream', 'Bei Logo und der Tagesschau'.
-                    
-                    'Sport,Fussball' (Komma-getrennt) findet Filme bei denen 'Sport' oder 'Fussball' \
-                    oder beides vorkommt, u.a. 'Wintersport im Mumintal' und 'Wie wird man Fussballprofi?'.
-                    
-                    'Sport:Fussball' (Doppelpunkt-getrennt) findet nur Dateien bei denen \
-                    beides ('Sport' und 'Fussball') vorkommt, z.B. 'Wintersport, Fussball und Formel 1'.
-                    
-                    """;
+            FILTER_TEXT_CLEAR +
+                    """
+                            "Sender" und "Thema"
+                            Hier kann man auswählen, welche Sender und welches Thema angezeigt werden soll.
+                            
+                            Das Textfeld [Thema oder Titel] durchsucht THEMA und TITEL der Filmliste. \
+                            Der Suchtext muss im Thema ODER Titel vorkommen.
+                            
+                            "Zeitraum" und "Filmlänge" finden Filme die in dem vorgegebenem Zeitraum liefen und die vorgegebene \
+                            Länge haben.
+                            
+                            ==================================================
+                            Groß- und Kleinschreibung wird beim Suchen nicht unterschieden.
+                            
+                            Um mehrere Begriffe zu suchen müssen diese durch Komma oder Doppelpunkt \
+                            getrennt werden. Das Komma verknüpft die Begriffe mit ODER (=> mindestens einer der Begriffe \
+                            muss vorkommen), der Doppelpunkt mit UND (=> alle Begriffe müssen vorkommen).
+                            
+                            'Tagesschau' findet u.a. 'Tagesschau, 12:00 Uhr', 'ARD Tagesschau Livestream'.
+                            
+                            'Sport,Fussball' (Komma) findet Filme bei denen 'Sport' oder 'Fussball' \
+                            oder beides vorkommt, u.a. 'Wintersport im Mumintal' und 'Wie wird man Fussballprofi?'.
+                            
+                            'Sport:Fussball' (Doppelpunkt) findet nur Dateien bei denen \
+                            beides ('Sport' und 'Fussball') vorkommt, z.B. 'Wintersport, Fussball und Formel 1'.
+                            
+                            """;
 
     public static final String SEARCH_SPECIAL =
             "-- Besonderheiten --" +
@@ -510,7 +456,7 @@ public class HelpText {
 
     public static final String SETDATA_RES =
             "Nicht jede Auflösung wird von jedem Sender angeboten. Wenn die gewünschte " +
-                    "Auflösung nicht verfügbar ist wird automatisch die hohe Auflösung heruntergeladen.\n" +
+                    "Auflösung nicht verfügbar ist, wird automatisch die hohe Auflösung heruntergeladen.\n" +
                     "\n" +
                     "Die Auflösung gilt nur für manuell gestartete Downloads und zum " +
                     "Abspielen von Filmen. Für Abos wird die im Abo ausgewählte Auflösung verwendet." +
@@ -518,7 +464,7 @@ public class HelpText {
 
     public static final String ABO_RES =
             "Nicht jede Auflösung wird von jedem Sender angeboten. " +
-                    "Wenn die gewünschte Auflösung nicht verfügbar ist wird " +
+                    "Wenn die gewünschte Auflösung nicht verfügbar ist, wird " +
                     "automatisch die hohe Auflösung heruntergeladen." +
                     "\n";
 
@@ -578,7 +524,7 @@ public class HelpText {
                     "wenn hier \"bei Abos Unterordner anlegen\" eingeschaltet ist. " +
                     "Der Name des Unterordners kann mit dem Auswahlmenü festgelegt werden.\n" +
                     "\n" +
-                    "Diese Einstellung wird überschrieben, wenn im Abo ein eigener " +
+                    "Diese Einstellung wird aber überschrieben, wenn im Abo ein eigener " +
                     "Abozielpfad angegeben ist. Der Download wird dann immer in einem " +
                     "Unterordner mit dem im Abozielpfad angegebenen Namen gespeichert." +
                     "\n";
@@ -593,7 +539,7 @@ public class HelpText {
     public static final String SETDATA_RESET_COLOR =
             "Wenn das Set in der Ansicht \"Filme\" als Button gestartet werden " +
                     "kann (\"Button\" im Set ist eingeschaltet), kann hier die " +
-                    "Schriftfarbe des Buttons festgelegt werden." +
+                    "Rahmenfarbe des Buttons festgelegt werden." +
                     "\n";
 
     public static final String FILTER_OFFER_TABLE =
@@ -689,7 +635,7 @@ public class HelpText {
                     "Aboliste erstellt.\n" +
                     "\n" +
                     "-- Suchen und Filtern --\n" +
-                    "\"Name\", \"Beschreibung\" sucht Abos die im \"Namen\" bzw. im der " +
+                    "\"Name\", \"Beschreibung\" sucht Abos die im \"Namen\" bzw. in der " +
                     "\"Beschreibung\" den Filtertext enthalten.\n" +
                     "\"Filtertext\" sucht Abos die im \"Thema\", \"Thema-Titel\", \"Titel\" oder in \"Irgendwo\" " +
                     "den Filtertext enthalten.\n" +
@@ -895,8 +841,9 @@ public class HelpText {
 
     public static final String LOAD_FILMLIST_MARK =
             "Hier kann vorgegeben werden, welche Filmtitel " +
-                    "markiert werden sollen. Z.B. mit dem Filmfilter \"Gebärdensprache\" " +
-                    "werden dann diese Filme markiert und gefunden." +
+                    "markiert werden sollen. Z.B. mit dem Filter \"Gebärdensprache\". " +
+                    "Im Filmfilter gibts einen, der nur markierte Filme anzeigt. Das sind dann die hier " +
+                    "markierten." +
                     "\n\n" +
                     "Das Feld \"Sender\" darf leer sein, im \"Titel\" muss immer etwas " +
                     "eingetragen sein. Der in den Feldern eingetragene Text muss dann im jeweiligen " +
@@ -975,12 +922,12 @@ public class HelpText {
 
     public static final String PROGRAM_ICON =
             "Das verwendete Programmicon kann damit geändert werden. " +
-                    "Damit kann ein eigens Bild dafür verwendet werden." +
+                    "Damit kann ein eigenes Bild dafür verwendet werden." +
                     "\n";
 
     public static final String TRAY_OWN_ICON =
             "Im System Tray wird für das Programm ein Symbol angezeigt. " +
-                    "Damit kann ein eigens Bild dafür verwendet werden." +
+                    "Damit kann ein eigenes Bild dafür verwendet werden." +
                     "\n";
 
     public static final String SHOW_TIPS =
@@ -1210,7 +1157,7 @@ public class HelpText {
                     "Die Suche wird mit dem Button \"Lupe\" gestartet. Der Suchbegriff muss mindestens " +
                     "4 Zeichen lang sein." +
                     "\n\n" +
-                    "Mit der Suche: \"URL Filmseite\" kann ein Film für die spezielle Filmseite angelegt " +
+                    "Mit der Suche: \"URL Filmseite\" kann ein Film für die spezielle Filmseite gesucht " +
                     "werden. Die URL ist die URL von Filmseiten aus der Mediathek von ARD oder ZDF." +
                     "\n";
 

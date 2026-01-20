@@ -142,9 +142,6 @@ public class HelpTextPset {
                     "%Z Hashwert der URL, z.B.: '1433245578'\n" +
                     "%z Hashwert der URL, angehängtes Suffix (entspricht '%Z.%S'), z.B.: '1433245578.mp4'\n" +
                     "\n\n" +
-                    "Im Set kann eine maximale Länge eines \"Elements\". z.B. %T und die maximale Länge des gesamten " +
-                    "Namens vorgegeben werden. Ist ein \"Element\" oder der gesamte Name länger, wird gekürzt." +
-                    "\n\n" +
                     "Beispiele:\n" +
                     "Am 10.05.2021 liefert '%H__%t__%T' z.B. '20210510__Natur__Wildes Shetland' (kein Suffix)\n" +
                     "und '%H__%t__%T.%S' liefert z.B. '20210510__Natur__Wildes Shetland.xxx' (mit dem Originalsuffix)";
@@ -157,7 +154,7 @@ public class HelpTextPset {
     public static final String HELP_PSET_SAVE_ABO_BUTTON =
             "-- Funktion Speichern --\n" +
                     "\"Speichern\" ist für das Speichern eines Films zuständig. " +
-                    "Wenn mehrere Sets zum Speichern angelegt sind, muss für jeden Film in einem " +
+                    "Wenn mehrere Sets zum Speichern angelegt sind, muss beim Download in einem " +
                     "Dialog das Set ausgewählt werden.\n" +
                     "\n" +
                     "-- Funktion Abo --\n" +
@@ -170,12 +167,12 @@ public class HelpTextPset {
                     "\n" +
                     "-- Funktion Button --\n" +
                     "\"Button\" stellt einen Button für dieses Set in der Ansicht \"Filme\" zur " +
-                    "Verfügung (unter der Tabelle, im Tab \"Startbutton\"), mit dem es direkt aus der " +
+                    "Verfügung (unter der Tabelle, im Tab \"Startbutton\"), mit dem es direkt mit einem Film aus der " +
                     "Filmtabelle gestartet werden kann.";
 
     public static final String HELP_PSET_SAVE =
             "\"Speichern\" ist für das Speichern eines Films zuständig. " +
-                    "Wenn mehrere Sets zum Speichern angelegt sind, muss für jeden Film in einem " +
+                    "Wenn mehrere Sets zum Speichern angelegt sind, muss für jeden Download in einem " +
                     "Dialog das Set ausgewählt werden.";
 
     public static final String HELP_PSET_ABO =
@@ -188,7 +185,7 @@ public class HelpTextPset {
 
     public static final String HELP_PSET_BUTTON =
             "\"Button\" stellt einen Button für dieses Set in der Ansicht \"Filme\" zur " +
-                    "Verfügung (unter der Tabelle, im Tab \"Startbutton\"), mit dem es direkt aus der " +
+                    "Verfügung (unter der Tabelle, im Tab \"Startbutton\"), mit dem es direkt mit einem Film aus der " +
                     "Filmtabelle gestartet werden kann.";
 
     public static final String HELP_PSET =
@@ -206,12 +203,12 @@ public class HelpTextPset {
 
                     "\n" +
                     "\"Abspielen\" ruft ein Programm zum Ansehen der Filme auf. " +
-                    "Es kann nur ein Set dafür zuständig sein. In der Tabelle erscheint das Set zum " +
-                    "Abspielen in roter Schrift.\n" +
+                    "Es kann nur ein Set dafür zuständig sein. In der Tabelle wird der Name das Sets " +
+                    "unterstrichen.\n" +
 
                     "\n" +
                     "\"Speichern\" ist für das Speichern eines Films zuständig. Wenn mehrere Sets zum Speichern angelegt " +
-                    "sind, muss für jeden Film in einem Dialog das Set ausgewählt werden.\n" +
+                    "sind, muss für jeden Download in einem Dialog das Set ausgewählt werden.\n" +
 
                     "\n" +
                     "\"Abo\": Wenn Abos genutzt werden, muss dafür ein Set bereitstehen, bei dem dies eingeschaltet ist. " +
