@@ -83,7 +83,8 @@ public class DownloadMenu {
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
-                "Film Starten", "Gespeicherten Film abspielen", PIconFactory.PICON.TOOLBAR_BTN_PLAY.getFontIcon());
+                "Film Starten", "Gespeicherten Film abspielen",
+                PIconFactory.PICON.TOOLBAR_BTN_PLAY.getFontIcon());
 
         btnRefresh.setOnAction(a -> {
             AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();

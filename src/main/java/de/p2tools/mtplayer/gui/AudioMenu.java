@@ -69,11 +69,14 @@ public class AudioMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
-                "Abspielen", "Markiertes Audio abspielen", PIconFactory.PICON.TOOLBAR_BTN_PLAY.getFontIcon());
+                "Abspielen", "Markiertes Audio abspielen",
+                PIconFactory.PICON.TOOLBAR_BTN_PLAY.getFontIcon());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
-                "Alle Abspielen", "Alle markierten Audios abspielen", PIconFactory.PICON.TOOLBAR_BTN_PLAY_ALL.getFontIcon());
+                "Alle Abspielen", "Alle markierten Audios abspielen",
+                PIconFactory.PICON.TOOLBAR_BTN_PLAY_ALL.getFontIcon());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markiertes Audio speichern", PIconFactory.PICON.TOOLBAR_BTN_RECORDE.getFontIcon());
+                "Speichern", "Markiertes Audio speichern",
+                PIconFactory.PICON.TOOLBAR_BTN_RECORDE.getFontIcon());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
