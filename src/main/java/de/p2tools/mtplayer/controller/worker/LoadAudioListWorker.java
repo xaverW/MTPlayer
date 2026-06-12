@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadFilmlist;
 import de.p2tools.p2lib.p2event.P2Event;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -95,6 +96,9 @@ public class LoadAudioListWorker {
         boolean search = !ProgData.FILMLIST_IS_DOWNLOADING.get(); // dann auch suchen, sonst machts die Filmliste
         new Thread(() -> {
             List<String> logList = new ArrayList<>();
+
+            logList.add("Audioliste INIT");
+            progData.audioList.forEach(FilmData::init);
 
             logList.add("Themen suchen");
             progData.audioList.loadTheme();

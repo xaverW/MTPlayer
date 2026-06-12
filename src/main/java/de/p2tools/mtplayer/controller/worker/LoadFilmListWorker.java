@@ -27,6 +27,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
@@ -95,6 +96,9 @@ public class LoadFilmListWorker {
         boolean search = !ProgData.AUDIOLIST_IS_DOWNLOADING.get();
         new Thread(() -> {
             List<String> logList = new ArrayList<>();
+
+            logList.add("Filmliste INIT");
+            progData.filmList.forEach(FilmDataMTP::init);
 
             logList.add("Themen suchen");
             progData.filmList.loadTheme();
