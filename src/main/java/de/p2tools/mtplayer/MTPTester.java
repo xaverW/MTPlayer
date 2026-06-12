@@ -28,7 +28,7 @@ import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filter.FilmFilterCheck;
 import de.p2tools.p2lib.mediathek.filter.Filter;
-import de.p2tools.p2lib.tools.P2ToolsFactory;
+import de.p2tools.p2lib.tools.P2Wait;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -106,7 +106,7 @@ public class MTPTester {
                     for (int i = 1; i < 100; ++i) {
                         double d = (double) i / 100;
                         ProgData.busy.setProgress(d);
-                        P2ToolsFactory.pause(20);
+                        P2Wait.pause(20);
                     }
                     ProgData.busy.busyOffFx();
                 });
