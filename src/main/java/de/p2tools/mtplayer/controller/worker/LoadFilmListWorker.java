@@ -154,6 +154,11 @@ public class LoadFilmListWorker {
                     });
                 }
             }
+            Platform.runLater(() -> {
+                if (progData.tableSort != null) {
+                    progData.tableSort.setSort();
+                }
+            });
         }).start();
     }
 

@@ -48,6 +48,7 @@ import de.p2tools.mtplayer.gui.dialog.BookmarkDialogController;
 import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.filter.DownloadFilterController;
 import de.p2tools.mtplayer.gui.tools.ProgTray;
+import de.p2tools.mtplayer.gui.tools.table.TableSort;
 import de.p2tools.p2lib.css.P2CssFactory;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPane;
 import de.p2tools.p2lib.p2event.P2EventHandler;
@@ -87,6 +88,7 @@ public class ProgData {
     // zentrale Klassen
     public LoadFilmListWorker loadFilmListWorker;
     public LoadAudioListWorker loadAudioListWorker;
+    public TableSort tableSort = null;
 
     public StartDownload startDownload; // Klasse zum Ausführen der Programme (für die Downloads): VLC, ...
     public PShortcut pShortcut; // verwendete Shortcuts

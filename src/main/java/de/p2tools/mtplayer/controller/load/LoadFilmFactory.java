@@ -20,6 +20,7 @@ package de.p2tools.mtplayer.controller.load;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
+import de.p2tools.mtplayer.gui.tools.table.TableSort;
 import de.p2tools.p2lib.mediathek.filmdata.Filmlist;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadFilmlist;
@@ -33,6 +34,7 @@ public class LoadFilmFactory {
     public static void loadFilmListProgStart() {
         Filmlist<FilmDataMTP> filmlistNew = new FilmListMTP();
         Filmlist<FilmDataMTP> filmlistDiff = new FilmListMTP();
+        ProgData.getInstance().tableSort = new TableSort(ProgData.getInstance().filmGuiController.tableView);
         p2LoadFilmlist = new P2LoadFilmlist(ProgData.getInstance().pEventHandler, filmlistNew, filmlistDiff);
         p2LoadFilmlist.loadFilmlistProgStart();
     }
@@ -52,6 +54,7 @@ public class LoadFilmFactory {
         Filmlist<FilmDataMTP> filmlistNew = new FilmListMTP();
         Filmlist<FilmDataMTP> filmlistDiff = new FilmListMTP();
 
+        ProgData.getInstance().tableSort = new TableSort(ProgData.getInstance().filmGuiController.tableView);
         p2LoadFilmlist = new P2LoadFilmlist(ProgData.getInstance().pEventHandler, filmlistNew, filmlistDiff);
         p2LoadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew/*, ProgInfos.getLocalFilmListFile()*/);
     }
