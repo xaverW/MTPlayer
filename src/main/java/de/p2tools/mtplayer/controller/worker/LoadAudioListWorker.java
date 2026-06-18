@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadFilmlist;
 import de.p2tools.p2lib.p2event.P2Event;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -97,8 +96,11 @@ public class LoadAudioListWorker {
         new Thread(() -> {
             List<String> logList = new ArrayList<>();
 
-            logList.add("Audioliste INIT");
-            progData.audioList.forEach(FilmData::init);
+//            logList.add("Audioliste INIT");
+//            P2Duration.counterStart("INIT_AUDIO");
+//            progData.audioList.forEach(FilmData::init);
+//            P2Duration.counterStop("INIT_AUDIO");
+
 
             logList.add("Themen suchen");
             progData.audioList.loadTheme();
