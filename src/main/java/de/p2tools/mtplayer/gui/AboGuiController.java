@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui;
 import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
+import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
@@ -247,6 +248,7 @@ public class AboGuiController extends AnchorPane {
         ProgConfig.FILTER_ABO_NAME.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_SEARCH_TEXT.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_DESCRIPTION.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_LIST.addListener((observable, oldValue, newValue) -> setFilter());
     }
 
     private void setFilter() {
@@ -255,8 +257,13 @@ public class AboGuiController extends AnchorPane {
         final String name = ProgConfig.FILTER_ABO_NAME.getValueSafe().trim();
         final String searchText = ProgConfig.FILTER_ABO_SEARCH_TEXT.getValueSafe().trim();
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim();
+        final int list = ProgConfig.FILTER_ABO_LIST.get();
 
         Predicate<AboData> predicate = aboData -> true;
+        if (list != ProgConst.LIST_FILM_AUDIO) {
+            predicate = predicate.and(aboData -> aboData.getList() == list);
+        }
+        
         if (!sender.isEmpty()) {
             Filter filter = new Filter(sender, true);
             predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getChannel()));

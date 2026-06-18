@@ -436,6 +436,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILTER_ABO_SEARCH_TEXT = addStrProp("filter-abo-search-text");
     public static StringProperty FILTER_ABO_DESCRIPTION = addStrProp("filter-abo-description");
     public static StringProperty FILTER_ABO_TYPE = addStrProp("filter-abo-type");
+    public static IntegerProperty FILTER_ABO_LIST = addIntProp("filter-abo-list", ProgConst.LIST_FILM_AUDIO);
 
     // Filter Download
     public static StringProperty FILTER_DOWNLOAD_LIST = addStrProp("filter-download-list");
