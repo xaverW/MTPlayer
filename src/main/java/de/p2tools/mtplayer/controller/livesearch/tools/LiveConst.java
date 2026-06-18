@@ -19,5 +19,15 @@ public class LiveConst {
         public String getDescription() {
             return description;
         }
+
+        public static Qualities getResolutionFromWidth(final int width) {
+            if (width > 1280) {
+                return Qualities.HD;
+            } else if (width > 640) {
+                return Qualities.NORMAL;
+            } else {
+                return Qualities.SMALL;
+            }
+        }
     }
 }

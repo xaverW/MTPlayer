@@ -1,0 +1,30 @@
+/*
+angepasste Version aus:
+https://github.com/mediathekview/MLib
+*/
+
+package de.p2tools.mtplayer.controller.livesearch.ard;
+
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class ArdFilmDto {
+
+    private final FilmDataMTP film;
+    private final Set<ArdFilmInfoDto> relatedFilms;
+
+    public ArdFilmDto(final FilmDataMTP film) {
+        this.film = film;
+        this.relatedFilms = new HashSet<>();
+    }
+
+    public FilmDataMTP getFilm() {
+        return film;
+    }
+
+    public void addRelatedFilm(final ArdFilmInfoDto filmInfoDto) {
+        relatedFilms.add(filmInfoDto);
+    }
+}

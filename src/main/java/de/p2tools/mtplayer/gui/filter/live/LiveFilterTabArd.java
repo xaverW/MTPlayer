@@ -2,7 +2,7 @@ package de.p2tools.mtplayer.gui.filter.live;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
+import de.p2tools.mtplayer.controller.livesearch.ard.ArdDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 public class LiveFilterTabArd extends Tab {
 
     private final ProgData progData;
-    private final JsonInfoDto jsonInfoDto = new JsonInfoDto();
+    private final ArdDto ardDto = new ArdDto();
     private final ProgressBar progress = new ProgressBar();
     private final VBox vBoxTab = new VBox();
 
@@ -29,7 +29,7 @@ public class LiveFilterTabArd extends Tab {
         this.progData = ProgData.getInstance();
         setClosable(false);
 
-        ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.addListener((u, o, n) -> jsonInfoDto.init()); // damit "weiter" nicht mehr geht
+        ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.addListener((u, o, n) -> ardDto.init()); // damit "weiter" nicht mehr geht
         addTabArd();
         addProgress();
     }
@@ -57,7 +57,7 @@ public class LiveFilterTabArd extends Tab {
         btnKeepOnArd.setGraphic(PIconFactory.PICON.BTN_FORWARD.getFontIcon());
         btnKeepOnArd.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnArd.setOnAction(a -> searchArd(true));
-        btnKeepOnArd.disableProperty().bind((jsonInfoDto.nextUrlProperty().isEmpty())
+        btnKeepOnArd.disableProperty().bind((ardDto.nextUrlProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboString cboSearch;
@@ -122,11 +122,11 @@ public class LiveFilterTabArd extends Tab {
     }
 
     private void searchArd(boolean next) {
-        new Thread(() -> new LiveSearchArd().loadLive(jsonInfoDto, next)).start();
+        new Thread(() -> new LiveSearchArd().loadLive(ardDto, next)).start();
     }
 
     private void searchUrl() {
-        new Thread(() -> new LiveSearchArd().loadUrl(jsonInfoDto)).start();
+        new Thread(() -> new LiveSearchArd().loadUrl(ardDto)).start();
     }
 
     private void addProgress() {

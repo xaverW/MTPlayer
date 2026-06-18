@@ -5,7 +5,6 @@ import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.config.ProxyFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.livesearch.JsonInfoDto;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
@@ -23,6 +22,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -38,11 +38,11 @@ public class LiveFactory {
     private LiveFactory() {
     }
 
-    public static void addToList(JsonInfoDto jsonInfoDto) {
+    public static void addToList(List<FilmDataMTP> list) {
         // nur Filme die noch nicht in der Liste sind, einfügen
         HashSet<String> hashSet = new HashSet<>();
         Platform.runLater(() -> {
-            if (jsonInfoDto.getList().isEmpty()) {
+            if (list.isEmpty()) {
                 // dann hats nicht geklappt
                 P2Alert.showErrorAlert("Film suchen", "Es konnte kein Film gefunden werden.");
                 return;
@@ -52,7 +52,7 @@ public class LiveFactory {
                 hashSet.add(getHash(filmDataMTP));
             });
 
-            jsonInfoDto.getList().forEach(filmDataMTP -> {
+            list.forEach(filmDataMTP -> {
                 if (!hashSet.contains(getHash(filmDataMTP))) {
                     hashSet.add(getHash(filmDataMTP));
                     ProgData.getInstance().liveFilmFilterWorker.getLiveFilmList().importFilmOnlyWithNr(filmDataMTP);

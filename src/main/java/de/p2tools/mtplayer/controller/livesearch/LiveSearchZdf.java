@@ -2,7 +2,10 @@ package de.p2tools.mtplayer.controller.livesearch;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
-import de.p2tools.mtplayer.controller.livesearchzdf.ZdfFilmDetailDeserializer;
+import de.p2tools.mtplayer.controller.livesearch.zdf.ZdfBearerFactory;
+import de.p2tools.mtplayer.controller.livesearch.zdf.ZdfFilmDetailDeserializer;
+import de.p2tools.mtplayer.controller.livesearch.zdf.JsonInfoDto;
+import de.p2tools.mtplayer.controller.livesearch.zdf.ZdfSearchFactory;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.log.P2Log;
 import org.jsoup.nodes.Document;
@@ -48,7 +51,7 @@ public class LiveSearchZdf {
             new ZdfFilmDetailDeserializer(jsonInfoDto).deserialize(url);
         }
 
-        LiveFactory.addToList(jsonInfoDto);
+        LiveFactory.addToList(jsonInfoDto.getList());
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ZDF);
         P2Log.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
@@ -73,7 +76,7 @@ public class LiveSearchZdf {
             P2Log.errorLog(898945124, ex, "Url: " + URL_BASE);
         }
 
-        LiveFactory.addToList(jsonInfoDto);
+        LiveFactory.addToList(jsonInfoDto.getList());
         LiveFactory.setProgressNull(LiveFactory.CHANNEL.ZDF);
         P2Log.sysLog("Filme gefunden: " + jsonInfoDto.getList().size());
     }
