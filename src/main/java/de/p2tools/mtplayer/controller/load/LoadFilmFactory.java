@@ -56,7 +56,7 @@ public class LoadFilmFactory {
 
         ProgData.getInstance().tableSort = new TableSort(ProgData.getInstance().filmGuiController.tableView);
         p2LoadFilmlist = new P2LoadFilmlist(ProgData.getInstance().pEventHandler, filmlistNew, filmlistDiff);
-        p2LoadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew/*, ProgInfos.getLocalFilmListFile()*/);
+        p2LoadFilmlist.loadNewFilmlistFromWeb(alwaysLoadNew);
     }
 
     public static void setLoadStop() {

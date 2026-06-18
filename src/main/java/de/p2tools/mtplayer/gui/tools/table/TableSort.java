@@ -13,6 +13,7 @@ public class TableSort {
     private final List<TableColumn<FilmDataMTP, ?>> sortOrder = FXCollections.observableArrayList();
 
     public TableSort(TableView<FilmDataMTP> tableView) {
+        // Start beim sortierten Titel: 64s und damit: 36s
         this.tableView = tableView;
         tableView.getSortOrder().forEach(s -> sortOrder.add(s));
         tableView.getSortOrder().clear();
