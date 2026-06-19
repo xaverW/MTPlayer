@@ -78,7 +78,16 @@ public class ArdFilmDeserializer {
         ADDITIONAL_SENDER.put("wdr", Const.WDR);
         ADDITIONAL_SENDER.put("hr", Const.HR);
         ADDITIONAL_SENDER.put("br", Const.BR);
-        ADDITIONAL_SENDER.put("radio_bremen", "rbtv");
+        ADDITIONAL_SENDER.put("radio_bremen", Const.RBTV);
+        ADDITIONAL_SENDER.put("tagesschau24", Const.TAGESSCHAU24);
+        ADDITIONAL_SENDER.put("das_erste", Const.ARD);
+        ADDITIONAL_SENDER.put("one", Const.ONE); // ONE
+        ADDITIONAL_SENDER.put("ard-alpha", Const.ARD_ALPHA); // ARD-alpha
+        ADDITIONAL_SENDER.put("funk", "Funk.net"); // Funk.net
+        ADDITIONAL_SENDER.put("sr", Const.SR);
+        ADDITIONAL_SENDER.put("phoenix", Const.PHOENIX);
+        ADDITIONAL_SENDER.put("ard", Const.ARD);
+        //IGNORED_SENDER "zdf", "kika", "3sat", "arte"
     }
 
     private final ArdVideoInfoJsonDeserializer videoDeserializer;
@@ -233,7 +242,6 @@ public class ArdFilmDeserializer {
                 return Optional.of(Duration.ofSeconds(durationValue));
             }
         }
-
 //
 //         mediaCollectionObject.get().has(ATTRIBUTE_DURATION[0])) {
 //            final long durationValue = mediaCollectionObject.get().get(ATTRIBUTE_DURATION[0]).asLong();

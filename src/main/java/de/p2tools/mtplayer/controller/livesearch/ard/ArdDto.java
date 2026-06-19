@@ -33,6 +33,11 @@ public class ArdDto {
     }
 
     public void init() {
+        searchString = "";
+        nextUrl.set("");
+        totalElements = 0;
+        pageId = "";
+        filmList.clear();
     }
 
     public String getSearchUrl() {
