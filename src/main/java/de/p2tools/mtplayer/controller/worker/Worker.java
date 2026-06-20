@@ -34,6 +34,7 @@ public class Worker {
 
     private String downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
     private String downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
+    private String downloadFilterThemeTitle = ProgConfig.FILTER_DOWNLOAD_THEME_TITLE.getValueSafe();
     private String aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
 
     private final ProgData progData;
@@ -117,6 +118,7 @@ public class Worker {
         // Filter Downloads
         downloadFilterChannel = ProgConfig.FILTER_DOWNLOAD_CHANNEL.getValueSafe();
         downloadFilterAbo = ProgConfig.FILTER_DOWNLOAD_ABO.getValueSafe();
+        downloadFilterThemeTitle = ProgConfig.FILTER_DOWNLOAD_THEME_TITLE.getValueSafe();
         // Filter Abos
         aboFilterChannel = ProgConfig.FILTER_ABO_CHANNEL.getValueSafe();
     }
@@ -128,6 +130,7 @@ public class Worker {
         } else {
             ProgConfig.FILTER_DOWNLOAD_ABO.setValue("");
         }
+        ProgConfig.FILTER_DOWNLOAD_THEME_TITLE.setValue(downloadFilterThemeTitle);
         if (ThemeListFactory.allChannelListFilm.contains(downloadFilterChannel)) {
             ProgConfig.FILTER_DOWNLOAD_CHANNEL.setValue(downloadFilterChannel);
         } else {

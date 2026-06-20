@@ -440,6 +440,7 @@ public class DownloadGuiController extends AnchorPane {
         ProgConfig.FILTER_DOWNLOAD_SOURCE.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_DOWNLOAD_TYPE.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_DOWNLOAD_STATE.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_DOWNLOAD_THEME_TITLE.addListener((observable, oldValue, newValue) -> setFilter());
     }
 
     private void setFilter() {
@@ -451,6 +452,7 @@ public class DownloadGuiController extends AnchorPane {
             final String source = ProgConfig.FILTER_DOWNLOAD_SOURCE.getValueSafe();
             final String type = ProgConfig.FILTER_DOWNLOAD_TYPE.getValueSafe();
             final String state = ProgConfig.FILTER_DOWNLOAD_STATE.getValueSafe();
+            final String themeTitle = ProgConfig.FILTER_DOWNLOAD_THEME_TITLE.getValueSafe().toLowerCase();
 
             predicate = predicate.and(download -> !download.isPlacedBack());
 
@@ -480,6 +482,9 @@ public class DownloadGuiController extends AnchorPane {
                         state.equals(DownloadConstants.STATE_COMBO_STARTED) && downloadData.isStarted() ||
                         state.equals(DownloadConstants.STATE_COMBO_LOADING) && downloadData.isStateStartedRun() ||
                         state.equals(DownloadConstants.STATE_COMBO_ERROR) && downloadData.isStateError());
+            }
+            if (!themeTitle.isEmpty()) {
+                predicate = predicate.and(d -> d.getTheme().toLowerCase().contains(themeTitle) || d.getTitle().toLowerCase().contains(themeTitle));
             }
 
             filteredListDownloads.setPredicate(predicate);

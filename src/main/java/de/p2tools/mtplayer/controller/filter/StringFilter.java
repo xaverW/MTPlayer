@@ -31,6 +31,9 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
     private final ObservableList<String> filterListAudioSomewhere = FXCollections.observableArrayList();
     private final ObservableList<String> filterListAudioUrl = FXCollections.observableArrayList();
 
+    // Download
+    private final ObservableList<String> filterListDownloadThemeTitle = FXCollections.observableArrayList();
+
     // Abo
     private final ObservableList<String> filterListAboName = FXCollections.observableArrayList();
     private final ObservableList<String> filterListAboSearchText = FXCollections.observableArrayList();
@@ -69,6 +72,8 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
         list.add(new ConfigStringList("filterListAudioTitel", filterListAudioTitel));
         list.add(new ConfigStringList("filterListAudioSomewhere", filterListAudioSomewhere));
         list.add(new ConfigStringList("filterListAudioUrl", filterListAudioUrl));
+
+        list.add(new ConfigStringList("filterListDownloadThemeTitle", filterListDownloadThemeTitle));
 
         list.add(new ConfigStringList("filterListAboName", filterListAboName));
         list.add(new ConfigStringList("filterListAboSearchText", filterListAboSearchText));
@@ -132,6 +137,11 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
 
     public ObservableList<String> getFilterListAudioUrl() {
         return filterListAudioUrl;
+    }
+
+    // Download
+    public ObservableList<String> getFilterListDownloadThemeTitle() {
+        return filterListDownloadThemeTitle;
     }
 
     // Abo

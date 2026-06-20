@@ -445,6 +445,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty FILTER_DOWNLOAD_TYPE = addStrProp("filter-download-type");
     public static StringProperty FILTER_DOWNLOAD_ABO = addStrProp("filter-download-abo");
     public static StringProperty FILTER_DOWNLOAD_STATE = addStrProp("filter-download-state");
+    public static StringProperty FILTER_DOWNLOAD_THEME_TITLE = addStrProp("filter-download-theme-title");
 
     // Bookmark
     static {

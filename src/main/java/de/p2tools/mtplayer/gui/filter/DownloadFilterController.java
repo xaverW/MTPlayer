@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfosFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
+import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
@@ -42,6 +43,7 @@ public class DownloadFilterController extends FilterController {
     private final P2CboCheckBoxListString mbChannel;
     private final ComboBox<String> cboAbo = new ComboBox<>();
     private final ComboBox<String> cboState = new ComboBox<>();
+    private final PCboString cboThemeTitle;
 
     private final Spinner<Integer> spinnerAnz = new Spinner<>(1, 9, 1);
     private final Slider sliderBandwidth = new Slider();
@@ -49,14 +51,19 @@ public class DownloadFilterController extends FilterController {
     private final Label lblBandwidth = new Label();
 
     private final VBox vBoxFilter;
+    private final ProgData progData;
 
     public DownloadFilterController() {
+        this.progData = ProgData.getInstance();
         vBoxFilter = getVBoxFilter();
         ProgData progData = ProgData.getInstance();
         progData.downloadFilterController = this;
 
         mbChannel = new P2CboCheckBoxListString(ProgConfig.FILTER_DOWNLOAD_CHANNEL,
                 ThemeListFactory.allChannelListFilm);
+
+        this.cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListDownloadThemeTitle(),
+                ProgConfig.FILTER_DOWNLOAD_THEME_TITLE, () -> false);
 
         initLayout();
         initFilter();
@@ -66,11 +73,16 @@ public class DownloadFilterController extends FilterController {
     }
 
     private void initLayout() {
+        addCont("Sender", mbChannel, vBoxFilter);
+        addCont("Thema/Titel", cboThemeTitle, vBoxFilter);
+        vBoxFilter.getChildren().addAll(P2GuiTools.getHDistance(10));
+
+        addCont("Abo", cboAbo, vBoxFilter);
         addCont("Liste", cboList, vBoxFilter);
+        vBoxFilter.getChildren().addAll(P2GuiTools.getHDistance(10));
+
         addCont("Quelle", cboSrc, vBoxFilter);
         addCont("Downloadart", cboKind, vBoxFilter);
-        addCont("Sender", mbChannel, vBoxFilter);
-        addCont("Abo", cboAbo, vBoxFilter);
         addCont("Status", cboState, vBoxFilter);
 
         final Button btnHelpFilter = PIconFactory.getHelpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
@@ -220,6 +232,9 @@ public class DownloadFilterController extends FilterController {
         }
         if (cboState.getSelectionModel() != null) {
             cboState.getSelectionModel().selectFirst();
+        }
+        if (cboThemeTitle.getSelectionModel() != null) {
+            cboThemeTitle.getSelectionModel().selectFirst();
         }
     }
 }
