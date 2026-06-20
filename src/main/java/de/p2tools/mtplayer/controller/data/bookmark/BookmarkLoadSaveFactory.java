@@ -1,6 +1,5 @@
 package de.p2tools.mtplayer.controller.data.bookmark;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
@@ -22,17 +21,17 @@ public class BookmarkLoadSaveFactory {
         // beim Programmstart laden
         P2Duration.counterStart("loadList");
 
-        if (!ProgConfig.SYSTEM_USE_NEW_BOOKMARK_FILE.get()) {
-            // dann noch mit dem alten File versuchen
-            ProgConfig.SYSTEM_USE_NEW_BOOKMARK_FILE.set(true);
-            BookmarkFileFactoryOld.readBookmarkDataFromFileOld();
-            saveBookmark();
-            FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS_TXT);
-
-        } else {
-            // dann schon das neue
-            loadBookmarks();
-        }
+//        if (!ProgConfig.SYSTEM_USE_NEW_BOOKMARK_FILE.get()) {
+//            // dann noch mit dem alten File versuchen
+//            ProgConfig.SYSTEM_USE_NEW_BOOKMARK_FILE.set(true);
+//            BookmarkFileFactoryOld.readBookmarkDataFromFileOld();
+//            saveBookmark();
+//            FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS_TXT);
+//
+//        } else {
+        // dann schon das neue
+        loadBookmarks();
+//        }
 
         ProgData.getInstance().bookmarkList.fillUrlHash();
         P2Duration.counterStop("loadList");

@@ -197,7 +197,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_AFTER_UPDATE_RBTV = addBoolProp("system-after-update-rbtv", Boolean.FALSE);
     public static BooleanProperty SYSTEM_ABO_START_TIME = addBoolProp("system-abo-start-time", Boolean.FALSE);
     public static BooleanProperty SYSTEM_CHANGE_LOG_DIR = addBoolProp("system-change-log-dir", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_USE_NEW_BOOKMARK_FILE = addBoolProp("system-use-new-bookmark-file", Boolean.FALSE);
+    //    public static BooleanProperty SYSTEM_USE_NEW_BOOKMARK_FILE = addBoolProp("system-use-new-bookmark-file", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_FILTER = addBoolProp("system-small-filter", Boolean.FALSE);
     public static BooleanProperty SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART = addBoolProp("system-update-load-filmlist-programstart", Boolean.FALSE);
     public static BooleanProperty SYSTEM_UPDATE_OFFER_FILTER = addBoolProp("system-update-offer-filter", Boolean.FALSE);
