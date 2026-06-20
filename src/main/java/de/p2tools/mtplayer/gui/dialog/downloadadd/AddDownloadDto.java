@@ -35,6 +35,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddDownloadDto {
 
@@ -47,12 +48,11 @@ public class AddDownloadDto {
     public InitProgramCall initProgramCall;
     public InitUrl initUrl;
     public InitStartTimeDownload initStartTimeDownload;
+    public final List<String> pathList;
 
     public ProgData progData;
     public AddDownloadData[] addDownloadData;
-
     public IntegerProperty actFilmIsShown = new SimpleIntegerProperty(0);
-//    public final String filterResolution = "";
 
     public final Label lblFree = new Label("4M noch frei");
     public final Label lblFilm = new Label("Film:");
@@ -115,6 +115,11 @@ public class AddDownloadDto {
         // einen neuen Download anlegen
         this.progData = progData;
         this.setDataStart = setDataStart;
+        if (audio) {
+            pathList = ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH_AUDIO;
+        } else {
+            pathList = ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH_FILM;
+        }
 
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayFilm(audio, filmsToDownloadList, this);
         initSetDataDownload = new InitSetDataDownload(this);
@@ -131,6 +136,11 @@ public class AddDownloadDto {
         this.progData = progData;
         this.setDataStart = null;
         this.addNewDownloads = false;
+        if (downloadDataArrayList.get(0).isAudio()) {
+            pathList = ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH_AUDIO;
+        } else {
+            pathList = ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH_FILM;
+        }
 
         addDownloadData = InitDownloadAddArray.initDownloadInfoArrayDownload(downloadDataArrayList, this);
         initSetDataDownload = new InitSetDataDownload(this);

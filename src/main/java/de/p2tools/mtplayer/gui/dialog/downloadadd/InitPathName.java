@@ -18,7 +18,6 @@
 package de.p2tools.mtplayer.gui.dialog.downloadadd;
 
 import de.p2tools.mtplayer.controller.config.ProgColorList;
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryMakeParameter;
 import de.p2tools.p2lib.mediathek.tools.P2FileNameUtils;
@@ -39,7 +38,8 @@ public class InitPathName {
     public InitPathName(AddDownloadDto addDownloadDto) {
         this.addDownloadDto = addDownloadDto;
         this.pathList = FXCollections.observableArrayList();
-        this.pathList.addAll(ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH);
+        this.pathList.addAll(addDownloadDto.pathList);
+
         init();
     }
 
@@ -153,7 +153,7 @@ public class InitPathName {
 
     public void clearPath() {
         pathList.clear();
-        ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.clear();
+        addDownloadDto.pathList.clear();
         pathChanged();
     }
 
@@ -183,11 +183,11 @@ public class InitPathName {
         // Dialog-Ende: Die verwendeten Pfade einfügen
         List<AddDownloadData> list = new ArrayList<>(Arrays.stream(addDownloadDto.addDownloadData).toList());
         Collections.reverse(list);
-        list.forEach(downloadAddData -> ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.add(0, downloadAddData.download.getDestPath()));
+        list.forEach(downloadAddData -> addDownloadDto.pathList.add(0, downloadAddData.download.getDestPath()));
 
         // doppelte aussortieren
         final ArrayList<String> tmpPathList = new ArrayList<>();
-        for (String s : ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH) {
+        for (String s : addDownloadDto.pathList) {
             if (s.endsWith(File.separator)) {
                 s = s.substring(0, s.length() - 1);
             }
@@ -202,7 +202,7 @@ public class InitPathName {
         }
 
         // und jetzt wieder eintragen
-        ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.clear();
-        ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.addAll(tmpPathList);
+        addDownloadDto.pathList.clear();
+        addDownloadDto.pathList.addAll(tmpPathList);
     }
 }

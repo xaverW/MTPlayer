@@ -195,7 +195,11 @@ public class DownloadContinueDialogController extends P2DialogExtra {
 
     private void initPathAndName() {
         // gespeicherte Pfade eintragen
-        cbPath.getItems().addAll(ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH);
+        if (download.isAudio()) {
+            cbPath.getItems().addAll(ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH_AUDIO);
+        } else {
+            cbPath.getItems().addAll(ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH_FILM);
+        }
 
         if (download.getDestPath().isEmpty()) {
             cbPath.getSelectionModel().selectFirst();

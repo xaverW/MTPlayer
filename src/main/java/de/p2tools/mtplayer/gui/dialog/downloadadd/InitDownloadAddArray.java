@@ -36,9 +36,9 @@ public class InitDownloadAddArray {
                                                               AddDownloadDto addDownloadDto) {
         // neue Downloads anlegen
         String aktPath = "";
-        if (!ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.isEmpty()) {
+        if (!addDownloadDto.pathList.isEmpty()) {
             // dann den ersten Pfad setzen
-            aktPath = ProgConfig.DOWNLOAD_DIALOG_DOWNLOAD_PATH.get(0);
+            aktPath = addDownloadDto.pathList.get(0);
         }
 
         // DownloadArr anlegen
