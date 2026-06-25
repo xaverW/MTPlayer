@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.data.film;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataProps;
@@ -49,9 +50,9 @@ public class FilmToolsFactory {
     public static void setFilmShown(ArrayList<FilmDataMTP> filmArrayList, boolean setShown) {
         // Menü: Film als .. setzen
         if (setShown) {
-            ProgData.getInstance().historyList.addFilmDataListToHistory(filmArrayList);
+            ProgData.getInstance().historyListJson.addFilmToShown(filmArrayList);
         } else {
-            ProgData.getInstance().historyList.removeFilmDataFromHistory(filmArrayList);
+            ProgData.getInstance().historyListJson.removeFilmFromHistory(filmArrayList);
         }
     }
 
@@ -153,7 +154,8 @@ public class FilmToolsFactory {
         // Geo, Future, History, UT, Mark
         filmData.setGeoBlocked();
         filmData.setInFuture();
-        filmData.setShown(ProgData.getInstance().historyList.checkIfUrlAlreadyIn(filmData.getUrlHistory()));
+        filmData.setShown(ProgData.getInstance().historyListJson
+                .checkIfUrlAlreadyIn(HistoryData.SOURCE_SHOWN, filmData.getUrlHistory()));
 
         if (ProgConfig.SYSTEM_FILMLIST_MARK_UT.getValue()) {
             // und dann auch nach erweiterten UT suchen

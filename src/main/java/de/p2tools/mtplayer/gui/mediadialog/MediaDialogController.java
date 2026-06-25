@@ -39,8 +39,7 @@ public class MediaDialogController extends P2DialogExtra {
     private final ProgData progData = ProgData.getInstance();
 
     private PaneDialogMedia paneDialogMedia;
-    private PaneDialogAbo paneDialogAbo;
-    private PaneDialogAbo paneDialogHistory;
+    private PaneHistory paneHistory;
 
     private final MediaDataDto mediaDataDtoMedia;
     private final MediaDataDto mediaDataDtoAbo;
@@ -81,15 +80,13 @@ public class MediaDialogController extends P2DialogExtra {
         initPanel();
         initAction();
         paneDialogMedia.filter(mediaDataDtoMedia.searchStringProp.getValueSafe());
-        paneDialogAbo.filter(mediaDataDtoAbo.searchStringProp.getValueSafe());
-        paneDialogHistory.filter(mediaDataDtoHistory.searchStringProp.getValueSafe());
+        paneHistory.filter(mediaDataDtoHistory.searchStringProp.getValueSafe());
     }
 
     @Override
     public void close() {
         paneDialogMedia.close();
-        paneDialogAbo.close();
-        paneDialogHistory.close();
+        paneHistory.close();
         super.close();
     }
 
@@ -122,11 +119,8 @@ public class MediaDialogController extends P2DialogExtra {
             paneDialogMedia = new PaneDialogMedia(getStage(), mediaDataDtoMedia);
             paneDialogMedia.make();
 
-            paneDialogAbo = new PaneDialogAbo(getStage(), mediaDataDtoAbo);
-            paneDialogAbo.make();
-
-            paneDialogHistory = new PaneDialogAbo(getStage(), mediaDataDtoHistory);
-            paneDialogHistory.make();
+            paneHistory = new PaneHistory(getStage(), mediaDataDtoHistory);
+            paneHistory.make();
 
             Tab tabMedia = new Tab("Mediensammlung");
             tabMedia.setTooltip(new Tooltip("Hier wird der Inhalt der Mediensammlung angezeigt"));
@@ -134,16 +128,10 @@ public class MediaDialogController extends P2DialogExtra {
             tabMedia.setContent(paneDialogMedia);
             tabPane.getTabs().add(tabMedia);
 
-            Tab tabAbo = new Tab("Erledigte Abos");
-            tabAbo.setTooltip(new Tooltip("Hier werden erledigte Abos angezeigt"));
-            tabAbo.setClosable(false);
-            tabAbo.setContent(paneDialogAbo);
-            tabPane.getTabs().add(tabAbo);
-
             Tab tabHistory = new Tab("History");
             tabHistory.setTooltip(new Tooltip("Hier werden die bereits gesehenen Filme angezeigt"));
             tabHistory.setClosable(false);
-            tabHistory.setContent(paneDialogHistory);
+            tabHistory.setContent(paneHistory);
             tabPane.getTabs().add(tabHistory);
 
             getVBoxCont().setPadding(new Insets(0));

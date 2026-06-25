@@ -17,6 +17,9 @@
 
 package de.p2tools.mtplayer.controller.data.history;
 
+import de.p2tools.mtplayer.controller.config.ProgConst;
+import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -25,6 +28,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryFactory {
@@ -34,6 +38,34 @@ public class HistoryFactory {
     private HistoryFactory() {
     }
 
+    public static void convertHistoryList() {
+        // laden und in die neue Liste eintragen
+        List<HistoryData> list = new ArrayList<>();
+
+        // erst Downloads
+        HistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(),
+                ProgConst.FILE_HISTORY_SHOWN, list);
+        list.forEach(h -> {
+            h.setSource(HistoryData.SOURCE_SHOWN);
+            ProgData.getInstance().historyListJson.add(h);
+        });
+
+        // dann Abos
+        list.clear();
+        HistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(),
+                ProgConst.FILE_HISTORY_ABO, list);
+        list.forEach(h -> {
+            HistoryData historyData = ProgData.getInstance().historyListJson.getHistoryData(h.getUrl());
+            if (historyData != null) {
+                historyData.setSource(HistoryData.SOURCE_SHOWN_DOWNLOAD);
+            } else {
+                h.setSource(HistoryData.SOURCE_DOWNLOAD);
+                ProgData.getInstance().historyListJson.add(h);
+            }
+        });
+    }
+
+
     public static synchronized void readHistoryDataFromFile(String settingsDir, String fileName, List<HistoryData> dataList) {
         // neue Liste mit den URLs aus dem Logfile bauen
         final Path urlPath = FileFactory.getUrlFilePath(settingsDir, fileName);
@@ -41,17 +73,6 @@ public class HistoryFactory {
             String line;
             while ((line = in.readLine()) != null) {
                 final HistoryData historyData = HistoryFactory.getHistoryDataFromLine(line);
-                // ==================================================================
-                // todo --> kommt die nächste Version wieder raus,
-                // da können Problematische Zeichen enthalten sein
-                // können aber keine Fehler mehr nachfolgen
-
-                // 0,2s bei 80_000 Einträgen
-                // PDuration.counterStart("readHistoryDataFromFile");
-//                historyData.setTheme(FilmFactory.cleanUnicode(historyData.getTheme()));
-//                historyData.setTitle(FilmFactory.cleanUnicode(historyData.getTitle()));
-                // PDuration.counterStop("readHistoryDataFromFile");
-                // ==================================================================
                 dataList.add(historyData);
             }
         } catch (final Exception ex) {
@@ -69,20 +90,6 @@ public class HistoryFactory {
             // dann das alte Format
             return url + P2LibConst.LINE_SEPARATOR;
         }
-
-        // schneller
-//        final int MAX_THEME = 25;
-//        final int MAX_TITLE = 40;
-//        if (theme.length() < MAX_THEME) {
-//            // nur wenn zu kurz, dann anpassen, so bleibt das Log ~lesbar
-//            // und Titel werden nicht abgeschnitten
-//            theme = PStringUtils.shortenString(MAX_THEME, theme, false /* mitte */, false /*addVorne*/);
-//        }
-//        if (title.length() < MAX_TITLE) {
-//            // nur wenn zu kurz, dann anpassen, so bleibt das Log ~lesbar
-//            // und Titel werden nicht abgeschnitten
-//            title = PStringUtils.shortenString(MAX_TITLE, title, false /* mitte */, false /*addVorne*/);
-//        }
 
         return dateStr + SEPARATOR_1
                 + cleanUp(theme) + SEPARATOR_1
@@ -120,6 +127,6 @@ public class HistoryFactory {
         } catch (final Exception ex) {
             P2Log.errorLog(398853224, ex);
         }
-        return new HistoryData(date, theme, title, url);
+        return new HistoryData(HistoryData.SOURCE_SHOWN, date, "", theme, title, url);
     }
 }

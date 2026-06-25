@@ -116,7 +116,8 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
             return;
         }
         //aus der Abo-History löschen
-        progData.historyListAbos.removeDownloadDataFromHistory(undoList);
+//        progData.historyListAbos.removeDownloadDataFromHistory(undoList);
+        progData.historyListJson.removeDownloadFromHistory(undoList);
         addAll(undoList);
         undoList.clear();
     }

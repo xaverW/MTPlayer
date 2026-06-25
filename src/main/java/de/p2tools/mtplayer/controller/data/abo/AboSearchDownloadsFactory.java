@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
@@ -165,7 +166,7 @@ public class AboSearchDownloadsFactory {
                 return;
             }
 
-            if (ProgData.getInstance().historyListAbos.checkIfUrlAlreadyIn(film.getUrlHistory())) {
+            if (ProgData.getInstance().historyListJson.checkIfUrlAlreadyIn(HistoryData.SOURCE_DOWNLOAD, film.getUrlHistory())) {
                 // ist schon mal geladen worden
                 return;
             }

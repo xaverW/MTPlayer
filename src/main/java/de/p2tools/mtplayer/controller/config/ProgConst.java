@@ -40,8 +40,9 @@ public class ProgConst {
 
     public static final String FILE_BOOKMARKS_TXT = "bookmarks.txt";
     public static final String FILE_BOOKMARKS_XML = "bookmarks.xml";
-    public static final String FILE_FINISHED_ABOS = "downloads.txt";
-    public static final String FILE_HISTORY = "history.txt";
+    public static final String FILE_HISTORY_ABO = "downloads.txt";
+    public static final String FILE_HISTORY_SHOWN = "history.txt";
+    public static final String FILE_HISTORY_JSON = "history.json";
     public static final String FILE_MEDIA_DB = "mediadb.txt";
     public static final String LOG_DIR = "Log";
 

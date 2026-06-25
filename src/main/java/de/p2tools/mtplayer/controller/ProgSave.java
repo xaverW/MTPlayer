@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.data.history.HistoryReadWriteJsonFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -51,6 +52,9 @@ public class ProgSave {
         // DownloadAddDialog, AboAddDialog
         if (busy)
             ProgData.busy.busyOn(Busy.BUSY_SRC.GUI, "Speichern:", -1.0, false);
+
+        // downloadHistory
+        HistoryReadWriteJsonFactory.write();
 
         P2Log.sysLog("Alle Programmeinstellungen sichern");
         final Path xmlFilePath = ProgInfos.getSettingsFile();

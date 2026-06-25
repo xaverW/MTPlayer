@@ -33,7 +33,21 @@ public class MediaSearchFactory {
     private MediaSearchFactory() {
     }
 
-    public static VBox getSearchVbox(MediaDataDto mediaDataDto, Label lblSum, boolean showBuildSearchFrom) {
+    public static VBox getSearchHistoryVbox(MediaDataDto mediaDataDto, Label lblSum, boolean showBuildSearchFrom) {
+        // Suchen wie
+        HBox hBoxBuildSearchFrom = getSearchHbox(mediaDataDto, lblSum, true);
+        HBox hBoxSearchIn = getSearchHbox(mediaDataDto, lblSum, false);
+
+        VBox vBox = new VBox(5);
+        vBox.setPadding(new Insets(5));
+        if (showBuildSearchFrom) {
+            vBox.getChildren().addAll(hBoxBuildSearchFrom);
+        }
+        vBox.getChildren().addAll(hBoxSearchIn);
+        return vBox;
+    }
+
+    public static VBox getSearchMediaVbox(MediaDataDto mediaDataDto, Label lblSum, boolean showBuildSearchFrom) {
         // Suchen wie
         HBox hBoxBuildSearchFrom = getSearchHbox(mediaDataDto, lblSum, true);
         HBox hBoxSearchIn = getSearchHbox(mediaDataDto, lblSum, false);

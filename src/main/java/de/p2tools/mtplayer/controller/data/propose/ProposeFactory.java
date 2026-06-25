@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.data.propose;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningProposeFactory;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 
 import java.util.Hashtable;
@@ -32,8 +33,11 @@ public class ProposeFactory {
         final Hashtable<String, Integer> hashtable = new Hashtable<>();
         ProgData.getInstance().proposeList.clear();
 
-        ProgData.getInstance().historyList.forEach(historyData -> {
-            CleaningProposeFactory.cleanSearchText(historyData, hashtable);
+        ProgData.getInstance().historyListJson.forEach(historyData -> { // todo json
+            if (historyData.getSource() == HistoryData.SOURCE_SHOWN ||
+                    historyData.getSource() == HistoryData.SOURCE_SHOWN_DOWNLOAD) {
+                CleaningProposeFactory.cleanSearchText(historyData, hashtable);
+            }
         });
 
         hashtable.forEach((s, i) -> {

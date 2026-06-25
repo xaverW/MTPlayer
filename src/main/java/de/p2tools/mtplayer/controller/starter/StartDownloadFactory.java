@@ -228,7 +228,7 @@ public class StartDownloadFactory {
 
         } else {
             if (download.isAbo()) {
-                progData.historyListAbos.addHistoryDataToHistory(download.getTheme(), download.getTitle(), download.getHistoryUrl());
+                progData.historyListJson.addDownloadToHistory(download);
             }
             return true;
         }

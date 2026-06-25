@@ -54,11 +54,7 @@ public class PaneHistoryContextMenu {
 
         MenuItem miDelUrl = new MenuItem("Url aus der Liste löschen");
         miDelUrl.setOnAction(a -> {
-            if (history) {
-                progData.historyList.removeHistoryDataFromHistory(historyDataArrayList);
-            } else {
-                progData.historyListAbos.removeHistoryDataFromHistory(historyDataArrayList);
-            }
+            progData.historyListJson.removeHistory(historyDataArrayList);
         });
 
         MenuItem miCopyUrl = new MenuItem("URL kopieren");

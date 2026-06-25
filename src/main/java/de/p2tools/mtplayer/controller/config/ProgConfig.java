@@ -202,6 +202,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART = addBoolProp("system-update-load-filmlist-programstart", Boolean.FALSE);
     public static BooleanProperty SYSTEM_UPDATE_OFFER_FILTER = addBoolProp("system-update-offer-filter", Boolean.FALSE);
     public static BooleanProperty SYSTEM_RESET_COLOR_LIST = addBoolProp("system-reset-color-list", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_CHANGE_HISTORY_FILE = addBoolProp("system-change-history-file", Boolean.FALSE);
 
     // Fenstereinstellungen
     static {
@@ -387,7 +388,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty DOWNLOAD_MAX_DOWNLOADS = addIntProp("download-max-downloads", 2);
     public static IntegerProperty DOWNLOAD_MAX_BANDWIDTH_BYTE = addIntProp("download-max-bandwidth-byte", MtBandwidthTokenBucket.BANDWIDTH_RUN_FREE);
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_SHOW = addBoolProp("download-dialog-error-show", Boolean.TRUE);
-    public static BooleanProperty DOWNLOAD_ONLY_HISTORY = addBoolProp("download-only-history", Boolean.FALSE);
+    public static BooleanProperty DOWNLOAD_ONLY_HISTORY = addBoolProp("download-only-history", Boolean.FALSE); // nur downloads in SHOWN eintragen
     public static BooleanProperty DOWNLOAD_DIALOG_ERROR_TIME = addBoolProp("download-dialog-error-time", Boolean.TRUE);
 
     // ===============================================================

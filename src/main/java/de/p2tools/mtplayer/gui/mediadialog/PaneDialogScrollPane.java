@@ -59,7 +59,7 @@ public class PaneDialogScrollPane extends ScrollPane {
     Label lblGesamtMedia = new Label();
     Label lblHits = new Label();
     TableView<MediaData> tableMedia = new TableView<>();
-    TableView<HistoryData> tableAboOrHistory = new TableView<>();
+    TableView<HistoryData> tableHistory = new TableView<>();
 
     TextField txtTitleMedia = new TextField();
     TextField txtPathMedia = new TextField();
@@ -152,11 +152,11 @@ public class PaneDialogScrollPane extends ScrollPane {
             vBoxMedia.getChildren().addAll(getVBoxSearch(), tableMedia, hBox, getTextFieldGrid());
 
         } else {
-            tableAboOrHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
-            VBox.setVgrow(tableAboOrHistory, Priority.ALWAYS);
+            tableHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
+            VBox.setVgrow(tableHistory, Priority.ALWAYS);
             HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
             hBox.getChildren().addAll(btnClearList, btnClearSelection, P2GuiTools.getHBoxGrower(), getHBoxSum());
-            vBoxMedia.getChildren().addAll(getVBoxSearch(), tableAboOrHistory, hBox, getTextFieldGrid());
+            vBoxMedia.getChildren().addAll(getVBoxSearch(), tableHistory, hBox, getTextFieldGrid());
         }
 
         this.setPadding(new Insets(P2LibConst.PADDING));
@@ -177,7 +177,7 @@ public class PaneDialogScrollPane extends ScrollPane {
         btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
         btnClear.setOnAction(a -> txtSearch.clear());
 
-        VBox vBoxSearch = MediaSearchFactory.getSearchVbox(mediaDataDto, null, false);
+        VBox vBoxSearch = MediaSearchFactory.getSearchMediaVbox(mediaDataDto, null, false);
         mediaDataDto.searchInWhat.addListener((u, o, n) -> filter());
 
         HBox.setHgrow(txtSearch, Priority.ALWAYS);

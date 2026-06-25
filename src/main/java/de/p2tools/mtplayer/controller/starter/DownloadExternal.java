@@ -128,9 +128,9 @@ public class DownloadExternal extends Thread {
 
             if (download.isProgramDownloadmanager()) {
                 // Downloadmanager, dann wars das
-                if (download.isAbo()) {
-                    progData.historyListAbos.addHistoryDataToHistory(download.getTheme(), download.getTitle(), download.getHistoryUrl());
-                }
+//                if (download.isAbo()) {
+                progData.historyListJson.addDownloadToHistory(download);
+//                }
                 retStat = stat_finished_ok;
 
             } else if (download.getSource().equals(DownloadConstants.SRC_BUTTON) &&

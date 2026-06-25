@@ -126,9 +126,9 @@ public class PaneMedia extends VBox {
         HBox.setHgrow(txtSearchAbo, Priority.ALWAYS);
 
         // Suchen in den Medien
-        VBox vLeft = MediaSearchFactory.getSearchVbox(mediaDataDtoMedia, lblSumMedia, true);
+        VBox vLeft = MediaSearchFactory.getSearchMediaVbox(mediaDataDtoMedia, lblSumMedia, true);
         vLeft.getChildren().add(tableMedia);
-        VBox vRight = MediaSearchFactory.getSearchVbox(mediaDataDtoAbo, lblSumAbo, true);
+        VBox vRight = MediaSearchFactory.getSearchMediaVbox(mediaDataDtoAbo, lblSumAbo, true);
         vRight.getChildren().add(tableAbo);
 
         mediaDataDtoMedia.searchInWhat.addListener((u, o, n) -> filter(mediaDataDtoMedia));
@@ -187,12 +187,12 @@ public class PaneMedia extends VBox {
 
     private void initSearch() {
         lblSumMedia.setText(progData.mediaDataList.getFilteredList().size() + "");
-        lblSumAbo.setText(progData.historyListAbos.getFilteredList().size() + "");
+        lblSumAbo.setText(progData.historyListJson.getFilteredList().size() + ""); // todo nur ABO??
 
         progData.mediaDataList.getFilteredList().addListener((ListChangeListener<MediaData>) c ->
                 Platform.runLater(() -> lblSumMedia.setText(progData.mediaDataList.getFilteredList().size() + "")));
-        progData.historyListAbos.getFilteredList().addListener((ListChangeListener<HistoryData>) c ->
-                Platform.runLater(() -> lblSumAbo.setText(progData.historyListAbos.getFilteredList().size() + "")));
+        progData.historyListJson.getFilteredList().addListener((ListChangeListener<HistoryData>) c ->
+                Platform.runLater(() -> lblSumAbo.setText(progData.historyListJson.getFilteredList().size() + "")));
 
         new FilterCheckRegEx(txtSearchMedia);
         txtSearchMedia.textProperty().addListener((u, o, n) -> {
@@ -222,7 +222,7 @@ public class PaneMedia extends VBox {
                     MediaSearchPredicateFactory.getPredicateMediaData(
                             mediaDataDtoMedia.searchInWhat, txtSearchMedia.getText()));
         } else {
-            progData.historyListAbos.filteredListSetPredicate(
+            progData.historyListJson.filteredListSetPredicate(
                     MediaSearchPredicateFactory.getPredicateHistoryData(
                             mediaDataDtoAbo.searchInWhat, txtSearchAbo.getText()));
         }
@@ -288,7 +288,7 @@ public class PaneMedia extends VBox {
         tableAbo.getColumns().addAll(themeColumn, titleColumn, dateColumn);
         tableAbo.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        SortedList<HistoryData> sortedList = progData.historyListAbos.getSortedList();
+        SortedList<HistoryData> sortedList = progData.historyListJson.getSortedList();
         sortedList.comparatorProperty().bind(tableAbo.comparatorProperty());
         tableAbo.setItems(sortedList);
     }

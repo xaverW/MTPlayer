@@ -27,7 +27,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
 import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorList;
 import de.p2tools.mtplayer.controller.data.film.FilmListMTP;
-import de.p2tools.mtplayer.controller.data.history.HistoryList;
+import de.p2tools.mtplayer.controller.data.history.HistoryListJson;
 import de.p2tools.mtplayer.controller.data.offer.OfferList;
 import de.p2tools.mtplayer.controller.data.propose.ProposeList;
 import de.p2tools.mtplayer.controller.data.replace.ReplaceList;
@@ -147,8 +147,9 @@ public class ProgData {
 
     public MediaDataList mediaDataList;
     public MediaCollectionDataList mediaCollectionDataList = null;
-    public HistoryList historyList; // alle angesehenen Filme
-    public HistoryList historyListAbos; // erfolgreich geladenen Abos
+    public HistoryListJson historyListJson; // alle angesehenen Filme aus Downloads und Abos
+    //    public HistoryList historyListShown; // alle angesehenen Filme
+//    public HistoryList historyListAbos; // erfolgreich geladenen Abos
     public BookmarkList bookmarkList; // markierte Filme
     public ProposeList proposeList;
     public final BlackListFilter blackListFilterFilmList;
@@ -192,8 +193,10 @@ public class ProgData {
         filmFilterRunner = new FilmFilterRunner(this, false);
         audioFilterRunner = new FilmFilterRunner(this, true);
 
-        historyList = new HistoryList(ProgConst.FILE_HISTORY, HistoryList.HISTORY_LIST.HISTORY);
-        historyListAbos = new HistoryList(ProgConst.FILE_FINISHED_ABOS, HistoryList.HISTORY_LIST.ABO);
+        historyListJson = new HistoryListJson();
+
+//        historyListShown = new HistoryList(ProgConst.FILE_HISTORY_SHOWN, HistoryList.HISTORY_LIST.DOWNLOAD_HISTORY);
+//        historyListAbos = new HistoryList(ProgConst.FILE_HISTORY_ABO, HistoryList.HISTORY_LIST.ABO_HISTORY);
         bookmarkList = new BookmarkList();
 
         mediaDataList = new MediaDataList();

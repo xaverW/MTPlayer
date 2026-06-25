@@ -61,7 +61,8 @@ public class DownloadFactoryStopDownload {
         }
         if (!aboHistoryList.isEmpty()) {
             // kommt nur in die "erledigte Abos" nicht in die History, da Downloads abgebrochen
-            ProgData.getInstance().historyListAbos.addDownloadDataListToHistory(aboHistoryList);
+//            ProgData.getInstance().historyListAbos.addDownloadDataListToHistory(aboHistoryList);
+            ProgData.getInstance().historyListJson.addDownloadToHistory(aboHistoryList);
         }
         downloadList.removeAll(list);
 
