@@ -52,6 +52,23 @@ public class BookmarkData extends BookmarkDataProps {
         }
     }
 
+    public BookmarkData(boolean audio, String channel, String theme, String title,
+                        String url, String info, String date) {
+        // beim Einlesen der Datei
+        setAudio(audio);
+        setChannel(channel);
+        setTheme(theme);
+        setTitle(title);
+        setUrl(url);
+        setInfo(info);
+        try {
+            FilmDate d = new FilmDate(sdf_datum.parse(date).getTime());
+            setDate(d);
+        } catch (final Exception ignore) {
+            setDate(new FilmDate(0));
+        }
+    }
+
     public FilmDataMTP getFilmData() {
         return filmData;
     }
