@@ -203,6 +203,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_UPDATE_OFFER_FILTER = addBoolProp("system-update-offer-filter", Boolean.FALSE);
     public static BooleanProperty SYSTEM_RESET_COLOR_LIST = addBoolProp("system-reset-color-list", Boolean.FALSE);
     public static BooleanProperty SYSTEM_CHANGE_HISTORY_FILE = addBoolProp("system-change-history-file", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_CHANGE_BOOKMARK_FILE = addBoolProp("system-change-bookmark-file", Boolean.FALSE);
 
     // Fenstereinstellungen
     static {

@@ -21,6 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
 import de.p2tools.mtplayer.controller.data.history.HistoryFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
@@ -43,6 +44,7 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_UPDATE_OFFER_FILTER.setValue(true); // für Version 20
         ProgConfig.SYSTEM_RESET_COLOR_LIST.setValue(true); // für Version 20
         ProgConfig.SYSTEM_CHANGE_HISTORY_FILE.setValue(true); // für Version 21
+        ProgConfig.SYSTEM_CHANGE_BOOKMARK_FILE.setValue(true); // für Version 21
     }
 
     public static void update() {
@@ -155,6 +157,11 @@ public class ProgConfigUpdate {
         if (!ProgConfig.SYSTEM_CHANGE_HISTORY_FILE.getValue()) {
             // dann auf das neue Format umstellen
             HistoryFactory.convertHistoryList();
+        }
+
+        if (!ProgConfig.SYSTEM_CHANGE_BOOKMARK_FILE.getValue()) {
+            // dann auf das neue Format umstellen
+            BookmarkLoadSaveFactory.updateOldBookmarks();
         }
 
         setUpdateDone();
