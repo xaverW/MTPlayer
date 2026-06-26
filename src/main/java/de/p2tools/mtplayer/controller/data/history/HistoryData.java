@@ -82,7 +82,7 @@ public class HistoryData implements Comparable<HistoryData> {
         }
     }
 
-    public void addSourceAbo() {
+    public void addSourceDownload() {
         if (source == HistoryData.SOURCE_SHOWN) {
             source = HistoryData.SOURCE_SHOWN_DOWNLOAD;
         }

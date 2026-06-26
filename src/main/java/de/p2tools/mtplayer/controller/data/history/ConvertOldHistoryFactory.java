@@ -31,48 +31,44 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryFactory {
+public class ConvertOldHistoryFactory {
     private final static String SEPARATOR_1 = " |#| ";
     private final static String SEPARATOR_2 = "  |###|  ";
 
-    private HistoryFactory() {
+    private ConvertOldHistoryFactory() {
     }
 
     public static void convertHistoryList() {
         // laden und in die neue Liste eintragen
-        List<HistoryData> list = new ArrayList<>();
+        ProgData.getInstance().historyListJson.clearAll();
 
         // erst Downloads
-        HistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(),
-                ProgConst.FILE_HISTORY_SHOWN, list);
-        list.forEach(h -> {
+        List<HistoryData> addList = new ArrayList<>();
+        ConvertOldHistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(), ProgConst.FILE_HISTORY_SHOWN, addList);
+        addList.forEach(h -> {
             h.setSource(HistoryData.SOURCE_SHOWN);
-            ProgData.getInstance().historyListJson.add(h);
         });
+        ProgData.getInstance().historyListJson.updateHistory(HistoryData.SOURCE_SHOWN, addList);
 
         // dann Abos
-        list.clear();
-        HistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(),
-                ProgConst.FILE_HISTORY_ABO, list);
-        list.forEach(h -> {
-            HistoryData historyData = ProgData.getInstance().historyListJson.getHistoryData(h.getUrl());
-            if (historyData != null) {
-                historyData.setSource(HistoryData.SOURCE_SHOWN_DOWNLOAD);
-            } else {
-                h.setSource(HistoryData.SOURCE_DOWNLOAD);
-                ProgData.getInstance().historyListJson.add(h);
-            }
+        addList.clear();
+        ConvertOldHistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(), ProgConst.FILE_HISTORY_ABO, addList);
+        addList.forEach(h -> {
+            h.setSource(HistoryData.SOURCE_DOWNLOAD);
         });
+        ProgData.getInstance().historyListJson.updateHistory(HistoryData.SOURCE_SHOWN, addList);
+        HistoryReadWriteJsonFactory.write();
+        ProgData.getInstance().historyListJson.clearAll(); // sonst sinds doppelt drin
     }
 
 
-    public static synchronized void readHistoryDataFromFile(String settingsDir, String fileName, List<HistoryData> dataList) {
+    private static synchronized void readHistoryDataFromFile(String settingsDir, String fileName, List<HistoryData> dataList) {
         // neue Liste mit den URLs aus dem Logfile bauen
         final Path urlPath = FileFactory.getUrlFilePath(settingsDir, fileName);
         try (LineNumberReader in = new LineNumberReader(new InputStreamReader(Files.newInputStream(urlPath)))) {
             String line;
             while ((line = in.readLine()) != null) {
-                final HistoryData historyData = HistoryFactory.getHistoryDataFromLine(line);
+                final HistoryData historyData = ConvertOldHistoryFactory.getHistoryDataFromLine(line);
                 dataList.add(historyData);
             }
         } catch (final Exception ex) {

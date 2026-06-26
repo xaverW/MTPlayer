@@ -79,9 +79,9 @@ public class ProgStartBeforeGui {
         }
 
         P2Log.sysLog("History-Listen laden");
-        ProgData.getInstance().historyListJson.loadList();
 //        ProgData.getInstance().historyList.loadList();
 //        ProgData.getInstance().historyListAbos.loadList();
+        ProgData.getInstance().historyListJson.loadList();
         BookmarkLoadSaveFactory.loadList();
 
         if (ProgData.getInstance().utDataList.isEmpty()) {

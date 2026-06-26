@@ -22,7 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
-import de.p2tools.mtplayer.controller.data.history.HistoryFactory;
+import de.p2tools.mtplayer.controller.data.history.ConvertOldHistoryFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
@@ -156,7 +156,7 @@ public class ProgConfigUpdate {
 
         if (!ProgConfig.SYSTEM_CHANGE_HISTORY_FILE.getValue()) {
             // dann auf das neue Format umstellen
-            HistoryFactory.convertHistoryList();
+            ConvertOldHistoryFactory.convertHistoryList();
         }
 
         if (!ProgConfig.SYSTEM_CHANGE_BOOKMARK_FILE.getValue()) {

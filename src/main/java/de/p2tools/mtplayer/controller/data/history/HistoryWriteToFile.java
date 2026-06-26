@@ -85,7 +85,7 @@ public class HistoryWriteToFile implements Runnable {
                 new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(FileFactory.getUrlFilePath(settingsDir, fileName)))))
         ) {
             for (final HistoryData historyData : list) {
-                final String line = HistoryFactory.getLine(historyData);
+                final String line = ConvertOldHistoryFactory.getLine(historyData);
                 bufferedWriter.write(line);
             }
         } catch (final Exception ex) {

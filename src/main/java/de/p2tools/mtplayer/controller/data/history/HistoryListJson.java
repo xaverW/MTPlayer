@@ -53,7 +53,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         // beim Programmstart laden
         P2Duration.counterStart("loadList");
         HistoryReadWriteJsonFactory.read();
-        fillUrlHash();
+        makeUrlHash();
         P2Duration.counterStop("loadList");
     }
 
@@ -77,6 +77,16 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
     }
 
     //===============
+    public synchronized void replaceList(List<HistoryData> list) {
+        this.setAll(list);
+        makeUrlHash();
+    }
+
+    public synchronized void clearAll() {
+        this.clear();
+        this.urlHashMap.clear();
+    }
+
     public synchronized void clearAll(Stage stage, int source) {
         // aus dem Menü: Alles löschen (Abo, History)
         final int size = this.size();
@@ -134,6 +144,31 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
     //===============
     //ADD
     //===============
+    public synchronized void updateHistory(int source, List<HistoryData> historyList) {
+        if (historyList == null || historyList.isEmpty()) {
+            return;
+        }
+
+        List<HistoryData> addList = new ArrayList<>();
+        historyList.forEach(addHistory -> {
+            if (!FilmToolsFactory.checkIfLiveStream(addHistory.getTheme())) {
+
+                HistoryData alreadyIn = urlHashMap.get(addHistory.getUrl());
+                if (alreadyIn == null) {
+                    // noch nicht drin
+                    addList.add(addHistory);
+
+                } else if (alreadyIn.getSource() != source) {
+                    // drin aber mit anderem source -> dann beides
+                    alreadyIn.setSource(HistoryData.SOURCE_SHOWN_DOWNLOAD);
+                }
+            }
+        });
+
+        // und dann wird er neu angelegt
+        addToThisList(addList);
+    }
+
     public synchronized void addDownloadToHistory(DownloadData download) {
         // gestarteter Download, landet in ABOS und SHOWN
         if (download == null) {
@@ -384,14 +419,19 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
             // SHOWN löschen, Rest ist dann ABO
             this.removeIf(h -> h.getSource() == HistoryData.SOURCE_SHOWN);
             this.forEach(historyData -> historyData.setSource(HistoryData.SOURCE_DOWNLOAD));
-            fillUrlHash();
+            makeUrlHash();
 
         } else {
             // ABOS löschen, Rest ist dann nur noch SHOWN
             this.removeIf(h -> h.getSource() == HistoryData.SOURCE_DOWNLOAD);
             this.forEach(historyData -> historyData.setSource(HistoryData.SOURCE_SHOWN));
-            fillUrlHash();
+            makeUrlHash();
         }
+    }
+
+    private void addToThisList(List<HistoryData> historyDataList) {
+        this.addAll(historyDataList);
+        makeUrlHash();
     }
 
     private void addToThisList(HistoryData historyData) {
@@ -401,12 +441,12 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
 
     private void replaceThisList(List<HistoryData> historyData) {
         this.setAll(historyData);
-        fillUrlHash();
+        makeUrlHash();
     }
 
     private void removeFromHistory(HistoryData historyData) {
         this.remove(historyData);
-        fillUrlHash();
+        makeUrlHash();
     }
 
     private void removeFromHistory(int source, HistoryData historyData) {
@@ -435,7 +475,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
 
     private void removeFromHistory(List<HistoryData> historyList) {
         this.removeAll(historyList);
-        fillUrlHash();
+        makeUrlHash();
     }
 
     private void removeFromHistory(int source, List<HistoryData> historyList) {
@@ -462,10 +502,10 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         });
 
         this.removeAll(remove);
-        fillUrlHash();
+        makeUrlHash();
     }
 
-    private void fillUrlHash() {
+    public void makeUrlHash() {
         urlHashMap.clear();
         this.forEach(h -> urlHashMap.put(h.getUrl(), h));
     }
