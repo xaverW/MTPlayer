@@ -85,6 +85,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
     public synchronized void clearAll() {
         this.clear();
         this.urlHashMap.clear();
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED);
     }
 
     public synchronized void clearAll(Stage stage) {
@@ -426,7 +427,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
 
     private void addToThisList(HistoryData historyData) {
         this.add(historyData);
-        urlHashMap.put(historyData.getUrl(), historyData);
+        makeUrlHash();
     }
 
     private void replaceThisList(List<HistoryData> historyData) {
@@ -498,5 +499,6 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
     public void makeUrlHash() {
         urlHashMap.clear();
         this.forEach(h -> urlHashMap.put(h.getUrl(), h));
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED);
     }
 }
