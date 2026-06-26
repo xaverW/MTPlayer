@@ -3,7 +3,6 @@ package de.p2tools.mtplayer.controller.data.bookmark;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
-import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.configfile.ConfigFile;
 import de.p2tools.p2lib.configfile.ConfigReadFile;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -18,10 +17,23 @@ public class BookmarkLoadSaveFactory {
 
     public static void updateOldBookmarks() {
         String settingsDir = ProgInfos.getSettingsDirectory_String();
-        String fileName = ProgConst.FILE_BOOKMARKS_XML;
-        final Path xmlFilePath = FileFactory.getUrlFilePath(settingsDir, fileName);
-
         BookmarkList list = new BookmarkList();
+        String fileNameXml = ProgConst.FILE_BOOKMARKS_XML;
+        String fileNameTxt = ProgConst.FILE_BOOKMARKS_TXT;
+
+        final Path txtFilePath = Path.of(settingsDir, fileNameTxt);
+        final Path xmlFilePath = Path.of(settingsDir, fileNameXml);
+
+        // Und jetzt die alten noch löschen
+        try {
+            if (Files.exists(txtFilePath)) {
+                Files.delete(txtFilePath);
+            }
+        } catch (Exception ex) {
+            P2Log.errorLog(623232321, ex.getMessage());
+        }
+
+
         try {
             if (!Files.exists(xmlFilePath) || xmlFilePath.toFile().length() == 0) {
                 return;
@@ -38,6 +50,15 @@ public class BookmarkLoadSaveFactory {
 
         BookmarkReadWriteJsonFactory.write(list);
         list.clearList();
+
+        // Und jetzt die alten noch löschen
+        try {
+            if (Files.exists(xmlFilePath)) {
+                Files.delete(xmlFilePath);
+            }
+        } catch (Exception ex) {
+            P2Log.errorLog(623232321, ex.getMessage());
+        }
     }
 
     public static void loadList() {
