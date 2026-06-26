@@ -87,35 +87,19 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         this.urlHashMap.clear();
     }
 
-    public synchronized void clearAll(Stage stage, int source) {
+    public synchronized void clearAll(Stage stage) {
         // aus dem Menü: Alles löschen (Abo, History)
         final int size = this.size();
-        final String text;
-        if (source == HistoryData.SOURCE_SHOWN_DOWNLOAD) {
-            text = "Soll die gesamte Liste " +
-                    "(" + size + ")" +
-                    " gelöscht werden?";
 
-        } else if (source == HistoryData.SOURCE_SHOWN) {
-            text = "Sollen alle \"Gesehenen\" " +
-                    "( " + size + " )" +
-                    " gelöscht werden?";
-
-        } else {
-            text = "Sollen alle \"Abos\" " +
-                    "( " + size + " )" +
-                    " gelöscht werden?";
-        }
-
-        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Film löschen", text)) {
-            clearList(source);
-            if (source == HistoryData.SOURCE_SHOWN_DOWNLOAD || source == HistoryData.SOURCE_SHOWN) {
-                // dann auch History in den Filmen löschen
-                ProgData.getInstance().filmList.forEach(film -> {
-                    film.setShown(false);
-                    film.setActHist(false);
-                });
-            }
+        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Film löschen",
+                "Soll die gesamte Liste (" + size + ")" +
+                        " gelöscht werden?")) {
+            clearList();
+            // dann auch History in den Filmen löschen
+            ProgData.getInstance().filmList.forEach(film -> {
+                film.setShown(false);
+                film.setActHist(false);
+            });
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED);
         }
     }
@@ -409,25 +393,31 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
     }
 
     //===============
-    private void clearList(int source) {
-        if (source == HistoryData.SOURCE_SHOWN_DOWNLOAD) {
-            // dann alle
-            urlHashMap.clear();
-            this.clear();
-
-        } else if (source == HistoryData.SOURCE_SHOWN) {
-            // SHOWN löschen, Rest ist dann ABO
-            this.removeIf(h -> h.getSource() == HistoryData.SOURCE_SHOWN);
-            this.forEach(historyData -> historyData.setSource(HistoryData.SOURCE_DOWNLOAD));
-            makeUrlHash();
-
-        } else {
-            // ABOS löschen, Rest ist dann nur noch SHOWN
-            this.removeIf(h -> h.getSource() == HistoryData.SOURCE_DOWNLOAD);
-            this.forEach(historyData -> historyData.setSource(HistoryData.SOURCE_SHOWN));
-            makeUrlHash();
-        }
+    private void clearList() {
+        // dann alle
+        urlHashMap.clear();
+        this.clear();
     }
+
+//    private void clearList(int source) {
+//        if (source == HistoryData.SOURCE_SHOWN_DOWNLOAD) {
+//            // dann alle
+//            urlHashMap.clear();
+//            this.clear();
+//
+//        } else if (source == HistoryData.SOURCE_SHOWN) {
+//            // SHOWN löschen, Rest ist dann ABO
+//            this.removeIf(h -> h.getSource() == HistoryData.SOURCE_SHOWN);
+//            this.forEach(historyData -> historyData.setSource(HistoryData.SOURCE_DOWNLOAD));
+//            makeUrlHash();
+//
+//        } else {
+//            // ABOS löschen, Rest ist dann nur noch SHOWN
+//            this.removeIf(h -> h.getSource() == HistoryData.SOURCE_DOWNLOAD);
+//            this.forEach(historyData -> historyData.setSource(HistoryData.SOURCE_SHOWN));
+//            makeUrlHash();
+//        }
+//    }
 
     private void addToThisList(List<HistoryData> historyDataList) {
         this.addAll(historyDataList);

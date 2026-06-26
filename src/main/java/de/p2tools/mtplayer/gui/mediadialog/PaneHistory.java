@@ -55,6 +55,7 @@ public class PaneHistory extends ScrollPane {
     //    private Text textSearch = new Text();
     private final Button btnClearList = new Button("_Gesamte Liste löschen");
     private final Button btnClearSelection = new Button("_Auswahl löschen");
+    private final Button btnClearShown = new Button("Angezeigte _Liste löschen");
     private final TextField txtSearch = new TextField();
 
     private final Label lblGesamtMedia = new Label();
@@ -127,7 +128,7 @@ public class PaneHistory extends ScrollPane {
         tableHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         VBox.setVgrow(tableHistory, Priority.ALWAYS);
         HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
-        hBox.getChildren().addAll(btnClearList, btnClearSelection, P2GuiTools.getHBoxGrower(), getHBoxSum());
+        hBox.getChildren().addAll(btnClearList, btnClearSelection, btnClearShown, P2GuiTools.getHBoxGrower(), getHBoxSum());
         vBoxMedia.getChildren().addAll(getVBoxSearch(), tableHistory, hBox, getTextFieldGrid());
 
         this.setPadding(new Insets(P2LibConst.PADDING));
@@ -230,11 +231,21 @@ public class PaneHistory extends ScrollPane {
         progData.historyListJson.addListener(listener);
 
         btnClearList.setOnAction(a -> {
-            progData.historyListJson.clearAll(stage, getSource());
+            progData.historyListJson.clearAll(stage);
         });
         btnClearSelection.setOnAction(a -> {
             ArrayList<HistoryData> historyDataArrayList =
                     new ArrayList<>(tableHistory.getSelectionModel().getSelectedItems());
+            if (historyDataArrayList.isEmpty()) {
+                P2Alert.showInfoNoSelection(stage);
+
+            } else {
+                progData.historyListJson.removeHistory(historyDataArrayList);
+            }
+        });
+        btnClearShown.setOnAction(a -> {
+            ArrayList<HistoryData> historyDataArrayList =
+                    new ArrayList<>(tableHistory.getItems());
             if (historyDataArrayList.isEmpty()) {
                 P2Alert.showInfoNoSelection(stage);
 
