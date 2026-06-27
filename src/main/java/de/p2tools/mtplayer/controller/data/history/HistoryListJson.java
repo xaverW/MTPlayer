@@ -122,7 +122,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
             return true;
         }
 
-        return source == h.getSource();
+        return h.getSource() == source;
     }
 
 

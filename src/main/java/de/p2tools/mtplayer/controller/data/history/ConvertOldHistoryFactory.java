@@ -44,7 +44,8 @@ public class ConvertOldHistoryFactory {
 
         // erst Downloads
         List<HistoryData> addList = new ArrayList<>();
-        ConvertOldHistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(), ProgConst.FILE_HISTORY_SHOWN, addList);
+        ConvertOldHistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(),
+                ProgConst.FILE_HISTORY_SHOWN_TXT, addList);
         addList.forEach(h -> {
             h.setSource(HistoryData.SOURCE_SHOWN);
         });
@@ -52,11 +53,12 @@ public class ConvertOldHistoryFactory {
 
         // dann Abos
         addList.clear();
-        ConvertOldHistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(), ProgConst.FILE_HISTORY_ABO, addList);
+        ConvertOldHistoryFactory.readHistoryDataFromFile(ProgInfos.getSettingsDirectory_String(),
+                ProgConst.FILE_HISTORY_ABO_TXT, addList);
         addList.forEach(h -> {
             h.setSource(HistoryData.SOURCE_DOWNLOAD);
         });
-        ProgData.getInstance().historyListJson.updateHistory(HistoryData.SOURCE_SHOWN, addList);
+        ProgData.getInstance().historyListJson.updateHistory(HistoryData.SOURCE_DOWNLOAD, addList);
         HistoryReadWriteJsonFactory.write();
         ProgData.getInstance().historyListJson.clearAll(); // sonst sinds doppelt drin
     }
