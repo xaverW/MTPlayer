@@ -221,7 +221,6 @@ public class ProgConfig extends P2DataProgConfig {
     //Configs zur Anzeige der Diakritika in der Filmliste
     //TRUE: dann werden Diakritika nicht geändert und angezeigt --> das kommt weg
     public static BooleanProperty SYSTEM_SHOW_DIACRITICS = addBoolProp("system-show-diacritics", Boolean.TRUE);
-
     //Configs zur Anzeige der Diakritika in der Filmliste
     //TRUE: dann werden Diakritika nicht geändert und angezeigt
     public static BooleanProperty SYSTEM_REMOVE_DIACRITICS = addBoolProp("system-remove-diacritics", Boolean.FALSE);
@@ -248,6 +247,10 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_QUITT_DIALOG_MINIMIZE = addBoolProp("system-quitt-dialog-minimize", false); // Programm minimize nach "Warten"
     public static BooleanProperty CHECK_SET_PROGRAM_START = addBoolProp("check-set-program-start", Boolean.TRUE); // die Sets prüfen
     public static StringProperty CHECK_SET_DIALOG_SIZE = addStrProp("check-set-dialog-size", "400:500");
+    public static BooleanProperty SYSTEM_FILTER_SECOND_KLICK = addBoolProp("system-filter-second-klick", true); // Filter 2x klicken um alles zu löschen
+    public static BooleanProperty SYSTEM_TAB_SECOND_KLICK = addBoolProp("system-tab-second-klick", true); // beim zweiten Klick auf den Tab, Filter/Info ein/ausblenden
+    public static BooleanProperty SYSTEM_FILTER_SECOND_KLICK_ASK = addBoolProp("system-filter-second-klick-ask", false); // Dialog mit Nachfrage
+    public static BooleanProperty SYSTEM_TAB_SECOND_KLICK_ASK = addBoolProp("system-tab-second-klick-ask", false); // Dialog mit Nachfrage
 
     //Configs Statusbar
     static {
@@ -456,6 +459,8 @@ public class ProgConfig extends P2DataProgConfig {
 
     public static StringProperty BOOKMARK_DIALOG_SIZE = addStrProp("bookmark-dialog-size", "600:800");
     public static StringProperty BOOKMARK_DIALOG_DEL_SIZE = addStrProp("bookmark-dialog-del-size", "450:350");
+    //    public static StringProperty FEATURE_FILTER_DIALOG_SIZE = addStrProp("feature-filter-dialog-size", "450:350");
+//    public static StringProperty FEATURE_TAB_DIALOG_SIZE = addStrProp("feature-tab-dialog-size", "450:350");
     public static StringProperty BOOKMARK_TABLE_WIDTH = addStrProp("bookmark-table-width");
     public static StringProperty BOOKMARK_TABLE_SORT = addStrProp("bookmark-table-sort");
     public static StringProperty BOOKMARK_TABLE_UP_DOWN = addStrProp("bookmark-table-up-down");

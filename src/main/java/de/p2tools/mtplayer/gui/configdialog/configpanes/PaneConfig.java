@@ -42,6 +42,7 @@ public class PaneConfig {
     private final P2ToggleSwitch tglStartMaximised = new P2ToggleSwitch("Programm immer \"Maximiert\" starten");
     private final P2ToggleSwitch tglCheckStart = new P2ToggleSwitch("Einstellungen zum Speichern beim Programmstart prüfen");
     private final P2ToggleSwitch tglShowTips = new P2ToggleSwitch("Tipps beim Programmstart anzeigen");
+    private final P2ToggleSwitch tglTabSecond = new P2ToggleSwitch("Beim zweiten Klick auf einen Tab, Filter ein/ausblenden");
     private TextField txtUserAgent;
 
     private final Stage stage;
@@ -55,6 +56,7 @@ public class PaneConfig {
         tglStartMaximised.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_GUI_START_ALWAYS_MAXIMISED);
         tglCheckStart.selectedProperty().unbindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
         tglShowTips.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SHOW_TIPS);
+        tglTabSecond.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_TAB_SECOND_KLICK);
         txtUserAgent.textProperty().unbindBidirectional(ProgConfig.SYSTEM_USERAGENT);
     }
 
@@ -76,6 +78,11 @@ public class PaneConfig {
         final Button btnHelpStartMaximised = PIconFactory.getHelpButton(stage, "Programm immer \"Maximiert\" starten",
                 HelpText.START_MAXIMISED);
         GridPane.setHalignment(btnHelpStartMaximised, HPos.RIGHT);
+
+        tglTabSecond.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_TAB_SECOND_KLICK);
+        final Button btnHelpTabSecond = PIconFactory.getHelpButton(stage, "Zweiter Klick auf einen Tab",
+                HelpText.TabSecondKlick);
+        GridPane.setHalignment(btnHelpTabSecond, HPos.RIGHT);
 
         tglCheckStart.selectedProperty().bindBidirectional(ProgConfig.CHECK_SET_PROGRAM_START);
 
@@ -123,6 +130,9 @@ public class PaneConfig {
 
         gridPane.add(tglStartMaximised, 0, ++row, 2, 1);
         gridPane.add(btnHelpStartMaximised, 2, row);
+
+        gridPane.add(tglTabSecond, 0, ++row, 2, 1);
+        gridPane.add(btnHelpTabSecond, 2, row);
 
         gridPane.add(new Label(" "), 0, ++row);
         gridPane.add(tglCheckStart, 0, ++row, 2, 1);

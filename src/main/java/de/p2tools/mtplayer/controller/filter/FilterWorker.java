@@ -17,10 +17,12 @@
 package de.p2tools.mtplayer.controller.filter;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
+import de.p2tools.mtplayer.gui.dialog.FeatureFilterDialog;
 
 import java.util.Optional;
 
@@ -151,9 +153,15 @@ public class FilterWorker {
     }
 
     public synchronized void clearFilter() {
+        if (!ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.get()) {
+            // dann zuerst mal nachfragen
+            new FeatureFilterDialog();
+        }
+
         actFilterSettings.switchFilterOff(true);
 
-        if (actFilterSettings.isTextFilterEmpty()) {
+        if (!ProgConfig.SYSTEM_FILTER_SECOND_KLICK.get() ||
+                actFilterSettings.isTextFilterEmpty()) {
             actFilterSettings.clearFilter(); // Button Black wird nicht verändert
         } else {
             actFilterSettings.clearTxtFilter();

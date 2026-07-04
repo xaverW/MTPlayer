@@ -57,6 +57,7 @@ public class PaneFilter {
     private final ObjectProperty<OfferData> offerDateProp = new SimpleObjectProperty<>(null);
     private final P2ToggleSwitch tglOffer = new P2ToggleSwitch("Vorschläge anzeigen");
     private final P2ToggleSwitch tglRegEx = new P2ToggleSwitch("Bei der Suche mit RegEx muss der Suchtext nur enthalten sein");
+    private final P2ToggleSwitch tglFilterSecondKlick = new P2ToggleSwitch("Alle Filter erst beim zweiten Klick, löschen");
 
     private final Stage stage;
 
@@ -69,6 +70,7 @@ public class PaneFilter {
         unbindText();
         tglOffer.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_USE_OFFERTABLE);
         tglRegEx.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);
+        tglFilterSecondKlick.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_SECOND_KLICK);
     }
 
     public void make(Collection<TitledPane> result) {
@@ -94,6 +96,9 @@ public class PaneFilter {
                 HelpText.FILTER_REG_EX_ONLY_CONTAIN);
         tglOffer.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_OFFERTABLE);
         tglRegEx.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);
+        tglFilterSecondKlick.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_SECOND_KLICK);
+        final Button btnFilterSecondKlick = PIconFactory.getHelpButton(stage, "Klick auf \"Filter löschen\"",
+                HelpText.FILTER_SECOND_KLICK);
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -103,9 +108,12 @@ public class PaneFilter {
         gridPane.add(tglRegEx, 0, 0);
         gridPane.add(btnHelpRegEx, 1, 0);
 
-        gridPane.add(new Label(), 0, 1);
-        gridPane.add(tglOffer, 0, 2);
-        gridPane.add(btnHelp, 1, 2);
+        gridPane.add(tglFilterSecondKlick, 0, 1);
+        gridPane.add(btnFilterSecondKlick, 1, 1);
+
+        gridPane.add(new Label(), 0, 2);
+        gridPane.add(tglOffer, 0, 3);
+        gridPane.add(btnHelp, 1, 3);
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcComputedSizeAndHgrow(),
                 P2GridConstraints.getCcPrefSize());
     }

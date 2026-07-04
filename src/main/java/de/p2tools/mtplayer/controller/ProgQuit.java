@@ -87,6 +87,13 @@ public class ProgQuit {
                 P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
             }
 
+            if (ProgData.debug) {
+                ProgConfig.SYSTEM_TAB_SECOND_KLICK.set(true);
+                ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.set(false);
+
+                ProgConfig.SYSTEM_FILTER_SECOND_KLICK.set(true);
+                ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.set(false);
+            }
             exitProg();
         });
     }

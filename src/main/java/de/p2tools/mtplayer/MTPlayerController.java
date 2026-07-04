@@ -22,6 +22,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.load.LoadFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.*;
+import de.p2tools.mtplayer.gui.dialog.FeatureTabDialog;
 import de.p2tools.mtplayer.gui.filter.FastFilter;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -99,25 +100,14 @@ public class MTPlayerController extends StackPane {
                 btnFilmlist.setMinSize(btnFilmlistMax.getWidth(), btnFilmlistMax.getHeight());
             });
 
-            // Toolbar
-//            TilePane tilePaneButton = new TilePane();
-//            tilePaneButton.setStyle("-fx-border-color: red;");
-//            tilePaneButton.setHgap(5);
-//            tilePaneButton.setPrefRows(1);
-//            tilePaneButton.setPrefColumns(5);
-//            tilePaneButton.setAlignment(Pos.BOTTOM_CENTER);
-//            btnFilm.setStyle("-fx-border-color: green; -fx-border-width: 2;");
-//            tilePaneButton.getChildren().addAll(btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
             HBox hBoxBtn = new HBox(5);
             hBoxBtn.setAlignment(Pos.BOTTOM_CENTER);
             hBoxBtn.getChildren().addAll(btnFilm, btnAudio, btnLive, btnDownload, btnAbo);
-//            hBoxBtn.setStyle("-fx-border-color: red;");
 
             StackPane stackPaneFilmlist = new StackPane();
             stackPaneFilmlist.getChildren().addAll(btnFilmlistMax, btnFilmlist);
 
             StackPane stackPaneTitleButton = new StackPane();
-//            stackPaneTitleButton.setStyle("-fx-border-color: blue;");
             stackPaneTitleButton.setAlignment(Pos.BOTTOM_CENTER);
             stackPaneTitleButton.setPadding(new Insets(0));
             stackPaneTitleButton.getChildren().addAll(btnSize, hBoxBtn);
@@ -166,9 +156,9 @@ public class MTPlayerController extends StackPane {
             initButton();
             if (ProgData.autoMode) {
                 // dann die Downloads anzeigen
-                selPanelDownload();
+                selPanelDownload(false);
             } else {
-                selPanelFilm();
+                selPanelFilm(false);
             }
         } catch (Exception ex) {
             P2Log.errorLog(597841023, ex);
@@ -231,7 +221,7 @@ public class MTPlayerController extends StackPane {
             // wenn Audio ein, dann Film
             fastFilterAudio.setManaged(ProgConfig.SYSTEM_USE_AUDIOLIST.get());
             if (TAB_AUDIO_ON.get()) {
-                selPanelFilm();
+                selPanelFilm(true);
             } else {
                 setButtonStyle();
             }
@@ -239,7 +229,7 @@ public class MTPlayerController extends StackPane {
         ProgConfig.SYSTEM_USE_LIVE.addListener((u, o, n) -> {
             // wenn Audio ein, dann Film
             if (TAB_LIVE_ON.get()) {
-                selPanelFilm();
+                selPanelFilm(true);
             }
         });
 
@@ -250,7 +240,7 @@ public class MTPlayerController extends StackPane {
         btnAbo.getStyleClass().addAll("pFuncBtn", "pFuncBtnTitleBar");
 
         btnFilm.setTooltip(new Tooltip("Filme anzeigen"));
-        btnFilm.setOnAction(e -> selPanelFilm());
+        btnFilm.setOnAction(e -> selPanelFilm(true));
         btnFilm.setMaxWidth(Double.MAX_VALUE);
 
         btnAudio.setTooltip(new Tooltip("Audios anzeigen"));
@@ -266,7 +256,7 @@ public class MTPlayerController extends StackPane {
         btnLive.managedProperty().bind(btnLive.visibleProperty());
 
         btnDownload.setTooltip(new Tooltip("Downloads anzeigen"));
-        btnDownload.setOnAction(e -> selPanelDownload());
+        btnDownload.setOnAction(e -> selPanelDownload(true));
         btnDownload.setMaxWidth(Double.MAX_VALUE);
 
         btnAbo.setTooltip(new Tooltip("Abos anzeigen"));
@@ -278,7 +268,8 @@ public class MTPlayerController extends StackPane {
             if (progData.maskerPane.isVisible() || !TAB_FILM_ON.get()) {
                 return;
             }
-            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY) &&
+                    ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
                 MTPlayerFactory.setInfos();
             }
         });
@@ -286,7 +277,8 @@ public class MTPlayerController extends StackPane {
             if (progData.maskerPane.isVisible() || !TAB_AUDIO_ON.get()) {
                 return;
             }
-            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY) &&
+                    ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
                 MTPlayerFactory.setInfos();
             }
         });
@@ -294,7 +286,8 @@ public class MTPlayerController extends StackPane {
             if (progData.maskerPane.isVisible() || !TAB_LIVE_ON.get()) {
                 return;
             }
-            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY) &&
+                    ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
                 MTPlayerFactory.setInfos();
             }
         });
@@ -302,7 +295,8 @@ public class MTPlayerController extends StackPane {
             if (progData.maskerPane.isVisible() || !TAB_DOWNLOAD_ON.get()) {
                 return;
             }
-            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY) &&
+                    ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
                 MTPlayerFactory.setInfos();
             }
         });
@@ -310,14 +304,19 @@ public class MTPlayerController extends StackPane {
             if (progData.maskerPane.isVisible() || !TAB_ABO_ON.get()) {
                 return;
             }
-            if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
+            if (mouseEvent.getButton().equals(MouseButton.SECONDARY) &&
+                    ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
                 MTPlayerFactory.setInfos();
             }
         });
     }
 
-    private void selPanelFilm() {
-        if (TAB_FILM_ON.get()) {
+    private void selPanelFilm(boolean ask) {
+        if (ask && !ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+            new FeatureTabDialog();
+        }
+        if (TAB_FILM_ON.get() &&
+                ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
             // dann ist der 2. Klick
             MTPlayerFactory.setFilter();
             return;
@@ -331,7 +330,11 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelAudio() {
-        if (TAB_AUDIO_ON.get()) {
+        if (!ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+            new FeatureTabDialog();
+        }
+        if (TAB_AUDIO_ON.get() &&
+                ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
             // dann ist der 2. Klick
             MTPlayerFactory.setFilter();
             return;
@@ -345,7 +348,11 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelLiveFilm() {
-        if (TAB_LIVE_ON.get()) {
+        if (!ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+            new FeatureTabDialog();
+        }
+        if (TAB_LIVE_ON.get() &&
+                ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
             // dann ist der 2. Klick
             MTPlayerFactory.setFilter();
             return;
@@ -358,8 +365,12 @@ public class MTPlayerController extends StackPane {
         statusBarController.setStatusbarIndex();
     }
 
-    private void selPanelDownload() {
-        if (TAB_DOWNLOAD_ON.get()) {
+    private void selPanelDownload(boolean ask) {
+        if (ask && !ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+            new FeatureTabDialog();
+        }
+        if (TAB_DOWNLOAD_ON.get() &&
+                ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
             // dann ist der 2. Klick
             MTPlayerFactory.setFilter();
             return;
@@ -373,7 +384,11 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelAbo() {
-        if (TAB_ABO_ON.get()) {
+        if (!ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+            new FeatureTabDialog();
+        }
+        if (TAB_ABO_ON.get() &&
+                ProgConfig.SYSTEM_TAB_SECOND_KLICK.get()) {
             // dann ist der 2. Klick
             MTPlayerFactory.setFilter();
             return;
@@ -387,13 +402,6 @@ public class MTPlayerController extends StackPane {
     }
 
     private void setButtonStyle() {
-//        btnFilm.getStyleClass().clear();
-//        btnAudio.getStyleClass().clear();
-//        btnLive.getStyleClass().clear();
-//        btnDownload.getStyleClass().clear();
-//        btnAbo.getStyleClass().clear();
-
-
         fastFilterFilm.setVisible(false);
         fastFilterAudio.setVisible(false);
 
@@ -424,15 +432,6 @@ public class MTPlayerController extends StackPane {
         if (TAB_ABO_ON.get()) {
             btnAbo.getStyleClass().addAll("pFuncBtnTitleBarSel");
         }
-
-//        if (ProgConfig.FAST_FILM_SEARCH_ON.get() ||
-//                ProgConfig.FAST_AUDIO_SEARCH_ON.get() && ProgConfig.SYSTEM_USE_AUDIOLIST.get()) {
-//            btnFilm.getStyleClass().addAll("pFuncBtn");
-//            btnAudio.getStyleClass().addAll("pFuncBtn");
-//            btnLive.getStyleClass().addAll("pFuncBtn");
-//            btnDownload.getStyleClass().addAll("pFuncBtn");
-//            btnAbo.getStyleClass().addAll("pFuncBtn");
-//        }
     }
 
     public void setFocus() {

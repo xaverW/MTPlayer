@@ -84,7 +84,6 @@ public class FilmFilterControllerClearFilter extends VBox {
         getChildren().addAll(hBox1, hBox2);
     }
 
-
     private void clearFilter() {
         P2Duration.onlyPing("Filter löschen");
         filterDto.filterWorker.clearFilter();

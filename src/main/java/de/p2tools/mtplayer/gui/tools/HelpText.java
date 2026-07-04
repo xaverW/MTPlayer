@@ -399,6 +399,9 @@ public class HelpText {
                     "Mit dieser Option werden aber alle Texte gefunden, die \"Sport\" enthalten (z.B.: sportlich)." +
                     "\n";
 
+    public static final String FILTER_SECOND_KLICK =
+            ""; // todo
+
     public static final String GUI_FILMS_EDIT_FILTER =
             "=============\n" +
                     "Filter\n" +
@@ -934,6 +937,9 @@ public class HelpText {
             "Beim Programmstart wird der Hilfe-Dialog mit Tipps zur Verwendung " +
                     "des Programms angezeigt." +
                     "\n";
+
+    public static final String TabSecondKlick =
+            ""; // todo
 
     public static final String DARK_THEME =
             "Das Programm kann damit mit einer dunklen oder hellen Programmoberfläche " +
