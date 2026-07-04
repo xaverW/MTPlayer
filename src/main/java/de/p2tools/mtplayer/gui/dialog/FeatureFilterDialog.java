@@ -26,7 +26,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 public class FeatureFilterDialog extends P2DialogExtra {
 
@@ -45,7 +44,6 @@ public class FeatureFilterDialog extends P2DialogExtra {
         gridPane1.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcComputedSizeAndHgrow());
 
-        VBox vBox = new VBox(10);
         P2Text.getLblTextBold("Filter löschen");
         Label lblText = new Label();
         lblText.setWrapText(true);
@@ -63,13 +61,13 @@ public class FeatureFilterDialog extends P2DialogExtra {
         Button btnDontUse = new Button("Nicht verwenden");
         btnUse.setOnAction(a -> {
             ProgConfig.SYSTEM_FILTER_SECOND_KLICK.set(true);
-            ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.set(true);
+            ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.set(false);
             close();
         });
 
         btnDontUse.setOnAction(a -> {
             ProgConfig.SYSTEM_FILTER_SECOND_KLICK.set(false);
-            ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.set(true);
+            ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.set(false);
             close();
         });
         addOkCancelButtons(btnDontUse, btnUse);

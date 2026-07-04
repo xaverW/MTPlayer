@@ -312,7 +312,7 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelFilm(boolean ask) {
-        if (ask && !ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+        if (ask && ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
             new FeatureTabDialog();
         }
         if (TAB_FILM_ON.get() &&
@@ -330,7 +330,7 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelAudio() {
-        if (!ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+        if (ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
             new FeatureTabDialog();
         }
         if (TAB_AUDIO_ON.get() &&
@@ -348,7 +348,7 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelLiveFilm() {
-        if (!ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+        if (ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
             new FeatureTabDialog();
         }
         if (TAB_LIVE_ON.get() &&
@@ -366,7 +366,7 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelDownload(boolean ask) {
-        if (ask && !ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+        if (ask && ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
             new FeatureTabDialog();
         }
         if (TAB_DOWNLOAD_ON.get() &&
@@ -384,7 +384,7 @@ public class MTPlayerController extends StackPane {
     }
 
     private void selPanelAbo() {
-        if (!ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
+        if (ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.get()) {
             new FeatureTabDialog();
         }
         if (TAB_ABO_ON.get() &&

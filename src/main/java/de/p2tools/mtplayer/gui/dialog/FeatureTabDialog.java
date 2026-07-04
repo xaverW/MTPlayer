@@ -49,7 +49,7 @@ public class FeatureTabDialog extends P2DialogExtra {
         lblText.setWrapText(true);
         lblText.setText("""
                 Mit dem ersten Klick auf einen  >>Tab<<   wird er ausgewählt. \
-                Jeder weitre Klick blendet die Spalte neben der Tabelle mit den Filter ein/aus
+                Jeder weitre Klick blendet die Spalte mit den Filtern neben der Tabelle ein/aus
                 
                 Ein Klick mit der "RECHTEN Maustaste" blendet das Infopanel unter der \
                 Tabelle ein/aus.
@@ -64,13 +64,13 @@ public class FeatureTabDialog extends P2DialogExtra {
         Button btnDontUse = new Button("Nicht verwenden");
         btnUse.setOnAction(a -> {
             ProgConfig.SYSTEM_TAB_SECOND_KLICK.set(true);
-            ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.set(true);
+            ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.set(false);
             close();
         });
 
         btnDontUse.setOnAction(a -> {
             ProgConfig.SYSTEM_TAB_SECOND_KLICK.set(false);
-            ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.set(true);
+            ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.set(false);
             close();
         });
         addOkCancelButtons(btnDontUse, btnUse);

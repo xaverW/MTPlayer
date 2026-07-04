@@ -249,8 +249,8 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty CHECK_SET_DIALOG_SIZE = addStrProp("check-set-dialog-size", "400:500");
     public static BooleanProperty SYSTEM_FILTER_SECOND_KLICK = addBoolProp("system-filter-second-klick", true); // Filter 2x klicken um alles zu löschen
     public static BooleanProperty SYSTEM_TAB_SECOND_KLICK = addBoolProp("system-tab-second-klick", true); // beim zweiten Klick auf den Tab, Filter/Info ein/ausblenden
-    public static BooleanProperty SYSTEM_FILTER_SECOND_KLICK_ASK = addBoolProp("system-filter-second-klick-ask", false); // Dialog mit Nachfrage
-    public static BooleanProperty SYSTEM_TAB_SECOND_KLICK_ASK = addBoolProp("system-tab-second-klick-ask", false); // Dialog mit Nachfrage
+    public static BooleanProperty SYSTEM_FILTER_SECOND_KLICK_ASK = addBoolProp("system-filter-second-klick-ask", true); // Dialog mit Nachfrage
+    public static BooleanProperty SYSTEM_TAB_SECOND_KLICK_ASK = addBoolProp("system-tab-second-klick-ask", true); // Dialog mit Nachfrage
 
     //Configs Statusbar
     static {

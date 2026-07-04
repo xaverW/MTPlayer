@@ -153,7 +153,7 @@ public class FilterWorker {
     }
 
     public synchronized void clearFilter() {
-        if (!ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.get()) {
+        if (ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.get()) {
             // dann zuerst mal nachfragen
             new FeatureFilterDialog();
         }
