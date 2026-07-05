@@ -34,7 +34,6 @@ import javafx.util.Duration;
 public class AutomodeContinueDialogController extends P2DialogExtra {
 
     private final VBox vBoxCont;
-//    private final HBox hBoxOk;
 
     private final Button btnCancel;
     private final Button btnContinue;
@@ -46,8 +45,7 @@ public class AutomodeContinueDialogController extends P2DialogExtra {
     private Integer timeSeconds = ProgConfig.SYSTEM_PARAMETER_AUTOMODE_QUITT_IN_SECONDS.getValue();
 
     public AutomodeContinueDialogController() {
-        super(ProgData.getInstance().primaryStage, null, "Automodus",
-                true, false, false);
+        super(ProgData.getInstance().primaryStage, null, "Automodus");
 
         vBoxCont = getVBoxCont();
         btnCancel = new Button("_Programm nicht beenden");
@@ -69,7 +67,6 @@ public class AutomodeContinueDialogController extends P2DialogExtra {
     }
 
     private void initCont() {
-        // Gridpane
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         VBox.setVgrow(gridPane, Priority.ALWAYS);
@@ -88,7 +85,7 @@ public class AutomodeContinueDialogController extends P2DialogExtra {
         vBoxCont.setPadding(new Insets(15));
         vBoxCont.getChildren().addAll(gridPane);
 
-        getHboxLeft().getChildren().add(new Label("Wie möchten Sie forfahren?"));
+        getHboxLeft().getChildren().add(new Label("Wie möchten Sie fortfahren?"));
         addOkCancelButtons(btnContinue, btnCancel);
     }
 

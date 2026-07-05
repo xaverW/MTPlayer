@@ -399,8 +399,14 @@ public class HelpText {
                     "Mit dieser Option werden aber alle Texte gefunden, die \"Sport\" enthalten (z.B.: sportlich)." +
                     "\n";
 
-    public static final String FILTER_SECOND_KLICK =
-            ""; // todo
+    public static final String FILTER_SECOND_KLICK = """
+            Ein Klick auf "Filter löschen" löscht zuerst die oberen Textfilter. Ein zweiter Klick löscht dann \
+            auch die restlichen Filter. Grund ist: Meist will man mit den unteren \
+            Filtereinstellungen nur nach anderen Begriffen suchen.
+            
+            Dieses Feature kann hier ein/ausgeschaltet werden. Es werden dann \
+            immer alle Filter beim ersten Klick gelöscht.
+            """;
 
     public static final String GUI_FILMS_EDIT_FILTER =
             "=============\n" +
@@ -938,8 +944,15 @@ public class HelpText {
                     "des Programms angezeigt." +
                     "\n";
 
-    public static final String TabSecondKlick =
-            ""; // todo
+    public static final String TabSecondKlick = """
+            Ein Klick auf einen Tab (Filme, Audios, ...) wählt diesen aus. Jeder weitere \
+            Klick blendet den Filter links neben der Tabelle ein/aus.
+            
+            Ein Klick mit der RECHTEN Maustaste blender den Infobereich unter der \
+            Tabelle ein/aus.
+            
+            Diese Feature kann hier ein/ausgeschaltet werden.
+            """;
 
     public static final String DARK_THEME =
             "Das Programm kann damit mit einer dunklen oder hellen Programmoberfläche " +

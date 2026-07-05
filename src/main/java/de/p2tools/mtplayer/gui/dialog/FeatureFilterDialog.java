@@ -21,6 +21,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.p2event.P2EventHandler;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -31,6 +32,10 @@ public class FeatureFilterDialog extends P2DialogExtra {
 
     public FeatureFilterDialog() {
         super(new SimpleStringProperty("450:350")/*wird nur einmal aufgerufen*/, "Filter löschen");
+        if (P2EventHandler.countRunningTimeMinutes <= 2) {
+            // frühestens nach 3 Minuten
+            return;
+        }
         init(true);
     }
 
