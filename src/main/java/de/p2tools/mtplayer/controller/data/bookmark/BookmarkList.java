@@ -99,7 +99,7 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2
             clearList();
             this.addAll(newList);
             fillUrlHash();
-            BookmarkLoadSaveFactory.saveBookmark();
+//            BookmarkLoadSaveFactory.saveBookmark();
         }
 
         P2Duration.counterStop("Bookmark: removeFromBookmark");

@@ -130,7 +130,7 @@ public class AudioMenu {
             progData.audioGuiController.tableView.requestFocus();
         });
         btDelAllBookmark.setOnAction(a -> {
-            BookmarkFactory.deleteAll(progData.primaryStage);
+            BookmarkFactory.deleteAll(progData.primaryStage, true);
             progData.audioGuiController.tableView.refresh();
             progData.audioGuiController.tableView.requestFocus();
         });
@@ -166,7 +166,7 @@ public class AudioMenu {
                 // dann läuft er schon
                 progData.bookmarkDialogController.showDialog();
             } else {
-                new BookmarkDialogController(progData, true);
+                new BookmarkDialogController(progData);
             }
         });
 
@@ -274,7 +274,7 @@ public class AudioMenu {
 
         final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
         miBookmarkDelAll.setOnAction(a -> {
-            BookmarkFactory.deleteAll(progData.primaryStage);
+            BookmarkFactory.deleteAll(progData.primaryStage, true);
         });
 
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);

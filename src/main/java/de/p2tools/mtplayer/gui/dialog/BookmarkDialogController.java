@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkDataProps;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
-import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.BookmarkTableContextMenu;
 import de.p2tools.mtplayer.gui.infoPane.PaneBookmarkInfo;
@@ -52,7 +51,6 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     private final TableBookmark tableView;
     private final ProgData progData;
-    private final boolean audio;
     private final PaneBookmarkInfo paneBookmarkInfo;
     private final Label lblSize = new Label();
     private final Button btnDel = new Button("Löschen");
@@ -61,11 +59,10 @@ public class BookmarkDialogController extends P2DialogExtra {
     private final RadioButton rbFilm = new RadioButton("Filme");
     private final RadioButton rbAudio = new RadioButton("Audios");
 
-    public BookmarkDialogController(ProgData progData, boolean audio) {
+    public BookmarkDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
                 false, true, true, DECO.BORDER_VERY_SMALL);
         this.progData = progData;
-        this.audio = audio;
         this.progData.bookmarkDialogController = this;
 
         this.tableView = new TableBookmark(Table.TABLE_ENUM.BOOKMARK, progData);
@@ -77,9 +74,9 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     public void close() {
         Table.saveTable(tableView, Table.TABLE_ENUM.BOOKMARK);
-        if (paneBookmarkInfo.isChanged()) {
-            BookmarkLoadSaveFactory.saveBookmark();
-        }
+//        if (paneBookmarkInfo.isChanged()) {
+//            BookmarkLoadSaveFactory.saveBookmark();
+//        }
         this.progData.bookmarkDialogController = null;
         super.close();
     }

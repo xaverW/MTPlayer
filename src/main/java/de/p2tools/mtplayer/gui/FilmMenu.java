@@ -131,7 +131,7 @@ public class FilmMenu {
             progData.filmGuiController.tableView.requestFocus();
         });
         btDelAllBookmark.setOnAction(a -> {
-            BookmarkFactory.deleteAll(progData.primaryStage);
+            BookmarkFactory.deleteAll(progData.primaryStage, false);
             progData.filmGuiController.tableView.refresh();
             progData.filmGuiController.tableView.requestFocus();
         });
@@ -167,7 +167,7 @@ public class FilmMenu {
                 // dann läuft er schon
                 progData.bookmarkDialogController.showDialog();
             } else {
-                new BookmarkDialogController(progData, false);
+                new BookmarkDialogController(progData);
             }
         });
 
@@ -275,7 +275,7 @@ public class FilmMenu {
 
         final MenuItem miBookmarkDelAll = new MenuItem("Alle angelegten Bookmarks löschen");
         miBookmarkDelAll.setOnAction(a -> {
-            BookmarkFactory.deleteAll(progData.primaryStage);
+            BookmarkFactory.deleteAll(progData.primaryStage, false);
         });
 
         submenuBookmark.getItems().addAll(miBookmarkAdd, miBookmarkDel, miBookmarkDelAll);

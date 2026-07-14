@@ -29,9 +29,10 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ControllerLoad extends P2AccordionPane {
+public class ControllerFilmAudio extends P2AccordionPane {
 
     private PaneFilmLoad paneFilmLoad;
+    private PaneBookmark paneBookmark;
     private PaneFilter paneFilter;
     private PaneFilterProfile paneFilterProfile;
     private PaneFilmDouble paneFilmDouble;
@@ -44,7 +45,7 @@ public class ControllerLoad extends P2AccordionPane {
     private final ProgData progData;
     private final Stage stage;
 
-    public ControllerLoad(Stage stage, BooleanProperty diacriticChanged) {
+    public ControllerFilmAudio(Stage stage, BooleanProperty diacriticChanged) {
         super(ProgConfig.CONFIG_DIALOG_ACCORDION, ProgConfig.SYSTEM_CONFIG_DIALOG_FILM);
         this.stage = stage;
         this.diacriticChanged = diacriticChanged;
@@ -56,6 +57,7 @@ public class ControllerLoad extends P2AccordionPane {
     @Override
     public void close() {
         paneFilmLoad.close();
+        paneBookmark.close();
         paneFilter.close();
         paneFilterProfile.close();
         paneFilmDouble.close();
@@ -71,6 +73,9 @@ public class ControllerLoad extends P2AccordionPane {
         Collection<TitledPane> result = new ArrayList<TitledPane>();
         paneFilmLoad = new PaneFilmLoad(stage, progData, diacriticChanged);
         paneFilmLoad.make(result);
+
+        paneBookmark = new PaneBookmark(stage);
+        paneBookmark.make(result);
 
         paneFilter = new PaneFilter(stage);
         paneFilter.make(result);

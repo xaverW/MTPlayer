@@ -61,58 +61,15 @@ public class BookmarkLoadSaveFactory {
         }
     }
 
-    public static void loadList() {
+    public static void loadBookmark() {
         // beim Programmstart laden
-        P2Duration.counterStart("loadList");
-
-//        if (!ProgConfig.SYSTEM_USE_NEW_BOOKMARK_FILE.get()) {
-//            // dann noch mit dem alten File versuchen
-//            ProgConfig.SYSTEM_USE_NEW_BOOKMARK_FILE.set(true);
-//            BookmarkFileFactoryOld.readBookmarkDataFromFileOld();
-//            saveBookmark();
-//            FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS_TXT);
-//
-//        } else {
-        // dann schon das neue
-        loadBookmarks();
-//        }
-
+        BookmarkReadWriteJsonFactory.read();
         ProgData.getInstance().bookmarkList.fillUrlHash();
         P2Duration.counterStop("loadList");
-    }
-
-    private static void loadBookmarks() {
-        BookmarkReadWriteJsonFactory.read();
-
-//        String settingsDir = ProgInfos.getSettingsDirectory_String();
-//        String fileName = ProgConst.FILE_BOOKMARKS_XML;
-//        final Path xmlFilePath = FileFactory.getUrlFilePath(settingsDir, fileName);
-//
-//        try {
-//            if (!Files.exists(xmlFilePath) || xmlFilePath.toFile().length() == 0) {
-//                return;
-//            }
-//
-//            ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), false);
-//            configFile.addConfigs(ProgData.getInstance().bookmarkList);
-//            if (!ConfigReadFile.readConfig(configFile)) {
-//                P2Log.errorLog(959874512, "Bookmarks konnten nicht geladen werden");
-//            }
-//
-//        } catch (final Exception ignore) {
-//        }
     }
 
     public static void saveBookmark() {
         P2Log.sysLog("Bookmarks sichern");
         BookmarkReadWriteJsonFactory.write();
-
-//        String settingsDir = ProgInfos.getSettingsDirectory_String();
-//        String fileName = ProgConst.FILE_BOOKMARKS_XML;
-//        final Path xmlFilePath = FileFactory.getUrlFilePath(settingsDir, fileName);
-//
-//        ConfigFile configFile = new ConfigFile(xmlFilePath.toString(), false);
-//        configFile.addConfigs(ProgData.getInstance().bookmarkList);
-//        ConfigWriteFile.writeConfigFile(configFile);
     }
 }

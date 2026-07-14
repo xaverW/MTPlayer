@@ -79,10 +79,8 @@ public class ProgStartBeforeGui {
         }
 
         P2Log.sysLog("History-Listen laden");
-//        ProgData.getInstance().historyList.loadList();
-//        ProgData.getInstance().historyListAbos.loadList();
         ProgData.getInstance().historyListJson.loadList();
-        BookmarkLoadSaveFactory.loadList();
+        BookmarkLoadSaveFactory.loadBookmark();
 
         if (ProgData.getInstance().utDataList.isEmpty()) {
             ProgData.getInstance().utDataList.init(true); // einmal ein Muster anlegen

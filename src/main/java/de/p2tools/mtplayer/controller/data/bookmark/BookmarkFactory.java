@@ -19,10 +19,8 @@ package de.p2tools.mtplayer.controller.data.bookmark;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.tools.FileFactory;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
@@ -40,17 +38,21 @@ public class BookmarkFactory {
     private BookmarkFactory() {
     }
 
-    public static void deleteAll(Stage stage) {
+    public static void deleteAll(Stage stage, boolean audio) {
         // aus dem Menü (alle Bookmarks löschen)
-        final int size = ProgData.getInstance().bookmarkList.size();
+        final int size = ProgData.getInstance().bookmarkList.filtered(b -> b.isAudio() == audio).size();
         if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
                 "Soll die gesamte Liste " +
                         "(" + size + " " + "Bookmarks" + ")" +
                         " gelöscht werden?")) {
-            ProgData.getInstance().bookmarkList.clearList();
-            FileFactory.deleteHistoryFile(ProgConst.FILE_BOOKMARKS_XML);
-            ProgData.getInstance().filmList.forEach(film -> film.setBookmark(false));
-            ProgData.getInstance().audioList.forEach(film -> film.setBookmark(false));
+            if (audio) {
+                ProgData.getInstance().bookmarkList.removeIf(BookmarkData::isAudio);
+                ProgData.getInstance().audioList.forEach(film -> film.setBookmark(false));
+
+            } else {
+                ProgData.getInstance().bookmarkList.removeIf(bookmarkData -> !bookmarkData.isAudio());
+                ProgData.getInstance().filmList.forEach(film -> film.setBookmark(false));
+            }
 
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BOOKMARK_CHANGED);
         }
@@ -109,7 +111,8 @@ public class BookmarkFactory {
         if (ProgConfig.BOOKMARK_DEL_ALL.get()) {
             count = ProgData.getInstance().bookmarkList.size();
             if (!onlyCount) {
-                deleteAll(stage);
+                deleteAll(stage, true);
+                deleteAll(stage, false);
             }
             return count;
         }
@@ -198,7 +201,7 @@ public class BookmarkFactory {
             ProgData.getInstance().bookmarkList.addToThisList(bookmarkData);
         }
 
-        BookmarkLoadSaveFactory.saveBookmark();
+//        BookmarkLoadSaveFactory.saveBookmark();
         P2Duration.counterStop("addFilmDataToBookmark");
     }
 
