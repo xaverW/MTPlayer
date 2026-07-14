@@ -148,8 +148,6 @@ public class ProgData {
     public MediaDataList mediaDataList;
     public MediaCollectionDataList mediaCollectionDataList = null;
     public HistoryListJson historyListJson; // alle angesehenen Filme aus Downloads und Abos
-    //    public HistoryList historyListShown; // alle angesehenen Filme
-//    public HistoryList historyListAbos; // erfolgreich geladenen Abos
     public BookmarkList bookmarkList; // markierte Filme
     public ProposeList proposeList;
     public final BlackListFilter blackListFilterFilmList;

@@ -90,6 +90,11 @@ public class TableBookmark extends PTable<BookmarkData> {
         TableBookmarkFactory.columnFactoryList(audioColumn);
         audioColumn.getStyleClass().add("alignCenter");
 
+        final TableColumn<BookmarkData, P2Date> filmDateColumn = new TableColumn<>("Filmdatum");
+        filmDateColumn.setCellValueFactory(new PropertyValueFactory<>("filmDate"));
+        dateColumn.getStyleClass().add("special-column-style");
+        TableBookmarkFactory.columnFactoryP2Date(filmDateColumn);
+
         final TableColumn<BookmarkData, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
         channelColumn.getStyleClass().add("special-column-style");
@@ -117,6 +122,7 @@ public class TableBookmark extends PTable<BookmarkData> {
 
         startColumn.setPrefWidth(160);
 
-        getColumns().addAll(dateColumn, ageColumn, audioColumn, channelColumn, themeColumn, titleColumn, startColumn, urlColumn);
+        getColumns().addAll(dateColumn, ageColumn, audioColumn, filmDateColumn, channelColumn, themeColumn,
+                titleColumn, startColumn, urlColumn);
     }
 }

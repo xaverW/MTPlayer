@@ -34,25 +34,26 @@ public class BookmarkData extends BookmarkDataProps {
         setChannel(filmDataMTP.getChannel());
         setTheme(filmDataMTP.getTheme());
         setTitle(filmDataMTP.getTitle());
+        setFilmDate(filmDataMTP.getDate());
         setUrl(filmDataMTP.getUrlHistory());
         setDate(new FilmDate());
         this.filmData = filmDataMTP;
     }
 
-    public BookmarkData(String date, String theme, String title, String url) {
-        // beim Einlesen der Datei
-        setTitle(title);
-        setTheme(theme);
-        setUrl(url);
-        try {
-            FilmDate d = new FilmDate(sdf_datum.parse(date).getTime());
-            setDate(d);
-        } catch (final Exception ignore) {
-            setDate(new FilmDate(0));
-        }
-    }
-
-    public BookmarkData(boolean audio, String channel, String theme, String title,
+    //    public BookmarkData(String date, String theme, String title, String url) {
+//        // beim Einlesen der Datei
+//        setTitle(title);
+//        setTheme(theme);
+//        setUrl(url);
+//        try {
+//            FilmDate d = new FilmDate(sdf_datum.parse(date).getTime());
+//            setDate(d);
+//        } catch (final Exception ignore) {
+//            setDate(new FilmDate(0));
+//        }
+//    }
+//
+    public BookmarkData(boolean audio, String channel, String theme, String title, String filmDate,
                         String url, String info, String date) {
         // beim Einlesen der Datei
         setAudio(audio);
@@ -61,6 +62,12 @@ public class BookmarkData extends BookmarkDataProps {
         setTitle(title);
         setUrl(url);
         setInfo(info);
+        try {
+            FilmDate d = new FilmDate(sdf_datum.parse(filmDate).getTime());
+            setFilmDate(d);
+        } catch (final Exception ignore) {
+            setFilmDate(new FilmDate(0));
+        }
         try {
             FilmDate d = new FilmDate(sdf_datum.parse(date).getTime());
             setDate(d);

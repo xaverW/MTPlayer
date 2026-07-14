@@ -893,6 +893,11 @@ public class HelpText {
                     "auf \"Downloads aktualisieren\" klicken." +
                     "\n";
 
+    public static final String DELETE_BOOKMARK_NOT_IN_FILMLIST = """
+            Hiermit werden dann nach dem Neuladen der Filmliste \
+            alle Bookmarks für die kein Filme mehr in der Liste ist, gelöscht.
+            """;
+
     public static final String START_DOWNLOADS_FROM_ABOS_IMMEDIATELY =
             "Nach dem Suchen von Downloads werden diese sofort gestartet. Das kann " +
                     "beim Programmstart sein, nach dem Neuladen einer Filmliste " +

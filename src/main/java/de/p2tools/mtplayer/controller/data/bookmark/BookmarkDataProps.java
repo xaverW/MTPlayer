@@ -36,6 +36,7 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
     private final StringProperty channel = new SimpleStringProperty("");
     private final StringProperty theme = new SimpleStringProperty("");
     private final StringProperty title = new SimpleStringProperty("");
+    private final P2DateProperty filmDate = new P2DateProperty(new P2Date(0));
     private final StringProperty url = new SimpleStringProperty("");
     private final StringProperty info = new SimpleStringProperty("");
     private final P2DateProperty date = new P2DateProperty(new P2Date(0));
@@ -63,6 +64,7 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
         list.add(new Config_stringProp("channel", channel));
         list.add(new Config_stringProp("theme", theme));
         list.add(new Config_stringProp("title", title));
+        list.add(new Config_pDateProp("filmDate", filmDate));
         list.add(new Config_stringProp("url", url));
         list.add(new Config_stringProp("info", info));
         list.add(new Config_pDateProp("date", date));
@@ -115,6 +117,18 @@ public class BookmarkDataProps extends P2DataSample<BookmarkData> {
 
     public StringProperty titleProperty() {
         return title;
+    }
+
+    public P2Date getFilmDate() {
+        return filmDate.get();
+    }
+
+    public void setFilmDate(P2Date date) {
+        filmDate.set(date);
+    }
+
+    public P2DateProperty filmDateProperty() {
+        return filmDate;
     }
 
     public String getUrl() {

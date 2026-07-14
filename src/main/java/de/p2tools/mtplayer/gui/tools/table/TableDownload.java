@@ -161,7 +161,7 @@ public class TableDownload extends PTable<DownloadData> {
 
         final TableColumn<DownloadData, Boolean> hdColumn = new TableColumn<>("HD");
         hdColumn.setCellValueFactory(new PropertyValueFactory<>("hd"));
-        hdColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+        hdColumn.setCellFactory(new P2CellCheckBox<DownloadData, Boolean>().cellFactory);
         hdColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<DownloadData, Boolean> utColumn = new TableColumn<>("UT");

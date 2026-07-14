@@ -45,8 +45,8 @@ public class PaneBookmarkInfo extends SplitPane {
     private boolean changed = false;
 
     public PaneBookmarkInfo() {
+        this.getStyleClass().add("extra-pane-info");
         final GridPane gridPane = new GridPane();
-        gridPane.getStyleClass().add("extra-pane-info");
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
@@ -78,6 +78,7 @@ public class PaneBookmarkInfo extends SplitPane {
             }
         });
         VBox vBox = new VBox(1);
+        vBox.setPadding(new Insets(4));
         Label lbl = new Label("Info:");
         vBox.getChildren().addAll(lbl, txtInfo);
         VBox.setVgrow(txtInfo, Priority.ALWAYS);

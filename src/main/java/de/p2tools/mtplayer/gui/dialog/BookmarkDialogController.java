@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
+import de.p2tools.mtplayer.controller.data.bookmark.BookmarkDataProps;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
@@ -45,25 +46,32 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class BookmarkDialogController extends P2DialogExtra {
 
     private final TableBookmark tableView;
     private final ProgData progData;
+    private final boolean audio;
     private final PaneBookmarkInfo paneBookmarkInfo;
     private final Label lblSize = new Label();
     private final Button btnDel = new Button("Löschen");
     private final P2ToggleSwitch tglShow = new P2ToggleSwitch("Infos");
+    private final RadioButton rbAll = new RadioButton("Alle");
+    private final RadioButton rbFilm = new RadioButton("Filme");
+    private final RadioButton rbAudio = new RadioButton("Audios");
 
-    public BookmarkDialogController(ProgData progData) {
+    public BookmarkDialogController(ProgData progData, boolean audio) {
         super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
-                false, true, true, DECO.BORDER_SMALL);
+                false, true, true, DECO.BORDER_VERY_SMALL);
         this.progData = progData;
+        this.audio = audio;
         this.progData.bookmarkDialogController = this;
 
         this.tableView = new TableBookmark(Table.TABLE_ENUM.BOOKMARK, progData);
         this.paneBookmarkInfo = new PaneBookmarkInfo();
         initTable();
+        initRadio();
         init(true);
     }
 
@@ -78,6 +86,11 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     @Override
     public void make() {
+        HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
+        hBox.setPadding(new Insets(4));
+        hBox.getStyleClass().add("extra-pane-info");
+        hBox.getChildren().addAll(rbAll, rbFilm, rbAudio);
+
         tglShow.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
         paneBookmarkInfo.visibleProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
         paneBookmarkInfo.managedProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
@@ -105,7 +118,7 @@ public class BookmarkDialogController extends P2DialogExtra {
         hBoxSize.setAlignment(Pos.CENTER_RIGHT);
 
         VBox vbox = new VBox(P2LibConst.SPACING_VBOX);
-        vbox.getChildren().addAll(tableView, paneBookmarkInfo, hBoxSize);
+        vbox.getChildren().addAll(hBox, tableView, paneBookmarkInfo, hBoxSize);
         VBox.setVgrow(tableView, Priority.ALWAYS);
 
         getVBoxCont().getChildren().add(vbox);
@@ -138,7 +151,30 @@ public class BookmarkDialogController extends P2DialogExtra {
         return mtp;
     }
 
+    private void initRadio() {
+        ToggleGroup tg = new ToggleGroup();
+        rbAll.setToggleGroup(tg);
+        rbFilm.setToggleGroup(tg);
+        rbAudio.setToggleGroup(tg);
+        rbAll.setSelected(true);
+        rbAll.setOnAction(a -> setPred());
+        rbFilm.setOnAction(a -> setPred());
+        rbAudio.setOnAction(a -> setPred());
+        setPred();
+    }
+
+    private void setPred() {
+        Predicate<BookmarkData> pred = b -> true;
+        if (rbFilm.isSelected()) {
+            pred = pred.and(bookmarkData -> !bookmarkData.isAudio());
+        } else if (rbAudio.isSelected()) {
+            pred = pred.and(BookmarkDataProps::isAudio);
+        }
+        progData.bookmarkList.getFilteredList().setPredicate(pred);
+    }
+
     private void initTable() {
+        tableView.getStyleClass().add("extra-pane-info");
         Table.setTable(tableView);
         tableView.setItems(progData.bookmarkList.getSortedList());
         progData.bookmarkList.getSortedList().comparatorProperty().bind(tableView.comparatorProperty());

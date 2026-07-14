@@ -197,7 +197,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_AFTER_UPDATE_RBTV = addBoolProp("system-after-update-rbtv", Boolean.FALSE);
     public static BooleanProperty SYSTEM_ABO_START_TIME = addBoolProp("system-abo-start-time", Boolean.FALSE);
     public static BooleanProperty SYSTEM_CHANGE_LOG_DIR = addBoolProp("system-change-log-dir", Boolean.FALSE);
-    //    public static BooleanProperty SYSTEM_USE_NEW_BOOKMARK_FILE = addBoolProp("system-use-new-bookmark-file", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SMALL_FILTER = addBoolProp("system-small-filter", Boolean.FALSE);
     public static BooleanProperty SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART = addBoolProp("system-update-load-filmlist-programstart", Boolean.FALSE);
     public static BooleanProperty SYSTEM_UPDATE_OFFER_FILTER = addBoolProp("system-update-offer-filter", Boolean.FALSE);
@@ -459,8 +458,6 @@ public class ProgConfig extends P2DataProgConfig {
 
     public static StringProperty BOOKMARK_DIALOG_SIZE = addStrProp("bookmark-dialog-size", "600:800");
     public static StringProperty BOOKMARK_DIALOG_DEL_SIZE = addStrProp("bookmark-dialog-del-size", "450:350");
-    //    public static StringProperty FEATURE_FILTER_DIALOG_SIZE = addStrProp("feature-filter-dialog-size", "450:350");
-//    public static StringProperty FEATURE_TAB_DIALOG_SIZE = addStrProp("feature-tab-dialog-size", "450:350");
     public static StringProperty BOOKMARK_TABLE_WIDTH = addStrProp("bookmark-table-width");
     public static StringProperty BOOKMARK_TABLE_SORT = addStrProp("bookmark-table-sort");
     public static StringProperty BOOKMARK_TABLE_UP_DOWN = addStrProp("bookmark-table-up-down");
@@ -475,6 +472,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty BOOKMARK_DEL_SHOWN = addBoolProp("bookmark-del-shown", Boolean.FALSE);
     public static BooleanProperty BOOKMARK_DEL_OLD = addBoolProp("bookmark-del-old", Boolean.FALSE);
     public static IntegerProperty BOOKMARK_DEL_OLD_COUNT_DAYS = addIntProp("bookmark-del-count-old-days", 10);
+    public static BooleanProperty BOOKMARK_DEL_NOT_IN_FILMLIST = addBoolProp("bookmark-del-not-in-filmlist", Boolean.FALSE);
 
     // Tips
     static {

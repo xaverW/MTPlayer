@@ -211,19 +211,28 @@ public class BookmarkFactory {
         BookmarkList bookmarkList = ProgData.getInstance().bookmarkList;
 
         HashMap<String, BookmarkData> hash = new HashMap<>();
-        bookmarkList.forEach(b -> hash.put(b.getUrl(), b));
+        bookmarkList.forEach(b -> {
+            if (audio && b.isAudio()) {
+                b.setFilmData(null);
+            } else if (!audio && !b.isAudio()) {
+                b.setFilmData(null);
+            }
+            hash.put(b.getUrl(), b);
+        });
 
         P2Duration.counterStart("markBookmarks");
         if (audio) {
-            ProgData.getInstance().audioList.forEach(film -> {
-                BookmarkData bookmarkData = hash.get(film.getUrlHistory());
+
+            ProgData.getInstance().audioList.forEach(a -> {
+                BookmarkData bookmarkData = hash.get(a.getUrlHistory());
                 if (bookmarkData != null) {
-                    film.setBookmark(true);
-                    bookmarkData.setFilmData(film);
+                    a.setBookmark(true);
+                    bookmarkData.setFilmData(a);
                 }
             });
 
         } else {
+            // Filme
             ProgData.getInstance().filmList.forEach(film -> {
                 BookmarkData bookmarkData = hash.get(film.getUrlHistory());
                 if (bookmarkData != null) {
@@ -232,6 +241,23 @@ public class BookmarkFactory {
                 }
             });
         }
+
+        if (ProgConfig.BOOKMARK_DEL_NOT_IN_FILMLIST.get()) {
+            List<BookmarkData> list = new ArrayList<>();
+            bookmarkList.forEach(b -> {
+                // Audio/Filme
+                if (b.getFilmData() != null) {
+                    list.add(b);
+
+                } else if (audio && !b.isAudio() ||
+                        !audio && b.isAudio()) {
+                    list.add(b);
+                }
+            });
+            bookmarkList.setAll(list);
+        }
+
+
         P2Duration.counterStop("markBookmarks");
     }
 }

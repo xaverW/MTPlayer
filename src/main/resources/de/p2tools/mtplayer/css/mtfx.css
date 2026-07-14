@@ -85,7 +85,7 @@
 /* Info-Pane unter Filme */
 .extra-pane-info {
     -fx-border-width: 2; /* makes really one-pixel-border */
-    -fx-border-color: -pGuiColor;
+    -fx-border-color: #939a9f;
 }
 
 /* Pane im Filter-Pane */

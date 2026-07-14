@@ -8,6 +8,7 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.tools.FileFactory;
+import de.p2tools.p2lib.tools.date.P2DateFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -70,6 +71,7 @@ public class BookmarkReadWriteJsonFactory {
         jsonGenerator.writeObjectFieldStart(BookmarkData.TAG);
         //start address object
         jsonGenerator.writeBooleanField("audio", bookmarkData.isAudio());
+        jsonGenerator.writeStringField("filmDate", P2DateFactory.toString(bookmarkData.getFilmDate()));
         jsonGenerator.writeStringField("channel", bookmarkData.getChannel());
         jsonGenerator.writeStringField("theme", bookmarkData.getTheme());
         jsonGenerator.writeStringField("title", bookmarkData.getTitle());
@@ -85,6 +87,7 @@ public class BookmarkReadWriteJsonFactory {
         String channel = "";
         String theme = "";
         String title = "";
+        String filmDate = "";
         String url = "";
         String info = "";
         String date = "";
@@ -94,6 +97,8 @@ public class BookmarkReadWriteJsonFactory {
             jsonParser.nextToken();
             if ("audio".equals(key)) {
                 audio = jsonParser.getBooleanValue();
+            } else if ("filmDate".equals(key)) {
+                filmDate = jsonParser.getText();
             } else if ("channel".equals(key)) {
                 channel = jsonParser.getText();
             } else if ("theme".equals(key)) {
@@ -109,7 +114,7 @@ public class BookmarkReadWriteJsonFactory {
             }
         }
 
-        BookmarkData bookmarkData = new BookmarkData(audio, channel, theme, title, url, info, date);
+        BookmarkData bookmarkData = new BookmarkData(audio, channel, theme, title, filmDate, url, info, date);
         ProgData.getInstance().bookmarkList.add(bookmarkData);
     }
 }

@@ -204,8 +204,10 @@ public class TableBookmarkFactory {
 
     public static void set(BookmarkData bookmarkData, TableCell tableCell) {
         if (bookmarkData.getFilmData() == null) {
+            return;
+        }
 
-        } else if (ProgConfig.SYSTEM_MARK_GEO.get() && bookmarkData.getFilmData().isGeoBlocked()) {
+        if (ProgConfig.SYSTEM_MARK_GEO.get() && bookmarkData.getFilmData().isGeoBlocked()) {
             // geoGeblockt
             tableCell.setStyle(ProgColorList.FILM_GEOBLOCK.getCssFontBold());
 
