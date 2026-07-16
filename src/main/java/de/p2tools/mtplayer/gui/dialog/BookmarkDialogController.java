@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkDataProps;
-import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.BookmarkTableContextMenu;
 import de.p2tools.mtplayer.gui.infoPane.PaneBookmarkInfo;
@@ -32,7 +31,6 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
-import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
@@ -52,70 +50,56 @@ public class BookmarkDialogController extends P2DialogExtra {
     private final TableBookmark tableView;
     private final ProgData progData;
     private final PaneBookmarkInfo paneBookmarkInfo;
+    private final PaneBookmarkDel paneBookmarkDel;
     private final Label lblSize = new Label();
-    private final Button btnDel = new Button("Löschen");
-    private final P2ToggleSwitch tglShow = new P2ToggleSwitch("Infos");
     private final RadioButton rbAll = new RadioButton("Alle");
     private final RadioButton rbFilm = new RadioButton("Filme");
     private final RadioButton rbAudio = new RadioButton("Audios");
+    private final Accordion accordion = new Accordion();
+    private final TitledPane tpInfo = new TitledPane();
+    private final TitledPane tpDel = new TitledPane();
 
     public BookmarkDialogController(ProgData progData) {
         super(progData.primaryStage, ProgConfig.BOOKMARK_DIALOG_SIZE, "Bookmarks",
-                false, true, true, DECO.BORDER_VERY_SMALL);
+                true, true, true, DECO.BORDER_VERY_SMALL);
         this.progData = progData;
-        this.progData.bookmarkDialogController = this;
-
         this.tableView = new TableBookmark(Table.TABLE_ENUM.BOOKMARK, progData);
         this.paneBookmarkInfo = new PaneBookmarkInfo();
+        this.paneBookmarkDel = new PaneBookmarkDel(progData, getStageProp());
+
         initTable();
+        initAccordion();
         initRadio();
         init(true);
     }
 
     public void close() {
         Table.saveTable(tableView, Table.TABLE_ENUM.BOOKMARK);
-//        if (paneBookmarkInfo.isChanged()) {
-//            BookmarkLoadSaveFactory.saveBookmark();
-//        }
+        ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.set(accordion.getExpandedPane() != null &&
+                accordion.getExpandedPane().equals(tpInfo));
+
         this.progData.bookmarkDialogController = null;
+        paneBookmarkDel.close();
         super.close();
     }
 
     @Override
     public void make() {
-        HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
-        hBox.setPadding(new Insets(4));
-        hBox.getStyleClass().add("extra-pane-info");
-        hBox.getChildren().addAll(rbAll, rbFilm, rbAudio);
+        HBox hBoxRadio = new HBox(P2LibConst.PADDING_HBOX);
+        hBoxRadio.setPadding(new Insets(4));
+        hBoxRadio.setAlignment(Pos.CENTER_LEFT);
+        hBoxRadio.getStyleClass().add("extra-pane-info");
+        hBoxRadio.getChildren().addAll(rbAll, rbFilm, rbAudio, P2GuiTools.getHBoxGrower(), new Label("Anzahl: "), lblSize);
 
-        tglShow.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
-        paneBookmarkInfo.visibleProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
-        paneBookmarkInfo.managedProperty().bind(ProgConfig.BOOKMARK_DIALOG_SHOW_INFO);
+//        HBox hBoxSize = new HBox();
+//        hBoxSize.setPadding(new Insets(4));
+//        hBoxSize.setAlignment(Pos.CENTER_RIGHT);
+//        hBoxSize.getStyleClass().add("extra-pane-info");
+//        hBoxSize.getChildren().addAll(new Label("Anzahl: "), lblSize);
+//        hBoxSize.setAlignment(Pos.CENTER_RIGHT);
 
-        // Del-Button
-        progData.bookmarkList.addListener((u, o, n) -> {
-            btnDel.setDisable(progData.bookmarkList.isEmpty());
-        });
-        btnDel.setDisable(progData.bookmarkList.isEmpty());
-
-        btnDel.setTooltip(new Tooltip("Bookmarks werden gelöscht und in einem Dialog " +
-                "wird vorher abgefragt, welche."));
-        btnDel.setOnAction(a -> {
-            BookmarkDelDialog b = new BookmarkDelDialog(progData, this.getStage());
-            if (b.isOk()) {
-                // dann löschen
-                BookmarkFactory.deleteFromDialog(this.getStage(), false);
-            }
-        });
-
-        HBox hBoxSize = new HBox(P2LibConst.SPACING_HBOX);
-        hBoxSize.getChildren().addAll(btnDel, tglShow,
-                P2GuiTools.getHBoxGrower(),
-                new Label("Anzahl: "), lblSize);
-        hBoxSize.setAlignment(Pos.CENTER_RIGHT);
-
-        VBox vbox = new VBox(P2LibConst.SPACING_VBOX);
-        vbox.getChildren().addAll(hBox, tableView, paneBookmarkInfo, hBoxSize);
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(hBoxRadio, tableView, P2GuiTools.getHDistance(5), accordion);
         VBox.setVgrow(tableView, Priority.ALWAYS);
 
         getVBoxCont().getChildren().add(vbox);
@@ -172,6 +156,7 @@ public class BookmarkDialogController extends P2DialogExtra {
 
     private void initTable() {
         tableView.getStyleClass().add("extra-pane-info");
+//        tableView.setPadding(new Insets(5));
         Table.setTable(tableView);
         tableView.setItems(progData.bookmarkList.getSortedList());
         progData.bookmarkList.getSortedList().comparatorProperty().bind(tableView.comparatorProperty());
@@ -225,5 +210,17 @@ public class BookmarkDialogController extends P2DialogExtra {
         tableView.getItems().addListener((ListChangeListener<BookmarkData>)
                 change -> lblSize.setText("" + tableView.getItems().size()));
         lblSize.setText("" + tableView.getItems().size());
+    }
+
+    private void initAccordion() {
+        tpInfo.setText("Info");
+        tpInfo.setContent(paneBookmarkInfo);
+
+        tpDel.setText("Löschen");
+        tpDel.setContent(paneBookmarkDel);
+        accordion.getPanes().addAll(tpInfo, tpDel);
+        if (ProgConfig.BOOKMARK_DIALOG_SHOW_INFO.get()) {
+            accordion.setExpandedPane(tpInfo);
+        }
     }
 }

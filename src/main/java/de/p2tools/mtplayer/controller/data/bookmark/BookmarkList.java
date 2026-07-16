@@ -86,7 +86,6 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2
 
         this.forEach(bookmarkData -> {
             if (removeUrlHash.contains(bookmarkData.getUrl())) {
-                // nur dann muss das Logfile auch geschrieben werden
                 found = true;
             } else {
                 // kommt wieder in die history
@@ -99,7 +98,6 @@ public class BookmarkList extends SimpleListProperty<BookmarkData> implements P2
             clearList();
             this.addAll(newList);
             fillUrlHash();
-//            BookmarkLoadSaveFactory.saveBookmark();
         }
 
         P2Duration.counterStop("Bookmark: removeFromBookmark");

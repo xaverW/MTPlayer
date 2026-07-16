@@ -228,7 +228,7 @@ public class AudioTableContextMenu {
             miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmark(true, film));
         }
         miBookmarkDelAll.setOnAction(a -> {
-            BookmarkFactory.deleteAll(progData.primaryStage, true);
+            BookmarkFactory.deleteAll(progData.primaryStage, true, true);
         });
 
         miBookmarkAdd.setDisable(film == null);

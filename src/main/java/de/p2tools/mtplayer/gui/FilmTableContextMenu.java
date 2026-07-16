@@ -227,7 +227,7 @@ public class FilmTableContextMenu {
             miBookmarkAdd.setOnAction(a -> BookmarkFactory.addBookmark(false, film));
         }
         miBookmarkDelAll.setOnAction(a -> {
-            BookmarkFactory.deleteAll(progData.primaryStage, false);
+            BookmarkFactory.deleteAll(progData.primaryStage, true, false);
         });
 
         miBookmarkAdd.setDisable(film == null);

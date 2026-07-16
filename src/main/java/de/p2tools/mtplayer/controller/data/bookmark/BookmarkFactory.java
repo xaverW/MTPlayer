@@ -38,10 +38,10 @@ public class BookmarkFactory {
     private BookmarkFactory() {
     }
 
-    public static void deleteAll(Stage stage, boolean audio) {
+    public static int deleteAll(Stage stage, boolean ask, boolean audio) {
         // aus dem Menü (alle Bookmarks löschen)
         final int size = ProgData.getInstance().bookmarkList.filtered(b -> b.isAudio() == audio).size();
-        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
+        if (!ask || size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Bookmarks löschen",
                 "Soll die gesamte Liste " +
                         "(" + size + " " + "Bookmarks" + ")" +
                         " gelöscht werden?")) {
@@ -56,6 +56,7 @@ public class BookmarkFactory {
 
             ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BOOKMARK_CHANGED);
         }
+        return size;
     }
 
     public static void removeBookmark(BookmarkData bookmarkData) {
@@ -84,83 +85,18 @@ public class BookmarkFactory {
             return;
         }
 
-        P2Duration.counterStart("Bookmark: removeDataFromBookmark");
         // urls zum Entfernen, sammeln
         final HashSet<String> hash = new HashSet<>(removeList.size() + 1, 0.75F);
         removeList.forEach(film -> {
             film.setBookmark(false);
             hash.add(film.getUrlHistory());
         });
-
         ProgData.getInstance().bookmarkList.removeUrlHash(hash);
         hash.clear();
-        P2Duration.counterStop("Bookmark: removeDataFromBookmark");
-
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BOOKMARK_CHANGED);
     }
 
-    public static int deleteFromDialog(Stage stage, boolean onlyCount) {
-        // Button löschen aus Dialog Bookmark
-        if (onlyCount) {
-            P2Log.sysLog("Bookmarks löschen, onlyCount");
-        } else {
-            P2Log.sysLog("Bookmarks löschen");
-        }
-
-        int count = 0;
-        if (ProgConfig.BOOKMARK_DEL_ALL.get()) {
-            count = ProgData.getInstance().bookmarkList.size();
-            if (!onlyCount) {
-                deleteAll(stage, true);
-                deleteAll(stage, false);
-            }
-            return count;
-        }
-
-
-        List<BookmarkData> delList = new ArrayList<>();
-        int delDays = ProgConfig.BOOKMARK_DEL_OLD_COUNT_DAYS.get();
-
-        for (BookmarkData b : ProgData.getInstance().bookmarkList) {
-            if (ProgConfig.BOOKMARK_DEL_SHOWN.get() && b.getFilmData() != null && b.getFilmData().isShown()) {
-                ++count;
-                if (!onlyCount) {
-                    delList.add(b);
-                }
-                continue;
-            }
-
-            if (ProgConfig.BOOKMARK_DEL_OLD.get()) {
-                // dann erst mal schauen
-                LocalDate ld = b.getDate().getLocalDate();
-                if (ld == null) {
-                    continue;
-                }
-
-                long days = ChronoUnit.DAYS.between(ld, LocalDate.now());
-                long diff = Math.abs(days);
-                if (diff >= delDays) {
-                    ++count;
-                    if (!onlyCount) {
-                        delList.add(b);
-                    }
-                }
-            }
-        }
-
-        if (!onlyCount) {
-            if (delList.isEmpty()) {
-                P2Alert.showInfoAlert(stage, "Löschen", "Bookmarks löschen",
-                        "Es sind keine Bookmarks zum Löschen, in der Liste.");
-                return 0;
-            }
-            deleteList(delList);
-        }
-
-        return count;
-    }
-
-    private static void deleteList(List<BookmarkData> list) {
+    public static void removeBookmarkList(List<BookmarkData> list) {
         final HashSet<String> hash = new HashSet<>(list.size(), 0.75F);
         list.forEach(bookmarkData -> {
             if (bookmarkData.getFilmData() != null) {
@@ -171,6 +107,53 @@ public class BookmarkFactory {
 
         ProgData.getInstance().bookmarkList.removeUrlHash(hash);
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BOOKMARK_CHANGED);
+    }
+
+    public static void deleteAge(Stage stage, int age) {
+        // Button alte löschen aus Dialog Bookmark
+        P2Log.sysLog("Alte Bookmarks löschen: " + age);
+
+        List<BookmarkData> delList = new ArrayList<>();
+        for (BookmarkData b : ProgData.getInstance().bookmarkList) {
+            // dann erst mal schauen
+            LocalDate ld = b.getDate().getLocalDate();
+            if (ld == null) {
+                continue;
+            }
+
+            long days = ChronoUnit.DAYS.between(ld, LocalDate.now());
+            long diff = Math.abs(days);
+            if (diff >= age) {
+                delList.add(b);
+            }
+        }
+        if (delList.isEmpty()) {
+            P2Alert.showInfoAlert(stage, "Löschen", "Bookmarks löschen",
+                    "Es sind keine Bookmarks zum Löschen, in der Liste.");
+            return;
+        }
+        removeBookmarkList(delList);
+    }
+
+    public static void deleteShown(Stage stage) {
+        // Button alte löschen aus Dialog Bookmark
+        P2Log.sysLog("Gesehene Bookmarks löschen");
+
+        List<BookmarkData> delList = new ArrayList<>();
+
+        for (BookmarkData b : ProgData.getInstance().bookmarkList) {
+            if (b.getFilmData() != null && b.getFilmData().isShown()) {
+                delList.add(b);
+                continue;
+            }
+        }
+        if (delList.isEmpty()) {
+            P2Alert.showInfoAlert(stage, "Löschen", "Bookmarks löschen",
+                    "Es sind keine Bookmarks zum Löschen, in der Liste.");
+            return;
+        }
+
+        removeBookmarkList(delList);
     }
 
     public static void addBookmark(boolean audio, FilmDataMTP film) {
@@ -201,7 +184,6 @@ public class BookmarkFactory {
             ProgData.getInstance().bookmarkList.addToThisList(bookmarkData);
         }
 
-//        BookmarkLoadSaveFactory.saveBookmark();
         P2Duration.counterStop("addFilmDataToBookmark");
     }
 
@@ -246,21 +228,27 @@ public class BookmarkFactory {
         }
 
         if (ProgConfig.BOOKMARK_DEL_NOT_IN_FILMLIST.get()) {
-            List<BookmarkData> list = new ArrayList<>();
-            bookmarkList.forEach(b -> {
-                // Audio/Filme
-                if (b.getFilmData() != null) {
-                    list.add(b);
-
-                } else if (audio && !b.isAudio() ||
-                        !audio && b.isAudio()) {
-                    list.add(b);
-                }
-            });
-            bookmarkList.setAll(list);
+            delNotInList(audio);
         }
 
-
         P2Duration.counterStop("markBookmarks");
+    }
+
+    public static int delNotInList(boolean audio) {
+        BookmarkList bookmarkList = ProgData.getInstance().bookmarkList;
+        int count = bookmarkList.size();
+        List<BookmarkData> list = new ArrayList<>();
+        bookmarkList.forEach(b -> {
+            // Audio/Filme
+            if (b.getFilmData() != null) {
+                list.add(b);
+
+            } else if (audio && !b.isAudio() ||
+                    !audio && b.isAudio()) {
+                list.add(b);
+            }
+        });
+        bookmarkList.setAll(list);
+        return count - bookmarkList.size();
     }
 }

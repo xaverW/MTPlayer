@@ -42,10 +42,8 @@ public class PaneBookmarkInfo extends SplitPane {
 
     private final Text text = new Text("Kein Film in der Liste");
     private BookmarkData bookmarkData = null;
-    private boolean changed = false;
 
     public PaneBookmarkInfo() {
-        this.getStyleClass().add("extra-pane-info");
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
@@ -73,7 +71,6 @@ public class PaneBookmarkInfo extends SplitPane {
         txtInfo.setPrefRowCount(2);
         txtInfo.textProperty().addListener((u, o, n) -> {
             if (bookmarkData != null) {
-                changed = true;
                 bookmarkData.setInfo(txtInfo.getText());
             }
         });
@@ -117,10 +114,6 @@ public class PaneBookmarkInfo extends SplitPane {
         txtInfo.setDisable(false);
 
         this.bookmarkData = bd;
-    }
-
-    public boolean isChanged() {
-        return changed;
     }
 }
 

@@ -468,9 +468,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty BOOKMARK_DIALOG_SMALL_TABLE_ROW = addBoolProp("bookmark-dialog-small-table-row", Boolean.TRUE);
     public static BooleanProperty BOOKMARK_DIALOG_SHOW_INFO = addBoolProp("bookmark-dialog-show-info", Boolean.TRUE);
 
-    public static BooleanProperty BOOKMARK_DEL_ALL = addBoolProp("bookmark-del-all", Boolean.FALSE);
-    public static BooleanProperty BOOKMARK_DEL_SHOWN = addBoolProp("bookmark-del-shown", Boolean.FALSE);
-    public static BooleanProperty BOOKMARK_DEL_OLD = addBoolProp("bookmark-del-old", Boolean.FALSE);
     public static IntegerProperty BOOKMARK_DEL_OLD_COUNT_DAYS = addIntProp("bookmark-del-count-old-days", 10);
     public static BooleanProperty BOOKMARK_DEL_NOT_IN_FILMLIST = addBoolProp("bookmark-del-not-in-filmlist", Boolean.FALSE);
 
