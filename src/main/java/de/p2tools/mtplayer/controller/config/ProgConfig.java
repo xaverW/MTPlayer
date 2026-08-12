@@ -792,6 +792,8 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_MEDIA = addIntProp("dialog-search-in-what-for-media", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
     public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_ABO = addIntProp("dialog-search-in-what-for-abo", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
     public static IntegerProperty DIALOG_SEARCH_IN_WHAT_FOR_HISTORY = addIntProp("dialog-search-in-what-for-history", ProgConst.MEDIA_SEARCH_TITEL_OR_NAME); //wo bei Medien gesucht wird: T/Th/TT
+    public static IntegerProperty HISTORY_DEL_OLD_COUNT_YEARS = addIntProp("history-del-count-old-years", 10);
+
 
     public static StringProperty GUI_MEDIA_CONFIG_DIALOG_SIZE = addStrProp("gui-media-config-dialog-size", "800:700");
 

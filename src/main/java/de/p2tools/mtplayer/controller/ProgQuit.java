@@ -78,13 +78,13 @@ public class ProgQuit {
         }
 
         Platform.runLater(() -> {
-            if (ProgData.debug) {
-                ProgConfig.SYSTEM_TAB_SECOND_KLICK.set(true);
-                ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.set(true);
-
-                ProgConfig.SYSTEM_FILTER_SECOND_KLICK.set(true);
-                ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.set(true);
-            }
+//            if (ProgData.debug--) {
+//                ProgConfig.SYSTEM_TAB_SECOND_KLICK.set(true);
+//                ProgConfig.SYSTEM_TAB_SECOND_KLICK_ASK.set(true);
+//
+//                ProgConfig.SYSTEM_FILTER_SECOND_KLICK.set(true);
+//                ProgConfig.SYSTEM_FILTER_SECOND_KLICK_ASK.set(true);
+//            }
 
             stopAllDownloads();
             writeTabSettings();

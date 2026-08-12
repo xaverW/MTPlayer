@@ -53,10 +53,10 @@ import java.util.function.Predicate;
 public class PaneHistory extends ScrollPane {
 
     //    private Text textSearch = new Text();
-    private final Button btnClearList = new Button("_Gesamte Liste löschen");
-    private final Button btnClearSelection = new Button("_Auswahl löschen");
-    private final Button btnClearShown = new Button("Angezeigte _Liste löschen");
     private final TextField txtSearch = new TextField();
+    private final TitledPane tpDel = new TitledPane();
+    private final PaneHistoryDel paneHistoryDel;
+    private final Accordion accordion = new Accordion();
 
     private final Label lblGesamtMedia = new Label();
     private final Label lblHits = new Label();
@@ -79,12 +79,13 @@ public class PaneHistory extends ScrollPane {
     private final RadioButton rbAll = new RadioButton("Alles");
     private final RadioButton rbDownload = new RadioButton("Downloads");
     private final RadioButton rbShown = new RadioButton("Gesehen");
-    private final RadioButton rbOnlyShown = new RadioButton("Nur gesehene");
+    private final RadioButton rbOnlyShown = new RadioButton("Gesehen, nicht gespeichert");
 
     public PaneHistory(Stage stage, MediaDataDto mediaDataDto) {
         // nur im MediaDialog
         this.mediaDataDto = mediaDataDto;
         this.mediaDataExist = !mediaDataDto.searchTheme.isEmpty() || !mediaDataDto.searchTitle.isEmpty();
+        this.paneHistoryDel = new PaneHistoryDel(progData, stage, tableHistory);
 
         listenerDbStart = new P2Listener(PEvents.EVENT_MEDIA_DB_START) {
             @Override
@@ -116,6 +117,7 @@ public class PaneHistory extends ScrollPane {
         initPanel();
         initTable();
         initAction();
+        initAccordion();
         filter();
     }
 
@@ -127,9 +129,7 @@ public class PaneHistory extends ScrollPane {
 
         tableHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         VBox.setVgrow(tableHistory, Priority.ALWAYS);
-        HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
-        hBox.getChildren().addAll(btnClearList, btnClearSelection, btnClearShown, P2GuiTools.getHBoxGrower(), getHBoxSum());
-        vBoxMedia.getChildren().addAll(getVBoxSearch(), tableHistory, hBox, getTextFieldGrid());
+        vBoxMedia.getChildren().addAll(getVBoxSearch(), tableHistory, getTextFieldGrid(), accordion);
 
         this.setPadding(new Insets(P2LibConst.PADDING));
         this.setFitToHeight(true);
@@ -229,30 +229,6 @@ public class PaneHistory extends ScrollPane {
             filter();
         });
         progData.historyListJson.addListener(listener);
-
-        btnClearList.setOnAction(a -> {
-            progData.historyListJson.clearAll(stage);
-        });
-        btnClearSelection.setOnAction(a -> {
-            ArrayList<HistoryData> historyDataArrayList =
-                    new ArrayList<>(tableHistory.getSelectionModel().getSelectedItems());
-            if (historyDataArrayList.isEmpty()) {
-                P2Alert.showInfoNoSelection(stage);
-
-            } else {
-                progData.historyListJson.removeHistory(historyDataArrayList);
-            }
-        });
-        btnClearShown.setOnAction(a -> {
-            ArrayList<HistoryData> historyDataArrayList =
-                    new ArrayList<>(tableHistory.getItems());
-            if (historyDataArrayList.isEmpty()) {
-                P2Alert.showInfoNoSelection(stage);
-
-            } else {
-                progData.historyListJson.removeHistory(historyDataArrayList);
-            }
-        });
     }
 
     // ==============================================
@@ -296,7 +272,8 @@ public class PaneHistory extends ScrollPane {
         }
 
         HBox hBoxRadio = new HBox(P2LibConst.PADDING_HBOX);
-        hBoxRadio.getChildren().addAll(rbAll, rbDownload, rbShown, rbOnlyShown);
+        hBoxRadio.getChildren().addAll(rbAll, rbDownload, rbShown, rbOnlyShown, P2GuiTools.getHBoxGrower(),
+                lblHits, new Label(" von: "), lblGesamtMedia);
 
         // ============
         GridPane gridPane = new GridPane();
@@ -329,12 +306,6 @@ public class PaneHistory extends ScrollPane {
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcComputedSizeAndHgrow());
         return gridPane;
-    }
-
-    private HBox getHBoxSum() {
-        HBox hBoxSum = new HBox(P2LibConst.DIST_BUTTON);
-        hBoxSum.getChildren().addAll(lblHits, new Label(" von: "), lblGesamtMedia);
-        return hBoxSum;
     }
 
     void filter(String searStr) {
@@ -380,5 +351,11 @@ public class PaneHistory extends ScrollPane {
             source = HistoryData.SOURCE_DOWNLOAD;
         }
         return source;
+    }
+
+    private void initAccordion() {
+        tpDel.setText("Löschen");
+        tpDel.setContent(paneHistoryDel);
+        accordion.getPanes().addAll(tpDel);
     }
 }
