@@ -16,7 +16,10 @@
 
 package de.p2tools.mtplayer.controller.mediadb;
 
-import de.p2tools.p2lib.configfile.config.*;
+import de.p2tools.p2lib.configfile.config.Config;
+import de.p2tools.p2lib.configfile.config.Config_boolProp;
+import de.p2tools.p2lib.configfile.config.Config_intProp;
+import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.tools.P2Index;
 import javafx.beans.property.*;
@@ -30,7 +33,6 @@ public class MediaCollectionData extends P2DataSample<MediaCollectionData> {
     public static final String TAG = "MediaCollectionData";
     public final static int MAX_ELEM = XML_NAMES.length;
 
-    private final LongProperty idLong = new SimpleLongProperty(0L); // sind die alten, bis V14
     private final IntegerProperty idInt = new SimpleIntegerProperty(0);
     private final StringProperty path = new SimpleStringProperty("");
     private final StringProperty collectionName = new SimpleStringProperty("");
@@ -60,7 +62,6 @@ public class MediaCollectionData extends P2DataSample<MediaCollectionData> {
     @Override
     public Config[] getConfigsArr() {
         ArrayList<Config> list = new ArrayList<>();
-        list.add(new Config_longProp("id", "Id", idLong));
         list.add(new Config_intProp("idInt", "IdInt", idInt));
         list.add(new Config_stringProp("path", "Pfad", path));
         list.add(new Config_stringProp("collectionName", "Sammlung", collectionName));
@@ -79,18 +80,6 @@ public class MediaCollectionData extends P2DataSample<MediaCollectionData> {
 
     public void setIdInt(int idInt) {
         this.idInt.set(idInt);
-    }
-
-    public long getIdLong() {
-        return idLong.get();
-    }
-
-    public LongProperty idLongProperty() {
-        return idLong;
-    }
-
-    public void setIdLong(long idLong) {
-        this.idLong.set(idLong);
     }
 
     public String getPath() {

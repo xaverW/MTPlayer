@@ -24,7 +24,7 @@ public class BookmarkLoadSaveFactory {
         final Path txtFilePath = Path.of(settingsDir, fileNameTxt);
         final Path xmlFilePath = Path.of(settingsDir, fileNameXml);
 
-        // Und jetzt die alten noch löschen
+        // Und jetzt die ganz alten löschen
         try {
             if (Files.exists(txtFilePath)) {
                 Files.delete(txtFilePath);

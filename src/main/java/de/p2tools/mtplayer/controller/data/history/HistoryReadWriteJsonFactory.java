@@ -48,8 +48,8 @@ public class HistoryReadWriteJsonFactory {
             jsonGenerator.writeStartObject(); // start root object
 
             // Memo
-            for (HistoryData memoData : ProgData.getInstance().historyListJson) {
-                writeJson(memoData, jsonGenerator);
+            for (HistoryData historyData : ProgData.getInstance().historyListJson) {
+                writeJson(historyData, jsonGenerator);
             }
             jsonGenerator.writeEndObject(); //end address object
             jsonGenerator.flush();

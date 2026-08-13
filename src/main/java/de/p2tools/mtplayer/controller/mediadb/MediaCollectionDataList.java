@@ -50,12 +50,6 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
 
     @Override
     public boolean add(MediaCollectionData mediaCollectionData) {
-        if (mediaCollectionData.getIdLong() > 0) {
-            // dann gibts noch eine alte ID
-            mediaCollectionData.setIdInt((int) mediaCollectionData.getIdLong() * -1); // dann sind sie immer anders als die neuen IDs
-            mediaCollectionData.setIdLong(0); // und jetzt "ausschalten"
-        }
-
         if (mediaCollectionData.getIdInt() == 0) {
             // dann muss sie gesetzt werden
             mediaCollectionData.setIdInt(P2Index.getIndexInt());
@@ -230,7 +224,8 @@ public class MediaCollectionDataList extends SimpleListProperty<MediaCollectionD
             // und die MediaData
             ProgData.getInstance().mediaDataList.addAll(undoMediaDataExternal);
             undoMediaDataExternal.clear();
-            new WriteMediaDb(ProgData.getInstance()).writeExternalMediaData();
+//            new WriteMediaDb(ProgData.getInstance()).writeExternalMediaData();
+            MediaDateReadWriteFactory.write();
 
         } else {
             // die Sammlungen

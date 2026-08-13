@@ -38,6 +38,30 @@ public class ConvertOldHistoryFactory {
     private ConvertOldHistoryFactory() {
     }
 
+    public static void delOldHistoryFile() {
+        // Shown
+        final Path urlPathDownload = FileFactory.getUrlFilePath(ProgInfos.getSettingsDirectory_String(),
+                ProgConst.FILE_HISTORY_SHOWN_TXT);
+        try {
+            if (Files.exists(urlPathDownload)) {
+                Files.delete(urlPathDownload);
+            }
+        } catch (Exception ex) {
+            P2Log.errorLog(956231458, ex.getMessage());
+        }
+
+        // Abos: Downloads
+        final Path urlPathAbo = FileFactory.getUrlFilePath(ProgInfos.getSettingsDirectory_String(),
+                ProgConst.FILE_HISTORY_ABO_TXT);
+        try {
+            if (Files.exists(urlPathAbo)) {
+                Files.delete(urlPathAbo);
+            }
+        } catch (Exception ex) {
+            P2Log.errorLog(956231458, ex.getMessage());
+        }
+    }
+
     public static void convertHistoryList() {
         // laden und in die neue Liste eintragen
         ProgData.getInstance().historyListJson.clearAll();
@@ -59,6 +83,7 @@ public class ConvertOldHistoryFactory {
             h.setSource(HistoryData.SOURCE_DOWNLOAD);
         });
         ProgData.getInstance().historyListJson.updateHistory(HistoryData.SOURCE_DOWNLOAD, addList);
+
         HistoryReadWriteJsonFactory.write();
         ProgData.getInstance().historyListJson.clearAll(); // sonst sinds doppelt drin
     }

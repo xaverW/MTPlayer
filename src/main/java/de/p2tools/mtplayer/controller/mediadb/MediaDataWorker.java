@@ -53,7 +53,7 @@ public class MediaDataWorker {
     // **************************************************************
     // Eine MediaCollection neu einlesen, vorher die vorhandenen löschen
     // vom User ausgelöst, Config
-    // oder wird beim Download-Ende aufgerufen, wenn in der Mediensammlung-Intern gespeichert
+    // oder beim Download-Ende, wenn in der Download in Mediensammlung-Intern gespeichert wird
     public static synchronized void updateCollection(MediaCollectionData mediaCollectionData) {
         if (progData.mediaDataList.isSearching()) {
             // dann mach mers gerade schon :)
@@ -126,7 +126,8 @@ public class MediaDataWorker {
 
         if (external) {
             // muss nur dann geschrieben werden
-            new WriteMediaDb(progData).writeExternalMediaData();
+//            new WriteMediaDb(progData).writeExternalMediaData();
+            MediaDateReadWriteFactory.write();
         }
     }
 

@@ -35,28 +35,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadMediaDb implements AutoCloseable {
+public class ReadMediaDb {
 
-    private final XMLInputFactory inFactory;
-    private final ArrayList<MediaData> list;
-
-    public ReadMediaDb() {
-        this.list = new ArrayList<>();
-
-        inFactory = XMLInputFactory.newInstance();
-        inFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
-        inFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE); // Deaktiviere DTDs
-        inFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE); // Deaktiviere externe Entitäten
+    private ReadMediaDb() {
     }
 
     // ******************************************************
     // EXTERNAL MediaData aus File lesen und schreiben
-    public List<MediaData> loadSavedExternalMediaData() {
+    public static List<MediaData> loadSavedExternalMediaData() {
         final Path urlPath = getPathMediaDB();
-        return new ReadMediaDb().readDb(urlPath);
+        return readDb(urlPath);
     }
 
-    private Path getPathMediaDB() {
+    private static Path getPathMediaDB() {
         Path urlPath = null;
         try {
             urlPath = Paths.get(ProgInfos.getSettingsDirectory_String()).resolve(ProgConst.FILE_MEDIA_DB);
@@ -69,7 +60,8 @@ public class ReadMediaDb implements AutoCloseable {
         return urlPath;
     }
 
-    public ArrayList<MediaData> readDb(Path xmlFilePath) {
+    private static ArrayList<MediaData> readDb(Path xmlFilePath) {
+        final ArrayList<MediaData> list = new ArrayList<>();
 
         if (!Files.exists(xmlFilePath) || xmlFilePath.toFile().length() == 0) {
             return list;
@@ -80,6 +72,12 @@ public class ReadMediaDb implements AutoCloseable {
 
         try (InputStream is = Files.newInputStream(xmlFilePath);
              InputStreamReader in = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+
+            final XMLInputFactory inFactory;
+            inFactory = XMLInputFactory.newInstance();
+            inFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.FALSE);
+            inFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE); // Deaktiviere DTDs
+            inFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE); // Deaktiviere externe Entitäten
 
             parser = inFactory.createXMLStreamReader(in);
             while (parser.hasNext()) {
@@ -113,7 +111,7 @@ public class ReadMediaDb implements AutoCloseable {
         return list;
     }
 
-    private boolean get(XMLStreamReader parser, String xmlElem, String[] xmlNames, String[] strRet) {
+    private static boolean get(XMLStreamReader parser, String xmlElem, String[] xmlNames, String[] strRet) {
         boolean ret = true;
         final int maxElem = strRet.length;
         for (int i = 0; i < maxElem; ++i) {
@@ -144,9 +142,5 @@ public class ReadMediaDb implements AutoCloseable {
             P2Log.errorLog(912036578, ex);
         }
         return ret;
-    }
-
-    @Override
-    public void close() throws Exception {
     }
 }

@@ -109,6 +109,8 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         // da ja über Pfad/Dateiname verglichen wird und nicht über den Datei-Hash
         // beim Löschen, haben die externen Vorrang, d.h. zuerst die internen löschen
         final HashSet<String> hashSet = new HashSet<>(size());
+
+        // zuerst die externen in Hash eintragen
         Iterator<MediaData> it = iterator();
         while (it.hasNext()) {
             // zuerst mal die doppelten externen löschen
@@ -124,6 +126,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
             }
         }
 
+        // und jetzt die internen in Hash eintragen
         it = iterator();
         while (it.hasNext()) {
             // jetzt sind alle externen drin, jetzt die internen checken
@@ -143,13 +146,17 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
 
     public synchronized void countMediaData(ProgData progData) {
         // creates the counter in the MediaCollectionDataList
-        progData.mediaCollectionDataList.forEach(collectionData -> collectionData.setCount(0));
-
-        this.forEach(mediaData -> {
-            MediaCollectionData mediaCollectionData = progData.mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionId());
-            if (mediaCollectionData != null) {
-                mediaCollectionData.setCount(mediaCollectionData.getCount() + 1);
-            }
+        progData.mediaCollectionDataList.forEach(mediaCollectionData -> {
+            mediaCollectionData.setCount(progData.mediaDataList.filtered(mediaData ->
+                    mediaData.getCollectionId() == mediaCollectionData.getIdInt()).size() + 1);
         });
+
+//        progData.mediaCollectionDataList.forEach(collectionData -> collectionData.setCount(0));
+//        this.forEach(mediaData -> {
+//            MediaCollectionData mediaCollectionData = progData.mediaCollectionDataList.getMediaCollectionData(mediaData.getCollectionId());
+//            if (mediaCollectionData != null) {
+//                mediaCollectionData.setCount(mediaCollectionData.getCount() + 1);
+//            }
+//        });
     }
 }

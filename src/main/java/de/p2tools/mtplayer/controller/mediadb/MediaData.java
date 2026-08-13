@@ -50,12 +50,7 @@ public class MediaData {
         try {
             id = Integer.parseInt(arr[MEDIA_DATA_COLLECTION_ID]); // sind die neuen
         } catch (Exception ex) {
-            // dann ist evtl. noch das alte Format
-            try {
-                id = -1 * (int) Long.parseLong(arr[MEDIA_DATA_COLLECTION_ID]); // V14 kann noch ein Long sein
-            } catch (Exception e) {
-                id = 0;
-            }
+            id = 0;
         }
         collectionId = id;
         this.extern = setExternal(); // wird gesetzt mit der Sammlung-Info, muss also nicht gespeichert werden
@@ -64,6 +59,21 @@ public class MediaData {
     public MediaData(String name, String path, long size, int id) {
         mediaFileSize.setSize(size);
         this.collectionId = id;
+        this.name = cleanUp(name);
+        this.path = cleanUp(path);
+        this.extern = setExternal(); // wird gesetzt mit der Sammlung-Info, muss also nicht gespeichert werden
+    }
+
+    public MediaData(String name, String path, String size, String idStr) {
+        mediaFileSize.setSize(size);
+
+        int id;
+        try {
+            id = Integer.parseInt(idStr); // sind die neuen
+        } catch (Exception ex) {
+            id = 0;
+        }
+        collectionId = id;
         this.name = cleanUp(name);
         this.path = cleanUp(path);
         this.extern = setExternal(); // wird gesetzt mit der Sammlung-Info, muss also nicht gespeichert werden

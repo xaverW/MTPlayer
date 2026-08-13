@@ -44,6 +44,7 @@ public class ProgConst {
     public static final String FILE_HISTORY_ABO_TXT = "downloads.txt";
     public static final String FILE_HISTORY_SHOWN_TXT = "history.txt";
     public static final String FILE_HISTORY_JSON = "history.json";
+    public static final String FILE_MEDIA_JSON = "media.json";
     public static final String FILE_MEDIA_DB = "mediadb.txt";
     public static final String LOG_DIR = "Log";
 

@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.bookmark.BookmarkLoadSaveFactory;
 import de.p2tools.mtplayer.controller.data.history.ConvertOldHistoryFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
+import de.p2tools.mtplayer.controller.mediadb.MediaDateReadWriteFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 
 public class ProgConfigUpdate {
@@ -43,8 +44,10 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_UPDATE_LOAD_FILMLIST_PROGRAMSTART.setValue(true); // für Version 20
         ProgConfig.SYSTEM_UPDATE_OFFER_FILTER.setValue(true); // für Version 20
         ProgConfig.SYSTEM_RESET_COLOR_LIST.setValue(true); // für Version 20
-        ProgConfig.SYSTEM_CHANGE_HISTORY_FILE.setValue(true); // für Version 21
-        ProgConfig.SYSTEM_CHANGE_BOOKMARK_FILE.setValue(true); // für Version 21
+        ProgConfig.SYSTEM_CHANGE_HISTORY_FILE.setValue(true); // für Version 22
+        ProgConfig.SYSTEM_CHANGE_BOOKMARK_FILE.setValue(true); // für Version 22
+        ProgConfig.SYSTEM_CHANGE_MEDIA_FILE.setValue(true); // für Version 22
+        ProgConfig.SYSTEM_DEL_OLD_CONFIG_FILE.setValue(true); // für Version 22
     }
 
     public static void update() {
@@ -162,6 +165,16 @@ public class ProgConfigUpdate {
         if (!ProgConfig.SYSTEM_CHANGE_BOOKMARK_FILE.getValue()) {
             // dann auf das neue Format umstellen
             BookmarkLoadSaveFactory.updateOldBookmarks();
+        }
+
+        if (!ProgConfig.SYSTEM_CHANGE_MEDIA_FILE.getValue()) {
+            // dann auf das neue Format umstellen
+            MediaDateReadWriteFactory.updateOldMedia();
+        }
+
+        if (!ProgConfig.SYSTEM_DEL_OLD_CONFIG_FILE.getValue()) {
+            // die alten Configs (history: shown, downloads) löschen
+            ConvertOldHistoryFactory.delOldHistoryFile();
         }
 
         setUpdateDone();
