@@ -19,9 +19,9 @@ package de.p2tools.mtplayer.gui.mediadialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.history.HistoryData;
+import de.p2tools.mtplayer.controller.data.history.HistoryFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
-import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,8 +34,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class PaneHistoryDel extends VBox {
 
@@ -67,56 +65,37 @@ public class PaneHistoryDel extends VBox {
         slAge.setMajorTickUnit(100);
         slAge.setBlockIncrement(5);
 
-        btnDelAge.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
-        btnDelAge.setOnAction(a -> {
-            progData.historyListJson.removeOld((int) slAge.getValue());
-        });
-
         btnDelAll.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         btnDelAll.setOnAction(a -> {
             progData.historyListJson.clearAll(stage);
         });
+
         btnDelSelection.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         btnDelSelection.setOnAction(a -> {
-            ArrayList<HistoryData> historyDataArrayList =
-                    new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
-            if (historyDataArrayList.isEmpty()) {
-                P2Alert.showInfoNoSelection(stage);
-
-            } else if (historyDataArrayList.size() <= 1) {
-                progData.historyListJson.removeHistory(historyDataArrayList);
-
-            } else if (P2Alert.showAlertOkCancel(stage, "Löschen", "History löschen",
-                    "Soll die gesamte Auswahl gelöscht werden?")) {
-                progData.historyListJson.removeHistory(historyDataArrayList);
-            }
+            HistoryFactory.delSelection(stage, tableView.getSelectionModel().getSelectedItems());
         });
 
         btnDelNotInList.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
-        btnDelNotInList.setOnAction(a -> {
-//            int size = BookmarkFactory.delNotInList(true);
-//            size += BookmarkFactory.delNotInList(false);
-//            if (size <= 0) {
-//                P2Alert.showInfoAlert(stage, "Löschen", "Bookmarks löschen",
-//                        "Es sind keine Bookmarks zum Löschen, in der Liste.");
-//            }
-        });
+        btnDelNotInList.setOnAction(a -> HistoryFactory.delNotInList(stage));
+
+        btnDelAge.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelAge.setOnAction(a -> HistoryFactory.delOld(stage, (int) slAge.getValue()));
 
         Button btnHelp = PIconFactory.getHelpButton(stage,
-                "Bookmarks löschen",
-                "Hier können Bookmarks gelöscht werden." +
+                "History löschen",
+                "Hier können Filme aus der History gelöscht werden." +
                         "\n\n" +
                         "* Alle löschen:\n" +
-                        "Es werden alle Bookmarks gelöscht." +
+                        "Es werden alle Einträge gelöscht." +
                         "\n\n" +
-                        "* Gesehene löschen:\n" +
-                        "Bookmarks für Filme/Audios die schon gesehen wurden, werden gelöscht." +
+                        "* Auswahl löschen:\n" +
+                        "Markierte Einträge werden gelöscht." +
                         "\n\n" +
                         "* Nicht mehr in der Film/Audio Liste:\n" +
-                        "Bookmarks, deren Film/Audio nicht mehr in der Film/Audio Liste enthalten sind, werden gelöscht." +
+                        "Einträge die nicht mehr in der Film/Audoliste sind, werden gelöscht." +
                         "\n\n" +
                         "* Alte löschen:\n" +
-                        "Bookmarks deren Datum \"Angelegt\" gleich oder älter ist als vorgegeben, werde gelöscht.");
+                        "Einträge die älter sind als vorgegeben und nicht mehr in der Filmliste sind, werden gelöscht.");
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
@@ -133,10 +112,12 @@ public class PaneHistoryDel extends VBox {
         gridPane.add(new Label("Auswahl löschen"), 0, ++row);
         gridPane.add(btnDelSelection, 2, row);
 
-        gridPane.add(new Label("Nicht mehr in der Film/Audio Liste"), 0, ++row);
+        gridPane.add(new Label("Nicht mehr in der Film/Audioliste Liste"), 0, ++row);
         gridPane.add(btnDelNotInList, 2, row);
 
-        gridPane.add(new Label("Alte löschen"), 0, ++row);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(new Label("Nicht mehr in der Film/Audioliste Liste"), new Label("[mit Mindestalter]"));
+        gridPane.add(vBox, 0, ++row);
         HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().addAll(slAge, lblAge);

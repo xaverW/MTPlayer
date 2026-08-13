@@ -79,7 +79,7 @@ public class PaneHistory extends ScrollPane {
     private final RadioButton rbAll = new RadioButton("Alles");
     private final RadioButton rbDownload = new RadioButton("Downloads");
     private final RadioButton rbShown = new RadioButton("Gesehen");
-    private final RadioButton rbOnlyShown = new RadioButton("Gesehen, nicht gespeichert");
+    private final RadioButton rbOnlyShown = new RadioButton("Gesehen aber nicht gespeichert");
 
     public PaneHistory(Stage stage, MediaDataDto mediaDataDto) {
         // nur im MediaDialog

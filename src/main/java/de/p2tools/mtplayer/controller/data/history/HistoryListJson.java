@@ -31,7 +31,10 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.stage.Stage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 
@@ -231,6 +234,11 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
     //===============
     //remove
     //===============
+    public void replaceHistory(List<HistoryData> historyList) {
+        this.setAll(historyList);
+        makeUrlHash();
+    }
+
     public synchronized void removeShown(HistoryData historyData) {
         // HistoryData aus den SHOWN löschen
         if (historyData == null) {
@@ -265,7 +273,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         removeFromHistory(historyData);
     }
 
-    public synchronized void removeHistory(ArrayList<HistoryData> removeList) {
+    public synchronized void removeHistory(List<HistoryData> removeList) {
         // HistoryData aus der History löschen
         if (removeList == null || removeList.isEmpty()) {
             return;
@@ -288,26 +296,26 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         removeFromHistory(removeList);
     }
 
-    public synchronized void removeOld(int year) {
-        // HistoryData aus der History löschen
-        if (year <= 0) {
-            return;
-        }
-
-        final Calendar c1 = Calendar.getInstance();
-        c1.setTime(new Date());
-
-        List<HistoryData> list = new ArrayList<>();
-        forEach(h -> {
-            Calendar c2 = Calendar.getInstance();
-            c2.setTime(h.getDate());
-            int yearDiff = c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR);
-            if (yearDiff < year) {
-                list.add(h);
-            }
-        });
-        replaceHistory(list);
-    }
+//    public synchronized void removeOld(int year) {
+//        // HistoryData aus der History löschen
+//        if (year <= 0) {
+//            return;
+//        }
+//
+//        final Calendar c1 = Calendar.getInstance();
+//        c1.setTime(new Date());
+//
+//        List<HistoryData> list = new ArrayList<>();
+//        forEach(h -> {
+//            Calendar c2 = Calendar.getInstance();
+//            c2.setTime(h.getDate());
+//            int yearDiff = c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR);
+//            if (yearDiff < year) {
+//                list.add(h);
+//            }
+//        });
+//        replaceHistory(list);
+//    }
 
     public synchronized void removeDownloadFromHistory(List<DownloadData> downloadList) {
         // eine Liste Downloads aus der History löschen -> undo Download
@@ -484,11 +492,6 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
 
     private void removeFromHistory(List<HistoryData> historyList) {
         this.removeAll(historyList);
-        makeUrlHash();
-    }
-
-    private void replaceHistory(List<HistoryData> historyList) {
-        this.setAll(historyList);
         makeUrlHash();
     }
 
