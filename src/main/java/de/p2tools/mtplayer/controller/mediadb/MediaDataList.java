@@ -148,7 +148,7 @@ public class MediaDataList extends SimpleListProperty<MediaData> {
         // creates the counter in the MediaCollectionDataList
         progData.mediaCollectionDataList.forEach(mediaCollectionData -> {
             mediaCollectionData.setCount(progData.mediaDataList.filtered(mediaData ->
-                    mediaData.getCollectionId() == mediaCollectionData.getIdInt()).size() + 1);
+                    mediaData.getCollectionId() == mediaCollectionData.getIdInt()).size());
         });
 
 //        progData.mediaCollectionDataList.forEach(collectionData -> collectionData.setCount(0));

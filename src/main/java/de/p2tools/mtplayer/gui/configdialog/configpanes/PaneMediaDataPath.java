@@ -162,6 +162,13 @@ public class PaneMediaDataPath {
                 external ? "Externe Mediensammlungen verwalten" : "Interne Mediensammlungen verwalten",
                 external ? HelpText.EXTERN_MEDIA_COLLECTION : HelpText.INTERN_MEDIA_COLLECTION);
 
+        Button btnUpdate = new Button("");
+        btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
+        btnUpdate.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
+                .or(progData.mediaDataList.searchingProperty()));
+        btnUpdate.setOnAction(a -> update());
+
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
         btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
@@ -178,17 +185,7 @@ public class PaneMediaDataPath {
         }
         btnAdd.setOnAction(a -> add());
 
-        Button btnUpdate = new Button("");
-        btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
-        btnUpdate.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
-        btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
-                .or(progData.mediaDataList.searchingProperty()));
-        btnUpdate.setOnAction(a -> {
-            update();
-        });
-        hBox.getChildren().addAll(btnUpdate);
-
-        hBox.getChildren().addAll(btnDel, btnAdd, P2GuiTools.getHBoxGrower(), btnHelp);
+        hBox.getChildren().addAll(btnUpdate, btnDel, btnAdd, P2GuiTools.getHBoxGrower(), btnHelp);
         vBox.getChildren().addAll(hBox);
     }
 
@@ -202,6 +199,8 @@ public class PaneMediaDataPath {
             return;
         }
         MediaDataWorker.updateCollection(mediaCollectionData);
+        // geändert, auch extern kann sich auf "intern" auswirken, wenn beide den gleichen Pfad haben
+        mediaChanged = true;
     }
 
     private void makeGrid(VBox vBox) {
@@ -218,6 +217,8 @@ public class PaneMediaDataPath {
             if (txtCollectionName.getText().isEmpty()) {
                 txtCollectionName.setText(txtPath.getText());
             }
+            // dann auch gleich aktualisieren
+            update();
         });
 
         int row = 0;
@@ -241,6 +242,8 @@ public class PaneMediaDataPath {
 
         MediaDataWorker.removeMediaCollection(sels, external);
         tableView.getSelectionModel().clearSelection();
+        // geändert, auch extern kann sich auf "intern" auswirken, wenn beide den gleichen Pfad haben
+        mediaChanged = true;
     }
 
     private void add() {
@@ -249,9 +252,7 @@ public class PaneMediaDataPath {
         tableView.getSelectionModel().clearSelection();
         tableView.getSelectionModel().select(mediaCollectionData);
         tableView.scrollTo(mediaCollectionData);
-        if (!external) {
-            // dann hat sich was geändert
-            mediaChanged = true;
-        }
+        // geändert, auch extern kann sich auf "intern" auswirken, wenn beide den gleichen Pfad haben
+        mediaChanged = true;
     }
 }
