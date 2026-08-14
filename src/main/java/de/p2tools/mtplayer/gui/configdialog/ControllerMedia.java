@@ -69,6 +69,7 @@ public class ControllerMedia extends P2AccordionPane {
         mediaDataDtoMedia.whatToShow = MediaDataDto.SHOW_WHAT.SHOW_MEDIA;
         mediaDataDtoMedia.buildSearchFrom = ProgConfig.DIALOG_BUILD_SEARCH_FROM_FOR_MEDIA;
         mediaDataDtoMedia.searchInWhat = ProgConfig.DIALOG_SEARCH_IN_WHAT_FOR_MEDIA;
+
         paneDialogMedia = new PaneDialogMedia(stage, mediaDataDtoMedia);
         paneDialogMedia.make(result);
 
