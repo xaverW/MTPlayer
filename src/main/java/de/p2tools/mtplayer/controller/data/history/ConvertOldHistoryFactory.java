@@ -38,6 +38,16 @@ public class ConvertOldHistoryFactory {
     private ConvertOldHistoryFactory() {
     }
 
+    public static void addHistoryToShownFile() {
+        ProgData.getInstance().historyListJson.loadList();
+        ProgData.getInstance().historyListJson.forEach(h -> {
+            if (h.getSource() == HistoryData.SOURCE_DOWNLOAD) {
+                h.setSource(HistoryData.SOURCE_SHOWN_DOWNLOAD);
+            }
+        });
+        HistoryReadWriteJsonFactory.write();
+    }
+
     public static void delOldHistoryFile() {
         // Shown
         final Path urlPathDownload = FileFactory.getUrlFilePath(ProgInfos.getSettingsDirectory_String(),

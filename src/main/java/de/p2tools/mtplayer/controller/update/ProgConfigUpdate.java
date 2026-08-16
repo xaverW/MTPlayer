@@ -48,6 +48,7 @@ public class ProgConfigUpdate {
         ProgConfig.SYSTEM_CHANGE_BOOKMARK_FILE.setValue(true); // für Version 22
         ProgConfig.SYSTEM_CHANGE_MEDIA_FILE.setValue(true); // für Version 22
         ProgConfig.SYSTEM_DEL_OLD_CONFIG_FILE.setValue(true); // für Version 22
+        ProgConfig.SYSTEM_ADD_HISTORY_SHOWN_FILE.setValue(true); // für Version 22
     }
 
     public static void update() {
@@ -175,6 +176,11 @@ public class ProgConfigUpdate {
         if (!ProgConfig.SYSTEM_DEL_OLD_CONFIG_FILE.getValue()) {
             // die alten Configs (history: shown, downloads) löschen
             ConvertOldHistoryFactory.delOldHistoryFile();
+        }
+
+        if (!ProgConfig.SYSTEM_ADD_HISTORY_SHOWN_FILE.getValue()) {
+            // die alten Configs (history: shown, downloads) löschen
+            ConvertOldHistoryFactory.addHistoryToShownFile();
         }
 
         setUpdateDone();

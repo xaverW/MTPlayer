@@ -59,7 +59,7 @@ public class HistoryReadWriteJsonFactory {
         }
     }
 
-    public static void writeJson(HistoryData historyData, JsonGenerator jsonGenerator) throws IOException {
+    private static void writeJson(HistoryData historyData, JsonGenerator jsonGenerator) throws IOException {
         jsonGenerator.writeObjectFieldStart(HistoryData.TAG);
         //start address object
         jsonGenerator.writeNumberField("source", historyData.getSource());
@@ -71,7 +71,7 @@ public class HistoryReadWriteJsonFactory {
         jsonGenerator.writeEndObject(); //end address object
     }
 
-    public static void readJson(JsonParser jsonParser) throws IOException {
+    private static void readJson(JsonParser jsonParser) throws IOException {
         int source = HistoryData.SOURCE_SHOWN_DOWNLOAD;
         String date = "";
         String channel = "";

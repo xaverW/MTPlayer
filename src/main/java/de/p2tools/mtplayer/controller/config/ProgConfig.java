@@ -205,6 +205,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_CHANGE_BOOKMARK_FILE = addBoolProp("system-change-bookmark-file", Boolean.FALSE);
     public static BooleanProperty SYSTEM_CHANGE_MEDIA_FILE = addBoolProp("system-change-media-file", Boolean.FALSE);
     public static BooleanProperty SYSTEM_DEL_OLD_CONFIG_FILE = addBoolProp("system-del-old-config-file", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_ADD_HISTORY_SHOWN_FILE = addBoolProp("system-add-history-shown-file", Boolean.FALSE);
 
     // Fenstereinstellungen
     static {
