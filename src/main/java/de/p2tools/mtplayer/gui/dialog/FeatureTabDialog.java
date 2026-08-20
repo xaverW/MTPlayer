@@ -54,7 +54,7 @@ public class FeatureTabDialog extends P2DialogExtra {
         lblText.setWrapText(true);
         lblText.setText("""
                 Mit dem ersten Klick auf einen  >>Tab<<   wird er ausgewählt. \
-                Jeder weitre Klick blendet die Spalte mit den Filtern neben der Tabelle ein/aus
+                Jeder weitere Klick blendet die Spalte mit den Filtern neben der Tabelle ein/aus
                 
                 Ein Klick mit der "RECHTEN Maustaste" blendet das Infopanel unter der \
                 Tabelle ein/aus.

@@ -953,7 +953,7 @@ public class HelpText {
             Ein Klick auf einen Tab (Filme, Audios, ...) wählt diesen aus. Jeder weitere \
             Klick blendet den Filter links neben der Tabelle ein/aus.
             
-            Ein Klick mit der RECHTEN Maustaste blender den Infobereich unter der \
+            Ein Klick mit der RECHTEN Maustaste blendet den Infobereich unter der \
             Tabelle ein/aus.
             
             Diese Feature kann hier ein/ausgeschaltet werden.
