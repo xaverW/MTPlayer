@@ -1,5 +1,26 @@
 # MTPlayer
 
+**Version 22**
+
+* Fehler der beim Neuladen der Filmliste auftreten konnte, behoben
+* Ist die Tabelle Filme nach einer Spalte sortiert, klappt der Programmstart etwas schneller
+* Im Tab "Abo" gibts einen neuen Filter: Abos für Filme/Audios/Alles
+* Im Tab "Download" gibts einen neuen Filter: "Thema/Titel"
+* Live-Suche für den ARD klappt wieder
+* Beim Anlegen eines Downloads wird die Vorgabe: "Zuletzt verwendeter Pfad" für Filme und Abos getrennt gesichert
+* Das Dateiformat der Bookmarks im Config-Ordner ist auf JSON umgestellt worden
+* Das Dateiformat der Mediensammlung im Config-Ordner ist auf JSON umgestellt worden
+* Das Dateiformat der History im Config-Ordner ist auf JSON umgestellt worden
+* Die Verwaltung der History wurde optimiert, liegt jetzt in nur einer Datei und erspart so, doppelte URLs, die Suche darin ist jetzt auch leichter möglich.
+* Dialog Mediensammlung->History überarbeitet, Möglichkeiten zum Aufräumen und Löschen der History hinzugefügt
+* In den Bookmarks wird jetzt auch das Filmdatum gespeichert
+* Bookmarks für Filme die nicht mehr in der aktuellen Filmliste sind, können automatisch gelöscht werden (nach dem Neuladen der Film/Audioliste, -> Einstellungen)
+* Der Bookmark Dialog wurde erweitert und umgestaltet
+* Beim Löschen "aller Bookmarks" in der Tabelle Filme/Audios werden jetzt nur noch die dazu passenden Bookmarks (Filme oder Audios) gelöscht
+* ...
+
+
+
 **Version 21**
 
 * Neue Parameter für den Dateinamen beim Download: %m, %M für die Länge des Films in Minuten: 20 oder 020
