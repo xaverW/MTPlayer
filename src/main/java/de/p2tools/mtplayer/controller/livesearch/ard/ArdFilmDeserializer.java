@@ -367,6 +367,10 @@ public class ArdFilmDeserializer {
         }
         Map<LiveConst.Qualities, String> videoInfo = new EnumMap<>(LiveConst.Qualities.class);
         for (Map.Entry<Integer, String> entry : urls.get().entrySet()) {
+            if (entry.getValue().startsWith("//")) {
+                entry.setValue("https:" + entry.getValue());
+            }
+
             LiveConst.Qualities resolution = LiveConst.Qualities.getResolutionFromWidth(entry.getKey());
             if (!videoInfo.containsKey(resolution)) {
                 videoInfo.put(resolution, entry.getValue());

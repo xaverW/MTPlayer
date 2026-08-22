@@ -1,0 +1,82 @@
+Das Bauen des Programms ist mit diesen Schritten
+(unter Linux!) möglich:
+
+
+Die Programme: git und gradle müssen in aktueller Version!!
+installiert sein. In einem leeren Verzeichis muss zuerst der
+Quellcode geladen werden. Der liegt hier:
+
+https://github.com/xaverW/MTPlayer
+
+
+==================================
+* Quellcode laden
+==================================
+
+$ git clone https://github.com/xaverW/MTPlayer.git
+
+
+==================================
+* im Ordner MTPlayer gradle anlegen
+==================================
+
+§ cd MTPlayer
+$ gradle init
+
+
+==================================
+* beim gradle-init dann diese
+  Parametern auswählen
+==================================
+
+Select type of build to generate:
+  1: Application
+  2: Library
+  3: Gradle plugin
+  4: Basic (build structure only)
+Enter selection (default: Application) [1..4] --> 4
+
+Project name (default: MTPlayer): --> default
+
+Select build script DSL:
+  1: Kotlin
+  2: Groovy
+Enter selection (default: Kotlin) [1..2] --> 2
+
+Generate build using new APIs and behavior 
+(some features may change in the next minor 
+release)? (default: no) [yes, no] --> default
+
+
+==================================
+* Gradle-Scripte in den 
+MTPlayer-Ordner kopieren
+(build.gradle.raspberry oder 
+build.gradle.mac umbenennen 
+wenn gebraucht)
+==================================
+
+
+build.gradle
+settings.gradle
+.gitignore
+
+
+==================================
+* im MTPlayer-Verzeichis dann das
+  Programm bauen
+==================================
+
+$ ./gradlew shadowJar
+
+
+==================================
+* im build-Verzeichniss 
+im Ordner "./build/shadowJar/"
+liegt dann das fertige jar-File, 
+das dann gestartet werden kann
+==================================
+
+$ cd build/shadowJar/
+$ java -jar MTPlayer.jar
+

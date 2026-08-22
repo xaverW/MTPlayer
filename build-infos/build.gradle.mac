@@ -1,0 +1,102 @@
+plugins {
+    id 'application'
+    id "org.openjfx.javafxplugin" version "0.1.0"
+    id 'com.gradleup.shadow' version '9.3.0'
+}
+javafx {
+    version = "21.0.9"
+    modules = ['javafx.controls']
+    platform = 'mac-aarch64'
+}
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+//<><><><><><><><><><><><><><><><><><><><>
+def programName = 'MTPlayer'
+def jarName = 'MTPlayer.jar'
+def theMainClass = 'de/p2tools/mtplayer/Main'
+//<><><><><><><><><><><><><><><><><><><><>
+
+def fatJarDir = layout.buildDirectory.get().toString() + "/shadowJar" + "/"
+def propertyFile = "./src/main/resources/version.properties"
+def versionNo = loadProgProperties().getProperty('VERSION').toInteger()
+def buildNo = loadProgProperties().getProperty('BUILD').toInteger()
+def newDate = new Date().format('yyy.MM.dd')
+
+// ===========================================
+// build project
+// ===========================================
+group 'de.p2tools'
+application {
+    mainClass = theMainClass
+}
+
+dependencies {
+    //<><><><><><><><><><><><><><><><><><><><>
+    implementation ':commons-cli-1.11.0'
+    implementation ':commons-io-2.21.0'
+    implementation ':commons-lang3-3.20.0'
+
+    implementation ':jackson-core-2.20.1'
+    implementation ':jackson-databind-2.20.1'
+    implementation ':jackson-annotations-2.20'
+
+    implementation ':xz-1.11'
+    implementation 'org.jsoup:jsoup:1.22.1'
+
+    implementation 'com.squareup.okhttp3:okhttp:5.3.2'
+
+    //<><><><><><><><><><><><><><><><><><><><>
+    implementation ':ikonli-core-12.4.0'
+    implementation ':ikonli-javafx-12.4.0'
+
+    implementation 'org.kordamp.ikonli:ikonli-material-pack:12.4.0'
+    implementation 'org.kordamp.ikonli:ikonli-material2-pack:12.4.0'
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign-pack:12.4.0'
+    implementation 'org.kordamp.ikonli:ikonli-materialdesign2-pack:12.4.0'
+    //<><><><><><><><><><><><><><><><><><><><>
+
+    implementation ':p2lib'
+    implementation ':controlsfx-11.2.3'
+    
+    implementation "org.openjfx:javafx-fxml:21:mac-aarch64"
+    implementation "org.openjfx:javafx-controls:21:mac-aarch64"
+    implementation "org.openjfx:javafx-graphics:21:mac-aarch64"
+    implementation "org.openjfx:javafx-base:21:mac-aarch64"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+jar {
+    manifest {
+        attributes("Manifest-Version": "1.0",
+                "Main-Class": theMainClass);
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+def loadProgProperties() {
+    Properties props = new Properties()
+    file('src/main/resources/version.properties').withInputStream {
+        props.load(it)
+    }
+    return props
+}
+
+
+tasks.shadowJar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE // Or WARN.
+    mergeServiceFiles()
+
+    destinationDirectory.set(file(fatJarDir))
+    archiveFileName = jarName
+}

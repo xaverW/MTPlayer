@@ -1,0 +1,7 @@
+# Ignore everything in the root except ...
+
+/*
+!src/
+!libs/
+!README.md
+!RELEASE.md
