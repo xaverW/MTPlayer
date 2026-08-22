@@ -9,13 +9,13 @@ Die Arbeit dafür (Programm, Filmliste aktuell halten, ..) war für mich alleine
 <br />
 
 ## Infos
-MTPlayer wurde ganz neu mit einem modernem GUI-Toolkit erstellt. Viele Vorschläge die ich von Usern erhalten habe, konnten deswegen damit umgesetzt werden. Es wurde an vielen Stellen verbessert und erweitert.  
+MTPlayer wurde ganz neu mit einem modernem GUI-Toolkit erstellt dessen Optik sich an vielen Stellen anpassen lässt. Viele Vorschläge die ich von Usern erhalten habe, konnten damit umgesetzt werden. Es wurde an vielen Stellen verbessert und erweitert. Auch durch die vielen Rückmeldungen der User ist das Programm immer weiter gewachsen und bietet eine Fülle an Möglichkeiten die in MediathekView nicht enthalten waren.  
 
-Ein besonderes Augenmerk waren die Filter zum Suche der Filmen. Es gibt jetzt mehr Filter die man bei der Suche verwenden kann und die Filtereinstellungen können auf verschiedene Weise, gespeichert und wieder zurückgeholt werden. So kann viel gezielter nach Filmen gesucht werden.  
-
-Im MTPlayer ist jetzt auch die ARD-Audiothek enthalten. Mit einer Live-Suche in den Mediatheken von ARD und ZDF können fehlende Beiträge vielleicht doch gefunden werden.  
+Ein besonderes Augenmerk waren die Filter zum Suchen der Filmen. Es gibt jetzt mehr Filter die man bei der Suche verwenden kann und die Filtereinstellungen können auf verschiedene Weise, gespeichert und wieder abgerufen werden. So kann viel gezielter nach Filmen gesucht werden.  
 
 Es lassen sich Abos anlegen, die dann automatisch Filme/Audios suchen und speichern. Auch die Abos profitieren bei der Suche nach den Beiträgen, von den erweiterten Filtern. Das Ausblenden ungewollter Filme lässt sich mit zwei Blacklists sehr gut an die eigenen Bedürfnisse anpassen und mit einer Mediensammlung für bereits geladene Filme können doppelte Downloads vermieden werden.
+
+Im MTPlayer ist jetzt auch die ARD-Audiothek enthalten. Mit einer Live-Suche in den Mediatheken von ARD und ZDF können fehlende Beiträge vielleicht doch gefunden werden.  
 <br />
 <br />
 
