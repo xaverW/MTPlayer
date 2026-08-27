@@ -50,7 +50,7 @@ public class AboMenu {
         vBox.getChildren().add(vBoxSpace);
 
         final ToolBarButton btNew = new ToolBarButton(vBox,
-                "Neues Abo", "Neus Abo anlegen",
+                "Neues Abo", "Neues Abo anlegen",
                 PIconFactory.PICON.TOOLBAR_BTN_ABO_ADD.getFontIcon());
 
         vBoxSpace = new VBox();
