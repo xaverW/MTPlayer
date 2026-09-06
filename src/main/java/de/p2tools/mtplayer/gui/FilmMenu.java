@@ -71,14 +71,14 @@ public class FilmMenu {
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
                 "Abspielen", "Markierten Film abspielen",
-                P2IconFactory.P2ICON.BTN_PLAY_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_B.getFontIcon());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
                 "Alle Abspielen", "Alle markierten Filme abspielen",
-                P2IconFactory.P2ICON.BTN_PLAY_ALL_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_ALL_B.getFontIcon());
 
         final ToolBarButton btSave = new ToolBarButton(vBox,
                 "Speichern", "Markierte Filme speichern",
-                P2IconFactory.P2ICON.BTN_RECORD_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_RECORD_B.getFontIcon());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().filmGuiController.getSel(true, true);
@@ -106,16 +106,16 @@ public class FilmMenu {
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
                 "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen",
-                P2IconFactory.P2ICON.BTN_BOOKMARK_ADD_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_BOOKMARK_ADD_B.getFontIcon());
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
                 "Bookmarks löschen", "Bookmarks für die markierten Filme löschen",
-                P2IconFactory.P2ICON.BTN_BOOKMARK_DEL_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_BOOKMARK_DEL_B.getFontIcon());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
                 "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen",
-                P2IconFactory.P2ICON.BTN_BOOKMARK_DEL_ALL_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_BOOKMARK_DEL_ALL_B.getFontIcon());
         final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
                 "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT,
-                P2IconFactory.P2ICON.BTN_BOOKMARK_SHOW_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_BOOKMARK_SHOW_B.getFontIcon());
         final ToolBarButton btShowBookmark = new ToolBarButton(vBox,
                 "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT,
                 PIconFactory.PICON.TOOLBAR_BTN_BOOKMARK_SHOW_DIALOG.getFontIcon());

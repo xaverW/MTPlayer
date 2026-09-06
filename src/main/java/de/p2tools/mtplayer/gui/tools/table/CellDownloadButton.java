@@ -70,7 +70,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStart = new Button("");
                     btnDownStart.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownStart.setTooltip(new Tooltip("Download starten"));
-                    btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN_14.getFontIcon());
+                    btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN_S.getFontIcon());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -159,8 +159,8 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
                         btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
 
-                        btnDownStop.setGraphic(P2IconFactory.P2ICON.BTN_STOP_22.getFontIcon());
-                        btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_22.getFontIcon());
+                        btnDownStop.setGraphic(P2IconFactory.P2ICON.BTN_STOP_B.getFontIcon());
+                        btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                     }
 
                     hbox.getChildren().addAll(btnDownStop, btnDownDel);
@@ -212,7 +212,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnOpenDirectory.setMinHeight(Table.ROW_HEIGHT_MAX);
 
                         btnFilmStart.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
-                        btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR_22.getFontIcon());
+                        btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
                     }
 
                     hbox.getChildren().addAll(btnFilmStart, btnOpenDirectory);
@@ -222,7 +222,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStart = new Button("");
                     btnDownStart.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownStart.setTooltip(new Tooltip("Download wieder starten"));
-                    btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN_14.getFontIcon());
+                    btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN_S.getFontIcon());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());

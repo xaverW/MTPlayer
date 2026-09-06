@@ -54,16 +54,16 @@ public class DownloadMenu {
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren",
-                P2IconFactory.P2ICON.BTN_RANDOM_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_RANDOM_B.getFontIcon());
         btnRefresh.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnStart = new ToolBarButton(vBox,
                 "Downloads Starten", "Markierte Downloads starten",
-                P2IconFactory.P2ICON.BTN_BOTTOM_OUTLINE_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_BOTTOM_OUTLINE_B.getFontIcon());
         final ToolBarButton btnStartAll = new ToolBarButton(vBox,
                 "Alle Downloads starten", "Alle Downloads starten",
-                P2IconFactory.P2ICON.BTN_START_ALL_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_START_ALL_B.getFontIcon());
         final ToolBarButton btStartAllTime = new ToolBarButton(vBox,
                 "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten",
                 PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_START_TIME.getFontIcon());
@@ -71,21 +71,21 @@ public class DownloadMenu {
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnBack = new ToolBarButton(vBox,
                 "Downloads zurückstellen", "Markierte Downloads zurückstellen",
-                P2IconFactory.P2ICON.BTN_ARROW_LEFT_TOP_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_ARROW_LEFT_TOP_B.getFontIcon());
         final ToolBarButton btnDel = new ToolBarButton(vBox,
                 "Downloads löschen", "Markierte Downloads löschen",
-                P2IconFactory.P2ICON.BTN_CLEAR_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_CLEAR_B.getFontIcon());
         final ToolBarButton btnChange = new ToolBarButton(vBox,
                 "Downloads ändern", "Markierte Downloads ändern",
-                P2IconFactory.P2ICON.BTN_EDIT_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_EDIT_B.getFontIcon());
         final ToolBarButton btnClear = new ToolBarButton(vBox,
                 "Downloads aufräumen", "Liste der Downloads aufräumen",
-                P2IconFactory.P2ICON.BTN_CLEAN_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_CLEAN_B.getFontIcon());
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
                 "Film Starten", "Gespeicherten Film abspielen",
-                P2IconFactory.P2ICON.BTN_PLAY_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_B.getFontIcon());
 
         btnRefresh.setOnAction(a -> {
             AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();

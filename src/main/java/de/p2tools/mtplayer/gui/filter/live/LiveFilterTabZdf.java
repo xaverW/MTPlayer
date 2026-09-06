@@ -51,7 +51,7 @@ public class LiveFilterTabZdf extends Tab {
                 ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF);
 
         Button btnSearchZdf = new Button();
-        btnSearchZdf.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_20.getFontIcon());
+        btnSearchZdf.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH.getFontIcon(20));
         btnSearchZdf.setTooltip(new Tooltip("Suche starten"));
         btnSearchZdf.setOnAction(a -> searchZdf(false));
         btnSearchZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(LiveConst.MIN_SEARCH_LENGTH))
@@ -91,7 +91,7 @@ public class LiveFilterTabZdf extends Tab {
         });
 
         Button btnSearchUrlZdf = new Button();
-        btnSearchUrlZdf.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_20.getFontIcon());
+        btnSearchUrlZdf.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH.getFontIcon(20));
         btnSearchUrlZdf.setTooltip(new Tooltip("Suche starten"));
         btnSearchUrlZdf.setOnAction(a -> searchUrl());
         btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.isEmpty())

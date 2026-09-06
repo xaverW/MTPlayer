@@ -68,7 +68,7 @@ public class FilmFilterControllerClearFilter extends VBox {
 
         btnClearFilter.setOnAction(a -> clearFilter());
 
-        btnEditFilter.setGraphic(P2IconFactory.P2ICON.BTN_EDIT_20.getFontIcon());
+        btnEditFilter.setGraphic(P2IconFactory.P2ICON.BTN_EDIT.getFontIcon());
         btnEditFilter.setOnAction(a -> new FilmFilterEditDialog(progData, filterDto));
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 

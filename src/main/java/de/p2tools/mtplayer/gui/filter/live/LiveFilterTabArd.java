@@ -47,7 +47,7 @@ public class LiveFilterTabArd extends Tab {
         });
 
         Button btnSearchArd = new Button();
-        btnSearchArd.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_20.getFontIcon());
+        btnSearchArd.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH.getFontIcon(20));
         btnSearchArd.setTooltip(new Tooltip("Suche starten"));
         btnSearchArd.setOnAction(a -> searchArd(false));
         btnSearchArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.length().lessThan(LiveConst.MIN_SEARCH_LENGTH))
@@ -91,7 +91,7 @@ public class LiveFilterTabArd extends Tab {
         });
 
         Button btnSearchUrlArd = new Button();
-        btnSearchUrlArd.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_20.getFontIcon());
+        btnSearchUrlArd.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH.getFontIcon(20));
         btnSearchUrlArd.setTooltip(new Tooltip("Suche starten"));
         btnSearchUrlArd.setOnAction(a -> searchUrl());
         btnSearchUrlArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.isEmpty())

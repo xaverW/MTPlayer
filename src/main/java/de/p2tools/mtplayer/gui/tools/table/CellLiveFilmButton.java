@@ -61,7 +61,7 @@ public class CellLiveFilmButton<S, T> extends TableCell<S, T> {
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_16.getFontIcon());
+                btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_S.getFontIcon());
 
                 if (ProgConfig.SYSTEM_SMALL_TABLE_ROW_LIVE.get()) {
                     btnPlay.setMaxHeight(Table.ROW_HEIGHT_MIN);
@@ -76,7 +76,7 @@ public class CellLiveFilmButton<S, T> extends TableCell<S, T> {
                     btnSave.setMinHeight(Table.ROW_HEIGHT_MAX);
 
                     btnPlay.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
-                    btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_16.getFontIcon());
+                    btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_S.getFontIcon());
                 }
 
                 btnPlay.setOnAction(e -> {

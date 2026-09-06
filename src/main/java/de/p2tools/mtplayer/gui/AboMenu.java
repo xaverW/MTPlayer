@@ -51,7 +51,7 @@ public class AboMenu {
 
         final ToolBarButton btNew = new ToolBarButton(vBox,
                 "Neues Abo", "Neues Abo anlegen",
-                P2IconFactory.P2ICON.BTN_BOOKMARK_ADD_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_BOOKMARK_ADD_B.getFontIcon());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -60,16 +60,16 @@ public class AboMenu {
 
         final ToolBarButton btOn = new ToolBarButton(vBox,
                 "Abos einschalten", "Markierte Abos einschalten",
-                P2IconFactory.P2ICON.BTN_PLAY_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_B.getFontIcon());
         final ToolBarButton btOff = new ToolBarButton(vBox,
                 "Abos ausschalten", "Markierte Abos ausschalten",
-                P2IconFactory.P2ICON.BTN_PAUSE_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PAUSE_B.getFontIcon());
         final ToolBarButton btDel = new ToolBarButton(vBox,
                 "Abos löschen", "Markierte Abos löschen",
-                P2IconFactory.P2ICON.BTN_CLEAR_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_CLEAR_B.getFontIcon());
         final ToolBarButton btChange = new ToolBarButton(vBox,
                 "Abos ändern", "Markierte Abos ändern",
-                P2IconFactory.P2ICON.BTN_EDIT_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_EDIT_B.getFontIcon());
 
         btNew.setOnAction(a -> {
             AboListFactory.addNewAbo(ProgConst.LIST_FILM_AUDIO, "Neu", "", "", "");

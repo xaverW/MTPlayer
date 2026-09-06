@@ -56,7 +56,7 @@ public class TableAudioFactory {
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_16.getFontIcon());
+                btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_S.getFontIcon());
                 btnSave.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
@@ -105,7 +105,7 @@ public class TableAudioFactory {
                     btnBookmark.setMinHeight(Table.ROW_HEIGHT_MAX);
 
                     btnPlay.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
-                    btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_16.getFontIcon());
+                    btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_S.getFontIcon());
                     if (film.isBookmark()) {
                         btnBookmark.setGraphic(P2IconFactory.P2ICON.BTN_BOOKMARK_DEL.getFontIcon());
                     } else {

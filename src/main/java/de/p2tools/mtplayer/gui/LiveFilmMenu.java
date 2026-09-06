@@ -65,12 +65,12 @@ public class LiveFilmMenu {
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
                 "Abspielen", "Markierten Film abspielen",
-                P2IconFactory.P2ICON.BTN_PLAY_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_B.getFontIcon());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
                 "Alle Abspielen", "Alle markierten Filme abspielen",
-                P2IconFactory.P2ICON.BTN_PLAY_ALL_25.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_ALL_B.getFontIcon());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", P2IconFactory.P2ICON.BTN_RECORD_25.getFontIcon());
+                "Speichern", "Markierte Filme speichern", P2IconFactory.P2ICON.BTN_RECORD_B.getFontIcon());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);

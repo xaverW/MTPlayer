@@ -103,11 +103,11 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
 
                     if (aboData.isActive()) {
                         // dann ausschalen
-                        btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PAUSE_22.getFontIcon());
+                        btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PAUSE.getFontIcon());
                     } else {
-                        btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PLAY_22.getFontIcon());
+                        btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
                     }
-                    btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_22.getFontIcon());
+                    btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                 }
 
                 hbox.getChildren().addAll(btnActivate, btnDel/*, btnBookmark*/);

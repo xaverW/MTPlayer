@@ -108,7 +108,7 @@ public class PCboLastFilmTextFilter extends HBox {
             final Label lblSomewhere = new Label();
 
             {
-                btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_14.getFontIcon());
+                btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_S.getFontIcon());
                 btnDel.getStyleClass().add("buttonVerySmall");
                 btnDel.setMaxSize(16, 16);
                 btnDel.setMinSize(16, 16);

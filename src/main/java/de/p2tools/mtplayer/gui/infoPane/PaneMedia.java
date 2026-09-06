@@ -160,7 +160,7 @@ public class PaneMedia extends VBox {
 
     private void initMenu() {
         btnConfig.setTooltip(new Tooltip("Einstellungen anzeigen"));
-        btnConfig.setGraphic(P2IconFactory.P2ICON.BTN_EDIT_20.getFontIcon());
+        btnConfig.setGraphic(P2IconFactory.P2ICON.BTN_EDIT.getFontIcon());
         btnConfig.setOnAction(a -> {
             new MediaCleaningDialogController(mediaDataDtoMedia, mediaDataDtoAbo);
             setSearchStringMedia();
