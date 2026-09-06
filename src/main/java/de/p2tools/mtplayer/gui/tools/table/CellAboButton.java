@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -60,9 +60,9 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 btnActivate.getStyleClass().addAll("pFuncBtn", "btnTable");
                 if (aboData.isActive()) {
                     // dann ausschalen
-                    btnActivate.setGraphic(PIconFactory.PICON.TABLE_ABO_OFF.getFontIcon());
+                    btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PAUSE.getFontIcon());
                 } else {
-                    btnActivate.setGraphic(PIconFactory.PICON.TABLE_ABO_ON.getFontIcon());
+                    btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
                 }
                 btnActivate.setOnAction(a -> {
                     getTableView().getSelectionModel().clearSelection();
@@ -78,7 +78,7 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 btnDel = new Button("");
                 btnDel.setTooltip(new Tooltip("Abo löschen"));
                 btnDel.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnDel.setGraphic(PIconFactory.PICON.TABLE_ABO_DEL.getFontIcon());
+                btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                 btnDel.setOnAction(a -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
@@ -103,11 +103,11 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
 
                     if (aboData.isActive()) {
                         // dann ausschalen
-                        btnActivate.setGraphic(PIconFactory.PICON.TABLE_ABO_OFF_BIG.getFontIcon());
+                        btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PAUSE_22.getFontIcon());
                     } else {
-                        btnActivate.setGraphic(PIconFactory.PICON.TABLE_ABO_ON_BIG.getFontIcon());
+                        btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PLAY_22.getFontIcon());
                     }
-                    btnDel.setGraphic(PIconFactory.PICON.TABLE_ABO_DEL_BIG.getFontIcon());
+                    btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_22.getFontIcon());
                 }
 
                 hbox.getChildren().addAll(btnActivate, btnDel/*, btnBookmark*/);

@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.ProgramData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -146,7 +145,7 @@ public class PaneSetProgram {
 
     private void initButton(VBox vBox) {
         Button btnDel = new Button("");
-        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
+        btnDel.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(event -> {
             final ObservableList<ProgramData> sels = tableView.getSelectionModel().getSelectedItems();
 
@@ -160,7 +159,7 @@ public class PaneSetProgram {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(PIconFactory.PICON.BTN_PLUS.getFontIcon());
+        btnNew.setGraphic(P2IconFactory.P2ICON.BTN_PLUS.getFontIcon());
         btnNew.setOnAction(event -> {
             ProgramData progData = new ProgramData();
             setDataObjectProperty.getValue().getProgramList().add(progData);
@@ -171,7 +170,7 @@ public class PaneSetProgram {
         });
 
         Button btnUp = new Button("");
-        btnUp.setGraphic(PIconFactory.PICON.BTN_UP.getFontIcon());
+        btnUp.setGraphic(P2IconFactory.P2ICON.BTN_UP.getFontIcon());
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -182,7 +181,7 @@ public class PaneSetProgram {
         });
 
         Button btnDown = new Button("");
-        btnDown.setGraphic(PIconFactory.PICON.BTN_DOWN.getFontIcon());
+        btnDown.setGraphic(P2IconFactory.P2ICON.BTN_DOWN.getFontIcon());
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {

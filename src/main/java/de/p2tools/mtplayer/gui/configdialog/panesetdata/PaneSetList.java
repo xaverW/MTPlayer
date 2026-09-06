@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpTextPset;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -135,7 +134,7 @@ public class PaneSetList extends VBox {
     private void initButton(VBox vBox) {
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Markiertes Set löschen"));
-        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
+        btnDel.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(event -> {
             final SetData setData = getSelectedSelData();
             if (setData != null) {
@@ -165,7 +164,7 @@ public class PaneSetList extends VBox {
 
         Button btnNew = new Button("");
         btnNew.setTooltip(new Tooltip("Ein neues Set anlegen"));
-        btnNew.setGraphic(PIconFactory.PICON.BTN_PLUS.getFontIcon());
+        btnNew.setGraphic(P2IconFactory.P2ICON.BTN_PLUS.getFontIcon());
         btnNew.setOnAction(event -> {
             SetData setData = new SetData("Neu-" + ++newCounter);
             progData.setDataList.addSetData(setData);
@@ -173,7 +172,7 @@ public class PaneSetList extends VBox {
 
         Button btnUp = new Button("");
         btnUp.setTooltip(new Tooltip("Markiertes Set nach oben schieben"));
-        btnUp.setGraphic(PIconFactory.PICON.BTN_UP.getFontIcon());
+        btnUp.setGraphic(P2IconFactory.P2ICON.BTN_UP.getFontIcon());
         btnUp.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {
@@ -184,7 +183,7 @@ public class PaneSetList extends VBox {
 
         Button btnDown = new Button("");
         btnDown.setTooltip(new Tooltip("Markiertes Set nach unten schieben"));
-        btnDown.setGraphic(PIconFactory.PICON.BTN_DOWN.getFontIcon());
+        btnDown.setGraphic(P2IconFactory.P2ICON.BTN_DOWN.getFontIcon());
         btnDown.setOnAction(event -> {
             int sel = getSelectedLine();
             if (sel >= 0) {

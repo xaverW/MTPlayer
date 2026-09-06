@@ -20,7 +20,7 @@ import de.p2tools.mtplayer.MTPlayerController;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.*;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -51,7 +51,7 @@ public class AboMenu {
 
         final ToolBarButton btNew = new ToolBarButton(vBox,
                 "Neues Abo", "Neues Abo anlegen",
-                PIconFactory.PICON.TOOLBAR_BTN_ABO_ADD.getFontIcon());
+                P2IconFactory.P2ICON.BTN_BOOKMARK_ADD_25.getFontIcon());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);
@@ -60,16 +60,16 @@ public class AboMenu {
 
         final ToolBarButton btOn = new ToolBarButton(vBox,
                 "Abos einschalten", "Markierte Abos einschalten",
-                PIconFactory.PICON.TOOLBAR_BTN_ABO_ON.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_25.getFontIcon());
         final ToolBarButton btOff = new ToolBarButton(vBox,
                 "Abos ausschalten", "Markierte Abos ausschalten",
-                PIconFactory.PICON.TOOLBAR_BTN_ABO_OFF.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PAUSE_25.getFontIcon());
         final ToolBarButton btDel = new ToolBarButton(vBox,
                 "Abos löschen", "Markierte Abos löschen",
-                PIconFactory.PICON.TOOLBAR_BTN_ABO_DEL.getFontIcon());
+                P2IconFactory.P2ICON.BTN_CLEAR_25.getFontIcon());
         final ToolBarButton btChange = new ToolBarButton(vBox,
                 "Abos ändern", "Markierte Abos ändern",
-                PIconFactory.PICON.TOOLBAR_BTN_ABO_CONFIG.getFontIcon());
+                P2IconFactory.P2ICON.BTN_EDIT_25.getFontIcon());
 
         btNew.setOnAction(a -> {
             AboListFactory.addNewAbo(ProgConst.LIST_FILM_AUDIO, "Neu", "", "", "");
@@ -102,7 +102,7 @@ public class AboMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Abomenü anzeigen"));
-        mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
+        mb.setGraphic(P2IconFactory.P2ICON.TAB_MENU.getFontIcon());
         mb.getStyleClass().addAll("pFuncBtn", "btnProgMenu", "btnProgMenuSmall");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");

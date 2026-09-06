@@ -26,8 +26,8 @@ import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmSaveFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
@@ -65,12 +65,12 @@ public class LiveFilmMenu {
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
                 "Abspielen", "Markierten Film abspielen",
-                PIconFactory.PICON.TOOLBAR_BTN_PLAY.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_25.getFontIcon());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
                 "Alle Abspielen", "Alle markierten Filme abspielen",
-                PIconFactory.PICON.TOOLBAR_BTN_PLAY_ALL.getFontIcon());
+                P2IconFactory.P2ICON.BTN_PLAY_ALL_25.getFontIcon());
         final ToolBarButton btSave = new ToolBarButton(vBox,
-                "Speichern", "Markierte Filme speichern", PIconFactory.PICON.TOOLBAR_BTN_RECORDE.getFontIcon());
+                "Speichern", "Markierte Filme speichern", P2IconFactory.P2ICON.BTN_RECORD_25.getFontIcon());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().liveFilmGuiController.getSel(true, true);
@@ -102,7 +102,7 @@ public class LiveFilmMenu {
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Live-Filmmenü anzeigen"));
-        mb.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
+        mb.setGraphic(P2IconFactory.P2ICON.TAB_MENU.getFontIcon());
         mb.getStyleClass().addAll("pFuncBtn", "btnProgMenu", "btnProgMenuSmall");
 
         final MenuItem mbPlay = new MenuItem("Film abspielen");

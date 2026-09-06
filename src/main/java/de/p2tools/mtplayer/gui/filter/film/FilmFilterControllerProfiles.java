@@ -87,7 +87,7 @@ public class FilmFilterControllerProfiles extends VBox {
     private void initButton() {
         btnLoadFilter.setOnAction(a -> loadFilter());
         btnLoadFilter.disableProperty().bind(cboFilterProfiles.getSelectionModel().selectedItemProperty().isNull());
-        btnLoadFilter.setGraphic(PIconFactory.PICON.OWN_FILTER_LOAD.getFontIcon());
+        btnLoadFilter.setGraphic(P2IconFactory.P2ICON.OWN_FILTER_LOAD.getFontIcon());
         btnLoadFilter.setTooltip(new Tooltip("Filterprofil wieder laden"));
 
         btnSaveFilter.setOnAction(a -> {
@@ -97,11 +97,11 @@ public class FilmFilterControllerProfiles extends VBox {
                 saveFilter();
             }
         });
-        btnSaveFilter.setGraphic(PIconFactory.PICON.OWN_FILTER_SAVE.getFontIcon());
+        btnSaveFilter.setGraphic(P2IconFactory.P2ICON.OWN_FILTER_SAVE.getFontIcon());
         btnSaveFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung im Filterprofil speichern"));
 
         btnNewFilter.setOnAction(a -> newFilter());
-        btnNewFilter.setGraphic(PIconFactory.PICON.OWN_FILTER_NEW.getFontIcon());
+        btnNewFilter.setGraphic(P2IconFactory.P2ICON.OWN_FILTER_NEW.getFontIcon());
         btnNewFilter.setTooltip(new Tooltip("Aktuelle Filtereinstellung als neues Filterprofil anlegen"));
     }
 
@@ -150,7 +150,7 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miReset = new MenuItem("Alle Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter(true));
 
-        mbFilterTools.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
+        mbFilterTools.setGraphic(P2IconFactory.P2ICON.TAB_MENU.getFontIcon());
         mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo,
                 new SeparatorMenuItem(), miResort, miFilterDialog,
                 new SeparatorMenuItem(), miAddStandard, miReset);

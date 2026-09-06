@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -83,7 +84,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
 
         // Button
         btnDel.setTooltip(new Tooltip("aktuelles Filterprofil löschen"));
-        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
+        btnDel.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(e -> delFilter());
 
         btnAddSeparator.setTooltip(new Tooltip("einen Trenner einfügen"));
@@ -91,7 +92,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         btnAddSeparator.setOnAction(e -> addSeparator());
 
         btnTop.setTooltip(new Tooltip("aktuelles Filterprofil an den Anfang verschieben"));
-        btnTop.setGraphic(PIconFactory.PICON.BTN_TOP.getFontIcon());
+        btnTop.setGraphic(P2IconFactory.P2ICON.BTN_TOP.getFontIcon());
         btnTop.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -104,7 +105,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         });
 
         btnBottom.setTooltip(new Tooltip("aktuelles Filterprofil an das Ende verschieben"));
-        btnBottom.setGraphic(PIconFactory.PICON.BTN_BOTTOM.getFontIcon());
+        btnBottom.setGraphic(P2IconFactory.P2ICON.BTN_BOTTOM.getFontIcon());
         btnBottom.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -117,7 +118,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         });
 
         btnUp.setTooltip(new Tooltip("aktuelles Filterprofil nach oben verschieben"));
-        btnUp.setGraphic(PIconFactory.PICON.BTN_UP.getFontIcon());
+        btnUp.setGraphic(P2IconFactory.P2ICON.BTN_UP.getFontIcon());
         btnUp.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 
@@ -130,7 +131,7 @@ public class FilmFilterSortDialog extends P2DialogExtra {
         });
 
         btnDown.setTooltip(new Tooltip("aktuelles Filterprofil nach unten verschieben"));
-        btnDown.setGraphic(PIconFactory.PICON.BTN_DOWN.getFontIcon());
+        btnDown.setGraphic(P2IconFactory.P2ICON.BTN_DOWN.getFontIcon());
         btnDown.setOnAction(event -> {
             final int sel = tableView.getSelectionModel().getSelectedIndex();
 

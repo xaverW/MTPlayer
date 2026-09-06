@@ -6,7 +6,7 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
 import de.p2tools.mtplayer.controller.filter.TextFilter;
 import de.p2tools.mtplayer.controller.filter.TextFilterList;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -108,7 +108,7 @@ public class PCboLastFilmTextFilter extends HBox {
             final Label lblSomewhere = new Label();
 
             {
-                btnDel.setGraphic(PIconFactory.PICON.BTN_CLEAR_CBO.getFontIcon());
+                btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_14.getFontIcon());
                 btnDel.getStyleClass().add("buttonVerySmall");
                 btnDel.setMaxSize(16, 16);
                 btnDel.setMinSize(16, 16);

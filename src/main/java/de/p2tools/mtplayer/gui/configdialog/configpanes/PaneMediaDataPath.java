@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
@@ -172,13 +171,13 @@ public class PaneMediaDataPath {
 
         Button btnDel = new Button("");
         btnDel.setTooltip(new Tooltip("Die markierte Sammlung wird gelöscht."));
-        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
+        btnDel.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
         btnDel.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
                 .or(progData.mediaDataList.searchingProperty()));
         btnDel.setOnAction(a -> delete());
 
         Button btnAdd = new Button("");
-        btnAdd.setGraphic(PIconFactory.PICON.BTN_PLUS.getFontIcon());
+        btnAdd.setGraphic(P2IconFactory.P2ICON.BTN_PLUS.getFontIcon());
         if (external) {
             btnAdd.setTooltip(new Tooltip("Eine neue Sammlung wird angelegt und vom angegebenen Pfad eingelesen."));
         } else {

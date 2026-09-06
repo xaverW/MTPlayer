@@ -6,7 +6,6 @@ import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
 import de.p2tools.mtplayer.controller.livesearch.ard.ArdDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
@@ -55,7 +54,7 @@ public class LiveFilterTabArd extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnArd = new Button("Weitersuchen");
-        btnKeepOnArd.setGraphic(PIconFactory.PICON.BTN_FORWARD.getFontIcon());
+        btnKeepOnArd.setGraphic(P2IconFactory.P2ICON.BTN_FORWARD.getFontIcon());
         btnKeepOnArd.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnArd.setOnAction(a -> searchArd(true));
         btnKeepOnArd.disableProperty().bind((ardDto.nextUrlProperty().isEmpty())

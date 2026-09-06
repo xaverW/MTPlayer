@@ -20,12 +20,12 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningData;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -109,7 +109,7 @@ public class PaneCleaningList {
 
     private void addButton(VBox vBox) {
         Button btnDel = new Button("");
-        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
+        btnDel.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(event -> {
             final ObservableList<CleaningData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
@@ -121,7 +121,7 @@ public class PaneCleaningList {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(PIconFactory.PICON.BTN_PLUS.getFontIcon());
+        btnNew.setGraphic(P2IconFactory.P2ICON.BTN_PLUS.getFontIcon());
         btnNew.setOnAction(event -> {
             CleaningData blackData = new CleaningData();
             cleaningDataList.add(blackData);

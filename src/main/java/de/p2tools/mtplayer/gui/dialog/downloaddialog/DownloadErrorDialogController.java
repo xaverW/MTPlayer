@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.dialog.downloaddialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
@@ -59,7 +58,7 @@ public class DownloadErrorDialogController extends P2DialogExtra {
     private final TextArea txtUrl = new TextArea();
     private final TextArea txtCont = new TextArea();
     private final Label lblTime = new Label("");
-    private final FontIcon fontIcon = PIconFactory.PICON.ATTENTION.getFontIcon();
+    private final FontIcon fontIcon = P2IconFactory.P2ICON.ATTENTION_80.getFontIcon();
     private final GridPane gridPane = new GridPane();
 
     private final Timeline timeline = new Timeline();

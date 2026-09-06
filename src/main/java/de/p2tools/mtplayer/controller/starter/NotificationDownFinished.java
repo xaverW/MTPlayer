@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.SizeTools;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.pnotification.P2Notification;
@@ -42,7 +41,7 @@ public class NotificationDownFinished {
         Button btnFilmStart = new Button();
         btnFilmStart.getStyleClass().addAll("pFuncBtn", "pFuncBtnSmall");
         btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
-        btnFilmStart.setGraphic(PIconFactory.PICON.BTN_ALERT_FILM_PLAY.getFontIcon());
+        btnFilmStart.setGraphic(P2IconFactory.P2ICON.BTN_PLAY_14.getFontIcon());
         btnFilmStart.setOnAction((ActionEvent event) -> {
             P2Open.playStoredFilm(download.getDestPathFile(),
                     ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
@@ -51,7 +50,7 @@ public class NotificationDownFinished {
         Button btnOpenDirectory = new Button();
         btnOpenDirectory.getStyleClass().addAll("pFuncBtn", "pFuncBtnSmall");
         btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-        btnOpenDirectory.setGraphic(PIconFactory.PICON.BTN_ALERT_DOWNLOAD_OPEN_DIR.getFontIcon());
+        btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR_14.getFontIcon());
         btnOpenDirectory.setOnAction((ActionEvent event) -> {
             P2Open.openDir(download.getDestPath(),
                     ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());

@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.controller.tips;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
@@ -69,10 +68,10 @@ public class TipsDialog extends P2DialogExtra {
         this.progData = progData;
         TIPS_DIALOG_OPEN = true;
 
-        this.btnFirst = P2Button.getButton(PIconFactory.PICON.BTN_TIP_FIRST.getFontIcon(), "ErsteSeite");
-        this.btnLast = P2Button.getButton(PIconFactory.PICON.BTN_TIP_LAST.getFontIcon(), "Letzte Seite");
-        this.btnNext = P2Button.getButton(PIconFactory.PICON.BTN_TIP_NEXT.getFontIcon(), "Nächste Seite");
-        this.btnPrev = P2Button.getButton(PIconFactory.PICON.BTN_TIP_PREV.getFontIcon(), "Vorherige Seite");
+        this.btnFirst = P2Button.getButton(P2IconFactory.P2ICON.BTN_TIP_FIRST.getFontIcon(), "ErsteSeite");
+        this.btnLast = P2Button.getButton(P2IconFactory.P2ICON.BTN_TIP_LAST.getFontIcon(), "Letzte Seite");
+        this.btnNext = P2Button.getButton(P2IconFactory.P2ICON.BTN_TIP_NEXT.getFontIcon(), "Nächste Seite");
+        this.btnPrev = P2Button.getButton(P2IconFactory.P2ICON.BTN_TIP_PREV.getFontIcon(), "Vorherige Seite");
 
         tipBox.getStyleClass().add("tipsTipBox");
 

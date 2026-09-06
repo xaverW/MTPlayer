@@ -24,7 +24,6 @@ import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
 import de.p2tools.mtplayer.controller.mediadb.MediaFileSize;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaSearchFactory;
 import de.p2tools.mtplayer.gui.mediacleaningdialog.MediaCleaningDialogController;
@@ -161,7 +160,7 @@ public class PaneMedia extends VBox {
 
     private void initMenu() {
         btnConfig.setTooltip(new Tooltip("Einstellungen anzeigen"));
-        btnConfig.setGraphic(PIconFactory.PICON.BTN_EDIT.getFontIcon());
+        btnConfig.setGraphic(P2IconFactory.P2ICON.BTN_EDIT_20.getFontIcon());
         btnConfig.setOnAction(a -> {
             new MediaCleaningDialogController(mediaDataDtoMedia, mediaDataDtoAbo);
             setSearchStringMedia();
@@ -169,7 +168,7 @@ public class PaneMedia extends VBox {
         });
 
         btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen"));
-        btnDialogMedia.setGraphic(PIconFactory.PICON.TAB_MENU.getFontIcon());
+        btnDialogMedia.setGraphic(P2IconFactory.P2ICON.TAB_MENU.getFontIcon());
         btnDialogMedia.setOnAction(a -> {
             new MediaDialogController(mediaDataDtoMedia);
             setSearchStringMedia();

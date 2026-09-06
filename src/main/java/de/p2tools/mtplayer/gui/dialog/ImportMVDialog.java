@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.mv.LoadMV;
 import de.p2tools.mtplayer.controller.mv.MVFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
@@ -141,7 +140,7 @@ public class ImportMVDialog extends P2DialogExtra {
         final Button btnLoad = new Button();
         btnLoad.setTooltip(new Tooltip("Die Einstellungen suchen"));
         btnLoad.setOnAction(event -> new LoadMV(aboList, blackList).readConfiguration(Path.of(txtMVPath.getText())));
-        btnLoad.setGraphic(PIconFactory.PICON.BTN_PLAY.getFontIcon());
+        btnLoad.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
         GridPane.setHalignment(btnLoad, HPos.RIGHT);
 
         final Label lblAbo = new Label();

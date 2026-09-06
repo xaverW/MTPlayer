@@ -23,7 +23,6 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistCountFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -58,7 +57,7 @@ public class PanelButton {
     void addButton(Stage stage, VBox vBox, TableView<BlackData> tableView,
                    BooleanProperty blackDataChanged, BlackList list) {
         Button btnDel = new Button("");
-        btnDel.setGraphic(PIconFactory.PICON.BTN_MINUS.getFontIcon());
+        btnDel.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
         btnDel.setOnAction(event -> {
             final ObservableList<BlackData> selected = tableView.getSelectionModel().getSelectedItems();
             if (selected == null || selected.isEmpty()) {
@@ -71,7 +70,7 @@ public class PanelButton {
         });
 
         Button btnNew = new Button("");
-        btnNew.setGraphic(PIconFactory.PICON.BTN_PLUS.getFontIcon());
+        btnNew.setGraphic(P2IconFactory.P2ICON.BTN_PLUS.getFontIcon());
         btnNew.setOnAction(event -> {
             blackDataChanged.set(true);
             BlackData blackData = new BlackData();

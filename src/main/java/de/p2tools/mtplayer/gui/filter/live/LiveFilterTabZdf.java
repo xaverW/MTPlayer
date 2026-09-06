@@ -6,7 +6,6 @@ import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.livesearch.zdf.JsonInfoDto;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
@@ -59,7 +58,7 @@ public class LiveFilterTabZdf extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnZdf = new Button("Weitersuchen");
-        btnKeepOnZdf.setGraphic(PIconFactory.PICON.BTN_FORWARD.getFontIcon());
+        btnKeepOnZdf.setGraphic(P2IconFactory.P2ICON.BTN_FORWARD.getFontIcon());
         btnKeepOnZdf.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnZdf.setOnAction(a -> searchZdf(true));
         btnKeepOnZdf.disableProperty().bind((jsonInfoDto.zdfNextCursorProperty().isEmpty())

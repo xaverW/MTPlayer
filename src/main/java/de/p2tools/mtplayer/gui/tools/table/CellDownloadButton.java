@@ -22,7 +22,6 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryStopDownload;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.P2GetList;
@@ -71,7 +70,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStart = new Button("");
                     btnDownStart.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownStart.setTooltip(new Tooltip("Download starten"));
-                    btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START.getFontIcon());
+                    btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN_14.getFontIcon());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -86,7 +85,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
+                    btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                     btnDownDel.setOnAction(event -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -110,8 +109,8 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
                         btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
 
-                        btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START_BIG.getFontIcon());
-                        btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL_BIG.getFontIcon());
+                        btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN.getFontIcon());
+                        btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                     }
 
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);
@@ -121,7 +120,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStop = new Button("");
                     btnDownStop.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownStop.setTooltip(new Tooltip("Download stoppen"));
-                    btnDownStop.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_STOP.getFontIcon());
+                    btnDownStop.setGraphic(P2IconFactory.P2ICON.BTN_PAUSE.getFontIcon());
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -136,7 +135,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
+                    btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                     btnDownDel.setOnAction(event -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -160,8 +159,8 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
                         btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
 
-                        btnDownStop.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_STOP_BIG.getFontIcon());
-                        btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL_BIG.getFontIcon());
+                        btnDownStop.setGraphic(P2IconFactory.P2ICON.BTN_STOP_22.getFontIcon());
+                        btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_22.getFontIcon());
                     }
 
                     hbox.getChildren().addAll(btnDownStop, btnDownDel);
@@ -171,7 +170,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnFilmStart = new Button("");
                     btnFilmStart.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
-                    btnFilmStart.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY.getFontIcon());
+                    btnFilmStart.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -187,7 +186,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnOpenDirectory = new Button();
                     btnOpenDirectory.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-                    btnOpenDirectory.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_OPEN_DIR.getFontIcon());
+                    btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
                     btnOpenDirectory.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -212,8 +211,8 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnOpenDirectory.setMaxHeight(Table.ROW_HEIGHT_MAX);
                         btnOpenDirectory.setMinHeight(Table.ROW_HEIGHT_MAX);
 
-                        btnFilmStart.setGraphic(PIconFactory.PICON.TABLE_FILM_PLAY_BIG.getFontIcon());
-                        btnOpenDirectory.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_OPEN_DIR_BIG.getFontIcon());
+                        btnFilmStart.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
+                        btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR_22.getFontIcon());
                     }
 
                     hbox.getChildren().addAll(btnFilmStart, btnOpenDirectory);
@@ -223,7 +222,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStart = new Button("");
                     btnDownStart.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownStart.setTooltip(new Tooltip("Download wieder starten"));
-                    btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START.getFontIcon());
+                    btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN_14.getFontIcon());
                     btnDownStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -240,7 +239,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownDel = new Button("");
                     btnDownDel.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownDel.setTooltip(new Tooltip("Download löschen"));
-                    btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL.getFontIcon());
+                    btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                     btnDownDel.setOnAction(event -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -264,8 +263,8 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
                         btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
 
-                        btnDownStart.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_START_BIG.getFontIcon());
-                        btnDownDel.setGraphic(PIconFactory.PICON.TABLE_DOWNLOAD_DEL_BIG.getFontIcon());
+                        btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN.getFontIcon());
+                        btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                     }
 
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);

@@ -21,7 +21,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.offer.OfferData;
 import de.p2tools.mtplayer.controller.data.offer.OfferFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -164,7 +164,7 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
             final Label lblFilter = new Label();
 
             {
-                btnDel.setGraphic(PIconFactory.PICON.BTN_CLEAR_CBO.getFontIcon());
+                btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_14.getFontIcon());
                 btnDel.getStyleClass().add("buttonVerySmall");
                 btnDel.setMaxSize(16, 16);
                 btnDel.setMinSize(16, 16);
