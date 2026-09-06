@@ -18,11 +18,11 @@ package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.film.FilmToolsFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -68,7 +68,7 @@ public class StartPaneStation extends VBox {
         getChildren().addAll(StartFactory.getTitle("Filmliste bereits beim Laden filtern"), hBox, P2GuiTools.getHDistance(20));
 
 
-        final Button btnHelpSender = PIconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
+        final Button btnHelpSender = P2IconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_SENDER_STARTDIALOG);
         HBox hBoxStation = new HBox(15);
         hBoxStation.setAlignment(Pos.CENTER_LEFT);

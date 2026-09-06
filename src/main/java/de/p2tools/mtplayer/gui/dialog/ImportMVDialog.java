@@ -30,6 +30,7 @@ import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -116,7 +117,7 @@ public class ImportMVDialog extends P2DialogExtra {
         });
         btnFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
 
-        final Button btnHelp = PIconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
+        final Button btnHelp = P2IconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
 
         int row = 0;
         gridPane.add(new Label("Den Pfad zum MediathekView Konfig-Ordner auswählen"), 0, row);
@@ -135,7 +136,7 @@ public class ImportMVDialog extends P2DialogExtra {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelp = PIconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_SEARCH);
+        final Button btnHelp = P2IconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_SEARCH);
 
         final Button btnLoad = new Button();
         btnLoad.setTooltip(new Tooltip("Die Einstellungen suchen"));
@@ -174,7 +175,7 @@ public class ImportMVDialog extends P2DialogExtra {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelp = PIconFactory.getHelpButton(getStageProp(), "Config-Ordner", HelpText.MV_IMPORT);
+        final Button btnHelp = P2IconFactory.getHelpButton(getStageProp(), "Config-Ordner", HelpText.MV_IMPORT);
 
         final Label lblFoundAbos = new Label("");
         final Button btnAddAbo = new Button();

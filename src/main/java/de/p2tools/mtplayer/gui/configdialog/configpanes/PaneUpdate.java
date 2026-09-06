@@ -19,13 +19,13 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -74,7 +74,7 @@ public class PaneUpdate {
 
         //einmal am Tag Update suchen
         tglSearch.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SEARCH_UPDATE);
-        final Button btnHelp = PIconFactory.getHelpButton(stage, "Programmupdate suchen",
+        final Button btnHelp = P2IconFactory.getHelpButton(stage, "Programmupdate suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Version des Programms gibt. " +
                         "Ist eine aktualisierte Version vorhanden, dann wird das gemeldet."
                         + P2LibConst.LINE_SEPARATOR +
@@ -82,7 +82,7 @@ public class PaneUpdate {
 
         tglSearchBeta.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_BETA);
         chkDaily.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_UPDATE_SEARCH_DAILY);
-        btnHelpBeta = PIconFactory.getHelpButton(stage, "Vorabversionen suchen",
+        btnHelpBeta = P2IconFactory.getHelpButton(stage, "Vorabversionen suchen",
                 "Beim Programmstart wird geprüft, ob es eine neue Vorabversion des Programms gibt. " +
                         P2LibConst.LINE_SEPARATORx2 +
                         "Das sind \"Zwischenschritte\" auf dem Weg zur nächsten Version. Hier ist die " +

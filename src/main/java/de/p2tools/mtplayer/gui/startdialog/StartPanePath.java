@@ -26,6 +26,7 @@ import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.download.GetProgramStandardPath;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.beans.property.StringProperty;
@@ -109,7 +110,7 @@ public class StartPanePath extends VBox {
                 addPlayer(PLAYER.FFMPEG);
         }
 
-        final Button btnHelp = PIconFactory.getHelpButton(stage,
+        final Button btnHelp = P2IconFactory.getHelpButton(stage,
                 "Videoplayer", HelpText.PROG_PATHS);
         gridPane.add(btnHelp, 2, ++row);
         GridPane.setHalignment(btnHelp, HPos.RIGHT);

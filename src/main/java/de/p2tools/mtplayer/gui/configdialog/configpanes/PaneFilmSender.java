@@ -21,12 +21,12 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.data.film.FilmToolsFactory;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadConst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -72,7 +72,7 @@ public class PaneFilmSender {
     }
 
     private void makeOnly(VBox vBox) {
-        final Button btnHelpDays = PIconFactory.getHelpButton(stage, "Film/Audio-Liste beim Laden filtern",
+        final Button btnHelpDays = P2IconFactory.getHelpButton(stage, "Film/Audio-Liste beim Laden filtern",
                 HelpText.LOAD_ONLY_FILMS);
 
         final GridPane gridPane = new GridPane();
@@ -102,7 +102,7 @@ public class PaneFilmSender {
     }
 
     private void makeSender(VBox vBox) {
-        final Button btnHelpSender = PIconFactory.getHelpButton(stage, "Film/Audio-Liste beim Laden filtern",
+        final Button btnHelpSender = P2IconFactory.getHelpButton(stage, "Film/Audio-Liste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_SENDER);
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
         hBox.setAlignment(Pos.CENTER_LEFT);

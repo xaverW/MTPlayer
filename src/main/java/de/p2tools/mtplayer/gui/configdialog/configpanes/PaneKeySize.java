@@ -18,11 +18,11 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -62,7 +62,7 @@ public class PaneKeySize {
 
     public void make(Collection<TitledPane> result) {
         tglStyle.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FONT_SIZE_CHANGE);
-        final Button btnHelpStyle = PIconFactory.getHelpButton(stage, "Schriftgröße anpassen", HelpText.CONFIG_STYLE);
+        final Button btnHelpStyle = P2IconFactory.getHelpButton(stage, "Schriftgröße anpassen", HelpText.CONFIG_STYLE);
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);

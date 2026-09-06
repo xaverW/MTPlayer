@@ -22,12 +22,12 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
 import de.p2tools.p2lib.guitools.P2MultiLineLabel;
 import de.p2tools.p2lib.guitools.P2TimePicker;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.*;
@@ -86,7 +86,7 @@ public class AddDownloadDto {
     public final P2MultiLineLabel textAreaProg = new P2MultiLineLabel();
     public final TextArea textAreaCallArray = new TextArea();
     public final VBox vBoxProgramCall = new VBox(P2LibConst.PADDING_VBOX);
-    public final Button btnProgramCallHelp = PIconFactory.getHelpButton("Den Programmaufruf ändern", HelpText.EDIT_DOWNLOAD_WITH_PROG);
+    public final Button btnProgramCallHelp = P2IconFactory.getHelpButton("Den Programmaufruf ändern", HelpText.EDIT_DOWNLOAD_WITH_PROG);
     public final Button btnProgramCallReset = new Button("");
 
     // Path / Name

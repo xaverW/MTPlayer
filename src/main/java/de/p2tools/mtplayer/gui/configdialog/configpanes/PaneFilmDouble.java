@@ -28,6 +28,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,7 +71,7 @@ public class PaneFilmDouble {
     public TitledPane make(Collection<TitledPane> result) {
         tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_REMOVE_DOUBLE);
         tglTT.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_DOUBLE_WITH_THEME_TITLE);
-        final Button btnHelpMark = PIconFactory.getHelpButton(stage, "Doppelte Filme markieren",
+        final Button btnHelpMark = P2IconFactory.getHelpButton(stage, "Doppelte Filme markieren",
                 HelpText.LOAD_FILMLIST_MARK_DOUBLE);
 
 

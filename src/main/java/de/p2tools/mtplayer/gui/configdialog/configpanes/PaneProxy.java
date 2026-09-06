@@ -17,11 +17,11 @@
 package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -55,7 +55,7 @@ public class PaneProxy {
 
     public TitledPane make(Collection<TitledPane> result) {
         tglProxy.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_PROXY);
-        final Button btnHelpGeo = PIconFactory.getHelpButton(stage, "Proxy", HelpText.CONFIG_PROXY);
+        final Button btnHelpGeo = P2IconFactory.getHelpButton(stage, "Proxy", HelpText.CONFIG_PROXY);
 
         txtServer.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROXY_HOST);
         txtPort.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROXY_PORT);

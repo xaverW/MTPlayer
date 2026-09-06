@@ -23,6 +23,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -74,7 +75,7 @@ public class StartPaneDownloadPath extends VBox {
         btnFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
 
-        final Button btnHelp = PIconFactory.getHelpButton(stage,
+        final Button btnHelp = P2IconFactory.getHelpButton(stage,
                 "Zielverzeichnis",
                 "Hier kann das Verzeichnis angegeben werden, " +
                         "in dem die Downloads gespeichert werden. Das Verzeichnis " +

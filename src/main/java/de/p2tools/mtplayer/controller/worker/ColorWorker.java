@@ -3,7 +3,7 @@ package de.p2tools.mtplayer.controller.worker;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.P2ColorFactory;
 import javafx.scene.paint.Color;
 
@@ -78,7 +78,7 @@ public class ColorWorker {
                 transparentTitleBarSel = ProgConfig.SYSTEM_GUI_TITLE_BAR_SEL_TRANSPARENT_LIGHT_2.get();
             }
         }
-        PIconFactory.setColor();
+        P2IconFactory.setColor(ProgData.getInstance().mtPlayerController);
         ProgConfig.SYSTEM_GUI_COLOR.set(gui); // damit wird dann das CSS neu geladen
         ProgConfig.SYSTEM_BACKGROUND_COLOR.set(background); // damit wird dann das CSS neu geladen
         ProgConfig.SYSTEM_TITLE_BAR_COLOR.set(titleBar); // damit wird dann das CSS neu geladen

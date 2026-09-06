@@ -28,6 +28,7 @@ import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.pcbo.P2CboObject;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -74,9 +75,9 @@ public class PaneSetDestination {
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen"));
         btnFile.setOnAction(event -> P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
 
-        final Button btnHelSubDir = PIconFactory.getHelpButton(stage, "Unterordner anlegen",
+        final Button btnHelSubDir = P2IconFactory.getHelpButton(stage, "Unterordner anlegen",
                 HelpText.SETDATA_ABO_SUBDIR);
-        final Button btnHelpDestName = PIconFactory.getHelpButton(stage, "Zieldateiname",
+        final Button btnHelpDestName = P2IconFactory.getHelpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_PARAMETER_FILE_NAME);
 
         cboDest.init(FXCollections.observableArrayList(AboSubDir.ENSubDir.values()));
@@ -134,7 +135,7 @@ public class PaneSetDestination {
         Label lblTxtField = new Label("Länge\neinzelne Felder:");
         Label lblSizeField = new Label();
 
-        final Button btnHelpDestSize = PIconFactory.getHelpButton(stage, "Länge des Zieldateinamens",
+        final Button btnHelpDestSize = P2IconFactory.getHelpButton(stage, "Länge des Zieldateinamens",
                 HelpTextPset.PSET_DEST_FILE_SIZE);
 
         slCut.setMin(0);

@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -91,7 +92,7 @@ public class PaneBookmarkDel extends VBox {
         btnDelShown.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         btnDelShown.setOnAction(a -> BookmarkFactory.deleteShown(stageObjectProperty.get()));
 
-        Button btnHelp = PIconFactory.getHelpButton(stageObjectProperty,
+        Button btnHelp = P2IconFactory.getHelpButton(stageObjectProperty,
                 "Bookmarks löschen",
                 "Hier können Bookmarks gelöscht werden." +
                         "\n\n" +

@@ -26,6 +26,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.HPos;
@@ -80,7 +81,7 @@ public class PaneMediaConfig {
         TitledPane tpConfig = new TitledPane("Allgemein", vBox);
         result.add(tpConfig);
 
-        final Button btnHelp = PIconFactory.getHelpButton(stage,
+        final Button btnHelp = P2IconFactory.getHelpButton(stage,
                 "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
         btnExportFile.setTooltip(new Tooltip("Einen Ordner für den Export auswählen"));
         btnExportFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());

@@ -1,15 +1,6 @@
 package de.p2tools.mtplayer.controller.picon;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.guitools.P2Button;
-import de.p2tools.p2lib.ikonli.IkonlyFactory;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
-import javafx.beans.property.ObjectProperty;
-import javafx.scene.control.Button;
-import javafx.scene.paint.Paint;
-import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class PIconFactory {
@@ -135,45 +126,15 @@ public class PIconFactory {
         }
 
         public FontIcon getFontIcon() {
-            return getIcon(literal, size);
+            return P2IconFactory.getIcon(literal, size);
         }
 
         public FontIcon getFontIcon(int size) {
             this.size = size;
-            return getIcon(literal, size);
-        }
-
-        @Override
-        public String toString() {
-            return literal;
+            return P2IconFactory.getIcon(literal, size);
         }
     }
 
     private PIconFactory() {
-    }
-
-    public static void setColor() {
-        IkonlyFactory.getAllNodes(ProgData.getInstance().mtPlayerController);
-        P2DialogExtra.getDialogList().forEach(d -> IkonlyFactory.getAllNodes(d.getStage().getScene().getRoot()));
-    }
-
-    public static FontIcon getIcon(String literal, int size) {
-        FontIcon fontIcon = new FontIcon();
-        fontIcon.setIconSize(size);
-        fontIcon.setIconColor(Paint.valueOf(ProgConfig.SYSTEM_ICON_COLOR.getValueSafe()));
-        fontIcon.setIconLiteral(literal);
-        return fontIcon;
-    }
-
-    public static Button getHelpButton(String header, String helpText) {
-        return P2Button.helpButton(PIconFactory.PICON.BTN_HELP.getFontIcon(), header, helpText);
-    }
-
-    public static Button getHelpButton(Stage stage, String header, String helpText) {
-        return P2Button.helpButton(stage, PIconFactory.PICON.BTN_HELP.getFontIcon(), header, helpText);
-    }
-
-    public static Button getHelpButton(ObjectProperty<Stage> stage, String header, String helpText) {
-        return P2Button.helpButton(stage, PIconFactory.PICON.BTN_HELP.getFontIcon(), header, helpText);
     }
 }

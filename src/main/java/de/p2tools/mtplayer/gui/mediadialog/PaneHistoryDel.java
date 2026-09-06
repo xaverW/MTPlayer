@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.history.HistoryFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -81,7 +82,7 @@ public class PaneHistoryDel extends VBox {
         btnDelAge.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
         btnDelAge.setOnAction(a -> HistoryFactory.delOld(stage, (int) slAge.getValue()));
 
-        Button btnHelp = PIconFactory.getHelpButton(stage,
+        Button btnHelp = P2IconFactory.getHelpButton(stage,
                 "History löschen",
                 "Hier können Filme aus der History gelöscht werden." +
                         "\n\n" +

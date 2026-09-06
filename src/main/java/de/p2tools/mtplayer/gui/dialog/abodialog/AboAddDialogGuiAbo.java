@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.gui.dialog.abodialog;
 import de.p2tools.mtplayer.controller.config.ProgColorList;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -110,7 +110,7 @@ public class AboAddDialogGuiAbo extends VBox {
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.getChildren().addAll(addAboDto.rbFilmAudio, addAboDto.rbFilm, addAboDto.rbAudio);
 
-        final Button btnHelpQ = PIconFactory.getHelpButton(stage,
+        final Button btnHelpQ = P2IconFactory.getHelpButton(stage,
                 "Quelle", HelpText.ABO_QUELLE);
 
         HBox hQ = new HBox(P2LibConst.PADDING_HBOX);
@@ -129,7 +129,7 @@ public class AboAddDialogGuiAbo extends VBox {
         hRes.setAlignment(Pos.CENTER_LEFT);
         hRes.getChildren().addAll(addAboDto.rbHd, addAboDto.rbHigh, addAboDto.rbLow);
 
-        final Button btnHelpRes = PIconFactory.getHelpButton(stage,
+        final Button btnHelpRes = P2IconFactory.getHelpButton(stage,
                 "Auflösung", HelpText.ABO_RES);
 
         HBox hResAll = new HBox(P2LibConst.PADDING_HBOX);
@@ -157,7 +157,7 @@ public class AboAddDialogGuiAbo extends VBox {
         GridPane.setHgrow(addAboDto.p2RangeBoxDuration, Priority.ALWAYS);
 
         // Startzeit
-        final Button btnHelpStartTime = PIconFactory.getHelpButton(stage, "Startzeit",
+        final Button btnHelpStartTime = P2IconFactory.getHelpButton(stage, "Startzeit",
                 HelpText.ABO_START_TIME);
 
         HBox hBoxTime = new HBox(10);

@@ -17,12 +17,12 @@
 package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.*;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.colordata.P2ColorData;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.P2ColorFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -64,7 +64,7 @@ public class PaneColorTable {
             rbLight.setSelected(!ProgConfig.SYSTEM_DARK_THEME.get());
         });
 
-        final Button btnHelpTheme = PIconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
+        final Button btnHelpTheme = P2IconFactory.getHelpButton(stage, "Erscheinungsbild der Programmoberfläche",
                 HelpText.DARK_THEME_TABLE);
 
         initTableColor(tableViewFont);

@@ -28,6 +28,7 @@ import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2BigButton;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pmask.P2MaskerPaneIndeterminate;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.P2ShutDown;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
@@ -103,7 +104,7 @@ public class QuitDialogController extends P2DialogExtra {
         ProgConfig.SYSTEM_SHUT_DOWN_CALL.addListener((u, o, n) -> {
             setSystemCallText();
         });
-        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
+        final Button btnHelp = P2IconFactory.getHelpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
         final Button btnEdit = new Button();
         btnEdit.setGraphic(PIconFactory.PICON.BTN_EDIT.getFontIcon());
         btnEdit.setOnAction(a -> new ChangeShutDownCallDialog(getStageProp().getValue()));

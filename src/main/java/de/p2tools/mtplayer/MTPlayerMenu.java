@@ -25,7 +25,6 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.picon.IconRunner;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
-import de.p2tools.mtplayer.controller.picon.PIconShow;
 import de.p2tools.mtplayer.controller.tips.TipsDialog;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
@@ -35,12 +34,15 @@ import de.p2tools.mtplayer.gui.dialog.ImportMVDialog;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.p2lib.guitools.P2Open;
+import de.p2tools.p2lib.ikonli.P2IconShow;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Region;
 import org.kordamp.ikonli.javafx.FontIcon;
+
+import java.util.Arrays;
 
 public class MTPlayerMenu extends MenuButton {
     public MTPlayerMenu() {
@@ -150,6 +152,9 @@ public class MTPlayerMenu extends MenuButton {
                 miWhatsNew, miSearchUpdate, miAbout);
 
         if (ProgData.debug) {
+            final MenuItem miIcon = new MenuItem("Icon");
+            miIcon.setOnAction(e -> new P2IconShow(Arrays.asList(PIconFactory.PICON.values())));
+
             final MenuItem miDebug = new MenuItem("Debugtools");
             miDebug.setOnAction(event -> {
                 MTPTester mtpTester = new MTPTester(progData);
@@ -162,9 +167,6 @@ public class MTPlayerMenu extends MenuButton {
             final MenuItem miSearchAllUpdate = new MenuItem("Alle Programm-Downloads anzeigen");
             miSearchAllUpdate.setOnAction(a -> new SearchProgramUpdate(progData)
                     .searchNewProgramVersion());
-
-            final MenuItem miIcon = new MenuItem("Icons");
-            miIcon.setOnAction(a -> new PIconShow());
 
             final MenuItem miIconRunner = new MenuItem("Icon-Zirkus");
             miIconRunner.setOnAction(a -> IconRunner.run());
@@ -187,7 +189,7 @@ public class MTPlayerMenu extends MenuButton {
             final MenuItem miSave = new MenuItem("Alles Speichern");
             miSave.setOnAction(a -> ProgSave.saveAll());
 
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug, miFilmlist, miSearchAllUpdate, miIcon, miIconRunner,
+            mHelp.getItems().addAll(new SeparatorMenuItem(), miIcon, miDebug, miFilmlist, miSearchAllUpdate, miIconRunner,
                     miResetTodayDone, miResetLastSearch, miResetUpdate, miSave);
         }
         return mHelp;

@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.setdata.SetImportFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.configdialog.panesetdata.ControllerSet;
 import de.p2tools.mtplayer.gui.startdialog.StartPaneDownloadPath;
 import de.p2tools.mtplayer.gui.startdialog.StartPanePath;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -57,7 +57,7 @@ public class ImportSetDialogController extends P2DialogExtra {
     @Override
     public void make() {
         btnCancel.setOnAction(a -> close());
-        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Set zurücksetzen",
+        final Button btnHelp = P2IconFactory.getHelpButton(getStage(), "Set zurücksetzen",
                 "Es werden die Standard-Sets eingerichtet, bestehende werden " +
                         "durch neue ersetzen\n" +
                         "\n" +

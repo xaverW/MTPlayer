@@ -25,6 +25,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -149,7 +150,7 @@ public class DownloadErrorDialogController extends P2DialogExtra {
         VBox.setVgrow(hBox, Priority.ALWAYS);
 
         addOkButton(btnOk);
-        Button btnHelp = PIconFactory.getHelpButton(getStage(), "Download Fehler", HelpText.CONFIG_DOWNOAD_ERROR);
+        Button btnHelp = P2IconFactory.getHelpButton(getStage(), "Download Fehler", HelpText.CONFIG_DOWNOAD_ERROR);
         addHlpButton(btnHelp);
 
         getHboxLeft().getChildren().addAll(btnErrorStream, btnLogFile, P2GuiTools.getHBoxGrower());

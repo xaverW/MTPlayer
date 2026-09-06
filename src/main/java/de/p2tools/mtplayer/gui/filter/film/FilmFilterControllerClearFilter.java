@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -76,7 +77,7 @@ public class FilmFilterControllerClearFilter extends VBox {
         hBox1.getChildren().addAll(btnEditFilter, P2GuiTools.getHBoxGrower(), btnGoBack, btnGoForward,
                 P2GuiTools.getHBoxGrower(), btnClearFilter);
 
-        final Button btnHelp = PIconFactory.getHelpButton("Filter", HelpText.FILTER_INFO);
+        final Button btnHelp = P2IconFactory.getHelpButton("Filter", HelpText.FILTER_INFO);
         HBox hBox2 = new HBox(P2LibConst.DIST_BUTTON);
         hBox2.getChildren().addAll(pCboLastFilmTextFilter, btnHelp);
         HBox.setHgrow(pCboLastFilmTextFilter, Priority.ALWAYS);

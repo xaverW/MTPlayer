@@ -24,7 +24,6 @@ import de.p2tools.mtplayer.controller.data.abo.AboFactory;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
 import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.filter.FilmFilter;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
@@ -33,6 +32,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -178,7 +178,7 @@ public class AboAddDialogController extends P2DialogExtra {
         vBoxCont.getChildren().add(hBox);
 
         addOkCancelApplyButtons(btnOk, btnCancel, btnApply);
-        addHlpButton(PIconFactory.getHelpButton(getStage(), "Abo", HelpText.ABO_SEARCH));
+        addHlpButton(P2IconFactory.getHelpButton(getStage(), "Abo", HelpText.ABO_SEARCH));
     }
 
     private TabPane getTabPane() {

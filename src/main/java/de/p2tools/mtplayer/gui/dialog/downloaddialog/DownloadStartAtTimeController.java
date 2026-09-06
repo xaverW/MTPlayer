@@ -24,6 +24,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2TimePicker;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.GermanStringIntSorter;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -79,7 +80,7 @@ public class DownloadStartAtTimeController extends P2DialogExtra {
     @Override
     public void make() {
         addOkCancelButtons(btnOk, btnCancel);
-        Button btnHelp = PIconFactory.getHelpButton(getStage(), "Downloads starten",
+        Button btnHelp = P2IconFactory.getHelpButton(getStage(), "Downloads starten",
                 HelpText.DOWNLOAD_ADD_AT_TIME);
         addHlpButton(btnHelp);
 

@@ -33,6 +33,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.css.P2CssFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
@@ -217,7 +218,7 @@ public class FilmFilterControllerProfiles extends VBox {
         vBox.getChildren().addAll(new Label("Filterprofile:"), cboFilterProfiles);
         getChildren().add(vBox);
 
-        final Button btnHelp = PIconFactory.getHelpButton("Filter", HelpText.FILTER_INFO_PROFILE);
+        final Button btnHelp = P2IconFactory.getHelpButton("Filter", HelpText.FILTER_INFO_PROFILE);
         hBox = new HBox(10);
         hBox.getChildren().addAll(mbFilterTools, P2GuiTools.getHBoxGrower(), btnHelp);
         getChildren().add(hBox);

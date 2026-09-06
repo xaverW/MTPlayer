@@ -25,6 +25,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2BigButton;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -65,7 +66,7 @@ public class ResetDialogController extends P2DialogExtra {
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
-        final Button btnHelp = PIconFactory.getHelpButton(this.getStage(), "Programm zurücksetzen",
+        final Button btnHelp = P2IconFactory.getHelpButton(this.getStage(), "Programm zurücksetzen",
                 HelpText.RESET_DIALOG);
 
         P2BigButton setButton = new P2BigButton(PIconFactory.PICON.BTN_QUIT_DIALOG.getFontIcon(),

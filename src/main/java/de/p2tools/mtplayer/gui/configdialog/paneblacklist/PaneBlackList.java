@@ -24,7 +24,6 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.load.LoadAudioFactory;
 import de.p2tools.mtplayer.controller.load.LoadFilmFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.Busy;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -37,6 +36,7 @@ import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.guitools.table.P2RowFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -194,7 +194,7 @@ public class PaneBlackList {
     }
 
     private void makeConfigBlackList(VBox vBox) {
-        final Button btnHelp = PIconFactory.getHelpButton(stage, "Blacklist / Whitelist",
+        final Button btnHelp = P2IconFactory.getHelpButton(stage, "Blacklist / Whitelist",
                 HelpText.BLACKLIST_WHITELIST);
 
         final ToggleGroup toggleGroupFilm = new ToggleGroup();

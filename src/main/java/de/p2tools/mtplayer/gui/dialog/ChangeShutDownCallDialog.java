@@ -19,11 +19,11 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.P2ShutDown;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -71,7 +71,7 @@ public class ChangeShutDownCallDialog extends P2DialogExtra {
             P2ShutDown.shutDown(ProgConfig.SYSTEM_SHUT_DOWN_CALL.getValueSafe());
         });
 
-        Button btnHelp = PIconFactory.getHelpButton(getStageProp(),
+        Button btnHelp = P2IconFactory.getHelpButton(getStageProp(),
                 "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
 
         VBox vBox = new VBox(P2LibConst.PADDING_VBOX);

@@ -28,6 +28,7 @@ import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -98,7 +99,7 @@ public class PaneReplace {
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         vBox.getChildren().add(gridPane);
 
-        final Button btnHelp = PIconFactory.getHelpButton(stage, "Ersetzungstabelle",
+        final Button btnHelp = P2IconFactory.getHelpButton(stage, "Ersetzungstabelle",
                 HelpText.DOWNLOAD_REPLACE_TABLE);
 
         tglAscii.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_ONLY_ASCII);

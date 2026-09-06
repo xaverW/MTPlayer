@@ -19,12 +19,12 @@ package de.p2tools.mtplayer.gui.startdialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -72,9 +72,9 @@ public class StartPaneFilm extends VBox {
         hBox.getChildren().add(lbl);
         getChildren().addAll(StartFactory.getTitle("Filmliste bereits beim Laden filtern"), hBox, P2GuiTools.getHDistance(20));
 
-        final Button btnHelpDouble = PIconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
+        final Button btnHelpDouble = P2IconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_FILMLIST_ONLY_MARK_DOUBLE);
-        final Button btnHelpDays = PIconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
+        final Button btnHelpDays = P2IconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
                 HelpText.LOAD_ONLY_FILMS_STARTDIALOG);
 
         final GridPane gridPane = new GridPane();

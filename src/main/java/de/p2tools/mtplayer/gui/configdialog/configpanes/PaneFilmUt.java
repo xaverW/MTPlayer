@@ -30,6 +30,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -121,11 +122,11 @@ public class PaneFilmUt {
         final Button btnHelpMark;
         if (ut) {
             tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_MARK_UT);
-            btnHelpMark = PIconFactory.getHelpButton(stage, "Filme mit Untertitel markieren",
+            btnHelpMark = P2IconFactory.getHelpButton(stage, "Filme mit Untertitel markieren",
                     HelpText.LOAD_FILMLIST_MARK_UT);
         } else {
             tglRemove.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILMLIST_MARK);
-            btnHelpMark = PIconFactory.getHelpButton(stage, "Filme markieren",
+            btnHelpMark = P2IconFactory.getHelpButton(stage, "Filme markieren",
                     HelpText.LOAD_FILMLIST_MARK);
         }
 

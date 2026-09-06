@@ -25,6 +25,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -74,7 +75,7 @@ public class PaneLogFile {
             }
         }));
 
-        final Button btnHelp = PIconFactory.getHelpButton(stage, "Logfile", HelpText.LOGFILE);
+        final Button btnHelp = P2IconFactory.getHelpButton(stage, "Logfile", HelpText.LOGFILE);
 
         txtLogFile = new TextField();
         txtLogFile.textProperty().bindBidirectional(ProgConfig.SYSTEM_LOG_DIR);

@@ -24,6 +24,7 @@ import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -102,7 +103,7 @@ public class TipsDialog extends P2DialogExtra {
         getHboxLeft().setAlignment(Pos.CENTER_LEFT);
 
         Button btnOk = new Button("OK");
-        final Button btnHelp = PIconFactory.getHelpButton(getStage(), "Hilfe-Dialog",
+        final Button btnHelp = P2IconFactory.getHelpButton(getStage(), "Hilfe-Dialog",
                 "In dem Dialog werden Tipps zum Programm angezeigt. Wenn nicht " +
                         "abgeschaltet, wird der Dialog beim Start angezeigt.");
         addOkButton(btnOk);

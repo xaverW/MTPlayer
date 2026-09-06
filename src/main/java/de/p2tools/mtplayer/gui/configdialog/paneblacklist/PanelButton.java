@@ -30,6 +30,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
@@ -80,7 +81,7 @@ public class PanelButton {
             tableView.scrollTo(blackData);
         });
 
-        final Button btnHelpCount = PIconFactory.getHelpButton(stage, "Treffer zählen",
+        final Button btnHelpCount = P2IconFactory.getHelpButton(stage, "Treffer zählen",
                 HelpText.BLACKLIST_COUNT);
 
         Button btnCountHits = new Button("_Treffer zählen");

@@ -28,6 +28,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -90,14 +91,14 @@ public class PaneFilter {
     }
 
     private void make(VBox vBox) {
-        final Button btnHelp = PIconFactory.getHelpButton(stage, "Filtervorschläge",
+        final Button btnHelp = P2IconFactory.getHelpButton(stage, "Filtervorschläge",
                 HelpText.FILTER_OFFER_TABLE);
-        final Button btnHelpRegEx = PIconFactory.getHelpButton(stage, "Suche mit RegEx",
+        final Button btnHelpRegEx = P2IconFactory.getHelpButton(stage, "Suche mit RegEx",
                 HelpText.FILTER_REG_EX_ONLY_CONTAIN);
         tglOffer.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_OFFERTABLE);
         tglRegEx.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);
         tglFilterSecondKlick.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_FILTER_SECOND_KLICK);
-        final Button btnFilterSecondKlick = PIconFactory.getHelpButton(stage, "Klick auf \"Filter löschen\"",
+        final Button btnFilterSecondKlick = P2IconFactory.getHelpButton(stage, "Klick auf \"Filter löschen\"",
                 HelpText.FILTER_SECOND_KLICK);
 
         final GridPane gridPane = new GridPane();

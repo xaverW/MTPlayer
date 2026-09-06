@@ -17,11 +17,11 @@
 package de.p2tools.mtplayer.gui.configdialog.configpanes;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
@@ -60,7 +60,7 @@ public class PaneBookmark {
         vBoxAll.getChildren().add(gridPane);
 
         tglDelBookmark.selectedProperty().bindBidirectional(ProgConfig.BOOKMARK_DEL_NOT_IN_FILMLIST);
-        final Button btnHelpAbo = PIconFactory.getHelpButton(stage, "Bookmarks ohne Film löschen",
+        final Button btnHelpAbo = P2IconFactory.getHelpButton(stage, "Bookmarks ohne Film löschen",
                 HelpText.DELETE_BOOKMARK_NOT_IN_FILMLIST);
 
         int row = 0;

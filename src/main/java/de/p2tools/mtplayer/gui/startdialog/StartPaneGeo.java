@@ -18,12 +18,12 @@ package de.p2tools.mtplayer.gui.startdialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -69,7 +69,7 @@ public class StartPaneGeo extends VBox {
         getChildren().addAll(StartFactory.getTitle("Geogeblockte Filme"), hBox, P2GuiTools.getHDistance(20));
 
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
-        final Button btnHelpGeo = PIconFactory.getHelpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
+        final Button btnHelpGeo = P2IconFactory.getHelpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);
 
         ToggleGroup tg = new ToggleGroup();
         tg.getToggles().addAll(rbDe, rbFr, rbCh, rbAt, rbEu, rbSonst);

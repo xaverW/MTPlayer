@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboConstants;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.mtplayer.gui.tools.HelpText;
@@ -28,6 +27,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -78,7 +78,7 @@ public class AboFilterController extends FilterController {
         Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
         hBox.getChildren().add(btnClear);
 
-        final Button btnHelpFilter = PIconFactory.getHelpButton("Filter", HelpText.GUI_ABO_FILTER);
+        final Button btnHelpFilter = P2IconFactory.getHelpButton("Filter", HelpText.GUI_ABO_FILTER);
         HBox hBoxHelp = new HBox();
         hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
         hBoxHelp.getChildren().add(btnHelpFilter);

@@ -25,6 +25,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -77,7 +78,7 @@ public class PaneIcon {
 
     private int addProgIcon(GridPane gridPane, int row) {
         tglOwnProgIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_USE_OWN_PROGRAM_ICON);
-        final Button btnHelpProgramIcon = PIconFactory.getHelpButton(stage, "Eigenes Bild als Programmicon anzeigen",
+        final Button btnHelpProgramIcon = P2IconFactory.getHelpButton(stage, "Eigenes Bild als Programmicon anzeigen",
                 HelpText.PROGRAM_ICON);
         GridPane.setHalignment(btnHelpProgramIcon, HPos.RIGHT);
 
@@ -117,13 +118,13 @@ public class PaneIcon {
 
     private int addTryIcon(GridPane gridPane, int row) {
         tglTray.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY);
-        final Button btnHelpTray = PIconFactory.getHelpButton(stage, "Programm im System Tray anzeigen",
+        final Button btnHelpTray = P2IconFactory.getHelpButton(stage, "Programm im System Tray anzeigen",
                 HelpText.TRAY);
         GridPane.setHalignment(btnHelpTray, HPos.RIGHT);
 
         tglOwnTrayIcon.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY_USE_OWN_ICON);
         tglOwnTrayIcon.disableProperty().bind(tglTray.selectedProperty().not());
-        final Button btnHelpTrayOwnIcon = PIconFactory.getHelpButton(stage, "Eigenes Bild im Tray anzeigen",
+        final Button btnHelpTrayOwnIcon = P2IconFactory.getHelpButton(stage, "Eigenes Bild im Tray anzeigen",
                 HelpText.TRAY_OWN_ICON);
         GridPane.setHalignment(btnHelpTrayOwnIcon, HPos.RIGHT);
         btnHelpTrayOwnIcon.disableProperty().bind(tglTray.selectedProperty().not());

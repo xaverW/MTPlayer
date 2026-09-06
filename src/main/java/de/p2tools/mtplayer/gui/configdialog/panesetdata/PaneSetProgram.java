@@ -29,6 +29,7 @@ import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
@@ -191,7 +192,7 @@ public class PaneSetProgram {
             }
         });
 
-        final Button btnHelpProg = PIconFactory.getHelpButton(stage, "Hilfsprogramme",
+        final Button btnHelpProg = P2IconFactory.getHelpButton(stage, "Hilfsprogramme",
                 HelpTextPset.PSET_FILE_HELP_PROG);
 
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
@@ -211,9 +212,9 @@ public class PaneSetProgram {
         btnFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 
-        final Button btnHelpDest = PIconFactory.getHelpButton(stage, "Zieldateiname",
+        final Button btnHelpDest = P2IconFactory.getHelpButton(stage, "Zieldateiname",
                 HelpTextPset.PSET_PARAMETER_FILE_NAME);
-        final Button btnHelpSwitch = PIconFactory.getHelpButton(stage, "Programmschalter",
+        final Button btnHelpSwitch = P2IconFactory.getHelpButton(stage, "Programmschalter",
                 HelpTextPset.PSET_SWITCH);
 
         int row = 0;

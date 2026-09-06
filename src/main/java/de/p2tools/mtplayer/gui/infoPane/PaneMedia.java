@@ -34,6 +34,7 @@ import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filmdata.FilmData;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.application.Platform;
@@ -114,7 +115,7 @@ public class PaneMedia extends VBox {
     }
 
     private void init() {
-        final Button btnHelpMedia = PIconFactory.getHelpButton("Mediensammlung", HelpText.DOWNLOAD_GUI_MEDIA);
+        final Button btnHelpMedia = P2IconFactory.getHelpButton("Mediensammlung", HelpText.DOWNLOAD_GUI_MEDIA);
         HBox hBoxTop = new HBox(P2LibConst.PADDING);
         hBoxTop.setPadding(new Insets(0));
         hBoxTop.setAlignment(Pos.CENTER);

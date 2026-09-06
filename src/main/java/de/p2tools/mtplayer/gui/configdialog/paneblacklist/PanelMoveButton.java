@@ -20,11 +20,11 @@ package de.p2tools.mtplayer.gui.configdialog.paneblacklist;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -42,7 +42,7 @@ public class PanelMoveButton {
     static void addMoveButton(Stage stage, VBox vBox, TableView<BlackData> tableView, ProgData progData,
                               boolean controlBlackListNotFilmFilter, BooleanProperty blackDataChanged, BlackList list) {
 
-        final Button btnHelpCount = PIconFactory.getHelpButton(stage, "Filter kopieren oder verschieben",
+        final Button btnHelpCount = P2IconFactory.getHelpButton(stage, "Filter kopieren oder verschieben",
                 HelpText.BLACKLIST_MOVE);
 
         Button btnCopy = new Button(controlBlackListNotFilmFilter ? "_Kopieren nach \"Filmliste laden\"" : "_Kopieren nach \"Blacklist\"");

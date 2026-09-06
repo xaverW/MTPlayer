@@ -25,6 +25,7 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -57,7 +58,7 @@ public class AboAddDialogGuiPath extends VBox {
         addContFileName();
         addResFileName();
 
-        final Button btnHelp = PIconFactory.getHelpButton(stage, "Abo-Pfad anlegen",
+        final Button btnHelp = P2IconFactory.getHelpButton(stage, "Abo-Pfad anlegen",
                 HelpText.ABO_PATH);
         HBox hBoxHelp = new HBox();
         hBoxHelp.setPadding(new Insets(10));

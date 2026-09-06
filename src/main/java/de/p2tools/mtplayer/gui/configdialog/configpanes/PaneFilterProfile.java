@@ -26,6 +26,7 @@ import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -106,7 +107,7 @@ public class PaneFilterProfile {
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcComputedSizeAndHgrow());
 
-        final Button btnHelp = PIconFactory.getHelpButton(stage, "Filter-Profile",
+        final Button btnHelp = P2IconFactory.getHelpButton(stage, "Filter-Profile",
                 "Hier kann ein Filter-Profile (eins für die Filmliste, eins für " +
                         "die Audioliste) ausgewählt werden. Wird das Programm gestartet " +
                         "wird dieses Profil ausgewählt und der Filter aktiviert. " +
