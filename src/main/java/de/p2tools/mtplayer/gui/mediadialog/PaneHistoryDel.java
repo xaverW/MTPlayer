@@ -20,7 +20,6 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.data.history.HistoryFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
@@ -66,20 +65,20 @@ public class PaneHistoryDel extends VBox {
         slAge.setMajorTickUnit(100);
         slAge.setBlockIncrement(5);
 
-        btnDelAll.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelAll.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelAll.setOnAction(a -> {
             progData.historyListJson.clearAll(stage);
         });
 
-        btnDelSelection.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelSelection.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelSelection.setOnAction(a -> {
             HistoryFactory.delSelection(stage, tableView.getSelectionModel().getSelectedItems());
         });
 
-        btnDelNotInList.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelNotInList.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelNotInList.setOnAction(a -> HistoryFactory.delNotInList(stage));
 
-        btnDelAge.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelAge.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelAge.setOnAction(a -> HistoryFactory.delOld(stage, (int) slAge.getValue()));
 
         Button btnHelp = P2IconFactory.getHelpButton(stage,

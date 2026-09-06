@@ -17,9 +17,9 @@
 package de.p2tools.mtplayer.gui.filter.live;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -40,7 +40,7 @@ public class LiveFilmFilterClearList extends VBox {
 
     private void addButton() {
         Button btnClearList = new Button();
-        btnClearList.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClearList.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClearList.setTooltip(new Tooltip("Filmliste löschen"));
         btnClearList.setOnAction(a -> progData.liveFilmFilterWorker.getLiveFilmList().clear());
         btnClearList.disableProperty().bind(progData.liveFilmFilterWorker.getLiveFilmList().sizeProperty().isEqualTo(0));

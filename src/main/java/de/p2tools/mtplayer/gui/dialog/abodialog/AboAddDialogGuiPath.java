@@ -18,7 +18,6 @@ package de.p2tools.mtplayer.gui.dialog.abodialog;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.abo.AboFieldNames;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
@@ -147,7 +146,7 @@ public class AboAddDialogGuiPath extends VBox {
         // eigenen Einstellungen
         final Button btnPath = new Button();
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
-        btnPath.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        btnPath.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         btnPath.setOnAction(event -> {
             P2DirFileChooser.DirChooser(stage, addAboDto.cboAboDir);
             addAboDto.initDestination.setPathToAbo();

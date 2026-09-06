@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.HistorySearchFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.table.CellHistorySource;
@@ -30,6 +29,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.table.P2RowFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.application.Platform;
@@ -247,12 +247,12 @@ public class PaneHistory extends ScrollPane {
 
         // Suchen was
         final Button btnReset = new Button("");
-        btnReset.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnReset.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
         btnReset.setOnAction(a -> txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle));
 
         final Button btnClear = new Button();
-        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
         btnClear.setOnAction(a -> txtSearch.clear());
 

@@ -23,12 +23,12 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.starter.LogMsgFactory;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -150,19 +150,19 @@ public class DownloadAddDialogController extends P2DialogExtra {
     }
 
     private void initButton() {
-        addDownloadDto.btnDest.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        addDownloadDto.btnDest.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         addDownloadDto.btnDest.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
         addDownloadDto.btnDest.setOnAction(event -> {
             P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, addDownloadDto.cboPath);
             addDownloadDto.initPathName.pathChanged();
         });
 
-        addDownloadDto.btnPropose.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        addDownloadDto.btnPropose.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
         addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen"));
         addDownloadDto.btnPropose.setOnAction(event ->
                 addDownloadDto.initPathName.proposeDestination());
 
-        addDownloadDto.btnClean.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        addDownloadDto.btnClean.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         addDownloadDto.btnClean.setTooltip(new Tooltip("Die Liste der Pfade löschen"));
         addDownloadDto.btnClean.setOnAction(a -> addDownloadDto.initPathName.clearPath());
 

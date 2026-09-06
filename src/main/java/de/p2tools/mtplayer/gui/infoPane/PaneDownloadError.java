@@ -17,10 +17,10 @@
 package de.p2tools.mtplayer.gui.infoPane;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadErrorStreamDialogController;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -40,7 +40,7 @@ public class PaneDownloadError extends VBox {
         progData = ProgData.getInstance();
         VBox.setVgrow(this, Priority.ALWAYS);
 
-        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClear.setTooltip(new Tooltip("Die Liste der Downloadfehler löschen"));
         btnClear.setOnAction(a -> progData.downloadErrorList.clear());
 

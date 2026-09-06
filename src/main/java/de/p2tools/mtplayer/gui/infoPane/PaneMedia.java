@@ -179,7 +179,7 @@ public class PaneMedia extends VBox {
         });
 
         btnClear.setTooltip(new Tooltip("Die Suchfelder löschen"));
-        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClear.setOnAction(a -> {
             txtSearchMedia.clear();
             txtSearchAbo.clear();

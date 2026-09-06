@@ -2,13 +2,14 @@ package de.p2tools.mtplayer.gui.filter.live;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.livesearch.zdf.JsonInfoDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
+import de.p2tools.mtplayer.controller.livesearch.zdf.JsonInfoDto;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -40,7 +41,7 @@ public class LiveFilterTabZdf extends Tab {
         vBoxTab.setAlignment(Pos.TOP_CENTER);
 
         Button btnClear = new Button();
-        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClear.setTooltip(new Tooltip("Suche löschen"));
         btnClear.setOnAction(a -> {
             ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.set("");
@@ -51,7 +52,7 @@ public class LiveFilterTabZdf extends Tab {
                 ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF);
 
         Button btnSearchZdf = new Button();
-        btnSearchZdf.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
+        btnSearchZdf.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_20.getFontIcon());
         btnSearchZdf.setTooltip(new Tooltip("Suche starten"));
         btnSearchZdf.setOnAction(a -> searchZdf(false));
         btnSearchZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(LiveConst.MIN_SEARCH_LENGTH))
@@ -84,14 +85,14 @@ public class LiveFilterTabZdf extends Tab {
 
         // Search URL
         Button btnClearUrl = new Button();
-        btnClearUrl.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClearUrl.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClearUrl.setTooltip(new Tooltip("Suche löschen"));
         btnClearUrl.setOnAction(a -> {
             ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.set("");
         });
 
         Button btnSearchUrlZdf = new Button();
-        btnSearchUrlZdf.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
+        btnSearchUrlZdf.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_20.getFontIcon());
         btnSearchUrlZdf.setTooltip(new Tooltip("Suche starten"));
         btnSearchUrlZdf.setOnAction(a -> searchUrl());
         btnSearchUrlZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.isEmpty())

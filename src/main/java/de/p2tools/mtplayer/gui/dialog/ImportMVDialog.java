@@ -115,7 +115,7 @@ public class ImportMVDialog extends P2DialogExtra {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.DirChooser(getStage(), txtMVPath);
         });
-        btnFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
 
         final Button btnHelp = P2IconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
 
@@ -184,7 +184,7 @@ public class ImportMVDialog extends P2DialogExtra {
             int found = MVFactory.importAbosMediathekView(this.getStage(), aboList);
             lblFoundAbos.setText(found + "");
         });
-        btnAddAbo.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnAddAbo.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
         GridPane.setHalignment(btnAddAbo, HPos.RIGHT);
 
         final Label lblFoundBlacks = new Label("");
@@ -194,7 +194,7 @@ public class ImportMVDialog extends P2DialogExtra {
             int found = MVFactory.addBlacks(blackList);
             lblFoundBlacks.setText(found + "");
         });
-        btnAddBlack.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnAddBlack.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
         GridPane.setHalignment(btnAddBlack, HPos.RIGHT);
 
         int row = 0;

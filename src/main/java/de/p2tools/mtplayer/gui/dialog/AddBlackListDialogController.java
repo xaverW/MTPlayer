@@ -21,13 +21,13 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackData;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistCountFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -141,35 +141,35 @@ public class AddBlackListDialogController extends P2DialogExtra {
             rbFilm.setSelected(list == ProgConst.LIST_FILM);
             rbAudio.setSelected(list == ProgConst.LIST_AUDIO);
         });
-        btnList.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnList.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
 
         btnChannel.setOnAction(a -> blackData.setChannel(channel));
         btnChannel.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnChannel.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnChannel.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
 
         btnTheme.setOnAction(a -> blackData.setTheme(theme));
         btnTheme.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnTheme.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnTheme.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
 
         btnTitel.setOnAction(a -> blackData.setTitle(title));
         btnTitel.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnTitel.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnTitel.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
 
         btnClearChannel.setOnAction(a -> blackData.channelProperty().setValue(""));
         btnClearChannel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearChannel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClearChannel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
 
         btnClearTheme.setOnAction(a -> blackData.setTheme(""));
         btnClearTheme.setTooltip(new Tooltip("Feld löschen"));
-        btnClearTheme.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClearTheme.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
 
         btnClearTitel.setOnAction(a -> blackData.setTitle(""));
         btnClearTitel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearTitel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClearTitel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
 
         btnClearThemeTitel.setOnAction(a -> blackData.setThemeTitle(""));
         btnClearThemeTitel.setTooltip(new Tooltip("Feld löschen"));
-        btnClearThemeTitel.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClearThemeTitel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
 
         txtTheme.textProperty().bindBidirectional(blackData.themeProperty());
         tgTheme.selectedProperty().bindBidirectional(blackData.themeExactProperty());

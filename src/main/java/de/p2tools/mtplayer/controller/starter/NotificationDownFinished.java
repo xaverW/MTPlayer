@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.pnotification.P2Notification;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -44,7 +45,7 @@ public class NotificationDownFinished {
         btnFilmStart.setGraphic(PIconFactory.PICON.BTN_ALERT_FILM_PLAY.getFontIcon());
         btnFilmStart.setOnAction((ActionEvent event) -> {
             P2Open.playStoredFilm(download.getDestPathFile(),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         });
 
         Button btnOpenDirectory = new Button();
@@ -53,7 +54,7 @@ public class NotificationDownFinished {
         btnOpenDirectory.setGraphic(PIconFactory.PICON.BTN_ALERT_DOWNLOAD_OPEN_DIR.getFontIcon());
         btnOpenDirectory.setOnAction((ActionEvent event) -> {
             P2Open.openDir(download.getDestPath(),
-                    ProgConfig.SYSTEM_PROG_OPEN_DIR, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+                    ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         });
 
         HBox hBoxBottom = new HBox();

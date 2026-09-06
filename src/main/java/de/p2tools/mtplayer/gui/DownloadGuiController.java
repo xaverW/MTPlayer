@@ -26,7 +26,6 @@ import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFi
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmPlayFactory;
 import de.p2tools.mtplayer.controller.data.film.FilmToolsFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloadadd.DownloadAddDialogController;
 import de.p2tools.mtplayer.gui.dialog.downloaddialog.DownloadStartAtTimeController;
@@ -43,6 +42,7 @@ import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneDto;
 import de.p2tools.p2lib.guitools.pclosepane.P2ClosePaneFactory;
 import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
 import de.p2tools.p2lib.guitools.table.P2RowFactory;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.Filter;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.p2event.P2Events;
@@ -210,7 +210,7 @@ public class DownloadGuiController extends AnchorPane {
     public void playFilm() {
         final Optional<DownloadData> download = getSel();
         download.ifPresent(downloadData -> P2Open.playStoredFilm(downloadData.getDestPathFile(),
-                ProgConfig.SYSTEM_PROG_PLAY_FILME, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon()));
+                ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon()));
     }
 
     public void deleteFilmFile() {
@@ -229,7 +229,7 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         String s = download.get().getDestPath();
-        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
     }
 
     public void playUrl() {

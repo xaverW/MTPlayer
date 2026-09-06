@@ -19,11 +19,11 @@ package de.p2tools.mtplayer.gui.dialog;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
@@ -97,7 +97,7 @@ public class DownloadSubtitleDialog extends P2DialogExtra {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.DirChooser(getStage(), txtPath);
         });
-        btnFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
 
         int row = 0;
         gridPane.add(new Label("Pfad"), 0, row);

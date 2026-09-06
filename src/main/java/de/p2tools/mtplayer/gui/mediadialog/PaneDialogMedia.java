@@ -28,6 +28,7 @@ import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import javafx.application.Platform;
 import javafx.collections.transformation.FilteredList;
@@ -150,7 +151,7 @@ public class PaneDialogMedia extends PaneDialogScrollPane {
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.setOnAction(e -> MediaDataWorker.createMediaDb());
 
-        btnOpen.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        btnOpen.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));
         btnOpen.setOnAction(e -> open());
         btnOpen.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
@@ -174,12 +175,12 @@ public class PaneDialogMedia extends PaneDialogScrollPane {
         final String name = txtTitleMedia.getText();
         if (!name.isEmpty() && !path.isEmpty()) {
             P2Open.playStoredFilm(P2FileUtils.addsPath(path, name),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         }
     }
 
     private void open() {
         final String s = txtPathMedia.getText();
-        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
     }
 }

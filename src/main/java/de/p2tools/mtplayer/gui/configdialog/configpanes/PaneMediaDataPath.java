@@ -165,7 +165,7 @@ public class PaneMediaDataPath {
 
         Button btnUpdate = new Button("");
         btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
-        btnUpdate.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnUpdate.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
         btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
                 .or(progData.mediaDataList.searchingProperty()));
         btnUpdate.setOnAction(a -> update());
@@ -212,7 +212,7 @@ public class PaneMediaDataPath {
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
-        btnPath.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        btnPath.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         btnPath.setOnAction(event -> {
             P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
             if (txtCollectionName.getText().isEmpty()) {

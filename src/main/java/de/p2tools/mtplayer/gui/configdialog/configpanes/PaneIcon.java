@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.configdialog.configpanes;
 import de.p2tools.mtplayer.MTPlayerFactory;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
@@ -91,7 +90,7 @@ public class PaneIcon {
                 txtProgIconPath.setText(s);
             }
         });
-        btnProgIconFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        btnProgIconFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         txtProgIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROGRAM_ICON_PATH);
         tglOwnProgIcon.selectedProperty().addListener((v, o, n) -> {
             MTPlayerFactory.setProgramIcon();
@@ -139,7 +138,7 @@ public class PaneIcon {
                 txtTrayIconPath.setText(s);
             }
         });
-        btnTrayFile.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        btnTrayFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         btnTrayFile.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
 
         txtTrayIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY_ICON_PATH);

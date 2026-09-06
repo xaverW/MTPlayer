@@ -22,10 +22,10 @@ import de.p2tools.mtplayer.controller.config.ProgConfigAskBeforeDelete;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.dialogs.P2DirFileChooser;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.tools.P2FileNameUtils;
 import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.animation.KeyFrame;
@@ -165,7 +165,7 @@ public class DownloadContinueDialogController extends P2DialogExtra {
     }
 
     private void initButton() {
-        btnPath.setGraphic(PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+        btnPath.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
         btnPath.setOnAction(event -> getDestination());
 

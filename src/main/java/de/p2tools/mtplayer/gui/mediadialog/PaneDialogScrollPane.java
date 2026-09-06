@@ -21,12 +21,12 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaSearchFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import de.p2tools.p2lib.p2event.P2Listener;
 import javafx.beans.value.ChangeListener;
@@ -168,12 +168,12 @@ public class PaneDialogScrollPane extends ScrollPane {
     private VBox getVBoxSearch() {
         // Suchen was
         final Button btnReset = new Button("");
-        btnReset.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnReset.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
         btnReset.setOnAction(a -> txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle));
 
         final Button btnClear = new Button();
-        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
         btnClear.setOnAction(a -> txtSearch.clear());
 
@@ -240,7 +240,7 @@ public class PaneDialogScrollPane extends ScrollPane {
         progress.setMaxHeight(Double.MAX_VALUE);
         progress.setMaxWidth(Double.MAX_VALUE);
 
-        btnStopSearching.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnStopSearching.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnStopSearching.setOnAction(event -> progData.mediaDataList.setStopSearching(true));
         btnStopSearching.visibleProperty().bind(progData.mediaDataList.searchingProperty());
         hBoxProgress.getChildren().addAll(btnCreateMediaDB, progress, btnStopSearching);

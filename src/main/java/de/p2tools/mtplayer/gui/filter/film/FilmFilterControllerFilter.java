@@ -18,12 +18,12 @@ package de.p2tools.mtplayer.gui.filter.film;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.FilterController;
 import de.p2tools.p2lib.guitools.P2LDatePicker;
 import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxBool;
 import de.p2tools.p2lib.guitools.prange.P2RangeBox;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.tools.date.P2LDateFactory;
 import javafx.geometry.Pos;
@@ -137,7 +137,7 @@ public class FilmFilterControllerFilter extends VBox {
             initPDatePicker();
         });
         initPDatePicker();
-        btnClearDatePicker.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClearDatePicker.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClearDatePicker.setOnAction(a -> pDatePicker.clearDate());
     }
 

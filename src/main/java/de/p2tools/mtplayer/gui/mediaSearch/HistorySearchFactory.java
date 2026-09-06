@@ -18,9 +18,9 @@
 package de.p2tools.mtplayer.gui.mediaSearch;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -40,7 +40,7 @@ public class HistorySearchFactory {
 
         Button btnChange = new Button();
         btnChange.setTooltip(new Tooltip("Einstellung wo gesucht wird"));
-        btnChange.setGraphic(PIconFactory.PICON.BTN_RESET.getFontIcon());
+        btnChange.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
         btnChange.setOnAction(a -> {
             if (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_THEME_OR_PATH) {
                 mediaDataDto.searchInWhat.setValue(ProgConst.MEDIA_SEARCH_TITEL_OR_NAME);

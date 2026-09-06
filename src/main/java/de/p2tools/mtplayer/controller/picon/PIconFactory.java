@@ -6,20 +6,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 public class PIconFactory {
 
     public enum PICON implements P2IconFactory.P2Icon {
-        BTN_HELP("mdi-help"),
-        BTN_DIR_OPEN("mdi2f-folder-open-outline", 18),
-        BTN_PLUS_OUTLINE("mdi-plus-circle-outline", 18),
-        BTN_MINUS_OUTLINE("mdi-minus-circle-outline", 18),
-        BTN_NEXT("mdi-chevron-double-right", 18),
-        BTN_PREV("mdi-chevron-double-left", 18),
-        BTN_FIRST("gmi-first-page", 18),
-        BTN_LAST("gmi-last-page", 18),
-        BTN_QUIT("gmi-power-settings-new", 18),
-        BTN_CLEAR("gmi-clear", 18),
-        BTN_RESET_1("gmi-radio-button-on", 25),
-        BTN_RESET_2("gmi-rotate-right", 30),
-        BTN_RESET("mdi-rotate-3d", 18),
-        BTN_SEARCH("gmi-search", 20),
         BTN_EDIT("mdomz-settings", 20),
         BTN_BACK("gmi-arrow-back-ios", 20),
         BTN_FORWARD("gmi-arrow-forward-ios", 20),

@@ -34,6 +34,7 @@ import de.p2tools.mtplayer.gui.dialog.ImportMVDialog;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.p2lib.guitools.P2Open;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.ikonli.P2IconShow;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
@@ -118,7 +119,7 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miUrlHelp = new MenuItem("Anleitung im Web");
         miUrlHelp.setOnAction(event -> {
             P2Open.openURL(ProgConst.URL_WEBSITE_HELP,
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
         });
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {

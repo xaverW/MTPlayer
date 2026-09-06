@@ -19,8 +19,8 @@ package de.p2tools.mtplayer.gui.mediadialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.mediadb.MediaData;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.guitools.P2Open;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.tools.file.P2FileUtils;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -49,7 +49,7 @@ public class PaneMediaContextMenu {
         miOpen.setOnAction(a -> {
             String path = mediaData.getPath();
             if (!path.isEmpty()) {
-                P2Open.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+                P2Open.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
             }
         });
 
@@ -59,7 +59,7 @@ public class PaneMediaContextMenu {
             String name = mediaData.getName();
             if (!path.isEmpty() && !name.isEmpty()) {
                 P2Open.playStoredFilm(P2FileUtils.addsPath(path, name),
-                        ProgConfig.SYSTEM_PROG_PLAY_FILME, PIconFactory.PICON.BTN_DIR_OPEN.getFontIcon());
+                        ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
             }
         });
 

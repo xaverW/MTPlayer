@@ -19,7 +19,6 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
@@ -64,12 +63,12 @@ public class PaneBookmarkDel extends VBox {
         slAge.setMajorTickUnit(100);
         slAge.setBlockIncrement(5);
 
-        btnDelAge.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelAge.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelAge.setOnAction(a -> {
             BookmarkFactory.deleteAge(stageObjectProperty.get(), (int) slAge.getValue());
         });
 
-        btnDelAll.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelAll.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelAll.setOnAction(a -> {
             int size = BookmarkFactory.deleteAll(stageObjectProperty.get(), false, true);
             size += BookmarkFactory.deleteAll(stageObjectProperty.get(), false, false);
@@ -79,7 +78,7 @@ public class PaneBookmarkDel extends VBox {
             }
         });
 
-        btnDelNotInList.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelNotInList.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelNotInList.setOnAction(a -> {
             int size = BookmarkFactory.delNotInList(true);
             size += BookmarkFactory.delNotInList(false);
@@ -89,7 +88,7 @@ public class PaneBookmarkDel extends VBox {
             }
         });
 
-        btnDelShown.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnDelShown.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelShown.setOnAction(a -> BookmarkFactory.deleteShown(stageObjectProperty.get()));
 
         Button btnHelp = P2IconFactory.getHelpButton(stageObjectProperty,

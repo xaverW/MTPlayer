@@ -2,14 +2,15 @@ package de.p2tools.mtplayer.gui.filter.live;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.livesearch.ard.ArdDto;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchArd;
+import de.p2tools.mtplayer.controller.livesearch.ard.ArdDto;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -40,14 +41,14 @@ public class LiveFilterTabArd extends Tab {
         vBoxTab.setAlignment(Pos.TOP_CENTER);
 
         Button btnClear = new Button();
-        btnClear.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClear.setTooltip(new Tooltip("Suche löschen"));
         btnClear.setOnAction(a -> {
             ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.set("");
         });
 
         Button btnSearchArd = new Button();
-        btnSearchArd.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
+        btnSearchArd.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_20.getFontIcon());
         btnSearchArd.setTooltip(new Tooltip("Suche starten"));
         btnSearchArd.setOnAction(a -> searchArd(false));
         btnSearchArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARD.length().lessThan(LiveConst.MIN_SEARCH_LENGTH))
@@ -84,14 +85,14 @@ public class LiveFilterTabArd extends Tab {
 
         // Search URL
         Button btnClearUrl = new Button();
-        btnClearUrl.setGraphic(PIconFactory.PICON.BTN_CLEAR.getFontIcon());
+        btnClearUrl.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnClearUrl.setTooltip(new Tooltip("Suche löschen"));
         btnClearUrl.setOnAction(a -> {
             ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.set("");
         });
 
         Button btnSearchUrlArd = new Button();
-        btnSearchUrlArd.setGraphic(PIconFactory.PICON.BTN_SEARCH.getFontIcon());
+        btnSearchUrlArd.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_20.getFontIcon());
         btnSearchUrlArd.setTooltip(new Tooltip("Suche starten"));
         btnSearchUrlArd.setOnAction(a -> searchUrl());
         btnSearchUrlArd.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARD.isEmpty())
