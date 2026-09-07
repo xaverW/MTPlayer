@@ -185,9 +185,9 @@ public class TableFilmFactory {
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("pFuncBtn", "btnTable");
                 if (film.isBookmark()) {
-                    btnBookmark.setGraphic(P2IconFactory.P2ICON.BTN_BOOKMARK_DEL.getFontIcon());
+                    btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_DEL.getFontIcon());
                 } else {
-                    btnBookmark.setGraphic(P2IconFactory.P2ICON.BTN_BOOKMARK_ADD.getFontIcon());
+                    btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_ADD.getFontIcon());
                 }
                 btnBookmark.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
@@ -222,9 +222,9 @@ public class TableFilmFactory {
                     btnPlay.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
                     btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_S.getFontIcon());
                     if (film.isBookmark()) {
-                        btnBookmark.setGraphic(P2IconFactory.P2ICON.BTN_BOOKMARK_DEL.getFontIcon());
+                        btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_DEL.getFontIcon());
                     } else {
-                        btnBookmark.setGraphic(P2IconFactory.P2ICON.BTN_BOOKMARK_ADD.getFontIcon());
+                        btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_ADD.getFontIcon());
                     }
                 }
 

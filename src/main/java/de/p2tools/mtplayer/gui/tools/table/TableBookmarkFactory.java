@@ -137,7 +137,7 @@ public class TableBookmarkFactory {
 
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnBookmark.setGraphic(P2IconFactory.P2ICON.BTN_BOOKMARK_DEL_B.getFontIcon());
+                btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_DEL_B.getFontIcon());
 
                 if (ProgConfig.BOOKMARK_DIALOG_SMALL_TABLE_ROW.get()) {
                     btnPlay.setMaxHeight(18);

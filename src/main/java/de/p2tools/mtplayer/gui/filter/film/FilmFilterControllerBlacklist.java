@@ -42,7 +42,7 @@ public class FilmFilterControllerBlacklist extends HBox {
 
         Button btnBlack = new Button("");
         btnBlack.getStyleClass().add("buttonSmall");
-        btnBlack.setGraphic(P2IconFactory.P2ICON.BTN_EDIT.getFontIcon());
+        btnBlack.setGraphic(P2IconFactory.P2ICON.BTN_EDIT_S.getFontIcon());
         btnBlack.setOnAction(a -> new ConfigDialogController(ProgData.getInstance(), true));
         btnBlack.disableProperty().bind(ConfigDialogController.dialogIsRunning);
         btnBlack.setTooltip(new Tooltip("Blacklist-Einstellungen anzeigen - " +

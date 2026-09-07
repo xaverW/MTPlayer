@@ -51,7 +51,7 @@ public class AboMenu {
 
         final ToolBarButton btNew = new ToolBarButton(vBox,
                 "Neues Abo", "Neues Abo anlegen",
-                P2IconFactory.P2ICON.BTN_BOOKMARK_ADD_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BOOKMARK_ADD_B.getFontIcon());
 
         vBoxSpace = new VBox();
         vBoxSpace.setMaxHeight(10);

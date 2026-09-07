@@ -79,21 +79,21 @@ public class QuitDialogController extends P2DialogExtra {
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
         // nicht beenden
-        P2BigButton cancelButton = new P2BigButton(P2IconFactory.P2ICON.BTN_DIALOG_RESET_CONFIG.getFontIcon(),
+        P2BigButton cancelButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(),
                 "Nicht beenden", "");
         cancelButton.setOnAction(e -> {
             close();
         });
 
         // beenden
-        P2BigButton quitButton = new P2BigButton(P2IconFactory.P2ICON.BTN_DIALOG_RESET_CONFIG.getFontIcon(),
+        P2BigButton quitButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(),
                 "Beenden", "Alle Downloads abbrechen und das Programm beenden.");
         quitButton.setOnAction(e -> {
             ProgQuit.quit();
         });
 
         // warten, dann beenden
-        P2BigButton waitButton = new P2BigButton(P2IconFactory.P2ICON.BTN_DIALOG_RESET_CONFIG.getFontIcon(),
+        P2BigButton waitButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(),
                 "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> startWaiting());
 
