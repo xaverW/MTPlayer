@@ -86,7 +86,7 @@ public class MTPlayerMenu extends MenuButton {
         setMinWidth(Region.USE_PREF_SIZE);
         getStyleClass().addAll("pFuncBtn", "btnProgMenu");
         setText("");
-        FontIcon node = P2IconFactory.P2ICON.PROG_MENU.getFontIcon();
+        FontIcon node = P2IconFactory.P2ICON.P2_PROG_MENU.getFontIcon();
         node.setScaleX(1.5);
         setGraphic(node);
 

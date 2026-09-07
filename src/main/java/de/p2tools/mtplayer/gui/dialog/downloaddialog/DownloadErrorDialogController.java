@@ -58,7 +58,7 @@ public class DownloadErrorDialogController extends P2DialogExtra {
     private final TextArea txtUrl = new TextArea();
     private final TextArea txtCont = new TextArea();
     private final Label lblTime = new Label("");
-    private final FontIcon fontIcon = P2IconFactory.P2ICON.ATTENTION_80.getFontIcon();
+    private final FontIcon fontIcon = P2IconFactory.P2ICON.P2_ATTENTION_80.getFontIcon();
     private final GridPane gridPane = new GridPane();
 
     private final Timeline timeline = new Timeline();

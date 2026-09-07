@@ -150,7 +150,7 @@ public class FilmFilterControllerProfiles extends VBox {
         final MenuItem miReset = new MenuItem("Alle Filterprofile wieder herstellen");
         miReset.setOnAction(e -> resetFilter(true));
 
-        mbFilterTools.setGraphic(P2IconFactory.P2ICON.TAB_MENU.getFontIcon());
+        mbFilterTools.setGraphic(P2IconFactory.P2ICON.P2_TAB_MENU.getFontIcon());
         mbFilterTools.getItems().addAll(miLoad, miRename, miDel, miDelAll, miSave, miNew, miAbo,
                 new SeparatorMenuItem(), miResort, miFilterDialog,
                 new SeparatorMenuItem(), miAddStandard, miReset);

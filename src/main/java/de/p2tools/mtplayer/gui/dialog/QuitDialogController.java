@@ -115,7 +115,7 @@ public class QuitDialogController extends P2DialogExtra {
         gridPane.setPadding(new Insets(20));
 
         int row = 0;
-        gridPane.add(P2IconFactory.P2ICON.ATTENTION_80.getFontIcon(), 0, 0, 1, 1);
+        gridPane.add(P2IconFactory.P2ICON.P2_ATTENTION_80.getFontIcon(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, row);
         gridPane.add(cancelButton, 1, ++row);
         gridPane.add(quitButton, 1, ++row);

@@ -102,7 +102,7 @@ public class AboMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Abomenü anzeigen"));
-        mb.setGraphic(P2IconFactory.P2ICON.TAB_MENU.getFontIcon());
+        mb.setGraphic(P2IconFactory.P2ICON.P2_TAB_MENU.getFontIcon());
         mb.getStyleClass().addAll("pFuncBtn", "btnProgMenu", "btnProgMenuSmall");
 
         final MenuItem mbOn = new MenuItem("Abos einschalten");

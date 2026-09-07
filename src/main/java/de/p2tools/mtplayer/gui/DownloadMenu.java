@@ -138,7 +138,7 @@ public class DownloadMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
-        mb.setGraphic(P2IconFactory.P2ICON.TAB_MENU.getFontIcon());
+        mb.setGraphic(P2IconFactory.P2ICON.P2_TAB_MENU.getFontIcon());
         mb.getStyleClass().addAll("pFuncBtn", "btnProgMenu", "btnProgMenuSmall");
 
         // Submenü "Downloads"

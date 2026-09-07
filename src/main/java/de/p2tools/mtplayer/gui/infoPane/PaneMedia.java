@@ -168,7 +168,7 @@ public class PaneMedia extends VBox {
         });
 
         btnDialogMedia.setTooltip(new Tooltip("Dialog Mediensammlung öffnen"));
-        btnDialogMedia.setGraphic(P2IconFactory.P2ICON.TAB_MENU.getFontIcon());
+        btnDialogMedia.setGraphic(P2IconFactory.P2ICON.P2_TAB_MENU.getFontIcon());
         btnDialogMedia.setOnAction(a -> {
             new MediaDialogController(mediaDataDtoMedia);
             setSearchStringMedia();
