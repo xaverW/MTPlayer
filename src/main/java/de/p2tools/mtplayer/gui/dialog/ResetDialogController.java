@@ -114,7 +114,7 @@ public class ResetDialogController extends P2DialogExtra {
             }
         });
 
-        gridPane.add(P2IconFactory.P2ICON.P2_ATTENTION_80.getFontIcon(), 0, 0, 1, 1);
+        gridPane.add(P2IconFactory.P2ICON.P2_ATTENTION_OCT_80.getFontIcon(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(btnHelp, 2, 1);
