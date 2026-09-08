@@ -123,7 +123,7 @@ public class DownloadAddDialogGui {
 
         // -> oder für Downloads über ein Programm
         addDownloadDto.btnProgramCallReset.setTooltip(new Tooltip("Reset"));
-        addDownloadDto.btnProgramCallReset.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        addDownloadDto.btnProgramCallReset.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
 
         HBox hBoxArray1 = new HBox(P2LibConst.PADDING_HBOX);
         HBox.setHgrow(addDownloadDto.textAreaProg, Priority.ALWAYS);

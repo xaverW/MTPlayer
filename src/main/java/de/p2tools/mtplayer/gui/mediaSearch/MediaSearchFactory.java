@@ -119,7 +119,7 @@ public class MediaSearchFactory {
         } else {
             btnChange.setTooltip(new Tooltip("Einstellung wo gesucht wird"));
         }
-        btnChange.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnChange.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
         btnChange.setOnAction(a -> {
             if (buildSearchFrom) {
                 if (mediaDataDto.buildSearchFrom.getValue() == ProgConst.MEDIA_SEARCH_THEME_OR_PATH) {

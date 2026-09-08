@@ -164,7 +164,7 @@ public class PaneMediaDataPath {
 
         Button btnUpdate = new Button("");
         btnUpdate.setTooltip(new Tooltip("Die markierte Sammlung wird neu eingelesen."));
-        btnUpdate.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnUpdate.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
         btnUpdate.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems())
                 .or(progData.mediaDataList.searchingProperty()));
         btnUpdate.setOnAction(a -> update());

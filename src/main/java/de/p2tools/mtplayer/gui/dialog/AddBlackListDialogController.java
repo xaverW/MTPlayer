@@ -141,19 +141,19 @@ public class AddBlackListDialogController extends P2DialogExtra {
             rbFilm.setSelected(list == ProgConst.LIST_FILM);
             rbAudio.setSelected(list == ProgConst.LIST_AUDIO);
         });
-        btnList.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnList.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
 
         btnChannel.setOnAction(a -> blackData.setChannel(channel));
         btnChannel.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnChannel.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnChannel.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
 
         btnTheme.setOnAction(a -> blackData.setTheme(theme));
         btnTheme.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnTheme.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnTheme.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
 
         btnTitel.setOnAction(a -> blackData.setTitle(title));
         btnTitel.setTooltip(new Tooltip("Daten vom Film eintragen"));
-        btnTitel.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnTitel.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
 
         btnClearChannel.setOnAction(a -> blackData.channelProperty().setValue(""));
         btnClearChannel.setTooltip(new Tooltip("Feld löschen"));

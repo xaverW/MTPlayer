@@ -168,7 +168,7 @@ public class PaneDialogScrollPane extends ScrollPane {
     private VBox getVBoxSearch() {
         // Suchen was
         final Button btnReset = new Button("");
-        btnReset.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnReset.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
         btnReset.setOnAction(a -> txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle));
 

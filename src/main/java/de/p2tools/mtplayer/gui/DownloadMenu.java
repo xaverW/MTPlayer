@@ -54,7 +54,7 @@ public class DownloadMenu {
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren",
-                P2IconFactory.P2ICON.BTN_RANDOM_B.getFontIcon());
+                P2IconFactory.P2ICON.BTN_ROTATE_3D_B.getFontIcon());
         btnRefresh.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
 
         vBox.getChildren().add(P2GuiTools.getVDistance(10));

@@ -183,7 +183,7 @@ public class ImportMVDialog extends P2DialogExtra {
             int found = MVFactory.importAbosMediathekView(this.getStage(), aboList);
             lblFoundAbos.setText(found + "");
         });
-        btnAddAbo.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnAddAbo.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
         GridPane.setHalignment(btnAddAbo, HPos.RIGHT);
 
         final Label lblFoundBlacks = new Label("");
@@ -193,7 +193,7 @@ public class ImportMVDialog extends P2DialogExtra {
             int found = MVFactory.addBlacks(blackList);
             lblFoundBlacks.setText(found + "");
         });
-        btnAddBlack.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnAddBlack.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
         GridPane.setHalignment(btnAddBlack, HPos.RIGHT);
 
         int row = 0;

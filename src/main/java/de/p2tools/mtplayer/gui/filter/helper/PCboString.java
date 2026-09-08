@@ -164,7 +164,7 @@ public class PCboString extends ComboBox<PCboString.PCboLabel> {
             final Label lblFilter = new Label();
 
             {
-                btnDel.setGraphic(P2IconFactory.P2ICON.P2_BTN_CLEAR_FILTER_S.getFontIcon());
+                btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_S.getFontIcon());
                 btnDel.getStyleClass().add("buttonVerySmall");
                 btnDel.setMaxSize(16, 16);
                 btnDel.setMinSize(16, 16);

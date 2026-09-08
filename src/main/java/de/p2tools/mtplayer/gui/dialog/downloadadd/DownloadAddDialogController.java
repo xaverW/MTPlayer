@@ -157,7 +157,7 @@ public class DownloadAddDialogController extends P2DialogExtra {
             addDownloadDto.initPathName.pathChanged();
         });
 
-        addDownloadDto.btnPropose.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        addDownloadDto.btnPropose.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
         addDownloadDto.btnPropose.setTooltip(new Tooltip("Einen Pfad zum Speichern vorschlagen"));
         addDownloadDto.btnPropose.setOnAction(event ->
                 addDownloadDto.initPathName.proposeDestination());

@@ -40,7 +40,7 @@ public class HistorySearchFactory {
 
         Button btnChange = new Button();
         btnChange.setTooltip(new Tooltip("Einstellung wo gesucht wird"));
-        btnChange.setGraphic(P2IconFactory.P2ICON.BTN_RANDOM.getFontIcon());
+        btnChange.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
         btnChange.setOnAction(a -> {
             if (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_THEME_OR_PATH) {
                 mediaDataDto.searchInWhat.setValue(ProgConst.MEDIA_SEARCH_TITEL_OR_NAME);
