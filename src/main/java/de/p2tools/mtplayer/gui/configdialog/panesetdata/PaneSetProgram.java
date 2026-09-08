@@ -208,7 +208,7 @@ public class PaneSetProgram {
 
         final Button btnFile = new Button();
         btnFile.setOnAction(event -> P2DirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtProgPath));
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnFile.setTooltip(new Tooltip("Ein Programm zum verarbeiten der URL auswählen"));
 
         final Button btnHelpDest = P2IconFactory.getHelpButton(stage, "Zieldateiname",

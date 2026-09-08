@@ -61,14 +61,14 @@ public class ResetDialogController extends P2DialogExtra {
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
         // Set zurücksetzen
-        P2BigButton cancelButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(),
+        P2BigButton cancelButton = new P2BigButton(P2IconFactory.P2ICON.P2__DIALOG_RESET.getFontIcon(),
                 "Nichts ändern", "");
         cancelButton.setOnAction(e -> close());
 
         final Button btnHelp = P2IconFactory.getHelpButton(this.getStage(), "Programm zurücksetzen",
                 HelpText.RESET_DIALOG);
 
-        P2BigButton setButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(),
+        P2BigButton setButton = new P2BigButton(P2IconFactory.P2ICON.P2__DIALOG_RESET.getFontIcon(),
                 "Einstellungen zum Abspielen/Aufzeichnen zurücksetzen",
                 "Es werden alle Programmsets (auch eigene)" + P2LibConst.LINE_SEPARATOR +
                         "zum Abspielen und Aufzeichnen gelöscht" + P2LibConst.LINE_SEPARATOR +
@@ -84,7 +84,7 @@ public class ResetDialogController extends P2DialogExtra {
         });
 
         // alle Einstellungen
-        P2BigButton allButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(), "" +
+        P2BigButton allButton = new P2BigButton(P2IconFactory.P2ICON.P2__DIALOG_RESET.getFontIcon(), "" +
                 "Alle Einstellungen zurücksetzen!",
                 "Alle Einstellungen gehen verloren." + P2LibConst.LINE_SEPARATORx2 +
                         "ACHTUNG" + P2LibConst.LINE_SEPARATOR +
@@ -114,7 +114,7 @@ public class ResetDialogController extends P2DialogExtra {
             }
         });
 
-        gridPane.add(P2IconFactory.P2ICON.P2_ATTENTION_OCT_80.getFontIcon(), 0, 0, 1, 1);
+        gridPane.add(P2IconFactory.P2ICON.P2__ATTENTION_OCT_80.getFontIcon(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, 0);
         gridPane.add(cancelButton, 1, 1);
         gridPane.add(btnHelp, 2, 1);

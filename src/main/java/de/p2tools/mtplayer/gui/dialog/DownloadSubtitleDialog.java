@@ -97,7 +97,7 @@ public class DownloadSubtitleDialog extends P2DialogExtra {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.DirChooser(getStage(), txtPath);
         });
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
 
         int row = 0;
         gridPane.add(new Label("Pfad"), 0, row);

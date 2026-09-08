@@ -83,7 +83,7 @@ public class PaneMediaConfig {
         final Button btnHelp = P2IconFactory.getHelpButton(stage,
                 "Mediensammlungen verwalten", HelpText.MEDIA_COLLECTION);
         btnExportFile.setTooltip(new Tooltip("Einen Ordner für den Export auswählen"));
-        btnExportFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnExportFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
 
         final ToggleGroup tg = new ToggleGroup();
         rbWithOutSuff.setToggleGroup(tg);

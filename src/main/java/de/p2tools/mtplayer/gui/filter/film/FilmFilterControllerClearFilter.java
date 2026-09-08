@@ -55,20 +55,20 @@ public class FilmFilterControllerClearFilter extends VBox {
     }
 
     private void addButton() {
-        btnGoBack.setGraphic(P2IconFactory.P2ICON.BTN_BACKWARD.getFontIcon());
+        btnGoBack.setGraphic(P2IconFactory.P2ICON.BTN_ARROW_BACKWARD.getFontIcon());
         btnGoBack.setOnAction(a -> filterDto.filterWorker.getBackwardFilmFilter().goBackward());
         btnGoBack.disableProperty().bind(filterDto.filterWorker.getBackwardFilterList().emptyProperty()
                 .or(filterDto.filterWorker.getBackwardFilterList().sizeProperty().isEqualTo(1))); // 1 ist der aktuelle Filter!
         btnGoBack.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
-        btnGoForward.setGraphic(P2IconFactory.P2ICON.BTN_FORWARD.getFontIcon());
+        btnGoForward.setGraphic(P2IconFactory.P2ICON.BTN_ARROW_FORWARD.getFontIcon());
         btnGoForward.setOnAction(a -> filterDto.filterWorker.getBackwardFilmFilter().goForward());
         btnGoForward.disableProperty().bind(filterDto.filterWorker.getForwardFilterList().emptyProperty());
         btnGoForward.setTooltip(new Tooltip("letzte Filtereinstellung wieder herstellen"));
 
         btnClearFilter.setOnAction(a -> clearFilter());
 
-        btnEditFilter.setGraphic(P2IconFactory.P2ICON.BTN_EDIT.getFontIcon());
+        btnEditFilter.setGraphic(P2IconFactory.P2ICON.P2_BTN_EDIT.getFontIcon());
         btnEditFilter.setOnAction(a -> new FilmFilterEditDialog(progData, filterDto));
         btnEditFilter.setTooltip(new Tooltip("Filter ein/ausschalten"));
 

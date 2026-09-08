@@ -49,7 +49,7 @@ public class PaneMediaContextMenu {
         miOpen.setOnAction(a -> {
             String path = mediaData.getPath();
             if (!path.isEmpty()) {
-                P2Open.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                P2Open.openDir(path, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
             }
         });
 
@@ -59,7 +59,7 @@ public class PaneMediaContextMenu {
             String name = mediaData.getName();
             if (!path.isEmpty() && !name.isEmpty()) {
                 P2Open.playStoredFilm(P2FileUtils.addsPath(path, name),
-                        ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                        ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
             }
         });
 

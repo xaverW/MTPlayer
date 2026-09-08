@@ -86,7 +86,7 @@ public class MTPlayerMenu extends MenuButton {
         setMinWidth(Region.USE_PREF_SIZE);
         getStyleClass().addAll("pFuncBtn", "btnProgMenu");
         setText("");
-        FontIcon node = P2IconFactory.P2ICON.P2_PROG_MENU.getFontIcon();
+        FontIcon node = P2IconFactory.P2ICON.P2__PROG_MENU.getFontIcon();
         node.setScaleX(1.5);
         setGraphic(node);
 
@@ -119,7 +119,7 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miUrlHelp = new MenuItem("Anleitung im Web");
         miUrlHelp.setOnAction(event -> {
             P2Open.openURL(ProgConst.URL_WEBSITE_HELP,
-                    ProgConfig.SYSTEM_PROG_OPEN_URL, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                    ProgConfig.SYSTEM_PROG_OPEN_URL, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         });
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {

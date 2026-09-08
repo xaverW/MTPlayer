@@ -150,12 +150,12 @@ public class PaneDialogMedia extends PaneDialogScrollPane {
         btnCreateMediaDB.disableProperty().bind(progData.mediaDataList.searchingProperty());
         btnCreateMediaDB.setOnAction(e -> MediaDataWorker.createMediaDb());
 
-        btnOpen.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnOpen.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnOpen.setTooltip(new Tooltip("Ausgewählten Pfad im Dateimanager öffnen"));
         btnOpen.setOnAction(e -> open());
         btnOpen.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
 
-        btnPlay.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
+        btnPlay.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
         btnPlay.setTooltip(new Tooltip("Ausgewählten Film abspielen"));
         btnPlay.setOnAction(e -> play());
         btnPlay.disableProperty().bind(txtPathMedia.textProperty().isEmpty().and(txtTitleMedia.textProperty().isEmpty()));
@@ -174,12 +174,12 @@ public class PaneDialogMedia extends PaneDialogScrollPane {
         final String name = txtTitleMedia.getText();
         if (!name.isEmpty() && !path.isEmpty()) {
             P2Open.playStoredFilm(P2FileUtils.addsPath(path, name),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         }
     }
 
     private void open() {
         final String s = txtPathMedia.getText();
-        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
     }
 }

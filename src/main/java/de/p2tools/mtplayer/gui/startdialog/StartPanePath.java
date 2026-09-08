@@ -172,7 +172,7 @@ public class StartPanePath extends VBox {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.FileChooserOpenFile(stage, txtPlayer);
         });
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnFile.setTooltip(new Tooltip("Programmdatei auswählen"));
 
         HBox hBox = new HBox();

@@ -211,7 +211,7 @@ public class PaneMediaDataPath {
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
 
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Einlesen einer neuen Sammlung auswählen."));
-        btnPath.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnPath.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnPath.setOnAction(event -> {
             P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtPath);
             if (txtCollectionName.getText().isEmpty()) {

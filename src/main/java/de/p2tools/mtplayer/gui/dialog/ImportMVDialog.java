@@ -114,7 +114,7 @@ public class ImportMVDialog extends P2DialogExtra {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.DirChooser(getStage(), txtMVPath);
         });
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
 
         final Button btnHelp = P2IconFactory.getHelpButton(getStageProp(), "Konfigordner", HelpText.MV_PATH);
 
@@ -140,7 +140,7 @@ public class ImportMVDialog extends P2DialogExtra {
         final Button btnLoad = new Button();
         btnLoad.setTooltip(new Tooltip("Die Einstellungen suchen"));
         btnLoad.setOnAction(event -> new LoadMV(aboList, blackList).readConfiguration(Path.of(txtMVPath.getText())));
-        btnLoad.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
+        btnLoad.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
         GridPane.setHalignment(btnLoad, HPos.RIGHT);
 
         final Label lblAbo = new Label();

@@ -120,7 +120,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnDownStop = new Button("");
                     btnDownStop.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnDownStop.setTooltip(new Tooltip("Download stoppen"));
-                    btnDownStop.setGraphic(P2IconFactory.P2ICON.BTN_PAUSE.getFontIcon());
+                    btnDownStop.setGraphic(P2IconFactory.P2ICON.P2_BTN_PAUSE.getFontIcon());
                     btnDownStop.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
@@ -159,7 +159,7 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
                         btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
 
-                        btnDownStop.setGraphic(P2IconFactory.P2ICON.BTN_STOP.getFontIcon());
+                        btnDownStop.setGraphic(P2IconFactory.P2ICON.P2_BTN_STOP.getFontIcon());
                         btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                     }
 
@@ -170,14 +170,14 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnFilmStart = new Button("");
                     btnFilmStart.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
-                    btnFilmStart.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
+                    btnFilmStart.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
                     btnFilmStart.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
 
                         DownloadData download = getTableView().getItems().get(getIndex());
                         P2Open.playStoredFilm(download.getDestPathFile(),
-                                ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                                ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
 
                         getTableView().refresh();
                         getTableView().requestFocus();
@@ -186,14 +186,14 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                     btnOpenDirectory = new Button();
                     btnOpenDirectory.getStyleClass().addAll("pFuncBtn", "btnTable");
                     btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-                    btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                    btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
                     btnOpenDirectory.setOnAction((ActionEvent event) -> {
                         getTableView().getSelectionModel().clearSelection();
                         getTableView().getSelectionModel().select(getIndex());
 
                         DownloadData download = getTableView().getItems().get(getIndex());
                         P2Open.openDir(download.getDestPath(),
-                                ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                                ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
 
                         getTableView().refresh();
                         getTableView().requestFocus();
@@ -211,8 +211,8 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnOpenDirectory.setMaxHeight(Table.ROW_HEIGHT_MAX);
                         btnOpenDirectory.setMinHeight(Table.ROW_HEIGHT_MAX);
 
-                        btnFilmStart.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
-                        btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                        btnFilmStart.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
+                        btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
                     }
 
                     hbox.getChildren().addAll(btnFilmStart, btnOpenDirectory);
@@ -262,9 +262,6 @@ public class CellDownloadButton<S, T> extends TableCell<S, T> {
                         btnDownStart.setMinHeight(Table.ROW_HEIGHT_MAX);
                         btnDownDel.setMaxHeight(Table.ROW_HEIGHT_MAX);
                         btnDownDel.setMinHeight(Table.ROW_HEIGHT_MAX);
-
-                        btnDownStart.setGraphic(P2IconFactory.P2ICON.BTN_TRIANGLE_DOWN.getFontIcon());
-                        btnDownDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                     }
 
                     hbox.getChildren().addAll(btnDownStart, btnDownDel);

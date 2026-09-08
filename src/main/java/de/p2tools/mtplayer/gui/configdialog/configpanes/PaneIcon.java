@@ -90,7 +90,7 @@ public class PaneIcon {
                 txtProgIconPath.setText(s);
             }
         });
-        btnProgIconFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnProgIconFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         txtProgIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_PROGRAM_ICON_PATH);
         tglOwnProgIcon.selectedProperty().addListener((v, o, n) -> {
             MTPlayerFactory.setProgramIcon();
@@ -138,7 +138,7 @@ public class PaneIcon {
                 txtTrayIconPath.setText(s);
             }
         });
-        btnTrayFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnTrayFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnTrayFile.disableProperty().bind(tglOwnTrayIcon.selectedProperty().not().or(tglTray.selectedProperty().not()));
 
         txtTrayIconPath.textProperty().bindBidirectional(ProgConfig.SYSTEM_TRAY_ICON_PATH);

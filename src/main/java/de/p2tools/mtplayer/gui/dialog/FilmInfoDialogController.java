@@ -19,10 +19,10 @@ package de.p2tools.mtplayer.gui.dialog;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
 import de.p2tools.p2lib.guitools.P2Hyperlink;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -47,9 +47,9 @@ public class FilmInfoDialogController extends P2DialogExtra {
     private final GridPane gridPane = new GridPane();
     private final Button btnOk = new Button("_Ok");
 
-    private final FontIcon ivHD = PIconFactory.PICON.ICON_BOOLEAN_ON.getFontIcon();
-    private final FontIcon ivUT = PIconFactory.PICON.ICON_BOOLEAN_ON.getFontIcon();
-    private final FontIcon ivNew = PIconFactory.PICON.ICON_BOOLEAN_ON.getFontIcon();
+    private final FontIcon ivHD = P2IconFactory.P2ICON.P2_BTN_BOOLEAN_ON.getFontIcon();
+    private final FontIcon ivUT = P2IconFactory.P2ICON.P2_BTN_BOOLEAN_ON.getFontIcon();
+    private final FontIcon ivNew = P2IconFactory.P2ICON.P2_BTN_BOOLEAN_ON.getFontIcon();
 
     private final P2Hyperlink p2HyperlinkUrlSmall = new P2Hyperlink("",
             ProgConfig.SYSTEM_PROG_OPEN_URL);

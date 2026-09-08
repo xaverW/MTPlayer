@@ -81,7 +81,7 @@ public class PaneProgs {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtFileManager);
         });
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnFile.setTooltip(new Tooltip("Einen Dateimanager manuell auswählen"));
 
         final Button btnHelp = P2IconFactory.getHelpButton(stage, "Dateimanager", HelpText.FILEMANAGER);
@@ -101,7 +101,7 @@ public class PaneProgs {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtFileManagerVideo);
         });
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnFile.setTooltip(new Tooltip("Einen Videoplayer zum Abspielen der gespeicherten Filme auswählen"));
 
         final Button btnHelp = P2IconFactory.getHelpButton(stage, "Videoplayer", HelpText.VIDEOPLAYER);
@@ -121,7 +121,7 @@ public class PaneProgs {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.FileChooserOpenFile(ProgData.getInstance().primaryStage, txtFileManagerWeb);
         });
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnFile.setTooltip(new Tooltip("Einen Webbrowser zum Öffnen von URLs auswählen"));
 
         final Button btnHelp = P2IconFactory.getHelpButton(stage, "Webbrowser", HelpText.WEBBROWSER);

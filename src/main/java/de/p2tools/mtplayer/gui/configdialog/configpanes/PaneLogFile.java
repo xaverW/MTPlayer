@@ -84,7 +84,7 @@ public class PaneLogFile {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtLogFile);
         });
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
 
         final Button btnClear = new Button();
         btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());

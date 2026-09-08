@@ -210,7 +210,7 @@ public class DownloadGuiController extends AnchorPane {
     public void playFilm() {
         final Optional<DownloadData> download = getSel();
         download.ifPresent(downloadData -> P2Open.playStoredFilm(downloadData.getDestPathFile(),
-                ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon()));
+                ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon()));
     }
 
     public void deleteFilmFile() {
@@ -229,7 +229,7 @@ public class DownloadGuiController extends AnchorPane {
         }
 
         String s = download.get().getDestPath();
-        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        P2Open.openDir(s, ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
     }
 
     public void playUrl() {

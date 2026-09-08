@@ -41,19 +41,19 @@ public class NotificationDownFinished {
         Button btnFilmStart = new Button();
         btnFilmStart.getStyleClass().addAll("pFuncBtn", "pFuncBtnSmall");
         btnFilmStart.setTooltip(new Tooltip("Gespeicherten Film abspielen"));
-        btnFilmStart.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon(14));
+        btnFilmStart.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY_S.getFontIcon());
         btnFilmStart.setOnAction((ActionEvent event) -> {
             P2Open.playStoredFilm(download.getDestPathFile(),
-                    ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                    ProgConfig.SYSTEM_PROG_PLAY_FILME, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         });
 
         Button btnOpenDirectory = new Button();
         btnOpenDirectory.getStyleClass().addAll("pFuncBtn", "pFuncBtnSmall");
         btnOpenDirectory.setTooltip(new Tooltip("Ordner mit gespeichertem Film öffnen"));
-        btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR_S.getFontIcon());
+        btnOpenDirectory.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR_S.getFontIcon());
         btnOpenDirectory.setOnAction((ActionEvent event) -> {
             P2Open.openDir(download.getDestPath(),
-                    ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+                    ProgConfig.SYSTEM_PROG_OPEN_DIR, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         });
 
         HBox hBoxBottom = new HBox();

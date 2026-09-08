@@ -68,7 +68,7 @@ public class Busy {
         final Button busyBtnStop = new Button();
 
         // busy
-        busyBtnStop.setGraphic(P2IconFactory.P2ICON.BTN_STOP.getFontIcon());
+        busyBtnStop.setGraphic(P2IconFactory.P2ICON.P2_BTN_STOP.getFontIcon());
         busyBtnStop.getStyleClass().add("buttonVeryLow");
         busyBtnStop.setOnAction(a -> stopPropProperty().set(true));
         busyBtnStop.visibleProperty().bind(stopBtn);

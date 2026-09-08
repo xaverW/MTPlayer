@@ -79,21 +79,21 @@ public class QuitDialogController extends P2DialogExtra {
         headerLabel.setStyle("-fx-font-size: 1.5em;");
 
         // nicht beenden
-        P2BigButton cancelButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(),
+        P2BigButton cancelButton = new P2BigButton(P2IconFactory.P2ICON.P2__DIALOG_RESET.getFontIcon(),
                 "Nicht beenden", "");
         cancelButton.setOnAction(e -> {
             close();
         });
 
         // beenden
-        P2BigButton quitButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(),
+        P2BigButton quitButton = new P2BigButton(P2IconFactory.P2ICON.P2__DIALOG_RESET.getFontIcon(),
                 "Beenden", "Alle Downloads abbrechen und das Programm beenden.");
         quitButton.setOnAction(e -> {
             ProgQuit.quit();
         });
 
         // warten, dann beenden
-        P2BigButton waitButton = new P2BigButton(P2IconFactory.P2ICON.P2_DIALOG_RESET.getFontIcon(),
+        P2BigButton waitButton = new P2BigButton(P2IconFactory.P2ICON.P2__DIALOG_RESET.getFontIcon(),
                 "Warten", "Alle Downloads abwarten und dann das Programm beenden.");
         waitButton.setOnAction(e -> startWaiting());
 
@@ -105,7 +105,7 @@ public class QuitDialogController extends P2DialogExtra {
         });
         final Button btnHelp = P2IconFactory.getHelpButton(getStage(), "Rechner herunterfahren", HelpText.CONFIG_SHUT_DOWN_CALL);
         final Button btnEdit = new Button();
-        btnEdit.setGraphic(P2IconFactory.P2ICON.BTN_EDIT.getFontIcon());
+        btnEdit.setGraphic(P2IconFactory.P2ICON.P2_BTN_EDIT.getFontIcon());
         btnEdit.setOnAction(a -> new ChangeShutDownCallDialog(getStageProp().getValue()));
         btnEdit.setTooltip(new Tooltip("Systembefehl nach Programmende anpassen"));
 
@@ -115,7 +115,7 @@ public class QuitDialogController extends P2DialogExtra {
         gridPane.setPadding(new Insets(20));
 
         int row = 0;
-        gridPane.add(P2IconFactory.P2ICON.P2_ATTENTION_OCT_80.getFontIcon(), 0, 0, 1, 1);
+        gridPane.add(P2IconFactory.P2ICON.P2__ATTENTION_OCT_80.getFontIcon(), 0, 0, 1, 1);
         gridPane.add(headerLabel, 1, row);
         gridPane.add(cancelButton, 1, ++row);
         gridPane.add(quitButton, 1, ++row);

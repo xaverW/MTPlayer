@@ -70,7 +70,7 @@ public class PaneSetDestination {
         result.add(titledPane);
 
         final Button btnFile = new Button();
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnFile.setTooltip(new Tooltip("Einen Ordner zum Speichern der Filme auswählen"));
         btnFile.setOnAction(event -> P2DirFileChooser.DirChooser(ProgData.getInstance().primaryStage, txtDestPath));
 

@@ -54,7 +54,7 @@ public class LiveFilterTabArd extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARD).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnArd = new Button("Weitersuchen");
-        btnKeepOnArd.setGraphic(P2IconFactory.P2ICON.BTN_FORWARD.getFontIcon());
+        btnKeepOnArd.setGraphic(P2IconFactory.P2ICON.BTN_ARROW_FORWARD.getFontIcon());
         btnKeepOnArd.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnArd.setOnAction(a -> searchArd(true));
         btnKeepOnArd.disableProperty().bind((ardDto.nextUrlProperty().isEmpty())

@@ -43,7 +43,7 @@ public class TableAudioFactory {
 
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnPlay.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
+                btnPlay.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
                 btnPlay.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
@@ -56,7 +56,7 @@ public class TableAudioFactory {
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_S.getFontIcon());
+                btnSave.setGraphic(P2IconFactory.P2ICON.P2_BTN_RECORD_S.getFontIcon());
                 btnSave.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
                     getTableView().getSelectionModel().select(getIndex());
@@ -70,9 +70,9 @@ public class TableAudioFactory {
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("pFuncBtn", "btnTable");
                 if (film.isBookmark()) {
-                    btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_DEL.getFontIcon());
+                    btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BTN_BOOKMARK_DEL.getFontIcon());
                 } else {
-                    btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_ADD.getFontIcon());
+                    btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BTN_BOOKMARK_ADD.getFontIcon());
                 }
                 btnBookmark.setOnAction(e -> {
                     getTableView().getSelectionModel().clearSelection();
@@ -104,12 +104,12 @@ public class TableAudioFactory {
                     btnBookmark.setMaxHeight(Table.ROW_HEIGHT_MAX);
                     btnBookmark.setMinHeight(Table.ROW_HEIGHT_MAX);
 
-                    btnPlay.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
-                    btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_S.getFontIcon());
+                    btnPlay.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
+                    btnSave.setGraphic(P2IconFactory.P2ICON.P2_BTN_RECORD_S.getFontIcon());
                     if (film.isBookmark()) {
-                        btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_DEL.getFontIcon());
+                        btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BTN_BOOKMARK_DEL.getFontIcon());
                     } else {
-                        btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_ADD.getFontIcon());
+                        btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BTN_BOOKMARK_ADD.getFontIcon());
                     }
                 }
 

@@ -71,13 +71,13 @@ public class AudioMenu {
 
         final ToolBarButton btPlay = new ToolBarButton(vBox,
                 "Abspielen", "Markiertes Audio abspielen",
-                P2IconFactory.P2ICON.BTN_PLAY_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_PLAY_B.getFontIcon());
         final ToolBarButton btPlayAll = new ToolBarButton(vBox,
                 "Alle Abspielen", "Alle markierten Audios abspielen",
-                P2IconFactory.P2ICON.BTN_PLAY_ALL_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_PLAY_ALL_B.getFontIcon());
         final ToolBarButton btSave = new ToolBarButton(vBox,
                 "Speichern", "Markiertes Audio speichern",
-                P2IconFactory.P2ICON.BTN_RECORD_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_RECORD_B.getFontIcon());
 
         btPlay.setOnAction(a -> {
             final Optional<FilmDataMTP> filmSelection = ProgData.getInstance().audioGuiController.getSel(true, true);
@@ -105,16 +105,16 @@ public class AudioMenu {
 
         final ToolBarButton btBookmark = new ToolBarButton(vBox,
                 "Bookmarks anlegen", "Bookmarks für die markierten Filme anlegen",
-                P2IconFactory.P2ICON.P2_BOOKMARK_ADD_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_BOOKMARK_ADD_B.getFontIcon());
         final ToolBarButton btDelBookmark = new ToolBarButton(vBox,
                 "Bookmarks löschen", "Bookmarks für die markierten Filme löschen",
-                P2IconFactory.P2ICON.P2_BOOKMARK_DEL_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_BOOKMARK_DEL_B.getFontIcon());
         final ToolBarButton btDelAllBookmark = new ToolBarButton(vBox,
                 "Alle Bookmarks löschen", "Alle angelegten Bookmarks löschen",
-                P2IconFactory.P2ICON.P2_BOOKMARK_DEL_ALL_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_BOOKMARK_DEL_B.getFontIcon());
         final ToolBarButton btFilterBookmark = new ToolBarButton(vBox,
                 "Bookmarks anzeigen", FILM_FILTER_BOOKMARK_TEXT,
-                P2IconFactory.P2ICON.P2_BOOKMARK_SHOW_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_BOOKMARK_SHOW_B.getFontIcon());
         final ToolBarButton btShowBookmark = new ToolBarButton(vBox,
                 "Alle Bookmarks anzeigen", FILM_SHOW_BOOKMARK_TEXT,
                 PIconFactory.PICON.TOOLBAR_BTN_BOOKMARK_SHOW_DIALOG.getFontIcon());
@@ -177,7 +177,7 @@ public class AudioMenu {
     private void initFilmMenu() {
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Audiomenü anzeigen"));
-        mb.setGraphic(P2IconFactory.P2ICON.P2_TAB_MENU.getFontIcon());
+        mb.setGraphic(P2IconFactory.P2ICON.P2__TAB_MENU.getFontIcon());
         mb.getStyleClass().addAll("pFuncBtn", "btnProgMenu", "btnProgMenuSmall");
 
         final MenuItem mbPlay = new MenuItem("Audio abspielen");

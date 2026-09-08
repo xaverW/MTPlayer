@@ -60,9 +60,9 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
                 btnActivate.getStyleClass().addAll("pFuncBtn", "btnTable");
                 if (aboData.isActive()) {
                     // dann ausschalen
-                    btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PAUSE.getFontIcon());
+                    btnActivate.setGraphic(P2IconFactory.P2ICON.P2_BTN_PAUSE.getFontIcon());
                 } else {
-                    btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
+                    btnActivate.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
                 }
                 btnActivate.setOnAction(a -> {
                     getTableView().getSelectionModel().clearSelection();
@@ -103,9 +103,9 @@ public class CellAboButton<S, T> extends TableCell<S, T> {
 
                     if (aboData.isActive()) {
                         // dann ausschalen
-                        btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PAUSE.getFontIcon());
+                        btnActivate.setGraphic(P2IconFactory.P2ICON.P2_BTN_PAUSE.getFontIcon());
                     } else {
-                        btnActivate.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
+                        btnActivate.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
                     }
                     btnDel.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
                 }

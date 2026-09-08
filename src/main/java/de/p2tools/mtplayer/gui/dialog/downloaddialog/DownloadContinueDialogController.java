@@ -165,7 +165,7 @@ public class DownloadContinueDialogController extends P2DialogExtra {
     }
 
     private void initButton() {
-        btnPath.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnPath.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
         btnPath.setOnAction(event -> getDestination());
 

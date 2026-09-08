@@ -63,7 +63,7 @@ public class DownloadMenu {
                 P2IconFactory.P2ICON.BTN_BOTTOM_OUTLINE_B.getFontIcon());
         final ToolBarButton btnStartAll = new ToolBarButton(vBox,
                 "Alle Downloads starten", "Alle Downloads starten",
-                P2IconFactory.P2ICON.BTN_START_ALL_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_DOWNLOAD_ALL_B.getFontIcon());
         final ToolBarButton btStartAllTime = new ToolBarButton(vBox,
                 "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten",
                 PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_START_TIME.getFontIcon());
@@ -77,7 +77,7 @@ public class DownloadMenu {
                 P2IconFactory.P2ICON.BTN_CLEAR_B.getFontIcon());
         final ToolBarButton btnChange = new ToolBarButton(vBox,
                 "Downloads ändern", "Markierte Downloads ändern",
-                P2IconFactory.P2ICON.BTN_EDIT_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_EDIT_B.getFontIcon());
         final ToolBarButton btnClear = new ToolBarButton(vBox,
                 "Downloads aufräumen", "Liste der Downloads aufräumen",
                 P2IconFactory.P2ICON.BTN_CLEAN_B.getFontIcon());
@@ -85,7 +85,7 @@ public class DownloadMenu {
         vBox.getChildren().add(P2GuiTools.getVDistance(10));
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
                 "Film Starten", "Gespeicherten Film abspielen",
-                P2IconFactory.P2ICON.BTN_PLAY_B.getFontIcon());
+                P2IconFactory.P2ICON.P2_BTN_PLAY_B.getFontIcon());
 
         btnRefresh.setOnAction(a -> {
             AboSearchDownloadsFactory.searchForDownloadsFromAbosAndMaybeStart();
@@ -138,7 +138,7 @@ public class DownloadMenu {
         // MenuButton
         final MenuButton mb = new MenuButton("");
         mb.setTooltip(new Tooltip("Downloadmenü anzeigen"));
-        mb.setGraphic(P2IconFactory.P2ICON.P2_TAB_MENU.getFontIcon());
+        mb.setGraphic(P2IconFactory.P2ICON.P2__TAB_MENU.getFontIcon());
         mb.getStyleClass().addAll("pFuncBtn", "btnProgMenu", "btnProgMenuSmall");
 
         // Submenü "Downloads"

@@ -146,7 +146,7 @@ public class AboAddDialogGuiPath extends VBox {
         // eigenen Einstellungen
         final Button btnPath = new Button();
         btnPath.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen."));
-        btnPath.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnPath.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnPath.setOnAction(event -> {
             P2DirFileChooser.DirChooser(stage, addAboDto.cboAboDir);
             addAboDto.initDestination.setPathToAbo();

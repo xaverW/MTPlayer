@@ -58,7 +58,7 @@ public class LiveFilterTabZdf extends Tab {
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         Button btnKeepOnZdf = new Button("Weitersuchen");
-        btnKeepOnZdf.setGraphic(P2IconFactory.P2ICON.BTN_FORWARD.getFontIcon());
+        btnKeepOnZdf.setGraphic(P2IconFactory.P2ICON.BTN_ARROW_FORWARD.getFontIcon());
         btnKeepOnZdf.setTooltip(new Tooltip("Weitersuchen"));
         btnKeepOnZdf.setOnAction(a -> searchZdf(true));
         btnKeepOnZdf.disableProperty().bind((jsonInfoDto.zdfNextCursorProperty().isEmpty())

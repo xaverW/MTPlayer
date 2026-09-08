@@ -129,15 +129,15 @@ public class TableBookmarkFactory {
 
                 btnPlay = new Button("");
                 btnPlay.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnPlay.setGraphic(P2IconFactory.P2ICON.BTN_PLAY.getFontIcon());
+                btnPlay.setGraphic(P2IconFactory.P2ICON.P2_BTN_PLAY.getFontIcon());
 
                 btnSave = new Button("");
                 btnSave.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnSave.setGraphic(P2IconFactory.P2ICON.BTN_RECORD_S.getFontIcon());
+                btnSave.setGraphic(P2IconFactory.P2ICON.P2_BTN_RECORD_S.getFontIcon());
 
                 btnBookmark = new Button("");
                 btnBookmark.getStyleClass().addAll("pFuncBtn", "btnTable");
-                btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BOOKMARK_DEL_B.getFontIcon());
+                btnBookmark.setGraphic(P2IconFactory.P2ICON.P2_BTN_BOOKMARK_DEL_B.getFontIcon());
 
                 if (ProgConfig.BOOKMARK_DIALOG_SMALL_TABLE_ROW.get()) {
                     btnPlay.setMaxHeight(18);

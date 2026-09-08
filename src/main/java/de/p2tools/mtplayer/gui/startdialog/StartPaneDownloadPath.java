@@ -71,7 +71,7 @@ public class StartPaneDownloadPath extends VBox {
         btnFile.setOnAction(event -> {
             P2DirFileChooser.DirChooser(stage, txtPath);
         });
-        btnFile.setGraphic(P2IconFactory.P2ICON.BTN_OPEN_DIR.getFontIcon());
+        btnFile.setGraphic(P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         btnFile.setTooltip(new Tooltip("Einen Pfad zum Speichern auswählen"));
 
         final Button btnHelp = P2IconFactory.getHelpButton(stage,
