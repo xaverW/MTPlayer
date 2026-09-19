@@ -34,10 +34,6 @@ public class PIconFactory {
             return size;
         }
 
-        public void setSize(int size) {
-            this.size = size;
-        }
-
         public FontIcon getFontIcon() {
             return P2IconFactory.getIcon(literal, size);
         }
