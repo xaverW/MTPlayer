@@ -206,6 +206,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_CHANGE_MEDIA_FILE = addBoolProp("system-change-media-file", Boolean.FALSE);
     public static BooleanProperty SYSTEM_DEL_OLD_CONFIG_FILE = addBoolProp("system-del-old-config-file", Boolean.FALSE);
     public static BooleanProperty SYSTEM_ADD_HISTORY_SHOWN_FILE = addBoolProp("system-add-history-shown-file", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_HISTORY_INIT_FILM_AUDIO_LIST = addBoolProp("system-history-init-film-audio-list", Boolean.FALSE);
 
     // Fenstereinstellungen
     static {

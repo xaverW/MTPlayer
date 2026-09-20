@@ -215,7 +215,7 @@ public class FilmGuiController extends AnchorPane {
         if (list.isEmpty()) {
             return;
         }
-        FilmToolsFactory.setFilmShown(list, set);
+        FilmToolsFactory.setFilmShown(false, list, set);
         setShown = true;
     }
 

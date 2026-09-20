@@ -494,14 +494,18 @@ public class DownloadGuiController extends AnchorPane {
     private void setFilmShown(boolean shown) {
         // Menü: Filme als (un)gesehen markieren
         final ArrayList<DownloadData> arrayDownloadData = getSelList();
-        final ArrayList<FilmDataMTP> filmArrayList = new ArrayList<>();
+        final ArrayList<FilmDataMTP> filmArrayListAudio = new ArrayList<>();
+        final ArrayList<FilmDataMTP> filmArrayListFilm = new ArrayList<>();
 
         arrayDownloadData.forEach(download -> {
-            if (download.getFilm() != null) {
-                filmArrayList.add(download.getFilm());
+            if (download.getFilm() != null && !download.isAudio()) {
+                filmArrayListFilm.add(download.getFilm());
+            } else if (download.getFilm() != null && download.isAudio()) {
+                filmArrayListAudio.add(download.getFilm());
             }
         });
-        FilmToolsFactory.setFilmShown(filmArrayList, shown);
+        FilmToolsFactory.setFilmShown(false, filmArrayListFilm, shown);
+        FilmToolsFactory.setFilmShown(true, filmArrayListAudio, shown);
     }
 
     private void stopWaiting() {

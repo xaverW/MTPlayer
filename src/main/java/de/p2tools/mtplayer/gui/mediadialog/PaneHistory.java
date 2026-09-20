@@ -24,9 +24,11 @@ import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.HistorySearchFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.table.CellHistorySource;
+import de.p2tools.mtplayer.gui.tools.table.TableHistoryFactory;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.table.P2RowFactory;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
@@ -52,11 +54,11 @@ import java.util.function.Predicate;
 
 public class PaneHistory extends ScrollPane {
 
-    //    private Text textSearch = new Text();
     private final TextField txtSearch = new TextField();
     private final TitledPane tpDel = new TitledPane();
     private final PaneHistoryDel paneHistoryDel;
     private final Accordion accordion = new Accordion();
+    private final ComboBox<String> cboAbo = new ComboBox<>();
 
     private final Label lblGesamtMedia = new Label();
     private final Label lblHits = new Label();
@@ -115,6 +117,7 @@ public class PaneHistory extends ScrollPane {
 
     public void make() {
         initPanel();
+        initCboAbo();
         initTable();
         initAction();
         initAccordion();
@@ -137,11 +140,24 @@ public class PaneHistory extends ScrollPane {
         this.setContent(vBoxMedia);
     }
 
-    void initTable() {
+    private void initCboAbo() {
+        cboAbo.setItems(progData.historyListJson.getAboList());
+        cboAbo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            filter();
+            mediaDataDto.searchStringProp.setValue(txtSearch.getText());
+        });
+    }
+
+    private void initTable() {
         tableHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableHistory.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableHistory.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         tableHistory.setEditable(true);
+
+        final TableColumn<HistoryData, Boolean> audioColumn = new TableColumn<>("Liste");
+        audioColumn.setCellValueFactory(new PropertyValueFactory<>("audio"));
+        TableHistoryFactory.columnFactoryList(audioColumn);
+        audioColumn.getStyleClass().add("alignCenter");
 
         final TableColumn<HistoryData, Integer> downloadColumn = new TableColumn<>("Downloads");
         downloadColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
@@ -150,6 +166,9 @@ public class PaneHistory extends ScrollPane {
         final TableColumn<HistoryData, Integer> shownColumn = new TableColumn<>("Gesehen");
         shownColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
         shownColumn.setCellFactory(new CellHistorySource<>(true).cellFactory);
+
+        final TableColumn<HistoryData, String> aboColumn = new TableColumn<>("Abo");
+        aboColumn.setCellValueFactory(new PropertyValueFactory<>("abo"));
 
         final TableColumn<HistoryData, String> channelColumn = new TableColumn<>("Sender");
         channelColumn.setCellValueFactory(new PropertyValueFactory<>("channel"));
@@ -168,8 +187,8 @@ public class PaneHistory extends ScrollPane {
         final TableColumn<HistoryData, String> pathColumn = new TableColumn<>("Url");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
 
-        tableHistory.getColumns().addAll(downloadColumn, shownColumn, channelColumn,
-                themeColumn, titleColumn, dateColumn, pathColumn);
+        tableHistory.getColumns().addAll(audioColumn, downloadColumn, shownColumn, aboColumn,
+                channelColumn, themeColumn, titleColumn, dateColumn, pathColumn);
 
         tableHistory.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
             setTableSel(dataNew);
@@ -232,7 +251,7 @@ public class PaneHistory extends ScrollPane {
     }
 
     // ==============================================
-    private GridPane getVBoxSearch() {
+    private VBox getVBoxSearch() {
         ToggleGroup tg = new ToggleGroup();
         rbAll.setToggleGroup(tg);
         rbShown.setToggleGroup(tg);
@@ -249,45 +268,26 @@ public class PaneHistory extends ScrollPane {
         final Button btnReset = new Button("");
         btnReset.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
         btnReset.setTooltip(new Tooltip("Suchtext wieder herstellen"));
-        btnReset.setOnAction(a -> txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle));
+        btnReset.setOnAction(a ->
+                txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle)
+        );
 
-        final Button btnClear = new Button();
-        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
-        btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
-        btnClear.setOnAction(a -> txtSearch.clear());
 
         // ============
-        HBox hBoxTitle = HistorySearchFactory.getSearchHbox(mediaDataDto);
+        GridPane searchGrid = HistorySearchFactory.getSearchHbox(mediaDataDto, txtSearch, btnReset, cboAbo);
         mediaDataDto.searchInWhat.addListener((u, o, n) -> filter());
 
         // ============
-        HBox.setHgrow(txtSearch, Priority.ALWAYS);
-        HBox hBoxSearch = new HBox(P2LibConst.PADDING_HBOX);
-        hBoxSearch.setPadding(new Insets(0));
-        if (mediaDataExist) {
-            hBoxSearch.getChildren().addAll(txtSearch, btnReset, btnClear);
-        } else {
-            // wenns keine MediaData gibt, dann brauchts den Reset auch nicht
-            hBoxSearch.getChildren().addAll(txtSearch, btnClear);
-        }
-
         HBox hBoxRadio = new HBox(P2LibConst.PADDING_HBOX);
         hBoxRadio.getChildren().addAll(rbAll, rbDownload, rbShown, rbOnlyShown, P2GuiTools.getHBoxGrower(),
                 lblHits, new Label(" von: "), lblGesamtMedia);
 
         // ============
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(5);
-        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
-                P2GridConstraints.getCcComputedSizeAndHgrow());
+        VBox vBox = new VBox(P2LibConst.SPACING_VBOX);
+        vBox.getChildren().addAll(P2Text.getLblTextBold("Suchen"),
+                searchGrid, hBoxRadio);
 
-        gridPane.add(hBoxTitle, 1, 0);
-        gridPane.add(new Label("Suchen: "), 0, 1);
-        gridPane.add(hBoxSearch, 1, 1);
-        gridPane.add(hBoxRadio, 1, 2);
-
-        return gridPane;
+        return vBox;
     }
 
     private GridPane getTextFieldGrid() {
@@ -326,6 +326,10 @@ public class PaneHistory extends ScrollPane {
         } else if (rbDownload.isSelected()) {
             pred = pred.and(h ->
                     (h.getSource() == HistoryData.SOURCE_SHOWN_DOWNLOAD || h.getSource() == HistoryData.SOURCE_DOWNLOAD));
+        }
+        String abo = cboAbo.getSelectionModel().getSelectedItem();
+        if (abo != null && !abo.isEmpty()) {
+            pred = pred.and(h -> (h.getAbo().equals(abo)));
         }
 
         filteredList.setPredicate(pred);

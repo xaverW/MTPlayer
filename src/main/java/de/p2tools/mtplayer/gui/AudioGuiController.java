@@ -215,7 +215,7 @@ public class AudioGuiController extends AnchorPane {
         if (list.isEmpty()) {
             return;
         }
-        FilmToolsFactory.setFilmShown(list, set);
+        FilmToolsFactory.setFilmShown(true, list, set);
         setShown = true;
     }
 

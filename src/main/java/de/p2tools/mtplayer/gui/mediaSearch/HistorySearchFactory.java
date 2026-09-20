@@ -18,25 +18,29 @@
 package de.p2tools.mtplayer.gui.mediaSearch;
 
 import de.p2tools.mtplayer.controller.config.ProgConst;
-import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.guitools.P2Text;
+import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 public class HistorySearchFactory {
     private HistorySearchFactory() {
     }
 
-    public static HBox getSearchHbox(MediaDataDto mediaDataDto) {
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.BOTTOM_CENTER);
-        Label lblText = P2Text.getLblTextBold(getTextSearchInWhat(mediaDataDto));
-        mediaDataDto.searchInWhat.addListener((u, o, n) ->
-                lblText.setText(getTextSearchInWhat(mediaDataDto)));
+    public static GridPane getSearchHbox(MediaDataDto mediaDataDto, TextField txtSearch, Button btnReset,
+                                         ComboBox<String> comboBox) {
+        final boolean mediaDataExist = !mediaDataDto.searchTheme.isEmpty() || !mediaDataDto.searchTitle.isEmpty();
+
+        final Button btnClear = new Button();
+        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnClear.setTooltip(new Tooltip("Das Suchfeld löschen"));
+        btnClear.setOnAction(a -> {
+            txtSearch.clear();
+            comboBox.getSelectionModel().clearSelection();
+        });
 
         Button btnChange = new Button();
         btnChange.setTooltip(new Tooltip("Einstellung wo gesucht wird"));
@@ -51,18 +55,42 @@ public class HistorySearchFactory {
             }
         });
 
-        hBox.getChildren().addAll(lblText, P2GuiTools.getHBoxGrower(), btnChange);
-        return hBox;
+        Label lblText = new Label(getTextSearchInWhat(mediaDataDto));
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+        hBox.setAlignment(Pos.CENTER);
+        mediaDataDto.searchInWhat.addListener((u, o, n) ->
+                lblText.setText(getTextSearchInWhat(mediaDataDto)));
+
+        if (mediaDataExist) {
+            hBox.getChildren().addAll(lblText, txtSearch, btnReset, btnChange, btnClear);
+        } else {
+            // wenns keine MediaData gibt, dann brauchts den Reset auch nicht
+            hBox.getChildren().addAll(lblText, txtSearch, btnChange, btnClear);
+        }
+
+        comboBox.setMaxWidth(Double.MAX_VALUE);
+        GridPane gridPane = new GridPane(P2LibConst.DIST_GRIDPANE_HGAP, P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSizeLeft(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
+
+        gridPane.add(lblText, 0, 0);
+        gridPane.add(txtSearch, 1, 0);
+        gridPane.add(hBox, 2, 0);
+        gridPane.add(new Label("Abos:"), 0, 1);
+        gridPane.add(comboBox, 1, 1);
+
+        return gridPane;
     }
 
     private static String getTextSearchInWhat(MediaDataDto mediaDataDto) {
         switch (mediaDataDto.searchInWhat.getValue()) {
             case ProgConst.MEDIA_SEARCH_THEME_OR_PATH:
-                return "Thema";
+                return "Thema:";
             case ProgConst.MEDIA_SEARCH_TITEL_OR_NAME:
-                return "Titel";
+                return "Titel:";
             default:
-                return "Thema oder Titel";
+                return "Thema oder Titel:";
         }
     }
 }

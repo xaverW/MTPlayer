@@ -38,7 +38,7 @@ public class MediaDialogController extends P2DialogExtra {
 
     private final ProgData progData = ProgData.getInstance();
 
-    private PaneDialogMedia paneDialogMedia;
+    private PaneMedia paneMedia;
     private PaneHistory paneHistory;
 
     private final MediaDataDto mediaDataDtoMedia;
@@ -79,13 +79,13 @@ public class MediaDialogController extends P2DialogExtra {
     public void make() {
         initPanel();
         initAction();
-        paneDialogMedia.filter(mediaDataDtoMedia.searchStringProp.getValueSafe());
+        paneMedia.filter(mediaDataDtoMedia.searchStringProp.getValueSafe());
         paneHistory.filter(mediaDataDtoHistory.searchStringProp.getValueSafe());
     }
 
     @Override
     public void close() {
-        paneDialogMedia.close();
+        paneMedia.close();
         paneHistory.close();
         super.close();
     }
@@ -116,8 +116,8 @@ public class MediaDialogController extends P2DialogExtra {
 
     private void initPanel() {
         try {
-            paneDialogMedia = new PaneDialogMedia(getStage(), mediaDataDtoMedia);
-            paneDialogMedia.make();
+            paneMedia = new PaneMedia(getStage(), mediaDataDtoMedia);
+            paneMedia.make();
 
             paneHistory = new PaneHistory(getStage(), mediaDataDtoHistory);
             paneHistory.make();
@@ -125,7 +125,7 @@ public class MediaDialogController extends P2DialogExtra {
             Tab tabMedia = new Tab("Mediensammlung");
             tabMedia.setTooltip(new Tooltip("Hier wird der Inhalt der Mediensammlung angezeigt"));
             tabMedia.setClosable(false);
-            tabMedia.setContent(paneDialogMedia);
+            tabMedia.setContent(paneMedia);
             tabPane.getTabs().add(tabMedia);
 
             Tab tabHistory = new Tab("History");

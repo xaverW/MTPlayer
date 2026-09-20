@@ -102,7 +102,7 @@ public class FilmPlayFactory {
 
         if (!ProgConfig.DOWNLOAD_ONLY_HISTORY.get()) {
             // dann den Film in die History eintragen
-            ProgData.getInstance().historyListJson.addFilmToShown(filmList);
+            ProgData.getInstance().historyListJson.addFilmToShown(audio, filmList);
         }
         final RuntimeExecPlay runtimeExec = new RuntimeExecPlay(downloadData);
         Process process = runtimeExec.exec(true /* log */);

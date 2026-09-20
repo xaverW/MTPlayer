@@ -17,7 +17,9 @@
 package de.p2tools.mtplayer.controller.data.history;
 
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.p2lib.mediathek.film.FilmDate;
+import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.tools.GermanStringSorter;
 
 public class HistoryData implements Comparable<HistoryData> {
@@ -29,20 +31,24 @@ public class HistoryData implements Comparable<HistoryData> {
     private final static GermanStringSorter sorter = GermanStringSorter.getInstance();
     public static final String TAG = "HistoryData";
 
+    private String abo;
     private int source;
     private FilmDate date;
     private final String channel;
+    private boolean audio; // dann ist es ein Download aus AUDIO
     private final String theme;
     private final String title;
     private final String url;
 
     public HistoryData(DownloadData download) {
+        this.audio = download.isAudio();
         this.source = download.isAbo() ? SOURCE_DOWNLOAD : SOURCE_SHOWN;
         try {
             this.date = new FilmDate();
         } catch (final Exception ignore) {
             this.date = new FilmDate(0);
         }
+        this.abo = download.getAboName();
         this.channel = download.getChannel();
         this.theme = download.getTheme();
         this.title = download.getTitle();
@@ -50,25 +56,31 @@ public class HistoryData implements Comparable<HistoryData> {
     }
 
     public HistoryData(DownloadData download, int source) {
+        this.audio = download.isAudio();
         this.source = source;
         this.date = new FilmDate();
+        this.abo = download.getAboName();
         this.channel = download.getChannel();
         this.theme = download.getTheme();
         this.title = download.getTitle();
         this.url = download.getHistoryUrl();
     }
 
-    public HistoryData(int source, String channel, String theme, String title, String url) {
+    public HistoryData(boolean audio, int source, FilmDataMTP film) {
+        this.audio = audio;
         this.source = source;
-        this.channel = channel;
-        this.theme = theme;
-        this.title = title;
-        this.url = url;
+        this.abo = film.getAboName();
+        this.channel = film.arr[FilmDataXml.FILM_CHANNEL];
+        this.theme = film.arr[FilmDataXml.FILM_THEME];
+        this.title = film.arr[FilmDataXml.FILM_TITLE];
+        this.url = film.getUrlHistory();
         this.date = new FilmDate();
     }
 
-    public HistoryData(int source, String date, String channel, String theme, String title, String url) {
+    public HistoryData(boolean audio, int source, String date, String abo, String channel, String theme, String title, String url) {
+        this.audio = audio;
         this.source = source;
+        this.abo = abo;
         this.channel = channel;
         this.theme = theme;
         this.title = title;
@@ -80,6 +92,22 @@ public class HistoryData implements Comparable<HistoryData> {
         } catch (final Exception ignore) {
             this.date = new FilmDate(0);
         }
+    }
+
+    public String getAbo() {
+        return abo;
+    }
+
+    public void setAbo(String abo) {
+        this.abo = abo;
+    }
+
+    public boolean isAudio() {
+        return audio;
+    }
+
+    public void setAudio(boolean audio) {
+        this.audio = audio;
     }
 
     public void addSourceDownload() {

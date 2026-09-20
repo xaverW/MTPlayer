@@ -29,6 +29,7 @@ import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.setdata.SetFactory;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
+import de.p2tools.mtplayer.controller.update.ProgConfigUpdateAfterLoad;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
 import de.p2tools.p2lib.mediathek.film.P2FilmlistFactory;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadFilmlist;
@@ -147,6 +148,7 @@ public class LoadFilmListWorker {
 
                 if (!ProgData.autoMode) {
                     // sonst macht es ja keinen Sinn
+                    ProgConfigUpdateAfterLoad.update();
                     WhatsNewFactory.checkUpdate();
                     Platform.runLater(() -> {
                         if (ProgConfig.CHECK_SET_PROGRAM_START.get()) {

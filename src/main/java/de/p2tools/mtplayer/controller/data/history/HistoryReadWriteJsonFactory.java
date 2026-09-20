@@ -62,8 +62,10 @@ public class HistoryReadWriteJsonFactory {
     private static void writeJson(HistoryData historyData, JsonGenerator jsonGenerator) throws IOException {
         jsonGenerator.writeObjectFieldStart(HistoryData.TAG);
         //start address object
+        jsonGenerator.writeBooleanField("audio", historyData.isAudio());
         jsonGenerator.writeNumberField("source", historyData.getSource());
         jsonGenerator.writeStringField("date", historyData.getDate().toString());
+        jsonGenerator.writeStringField("abo", historyData.getAbo());
         jsonGenerator.writeStringField("channel", historyData.getChannel());
         jsonGenerator.writeStringField("theme", historyData.getTheme());
         jsonGenerator.writeStringField("title", historyData.getTitle());
@@ -74,6 +76,8 @@ public class HistoryReadWriteJsonFactory {
     private static void readJson(JsonParser jsonParser) throws IOException {
         int source = HistoryData.SOURCE_SHOWN_DOWNLOAD;
         String date = "";
+        String abo = "";
+        boolean audio = false;
         String channel = "";
         String theme = "";
         String title = "";
@@ -82,8 +86,12 @@ public class HistoryReadWriteJsonFactory {
         while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
             String key = jsonParser.currentName();
             jsonParser.nextToken();
-            if ("date".equals(key)) {
+            if ("audio".equals(key)) {
+                audio = jsonParser.getBooleanValue();
+            } else if ("date".equals(key)) {
                 date = jsonParser.getText();
+            } else if ("abo".equals(key)) {
+                abo = jsonParser.getText();
             } else if ("channel".equals(key)) {
                 channel = jsonParser.getText();
             } else if ("theme".equals(key)) {
@@ -97,7 +105,7 @@ public class HistoryReadWriteJsonFactory {
             }
         }
 
-        HistoryData historyData = new HistoryData(source, date, channel, theme, title, url);
+        HistoryData historyData = new HistoryData(audio, source, date, abo, channel, theme, title, url);
         ProgData.getInstance().historyListJson.add(historyData);
     }
 }

@@ -22,11 +22,11 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.film.FilmToolsFactory;
 import de.p2tools.p2lib.alert.P2Alert;
-import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.tools.duration.P2Duration;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.stage.Stage;
@@ -77,6 +77,15 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
     }
 
     //===============
+    public ObservableList<String> getAboList() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        final HashSet<String> hash = new HashSet<>();
+        hash.add("");
+        this.forEach(h -> hash.add(h.getAbo()));
+        list.setAll(hash.stream().sorted().toList());
+        return list;
+    }
+
     public synchronized void replaceList(List<HistoryData> list) {
         this.setAll(list);
         makeUrlHash();
@@ -191,7 +200,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         }
     }
 
-    public synchronized void addFilmToShown(FilmDataMTP film) {
+    public synchronized void addFilmToShown(boolean audio, FilmDataMTP film) {
         // Button oder Menü, PlayFilm oder Tabellenmenü: Mark/Unmark
         // eine Liste Filme in die History schreiben
         if (film == null) {
@@ -212,13 +221,11 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
             return;
         }
 
-        HistoryData h = new HistoryData(HistoryData.SOURCE_SHOWN,
-                film.arr[FilmDataXml.FILM_CHANNEL], film.arr[FilmDataXml.FILM_THEME],
-                film.arr[FilmDataXml.FILM_TITLE], film.getUrlHistory());
+        HistoryData h = new HistoryData(audio, HistoryData.SOURCE_SHOWN, film);
         addToThisList(h);
     }
 
-    public synchronized void addFilmToShown(List<FilmDataMTP> filmList) {
+    public synchronized void addFilmToShown(boolean audio, List<FilmDataMTP> filmList) {
         // Button oder Menü, PlayFilm oder Tabellenmenü: Mark/Unmark
         // eine Liste Filme in die History schreiben
         if (filmList == null || filmList.isEmpty()) {
@@ -226,7 +233,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         }
 
         for (final FilmDataMTP film : filmList) {
-            addFilmToShown(film);
+            addFilmToShown(audio, film);
         }
     }
 

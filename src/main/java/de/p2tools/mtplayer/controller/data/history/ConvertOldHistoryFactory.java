@@ -29,6 +29,7 @@ import java.io.LineNumberReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ConvertOldHistoryFactory {
@@ -37,6 +38,41 @@ public class ConvertOldHistoryFactory {
 
     private ConvertOldHistoryFactory() {
     }
+
+    public static void initFilmAudioList() {
+        HistoryListJson historyListJson = ProgData.getInstance().historyListJson;
+        HashMap<String, HistoryData> hash = new HashMap<>();
+
+        historyListJson.forEach(h -> {
+            hash.put(h.getUrl(), h);
+        });
+
+        ProgData.getInstance().filmList.forEach(f -> {
+            HistoryData historyData = hash.get(f.getUrlHistory());
+            if (historyData != null) {
+                if (historyData.getAbo().isEmpty() && f.getAbo() != null) {
+                    historyData.setAbo(f.getAbo().getName());
+                }
+                if (!f.getUrl().endsWith(".mp3")) {
+                    historyData.setAudio(false);
+                }
+            }
+        });
+
+        ProgData.getInstance().audioList.forEach(f -> {
+            HistoryData historyData = hash.get(f.getUrlHistory());
+            if (historyData != null) {
+
+                if (historyData.getAbo().isEmpty() && f.getAbo() != null) {
+                    historyData.setAbo(f.getAbo().getName());
+                }
+                if (f.getUrl().endsWith(".mp3")) {
+                    historyData.setAudio(true);
+                }
+            }
+        });
+    }
+
 
     public static void addHistoryToShownFile() {
         ProgData.getInstance().historyListJson.loadList();
@@ -160,6 +196,6 @@ public class ConvertOldHistoryFactory {
         } catch (final Exception ex) {
             P2Log.errorLog(398853224, ex);
         }
-        return new HistoryData(HistoryData.SOURCE_SHOWN, date, "", theme, title, url);
+        return new HistoryData(url.endsWith(".mp3"), HistoryData.SOURCE_SHOWN, date, "", "", theme, title, url);
     }
 }

@@ -26,6 +26,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboSearchDownloadsFactory;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFilterFactory;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkFactory;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.update.ProgConfigUpdateAfterLoad;
 import de.p2tools.p2lib.mediathek.filmlistload.P2LoadFilmlist;
 import de.p2tools.p2lib.p2event.P2Event;
 import de.p2tools.p2lib.p2event.P2Listener;
@@ -155,6 +156,8 @@ public class LoadAudioListWorker {
             // activate the saved filter
             progData.worker.resetFilter();
         });
+
+        ProgConfigUpdateAfterLoad.update();
     }
 
     private static synchronized void addAudioInDownloads() {

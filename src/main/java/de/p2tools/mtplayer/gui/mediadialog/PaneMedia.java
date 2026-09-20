@@ -37,7 +37,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
-public class PaneDialogMedia extends PaneDialogScrollPane {
+public class PaneMedia extends PaneDialogScrollPane {
 
     private final Stage stage;
     private final FilteredList<MediaData> filteredList;
@@ -46,7 +46,7 @@ public class PaneDialogMedia extends PaneDialogScrollPane {
     private final ProgData progData = ProgData.getInstance();
     private final MediaDataDto mediaDataDto;
 
-    public PaneDialogMedia(Stage stage, MediaDataDto mediaDataDto) {
+    public PaneMedia(Stage stage, MediaDataDto mediaDataDto) {
         // aus den Einstellungen -> Mediensammlung
         // Dialog Mediensammlung aus Menü/Tabelle Kontextmenü
         super(mediaDataDto);

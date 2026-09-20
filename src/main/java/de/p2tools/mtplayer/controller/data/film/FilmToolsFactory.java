@@ -47,10 +47,10 @@ public class FilmToolsFactory {
         return theme.equals(ProgConst.THEME_LIVE);
     }
 
-    public static void setFilmShown(ArrayList<FilmDataMTP> filmArrayList, boolean setShown) {
+    public static void setFilmShown(boolean audio, ArrayList<FilmDataMTP> filmArrayList, boolean setShown) {
         // Menü: Film als .. setzen
         if (setShown) {
-            ProgData.getInstance().historyListJson.addFilmToShown(filmArrayList);
+            ProgData.getInstance().historyListJson.addFilmToShown(audio, filmArrayList);
         } else {
             ProgData.getInstance().historyListJson.removeFilmFromHistory(filmArrayList);
         }
