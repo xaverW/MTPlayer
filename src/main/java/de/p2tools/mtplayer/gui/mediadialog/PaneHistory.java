@@ -190,6 +190,8 @@ public class PaneHistory extends ScrollPane {
         final TableColumn<HistoryData, String> pathColumn = new TableColumn<>("Url");
         pathColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
 
+        aboColumn.setPrefWidth(150);
+
         tableHistory.getColumns().addAll(audioColumn, downloadColumn, shownColumn, aboColumn,
                 channelColumn, themeColumn, titleColumn, dateColumn, pathColumn);
 
