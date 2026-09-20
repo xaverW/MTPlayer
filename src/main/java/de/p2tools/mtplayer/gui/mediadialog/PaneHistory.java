@@ -21,7 +21,6 @@ import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.mediadb.MediaSearchPredicateFactory;
-import de.p2tools.mtplayer.gui.mediaSearch.HistorySearchFactory;
 import de.p2tools.mtplayer.gui.mediaSearch.MediaDataDto;
 import de.p2tools.mtplayer.gui.tools.table.CellHistorySource;
 import de.p2tools.mtplayer.gui.tools.table.TableHistoryFactory;
@@ -39,6 +38,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
@@ -82,6 +82,9 @@ public class PaneHistory extends ScrollPane {
     private final RadioButton rbDownload = new RadioButton("Downloads");
     private final RadioButton rbShown = new RadioButton("Gesehen");
     private final RadioButton rbOnlyShown = new RadioButton("Gesehen aber nicht gespeichert");
+    private final RadioButton rbAllLists = new RadioButton("Alles");
+    private final RadioButton rbFilm = new RadioButton("Filmliste");
+    private final RadioButton rbAudio = new RadioButton("Audioliste");
 
     public PaneHistory(Stage stage, MediaDataDto mediaDataDto) {
         // nur im MediaDialog
@@ -252,17 +255,27 @@ public class PaneHistory extends ScrollPane {
 
     // ==============================================
     private VBox getVBoxSearch() {
-        ToggleGroup tg = new ToggleGroup();
-        rbAll.setToggleGroup(tg);
-        rbShown.setToggleGroup(tg);
-        rbOnlyShown.setToggleGroup(tg);
-        rbDownload.setToggleGroup(tg);
+        ToggleGroup tgHistory = new ToggleGroup();
+        rbAll.setToggleGroup(tgHistory);
+        rbShown.setToggleGroup(tgHistory);
+        rbOnlyShown.setToggleGroup(tgHistory);
+        rbDownload.setToggleGroup(tgHistory);
 
         rbAll.setSelected(true);
-        rbAll.setOnAction(a -> filter());
+        rbAll.selectedProperty().addListener((u, o, n) -> filter());
         rbShown.setOnAction(a -> filter());
         rbOnlyShown.setOnAction(a -> filter());
         rbDownload.setOnAction(a -> filter());
+
+        ToggleGroup tgList = new ToggleGroup();
+        rbAllLists.setToggleGroup(tgList);
+        rbFilm.setToggleGroup(tgList);
+        rbAudio.setToggleGroup(tgList);
+
+        rbAllLists.setSelected(true);
+        rbAllLists.selectedProperty().addListener((u, o, n) -> filter());
+        rbFilm.setOnAction(a -> filter());
+        rbAudio.setOnAction(a -> filter());
 
         // Suchen was
         final Button btnReset = new Button("");
@@ -272,20 +285,14 @@ public class PaneHistory extends ScrollPane {
                 txtSearch.setText(mediaDataDto.searchTheme + " " + mediaDataDto.searchTitle)
         );
 
-
         // ============
-        GridPane searchGrid = HistorySearchFactory.getSearchHbox(mediaDataDto, txtSearch, btnReset, cboAbo);
+        GridPane searchGrid = getSearchGrid(mediaDataDto, txtSearch, btnReset, cboAbo);
         mediaDataDto.searchInWhat.addListener((u, o, n) -> filter());
-
-        // ============
-        HBox hBoxRadio = new HBox(P2LibConst.PADDING_HBOX);
-        hBoxRadio.getChildren().addAll(rbAll, rbDownload, rbShown, rbOnlyShown, P2GuiTools.getHBoxGrower(),
-                lblHits, new Label(" von: "), lblGesamtMedia);
 
         // ============
         VBox vBox = new VBox(P2LibConst.SPACING_VBOX);
         vBox.getChildren().addAll(P2Text.getLblTextBold("Suchen"),
-                searchGrid, hBoxRadio);
+                searchGrid);
 
         return vBox;
     }
@@ -313,10 +320,14 @@ public class PaneHistory extends ScrollPane {
         filter();
     }
 
-    private void filter() {
+    private synchronized void filter() {
         Predicate<HistoryData> pred = historyData -> true;
-        pred = pred.and(MediaSearchPredicateFactory.getPredicateHistoryData(
-                mediaDataDto.searchInWhat, txtSearch.getText()));
+
+        if (!txtSearch.getText().isEmpty()) {
+            pred = pred.and(MediaSearchPredicateFactory.getPredicateHistoryData(
+                    mediaDataDto.searchInWhat, txtSearch.getText()));
+        }
+
         if (rbShown.isSelected()) {
             pred = pred.and(h ->
                     (h.getSource() == HistoryData.SOURCE_SHOWN_DOWNLOAD || h.getSource() == HistoryData.SOURCE_SHOWN));
@@ -327,6 +338,13 @@ public class PaneHistory extends ScrollPane {
             pred = pred.and(h ->
                     (h.getSource() == HistoryData.SOURCE_SHOWN_DOWNLOAD || h.getSource() == HistoryData.SOURCE_DOWNLOAD));
         }
+
+        if (rbFilm.isSelected()) {
+            pred = pred.and(h -> (!h.isAudio()));
+        } else if (rbAudio.isSelected()) {
+            pred = pred.and(HistoryData::isAudio);
+        }
+
         String abo = cboAbo.getSelectionModel().getSelectedItem();
         if (abo != null && !abo.isEmpty()) {
             pred = pred.and(h -> (h.getAbo().equals(abo)));
@@ -361,5 +379,84 @@ public class PaneHistory extends ScrollPane {
         tpDel.setText("Löschen");
         tpDel.setContent(paneHistoryDel);
         accordion.getPanes().addAll(tpDel);
+    }
+
+    private GridPane getSearchGrid(MediaDataDto mediaDataDto, TextField txtSearch, Button btnReset,
+                                   ComboBox<String> comboBox) {
+        final boolean mediaDataExist = !mediaDataDto.searchTheme.isEmpty() || !mediaDataDto.searchTitle.isEmpty();
+
+        // ============
+        HBox hBoxRadioList = new HBox(P2LibConst.PADDING_HBOX);
+        hBoxRadioList.setAlignment(Pos.CENTER_LEFT);
+        hBoxRadioList.getChildren().addAll(rbAllLists, rbFilm, rbAudio);
+
+        // ============
+        HBox hBoxRadioHistory = new HBox(P2LibConst.PADDING_HBOX);
+        hBoxRadioHistory.getChildren().addAll(rbAll, rbDownload, rbShown, rbOnlyShown, P2GuiTools.getHBoxGrower(),
+                lblHits, new Label(" von: "), lblGesamtMedia);
+
+        final Button btnClearFilter = new Button();
+        btnClearFilter.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnClearFilter.setTooltip(new Tooltip("Den Filter löschen"));
+        btnClearFilter.setOnAction(a -> {
+            txtSearch.clear();
+            comboBox.getSelectionModel().clearSelection();
+            rbAll.setSelected(true);
+            rbAllLists.setSelected(true);
+        });
+
+        Button btnChange = new Button();
+        btnChange.setTooltip(new Tooltip("Einstellung wo gesucht wird"));
+        btnChange.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
+        btnChange.setOnAction(a -> {
+            if (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_THEME_OR_PATH) {
+                mediaDataDto.searchInWhat.setValue(ProgConst.MEDIA_SEARCH_TITEL_OR_NAME);
+            } else if (mediaDataDto.searchInWhat.getValue() == ProgConst.MEDIA_SEARCH_TITEL_OR_NAME) {
+                mediaDataDto.searchInWhat.setValue(ProgConst.MEDIA_SEARCH_TT_OR_PN);
+            } else {
+                mediaDataDto.searchInWhat.setValue(ProgConst.MEDIA_SEARCH_THEME_OR_PATH);
+            }
+        });
+
+        Label lblText = new Label(getTextSearchInWhat(mediaDataDto));
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+        hBox.setAlignment(Pos.CENTER);
+        mediaDataDto.searchInWhat.addListener((u, o, n) ->
+                lblText.setText(getTextSearchInWhat(mediaDataDto)));
+
+        if (mediaDataExist) {
+            hBox.getChildren().addAll(lblText, txtSearch, btnReset, btnChange, btnClearFilter);
+        } else {
+            // wenns keine MediaData gibt, dann brauchts den Reset auch nicht
+            hBox.getChildren().addAll(lblText, txtSearch, btnChange, btnClearFilter);
+        }
+
+        comboBox.setMaxWidth(Double.MAX_VALUE);
+        GridPane gridPane = new GridPane(P2LibConst.DIST_GRIDPANE_HGAP, P2LibConst.DIST_GRIDPANE_VGAP);
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSizeLeft(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
+
+        gridPane.add(lblText, 0, 0);
+        gridPane.add(txtSearch, 1, 0);
+        gridPane.add(hBox, 2, 0);
+        gridPane.add(new Label("Abos:"), 0, 1);
+        gridPane.add(comboBox, 1, 1);
+
+        gridPane.add(hBoxRadioList, 1, 2, 2, 1);
+        gridPane.add(hBoxRadioHistory, 1, 3, 2, 1);
+
+        return gridPane;
+    }
+
+    private String getTextSearchInWhat(MediaDataDto mediaDataDto) {
+        switch (mediaDataDto.searchInWhat.getValue()) {
+            case ProgConst.MEDIA_SEARCH_THEME_OR_PATH:
+                return "Thema:";
+            case ProgConst.MEDIA_SEARCH_TITEL_OR_NAME:
+                return "Titel:";
+            default:
+                return "Thema oder Titel:";
+        }
     }
 }
