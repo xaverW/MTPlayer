@@ -364,16 +364,16 @@ public class PaneHistory extends ScrollPane {
         }
     }
 
-    private int getSource() {
-        int source = HistoryData.SOURCE_SHOWN_DOWNLOAD;
-        if (rbShown.isSelected()) {
-            source = HistoryData.SOURCE_SHOWN;
-        }
-        if (rbDownload.isSelected()) {
-            source = HistoryData.SOURCE_DOWNLOAD;
-        }
-        return source;
-    }
+//    private int getSource() {
+//        int source = HistoryData.SOURCE_SHOWN_DOWNLOAD;
+//        if (rbShown.isSelected()) {
+//            source = HistoryData.SOURCE_SHOWN;
+//        }
+//        if (rbDownload.isSelected()) {
+//            source = HistoryData.SOURCE_DOWNLOAD;
+//        }
+//        return source;
+//    }
 
     private void initAccordion() {
         tpDel.setText("Löschen");
