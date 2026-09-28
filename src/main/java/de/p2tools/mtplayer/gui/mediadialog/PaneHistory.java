@@ -286,7 +286,7 @@ public class PaneHistory extends ScrollPane {
         rbFilm.setOnAction(a -> filter());
         rbAudio.setOnAction(a -> filter());
 
-        chkAct.setOnAction(a -> filter());
+        chkAct.selectedProperty().addListener((u, o, n) -> filter());
 
         // Suchen was
         final Button btnReset = new Button("");
