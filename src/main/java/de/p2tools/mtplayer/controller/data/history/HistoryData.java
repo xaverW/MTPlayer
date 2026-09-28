@@ -39,23 +39,25 @@ public class HistoryData implements Comparable<HistoryData> {
     private final String theme;
     private final String title;
     private final String url;
+    private boolean act = false;
 
-    public HistoryData(DownloadData download) {
-        this.audio = download.isAudio();
-        this.source = download.isAbo() ? SOURCE_DOWNLOAD : SOURCE_SHOWN;
-        try {
-            this.date = new FilmDate();
-        } catch (final Exception ignore) {
-            this.date = new FilmDate(0);
-        }
-        this.abo = download.getAboName();
-        this.channel = download.getChannel();
-        this.theme = download.getTheme();
-        this.title = download.getTitle();
-        this.url = download.getHistoryUrl();
-    }
+//    public HistoryData(DownloadData download) {
+//        this.audio = download.isAudio();
+//        this.source = download.isAbo() ? SOURCE_DOWNLOAD : SOURCE_SHOWN;
+//        try {
+//            this.date = new FilmDate();
+//        } catch (final Exception ignore) {
+//            this.date = new FilmDate(0);
+//        }
+//        this.abo = download.getAboName();
+//        this.channel = download.getChannel();
+//        this.theme = download.getTheme();
+//        this.title = download.getTitle();
+//        this.url = download.getHistoryUrl();
+//    }
 
     public HistoryData(DownloadData download, int source) {
+        // Download wird gestartet
         this.audio = download.isAudio();
         this.source = source;
         this.date = new FilmDate();
@@ -64,9 +66,11 @@ public class HistoryData implements Comparable<HistoryData> {
         this.theme = download.getTheme();
         this.title = download.getTitle();
         this.url = download.getHistoryUrl();
+        this.act = true;
     }
 
     public HistoryData(boolean audio, int source, FilmDataMTP film) {
+        // Film wird gestartet
         this.audio = audio;
         this.source = source;
         this.abo = film.getAboName();
@@ -75,9 +79,11 @@ public class HistoryData implements Comparable<HistoryData> {
         this.title = film.arr[FilmDataXml.FILM_TITLE];
         this.url = film.getUrlHistory();
         this.date = new FilmDate();
+        this.act = true;
     }
 
     public HistoryData(boolean audio, int source, String date, String abo, String channel, String theme, String title, String url) {
+        // History aus der Hist-Datei laden
         this.audio = audio;
         this.source = source;
         this.abo = abo;
@@ -92,6 +98,14 @@ public class HistoryData implements Comparable<HistoryData> {
         } catch (final Exception ignore) {
             this.date = new FilmDate(0);
         }
+    }
+
+    public boolean isAct() {
+        return act;
+    }
+
+    public void setAct(boolean act) {
+        this.act = act;
     }
 
     public String getAbo() {

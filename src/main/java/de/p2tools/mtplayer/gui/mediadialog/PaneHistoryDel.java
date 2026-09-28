@@ -42,6 +42,7 @@ public class PaneHistoryDel extends VBox {
     private final Label lblAge = new Label();
     private final Stage stage;
     private final Button btnDelAll = new Button("");
+    private final Button btnDelAct = new Button("");
     private final Button btnDelSelection = new Button("");
     private final Button btnDelAge = new Button("");
     private final Button btnDelNotInList = new Button("");
@@ -70,6 +71,11 @@ public class PaneHistoryDel extends VBox {
             progData.historyListJson.clearAll(stage);
         });
 
+        btnDelAct.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnDelAct.setOnAction(a -> {
+            progData.historyListJson.clearAct(stage);
+        });
+
         btnDelSelection.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnDelSelection.setOnAction(a -> {
             HistoryFactory.delSelection(stage, tableView.getSelectionModel().getSelectedItems());
@@ -84,6 +90,9 @@ public class PaneHistoryDel extends VBox {
         Button btnHelp = P2IconFactory.getHelpButton(stage,
                 "History löschen",
                 "Hier können Filme aus der History gelöscht werden." +
+                        "\n\n" +
+                        "* Aktuelle History löschen:\n" +
+                        "Es werden die neuen Einträge seit dem Programmstart gelöscht." +
                         "\n\n" +
                         "* Alle löschen:\n" +
                         "Es werden alle Einträge gelöscht." +
@@ -106,7 +115,10 @@ public class PaneHistoryDel extends VBox {
                 P2GridConstraints.getCcComputedSizeAndHgrow(), P2GridConstraints.getCcPrefSize());
 
         int row = 0;
-        gridPane.add(new Label("Alle löschen"), 0, row);
+        gridPane.add(new Label("Aktuelle History löschen"), 0, row);
+        gridPane.add(btnDelAct, 2, row);
+
+        gridPane.add(new Label("Alle löschen"), 0, ++row);
         gridPane.add(btnDelAll, 2, row);
 
         gridPane.add(new Label("Auswahl löschen"), 0, ++row);

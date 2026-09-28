@@ -101,10 +101,29 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         // aus dem Menü: Alles löschen (Abo, History)
         final int size = this.size();
 
-        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Film löschen",
+        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "History löschen",
                 "Soll die gesamte Liste (" + size + ")" +
                         " gelöscht werden?")) {
             clearList();
+            // dann auch History in den Filmen löschen
+            ProgData.getInstance().filmList.forEach(film -> {
+                film.setShown(false);
+                film.setActHist(false);
+            });
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED);
+        }
+    }
+
+    public synchronized void clearAct(Stage stage) {
+        // aus dem Menü: Aktuelle löschen (Abo, History)
+        List<HistoryData> delList = this.stream().filter(HistoryData::isAct).toList();
+        final int size = delList.size();
+
+        if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Aktuelle History löschen",
+                "Soll die aktuelle History aus der Liste (" + size + ")" +
+                        " gelöscht werden?")) {
+            this.removeAll(delList);
+
             // dann auch History in den Filmen löschen
             ProgData.getInstance().filmList.forEach(film -> {
                 film.setShown(false);

@@ -29,6 +29,7 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
 import de.p2tools.p2lib.guitools.table.P2RowFactory;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
@@ -70,7 +71,7 @@ public class PaneHistory extends ScrollPane {
     private final P2Listener listenerDbStart;
     private final P2Listener listenerDbStop;
 
-    private final boolean mediaDataExist;
+    //    private final boolean mediaDataExist;
     private final ProgData progData = ProgData.getInstance();
 
     ListChangeListener<HistoryData> listener;
@@ -85,11 +86,12 @@ public class PaneHistory extends ScrollPane {
     private final RadioButton rbAllLists = new RadioButton("Alles");
     private final RadioButton rbFilm = new RadioButton("Filmliste");
     private final RadioButton rbAudio = new RadioButton("Audioliste");
+    private final CheckBox chkAct = new CheckBox("Aktuelle");
 
     public PaneHistory(Stage stage, MediaDataDto mediaDataDto) {
         // nur im MediaDialog
         this.mediaDataDto = mediaDataDto;
-        this.mediaDataExist = !mediaDataDto.searchTheme.isEmpty() || !mediaDataDto.searchTitle.isEmpty();
+//        this.mediaDataExist = !mediaDataDto.searchTheme.isEmpty() || !mediaDataDto.searchTitle.isEmpty();
         this.paneHistoryDel = new PaneHistoryDel(progData, stage, tableHistory);
 
         listenerDbStart = new P2Listener(PEvents.EVENT_MEDIA_DB_START) {
@@ -162,6 +164,11 @@ public class PaneHistory extends ScrollPane {
         TableHistoryFactory.columnFactoryList(audioColumn);
         audioColumn.getStyleClass().add("alignCenter");
 
+        final TableColumn<HistoryData, Boolean> actColumn = new TableColumn<>("Neu");
+        actColumn.setCellValueFactory(new PropertyValueFactory<>("act"));
+        actColumn.setCellFactory(new P2CellCheckBox().cellFactory);
+        actColumn.getStyleClass().add("alignCenter");
+
         final TableColumn<HistoryData, Integer> downloadColumn = new TableColumn<>("Downloads");
         downloadColumn.setCellValueFactory(new PropertyValueFactory<>("source"));
         downloadColumn.setCellFactory(new CellHistorySource<>(false).cellFactory);
@@ -192,7 +199,7 @@ public class PaneHistory extends ScrollPane {
 
         aboColumn.setPrefWidth(150);
 
-        tableHistory.getColumns().addAll(audioColumn, downloadColumn, shownColumn, aboColumn,
+        tableHistory.getColumns().addAll(audioColumn, actColumn, downloadColumn, shownColumn, aboColumn,
                 channelColumn, themeColumn, titleColumn, dateColumn, pathColumn);
 
         tableHistory.getSelectionModel().selectedItemProperty().addListener((observableValue, dataOld, dataNew) -> {
@@ -279,6 +286,8 @@ public class PaneHistory extends ScrollPane {
         rbFilm.setOnAction(a -> filter());
         rbAudio.setOnAction(a -> filter());
 
+        chkAct.setOnAction(a -> filter());
+
         // Suchen was
         final Button btnReset = new Button("");
         btnReset.setGraphic(P2IconFactory.P2ICON.BTN_ROTATE_3D.getFontIcon());
@@ -352,6 +361,10 @@ public class PaneHistory extends ScrollPane {
             pred = pred.and(h -> (h.getAbo().equals(abo)));
         }
 
+        if (chkAct.isSelected()) {
+            pred = pred.and(HistoryData::isAct);
+        }
+
         filteredList.setPredicate(pred);
         lblHits.setText(filteredList.size() + "");
     }
@@ -384,7 +397,7 @@ public class PaneHistory extends ScrollPane {
     }
 
     private GridPane getSearchGrid(MediaDataDto mediaDataDto, TextField txtSearch, Button btnReset,
-                                   ComboBox<String> comboBox) {
+                                   ComboBox<String> cboAbo) {
         final boolean mediaDataExist = !mediaDataDto.searchTheme.isEmpty() || !mediaDataDto.searchTitle.isEmpty();
 
         // ============
@@ -402,9 +415,10 @@ public class PaneHistory extends ScrollPane {
         btnClearFilter.setTooltip(new Tooltip("Den Filter löschen"));
         btnClearFilter.setOnAction(a -> {
             txtSearch.clear();
-            comboBox.getSelectionModel().clearSelection();
+            cboAbo.getSelectionModel().clearSelection();
             rbAll.setSelected(true);
             rbAllLists.setSelected(true);
+            chkAct.setSelected(false);
         });
 
         Button btnChange = new Button();
@@ -433,7 +447,7 @@ public class PaneHistory extends ScrollPane {
             hBox.getChildren().addAll(lblText, txtSearch, btnChange, btnClearFilter);
         }
 
-        comboBox.setMaxWidth(Double.MAX_VALUE);
+        cboAbo.setMaxWidth(Double.MAX_VALUE);
         GridPane gridPane = new GridPane(P2LibConst.DIST_GRIDPANE_HGAP, P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSizeLeft(),
                 P2GridConstraints.getCcComputedSizeAndHgrow(),
@@ -443,10 +457,11 @@ public class PaneHistory extends ScrollPane {
         gridPane.add(txtSearch, 1, 0);
         gridPane.add(hBox, 2, 0);
         gridPane.add(new Label("Abos:"), 0, 1);
-        gridPane.add(comboBox, 1, 1);
+        gridPane.add(cboAbo, 1, 1);
 
         gridPane.add(hBoxRadioList, 1, 2, 2, 1);
         gridPane.add(hBoxRadioHistory, 1, 3, 2, 1);
+        gridPane.add(chkAct, 1, 4, 2, 1);
 
         return gridPane;
     }
