@@ -17,14 +17,12 @@
 
 package de.p2tools.mtplayer;
 
+import de.p2tools.mtplayer.controller.MTPTools;
 import de.p2tools.mtplayer.controller.ProgQuit;
-import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.controller.picon.IconRunner;
-import de.p2tools.mtplayer.controller.picon.PIconFactory;
 import de.p2tools.mtplayer.controller.tips.TipsDialog;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
@@ -35,15 +33,12 @@ import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
-import de.p2tools.p2lib.ikonli.P2IconShow;
 import de.p2tools.p2lib.tools.log.P2Logger;
 import de.p2tools.p2lib.tools.shortcut.P2ShortcutWorker;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Region;
 import org.kordamp.ikonli.javafx.FontIcon;
-
-import java.util.Arrays;
 
 public class MTPlayerMenu extends MenuButton {
     public MTPlayerMenu() {
@@ -153,45 +148,13 @@ public class MTPlayerMenu extends MenuButton {
                 miWhatsNew, miSearchUpdate, miAbout);
 
         if (ProgData.debug) {
-            final MenuItem miIcon = new MenuItem("Icon");
-            miIcon.setOnAction(e -> new P2IconShow(Arrays.asList(PIconFactory.PICON.values())));
-
             final MenuItem miDebug = new MenuItem("Debugtools");
             miDebug.setOnAction(event -> {
-                MTPTester mtpTester = new MTPTester(progData);
-                mtpTester.showDialog();
-            });
-            final MenuItem miFilmlist = new MenuItem("Filmliste");
-            miFilmlist.setOnAction(a -> progData.checkForNewFilmlist.foundNewListProperty()
-                    .set(!progData.checkForNewFilmlist.foundNewListProperty().get()));
-
-            final MenuItem miSearchAllUpdate = new MenuItem("Alle Programm-Downloads anzeigen");
-            miSearchAllUpdate.setOnAction(a -> new SearchProgramUpdate(progData)
-                    .searchNewProgramVersion());
-
-            final MenuItem miIconRunner = new MenuItem("Icon-Zirkus");
-            miIconRunner.setOnAction(a -> IconRunner.run());
-
-            final MenuItem miResetTodayDone = new MenuItem("<SYSTEM_SEARCH_UPDATE_TODAY_DONE> zurücksetzen");
-            miResetTodayDone.setOnAction(a -> {
-                ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.set("2020.01.01"); // heute noch nicht gemacht
-            });
-            final MenuItem miResetLastSearch = new MenuItem("<SYSTEM_SEARCH_UPDATE_LAST_DATE> zurücksetzen");
-            miResetLastSearch.setOnAction(a -> {
-                ProgConfig.SYSTEM_SEARCH_UPDATE_LAST_DATE.set("2020.01.01"); // letztes Datum, bis zu dem geprüft wurde, wenn leer wird das buildDate genommen
-            });
-            final MenuItem miResetUpdate = new MenuItem("<SYSTEM_SEARCH_UPDATE_TODAY_DONE und \n" +
-                    "SYSTEM_SEARCH_UPDATE_LAST_DATE> zurücksetzen");
-            miResetUpdate.setOnAction(a -> {
-                ProgConfig.SYSTEM_SEARCH_UPDATE_TODAY_DONE.set("2020.01.01"); // heute noch nicht gemacht
-                ProgConfig.SYSTEM_SEARCH_UPDATE_LAST_DATE.set("2020.01.01"); // letztes Datum, bis zu dem geprüft wurde, wenn leer wird das buildDate genommen
+                MTPTools mtpTools = new MTPTools(progData);
+                mtpTools.showDialog();
             });
 
-            final MenuItem miSave = new MenuItem("Alles Speichern");
-            miSave.setOnAction(a -> ProgSave.saveAll());
-
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miIcon, miDebug, miFilmlist, miSearchAllUpdate, miIconRunner,
-                    miResetTodayDone, miResetLastSearch, miResetUpdate, miSave);
+            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug);
         }
         return mHelp;
     }
