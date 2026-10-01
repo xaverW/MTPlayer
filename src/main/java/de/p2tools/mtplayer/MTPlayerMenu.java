@@ -17,12 +17,13 @@
 
 package de.p2tools.mtplayer;
 
-import de.p2tools.mtplayer.controller.MTPTools;
 import de.p2tools.mtplayer.controller.ProgQuit;
+import de.p2tools.mtplayer.controller.ProgSave;
 import de.p2tools.mtplayer.controller.config.PShortcut;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgConst;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.infotools.MTPToolsDialog;
 import de.p2tools.mtplayer.controller.tips.TipsDialog;
 import de.p2tools.mtplayer.controller.update.SearchProgramUpdate;
 import de.p2tools.mtplayer.controller.update.WhatsNewFactory;
@@ -63,15 +64,9 @@ public class MTPlayerMenu extends MenuButton {
         miConfig.setOnAction(e -> new ConfigDialogController(ProgData.getInstance()));
         miConfig.disableProperty().bind(ConfigDialogController.dialogIsRunning);
 
-        final MenuItem miSearchMediaCollection = new MenuItem("Mediensammlung");
-        miSearchMediaCollection.setOnAction(a -> new MediaDialogController("", ""));
-        P2ShortcutWorker.addShortCut(miSearchMediaCollection, PShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
-
-        final CheckMenuItem miDarkMode = new CheckMenuItem("Dunkle Oberfläche");
-        miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
-
-        final CheckMenuItem miColorMode = new CheckMenuItem("Farb-Modus-1");
-        miColorMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_THEME_1);
+        final MenuItem miMediaCollection = new MenuItem("Mediensammlung");
+        miMediaCollection.setOnAction(a -> new MediaDialogController("", ""));
+        P2ShortcutWorker.addShortCut(miMediaCollection, PShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
@@ -81,19 +76,23 @@ public class MTPlayerMenu extends MenuButton {
         setMinWidth(Region.USE_PREF_SIZE);
         getStyleClass().addAll("pFuncBtn", "btnProgMenu");
         setText("");
+
         FontIcon node = P2IconFactory.P2ICON.P2__PROG_MENU.getFontIcon();
         node.setScaleX(1.5);
         setGraphic(node);
 
-        getItems().addAll(miConfig, miSearchMediaCollection, miDarkMode, miColorMode);
-        addMenuButton();
-        getItems().addAll(addHelp(progData), new SeparatorMenuItem(), miQuit);
+        getItems().addAll(miConfig, miMediaCollection);
+        getItems().addAll(addTool(progData), addHelp(progData), new SeparatorMenuItem(), miQuit);
     }
 
-    private void addMenuButton() {
+    private void addMenuButton(Menu mTools) {
         final CheckMenuItem miFilm = new CheckMenuItem("Rechte Menüleiste");
         miFilm.visibleProperty().bind(MTPlayerController.TAB_FILM_ON);
         miFilm.selectedProperty().bindBidirectional(ProgConfig.FILM_GUI_SHOW_MENU);
+
+        final CheckMenuItem miAudio = new CheckMenuItem("Rechte Menüleiste");
+        miAudio.visibleProperty().bind(MTPlayerController.TAB_AUDIO_ON);
+        miAudio.selectedProperty().bindBidirectional(ProgConfig.AUDIO_GUI_SHOW_MENU);
 
         final CheckMenuItem miLiveFilm = new CheckMenuItem("Rechte Menüleiste");
         miLiveFilm.visibleProperty().bind(MTPlayerController.TAB_LIVE_ON);
@@ -107,7 +106,46 @@ public class MTPlayerMenu extends MenuButton {
         miAbo.visibleProperty().bind(MTPlayerController.TAB_ABO_ON);
         miAbo.selectedProperty().bindBidirectional(ProgConfig.ABO_GUI_SHOW_MENU);
 
-        getItems().addAll(miFilm, miLiveFilm, miDownload, miAbo);
+        mTools.getItems().addAll(miFilm, miAudio, miLiveFilm, miDownload, miAbo);
+    }
+
+    private Menu addTool(ProgData progData) {
+        final Menu mTools = new Menu("Tools");
+
+        final CheckMenuItem miDarkMode = new CheckMenuItem("Dunkle Oberfläche");
+        miDarkMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_DARK_THEME);
+
+        final CheckMenuItem miColorMode = new CheckMenuItem("Farb-Modus-1");
+        miColorMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_THEME_1);
+
+        addMenuButton(mTools);
+
+        final MenuItem miLog = new MenuItem("Logdatei öffnen");
+        miLog.setOnAction(event -> {
+            P2Logger.openLogFile();
+        });
+
+        final MenuItem miShortCut = new MenuItem("Tastaturbefehle festlegen");
+        miShortCut.setOnAction(event -> {
+            ProgConfig.SYSTEM_CONFIG_DIALOG_TAB.setValue(0);
+            ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG.setValue(8);
+            new ConfigDialogController(ProgData.getInstance());
+        });
+
+        final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
+        miReset.setOnAction(event -> new ResetDialogController(progData));
+
+        final MenuItem miImportMV = new MenuItem("MediathekView Einstellungen importieren");
+        miImportMV.setOnAction(event -> new ImportMVDialog(progData));
+
+        final MenuItem miSave = new MenuItem("Einstellungen speichern");
+        miSave.setOnAction(event -> ProgSave.saveAll());
+
+        final MenuItem miInfos = new MenuItem("Programminfos");
+        miInfos.setOnAction(event -> new MTPToolsDialog());
+
+        mTools.getItems().addAll(miDarkMode, miColorMode, miLog, miShortCut, miReset, miImportMV, miSave, miInfos);
+        return mTools;
     }
 
     private Menu addHelp(ProgData progData) {
@@ -116,46 +154,26 @@ public class MTPlayerMenu extends MenuButton {
             P2Open.openURL(ProgConst.URL_WEBSITE_HELP,
                     ProgConfig.SYSTEM_PROG_OPEN_URL, P2IconFactory.P2ICON.P2_BTN_OPEN_DIR.getFontIcon());
         });
-        final MenuItem miLog = new MenuItem("Logdatei öffnen");
-        miLog.setOnAction(event -> {
-            P2Logger.openLogFile();
-        });
-        final MenuItem miShortCut = new MenuItem("Tastaturbefehle festlegen");
-        miShortCut.setOnAction(event -> {
-            ProgConfig.SYSTEM_CONFIG_DIALOG_TAB.setValue(0);
-            ProgConfig.SYSTEM_CONFIG_DIALOG_CONFIG.setValue(8);
-            new ConfigDialogController(ProgData.getInstance());
-        });
-        final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
-        miReset.setOnAction(event -> new ResetDialogController(progData));
-        final MenuItem miImportMV = new MenuItem("MediathekView Einstellungen importieren");
-        miImportMV.setOnAction(event -> new ImportMVDialog(progData));
 
         final MenuItem miTipps = new MenuItem("Hilfedialog");
         miTipps.setOnAction(a -> new TipsDialog(progData));
+
         final MenuItem miWhatsNew = new MenuItem("Was ist neu?");
         miWhatsNew.setOnAction(a -> WhatsNewFactory.showWhatsNew(true));
+
+        final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
+        miReset.setOnAction(event -> new ResetDialogController(progData));
+
         final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
         miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData).searchNewProgramVersion(true));
+
         final MenuItem miAbout = new MenuItem("Über dieses Programm");
         miAbout.setOnAction(event -> new AboutDialogController(progData).showDialog());
 
         final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miTipps,
-                new SeparatorMenuItem(),
-                miUrlHelp, miLog, miShortCut, miReset, miImportMV,
-                new SeparatorMenuItem(), new SeparatorMenuItem(),
-                miWhatsNew, miSearchUpdate, miAbout);
+        mHelp.getItems().addAll(miTipps, miUrlHelp, miWhatsNew, miReset,
+                miSearchUpdate, new SeparatorMenuItem(), miAbout);
 
-        if (ProgData.debug) {
-            final MenuItem miDebug = new MenuItem("Debugtools");
-            miDebug.setOnAction(event -> {
-                MTPTools mtpTools = new MTPTools(progData);
-                mtpTools.showDialog();
-            });
-
-            mHelp.getItems().addAll(new SeparatorMenuItem(), miDebug);
-        }
         return mHelp;
     }
 }
