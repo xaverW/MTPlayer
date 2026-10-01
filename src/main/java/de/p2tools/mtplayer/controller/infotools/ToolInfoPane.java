@@ -18,19 +18,26 @@ package de.p2tools.mtplayer.controller.infotools;
 
 
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import de.p2tools.p2lib.tools.P2InfoFactory;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+
+import java.util.List;
 
 public class ToolInfoPane extends VBox {
 
-    public ToolInfoPane() {
+    private final List<Node[]> infoList;
+    private final String progName;
+
+    public ToolInfoPane(String progName, List<Node[]> infoList) {
+        this.progName = progName;
+        this.infoList = infoList;
         init();
     }
 
@@ -49,25 +56,58 @@ public class ToolInfoPane extends VBox {
     }
 
     private GridPane getGrid() {
+        int row = 0;
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(5);
         gridPane.setVgap(5);
 
-        int row = 0;
-
-        //Java
-        Text text = new Text("Java Informationen");
-        text.setFont(Font.font(null, FontWeight.BOLD, 15));
-        text.getStyleClass().add("downloadGuiMediaText");
-        gridPane.add(text, 0, row, 3, 1);
+        // ==========================
+        gridPane.add(P2Text.getLblTextBoldBig(progName), 0, row, 2, 1);
 
         gridPane.add(new Label("Version:"), 0, ++row);
-        gridPane.add(new Label(System.getProperty("java.version")), 1, row, 2, 1);
+        gridPane.add(new Label(P2InfoFactory.getProgVersion()), 1, row);
+        gridPane.add(new Label("[ Build: " + P2InfoFactory.getBuildNo() + " vom " +
+                P2InfoFactory.getBuildDate() + " ]"), 1, ++row);
+
+
+        // ==========================
+        //Java
+        gridPane.add(new Label(""), 0, ++row);
+        gridPane.add(P2Text.getLblTextBold("Java Informationen"), 0, ++row, 2, 1);
+
+        gridPane.add(new Label("Version:"), 0, ++row);
+        gridPane.add(new Label(System.getProperty("java.version")), 1, row);
 
         gridPane.add(new Label("Type:"), 0, ++row);
         String strVmType = System.getProperty("java.vm.name");
         strVmType += " (" + System.getProperty("java.vendor") + ")";
-        gridPane.add(new Label(strVmType), 1, row, 2, 1);
+        gridPane.add(new Label(strVmType), 1, row);
+
+        gridPane.add(new Label("JavaFX:"), 0, ++row);
+        gridPane.add(new Label(System.getProperty("javafx.runtime.version")), 1, row);
+
+
+        // ==========================
+        if (infoList != null && !infoList.isEmpty()) {
+            gridPane.add(new Label(), 0, ++row);
+            for (Node[] info : infoList) {
+
+                if (info.length == 0) {
+                    gridPane.add(new Label(""), 0, ++row);
+                }
+                if (info.length >= 1) {
+                    gridPane.add((info[0]), 0, ++row);
+                }
+                if (info.length >= 2) {
+                    gridPane.add(info[1], 1, row);
+                }
+                if (info.length > 2) {
+                    for (int i = 2; i < info.length; ++i) {
+                        gridPane.add(info[i], 1, ++row);
+                    }
+                }
+            }
+        }
 
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcComputedSizeAndHgrow(),

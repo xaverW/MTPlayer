@@ -21,21 +21,26 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
+
 public class MTPToolsDialog extends P2DialogExtra {
     private final ProgData progData;
-    ToolMemoryPane memoryTab = new ToolMemoryPane();
-    ToolInfoPane infoTab = new ToolInfoPane();
-    ToolRuntimePane runtimeTab = new ToolRuntimePane();
-    ToolDebugPane debugTab = new ToolDebugPane();
+    private final ToolMemoryPane memoryTab = new ToolMemoryPane();
+    private final ToolInfoPane infoTab;
+    private final ToolRuntimePane runtimeTab = new ToolRuntimePane();
+    private final ToolDebugPane debugTab = new ToolDebugPane();
 
-    public MTPToolsDialog() {
+    public MTPToolsDialog(String progName, List<Node[]> infoList) {
         super(P2LibConst.primaryStage, ProgConfig.TOOLS_DIALOG_SIZE, "Programmtools",
                 false, true, true, DECO.NO_BORDER);
         this.progData = ProgData.getInstance();
+        infoTab = new ToolInfoPane(progName, infoList);
         init(true);
     }
 
@@ -56,5 +61,8 @@ public class MTPToolsDialog extends P2DialogExtra {
 
         VBox.setVgrow(tabPane, Priority.ALWAYS);
         getVBoxCont().getChildren().add(tabPane);
+        Button btnOk = new Button("_Ok");
+        addOkButton(btnOk);
+        btnOk.setOnAction(a -> close());
     }
 }

@@ -19,15 +19,69 @@ package de.p2tools.mtplayer;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.config.ProgInfos;
 import de.p2tools.mtplayer.controller.data.blackdata.BlacklistFactory;
 import de.p2tools.mtplayer.controller.load.LoadFactory;
 import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
+import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.P2WindowIcon;
+import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MTPlayerFactory {
 
     private MTPlayerFactory() {
+    }
+
+    public static List<Node[]> getInfoList() {
+        List<Node[]> list = new ArrayList<>();
+
+        list.add(new Node[]{P2Text.getLblTextBold("Filmliste:"),
+                P2Text.getLblTextBold(ProgInfos.getLocalFilmListFile())});
+        list.add(new Node[]{P2Text.getLblTextBold("Einstellungen:"),
+                P2Text.getLblTextBold(ProgInfos.getSettingsFile().toAbsolutePath().toString())});
+
+        int blSize = ProgData.getInstance().blackList.size();
+        int buSize = ProgData.getInstance().bookmarkList.size();
+        int hSizhe = ProgData.getInstance().historyListJson.size();
+        int mSize = ProgData.getInstance().mediaDataList.size();
+
+        DecimalFormat df = new DecimalFormat("#,###");
+        String bl = df.format(blSize);
+        String bu = df.format(buSize);
+        String h = df.format(hSizhe);
+        String m = df.format(mSize);
+
+        int row = 0;
+        GridPane gridPane = new GridPane(15, 2);
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSizeRight());
+        gridPane.getRowConstraints().addAll(P2GridConstraints.getRcPrefSizeTop());
+        gridPane.add(new Label("Blacklist:"), 0, row);
+        gridPane.add(new Label(bl), 1, row);
+        gridPane.add(new Label("Bookmarks:"), 0, ++row);
+        gridPane.add(new Label(bu), 1, row);
+        gridPane.add(new Label("History:"), 0, ++row);
+        gridPane.add(new Label(h), 1, row);
+        gridPane.add(new Label("Medien:"), 0, ++row);
+        gridPane.add(new Label(m), 1, row);
+
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.TOP_LEFT);
+        Label lbl = P2Text.getLblTextBold("Anzahl:");
+        vBox.getChildren().add(lbl);
+        list.add(new Node[]{});
+        list.add(new Node[]{vBox, gridPane});
+        return list;
     }
 
     public static String getOwnIconPath() {

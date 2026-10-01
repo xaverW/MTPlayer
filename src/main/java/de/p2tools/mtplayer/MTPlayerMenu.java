@@ -142,7 +142,9 @@ public class MTPlayerMenu extends MenuButton {
         miSave.setOnAction(event -> ProgSave.saveAll());
 
         final MenuItem miInfos = new MenuItem("Programminfos");
-        miInfos.setOnAction(event -> new MTPToolsDialog());
+        miInfos.setOnAction(event -> {
+            new MTPToolsDialog(ProgConst.PROGRAM_NAME, MTPlayerFactory.getInfoList());
+        });
 
         mTools.getItems().addAll(miDarkMode, miColorMode, miLog, miShortCut, miReset, miImportMV, miSave, miInfos);
         return mTools;
