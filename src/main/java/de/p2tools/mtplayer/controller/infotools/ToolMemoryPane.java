@@ -33,8 +33,8 @@ public class ToolMemoryPane extends VBox {
     private final Button btnReset = new Button("_Zurücksetzen");
     private final CheckBox chkEndless = new CheckBox("Endlos");
     private final List<MemoryData> memoryDataList = new ArrayList<>();
-    private final int MAX = 1_000;
-    private final int MINUTE = 100;
+    private final int MAX = 600; // maximale Anzahl Werte 10 Minuten
+    private final int MIN = 100; // minimale Anzahl (!endless, oder zum Umschalten auf [min]
 
     public ToolMemoryPane() {
         init();
@@ -133,13 +133,13 @@ public class ToolMemoryPane extends VBox {
         MemoryData memoryData = new MemoryData(0, used, free, total);
         memoryDataList.add(memoryData);
         if (!chkEndless.isSelected()) {
-            while (memoryDataList.size() > MINUTE) {
+            while (memoryDataList.size() > MIN) {
                 // 1 min.
                 memoryDataList.remove(0);
             }
         }
 
-        if (memoryDataList.size() > MINUTE) {
+        if (memoryDataList.size() > MIN) {
             // min
             lineChart.getXAxis().setLabel("Laufzeit [min]");
         } else {
@@ -171,7 +171,7 @@ public class ToolMemoryPane extends VBox {
         for (int i = 0; i < memoryDataList.size(); ++i) {
             MemoryData m = memoryDataList.get(i);
             final double factor;
-            if (memoryDataList.size() > MINUTE) {
+            if (memoryDataList.size() > MIN) {
                 factor = i / 60.0;
             } else {
                 factor = i;

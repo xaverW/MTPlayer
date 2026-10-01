@@ -68,6 +68,9 @@ public class MTPlayerMenu extends MenuButton {
         miMediaCollection.setOnAction(a -> new MediaDialogController("", ""));
         P2ShortcutWorker.addShortCut(miMediaCollection, PShortcut.SHORTCUT_SEARCH_MEDIACOLLECTION);
 
+        final MenuItem miAbout = new MenuItem("Über dieses Programm");
+        miAbout.setOnAction(event -> new AboutDialogController(progData).showDialog());
+
         final MenuItem miQuit = new MenuItem("Beenden");
         miQuit.setOnAction(e -> ProgQuit.quit(false));
         P2ShortcutWorker.addShortCut(miQuit, PShortcut.SHORTCUT_QUIT_PROGRAM);
@@ -82,7 +85,7 @@ public class MTPlayerMenu extends MenuButton {
         setGraphic(node);
 
         getItems().addAll(miConfig, miMediaCollection);
-        getItems().addAll(addTool(progData), addHelp(progData), new SeparatorMenuItem(), miQuit);
+        getItems().addAll(addTool(progData), addHelp(progData), new SeparatorMenuItem(), miAbout, miQuit);
     }
 
     private void addMenuButton(Menu mTools) {
@@ -118,8 +121,6 @@ public class MTPlayerMenu extends MenuButton {
         final CheckMenuItem miColorMode = new CheckMenuItem("Farb-Modus-1");
         miColorMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_THEME_1);
 
-        addMenuButton(mTools);
-
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {
             P2Logger.openLogFile();
@@ -141,12 +142,18 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miSave = new MenuItem("Einstellungen speichern");
         miSave.setOnAction(event -> ProgSave.saveAll());
 
+        final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
+        miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData).searchNewProgramVersion(true));
+
         final MenuItem miInfos = new MenuItem("Programminfos");
         miInfos.setOnAction(event -> {
             new MTPToolsDialog(ProgConst.PROGRAM_NAME, MTPlayerFactory.getInfoList());
         });
 
-        mTools.getItems().addAll(miDarkMode, miColorMode, miLog, miShortCut, miReset, miImportMV, miSave, miInfos);
+        mTools.getItems().addAll(miDarkMode, miColorMode);
+        addMenuButton(mTools);
+        mTools.getItems().addAll(new SeparatorMenuItem(), miLog, miShortCut,
+                miImportMV, new SeparatorMenuItem(), miSave, miReset, miSearchUpdate, new SeparatorMenuItem(), miInfos);
         return mTools;
     }
 
@@ -160,21 +167,18 @@ public class MTPlayerMenu extends MenuButton {
         final MenuItem miTipps = new MenuItem("Hilfedialog");
         miTipps.setOnAction(a -> new TipsDialog(progData));
 
-        final MenuItem miWhatsNew = new MenuItem("Was ist neu?");
-        miWhatsNew.setOnAction(a -> WhatsNewFactory.showWhatsNew(true));
-
         final MenuItem miReset = new MenuItem("Einstellungen zurücksetzen");
         miReset.setOnAction(event -> new ResetDialogController(progData));
+
+        final MenuItem miWhatsNew = new MenuItem("Was ist neu?");
+        miWhatsNew.setOnAction(a -> WhatsNewFactory.showWhatsNew(true));
 
         final MenuItem miSearchUpdate = new MenuItem("Gibt's ein Update?");
         miSearchUpdate.setOnAction(a -> new SearchProgramUpdate(progData).searchNewProgramVersion(true));
 
-        final MenuItem miAbout = new MenuItem("Über dieses Programm");
-        miAbout.setOnAction(event -> new AboutDialogController(progData).showDialog());
-
         final Menu mHelp = new Menu("Hilfe");
-        mHelp.getItems().addAll(miTipps, miUrlHelp, miWhatsNew, miReset,
-                miSearchUpdate, new SeparatorMenuItem(), miAbout);
+        mHelp.getItems().addAll(miTipps, miUrlHelp, miWhatsNew/*, new SeparatorMenuItem(),
+                miReset, miSearchUpdate*/);
 
         return mHelp;
     }
