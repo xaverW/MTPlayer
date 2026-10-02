@@ -270,7 +270,7 @@ public class PaneFilmUt {
         } else {
             hBox.disableProperty().bind(ProgConfig.SYSTEM_FILMLIST_MARK.not());
         }
-        hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
+        hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getDistanceH(P2LibConst.DIST_BUTTON_BLOCK),
                 btnUp, btnDown, P2GuiTools.getHBoxGrower(), btnClean, btnReset);
         vBox.getChildren().addAll(hBox);
     }

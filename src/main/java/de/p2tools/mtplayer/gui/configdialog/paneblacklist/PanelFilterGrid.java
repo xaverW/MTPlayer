@@ -126,7 +126,7 @@ public class PanelFilterGrid {
         Label label = new Label("Blacklist-Eintrag suchen:");
         vb1.getChildren().add(label);
 
-        vb1.getChildren().add(P2GuiTools.getVDistance(5));
+        vb1.getChildren().add(P2GuiTools.getDistanceH(5));
         vb1.getChildren().add(tglFilterActive);
 
         HBox hBox = new HBox(2);
@@ -139,8 +139,8 @@ public class PanelFilterGrid {
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(SPACE_TITLE);
-        vb.getChildren().addAll(new Label("Thema"), txtFilterThema, P2GuiTools.getVDistance(2), tglFilterThemeExact);
-        vb1.getChildren().addAll(vb, P2GuiTools.getVDistance(1));
+        vb.getChildren().addAll(new Label("Thema"), txtFilterThema, P2GuiTools.getDistanceH(2), tglFilterThemeExact);
+        vb1.getChildren().addAll(vb, P2GuiTools.getDistanceH(1));
         HBox.setHgrow(vb, Priority.ALWAYS);
 
         vb = new VBox(SPACE_TITLE);

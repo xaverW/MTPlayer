@@ -75,11 +75,11 @@ public class DownloadFilterController extends FilterController {
     private void initLayout() {
         addCont("Sender", mbChannel, vBoxFilter);
         addCont("Thema/Titel", cboThemeTitle, vBoxFilter);
-        vBoxFilter.getChildren().addAll(P2GuiTools.getHDistance(10));
+        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(10));
 
         addCont("Abo", cboAbo, vBoxFilter);
         addCont("Liste", cboList, vBoxFilter);
-        vBoxFilter.getChildren().addAll(P2GuiTools.getHDistance(10));
+        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(10));
 
         addCont("Quelle", cboSrc, vBoxFilter);
         addCont("Downloadart", cboKind, vBoxFilter);
@@ -95,7 +95,7 @@ public class DownloadFilterController extends FilterController {
         hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
         hBoxHelp.getChildren().add(btnHelpFilter);
 
-        vBoxFilter.getChildren().addAll(P2GuiTools.getVDistance(10), hBoxClear, P2GuiTools.getVBoxGrower(), hBoxHelp);
+        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceH(10), hBoxClear, P2GuiTools.getVBoxGrower(), hBoxHelp);
 
         // black
         VBox vb = new VBox(FilterController.FILTER_SPACING_TEXTFILTER);

@@ -35,6 +35,7 @@ public class ToolMemoryPane extends VBox {
     private final int MIN = 100; // minimale Anzahl (!endless, oder zum Umschalten auf [min]
     private final Slider slider = new Slider();
     private final Label lblSliderValue = new Label();
+    private int actTime = 0;
 
     public ToolMemoryPane() {
         init();
@@ -86,22 +87,27 @@ public class ToolMemoryPane extends VBox {
 
         gridPane.add(P2Text.getLblTextBold("Speicherverbrauch des Programms"), 0, row, 3, 1);
 
-        gridPane.add(new Label("Used/Max"), 0, ++row);
+        gridPane.add(new Label("Verbrauch/Maximal"), 0, ++row);
         gridPane.add(progressBar, 1, row);
         gridPane.add(lblMemInfo, 2, row);
         GridPane.setHgrow(progressBar, Priority.ALWAYS);
 
         gridPane.add(new Label(""), 0, ++row);
 
+        HBox hBoxSlider = new HBox(10);
+        hBoxSlider.setAlignment(Pos.TOP_LEFT);
+        hBoxSlider.getChildren().addAll(new Label("Dauer: "), slider, lblSliderValue);
         HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
         hBox.setSpacing(P2LibConst.SPACING_HBOX);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(btnReset, slider, P2GuiTools.getHDistance(20), lblSliderValue, P2GuiTools.getHBoxGrower(), btnGc);
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.getChildren().addAll(btnReset, P2GuiTools.getDistanceH(25),
+                hBoxSlider, P2GuiTools.getHBoxGrower(), btnGc);
         getChildren().addAll(gridPane, lineChart, hBox);
     }
 
     private void reset() {
         memoryDataList.clear();
+        actTime = 0;
     }
 
     private void initCharts() {
@@ -146,19 +152,11 @@ public class ToolMemoryPane extends VBox {
         final String info = used + " von " + total + "MB";
         lblMemInfo.setText(info);
 
-        MemoryData memoryData = new MemoryData(memoryDataList.size(), used, free, total);
+        MemoryData memoryData = new MemoryData(actTime++, used, free, total);
         memoryDataList.add(memoryData);
         while (memoryDataList.size() > slider.getValue() * 60) {
             memoryDataList.remove(0);
         }
-
-        if (memoryDataList.size() > MIN) {
-            // min
-            lineChart.getXAxis().setLabel("Laufzeit [min]");
-        } else {
-            lineChart.getXAxis().setLabel("Laufzeit [s]");
-        }
-
         makeChartData();
     }
 
@@ -181,15 +179,21 @@ public class ToolMemoryPane extends VBox {
             return;
         }
 
+        if (actTime > MIN) {
+            // min
+            lineChart.getXAxis().setLabel("Laufzeit [min]");
+        } else {
+            lineChart.getXAxis().setLabel("Laufzeit [s]");
+        }
+
         for (int i = 0; i < memoryDataList.size(); ++i) {
             MemoryData m = memoryDataList.get(i);
             final double factor;
-            if (memoryDataList.size() > MIN) {
+            if (actTime > MIN) {
                 factor = m.getxValue() / 60.0;
             } else {
                 factor = m.getxValue();
             }
-
 
             used.getData().add(new XYChart.Data<>(factor, m.getUsedMem()));
             free.getData().add(new XYChart.Data<>(factor, m.getFreeMemory()));

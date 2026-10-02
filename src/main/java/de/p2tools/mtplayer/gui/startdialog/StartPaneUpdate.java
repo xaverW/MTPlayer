@@ -56,7 +56,7 @@ public class StartPaneUpdate extends VBox {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        getChildren().addAll(StartFactory.getTitle("Programmupdate"), hBox, P2GuiTools.getHDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Programmupdate"), hBox, P2GuiTools.getDistanceV(20));
 
         final GridPane gridPane = new GridPane();
         gridPane.setHgap(15);

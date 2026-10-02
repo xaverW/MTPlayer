@@ -124,18 +124,18 @@ public class QuitDialogController extends P2DialogExtra {
 
         HBox hBoxBlend = new HBox(P2LibConst.PADDING_HBOX);
         hBoxBlend.setAlignment(Pos.CENTER_LEFT);
-        hBoxBlend.getChildren().addAll(P2GuiTools.getVDistance(10), chkBlend);
+        hBoxBlend.getChildren().addAll(P2GuiTools.getDistanceH(10), chkBlend);
 
         HBox hBoxQuitt = new HBox(P2LibConst.PADDING_HBOX);
         hBoxQuitt.setAlignment(Pos.CENTER_LEFT);
-        hBoxQuitt.getChildren().addAll(P2GuiTools.getVDistance(10), chkShutDown, P2GuiTools.getHBoxGrower(), btnEdit, btnHelp);
+        hBoxQuitt.getChildren().addAll(P2GuiTools.getDistanceH(10), chkShutDown, P2GuiTools.getHBoxGrower(), btnEdit, btnHelp);
 
         HBox hBoxCall = new HBox(0);
         hBoxCall.setAlignment(Pos.CENTER_LEFT);
-        hBoxCall.getChildren().addAll(P2GuiTools.getVDistance(25), lblSystemCall);
+        hBoxCall.getChildren().addAll(P2GuiTools.getDistanceH(25), lblSystemCall);
 
         VBox vBox = new VBox(1);
-        vBox.getChildren().addAll(waitButton, P2GuiTools.getHDistance(5), hBoxBlend, hBoxQuitt, hBoxCall);
+        vBox.getChildren().addAll(waitButton, P2GuiTools.getDistanceV(5), hBoxBlend, hBoxQuitt, hBoxCall);
         gridPane.add(vBox, 1, ++row);
 
         stackPane.getChildren().addAll(gridPane, maskerPane);

@@ -161,7 +161,7 @@ public class AboAddDialogController extends P2DialogExtra {
         HBox hBoxBtn = new HBox(P2LibConst.SPACING_HBOX);
         hBoxBtn.setAlignment(Pos.CENTER_RIGHT);
         hBoxBtn.getChildren().addAll(DownloadAddDialogFactory.getText(AboFieldNames.ABO_NO + ":"), addAboDto.lblAboNo,
-                P2GuiTools.getHDistance(20),
+                P2GuiTools.getDistanceV(20),
                 DownloadAddDialogFactory.getText(AboFieldNames.ABO_HIT + ":"), addAboDto.lblHit,
                 P2GuiTools.getHBoxGrower(),
                 addAboDto.btnAll);

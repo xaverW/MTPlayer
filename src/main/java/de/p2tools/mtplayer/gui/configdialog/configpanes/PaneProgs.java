@@ -154,7 +154,7 @@ public class PaneProgs {
         hBox.getChildren().addAll(txtSystemCall, btnTest, btnStandard, btnHelp);
         HBox.setHgrow(txtSystemCall, Priority.ALWAYS);
         HBox hBoxOn = new HBox();
-        hBoxOn.getChildren().addAll(P2GuiTools.getVDistance(20), cbxSystemCallOn);
+        hBoxOn.getChildren().addAll(P2GuiTools.getDistanceH(20), cbxSystemCallOn);
         vBox.getChildren().addAll(new Label("Systemaufruf nach dem \"Auf Downloads warten\" Dialog"), hBox, hBoxOn);
         gridPane.add(vBox, 0, row);
     }

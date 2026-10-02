@@ -136,7 +136,7 @@ public class StartDialogController extends P2DialogExtra {
 
         VBox.setVgrow(vBoxCont, Priority.ALWAYS);
         getVBoxCont().setPadding(new Insets(5));
-        getVBoxCont().getChildren().addAll(tilePane1, tilePane2, P2GuiTools.getHDistance(5), vBoxCont);
+        getVBoxCont().getChildren().addAll(tilePane1, tilePane2, P2GuiTools.getDistanceV(5), vBoxCont);
     }
 
     private void initTopButton(Button btn, State state) {

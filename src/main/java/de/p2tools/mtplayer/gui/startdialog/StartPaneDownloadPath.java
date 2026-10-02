@@ -56,7 +56,7 @@ public class StartPaneDownloadPath extends VBox {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        getChildren().addAll(StartFactory.getTitle("Pfad für die Downloads"), hBox, P2GuiTools.getHDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Pfad für die Downloads"), hBox, P2GuiTools.getDistanceV(20));
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);

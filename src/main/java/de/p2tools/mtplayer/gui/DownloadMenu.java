@@ -51,13 +51,13 @@ public class DownloadMenu {
 
     private void initButton() {
         // Button
-        vBox.getChildren().add(P2GuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getDistanceH(10));
         final ToolBarButton btnRefresh = new ToolBarButton(vBox,
                 "Downloads aktualisieren", "Liste der Downloads aktualisieren",
                 P2IconFactory.P2ICON.BTN_ROTATE_3D_B.getFontIcon());
         btnRefresh.disableProperty().bind(AboSearchDownloadsFactory.alreadyRunning);
 
-        vBox.getChildren().add(P2GuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getDistanceH(10));
         final ToolBarButton btnStart = new ToolBarButton(vBox,
                 "Downloads Starten", "Markierte Downloads starten",
                 P2IconFactory.P2ICON.BTN_BOTTOM_OUTLINE_B.getFontIcon());
@@ -68,7 +68,7 @@ public class DownloadMenu {
                 "Alle Downloads mit Startzeit starten", "Alle Downloads mit Startzeit starten",
                 PIconFactory.PICON.TOOLBAR_BTN_DOWNLOAD_START_TIME.getFontIcon());
 
-        vBox.getChildren().add(P2GuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getDistanceH(10));
         final ToolBarButton btnBack = new ToolBarButton(vBox,
                 "Downloads zurückstellen", "Markierte Downloads zurückstellen",
                 P2IconFactory.P2ICON.BTN_ARROW_LEFT_TOP_B.getFontIcon());
@@ -82,7 +82,7 @@ public class DownloadMenu {
                 "Downloads aufräumen", "Liste der Downloads aufräumen",
                 P2IconFactory.P2ICON.BTN_CLEAN_B.getFontIcon());
 
-        vBox.getChildren().add(P2GuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getDistanceH(10));
         final ToolBarButton btnDownloadFilm = new ToolBarButton(vBox,
                 "Film Starten", "Gespeicherten Film abspielen",
                 P2IconFactory.P2ICON.P2_BTN_PLAY_B.getFontIcon());

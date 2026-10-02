@@ -111,7 +111,7 @@ public class PaneFilmSender {
         HBox hBoxB = new HBox(P2LibConst.DIST_BUTTON);
         hBoxB.getChildren().addAll(btnClearAll, btnSetAll, P2GuiTools.getHBoxGrower(), btnHelpSender);
 
-        vBox.getChildren().addAll(P2GuiTools.getHDistance(5), hBox, getTilePaneSender(), P2GuiTools.getHDistance(5), hBoxB);
+        vBox.getChildren().addAll(P2GuiTools.getDistanceV(5), hBox, getTilePaneSender(), P2GuiTools.getDistanceV(5), hBoxB);
 
         Button btnLoadAudio = new Button("_Audioliste mit diesen Einstellungen neu laden");
         btnLoadAudio.setTooltip(new Tooltip("Eine komplette neue Audioliste laden.\n" +

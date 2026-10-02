@@ -54,7 +54,7 @@ public class StartPaneColorMode extends VBox {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        getChildren().addAll(StartFactory.getTitle("Farbe"), hBox, P2GuiTools.getHDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Farbe"), hBox, P2GuiTools.getDistanceV(20));
 
         ProgConfig.SYSTEM_GUI_THEME_1_START.addListener((u, o, n) -> {
             setHBox();

@@ -198,7 +198,7 @@ public class PaneFilmDouble {
 
         hBoxButton.setSpacing(P2LibConst.SPACING_HBOX);
         hBoxButton.getChildren().addAll(cboSender, btnAdd, btnDel,
-                P2GuiTools.getHDistance(20), btnUp, btnDown, P2GuiTools.getHBoxGrower(),
+                P2GuiTools.getDistanceV(20), btnUp, btnDown, P2GuiTools.getHBoxGrower(),
                 new Label("Anzahl Doppelte: "), lblDouble);
     }
 

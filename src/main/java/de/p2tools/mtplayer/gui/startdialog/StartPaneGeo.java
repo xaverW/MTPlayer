@@ -66,7 +66,7 @@ public class StartPaneGeo extends VBox {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        getChildren().addAll(StartFactory.getTitle("Geogeblockte Filme"), hBox, P2GuiTools.getHDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Geogeblockte Filme"), hBox, P2GuiTools.getDistanceV(20));
 
         tglGeo.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_MARK_GEO);
         final Button btnHelpGeo = P2IconFactory.getHelpButton(stage, "Geogeblockte Filme", HelpText.CONFIG_GEO);

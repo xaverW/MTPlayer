@@ -108,9 +108,9 @@ public class FilmFilterController extends FilterController {
 //            getChildren().clear();
 //            final VBox vBox = getVBoxFilter();
 //            vBox.getChildren().addAll(filmFilterControllerTextFilter);
-//            vBox.getChildren().add(P2GuiTools.getHDistance(10));
+//            vBox.getChildren().add(P2GuiTools.getDistanceV(10));
 //            vBox.getChildren().addAll(filmFilterControllerFilter);
-//            vBox.getChildren().add(P2GuiTools.getHDistance(10));
+//            vBox.getChildren().add(P2GuiTools.getDistanceV(10));
 //            vBox.getChildren().addAll(filmFilterControllerOnlyNew);
 //
 //            vBox.getChildren().add(P2GuiTools.getVBoxGrower());
@@ -146,12 +146,12 @@ public class FilmFilterController extends FilterController {
         final VBox vBox = getVBoxFilter();
         vBox.getChildren().addAll(filmFilterControllerTextFilter);
 
-        Region reg1 = P2GuiTools.getHDistance(10);
+        Region reg1 = P2GuiTools.getDistanceV(10);
         vBox.getChildren().add(reg1);
 
         vBox.getChildren().addAll(filmFilterControllerFilter);
 
-        Region reg2 = P2GuiTools.getHDistance(10); // small
+        Region reg2 = P2GuiTools.getDistanceV(10); // small
         reg2.visibleProperty().bind(small);
         reg2.managedProperty().bind(small);
         vBox.getChildren().add(reg2); // small

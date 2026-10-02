@@ -83,7 +83,7 @@ public class ChangeShutDownCallDialog extends P2DialogExtra {
         hBox = new HBox(P2LibConst.PADDING_HBOX);
         HBox.setHgrow(txtCall, Priority.ALWAYS);
         hBox.getChildren().addAll(new Label("Eigener Befehl:"), txtCall, btnTest, btnHelp);
-        vBox.getChildren().addAll(P2GuiTools.getVDistance(P2LibConst.PADDING_VBOX), hBox);
+        vBox.getChildren().addAll(P2GuiTools.getDistanceH(P2LibConst.PADDING_VBOX), hBox);
 
         getVBoxCont().getChildren().addAll(vBox);
 

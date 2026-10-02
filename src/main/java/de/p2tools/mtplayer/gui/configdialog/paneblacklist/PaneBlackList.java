@@ -326,7 +326,7 @@ public class PaneBlackList {
 
         HBox hBoxChannel = new HBox(P2LibConst.SPACING_HBOX);
         hBoxChannel.setAlignment(Pos.CENTER_LEFT);
-        hBoxChannel.getChildren().addAll(mbChannel, P2GuiTools.getVDistance(50),
+        hBoxChannel.getChildren().addAll(mbChannel, P2GuiTools.getDistanceH(50),
                 tglActive, P2GuiTools.getHBoxGrower(), rbFilmAudio, rbFilm, rbAudio);
         gridPane.add(new Label("Sender:"), 0, row);
         gridPane.add(hBoxChannel, 1, row);

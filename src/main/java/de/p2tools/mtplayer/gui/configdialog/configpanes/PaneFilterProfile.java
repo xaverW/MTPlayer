@@ -71,7 +71,7 @@ public class PaneFilterProfile {
                 "dann beim Programmstart geladen wird.");
         lbl.setWrapText(true);
         hBox.getChildren().add(lbl);
-        vBox.getChildren().addAll(hBox, P2GuiTools.getHDistance(20));
+        vBox.getChildren().addAll(hBox, P2GuiTools.getDistanceV(20));
 
         make(vBox);
         initCbo();

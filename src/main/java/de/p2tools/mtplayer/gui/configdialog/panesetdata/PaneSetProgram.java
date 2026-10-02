@@ -195,7 +195,7 @@ public class PaneSetProgram {
                 HelpTextPset.PSET_FILE_HELP_PROG);
 
         HBox hBox = new HBox(P2LibConst.DIST_BUTTON);
-        hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
+        hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getDistanceH(P2LibConst.DIST_BUTTON_BLOCK),
                 btnUp, btnDown, P2GuiTools.getHBoxGrower(), btnHelpProg);
         vBox.getChildren().addAll(hBox);
     }

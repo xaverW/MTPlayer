@@ -92,7 +92,7 @@ public class BookmarkDialogController extends P2DialogExtra {
         hBoxRadio.getChildren().addAll(rbAll, rbFilm, rbAudio, P2GuiTools.getHBoxGrower(), new Label("Anzahl: "), lblSize);
 
         VBox vbox = new VBox();
-        vbox.getChildren().addAll(hBoxRadio, tableView, P2GuiTools.getHDistance(5), accordion);
+        vbox.getChildren().addAll(hBoxRadio, tableView, P2GuiTools.getDistanceV(5), accordion);
         VBox.setVgrow(tableView, Priority.ALWAYS);
 
         getVBoxCont().getChildren().add(vbox);

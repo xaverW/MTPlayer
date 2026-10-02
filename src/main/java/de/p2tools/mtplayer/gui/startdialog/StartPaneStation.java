@@ -65,7 +65,7 @@ public class StartPaneStation extends VBox {
         lbl.setWrapText(true);
         lbl.setPrefWidth(500);
         hBox.getChildren().add(lbl);
-        getChildren().addAll(StartFactory.getTitle("Filmliste bereits beim Laden filtern"), hBox, P2GuiTools.getHDistance(20));
+        getChildren().addAll(StartFactory.getTitle("Filmliste bereits beim Laden filtern"), hBox, P2GuiTools.getDistanceV(20));
 
 
         final Button btnHelpSender = P2IconFactory.getHelpButton(stage, "Filmliste beim Laden filtern",
@@ -78,7 +78,7 @@ public class StartPaneStation extends VBox {
         hBoxB.setAlignment(Pos.CENTER_LEFT);
         hBoxB.getChildren().addAll(P2GuiTools.getHBoxGrower(), btnClearAll, btnSetAll);
 
-        getChildren().addAll(hBoxStation, P2GuiTools.getHDistance(15), getTilePaneSender(), P2GuiTools.getHDistance(15), hBoxB);
+        getChildren().addAll(hBoxStation, P2GuiTools.getDistanceV(15), getTilePaneSender(), P2GuiTools.getDistanceV(15), hBoxB);
     }
 
     private TilePane getTilePaneSender() {

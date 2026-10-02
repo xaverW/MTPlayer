@@ -91,7 +91,7 @@ public class PaneColorTable {
 
         HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
         hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(rbDark, P2GuiTools.getHDistance(10), rbLight,
+        hBox.getChildren().addAll(rbDark, P2GuiTools.getDistanceV(10), rbLight,
                 P2GuiTools.getHBoxGrower(), btnReset, btnHelpTheme);
         vBox.getChildren().add(hBox);
 

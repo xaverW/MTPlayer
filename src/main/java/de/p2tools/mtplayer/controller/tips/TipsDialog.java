@@ -246,7 +246,7 @@ public class TipsDialog extends P2DialogExtra {
         gridPane2.add(btnLast, 3, 0);
 
 
-        vBoxButton.getChildren().addAll(gridPane2, P2GuiTools.getHDistance(10), gridPane1);
+        vBoxButton.getChildren().addAll(gridPane2, P2GuiTools.getDistanceV(10), gridPane1);
         HBox.setHgrow(vBoxButton, Priority.ALWAYS);
 
         btnFirst.setOnAction(a -> {

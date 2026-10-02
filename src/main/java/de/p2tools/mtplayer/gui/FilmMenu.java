@@ -172,7 +172,7 @@ public class FilmMenu {
             }
         });
 
-        vBox.getChildren().add(P2GuiTools.getVDistance(10));
+        vBox.getChildren().add(P2GuiTools.getDistanceH(10));
     }
 
     private void initFilmMenu() {

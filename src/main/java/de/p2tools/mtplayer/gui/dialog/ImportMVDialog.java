@@ -80,14 +80,14 @@ public class ImportMVDialog extends P2DialogExtra {
         text.getStyleClass().add("downloadGuiMediaText");
         vBox.getChildren().add(text);
         addPath(vBox);
-        vBox.getChildren().add(P2GuiTools.getHDistance(20));
+        vBox.getChildren().add(P2GuiTools.getDistanceV(20));
 
         text = new Text("2. Einstellungen suchen");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));
         text.getStyleClass().add("downloadGuiMediaText");
         vBox.getChildren().add(text);
         addLoad(vBox);
-        vBox.getChildren().add(P2GuiTools.getHDistance(20));
+        vBox.getChildren().add(P2GuiTools.getDistanceV(20));
 
         text = new Text("3. Einstellungen anfügen");
         text.setFont(Font.font(null, FontWeight.BOLD, 16));

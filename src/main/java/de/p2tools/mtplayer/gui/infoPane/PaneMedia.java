@@ -120,7 +120,7 @@ public class PaneMedia extends VBox {
         hBoxTop.setAlignment(Pos.CENTER);
 
         HBox hBoxButton = new HBox(P2LibConst.DIST_BUTTON);
-        hBoxButton.getChildren().addAll(btnConfig, btnClear, btnHelpMedia, P2GuiTools.getVDistance(5), btnDialogMedia);
+        hBoxButton.getChildren().addAll(btnConfig, btnClear, btnHelpMedia, P2GuiTools.getDistanceH(5), btnDialogMedia);
         hBoxTop.getChildren().addAll(txtSearchMedia, hBoxButton, txtSearchAbo);
         HBox.setHgrow(txtSearchMedia, Priority.ALWAYS);
         HBox.setHgrow(txtSearchAbo, Priority.ALWAYS);

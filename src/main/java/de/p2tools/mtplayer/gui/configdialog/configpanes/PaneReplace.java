@@ -261,7 +261,7 @@ public class PaneReplace {
         HBox hBox = new HBox();
         hBox.setSpacing(P2LibConst.DIST_BUTTON);
         hBox.disableProperty().bind(ProgConfig.SYSTEM_USE_REPLACETABLE.not());
-        hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getVDistance(P2LibConst.DIST_BUTTON_BLOCK),
+        hBox.getChildren().addAll(btnNew, btnDel, P2GuiTools.getDistanceH(P2LibConst.DIST_BUTTON_BLOCK),
                 btnTop, btnUp, btnDown, btnBottom, P2GuiTools.getHBoxGrower(), btnReset);
         vBox.getChildren().addAll(hBox);
     }
