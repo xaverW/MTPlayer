@@ -810,7 +810,7 @@ public class ProgConfig extends P2DataProgConfig {
 
     // ToolsDialog
     public static StringProperty TOOLS_DIALOG_SIZE = addStrProp("tools-dialog-size", "600:500");
-    public static BooleanProperty Tools_DIALOG_ENDLESS = addBoolProp("tools-dialog-endless", Boolean.FALSE);
+    public static DoubleProperty Tools_DIALOG_SLIDER = addDoubleProp("tools-dialog-slider", 1); // 1 Minute
 
     // ConfigDialog
     public static StringProperty DOWNLOAD_SUBTITLE_DIALOG_SIZE = addStrProp("download-subtitle-dialog-size", "500:300");

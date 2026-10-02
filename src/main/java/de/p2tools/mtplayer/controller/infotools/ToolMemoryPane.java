@@ -31,10 +31,10 @@ public class ToolMemoryPane extends VBox {
     private final Label lblMemInfo = new Label("");
     private final Button btnGc = new Button("_Speicher aufräumen");
     private final Button btnReset = new Button("_Zurücksetzen");
-    private final CheckBox chkEndless = new CheckBox("Endlos");
     private final List<MemoryData> memoryDataList = new ArrayList<>();
-    private final int MAX = 600; // maximale Anzahl Werte 10 Minuten
     private final int MIN = 100; // minimale Anzahl (!endless, oder zum Umschalten auf [min]
+    private final Slider slider = new Slider();
+    private final Label lblSliderValue = new Label();
 
     public ToolMemoryPane() {
         init();
@@ -48,7 +48,7 @@ public class ToolMemoryPane extends VBox {
     }
 
     public void close() {
-        chkEndless.selectedProperty().unbindBidirectional(ProgConfig.Tools_DIALOG_ENDLESS);
+        slider.valueProperty().unbindBidirectional(ProgConfig.Tools_DIALOG_SLIDER);
     }
 
     private void init() {
@@ -58,13 +58,25 @@ public class ToolMemoryPane extends VBox {
         initChartData();
         initCharts();
         initProgress();
+        initSlider();
+    }
+
+    private void initSlider() {
+        slider.setMin(1);
+        slider.setMax(10);
+        slider.setShowTickLabels(true);
+        slider.setMinorTickCount(1);
+        slider.setMajorTickUnit(1);
+        slider.setBlockIncrement(1);
+        slider.setSnapToTicks(true);
     }
 
     private void initProgress() {
         btnGc.setOnAction(a -> System.gc());
-        btnReset.setOnAction(a -> memoryDataList.clear());
-        chkEndless.selectedProperty().bindBidirectional(ProgConfig.Tools_DIALOG_ENDLESS);
-
+        btnReset.setOnAction(a -> reset());
+        slider.valueProperty().bindBidirectional(ProgConfig.Tools_DIALOG_SLIDER);
+        slider.valueProperty().addListener((u, o, n) -> lblSliderValue.setText((int) slider.getValue() + " [min]"));
+        lblSliderValue.setText((int) slider.getValue() + " [min]");
         progressBar.setMaxWidth(Double.MAX_VALUE);
         progressBar.setMinWidth(10);
         lblMemInfo.setMaxWidth(Region.USE_PREF_SIZE);
@@ -81,11 +93,15 @@ public class ToolMemoryPane extends VBox {
 
         gridPane.add(new Label(""), 0, ++row);
 
-        HBox hBox = new HBox();
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
         hBox.setSpacing(P2LibConst.SPACING_HBOX);
         hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(btnReset, chkEndless, P2GuiTools.getHBoxGrower(), btnGc);
+        hBox.getChildren().addAll(btnReset, slider, P2GuiTools.getHDistance(20), lblSliderValue, P2GuiTools.getHBoxGrower(), btnGc);
         getChildren().addAll(gridPane, lineChart, hBox);
+    }
+
+    private void reset() {
+        memoryDataList.clear();
     }
 
     private void initCharts() {
@@ -130,13 +146,10 @@ public class ToolMemoryPane extends VBox {
         final String info = used + " von " + total + "MB";
         lblMemInfo.setText(info);
 
-        MemoryData memoryData = new MemoryData(0, used, free, total);
+        MemoryData memoryData = new MemoryData(memoryDataList.size(), used, free, total);
         memoryDataList.add(memoryData);
-        if (!chkEndless.isSelected()) {
-            while (memoryDataList.size() > MIN) {
-                // 1 min.
-                memoryDataList.remove(0);
-            }
+        while (memoryDataList.size() > slider.getValue() * 60) {
+            memoryDataList.remove(0);
         }
 
         if (memoryDataList.size() > MIN) {
@@ -144,10 +157,6 @@ public class ToolMemoryPane extends VBox {
             lineChart.getXAxis().setLabel("Laufzeit [min]");
         } else {
             lineChart.getXAxis().setLabel("Laufzeit [s]");
-        }
-        while (memoryDataList.size() > MAX) {
-            // macht sonst keinen Sinn
-            memoryDataList.remove(0);
         }
 
         makeChartData();
@@ -168,14 +177,20 @@ public class ToolMemoryPane extends VBox {
         XYChart.Series<Number, Number> used = chartSeriesList.get(2);
         used.getData().clear();
 
+        if (memoryDataList.isEmpty()) {
+            return;
+        }
+
         for (int i = 0; i < memoryDataList.size(); ++i) {
             MemoryData m = memoryDataList.get(i);
             final double factor;
             if (memoryDataList.size() > MIN) {
-                factor = i / 60.0;
+                factor = m.getxValue() / 60.0;
             } else {
-                factor = i;
+                factor = m.getxValue();
             }
+
+
             used.getData().add(new XYChart.Data<>(factor, m.getUsedMem()));
             free.getData().add(new XYChart.Data<>(factor, m.getFreeMemory()));
             max.getData().add(new XYChart.Data<>(factor, m.getTotalMemory()));

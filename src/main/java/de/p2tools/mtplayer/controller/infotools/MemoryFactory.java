@@ -5,16 +5,17 @@ import javafx.scene.chart.NumberAxis;
 import javafx.util.StringConverter;
 
 public class MemoryFactory {
+
     private MemoryFactory() {
     }
 
     public static NumberAxis createXAxis() {
         final NumberAxis xAxis = new NumberAxis();
-        xAxis.setAutoRanging(true);
         xAxis.setTickUnit(10);
-        setXAxisLabel(xAxis);
-        xAxis.setLowerBound(0.0);
+        xAxis.setAutoRanging(true);
+        xAxis.setForceZeroInRange(false);
         xAxis.setSide(Side.RIGHT);
+        setXAxisLabel(xAxis);
         xAxis.setTickLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Number object) {
