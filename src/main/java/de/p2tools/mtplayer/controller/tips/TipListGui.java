@@ -59,6 +59,14 @@ public class TipListGui {
         pToolTipList.add(pToolTip);
 
 
+        text = "In den Tabellen können mit dem " +
+                "kleinen \"Plus\" Spalten ein und ausgeblendet " +
+                "werden.";
+        image = "/de/p2tools/mtplayer/res/tips/gui/gui-8.png";
+        pToolTip = new TipData(text, image);
+        pToolTipList.add(pToolTip);
+
+
         text = "Im Programm sind immer zwei " +
                 "Menüs sichtbar." +
                 "\n\n" +
