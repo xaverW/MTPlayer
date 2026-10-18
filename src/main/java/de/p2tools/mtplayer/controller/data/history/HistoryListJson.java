@@ -209,15 +209,34 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
     }
 
     public synchronized void addDownloadToHistory(ArrayList<DownloadData> downloadList, int dest) {
-        // Menü/Automatisch
-        // eine Liste Downloads in die History schreiben
+        // Menü/Automatisch, Download starten/löschen
         if (downloadList == null || downloadList.isEmpty()) {
             return;
         }
 
+        List<HistoryData> list = new ArrayList<>();
         for (final DownloadData download : downloadList) {
-            addDownloadToHistory(download, dest);
+//            addDownloadToHistory(download, dest);
+            if (FilmToolsFactory.checkIfLiveStream(download.getTheme())) {
+                continue;
+            }
+
+            if (download.getFilm() != null) {
+                download.getFilm().setShown(true);
+                download.getFilm().setActHist(true);
+            }
+
+            HistoryData historyData = urlHashMap.get(download.getHistoryUrl());
+            if (historyData != null) {
+                historyData.addSource(dest);
+
+            } else {
+                // dann wird er neu angelegt
+                list.add(new HistoryData(download, dest));
+            }
         }
+
+        addToThisList(list);
     }
 
     public synchronized void addFilmToShown(boolean audio, List<FilmDataMTP> filmList) {
