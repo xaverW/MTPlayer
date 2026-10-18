@@ -19,6 +19,7 @@ package de.p2tools.mtplayer.controller.starter;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.download.DownloadConstants;
 import de.p2tools.mtplayer.controller.data.download.DownloadData;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -129,7 +130,8 @@ public class DownloadExternal extends Thread {
             if (download.isProgramDownloadmanager()) {
                 // Downloadmanager, dann wars das
 //                if (download.isAbo()) {
-                progData.historyListJson.addDownloadToHistory(download);
+                // in GESEHEN und DOWNLOAD
+                progData.historyListJson.addDownloadToHistory(download, HistoryData.SOURCE_SHOWN_DOWNLOAD);
 //                }
                 retStat = stat_finished_ok;
 

@@ -122,7 +122,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         if (size <= 1 || P2Alert.showAlertOkCancel(stage, "Löschen", "Aktuelle History löschen",
                 "Soll die aktuelle History aus der Liste (" + size + ")" +
                         " gelöscht werden?")) {
-            this.removeAll(delList);
+            removeFromHistory(delList);
 
             // dann auch History in den Filmen löschen
             ProgData.getInstance().filmList.forEach(film -> {
@@ -182,7 +182,7 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         addToThisList(addList);
     }
 
-    public synchronized void addDownloadToHistory(DownloadData download) {
+    public synchronized void addDownloadToHistory(DownloadData download, int dest) {
         // gestarteter Download, landet in ABOS und SHOWN
         if (download == null) {
             return;
@@ -199,15 +199,16 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
 
         HistoryData historyData = urlHashMap.get(download.getHistoryUrl());
         if (historyData != null) {
-            historyData.addSourceShownDownload();
+            historyData.addSource(dest);
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_HISTORY_CHANGED);
             return;
         }
 
         // und dann wird er neu angelegt
-        addToThisList(new HistoryData(download, HistoryData.SOURCE_SHOWN_DOWNLOAD));
+        addToThisList(new HistoryData(download, dest));
     }
 
-    public synchronized void addDownloadToHistory(ArrayList<DownloadData> downloadList) {
+    public synchronized void addDownloadToHistory(ArrayList<DownloadData> downloadList, int dest) {
         // Menü/Automatisch
         // eine Liste Downloads in die History schreiben
         if (downloadList == null || downloadList.isEmpty()) {
@@ -215,11 +216,23 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
         }
 
         for (final DownloadData download : downloadList) {
-            addDownloadToHistory(download);
+            addDownloadToHistory(download, dest);
         }
     }
 
-    public synchronized void addFilmToShown(boolean audio, FilmDataMTP film) {
+    public synchronized void addFilmToShown(boolean audio, List<FilmDataMTP> filmList) {
+        // Button oder Menü, PlayFilm oder Tabellenmenü: Mark/Unmark
+        // eine Liste Filme in die History schreiben
+        if (filmList == null || filmList.isEmpty()) {
+            return;
+        }
+
+        for (final FilmDataMTP film : filmList) {
+            addFilmToShown(audio, film);
+        }
+    }
+
+    private synchronized void addFilmToShown(boolean audio, FilmDataMTP film) {
         // Button oder Menü, PlayFilm oder Tabellenmenü: Mark/Unmark
         // eine Liste Filme in die History schreiben
         if (film == null) {
@@ -242,18 +255,6 @@ public class HistoryListJson extends SimpleListProperty<HistoryData> {
 
         HistoryData h = new HistoryData(audio, HistoryData.SOURCE_SHOWN, film);
         addToThisList(h);
-    }
-
-    public synchronized void addFilmToShown(boolean audio, List<FilmDataMTP> filmList) {
-        // Button oder Menü, PlayFilm oder Tabellenmenü: Mark/Unmark
-        // eine Liste Filme in die History schreiben
-        if (filmList == null || filmList.isEmpty()) {
-            return;
-        }
-
-        for (final FilmDataMTP film : filmList) {
-            addFilmToShown(audio, film);
-        }
     }
 
 

@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.download.DownloadData;
 import de.p2tools.mtplayer.controller.data.download.DownloadFactoryDelDownloadFiles;
 import de.p2tools.mtplayer.controller.data.downloaderror.DownloadErrorData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.controller.data.setdata.SetData;
 import de.p2tools.mtplayer.controller.mediadb.MediaCollectionData;
 import de.p2tools.mtplayer.controller.mediadb.MediaDataWorker;
@@ -227,9 +228,10 @@ public class StartDownloadFactory {
             return false;
 
         } else {
-            if (download.isAbo()) {
-                progData.historyListJson.addDownloadToHistory(download);
-            }
+//            if (download.isAbo()) {
+            // kommt in GESEHEN und DOWNLOAD
+            progData.historyListJson.addDownloadToHistory(download, HistoryData.SOURCE_SHOWN_DOWNLOAD);
+//            }
             return true;
         }
     }

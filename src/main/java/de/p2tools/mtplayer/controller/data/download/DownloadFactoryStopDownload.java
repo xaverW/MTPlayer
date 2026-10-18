@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -62,8 +63,10 @@ public class DownloadFactoryStopDownload {
         if (!aboHistoryList.isEmpty()) {
             // kommt nur in die "erledigte Abos" nicht in die History, da Downloads abgebrochen
 //            ProgData.getInstance().historyListAbos.addDownloadDataListToHistory(aboHistoryList);
-            ProgData.getInstance().historyListJson.addDownloadToHistory(aboHistoryList);
+            // in DOWNLOAD und GESEHEN
+            ProgData.getInstance().historyListJson.addDownloadToHistory(aboHistoryList, HistoryData.SOURCE_SHOWN_DOWNLOAD);
         }
+
         downloadList.removeAll(list);
 
         P2Duration.counterStop("delDownloads");

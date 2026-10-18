@@ -124,6 +124,12 @@ public class HistoryData implements Comparable<HistoryData> {
         this.audio = audio;
     }
 
+    public void addSource(int addSource) {
+        if (addSource != source) {
+            source = HistoryData.SOURCE_SHOWN_DOWNLOAD;
+        }
+    }
+
     public void addSourceDownload() {
         if (source == HistoryData.SOURCE_SHOWN) {
             source = HistoryData.SOURCE_SHOWN_DOWNLOAD;

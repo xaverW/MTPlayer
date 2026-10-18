@@ -17,6 +17,7 @@
 package de.p2tools.mtplayer.controller.data.download;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
+import de.p2tools.mtplayer.controller.data.history.HistoryData;
 import de.p2tools.mtplayer.gui.dialog.NoSetDialogController;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.tools.duration.P2Duration;
@@ -44,7 +45,8 @@ public class DownloadFactoryStartDownload {
         downloads.forEach(DownloadData::initStartDownload);
         downloadList.addNumber(downloads);
 //        ProgData.getInstance().historyListShown.addDownloadDataListToHistory(downloads);
-        ProgData.getInstance().historyListJson.addDownloadToHistory(downloads);
+        // zuerst mal nur in GESEHEN
+        ProgData.getInstance().historyListJson.addDownloadToHistory(downloads, HistoryData.SOURCE_SHOWN);
     }
 
     public static boolean startDownloads(DownloadList downloadList,

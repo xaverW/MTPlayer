@@ -30,6 +30,7 @@ import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.grid.P2GridConstraints;
 import de.p2tools.p2lib.guitools.ptable.P2CellCheckBox;
+import de.p2tools.p2lib.guitools.ptable.P2TableFactory;
 import de.p2tools.p2lib.guitools.table.P2RowFactory;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
@@ -154,6 +155,12 @@ public class PaneHistory extends ScrollPane {
     }
 
     private void initTable() {
+        progData.pEventHandler.addListener(new P2Listener(PEvents.EVENT_HISTORY_CHANGED) {
+            @Override
+            public void ping() {
+                P2TableFactory.refreshTable(tableHistory);
+            }
+        });
         tableHistory.setMinHeight(ProgConst.MIN_TABLE_HEIGHT);
         tableHistory.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableHistory.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
