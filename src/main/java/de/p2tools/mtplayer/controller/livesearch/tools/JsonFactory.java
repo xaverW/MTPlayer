@@ -48,24 +48,16 @@ public class JsonFactory {
         return Optional.empty();
     }
 
-    public static Optional<String> getOptStringElement(JsonNode jsonNode, String element1, String element2) {
-        if (jsonNode.has(element1)) {
-            if (jsonNode.get(element1).has(element2)) {
-                return Optional.of(jsonNode.get(element1).get(element2).asText());
+    public static Optional<String> getOptStringElement(JsonNode jsonNode, String[] element) {
+        JsonNode act = jsonNode;
+        for (String e : element) {
+            if (!act.has(e)) {
+                return Optional.empty();
+            } else {
+                act = act.get(e);
             }
         }
-        return Optional.empty();
-    }
-
-    public static Optional<String> getOptStringElement(JsonNode jsonNode, String element1, String element2, String element3) {
-        if (jsonNode.has(element1)) {
-            if (jsonNode.get(element1).has(element2)) {
-                if (jsonNode.get(element1).get(element2).has(element3)) {
-                    return Optional.of(jsonNode.get(element1).get(element2).get(element3).asText());
-                }
-            }
-        }
-        return Optional.empty();
+        return Optional.of(act.asText());
     }
 
     public static Optional<JsonNode> getOptElement(JsonNode jsonNode, String element) {
@@ -75,24 +67,16 @@ public class JsonFactory {
         return Optional.empty();
     }
 
-    public static Optional<JsonNode> getOptElement(JsonNode jsonNode, String element1, String element2) {
-        if (jsonNode.has(element1)) {
-            if (jsonNode.get(element1).has(element2)) {
-                return Optional.of(jsonNode.get(element1).get(element2));
+    public static Optional<JsonNode> getOptElement(JsonNode jsonNode, String[] element) {
+        JsonNode act = jsonNode;
+        for (String e : element) {
+            if (!act.has(e)) {
+                return Optional.empty();
+            } else {
+                act = act.get(e);
             }
         }
-        return Optional.empty();
-    }
-
-    public static Optional<JsonNode> getOptElement(JsonNode jsonNode, String element1, String element2, String element3) {
-        if (jsonNode.has(element1)) {
-            if (jsonNode.get(element1).has(element2)) {
-                if (jsonNode.get(element1).get(element2).has(element3)) {
-                    return Optional.of(jsonNode.get(element1).get(element2).get(element3));
-                }
-            }
-        }
-        return Optional.empty();
+        return Optional.of(act);
     }
 
     public static String getString(JsonNode jsonNode, String element) {
@@ -117,7 +101,26 @@ public class JsonFactory {
             };
         }
 
-        Iterator<JsonNode> it = jsonNode.get(element).elements();
-        return it;
+        return jsonNode.get(element).elements();
+    }
+
+    public static Iterator<JsonNode> getIterator(JsonNode jsonNode, String[] element) {
+        Optional<JsonNode> opt = getOptElement(jsonNode, element);
+
+        if (opt.isPresent()) {
+            return opt.get().elements();
+        } else {
+            return new Iterator<>() {
+                @Override
+                public boolean hasNext() {
+                    return false;
+                }
+
+                @Override
+                public JsonNode next() {
+                    return null;
+                }
+            };
+        }
     }
 }

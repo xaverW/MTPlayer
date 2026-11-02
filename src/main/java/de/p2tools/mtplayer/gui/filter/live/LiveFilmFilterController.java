@@ -46,8 +46,9 @@ public class LiveFilmFilterController extends FilterController {
         // ARD, ZDF
         LiveFilterTabZdf liveFilterTabZdf = new LiveFilterTabZdf();
         LiveFilterTabArd liveFilterTabArd = new LiveFilterTabArd();
+        LiveFilterTabArte liveFilterTabArte = new LiveFilterTabArte();
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(liveFilterTabArd, liveFilterTabZdf);
+        tabPane.getTabs().addAll(liveFilterTabArd, liveFilterTabZdf, liveFilterTabArte);
         vBoxFilter.getChildren().add(tabPane);
 
         final Button btnHelp = P2IconFactory.getHelpButton(progData.primaryStage, "Live-Suche",

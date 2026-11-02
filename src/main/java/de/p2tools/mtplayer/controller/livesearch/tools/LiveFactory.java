@@ -31,9 +31,10 @@ public class LiveFactory {
     public static int PROGRESS_NULL = -1;
     public static double PROGRESS_WAIT = -0.5;
     private static final DoubleProperty progressPropertyARD = new SimpleDoubleProperty(PROGRESS_NULL);
+    private static final DoubleProperty progressPropertyARTE = new SimpleDoubleProperty(PROGRESS_NULL);
     private static final DoubleProperty progressPropertyZDF = new SimpleDoubleProperty(PROGRESS_NULL);
 
-    public enum CHANNEL {ARD, ZDF}
+    public enum CHANNEL {ARD, ZDF, ARTE}
 
     private LiveFactory() {
     }
@@ -108,7 +109,7 @@ public class LiveFactory {
         final double progress = count / max;
         switch (channel) {
             case ARD -> Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(progress));
-
+            case ARTE -> Platform.runLater(() -> LiveFactory.progressPropertyARTE.setValue(progress));
             case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(progress));
 
         }
@@ -118,7 +119,7 @@ public class LiveFactory {
     public static void setProgressWait(CHANNEL channel) {
         switch (channel) {
             case ARD -> Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(PROGRESS_WAIT));
-
+            case ARTE -> Platform.runLater(() -> LiveFactory.progressPropertyARTE.setValue(PROGRESS_WAIT));
             case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(PROGRESS_WAIT));
 
         }
@@ -127,9 +128,8 @@ public class LiveFactory {
     public static void setProgressNull(CHANNEL channel) {
         switch (channel) {
             case ARD -> Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(PROGRESS_NULL));
-
+            case ARTE -> Platform.runLater(() -> LiveFactory.progressPropertyARTE.setValue(PROGRESS_NULL));
             case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(PROGRESS_NULL));
-
         }
     }
 
@@ -137,6 +137,9 @@ public class LiveFactory {
         switch (channel) {
             case ARD -> {
                 return progressPropertyARD;
+            }
+            case ARTE -> {
+                return progressPropertyARTE;
             }
             case ZDF -> {
                 return progressPropertyZDF;

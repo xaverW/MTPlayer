@@ -580,9 +580,11 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty LIVE_FILM_GUI_TABLE_ORDER = addStrProp("live-film-gui-table-order");
     public static DoubleProperty LIVE_FILM_PANE_INFO_DIVIDER = addDoubleProp("live-film-pane-info-divider", ProgConst.GUI_INFO_DIVIDER_LOCATION);
 
+    public static StringProperty LIVE_FILM_GUI_SEARCH_ARTE = addStrProp("live-film-gui-search-arte");
     public static StringProperty LIVE_FILM_GUI_SEARCH_ARD = addStrProp("live-film-gui-search-ard");
     public static StringProperty LIVE_FILM_GUI_SEARCH_ZDF = addStrProp("live-film-gui-search-zdf");
     public static StringProperty LIVE_FILM_GUI_SEARCH_URL_ARD = addStrProp("live-film-gui-search-url-ard");
+    public static StringProperty LIVE_FILM_GUI_SEARCH_URL_ARTE = addStrProp("live-film-gui-search-url-arte");
     public static StringProperty LIVE_FILM_GUI_SEARCH_URL_ZDF = addStrProp("live-film-gui-search-url-zdf");
 
     // Live Info Pane

@@ -71,7 +71,7 @@ public class LiveSearchArd {
 
             if (!next) {
                 // beim ersten Mal die Gesamtgröße suchen
-                Optional<JsonNode> optionalJsonNode = JsonFactory.getOptElement(jsonNode, "pagination", "totalElements");
+                Optional<JsonNode> optionalJsonNode = JsonFactory.getOptElement(jsonNode, new String[]{"pagination", "totalElements"});
                 optionalJsonNode.ifPresent(node -> ardDto.setTotalElements(node.asLong()));
             }
             hasMore(ardDto);

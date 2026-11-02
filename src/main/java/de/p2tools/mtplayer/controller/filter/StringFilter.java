@@ -42,6 +42,8 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
     // Live-Filter
     private final ObservableList<String> filterListLiveArd = FXCollections.observableArrayList();
     private final ObservableList<String> filterListLiveArdUrl = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListLiveArte = FXCollections.observableArrayList();
+    private final ObservableList<String> filterListLiveArteUrl = FXCollections.observableArrayList();
     private final ObservableList<String> filterListLiveZdf = FXCollections.observableArrayList();
     private final ObservableList<String> filterListLiveZdfUrl = FXCollections.observableArrayList();
     private final ObservableList<String> filterListLiveThema = FXCollections.observableArrayList();
@@ -164,6 +166,14 @@ public class StringFilter extends P2DataSample<StringFilter> implements Comparab
 
     public ObservableList<String> getFilterListLiveArdUrl() {
         return filterListLiveArdUrl;
+    }
+
+    public ObservableList<String> getFilterListLiveArte() {
+        return filterListLiveArte;
+    }
+
+    public ObservableList<String> getFilterListLiveArteUrl() {
+        return filterListLiveArteUrl;
     }
 
     public ObservableList<String> getFilterListLiveZdf() {
