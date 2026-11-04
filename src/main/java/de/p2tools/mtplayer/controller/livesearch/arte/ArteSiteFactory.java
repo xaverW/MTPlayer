@@ -21,9 +21,9 @@ public class ArteSiteFactory {
         FilmDataMTP filmDataMTP = new FilmDataMTP();
         getConfig(arteDto, urlConfig, filmDataMTP);
         getPlaylist(arteDto, urlPlaylist, filmDataMTP);
-//        if (!filmDataMTP.getUrl().isEmpty()) {
-        arteDto.getFilmList().add(filmDataMTP);
-//        }
+        if (!filmDataMTP.getUrl().isEmpty()) {
+            arteDto.getFilmList().add(filmDataMTP);
+        }
     }
 
     private static void getConfig(ArteDto arteDto, String url, FilmDataMTP filmDataMTP) {
