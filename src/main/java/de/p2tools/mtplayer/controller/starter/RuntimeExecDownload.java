@@ -31,6 +31,9 @@ import java.util.regex.Pattern;
 
 public class RuntimeExecDownload {
 
+    // ERRORSTREAM:   Duration: 00:02:48.40, start: 0.101000, bitrate: 0 kb/s
+    // frame= 2748 fps=687 q=-1.0 size=   48640KiB time=00:01:50.01 bitrate=3621.8kbits/s speed=27.5x elapsed=0:00:04.00
+
     private static final int INPUT = 1;
     private static final int ERROR = 2;
     private Process process = null;
@@ -40,7 +43,7 @@ public class RuntimeExecDownload {
 
     private static final Pattern patternFfmpegDuration = Pattern.compile("(?<=  Duration: )[^,]*"); // Duration: 00:00:30.28, start: 0.000000, bitrate: N/A
     private static final Pattern patternFfmpegTime = Pattern.compile("(?<=time=)[^ ]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
-    private static final Pattern patternFfmpegSize = Pattern.compile("(?<=size=)[^k]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
+    private static final Pattern patternFfmpegSize = Pattern.compile("(?<=size=)[^k,K]*");  // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
     private static final Pattern patternFfmpegBitrate = Pattern.compile("(?<=bitrate=)[^k]*");  // size=    1536kB time=00:00:06.24 bitrate=2016.6kbits/s speed=  12x
 
     private double totalSecs = 0;
@@ -179,11 +182,14 @@ public class RuntimeExecDownload {
             // ffmpeg muss dazu mit dem Parameter -i gestartet werden:
             // -i %f -acodec copy -vcodec copy -y **
             try {
+                // =====================
                 // 404
                 if (input.contains("HTTP error 404 Not Found")) {
                     download.getStartDownloadDto().addErrMsg("Die URL wurde nicht gefunden.");
                 }
 
+
+                // =====================
                 // Gesamtzeit ffmpeg
                 matcher = patternFfmpegDuration.matcher(input);
                 if (matcher.find()) {
@@ -195,6 +201,11 @@ public class RuntimeExecDownload {
                             + Double.parseDouble(hms[2]);
                 }
 
+                if (!input.contains("frame")) {
+                    return;
+                }
+
+                // =====================
                 // Gesamtgröße ffmpeg
                 if (totalSecs > 0) {
                     // macht nur dann Sinn
@@ -215,6 +226,8 @@ public class RuntimeExecDownload {
                     }
                 }
 
+
+                // =====================
                 // Bandbreite ffmpeg
                 matcher = patternFfmpegSize.matcher(input);
                 if (matcher.find()) {
@@ -235,12 +248,16 @@ public class RuntimeExecDownload {
                     }
                 }
 
+
+                // =====================
                 // Fortschritt ffmpeg
                 matcher = patternFfmpegTime.matcher(input);
                 if (totalSecs > 0 && matcher.find()) {
-                    // ffmpeg    1611kB time=00:00:06.73 bitrate=1959.7kbits/s   
+                    // frame=  147 fps= 17 q=-1.0 size=    1588kB time=00:00:05.84 bitrate=2226.0kbits/s
+                    // frame= 2748 fps=687 q=-1.0 size=   48640KiB time=00:01:50.01 bitrate=3621.8kbits/s speed=27.5x elapsed=0:00:04.00
+                    // ffmpeg    1611kB time=00:00:06.73 bitrate=1959.7kbits/s
                     // avconv    size=   26182kB time=100.96 bitrate=2124.5kbits/s 
-                    final String time = matcher.group();
+                    final String time = matcher.group().trim();
                     if (time.contains(":")) {
                         final String[] hms = time.split(":");
                         final double aktSecs = Integer.parseInt(hms[0]) * 3600
@@ -248,7 +265,7 @@ public class RuntimeExecDownload {
                                 + Double.parseDouble(hms[2]);
                         final double d = aktSecs / totalSecs * 100;
                         notifyDouble(d);
-                    } else {
+                    } else if (!time.isEmpty()) {
                         final double aktSecs = Double.parseDouble(time);
                         final double d = aktSecs / totalSecs * 100;
                         notifyDouble(d);
