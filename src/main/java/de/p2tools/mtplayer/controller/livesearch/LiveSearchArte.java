@@ -24,6 +24,10 @@ public class LiveSearchArte {
 
         // und jetzt die Seiten laden
         for (int i = 0; i < arteDto.getSiteDtos().size(); ++i) {
+            if (arteDto.isStop()) {
+                break;
+            }
+
             addFilmWithId(arteDto, arteDto.getSiteDtos().get(i));
             LiveFactory.setProgress(LiveFactory.CHANNEL.ARTE, i + 1, arteDto.getSiteDtos().size());
         }

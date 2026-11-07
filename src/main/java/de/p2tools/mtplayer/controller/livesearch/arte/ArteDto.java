@@ -12,6 +12,7 @@ public class ArteDto {
     private final ArrayList<ArteSiteDto> siteDtos = new ArrayList<>();
     private final StringProperty nextUrl = new SimpleStringProperty("");
     private ArteSiteDto arteSiteDto = new ArteSiteDto();
+    private boolean stop = false;
 
     public ArteDto() {
     }
@@ -22,6 +23,7 @@ public class ArteDto {
         arteSiteDto = new ArteSiteDto();
         filmList.clear();
         siteDtos.clear();
+        stop = false;
     }
 
     public String getSearchString() {
@@ -46,5 +48,13 @@ public class ArteDto {
 
     public void setSiteDto(ArteSiteDto pageId) {
         this.arteSiteDto = pageId;
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
     }
 }

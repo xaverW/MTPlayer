@@ -33,6 +33,12 @@ public class LiveFactory {
     private static final DoubleProperty progressPropertyARD = new SimpleDoubleProperty(PROGRESS_NULL);
     private static final DoubleProperty progressPropertyARTE = new SimpleDoubleProperty(PROGRESS_NULL);
     private static final DoubleProperty progressPropertyZDF = new SimpleDoubleProperty(PROGRESS_NULL);
+    private static int ardMax = 0;
+    private static int ardAct = 0;
+    private static int zdfMax = 0;
+    private static int zdfAct = 0;
+    private static int arteMax = 0;
+    private static int arteAct = 0;
 
     public enum CHANNEL {ARD, ZDF, ARTE}
 
@@ -108,10 +114,21 @@ public class LiveFactory {
     public static void setProgress(CHANNEL channel, double count, int max) {
         final double progress = count / max;
         switch (channel) {
-            case ARD -> Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(progress));
-            case ARTE -> Platform.runLater(() -> LiveFactory.progressPropertyARTE.setValue(progress));
-            case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(progress));
-
+            case ARD -> Platform.runLater(() -> {
+                LiveFactory.ardMax = max;
+                LiveFactory.ardAct = (int) count;
+                LiveFactory.progressPropertyARD.setValue(progress);
+            });
+            case ARTE -> Platform.runLater(() -> {
+                LiveFactory.arteMax = max;
+                LiveFactory.arteAct = (int) count;
+                LiveFactory.progressPropertyARTE.setValue(progress);
+            });
+            case ZDF -> Platform.runLater(() -> {
+                LiveFactory.zdfMax = max;
+                LiveFactory.zdfAct = (int) count;
+                LiveFactory.progressPropertyZDF.setValue(progress);
+            });
         }
         P2Log.debugLog("Filme suchen: " + progress);
     }
@@ -135,9 +152,6 @@ public class LiveFactory {
 
     public static DoubleProperty getProgressProperty(CHANNEL channel) {
         switch (channel) {
-            case ARD -> {
-                return progressPropertyARD;
-            }
             case ARTE -> {
                 return progressPropertyARTE;
             }
@@ -145,7 +159,35 @@ public class LiveFactory {
                 return progressPropertyZDF;
             }
             default -> {
-                return progressPropertyZDF;
+                return progressPropertyARD;
+            }
+        }
+    }
+
+    public static int getMax(CHANNEL channel) {
+        switch (channel) {
+            case ARTE -> {
+                return arteMax;
+            }
+            case ZDF -> {
+                return zdfMax;
+            }
+            default -> {
+                return ardMax;
+            }
+        }
+    }
+
+    public static int getAct(CHANNEL channel) {
+        switch (channel) {
+            case ARTE -> {
+                return arteAct;
+            }
+            case ZDF -> {
+                return zdfAct;
+            }
+            default -> {
+                return ardAct;
             }
         }
     }
