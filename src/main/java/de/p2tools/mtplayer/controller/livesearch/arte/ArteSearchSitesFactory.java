@@ -13,8 +13,8 @@ public class ArteSearchSitesFactory {
     }
 
     public static void search1(ArteDto arteDto) {
-        final String url;
-        url = arteDto.getSearchUrl();
+        final String SEARCH_URL = "https://api.arte.tv/api/emac/v4/de/web/search/results?page=1&query=";
+        final String url = SEARCH_URL + arteDto.getSearchString();
 
         try {
             Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
@@ -32,17 +32,10 @@ public class ArteSearchSitesFactory {
                     Iterator<JsonNode> u = JsonFactory.getIterator(ch, new String[]{"content", "data"});
                     while (u.hasNext()) {
                         JsonNode filmUrl = u.next();
-                        Optional<JsonNode> siteId = JsonFactory.getOptElement(filmUrl, "id");
-                        siteId.ifPresent(n -> {
-                            String id = n.asText();
-                            if (id.contains("_")) {
-                                id = id.substring(0, id.indexOf("_"));
-                            }
-                            arteDto.getIdList().add(id);
-                        });
+                        addArteSiteDto(arteDto, filmUrl);
                     }
                 }
-                LiveFactory.setProgress(LiveFactory.CHANNEL.ARTE, 0, arteDto.getIdList().size());
+                LiveFactory.setProgress(LiveFactory.CHANNEL.ARTE, 0, arteDto.getSiteDtos().size());
             }
         } catch (final Exception ex) {
             P2Log.errorLog(546212147, ex, "Url: " + url);
@@ -52,9 +45,6 @@ public class ArteSearchSitesFactory {
     public static void search2(ArteDto arteDto) {
         String url = "https://api.arte.tv/api/emac/v4/de/web/zones/f75e7b54-a37b-4f8f-b01b-dbefa877c041/content?page=1&query=" +
                 arteDto.getSearchString();
-//        String url = "https://api.arte.tv/api/emac/v4/de/web/zones/89658033-61df-430e-a825-3eec69311209/content?page=1&query=" +
-//                arteDto.getSearchString();
-
         try {
             do {
                 Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
@@ -62,7 +52,6 @@ public class ArteSearchSitesFactory {
                     return;
                 }
                 JsonNode jsonNode = rootNode.get();
-
                 searchSites(arteDto, jsonNode);
 
                 // dann die nächste suchen
@@ -72,31 +61,37 @@ public class ArteSearchSitesFactory {
                 }
             } while (!url.isEmpty() && !url.equals("null"));
 
-
-            LiveFactory.setProgress(LiveFactory.CHANNEL.ARTE, 0, arteDto.getIdList().size());
+            LiveFactory.setProgress(LiveFactory.CHANNEL.ARTE, 0, arteDto.getSiteDtos().size());
         } catch (final Exception ex) {
             P2Log.errorLog(546212147, ex, "Url: " + url);
         }
     }
 
-    public static void searchSites(ArteDto arteDto, JsonNode jsonNode) {
+    private static void searchSites(ArteDto arteDto, JsonNode jsonNode) {
         try {
             Iterator<JsonNode> children = JsonFactory.getIterator(jsonNode, "data");
             while (children.hasNext()) {
                 JsonNode ch = children.next();
-
-                // FilmUrls suchen
-                Optional<JsonNode> siteId = JsonFactory.getOptElement(ch, "id");
-                siteId.ifPresent(n -> {
-                    String id = n.asText();
-                    if (id.contains("_")) {
-                        id = id.substring(0, id.indexOf("_"));
-                    }
-                    arteDto.getIdList().add(id);
-                });
+                addArteSiteDto(arteDto, ch);
             }
         } catch (final Exception ex) {
             P2Log.errorLog(632652147, ex);
         }
+    }
+
+    private static void addArteSiteDto(ArteDto arteDto, JsonNode jsonNode) {
+        ArteSiteDto arteSiteDto = new ArteSiteDto();
+        Optional<JsonNode> siteGenre = JsonFactory.getOptElement(jsonNode, new String[]{"genre", "label"});
+        siteGenre.ifPresent(n -> arteSiteDto.setGenre(siteGenre.get().asText()));
+
+        Optional<JsonNode> siteId = JsonFactory.getOptElement(jsonNode, "id");
+        siteId.ifPresent(n -> {
+            String id = n.asText();
+            if (id.contains("_")) {
+                id = id.substring(0, id.indexOf("_"));
+            }
+            arteSiteDto.setId(id);
+            arteDto.getSiteDtos().add(arteSiteDto);
+        });
     }
 }
