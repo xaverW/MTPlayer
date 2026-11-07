@@ -41,6 +41,25 @@ public class JsonFactory {
         return Optional.empty();
     }
 
+    public static Optional<Integer> getOptIntElement(JsonNode jsonNode, String element) {
+        if (jsonNode.has(element)) {
+            return Optional.of(jsonNode.get(element).asInt());
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<Integer> getOptIntElement(JsonNode jsonNode, String[] element) {
+        JsonNode act = jsonNode;
+        for (String e : element) {
+            if (!act.has(e)) {
+                return Optional.empty();
+            } else {
+                act = act.get(e);
+            }
+        }
+        return Optional.of(act.asInt());
+    }
+
     public static Optional<String> getOptStringElement(JsonNode jsonNode, String element) {
         if (jsonNode.has(element)) {
             return Optional.of(jsonNode.get(element).asText());

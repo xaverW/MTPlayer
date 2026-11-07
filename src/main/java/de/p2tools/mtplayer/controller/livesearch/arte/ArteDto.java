@@ -14,6 +14,7 @@ public class ArteDto {
     public static final String PAGE_NO = "0";
     public static final String SEARCH_URL = "https://api.arte.tv/api/emac/v4/de/web/search/results?page=1&query=" + SEARCH;
 
+    //    public static final String SEARCH_URL = "https://api.arte.tv/api/emac/v4/de/web/zones/89658033-61df-430e-a825-3eec69311209/content?page=1&query=" + SEARCH;
     public static final String PAGE_URL = "https://api.ardmediathek.de/page-gateway/pages/ard/item/" +
             ID +
             "?embedded=false&mcV6=true";
