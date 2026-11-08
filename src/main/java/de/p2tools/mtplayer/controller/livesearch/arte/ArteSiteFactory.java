@@ -48,9 +48,9 @@ public class ArteSiteFactory {
             filmDataMTP.arr[FilmDataMTP.FILM_SIZE] = "";
             filmDataMTP.arr[FilmDataMTP.FILM_URL_SUBTITLE] = "";
 
-            filmDataMTP.arr[FilmDataMTP.FILM_URL] = "ARTE";
-            filmDataMTP.arr[FilmDataMTP.FILM_URL_SMALL] = "ARTE";
-            filmDataMTP.arr[FilmDataMTP.FILM_URL_HD] = "ARTE";
+            filmDataMTP.arr[FilmDataMTP.FILM_URL] = "";
+            filmDataMTP.arr[FilmDataMTP.FILM_URL_SMALL] = "";
+            filmDataMTP.arr[FilmDataMTP.FILM_URL_HD] = "";
 
             filmDataMTP.arr[FilmDataMTP.FILM_CHANNEL] = "ARTE";
 

@@ -40,11 +40,12 @@ public class LiveFilterTabArte extends Tab {
         vBoxTab.setPadding(new Insets(P2LibConst.PADDING));
         vBoxTab.setAlignment(Pos.TOP_CENTER);
 
-        Button btnSearchArte = new Button();
-        btnSearchArte.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH.getFontIcon(20));
-        btnSearchArte.setTooltip(new Tooltip("Suche starten"));
-        btnSearchArte.setOnAction(a -> searchArte());
-        btnSearchArte.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARTE.length().lessThan(LiveConst.MIN_SEARCH_LENGTH))
+        Button btnSearch = new Button();
+        btnSearch.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_S.getFontIcon());
+        btnSearch.getStyleClass().add("buttonLow");
+        btnSearch.setTooltip(new Tooltip("Suche starten"));
+        btnSearch.setOnAction(a -> searchArte());
+        btnSearch.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ARTE.length().lessThan(LiveConst.MIN_SEARCH_LENGTH))
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         final PCboString cboSearch;
@@ -54,13 +55,14 @@ public class LiveFilterTabArte extends Tab {
         vBox.setSpacing(2);
         HBox hBox = new HBox();
         hBox.setSpacing(P2LibConst.SPACING_HBOX);
-        hBox.getChildren().addAll(cboSearch, btnSearchArte);
+        hBox.getChildren().addAll(cboSearch, btnSearch);
         HBox.setHgrow(cboSearch, Priority.ALWAYS);
         vBox.getChildren().addAll(new Label("Livesuche ARTE"), hBox);
         vBoxTab.getChildren().add(vBox);
 
         Button btnSearchUrl = new Button();
-        btnSearchUrl.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH.getFontIcon(20));
+        btnSearchUrl.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH_S.getFontIcon());
+        btnSearchUrl.getStyleClass().add("buttonLow");
         btnSearchUrl.setTooltip(new Tooltip("Suche starten"));
         btnSearchUrl.setOnAction(a -> searchUrl());
         btnSearchUrl.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARTE.isEmpty())
@@ -94,14 +96,16 @@ public class LiveFilterTabArte extends Tab {
         final Button btnClear = new Button();
 
         progress.setMaxHeight(Double.MAX_VALUE);
-        btnClear.setGraphic(P2IconFactory.P2ICON.P2_BTN_CLEAR_FILTER.getFontIcon());
+        btnClear.setGraphic(P2IconFactory.P2ICON.P2_BTN_CLEAR_FILTER_S.getFontIcon());
+        btnClear.getStyleClass().add("buttonLow");
         btnClear.setTooltip(new Tooltip("Suche löschen"));
         btnClear.setOnAction(a -> {
             ProgConfig.LIVE_FILM_GUI_SEARCH_ARTE.set("");
             ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARTE.set("");
         });
 
-        btnStop.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnStop.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_S.getFontIcon());
+        btnStop.getStyleClass().add("buttonLow");
         btnStop.setOnAction(a -> arteDto.setStop(true));
         progress.progressProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE));
         progress.setMaxWidth(Double.MAX_VALUE);
@@ -124,6 +128,8 @@ public class LiveFilterTabArte extends Tab {
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().addAll(lblCount, progress, btnStop, btnClear);
         HBox.setHgrow(progress, Priority.ALWAYS);
-        vBoxTab.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBox);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(P2GuiTools.getDistance(5), hBox);
+        vBoxTab.getChildren().addAll(vBox);
     }
 }

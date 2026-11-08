@@ -47,7 +47,7 @@ public class LiveSearchZdf {
         do {
             urlList.addAll(ZdfSearchFactory.getFilmList(zdfDto));
             ++count;
-        } while (!zdfDto.zdfNextCursorProperty().get().isEmpty() && count < 12);
+        } while (!zdfDto.zdfNextCursorProperty().get().isEmpty() && count < 10);
 
         search(zdfDto, urlList);
 
