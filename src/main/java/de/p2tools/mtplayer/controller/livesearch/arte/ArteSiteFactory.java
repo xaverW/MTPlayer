@@ -70,10 +70,21 @@ public class ArteSiteFactory {
 
             node = JsonFactory.getOptElement(nodeRoot, new String[]{"data", "attributes", "metadata", "title"});
             node.ifPresent(n -> filmDataMTP.arr[FilmDataMTP.FILM_TITLE] = n.asText());
-            if (filmDataMTP.arr[FilmDataMTP.FILM_TITLE].isEmpty()) {
-                node = JsonFactory.getOptElement(nodeRoot, new String[]{"data", "attributes", "metadata", "subtitle"});
-                node.ifPresent(n -> filmDataMTP.arr[FilmDataMTP.FILM_TITLE] = n.asText());
-            }
+            node = JsonFactory.getOptElement(nodeRoot, new String[]{"data", "attributes", "metadata", "subtitle"});
+            node.ifPresent(n -> {
+                String text = filmDataMTP.arr[FilmDataMTP.FILM_TITLE];
+                if (!text.isEmpty() && !n.asText().isEmpty()) {
+                    text += " - " + n.asText();
+                }
+                if (text.isEmpty()) {
+                    text = n.asText();
+                }
+                if (text.isEmpty()) {
+                    text = "ARTE";
+                }
+
+                filmDataMTP.arr[FilmDataMTP.FILM_TITLE] = text;
+            });
 
             node = JsonFactory.getOptElement(nodeRoot, new String[]{"data", "attributes", "metadata", "duration", "seconds"});
             node.ifPresent(n -> checkFilmDauer(filmDataMTP, n.asLong()));
