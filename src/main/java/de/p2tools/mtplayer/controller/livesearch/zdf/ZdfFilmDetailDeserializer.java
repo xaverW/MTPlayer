@@ -59,15 +59,15 @@ public class ZdfFilmDetailDeserializer {
             = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX"); // 2016-10-29T16:15:00+02:00
 
     private final String apiUrlBase = "https://api.zdf.de";
-    private final JsonInfoDto jsonInfoDto;
+    private final ZdfDto zdfDto;
 
-    public ZdfFilmDetailDeserializer(JsonInfoDto jsonInfoDto) {
-        this.jsonInfoDto = jsonInfoDto;
+    public ZdfFilmDetailDeserializer(ZdfDto zdfDto) {
+        this.zdfDto = zdfDto;
     }
 
     public void deserialize(String getUrl) {
         try {
-            Optional<JsonNode> optRootNode = JsonFactory.getRootNode(getUrl, "Bearer " + jsonInfoDto.getApi());
+            Optional<JsonNode> optRootNode = JsonFactory.getRootNode(getUrl, "Bearer " + zdfDto.getApi());
             if (optRootNode.isEmpty()) {
                 return;
             }
@@ -111,8 +111,8 @@ public class ZdfFilmDetailDeserializer {
                 ZdfFilmDto zdfFilmDto = new ZdfFilmDto(downloadUrl.get(DOWNLOAD_URL_DEFAULT), topic,
                         title.get(), description, website, time, duration, downloadUrl.get(DOWNLOAD_URL_DGS));
 
-                Optional<DownloadDto> downloadDtoOptional = new ZdfDownloadDtoDeserializer().deserialize(jsonInfoDto, downloadUrl.get(DOWNLOAD_URL_DEFAULT));
-                downloadDtoOptional.ifPresent(downloadDto -> new ZdfFilmDetailTask().processRestTarget(jsonInfoDto, zdfFilmDto, downloadDto));
+                Optional<DownloadDto> downloadDtoOptional = new ZdfDownloadDtoDeserializer().deserialize(zdfDto, downloadUrl.get(DOWNLOAD_URL_DEFAULT));
+                downloadDtoOptional.ifPresent(downloadDto -> new ZdfFilmDetailTask().processRestTarget(zdfDto, zdfFilmDto, downloadDto));
 
             } else {
                 P2Log.errorLog(652365478, "ZdfFilmDetailDeserializer: no title or url found");

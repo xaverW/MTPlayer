@@ -27,14 +27,14 @@ public class ZdfFilmDetailTask {
     public ZdfFilmDetailTask() {
     }
 
-    public void processRestTarget(final JsonInfoDto jsonInfoDto, ZdfFilmDto zdfFilmDto, DownloadDto downloadDto) {
+    public void processRestTarget(final ZdfDto zdfDto, ZdfFilmDto zdfFilmDto, DownloadDto downloadDto) {
         try {
             appendSignLanguage(downloadDto, zdfFilmDto.getUrlSignLanguage());
 
             final ZdfFilmDto result = zdfFilmDto;
-            addFilm(jsonInfoDto, downloadDto, result);
+            addFilm(zdfDto, downloadDto, result);
         } catch (Exception e) {
-            P2Log.errorLog(959562654, e, jsonInfoDto.getSearchString());
+            P2Log.errorLog(959562654, e, zdfDto.getSearchString());
         }
     }
 
@@ -47,7 +47,7 @@ public class ZdfFilmDetailTask {
         }
     }
 
-    private void addFilm(final JsonInfoDto jsonInfoDto, DownloadDto downloadDto, final ZdfFilmDto zdfFilmDto) {
+    private void addFilm(final ZdfDto zdfDto, DownloadDto downloadDto, final ZdfFilmDto zdfFilmDto) {
         for (final String language : downloadDto.getLanguages()) {
 
             if (downloadDto.getUrl(language, LiveConst.Qualities.NORMAL).isPresent()) {
@@ -57,7 +57,7 @@ public class ZdfFilmDetailTask {
                 final FilmDataMTP filmWithLanguage = createFilm(downloadDto, zdfFilmDto, language);
                 LiveFactory.setFilmSize(filmWithLanguage);
                 filmWithLanguage.init();
-                jsonInfoDto.getList().add(filmWithLanguage);
+                zdfDto.getFilmDataList().add(filmWithLanguage);
             }
         }
     }

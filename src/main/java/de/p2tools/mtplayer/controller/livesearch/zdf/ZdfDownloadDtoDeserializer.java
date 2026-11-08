@@ -54,10 +54,10 @@ public class ZdfDownloadDtoDeserializer {
     public ZdfDownloadDtoDeserializer() {
     }
 
-    public Optional<DownloadDto> deserialize(final JsonInfoDto jsonInfoDto, String videoUrl) {
+    public Optional<DownloadDto> deserialize(final ZdfDto zdfDto, String videoUrl) {
         try {
             final Request.Builder builder = new Request.Builder().url(videoUrl);
-            String api = "Bearer " + jsonInfoDto.getApi();
+            String api = "Bearer " + zdfDto.getApi();
             builder.addHeader("Api-Auth", api);
             Response response = MtHttpClient.getInstance().getHttpClient().newCall(builder.build()).execute();
             ResponseBody body = response.body();

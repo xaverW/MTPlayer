@@ -11,7 +11,9 @@ import de.p2tools.p2lib.mediathek.filmdata.FilmDataXml;
 import de.p2tools.p2lib.tools.log.P2Log;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
@@ -27,18 +29,19 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class LiveFactory {
+    public static final int MAX_SEARCH_FILM = 250;
     private static final int TIMEOUT_LENGTH = 2000;
     public static int PROGRESS_NULL = -1;
     public static double PROGRESS_WAIT = -0.5;
     private static final DoubleProperty progressPropertyARD = new SimpleDoubleProperty(PROGRESS_NULL);
     private static final DoubleProperty progressPropertyARTE = new SimpleDoubleProperty(PROGRESS_NULL);
     private static final DoubleProperty progressPropertyZDF = new SimpleDoubleProperty(PROGRESS_NULL);
-    private static int ardMax = 0;
-    private static int ardAct = 0;
-    private static int zdfMax = 0;
-    private static int zdfAct = 0;
-    private static int arteMax = 0;
-    private static int arteAct = 0;
+    private static final IntegerProperty ardMax = new SimpleIntegerProperty(0);
+    private static final IntegerProperty ardAct = new SimpleIntegerProperty(0);
+    private static final IntegerProperty zdfMax = new SimpleIntegerProperty(0);
+    private static final IntegerProperty zdfAct = new SimpleIntegerProperty(0);
+    private static final IntegerProperty arteMax = new SimpleIntegerProperty(0);
+    private static final IntegerProperty arteAct = new SimpleIntegerProperty(0);
 
     public enum CHANNEL {ARD, ZDF, ARTE}
 
@@ -115,19 +118,19 @@ public class LiveFactory {
         final double progress = count / max;
         switch (channel) {
             case ARD -> Platform.runLater(() -> {
-                LiveFactory.ardMax = max;
-                LiveFactory.ardAct = (int) count;
-                LiveFactory.progressPropertyARD.setValue(progress);
+                ardMax.set(max);
+                ardAct.set((int) count);
+                progressPropertyARD.setValue(progress);
             });
             case ARTE -> Platform.runLater(() -> {
-                LiveFactory.arteMax = max;
-                LiveFactory.arteAct = (int) count;
-                LiveFactory.progressPropertyARTE.setValue(progress);
+                arteMax.set(max);
+                arteAct.set((int) count);
+                progressPropertyARTE.setValue(progress);
             });
             case ZDF -> Platform.runLater(() -> {
-                LiveFactory.zdfMax = max;
-                LiveFactory.zdfAct = (int) count;
-                LiveFactory.progressPropertyZDF.setValue(progress);
+                zdfMax.set(max);
+                zdfAct.set((int) count);
+                progressPropertyZDF.setValue(progress);
             });
         }
         P2Log.debugLog("Filme suchen: " + progress);
@@ -135,10 +138,21 @@ public class LiveFactory {
 
     public static void setProgressWait(CHANNEL channel) {
         switch (channel) {
-            case ARD -> Platform.runLater(() -> LiveFactory.progressPropertyARD.setValue(PROGRESS_WAIT));
-            case ARTE -> Platform.runLater(() -> LiveFactory.progressPropertyARTE.setValue(PROGRESS_WAIT));
-            case ZDF -> Platform.runLater(() -> LiveFactory.progressPropertyZDF.setValue(PROGRESS_WAIT));
-
+            case ARD -> Platform.runLater(() -> {
+                ardMax.set(0);
+                ardAct.set(0);
+                progressPropertyARD.setValue(PROGRESS_WAIT);
+            });
+            case ARTE -> Platform.runLater(() -> {
+                arteMax.set(0);
+                arteAct.set(0);
+                progressPropertyARTE.setValue(PROGRESS_WAIT);
+            });
+            case ZDF -> Platform.runLater(() -> {
+                zdfMax.set(0);
+                zdfAct.set(0);
+                progressPropertyZDF.setValue(PROGRESS_WAIT);
+            });
         }
     }
 
@@ -164,7 +178,7 @@ public class LiveFactory {
         }
     }
 
-    public static int getMax(CHANNEL channel) {
+    public static IntegerProperty getMaxProperty(CHANNEL channel) {
         switch (channel) {
             case ARTE -> {
                 return arteMax;
@@ -178,7 +192,7 @@ public class LiveFactory {
         }
     }
 
-    public static int getAct(CHANNEL channel) {
+    public static IntegerProperty getActProperty(CHANNEL channel) {
         switch (channel) {
             case ARTE -> {
                 return arteAct;

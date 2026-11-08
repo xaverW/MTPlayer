@@ -22,22 +22,21 @@ import javafx.beans.property.*;
 
 import java.util.ArrayList;
 
-public class JsonInfoDto {
-    public static int PAGE_SIZE = 20;
-
+public class ZdfDto {
     private String searchString;
     private String startUrl = "";
     private final StringProperty nextUrl = new SimpleStringProperty("");
     private final StringProperty zdfNextCursor = new SimpleStringProperty("");
 
-    private String ardFilmId = "";
+    //    private String ardFilmId = "";
     private final LongProperty sizeOverAll = new SimpleLongProperty(0);
     private final IntegerProperty pageNo = new SimpleIntegerProperty(0);
-    private ArrayList<FilmDataMTP> list = new ArrayList<>();
+    private ArrayList<FilmDataMTP> filmDataList = new ArrayList<>();
 
     private String api = "";
+    private boolean stop = false;
 
-    public JsonInfoDto() {
+    public ZdfDto() {
     }
 
     public void init() {
@@ -47,10 +46,11 @@ public class JsonInfoDto {
         startUrl = "";
         zdfNextCursor.set("");
         nextUrl.set("");
-        ardFilmId = "";
+//        ardFilmId = "";
         sizeOverAll.set(0);
         pageNo.set(0);
-        list.clear();
+        filmDataList.clear();
+        stop = false;
     }
 
     public String getSearchString() {
@@ -69,17 +69,17 @@ public class JsonInfoDto {
         this.startUrl = startUrl;
     }
 
-    public String getNextUrl() {
-        return nextUrl.get();
-    }
+//    public String getNextUrl() {
+//        return nextUrl.get();
+//    }
 
-    public StringProperty nextUrlProperty() {
-        return nextUrl;
-    }
+//    public StringProperty nextUrlProperty() {
+//        return nextUrl;
+//    }
 
-    public void setNextUrl(String nextUrl) {
-        this.nextUrl.set(nextUrl);
-    }
+//    public void setNextUrl(String nextUrl) {
+//        this.nextUrl.set(nextUrl);
+//    }
 
     public String getZdfNextCursor() {
         return zdfNextCursor.get();
@@ -93,44 +93,44 @@ public class JsonInfoDto {
         return zdfNextCursor;
     }
 
-    public String getArdFilmId() {
-        return ardFilmId;
+//    public String getArdFilmId() {
+//        return ardFilmId;
+//    }
+//
+//    public void setArdFilmId(String ardFilmId) {
+//        this.ardFilmId = ardFilmId;
+//    }
+//
+//    public long getSizeOverAll() {
+//        return sizeOverAll.get();
+//    }
+//
+//    public LongProperty sizeOverAllProperty() {
+//        return sizeOverAll;
+//    }
+//
+//    public void setSizeOverAll(long sizeOverAll) {
+//        this.sizeOverAll.set(sizeOverAll);
+//    }
+//
+//    public int getPageNo() {
+//        return pageNo.get();
+//    }
+//
+//    public IntegerProperty pageNoProperty() {
+//        return pageNo;
+//    }
+//
+//    public void setPageNo(int pageNo) {
+//        this.pageNo.set(pageNo);
+//    }
+
+    public ArrayList<FilmDataMTP> getFilmDataList() {
+        return filmDataList;
     }
 
-    public void setArdFilmId(String ardFilmId) {
-        this.ardFilmId = ardFilmId;
-    }
-
-    public long getSizeOverAll() {
-        return sizeOverAll.get();
-    }
-
-    public LongProperty sizeOverAllProperty() {
-        return sizeOverAll;
-    }
-
-    public void setSizeOverAll(long sizeOverAll) {
-        this.sizeOverAll.set(sizeOverAll);
-    }
-
-    public int getPageNo() {
-        return pageNo.get();
-    }
-
-    public IntegerProperty pageNoProperty() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo.set(pageNo);
-    }
-
-    public ArrayList<FilmDataMTP> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<FilmDataMTP> list) {
-        this.list = list;
+    public void setFilmDataList(ArrayList<FilmDataMTP> filmDataList) {
+        this.filmDataList = filmDataList;
     }
 
     public String getApi() {
@@ -139,5 +139,13 @@ public class JsonInfoDto {
 
     public void setApi(String api) {
         this.api = api;
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
     }
 }

@@ -28,17 +28,17 @@ public class LiveSearchArte {
                 break;
             }
 
-            addFilmWithId(arteDto, arteDto.getSiteDtos().get(i));
             LiveFactory.setProgress(LiveFactory.CHANNEL.ARTE, i + 1, arteDto.getSiteDtos().size());
+            addFilmWithId(arteDto, arteDto.getSiteDtos().get(i));
         }
         addFilm(arteDto);
     }
 
     public void loadUrl(ArteDto arteDto) {
         // https://www.arte.tv/de/videos/  125691-000-A  /outgrow-the-system-wirtschaft-neu-denken/
+        LiveFactory.setProgressWait(LiveFactory.CHANNEL.ARTE);
         String url = ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARTE.get().trim();
         P2Log.sysLog("Filme suchen: " + url);
-        LiveFactory.setProgressWait(LiveFactory.CHANNEL.ARTE);
         arteDto.init();
 
         url = url.replace("https://www.arte.tv/de/videos/", "");

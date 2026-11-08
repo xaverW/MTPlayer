@@ -21,11 +21,8 @@ public class LiveFilterTabArte extends Tab {
 
     private final ProgData progData;
     private final ArteDto arteDto = new ArteDto();
-    private final ProgressBar progress = new ProgressBar();
-    private final Button btnStop = new Button();
     private final Label lblCount = new Label();
     private final VBox vBoxTab = new VBox();
-    private final Button btnClear = new Button();
 
     public LiveFilterTabArte() {
         super("ARTE");
@@ -79,17 +76,6 @@ public class LiveFilterTabArte extends Tab {
         HBox.setHgrow(cboSearchUrl, Priority.ALWAYS);
         vBox.getChildren().addAll(new Label("URL ARTE-Filmseite"), hBox);
         vBoxTab.getChildren().add(vBox);
-
-//        btnClear.setGraphic(P2IconFactory.P2ICON.P2_BTN_CLEAR_FILTER.getFontIcon());
-//        btnClear.setTooltip(new Tooltip("Suche löschen"));
-//        btnClear.setOnAction(a -> {
-//            ProgConfig.LIVE_FILM_GUI_SEARCH_ARTE.set("");
-//            ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARTE.set("");
-//        });
-//        HBox hBoxClear = new HBox();
-//        hBoxClear.getChildren().add(btnClear);
-//        hBoxClear.setAlignment(Pos.CENTER_RIGHT);
-//        vBoxTab.getChildren().add(hBoxClear);
     }
 
     private void searchArte() {
@@ -103,6 +89,11 @@ public class LiveFilterTabArte extends Tab {
     }
 
     private void addProgress() {
+        final ProgressBar progress = new ProgressBar();
+        final Button btnStop = new Button();
+        final Button btnClear = new Button();
+
+        progress.setMaxHeight(Double.MAX_VALUE);
         btnClear.setGraphic(P2IconFactory.P2ICON.P2_BTN_CLEAR_FILTER.getFontIcon());
         btnClear.setTooltip(new Tooltip("Suche löschen"));
         btnClear.setOnAction(a -> {
@@ -110,19 +101,20 @@ public class LiveFilterTabArte extends Tab {
             ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ARTE.set("");
         });
 
-        btnStop.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR_S.getFontIcon());
+        btnStop.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
         btnStop.setOnAction(a -> arteDto.setStop(true));
-        btnStop.getStyleClass().add("buttonVerySmall");
         progress.progressProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE));
         progress.setMaxWidth(Double.MAX_VALUE);
 
         LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE).addListener((u, o, n) -> {
-            final String text = LiveFactory.getAct(LiveFactory.CHANNEL.ARTE) + " / " +
-                    LiveFactory.getMax(LiveFactory.CHANNEL.ARTE);
+            final String text = LiveFactory.getActProperty(LiveFactory.CHANNEL.ARTE).get() + " / " +
+                    LiveFactory.getMaxProperty(LiveFactory.CHANNEL.ARTE).get();
             lblCount.setText(text);
         });
 
-        lblCount.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE).greaterThan(-1));
+        lblCount.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE).greaterThan(-1).and(
+                LiveFactory.getMaxProperty(LiveFactory.CHANNEL.ARTE).greaterThan(0)));
+        lblCount.managedProperty().bind(lblCount.visibleProperty());
         progress.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE).greaterThan(-1));
         btnStop.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE).greaterThan(-1));
         btnClear.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ARTE).greaterThan(-1).not());

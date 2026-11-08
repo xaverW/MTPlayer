@@ -2,7 +2,6 @@ package de.p2tools.mtplayer.controller.livesearch.arte;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import de.p2tools.mtplayer.controller.livesearch.tools.JsonFactory;
-import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
 import de.p2tools.p2lib.tools.log.P2Log;
 
 import java.util.Iterator;
@@ -35,7 +34,6 @@ public class ArteSearchSitesFactory {
                         addArteSiteDto(arteDto, filmUrl);
                     }
                 }
-                LiveFactory.setProgress(LiveFactory.CHANNEL.ARTE, 0, arteDto.getSiteDtos().size());
             }
         } catch (final Exception ex) {
             P2Log.errorLog(546212147, ex, "Url: " + url);
@@ -46,6 +44,7 @@ public class ArteSearchSitesFactory {
         String url = "https://api.arte.tv/api/emac/v4/de/web/zones/f75e7b54-a37b-4f8f-b01b-dbefa877c041/content?page=1&query=" +
                 arteDto.getSearchString();
         try {
+            int count = 0;
             do {
                 Optional<JsonNode> rootNode = JsonFactory.getRootNode(url);
                 if (rootNode.isEmpty()) {
@@ -53,15 +52,14 @@ public class ArteSearchSitesFactory {
                 }
                 JsonNode jsonNode = rootNode.get();
                 searchSites(arteDto, jsonNode);
+                ++count;
 
                 // dann die nächste suchen
                 Optional<JsonNode> jsonNext = JsonFactory.getOptElement(jsonNode, new String[]{"pagination", "links", "next"});
                 if (jsonNext.isPresent()) {
                     url = jsonNext.get().asText();
                 }
-            } while (!url.isEmpty() && !url.equals("null"));
-
-            LiveFactory.setProgress(LiveFactory.CHANNEL.ARTE, 0, arteDto.getSiteDtos().size());
+            } while (!url.isEmpty() && !url.equals("null") && count < 20);
         } catch (final Exception ex) {
             P2Log.errorLog(546212147, ex, "Url: " + url);
         }

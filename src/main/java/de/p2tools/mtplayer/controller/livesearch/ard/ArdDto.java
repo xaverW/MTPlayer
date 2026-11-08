@@ -28,6 +28,7 @@ public class ArdDto {
     private long totalElements = 0;
     private int actPage = 0;
     private String pageId = "";
+    private boolean stop = false;
 
     public ArdDto() {
     }
@@ -38,16 +39,17 @@ public class ArdDto {
         totalElements = 0;
         pageId = "";
         filmList.clear();
+        stop = false;
     }
 
     public String getSearchUrl() {
         return ArdSearchFactory.getSearchUrl(searchString);
     }
 
-    public String getSearchUrl(String searchString) {
-        setSearchString(searchString);
-        return ArdSearchFactory.getSearchUrl(searchString);
-    }
+//    public String getSearchUrl(String searchString) {
+//        setSearchString(searchString);
+//        return ArdSearchFactory.getSearchUrl(searchString);
+//    }
 
     // =========================
 
@@ -73,9 +75,9 @@ public class ArdDto {
         return nextUrl.get();
     }
 
-    public StringProperty nextUrlProperty() {
-        return nextUrl;
-    }
+//    public StringProperty nextUrlProperty() {
+//        return nextUrl;
+//    }
 
     public long getTotalElements() {
         return totalElements;
@@ -99,5 +101,13 @@ public class ArdDto {
 
     public void setPageId(String pageId) {
         this.pageId = pageId;
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
     }
 }

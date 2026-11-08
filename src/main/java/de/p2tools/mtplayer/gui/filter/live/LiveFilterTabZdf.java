@@ -5,9 +5,10 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.livesearch.LiveSearchZdf;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveConst;
 import de.p2tools.mtplayer.controller.livesearch.tools.LiveFactory;
-import de.p2tools.mtplayer.controller.livesearch.zdf.JsonInfoDto;
+import de.p2tools.mtplayer.controller.livesearch.zdf.ZdfDto;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.P2LibConst;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,16 +20,15 @@ import javafx.scene.layout.VBox;
 public class LiveFilterTabZdf extends Tab {
 
     private final ProgData progData;
-    private final JsonInfoDto jsonInfoDto = new JsonInfoDto();
-    private final ProgressBar progress = new ProgressBar();
+    private final ZdfDto zdfDto = new ZdfDto();
     private final VBox vBoxTab = new VBox();
+    private final Label lblCount = new Label();
 
     public LiveFilterTabZdf() {
         super("ZDF");
         this.progData = ProgData.getInstance();
         setClosable(false);
 
-        ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.addListener((u, o, n) -> jsonInfoDto.init()); // damit "weiter" nicht mehr geht
         addTabZdf();
         addProgress();
     }
@@ -39,13 +39,6 @@ public class LiveFilterTabZdf extends Tab {
         vBoxTab.setPadding(new Insets(P2LibConst.PADDING));
         vBoxTab.setAlignment(Pos.TOP_CENTER);
 
-        Button btnClear = new Button();
-        btnClear.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
-        btnClear.setTooltip(new Tooltip("Suche löschen"));
-        btnClear.setOnAction(a -> {
-            ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.set("");
-        });
-
         final PCboString cboSearch;
         cboSearch = new PCboString(progData.stringFilterLists.getFilterListLiveZdf(),
                 ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF);
@@ -53,15 +46,8 @@ public class LiveFilterTabZdf extends Tab {
         Button btnSearchZdf = new Button();
         btnSearchZdf.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH.getFontIcon(20));
         btnSearchZdf.setTooltip(new Tooltip("Suche starten"));
-        btnSearchZdf.setOnAction(a -> searchZdf(false));
+        btnSearchZdf.setOnAction(a -> searchZdf());
         btnSearchZdf.disableProperty().bind((ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.length().lessThan(LiveConst.MIN_SEARCH_LENGTH))
-                .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
-
-        Button btnKeepOnZdf = new Button("Weitersuchen");
-        btnKeepOnZdf.setGraphic(P2IconFactory.P2ICON.BTN_ARROW_FORWARD.getFontIcon());
-        btnKeepOnZdf.setTooltip(new Tooltip("Weitersuchen"));
-        btnKeepOnZdf.setOnAction(a -> searchZdf(true));
-        btnKeepOnZdf.disableProperty().bind((jsonInfoDto.zdfNextCursorProperty().isEmpty())
                 .or(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).isNotEqualTo(LiveFactory.PROGRESS_NULL)));
 
         VBox vBox = new VBox();
@@ -69,26 +55,10 @@ public class LiveFilterTabZdf extends Tab {
 
         HBox hBox = new HBox();
         hBox.setSpacing(P2LibConst.SPACING_HBOX);
-        hBox.getChildren().addAll(cboSearch, btnClear);
+        hBox.getChildren().addAll(cboSearch, btnSearchZdf);
         HBox.setHgrow(cboSearch, Priority.ALWAYS);
         vBox.getChildren().addAll(new Label("Livesuche ZDF"), hBox);
-
-        hBox = new HBox();
-        hBox.setPadding(new Insets(2, 0, 0, 0));
-        hBox.setSpacing(P2LibConst.SPACING_HBOX);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(btnKeepOnZdf, btnSearchZdf);
-        vBox.getChildren().add(hBox);
-
         vBoxTab.getChildren().add(vBox);
-
-        // Search URL
-        Button btnClearUrl = new Button();
-        btnClearUrl.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
-        btnClearUrl.setTooltip(new Tooltip("Suche löschen"));
-        btnClearUrl.setOnAction(a -> {
-            ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.set("");
-        });
 
         Button btnSearchUrlZdf = new Button();
         btnSearchUrlZdf.setGraphic(P2IconFactory.P2ICON.BTN_SEARCH.getFontIcon(20));
@@ -105,35 +75,58 @@ public class LiveFilterTabZdf extends Tab {
 
         hBox = new HBox();
         hBox.setSpacing(P2LibConst.SPACING_HBOX);
-        hBox.getChildren().addAll(cboSearchUrl, btnClearUrl);
+        hBox.getChildren().addAll(cboSearchUrl, btnSearchUrlZdf);
         HBox.setHgrow(cboSearchUrl, Priority.ALWAYS);
         vBox.getChildren().addAll(new Label("URL ZDF-Filmseite"), hBox);
 
-        hBox = new HBox();
-        hBox.setPadding(new Insets(2, 0, 0, 0));
-        hBox.setSpacing(P2LibConst.SPACING_HBOX);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(btnSearchUrlZdf);
-        vBox.getChildren().add(hBox);
-
         vBoxTab.getChildren().add(vBox);
-
         this.setContent(vBoxTab);
     }
 
-    private void searchZdf(boolean next) {
-        new Thread(() -> new LiveSearchZdf().loadLive(jsonInfoDto, next)).start();
+    private void searchZdf() {
+        new Thread(() -> new LiveSearchZdf().loadLive(zdfDto)).start();
     }
 
     private void searchUrl() {
-        new Thread(() -> new LiveSearchZdf().loadUrl(jsonInfoDto)).start();
+        new Thread(() -> new LiveSearchZdf().loadUrl(zdfDto)).start();
     }
 
     private void addProgress() {
+        final ProgressBar progress = new ProgressBar();
+        final Button btnStop = new Button();
+        final Button btnClear = new Button();
+
+        progress.setMaxHeight(Double.MAX_VALUE);
+        btnClear.setGraphic(P2IconFactory.P2ICON.P2_BTN_CLEAR_FILTER.getFontIcon());
+        btnClear.setTooltip(new Tooltip("Suche löschen"));
+        btnClear.setOnAction(a -> {
+            ProgConfig.LIVE_FILM_GUI_SEARCH_ZDF.set("");
+            ProgConfig.LIVE_FILM_GUI_SEARCH_URL_ZDF.set("");
+        });
+
+        btnStop.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnStop.setOnAction(a -> zdfDto.setStop(true));
         progress.progressProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF));
-        progress.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).greaterThan(-1));
         progress.setMaxWidth(Double.MAX_VALUE);
-        vBoxTab.getChildren().addAll(/*P2GuiTools.getVBoxGrower(),*/ progress);
-        VBox.setVgrow(progress, Priority.ALWAYS);
+
+        LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).addListener((u, o, n) -> {
+            final String text = LiveFactory.getActProperty(LiveFactory.CHANNEL.ZDF).get() + " / " +
+                    LiveFactory.getMaxProperty(LiveFactory.CHANNEL.ZDF).get();
+            lblCount.setText(text);
+        });
+
+        lblCount.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).greaterThan(-1).and(
+                LiveFactory.getMaxProperty(LiveFactory.CHANNEL.ZDF).greaterThan(0)));
+        lblCount.managedProperty().bind(lblCount.visibleProperty());
+        progress.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).greaterThan(-1));
+        btnStop.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).greaterThan(-1));
+        btnClear.visibleProperty().bind(LiveFactory.getProgressProperty(LiveFactory.CHANNEL.ZDF).greaterThan(-1).not());
+        btnClear.managedProperty().bind(btnClear.visibleProperty());
+
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        hBox.getChildren().addAll(lblCount, progress, btnStop, btnClear);
+        HBox.setHgrow(progress, Priority.ALWAYS);
+        vBoxTab.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBox);
     }
 }
