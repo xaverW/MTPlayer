@@ -44,6 +44,7 @@ public class PaneHistoryDel extends VBox {
     private final Button btnDelAll = new Button("");
     private final Button btnDelAct = new Button("");
     private final Button btnDelSelection = new Button("");
+    private final Button btnDelShown = new Button("");
     private final Button btnDelAge = new Button("");
     private final Button btnDelNotInList = new Button("");
     private final TableView<HistoryData> tableView;
@@ -62,82 +63,112 @@ public class PaneHistoryDel extends VBox {
     private void make() {
         slAge.setMin(1);
         slAge.setMax(20);
-        slAge.setShowTickLabels(false);
-        slAge.setMajorTickUnit(100);
-        slAge.setBlockIncrement(5);
+        slAge.setShowTickMarks(true);
+        slAge.setShowTickLabels(true);
+        slAge.setMajorTickUnit(2);
+        slAge.setMinorTickCount(1);
+        slAge.setBlockIncrement(1);
+        slAge.setSnapToTicks(true);
 
         btnDelAll.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnDelAll.getStyleClass().add("buttonLow");
         btnDelAll.setOnAction(a -> {
             progData.historyListJson.clearAll(stage);
         });
 
         btnDelAct.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnDelAct.getStyleClass().add("buttonLow");
         btnDelAct.setOnAction(a -> {
             progData.historyListJson.clearAct(stage);
         });
 
         btnDelSelection.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnDelSelection.getStyleClass().add("buttonLow");
         btnDelSelection.setOnAction(a -> {
             HistoryFactory.delSelection(stage, tableView.getSelectionModel().getSelectedItems());
         });
 
+        btnDelShown.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnDelShown.getStyleClass().add("buttonLow");
+        btnDelShown.setOnAction(a -> HistoryFactory.delSelection(stage, tableView.getItems()));
+
         btnDelNotInList.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnDelNotInList.getStyleClass().add("buttonLow");
         btnDelNotInList.setOnAction(a -> HistoryFactory.delNotInList(stage));
 
         btnDelAge.setGraphic(P2IconFactory.P2ICON.BTN_CLEAR.getFontIcon());
+        btnDelAge.getStyleClass().add("buttonLow");
         btnDelAge.setOnAction(a -> HistoryFactory.delOld(stage, (int) slAge.getValue()));
 
         Button btnHelp = P2IconFactory.getHelpButton(stage,
                 "History löschen",
                 "Hier können Filme aus der History gelöscht werden." +
                         "\n\n" +
+                        "* Alle löschen:\n" +
+                        "Die gesamte History wird gelöscht." +
+                        "\n\n" +
+
                         "* Aktuelle History löschen:\n" +
                         "Es werden die neuen Einträge seit dem Programmstart gelöscht." +
                         "\n\n" +
-                        "* Alle löschen:\n" +
-                        "Es werden alle Einträge gelöscht." +
-                        "\n\n" +
+
                         "* Auswahl löschen:\n" +
                         "Markierte Einträge werden gelöscht." +
                         "\n\n" +
+
+                        "* Alle in der Tabelle löschen:\n" +
+                        "Die (gefilterte) Liste in der Tabelle wird gelöscht." +
+                        "\n\n" +
+
                         "* Nicht mehr in der Film/Audio Liste:\n" +
                         "Einträge die nicht mehr in der Film/Audoliste sind, werden gelöscht." +
                         "\n\n" +
+
                         "* Alte löschen:\n" +
                         "Einträge die älter sind als vorgegeben und nicht mehr in der Filmliste sind, werden gelöscht.");
+        btnHelp.getStyleClass().add("buttonLow");
 
-        final GridPane gridPane = new GridPane();
+        final GridPane gridPane = new GridPane(5, 5);
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
-        gridPane.setVgap(15);
 
         gridPane.setPadding(new Insets(P2LibConst.PADDING));
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
-                P2GridConstraints.getCcComputedSizeAndHgrow(), P2GridConstraints.getCcPrefSize());
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize());
 
         int row = 0;
-        gridPane.add(new Label("Aktuelle History löschen"), 0, row);
-        gridPane.add(btnDelAct, 2, row);
+        gridPane.add(btnDelAll, 0, row);
+        gridPane.add(new Label("Alle löschen"), 1, row);
 
-        gridPane.add(new Label("Alle löschen"), 0, ++row);
-        gridPane.add(btnDelAll, 2, row);
-
-        gridPane.add(new Label("Auswahl löschen"), 0, ++row);
         gridPane.add(btnDelSelection, 2, row);
+        gridPane.add(new Label("Auswahl löschen"), 3, row);
 
-        gridPane.add(new Label("Nicht mehr in der Film/Audioliste Liste"), 0, ++row);
-        gridPane.add(btnDelNotInList, 2, row);
+        gridPane.add(btnHelp, 4, row);
+//        GridPane.setHalignment(btnHelp, HPos.RIGHT);
+
+        gridPane.add(btnDelAct, 0, ++row);
+        gridPane.add(new Label("Aktuelle History löschen"), 1, row);
+
+        gridPane.add(btnDelShown, 2, row);
+        gridPane.add(new Label("Alle in der Tabelle löschen"), 3, row);
+
+        gridPane.add(new Label(""), 0, ++row);
+
+        gridPane.add(btnDelNotInList, 0, ++row);
+        gridPane.add(new Label("Nicht mehr in der Film/Audioliste Liste"), 1, row);
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(new Label("Nicht mehr in der Film/Audioliste Liste"), new Label("[mit Mindestalter]"));
-        gridPane.add(vBox, 0, ++row);
         HBox hBox = new HBox(P2LibConst.PADDING_HBOX);
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.getChildren().addAll(slAge, lblAge);
         HBox.setHgrow(slAge, Priority.ALWAYS);
-        gridPane.add(hBox, 1, row);
-        gridPane.add(btnDelAge, 2, row);
 
-        gridPane.add(btnHelp, 2, ++row);
+        gridPane.add(btnDelAge, 0, ++row);
+        gridPane.add(vBox, 1, row);
+        gridPane.add(hBox, 2, row, 3, 1);
 
         getChildren().add(gridPane);
         setPadding(new Insets(P2LibConst.PADDING));
