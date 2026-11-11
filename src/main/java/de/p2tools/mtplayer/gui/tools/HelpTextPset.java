@@ -132,6 +132,11 @@ public class HelpTextPset {
                     "\n" +
                     "%m Dauer des Films in Minuten, z.B.: 25\n" +
                     "%M Dauer des Films in Minuten, z.B.: 025\n" +
+
+                    "\n" +
+                    "%c Ein Downloadzähler der kontinuierlich hochgezählt wird, zB. 15\n" +
+                    "%C Der Downloadzähler immer mit 5 Stellen, zB.: 00015\n" +
+
                     "\n" +
                     "%N Originaldateiname des Films (der kann sehr kryptisch und lang sein)\n" +
                     "%S Suffix des Originaldateinamens des Films (z.B. 'mp4')\n" +
