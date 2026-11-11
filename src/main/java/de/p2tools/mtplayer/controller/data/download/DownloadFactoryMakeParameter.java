@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.download;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.film.FilmDataMTP;
 import de.p2tools.mtplayer.controller.data.replace.ReplaceFactory;
@@ -38,6 +39,9 @@ public class DownloadFactoryMakeParameter {
     public final static String PARAMETER_URL = "%f";
     public final static String PARAMETER_PATH_FILE = "**";
     public final static String PARAMETER_WEBSITE = "%w";
+
+    public final static String PARAMETER_COUNT = "%c";
+    public final static String PARAMETER_COUNT_00000 = "%C";
 
     public final static String PARAMETER_CHANNEL = "%s";
     public final static String PARAMETER_THEME = "%t";
@@ -372,6 +376,17 @@ public class DownloadFactoryMakeParameter {
                 P2FileUtils.getHash(download.getUrl()) + "."
                         + PUrlTools.getSuffixFromUrl(download.getUrl()));
 
+        if (replStr.contains(PARAMETER_COUNT)) {
+            // nur dann Zähler hochzählen
+            replStr = replStr.replace(PARAMETER_COUNT, ProgConfig.SYSTEM_DOWNLOAD_COUNT.get() + "");
+            ProgConfig.SYSTEM_DOWNLOAD_COUNT.set(ProgConfig.SYSTEM_DOWNLOAD_COUNT.get() + 1);
+        }
+        if (replStr.contains(PARAMETER_COUNT_00000)) {
+            // nur dann Zähler hochzählen
+            replStr = replStr.replace(PARAMETER_COUNT_00000, String.format("%05d", ProgConfig.SYSTEM_DOWNLOAD_COUNT.get()));
+            ProgConfig.SYSTEM_DOWNLOAD_COUNT.set(ProgConfig.SYSTEM_DOWNLOAD_COUNT.get() + 1);
+        }
+
         return replStr;
     }
 
@@ -533,7 +548,6 @@ public class DownloadFactoryMakeParameter {
 
         execString = execString.replace(PARAMETER_DEST_PATH, downloadData.getDestPath());
         execString = execString.replace(PARAMETER_DEST_FILE_NAME, downloadData.getDestFileName());
-
         return execString;
     }
 }

@@ -47,6 +47,7 @@ public class PaneDownload {
     private final Slider sliderBandwidth = new Slider();
     private final Label lblBandwidth = new Label();
     private final Stage stage;
+    private final Label lblCount = new Label();
 
     public PaneDownload(Stage stage) {
         this.stage = stage;
@@ -96,6 +97,20 @@ public class PaneDownload {
         final Button btnBandwidth = P2IconFactory.getHelpButton(stage, "Download",
                 HelpText.DOWNLOAD_BANDWIDTH);
 
+        final Button btnCount = new Button();
+        btnCount.setGraphic(P2IconFactory.P2ICON.BTN_CLEAN.getFontIcon());
+        btnCount.setOnAction(a -> {
+            ProgConfig.SYSTEM_DOWNLOAD_COUNT.set(1);
+            setLabelCount();
+        });
+        lblCount.setWrapText(true);
+        setLabelCount();
+
+        final Button btnHelpCount = P2IconFactory.getHelpButton(stage, "Downloadzähler zurücksetzen",
+                """
+                        Der Zähler für den Dateinamen von Downloads (%c, %C) wird damit wieder auf \
+                        den Startwert: 1 zurückgesetzt.
+                        """);
 
         GridPane.setHalignment(btnHelpFinished, HPos.RIGHT);
         btnHelpFinished.setPrefWidth(btnBeep.getWidth());
@@ -121,11 +136,19 @@ public class PaneDownload {
         btnHelpSSL.setPrefWidth(btnBeep.getWidth());
         btnHelpSSL.setMaxWidth(Double.MAX_VALUE);
 
-        GridPane.setHalignment(btnBeep, HPos.RIGHT);
-
         GridPane.setHalignment(btnBandwidth, HPos.RIGHT);
         btnBandwidth.setPrefWidth(btnBeep.getWidth());
         btnBandwidth.setMaxWidth(Double.MAX_VALUE);
+
+        GridPane.setHalignment(btnHelpCount, HPos.RIGHT);
+        btnHelpCount.setPrefWidth(btnBeep.getWidth());
+        btnHelpCount.setMaxWidth(Double.MAX_VALUE);
+
+        GridPane.setHalignment(btnCount, HPos.RIGHT);
+        btnCount.setPrefWidth(btnBeep.getWidth());
+        btnCount.setMaxWidth(Double.MAX_VALUE);
+
+        GridPane.setHalignment(btnBeep, HPos.RIGHT);
 
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
@@ -147,6 +170,10 @@ public class PaneDownload {
 
         gridPane.add(tglSSL, 0, ++row, 2, 1);
         gridPane.add(btnHelpSSL, 2, row);
+
+        gridPane.add(lblCount, 0, ++row);
+        gridPane.add(btnCount, 1, row);
+        gridPane.add(btnHelpCount, 2, row);
 
 
         // gleichzeitige Downloads
@@ -177,6 +204,12 @@ public class PaneDownload {
 
         initNumberDownloads();
         DownloadInfosFactory.initBandwidth(sliderBandwidth, lblBandwidth);
+    }
+
+    private void setLabelCount() {
+        lblCount.setText("Downloadzähler (%c, %C) zurücksetzen:\n" +
+                "( Aktueller Wert:  "
+                + ProgConfig.SYSTEM_DOWNLOAD_COUNT.get() + " )");
     }
 
     private void initNumberDownloads() {
