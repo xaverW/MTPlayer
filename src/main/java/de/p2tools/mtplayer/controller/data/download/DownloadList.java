@@ -70,6 +70,7 @@ public class DownloadList extends SimpleListProperty<DownloadData> implements P2
     }
 
     public synchronized void initDownloads() {
+        // nach dem Programmstart
         this.forEach(download -> {
             download.setFile(download.getDestPathFile());
 

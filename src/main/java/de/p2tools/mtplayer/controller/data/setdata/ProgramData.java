@@ -24,12 +24,12 @@ public class ProgramData extends ProgramDataProps {
         setDownManager(false);
     }
 
-    public ProgramData(String name, String programmPath, String schalter, String restart, String downloadmanager) {
-        setName(name);
-        setProgPath(programmPath);
-        setProgSwitch(schalter);
-        setDownManager(downloadmanager.equals("") ? false : Boolean.parseBoolean(downloadmanager));
-    }
+//    public ProgramData(String name, String programmPath, String schalter, String restart, String downloadmanager) {
+//        setName(name);
+//        setProgPath(programmPath);
+//        setProgSwitch(schalter);
+//        setDownManager(downloadmanager.equals("") ? false : Boolean.parseBoolean(downloadmanager));
+//    }
 
     public ProgramData getCopy() {
         final ProgramData ret = new ProgramData();

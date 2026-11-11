@@ -72,7 +72,7 @@ public class InitSetDataDownload {
             return;
         }
 
-        addDownloadData.download.setSetData(psetData, false);
+        addDownloadData.download.setSetData(psetData, true); // true, damit auch sub+info gesetzt wird
 
         // müssen Pfad/Name/Aufruf neu gebaut werden
         DownloadData download = addDownloadData.download;

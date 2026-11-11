@@ -82,13 +82,14 @@ public class DownloadFactoryMakeParameter {
     public static boolean makeProgParameter(DownloadData downloadData, AboData abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
         try {
-            final ProgramData programData = downloadData.getSetData().getProgUrl(downloadData.getUrl());
-            if (programData == null) {
-                return false; //todo ist das gut da wenn kein Set zum Download???
-            }
+//            final ProgramData programData = downloadData.getSetData().getProgUrl(downloadData.getUrl());
+//            if (programData == null) {
+//                return false; //todo ist das gut da wenn kein Set zum Download???
+//            }
 
             // Direkter Download nur, wenn url passt und wenn im Programm ein Zielpfad, sonst Programm
             // auch Abspielen immer über Programm!
+
             final SetData setData = downloadData.getSetData();
             if (setData.isPlay()) {
                 // Play läuft immer über ein Programm
@@ -107,17 +108,25 @@ public class DownloadFactoryMakeParameter {
                 downloadData.setType(DownloadConstants.TYPE_PROGRAM);
             }
 
-//            downloadData.setType((downloadData.getSetData().checkDownloadDirect(downloadData.getUrl()) &&
-//                    downloadData.getSetData().progsContainPath()) ?
-//                    DownloadConstants.TYPE_DOWNLOAD : DownloadConstants.TYPE_PROGRAM);
+            final ProgramData programData = downloadData.getSetData().getProgUrl(downloadData.getUrl());
+            if (downloadData.getType().equals(DownloadConstants.TYPE_PROGRAM) && programData == null) {
+                // wenn über Programm, muss auch eins da sein!
+                // todo Fehlermeldung??
+                downloadData.setProgramDownloadmanager(false);
+                buildFileNamePath(downloadData, downloadData.getSetData(), abo, name, path); // damit die wenigsten passen
+
+                return false;
+            }
+
 
             if (downloadData.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
                 downloadData.setProgramName(DownloadConstants.TYPE_DOWNLOAD);
+
             } else {
                 downloadData.setProgramName(programData.getName());
+                downloadData.setProgramDownloadmanager(programData.isDownManager());
             }
 
-            downloadData.setProgramDownloadmanager(programData.isDownManager());
 
             buildFileNamePath(downloadData, downloadData.getSetData(), abo, name, path);
             buildProgParameter(downloadData, programData);
@@ -129,8 +138,10 @@ public class DownloadFactoryMakeParameter {
 
     private static void buildProgParameter(DownloadData download, ProgramData program) {
         if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
+            // dann ist programm==null!
             download.setProgramCall("");
             download.setProgramCallArray("");
+
         } else {
             String befehlsString = program.getProgrammAufruf();
             befehlsString = buildUrl(download, befehlsString);

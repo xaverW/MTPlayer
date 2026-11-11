@@ -85,7 +85,7 @@ public class SetData extends SetDataProps {
 //    }
 
     public ProgramData getProgUrl(String url) {
-        //mit einer Url das Passende Programm finden
+        //mit einer Url das passende Programm finden
         //passt nichts, wird das letzte Programm genommen
         //ist nur ein Programm in der Liste wird dieses genommen
         ProgramData ret = null;
