@@ -113,23 +113,38 @@ public class FilmPlayFactory {
         } else {
             // nicht gestartet
             list.add("Film konnte nicht gestartet werden");
-            P2Alert.showErrorAlert("Film starten", "Kann den Film mit dem Aufruf nicht starten:" +
-                    "\n" +
-                    "\n" +
-                    "------------------------------------------------" +
-                    "\n" +
-                    downloadData.getProgramCall() +
-                    "\n" +
-                    "------------------------------------------------" +
-                    "\n" +
-                    "\n" +
-                    "Bitte im Programmmenü unter\n" +
-                    " -> Einstellungen -> Aufzeichnen und Abspielen \n" +
-                    "die Einstellungen zum Abspielen und Aufzeichnen von Filmen " +
-                    "prüfen.");
+            final String text = getText(downloadData);
+            P2Alert.showErrorAlert("Film starten", text);
         }
         list.add(P2Log.LILNE3);
         P2Log.sysLog(list.toArray(new String[0]));
+    }
+
+    private static String getText(DownloadData downloadData) {
+        final String text;
+        if (downloadData.getProgramCall().isEmpty()) {
+            text = """
+                    Kann den Film nicht starten.
+                    
+                    Bitte im Programmmenü unter
+                       -> Einstellungen -> Aufzeichnen und Abspielen
+                    die Einstellungen zum Abspielen prüfen.""";
+        } else {
+            text = "Kann den Film mit dem Aufruf nicht starten:" +
+                   "\n" +
+                   "\n" +
+                   "------------------------------------------------" +
+                   "\n" +
+                   downloadData.getProgramCall() +
+                   "\n" +
+                   "------------------------------------------------" +
+                   "\n" +
+                   "\n" +
+                   "Bitte im Programmmenü unter\n" +
+                   "   -> Einstellungen -> Aufzeichnen und Abspielen \n" +
+                   "die Einstellungen zum Abspielen prüfen.";
+        }
+        return text;
     }
 
     static void startMsg(DownloadData downloadData, ArrayList<String> list) {

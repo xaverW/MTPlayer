@@ -81,16 +81,18 @@ public class DownloadFactoryMakeParameter {
 
     public static boolean makeProgParameter(DownloadData downloadData, AboData abo, String name, String path) {
         // zieldatei und pfad bauen und eintragen
+        // Direkter Download nur, wenn url passt und wenn im Programm ein Zielpfad, sonst Programm
+        // auch Abspielen immer über Programm!
         try {
+
 //            final ProgramData programData = downloadData.getSetData().getProgUrl(downloadData.getUrl());
 //            if (programData == null) {
 //                return false; //todo ist das gut da wenn kein Set zum Download???
 //            }
 
-            // Direkter Download nur, wenn url passt und wenn im Programm ein Zielpfad, sonst Programm
-            // auch Abspielen immer über Programm!
-
             final SetData setData = downloadData.getSetData();
+            final ProgramData programData = setData.getProgUrl(downloadData.getUrl());
+
             if (setData.isPlay()) {
                 // Play läuft immer über ein Programm
                 downloadData.setType(DownloadConstants.TYPE_PROGRAM);
@@ -99,7 +101,7 @@ public class DownloadFactoryMakeParameter {
                 // nur Button: immer übers Programm
                 downloadData.setType(DownloadConstants.TYPE_PROGRAM);
 
-            } else if (downloadData.getSetData().checkDownloadDirect(downloadData.getUrl())) {
+            } else if (setData.checkDownloadDirect(downloadData.getUrl())) {
                 // wenn die URL passt
                 downloadData.setType(DownloadConstants.TYPE_DOWNLOAD);
 
@@ -108,27 +110,28 @@ public class DownloadFactoryMakeParameter {
                 downloadData.setType(DownloadConstants.TYPE_PROGRAM);
             }
 
-            final ProgramData programData = downloadData.getSetData().getProgUrl(downloadData.getUrl());
-            if (downloadData.getType().equals(DownloadConstants.TYPE_PROGRAM) && programData == null) {
-                // wenn über Programm, muss auch eins da sein!
-                // todo Fehlermeldung??
-                downloadData.setProgramDownloadmanager(false);
-                buildFileNamePath(downloadData, downloadData.getSetData(), abo, name, path); // damit die wenigsten passen
-
-                return false;
-            }
-
+//            if (downloadData.getType().equals(DownloadConstants.TYPE_PROGRAM) && programData == null) {
+//                // wenn über Programm, muss auch eins da sein!
+//                // todo Fehlermeldung??
+//                return false;
+//            }
 
             if (downloadData.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
                 downloadData.setProgramName(DownloadConstants.TYPE_DOWNLOAD);
+                downloadData.setProgramDownloadmanager(false);
 
             } else {
-                downloadData.setProgramName(programData.getName());
-                downloadData.setProgramDownloadmanager(programData.isDownManager());
+                if (programData == null) {
+                    downloadData.setProgramName("");
+                    downloadData.setProgramDownloadmanager(false);
+                } else {
+                    downloadData.setProgramName(programData.getName());
+                    downloadData.setProgramDownloadmanager(programData.isDownManager());
+                }
             }
 
 
-            buildFileNamePath(downloadData, downloadData.getSetData(), abo, name, path);
+            buildFileNamePath(downloadData, setData, abo, name, path);
             buildProgParameter(downloadData, programData);
         } catch (final Exception ex) {
             P2Log.errorLog(825600145, ex);
@@ -137,8 +140,7 @@ public class DownloadFactoryMakeParameter {
     }
 
     private static void buildProgParameter(DownloadData download, ProgramData program) {
-        if (download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
-            // dann ist programm==null!
+        if (program == null || download.getType().equals(DownloadConstants.TYPE_DOWNLOAD)) {
             download.setProgramCall("");
             download.setProgramCallArray("");
 
