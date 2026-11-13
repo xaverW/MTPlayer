@@ -79,9 +79,6 @@ public class FilmInfoDialogController extends P2DialogExtra {
                 if (film == null) {
                     lblCont[i].setText("");
                     textArea.setText("");
-//                    ivHD.setImage(null);
-//                    ivUT.setImage(null);
-//                    ivNew.setImage(null);
                     p2HyperlinkUrlSmall.setUrl("");
                     p2HyperlinkUrlHeight.setUrl("");
                     p2HyperlinkUrlHd.setUrl("");
@@ -151,16 +148,18 @@ public class FilmInfoDialogController extends P2DialogExtra {
     public void make() {
         this.getMaskerPane().visibleProperty().bind(ProgData.getInstance().maskerPane.visibleProperty());
 
-        TitledPane tpUrl;
+        TitledPane titledPane;
         addOkButton(btnOk);
         btnOk.setOnAction(a -> close());
-        getVBoxCont().getChildren().add(gridPane);
 
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(5));
         gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                 P2GridConstraints.getCcComputedSizeAndHgrow());
+        getScrollPane().setFitToHeight(false);
+        getScrollPane().setFitToWidth(true);
+        getVBoxCont().getChildren().add(gridPane);
 
         int row = 0;
         for (int i = 0; i < FilmDataXml.MAX_ELEM; ++i) {
@@ -195,16 +194,20 @@ public class FilmInfoDialogController extends P2DialogExtra {
                     break;
                 case FilmDataXml.FILM_URL:
                     p2HyperlinkUrlSmall.setWrapText(true);
-                    p2HyperlinkUrlHeight.setWrapText(true);
-                    p2HyperlinkUrlHd.setWrapText(true);
+                    p2HyperlinkUrlSmall.setPadding(new Insets(5));
 
-                    tpUrl = new TitledPane("", new HBox());
-                    tpUrl.expandedProperty().bindBidirectional(ProgConfig.FILM_INFO_DIALOG_SHOW_URL);
+                    p2HyperlinkUrlHeight.setWrapText(true);
+                    p2HyperlinkUrlHeight.setPadding(new Insets(5));
+
+                    p2HyperlinkUrlHd.setWrapText(true);
+                    p2HyperlinkUrlHd.setPadding(new Insets(5));
+
+                    titledPane = new TitledPane("", new HBox());
+                    titledPane.expandedProperty().bindBidirectional(ProgConfig.FILM_INFO_DIALOG_SHOW_URL);
+
                     final var gUrl = new GridPane();
                     gUrl.setHgap(10);
                     gUrl.setVgap(0);
-//                    gUrl.setGridLinesVisible(true);
-                    gUrl.setPadding(new Insets(0));
                     gUrl.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
                             P2GridConstraints.getCcComputedSizeAndHgrow());
 
@@ -214,39 +217,43 @@ public class FilmInfoDialogController extends P2DialogExtra {
                     gUrl.add(p2HyperlinkUrlHeight, 1, 1);
                     gUrl.add(new Label("HD:"), 0, 2);
                     gUrl.add(p2HyperlinkUrlHd, 1, 2);
-                    tpUrl.setContent(gUrl);
 
+                    titledPane.setContent(gUrl);
                     gridPane.add(textTitle[i], 0, row);
-                    gridPane.add(tpUrl, 1, row++, 2, 1);
+                    gridPane.add(titledPane, 1, row++);
                     break;
                 case FilmDataXml.FILM_WEBSITE:
                     p2HyperlinkWebsite.setWrapText(true);
-                    tpUrl = new TitledPane("", new HBox());
-                    tpUrl.expandedProperty().bindBidirectional(ProgConfig.FILM_INFO_DIALOG_SHOW_WEBSITE_URL);
+                    p2HyperlinkWebsite.setPadding(new Insets(5));
+
                     final var gWeb = new GridPane();
                     gWeb.add(textTitle[i], 0, 0);
                     gWeb.add(p2HyperlinkWebsite, 1, 1, 3, 1);
-                    tpUrl.setContent(gWeb);
+
+                    titledPane = new TitledPane("", new HBox());
+                    titledPane.expandedProperty().bindBidirectional(ProgConfig.FILM_INFO_DIALOG_SHOW_WEBSITE_URL);
+                    titledPane.setContent(gWeb);
 
                     gridPane.add(textTitle[i], 0, row);
-                    gridPane.add(tpUrl, 1, row++, 2, 1);
+                    gridPane.add(titledPane, 1, row++);
                     break;
                 case FilmDataXml.FILM_DESCRIPTION:
-                    textArea.setMaxHeight(Double.MAX_VALUE);
                     textArea.setPrefRowCount(6);
                     textArea.setWrapText(true);
                     textArea.setEditable(false);
 
-                    tpUrl = new TitledPane("", new HBox());
-                    tpUrl.expandedProperty().bindBidirectional(ProgConfig.FILM_INFO_DIALOG_SHOW_DESCRIPTION);
                     final var gDescription = new GridPane();
+                    gDescription.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                            P2GridConstraints.getCcComputedSizeAndHgrow());
                     gDescription.add(textTitle[i], 0, 0);
-                    gDescription.add(textArea, 1, 1, 3, 1);
-                    tpUrl.setContent(gDescription);
+                    gDescription.add(textArea, 1, 0);
+
+                    titledPane = new TitledPane("", new HBox());
+                    titledPane.expandedProperty().bindBidirectional(ProgConfig.FILM_INFO_DIALOG_SHOW_DESCRIPTION);
+                    titledPane.setContent(gDescription);
 
                     gridPane.add(textTitle[i], 0, row);
-                    gridPane.add(tpUrl, 1, row++);
-
+                    gridPane.add(titledPane, 1, row++);
                     break;
                 default:
                     gridPane.add(textTitle[i], 0, row);

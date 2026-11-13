@@ -131,6 +131,8 @@ public class DownloadAddDialogController extends P2DialogExtra {
     }
 
     private void initGui() {
+        getScrollPane().setFitToHeight(false);
+        getScrollPane().setFitToWidth(true);
         DownloadAddDialogGui downloadAddDialogGui = new DownloadAddDialogGui(progData, addDownloadDto, getVBoxCont());
         downloadAddDialogGui.addCont();
         downloadAddDialogGui.init();

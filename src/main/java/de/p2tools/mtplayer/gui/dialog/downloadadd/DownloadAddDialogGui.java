@@ -61,11 +61,15 @@ public class DownloadAddDialogGui {
         hBoxTop.getChildren().addAll(addDownloadDto.btnPrev, addDownloadDto.lblSum, addDownloadDto.btnNext);
         vBoxCont.getChildren().add(hBoxTop);
 
+        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcComputedSizeAndHgrow(),
+                P2GridConstraints.getCcPrefSize(),
+                P2GridConstraints.getCcPrefSizeCenter());
         gridPane.setHgap(P2LibConst.DIST_GRIDPANE_HGAP);
         gridPane.setVgap(P2LibConst.DIST_GRIDPANE_VGAP);
         gridPane.setPadding(new Insets(5));
-        VBox.setVgrow(gridPane, Priority.ALWAYS);
         vBoxCont.setPadding(new Insets(10));
+        vBoxCont.getChildren().add(gridPane);
 
         gridPane.setDisable(addDownloadDto.getAct().downloadIsRunning());
         addDownloadDto.actFilmIsShown.addListener((u, o, n) -> gridPane.setDisable(addDownloadDto.getAct().downloadIsRunning()));
@@ -154,11 +158,11 @@ public class DownloadAddDialogGui {
 
         // URL
         addDownloadDto.p2HyperlinkUrlFilm.setWrapText(true);
-        addDownloadDto.p2HyperlinkUrlFilm.setMinHeight(Region.USE_PREF_SIZE);
+//        addDownloadDto.p2HyperlinkUrlFilm.setMinHeight(Region.USE_PREF_SIZE);
         addDownloadDto.p2HyperlinkUrlFilm.setPadding(new Insets(5));
 
         addDownloadDto.p2HyperlinkUrlDownload.setWrapText(true);
-        addDownloadDto.p2HyperlinkUrlDownload.setMinHeight(Region.USE_PREF_SIZE);
+//        addDownloadDto.p2HyperlinkUrlDownload.setMinHeight(Region.USE_PREF_SIZE);
         addDownloadDto.p2HyperlinkUrlDownload.setPadding(new Insets(5));
 
         TitledPane tpUrl = new TitledPane("", new HBox());
@@ -216,13 +220,6 @@ public class DownloadAddDialogGui {
         gridPane.add(DownloadAddDialogFactory.getText("Startzeit:"), 0, ++row);
         gridPane.add(hBoxStartTime, 1, row, 2, 1);
         gridPane.add(addDownloadDto.chkStartTimeAll, 3, row);
-
-
-        gridPane.getColumnConstraints().addAll(P2GridConstraints.getCcPrefSize(),
-                P2GridConstraints.getCcComputedSizeAndHgrow(),
-                P2GridConstraints.getCcPrefSize(),
-                P2GridConstraints.getCcPrefSizeCenter());
-        vBoxCont.getChildren().add(gridPane);
     }
 
     public void init() {
