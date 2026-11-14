@@ -36,12 +36,21 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
 
     private void addWhatsNew() {
         WhatsNewInfo whatsNewInfo = new WhatsNewInfo(LocalDate.of(2026, 11, 14),
+                "/de/p2tools/mtplayer/res/whatsnew/whatsNew_program_infos.png",
+                "Programm-Infos",
+                """
+                        Im Programmmenü: "Tools->Programminfos" werden
+                        in einem neuen Dialog Infos zum Speicherverbrauch
+                        und über das Programm angezeigt.""", 60);
+        add(whatsNewInfo);
+
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2026, 11, 14),
                 "/de/p2tools/mtplayer/res/whatsnew/whatsNew_search_arte.png",
                 "Live-Suche bei ARTE",
-                "In der Live-Suche ist jetzt auch der Sender ARTE enthalten. " +
-                        "Damit kann dann " +
-                        "nach Suchbegriffen und mit der URL " +
-                        "einer Sendung gesucht werden.", 50);
+                """
+                        In der Live-Suche ist jetzt auch der Sender ARTE
+                        enthalten. Damit kann dann nach Suchbegriffen
+                        und mit der URL einer Sendung gesucht werden.""", 70);
         add(whatsNewInfo);
     }
 }
