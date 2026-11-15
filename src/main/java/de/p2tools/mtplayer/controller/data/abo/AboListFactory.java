@@ -39,7 +39,8 @@ public class AboListFactory {
     private AboListFactory() {
     }
 
-    public static void addNewAbo(int audio, String aboName, String filmChannel, String filmTheme, String filmTitle) {
+    public static void addNewAbo(int audio, String aboName,
+                                 String filmChannel, String filmTheme, String filmTitle) {
         // Menü: abo anlegen
         int minDuration, maxDuration;
         try {

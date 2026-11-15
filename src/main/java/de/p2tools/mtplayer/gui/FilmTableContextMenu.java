@@ -129,17 +129,21 @@ public class FilmTableContextMenu {
 
     private Menu addAbo(FilmDataMTP film) {
         Menu submenuAbo = new Menu("Abo");
-        final MenuItem miAboAddFilter = new MenuItem("aus dem Filter ein Abo erstellen");
+        final MenuItem miAboAddFilter = new MenuItem("Aus dem Filter ein Abo erstellen");
         final MenuItem miAboAddChannelTheme = new MenuItem("Abo mit Sender und Thema anlegen");
+        final MenuItem miAboAddTheme = new MenuItem("Abo mit Thema anlegen");
         final MenuItem miAboAddChannelThemeTitle = new MenuItem("Abo mit Sender und Thema und Titel anlegen");
         final MenuItem miAboChange = new MenuItem("Abo ändern");
         final MenuItem miAboDel = new MenuItem("Abo löschen");
+        final MenuItem miAboActive = new MenuItem("Abo ausschalten");
 
         // gleich hier weil dann evtl. nochmals ausgeschaltet
         miAboAddChannelTheme.setDisable(film == null);
+        miAboAddTheme.setDisable(film == null);
         miAboAddChannelThemeTitle.setDisable(film == null);
         miAboChange.setDisable(film == null);
         miAboDel.setDisable(film == null);
+        miAboActive.setDisable(film == null);
 
         // neues Abo aus Filter anlegen
         miAboAddFilter.setOnAction(a -> {
@@ -150,24 +154,39 @@ public class FilmTableContextMenu {
             //nur dann gibts kein Abo, auch kein ausgeschaltetes, ...
             //neues Abo anlegen
             miAboAddChannelTheme.setOnAction(a ->
-                    AboListFactory.addNewAbo(ProgConst.LIST_FILM, film.getTheme(), film.getChannel(), film.getTheme(), ""));
+                    AboListFactory.addNewAbo(ProgConst.LIST_FILM, film.getTheme(),
+                            film.getChannel(), film.getTheme(), ""));
+            miAboAddTheme.setOnAction(a ->
+                    AboListFactory.addNewAbo(ProgConst.LIST_FILM, film.getTheme(),
+                            "", film.getTheme(), ""));
             miAboAddChannelThemeTitle.setOnAction(a ->
-                    AboListFactory.addNewAbo(ProgConst.LIST_FILM, film.getTheme(), film.getChannel(), film.getTheme(), film.getTitle()));
+                    AboListFactory.addNewAbo(ProgConst.LIST_FILM, film.getTheme(),
+                            film.getChannel(), film.getTheme(), film.getTitle()));
             //Abo löschen/ändern
             miAboChange.setDisable(true);
             miAboDel.setDisable(true);
+            miAboActive.setDisable(true);
         } else {
             //Abo gibts, auch wenn es evtl. ausgeschaltet, Film zu kurz, .. ist
             miAboAddChannelTheme.setDisable(true);
+            miAboAddTheme.setDisable(true);
             miAboAddChannelThemeTitle.setDisable(true);
             //Abo löschen/ändern
             miAboChange.setOnAction(event ->
                     AboListFactory.editAbo(aboData));
             miAboDel.setOnAction(event ->
                     AboListFactory.deleteAbo(aboData));
+            if (aboData.isActive()) {
+                miAboActive.setText("Abo ausschalten");
+            } else {
+                miAboActive.setText("Abo einschalten");
+            }
+            miAboActive.setOnAction(event -> AboListFactory.setAboActive(aboData, !aboData.isActive()));
         }
 
-        submenuAbo.getItems().addAll(miAboAddChannelTheme, miAboAddChannelThemeTitle, miAboAddFilter, miAboChange, miAboDel);
+        submenuAbo.getItems().addAll(miAboAddFilter, new SeparatorMenuItem(),
+                miAboAddTheme, miAboAddChannelTheme, miAboAddChannelThemeTitle, new SeparatorMenuItem(),
+                miAboChange, miAboActive, miAboDel);
         return submenuAbo;
     }
 
