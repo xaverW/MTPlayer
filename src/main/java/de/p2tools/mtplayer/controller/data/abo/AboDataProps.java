@@ -59,6 +59,7 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
 
     private final ObjectProperty<SetData> setData = new SimpleObjectProperty<>();
     private int countHit = 0;
+    private boolean markOld = false;
     private String buttonDummy = "";
 
     public final Property[] properties = {no, list, active, hit, name, description, resolution,
@@ -416,6 +417,14 @@ public class AboDataProps extends P2DataSample<AboData> implements Comparable<Ab
         this.setHit(countHit);
 //        PListener.notify(PListener.EVENT_ABO_HIT_CHANGED, AboDataProps.class.getSimpleName());
         ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_ABO_HIT_CHANGED);
+    }
+
+    public boolean isMarkOld() {
+        return markOld;
+    }
+
+    public void setMarkOld(boolean markOld) {
+        this.markOld = markOld;
     }
 
     public String getButtonDummy() {

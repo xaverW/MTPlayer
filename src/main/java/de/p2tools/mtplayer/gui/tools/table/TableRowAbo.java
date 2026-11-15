@@ -47,7 +47,9 @@ public class TableRowAbo<T> extends TableRow<T> {
                                 (abo.getThemeTitle().isEmpty() ? "" : "Thema oder Titel: " + abo.getThemeTitle() + "\n") +
                                 (abo.getTitle().isEmpty() ? "" : "Titel: " + abo.getTitle())));
             }
-            if (!abo.isActive()) {
+            if (abo.isMarkOld()) {
+                setStyle(ProgColorList.ABO_MARK_OLD.getCssBackground());
+            } else if (!abo.isActive()) {
                 setStyle(ProgColorList.ABO_SWITCHED_OFF.getCssBackground());
             } else {
                 setStyle("");

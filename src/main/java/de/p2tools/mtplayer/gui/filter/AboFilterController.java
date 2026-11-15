@@ -28,14 +28,19 @@ import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
+import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 
 public class AboFilterController extends FilterController {
+
+    public static final int LAST_ABO_MIN = 0;
+    public static final int LAST_ABO_MAX = 300;
 
     private P2CboCheckBoxListString mbChannel;
     private final ComboBox<String> cboState = new ComboBox<>(); // Abo ein-/ausgeschaltet
@@ -45,6 +50,9 @@ public class AboFilterController extends FilterController {
     private final RadioButton rbAll = new RadioButton("Alle");
     private final RadioButton rbFilm = new RadioButton("Filme");
     private final RadioButton rbAudio = new RadioButton("Audios");
+    private final Slider slider = new Slider();
+    private final Label lblTimeRangeValue = new Label();
+    private final CheckBox chkOld = new CheckBox("Nur markieren");
     private final ProgData progData;
 
     public AboFilterController() {
@@ -57,6 +65,7 @@ public class AboFilterController extends FilterController {
         rbFilm.setToggleGroup(tg);
         rbAudio.setToggleGroup(tg);
 
+        initLastAboFilter();
         initFilter();
 
         addCont("Abos für Sender", mbChannel, vBoxFilter);
@@ -65,12 +74,23 @@ public class AboFilterController extends FilterController {
         addCont("Filtertext", cboSearchText, vBoxFilter);
         addCont("Beschreibung", cboDescription, vBoxFilter);
 
+        // Filme/Audios
+        vBoxFilter.getChildren().add(P2GuiTools.getDistanceV(15));
         VBox vBoxRadio = new VBox(2);
         Label lblRadio = new Label("Abos für Liste");
         HBox hBoxRadio = new HBox(P2LibConst.SPACING_HBOX);
         hBoxRadio.getChildren().addAll(rbAll, rbFilm, rbAudio);
         vBoxRadio.getChildren().addAll(lblRadio, hBoxRadio);
         vBoxFilter.getChildren().addAll(vBoxRadio);
+
+        // Last Abo
+        vBoxFilter.getChildren().add(P2GuiTools.getDistanceV(15));
+        VBox vBox = new VBox(2);
+        HBox h = new HBox();
+        Label lblTimeRange = new Label("Kein Abo seit:");
+        h.getChildren().addAll(lblTimeRange, P2GuiTools.getHBoxGrower(), lblTimeRangeValue);
+        vBox.getChildren().addAll(h, slider, chkOld);
+        vBoxFilter.getChildren().addAll(vBox);
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -85,6 +105,61 @@ public class AboFilterController extends FilterController {
 
         vBoxFilter.getChildren().addAll(hBox, P2GuiTools.getVBoxGrower(), hBoxHelp);
         btnClear.setOnAction(a -> clearFilter());
+    }
+
+    private void initLastAboFilter() {
+        slider.setMin(LAST_ABO_MIN);
+        slider.setMax(LAST_ABO_MAX);
+//        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+
+        slider.setMajorTickUnit(50);
+        slider.setMinorTickCount(49);
+        slider.setBlockIncrement(10);
+        slider.setSnapToTicks(true);
+
+        slider.setLabelFormatter(new StringConverter<>() {
+            @Override
+            public String toString(Double x) {
+                if (x == FilterCheck.FILTER_ALL_OR_MIN) return "alles";
+
+                return x.intValue() + "";
+            }
+
+            @Override
+            public Double fromString(String string) {
+                return null;
+            }
+        });
+
+        slider.setValue(ProgConfig.FILTER_ABO_LAST_ABO.get());
+        setLabelSlider();
+        // kein direktes binding wegen: valueChangingProperty, nur melden wenn "steht"
+        slider.valueProperty().addListener((o, oldV, newV) -> {
+            setLabelSlider();
+            if (!slider.isValueChanging()) {
+                ProgConfig.FILTER_ABO_LAST_ABO.set((int) slider.getValue());
+            }
+        });
+        slider.valueChangingProperty().addListener((observable, oldvalue, newvalue) -> {
+                    if (!newvalue) {
+                        ProgConfig.FILTER_ABO_LAST_ABO.set((int) slider.getValue());
+                    }
+                }
+        );
+    }
+
+    private void setLabelSlider() {
+        final String txtAll = "Alles";
+
+        int i = (int) slider.getValue();
+        String tNr = i + "";
+
+        if (i == LAST_ABO_MIN) {
+            lblTimeRangeValue.setText(txtAll);
+        } else {
+            lblTimeRangeValue.setText(tNr + (i == 1 ? " Tag" : " Tagen"));
+        }
     }
 
     private void initFilter() {
@@ -127,6 +202,9 @@ public class AboFilterController extends FilterController {
         cboDescription = new PCboString(progData.stringFilterLists.getFilterListAboDescription(),
                 ProgConfig.FILTER_ABO_DESCRIPTION);
         new FilterCheckRegEx(cboDescription.getEditor());
+
+        slider.valueProperty().bindBidirectional(ProgConfig.FILTER_ABO_LAST_ABO);
+        chkOld.selectedProperty().bindBidirectional(ProgConfig.FILTER_ABO_ONLY_MARK);
     }
 
     private void clearFilter() {
@@ -136,5 +214,7 @@ public class AboFilterController extends FilterController {
         ProgConfig.FILTER_ABO_CHANNEL.setValue("");
         ProgConfig.FILTER_ABO_TYPE.set("");
         ProgConfig.FILTER_ABO_LIST.set(ProgConst.LIST_FILM_AUDIO);
+        ProgConfig.FILTER_ABO_LAST_ABO.set(LAST_ABO_MIN);
+        ProgConfig.FILTER_ABO_ONLY_MARK.set(false);
     }
 }

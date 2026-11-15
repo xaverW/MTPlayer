@@ -25,6 +25,7 @@ import de.p2tools.mtplayer.controller.data.abo.AboConstants;
 import de.p2tools.mtplayer.controller.data.abo.AboData;
 import de.p2tools.mtplayer.controller.data.abo.AboListFactory;
 import de.p2tools.mtplayer.gui.dialog.FilmInfoDialogController;
+import de.p2tools.mtplayer.gui.filter.AboFilterController;
 import de.p2tools.mtplayer.gui.infoPane.InfoPaneFactory;
 import de.p2tools.mtplayer.gui.infoPane.PaneAboInfo;
 import de.p2tools.mtplayer.gui.infoPane.PaneAboInfoList;
@@ -53,6 +54,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -249,6 +251,8 @@ public class AboGuiController extends AnchorPane {
         ProgConfig.FILTER_ABO_SEARCH_TEXT.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_DESCRIPTION.addListener((observable, oldValue, newValue) -> setFilter());
         ProgConfig.FILTER_ABO_LIST.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_LAST_ABO.addListener((observable, oldValue, newValue) -> setFilter());
+        ProgConfig.FILTER_ABO_ONLY_MARK.addListener((observable, oldValue, newValue) -> setFilter());
     }
 
     private void setFilter() {
@@ -258,12 +262,15 @@ public class AboGuiController extends AnchorPane {
         final String searchText = ProgConfig.FILTER_ABO_SEARCH_TEXT.getValueSafe().trim();
         final String description = ProgConfig.FILTER_ABO_DESCRIPTION.get().trim();
         final int list = ProgConfig.FILTER_ABO_LIST.get();
+        final double lastAbo = ProgConfig.FILTER_ABO_LAST_ABO.get();
+
+        progData.aboList.forEach(a -> a.setMarkOld(false));
 
         Predicate<AboData> predicate = aboData -> true;
         if (list != ProgConst.LIST_FILM_AUDIO) {
             predicate = predicate.and(aboData -> aboData.getList() == list);
         }
-        
+
         if (!sender.isEmpty()) {
             Filter filter = new Filter(sender, true);
             predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getChannel()));
@@ -288,6 +295,28 @@ public class AboGuiController extends AnchorPane {
             Filter filter = new Filter(description, true);
             predicate = predicate.and(aboData -> FilterCheck.check(filter, aboData.getDescription()));
         }
+
+        if (lastAbo > AboFilterController.LAST_ABO_MIN) {
+            predicate = predicate.and(aboData -> {
+                LocalDate abo = aboData.getDate().getLocalDate();
+                boolean isOld = false;
+
+                if (abo == null) {
+                    isOld = true;
+                } else if (abo.isBefore(LocalDate.now().minusDays((int) lastAbo))) {
+                    isOld = true;
+                }
+
+                if (ProgConfig.FILTER_ABO_ONLY_MARK.get()) {
+                    // dann immer anzeigen
+                    aboData.setMarkOld(isOld);
+                    return true;
+                } else {
+                    return isOld;
+                }
+            });
+        }
+
         filteredAbos.setPredicate(predicate);
     }
 

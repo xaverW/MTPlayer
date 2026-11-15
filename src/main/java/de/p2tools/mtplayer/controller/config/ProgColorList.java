@@ -62,6 +62,8 @@ public class ProgColorList extends P2ColorList {
     // Tabelle Abos
     public static final P2ColorData ABO_SWITCHED_OFF = addNewKey("COLOR_ABO_SWITCHED_OFF",
             Color.rgb(225, 225, 225), Color.rgb(109, 109, 109), "Tabelle Abo, ausgeschaltet");
+    public static final P2ColorData ABO_MARK_OLD = addNewKey("COLOR_ABO_MARK",
+            Color.rgb(204, 230, 255), Color.rgb(122, 149, 174), "Tabelle Abo, Kein Abo seit XX Tagen");
 
     // Tabelle Blacklist
     public static final P2ColorData BLACK_DATA_SWITCHED_OFF = addNewKey("BLACK_DATA_SWITCHED_OFF",
