@@ -16,9 +16,9 @@
 
 
 .root{
-    -style-extra-pane-color: derive(-fx-base,-10%);
+    /*-style-extra-pane-color: derive(-fx-base,-10%);
     -lblSelectedLines-color-1: derive(-fx-base, -40%);
-    -lblSelectedLines-color-2: derive(-fx-base, -10%);
+    -lblSelectedLines-color-2: derive(-fx-base, -10%);*/
 }
 
 /* ist "Text" in vielen Bereichen */
