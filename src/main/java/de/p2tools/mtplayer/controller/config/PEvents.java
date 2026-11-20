@@ -35,4 +35,6 @@ public class PEvents extends P2Events {
     public static final int EVENT_SET_DATA_BUTTON_CHANGED = count++;
     public static final int EVENT_REFRESH_TABLE = ++count;
     public static final int EVENT_ABO_HIT_CHANGED = ++count;
+    public static final int EVENT_SORT_FILM = ++count;
+    public static final int EVENT_SORT_AUDIO = ++count;
 }

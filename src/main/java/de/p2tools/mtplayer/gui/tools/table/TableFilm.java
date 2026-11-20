@@ -30,11 +30,17 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.text.Collator;
+import java.util.Comparator;
+
 public class TableFilm extends PTable<FilmDataMTP> {
+
+    final TableColumn<FilmDataMTP, String> titleColumn;
 
     public TableFilm(Table.TABLE_ENUM table_enum, ProgData progData) {
         super(table_enum);
         this.table_enum = table_enum;
+        titleColumn = new TableColumn<>("Titel");
         iniColumn();
     }
 
@@ -95,6 +101,19 @@ public class TableFilm extends PTable<FilmDataMTP> {
             }
         });
 
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_SORT_FILM) {
+            @Override
+            public void pingGui() {
+                setComparator();
+                refreshTable();
+            }
+        });
+        ProgConfig.SYSTEM_SORT_FILM_TABLE.addListener((u, o, n) -> {
+            setComparator();
+            refreshTable();
+        });
+        setComparator();
+
         final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
@@ -110,7 +129,6 @@ public class TableFilm extends PTable<FilmDataMTP> {
         themeColumn.getStyleClass().add("alignCenterLeft");
         TableFilmFactory.columnFactoryString(themeColumn);
 
-        final TableColumn<FilmDataMTP, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
         TableFilmFactory.columnFactoryString(titleColumn);
@@ -188,5 +206,18 @@ public class TableFilm extends PTable<FilmDataMTP> {
                 dateColumn, timeColumn, durationColumn, sizeColumn,
                 hdColumn, utColumn, bookmarkColumn,
                 geoColumn, doubleColumn, aboColumn, urlColumn);
+    }
+
+    private void setComparator() {
+        if (ProgConfig.SYSTEM_SORT_FILM_TABLE.get()) {
+            titleColumn.setComparator(TableFactory.getComparator(false));
+        } else {
+            titleColumn.setComparator(new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    return Collator.getInstance().compare(s, t1);
+                }
+            });
+        }
     }
 }

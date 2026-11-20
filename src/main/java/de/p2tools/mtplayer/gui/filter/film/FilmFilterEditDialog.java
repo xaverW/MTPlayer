@@ -40,13 +40,14 @@ public class FilmFilterEditDialog extends P2DialogExtra {
     private final P2ToggleSwitch tglRegEx = new P2ToggleSwitch("Bei RegEx muss der Suchtext nur enthalten sein:");
     private final ProgData progData;
     private final FilterDto filterDto;
+    private final FilmFilterSortTab filmFilterSortTab;
 
     public FilmFilterEditDialog(ProgData progData, FilterDto filterDto) {
         super(progData.primaryStage, null, "Filtereinstellungen",
                 true, false, false, DECO.NO_BORDER);
         this.progData = progData;
         this.filterDto = filterDto;
-
+        this.filmFilterSortTab = new FilmFilterSortTab(getStage(), filterDto.audio);
         init(true);
     }
 
@@ -55,6 +56,7 @@ public class FilmFilterEditDialog extends P2DialogExtra {
         rbFirst.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_FIRST_ROW);
         rbNothing.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_NONE_ROW);
         tglRegEx.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_FILTER_REG_EX_ONLY_CONTAIN);
+        filmFilterSortTab.close();
         super.close();
     }
 
@@ -76,6 +78,8 @@ public class FilmFilterEditDialog extends P2DialogExtra {
         VBox.setVgrow(tabPane, Priority.ALWAYS);
         addFilterTab(tabPane);
         addConfigTab(tabPane);
+        tabPane.getTabs().add(filmFilterSortTab);
+
     }
 
     public void addFilterTab(TabPane tabPane) {

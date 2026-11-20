@@ -88,6 +88,9 @@ public class ProgStartBeforeGui {
         if (ProgData.getInstance().markDataList.isEmpty()) {
             ProgData.getInstance().markDataList.init(false); // einmal ein Muster anlegen
         }
+        ProgData.getInstance().compListFilm.init();
+        ProgData.getInstance().compListAudio.init();
+
     }
 
     private static void initLib() {
