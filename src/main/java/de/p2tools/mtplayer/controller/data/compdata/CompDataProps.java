@@ -31,6 +31,7 @@ import javafx.beans.property.StringProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class CompDataProps extends P2DataSample<CompDataProps> {
 
@@ -43,6 +44,7 @@ public class CompDataProps extends P2DataSample<CompDataProps> {
 
     private String textLow = "";
     private boolean regEx = false;
+    private Pattern pattern = null;
 
     @Override
     public Config[] getConfigsArr() {
@@ -75,6 +77,7 @@ public class CompDataProps extends P2DataSample<CompDataProps> {
     public void init() {
         textLow = text.getValueSafe().toLowerCase(Locale.ROOT);
         regEx = Filter.isPattern(text.getValueSafe());
+        pattern = Filter.makePattern(getText());
     }
 
     public int getNo() {
@@ -124,6 +127,10 @@ public class CompDataProps extends P2DataSample<CompDataProps> {
 
     public boolean isRegEx() {
         return regEx;
+    }
+
+    public Pattern getPattern() {
+        return pattern;
     }
 
     @Override

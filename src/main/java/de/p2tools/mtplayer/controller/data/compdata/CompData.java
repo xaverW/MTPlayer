@@ -16,10 +16,6 @@
 
 package de.p2tools.mtplayer.controller.data.compdata;
 
-import de.p2tools.p2lib.mediathek.filter.Filter;
-
-import java.util.regex.Pattern;
-
 public class CompData extends CompDataProps {
 
     public CompData() {
@@ -28,9 +24,6 @@ public class CompData extends CompDataProps {
     public CompData(String text, boolean audio) {
         this.setText(text);
         this.setAudio(audio);
-    }
-
-    public Pattern getPattern() {
-        return Filter.makePattern(getText());
+        init();
     }
 }

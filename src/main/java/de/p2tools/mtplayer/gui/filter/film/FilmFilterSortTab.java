@@ -55,19 +55,10 @@ public class FilmFilterSortTab extends Tab {
 
     public void close() {
         compList.removeIf(compData -> compData.getText().isEmpty());
-
-        if (audio) {
-            tglOn.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SORT_AUDIO_TABLE);
-            if (sort) {
-                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_SORT_AUDIO);
-            }
-
-        } else {
-            tglOn.selectedProperty().unbindBidirectional(ProgConfig.SYSTEM_SORT_FILM_TABLE);
-            if (sort) {
-                ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_SORT_FILM);
-            }
+        if (sort) {
+            ProgData.getInstance().pEventHandler.notifyListener(audio ? PEvents.EVENT_SORT_AUDIO : PEvents.EVENT_SORT_FILM);
         }
+        tglOn.selectedProperty().unbindBidirectional(audio ? ProgConfig.SYSTEM_SORT_AUDIO_TABLE : ProgConfig.SYSTEM_SORT_FILM_TABLE);
     }
 
     private void init() {
@@ -75,11 +66,7 @@ public class FilmFilterSortTab extends Tab {
         vBoxAll.setPadding(new Insets(5));
         vBoxAll.setSpacing(P2LibConst.SPACING_VBOX);
 
-        if (audio) {
-            tglOn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SORT_AUDIO_TABLE);
-        } else {
-            tglOn.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_SORT_FILM_TABLE);
-        }
+        tglOn.selectedProperty().bindBidirectional(audio ? ProgConfig.SYSTEM_SORT_AUDIO_TABLE : ProgConfig.SYSTEM_SORT_FILM_TABLE);
 
         Button btnHelp = P2Button.helpButton(stage, "Vorgaben zum Sortieren",
                 "");
@@ -132,12 +119,14 @@ public class FilmFilterSortTab extends Tab {
             CompData compData = new CompData("", audio);
             compList.add(compData);
             listView.getSelectionModel().select(compData);
+            sort = true;
         });
         btnDel.setOnAction(a -> {
             CompData compData = getSel();
             if (compData != null) {
                 compList.remove(compData);
             }
+            sort = true;
         });
         btnUp.setOnAction(a -> {
             int sel = getSelectedLine();
@@ -145,6 +134,7 @@ public class FilmFilterSortTab extends Tab {
                 int newSel = compList.up(sel, true);
                 listView.getSelectionModel().select(newSel);
             }
+            sort = true;
         });
         btnDown.setOnAction(a -> {
             int sel = getSelectedLine();
@@ -152,10 +142,11 @@ public class FilmFilterSortTab extends Tab {
                 int newSel = compList.up(sel, false);
                 listView.getSelectionModel().select(newSel);
             }
+            sort = true;
         });
 
         btnSort.setOnAction(a -> {
-                    ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_SORT_FILM);
+                    ProgData.getInstance().pEventHandler.notifyListener(audio ? PEvents.EVENT_SORT_AUDIO : PEvents.EVENT_SORT_FILM);
                     sort = false;
                 }
         );
