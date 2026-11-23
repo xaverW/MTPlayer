@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.data.compdata;
 
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -27,15 +26,11 @@ import java.util.List;
 public class CompList extends SimpleListProperty<CompData> implements P2DataList<CompData> {
 
     public String TAG = "CompList";
-    private final ProgData progData;
 
     private final ObservableList<CompData> undoList = FXCollections.observableArrayList();
 
-
-    public CompList(ProgData progData, boolean audio) {
+    public CompList() {
         super(FXCollections.observableArrayList());
-        this.progData = progData;
-        TAG = audio ? "CompListAudio" : "CompListFilm";
     }
 
     @Override

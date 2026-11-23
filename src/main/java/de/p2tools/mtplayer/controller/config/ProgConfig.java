@@ -117,8 +117,8 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.offerList);
         configFile.addConfigs(progData.utDataList);
         configFile.addConfigs(progData.markDataList);
-        configFile.addConfigs(progData.compListFilm);
-        configFile.addConfigs(progData.compListAudio);
+        configFile.addConfigs(progData.sortListFilm);
+        configFile.addConfigs(progData.sortListAudio);
         if (save) {
             // dann nur die selbst angelegten Downloads
             configFile.addConfigs(progData.downloadList.getCopyForSaving());
@@ -304,6 +304,7 @@ public class ProgConfig extends P2DataProgConfig {
     public static IntegerProperty SYSTEM_DOWNLOAD_COUNT = addIntProp("system-download-count", 1); // Ist der Downloadzähler: %c, %C
     public static BooleanProperty SYSTEM_SORT_FILM_TABLE = addBoolProp("system-sort-film-table", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SORT_AUDIO_TABLE = addBoolProp("system-sort-audio-table", Boolean.FALSE);
+    public static DoubleProperty SYSTEM_SORT_DIALOG_DIVIDER = addDoubleProp("system-sort-dialog-divider", 0.5);
 
     public static IntegerProperty SYSTEM_FONT_SIZE = addIntProp("system-font-size", 0);
     public static BooleanProperty SYSTEM_FONT_SIZE_CHANGE = addBoolProp("system-font-size-change", Boolean.FALSE); // für die Schriftgröße
@@ -816,6 +817,9 @@ public class ProgConfig extends P2DataProgConfig {
     static {
         addComment("Dialoge");
     }
+
+    // Filter settings
+    public static StringProperty FILTER_SETTINGS_DIALOG_SIZE = addStrProp("filter-settings-dialog-size", "600:600");
 
     // ToolsDialog
     public static StringProperty TOOLS_DIALOG_SIZE = addStrProp("tools-dialog-size", "600:500");

@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 
 public class CompDataProps extends P2DataSample<CompDataProps> {
 
-    public static final String TAG = "BlackData";
+    public static final String TAG = "CompData";
 
     private int no = 0;
     private final StringProperty text = new SimpleStringProperty("");
@@ -45,6 +45,11 @@ public class CompDataProps extends P2DataSample<CompDataProps> {
     private String textLow = "";
     private boolean regEx = false;
     private Pattern pattern = null;
+
+    @Override
+    public String getTag() {
+        return TAG;
+    }
 
     @Override
     public Config[] getConfigsArr() {
@@ -66,11 +71,6 @@ public class CompDataProps extends P2DataSample<CompDataProps> {
         bl.audioProperty().set(bl.isAudio());
         bl.setGenDate(genDate);
         return bl;
-    }
-
-    @Override
-    public String getTag() {
-        return TAG;
     }
 
     // ================

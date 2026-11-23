@@ -43,8 +43,8 @@ public class FilmFilterEditDialog extends P2DialogExtra {
     private final FilmFilterSortTab filmFilterSortTab;
 
     public FilmFilterEditDialog(ProgData progData, FilterDto filterDto) {
-        super(progData.primaryStage, null, "Filtereinstellungen",
-                true, false, false, DECO.NO_BORDER);
+        super(progData.primaryStage, ProgConfig.FILTER_SETTINGS_DIALOG_SIZE, "Filtereinstellungen",
+                true, true, false, DECO.NO_BORDER);
         this.progData = progData;
         this.filterDto = filterDto;
         this.filmFilterSortTab = new FilmFilterSortTab(getStage(), filterDto.audio);

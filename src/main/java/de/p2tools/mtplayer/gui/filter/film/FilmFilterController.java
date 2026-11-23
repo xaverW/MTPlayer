@@ -33,6 +33,7 @@ public class FilmFilterController extends FilterController {
     final FilmFilterControllerClearFilter filmFilterControllerClearFilter;
 
     final FilmFilterControllerProfiles filmFilterControllerProfiles;
+    final FilmFilterControllerSort filmFilterControllerSort;
     final FilmFilterControllerBlacklist filmFilterControllerBlacklist;
 
     final FilmSmallFilterControllerFilter filmSmallFilterControllerFilter;
@@ -46,25 +47,23 @@ public class FilmFilterController extends FilterController {
         filmFilterControllerClearFilter = new FilmFilterControllerClearFilter(filterDto);
 
         filmFilterControllerProfiles = new FilmFilterControllerProfiles(filterDto);
+        filmFilterControllerSort = new FilmFilterControllerSort(filterDto);
         filmFilterControllerBlacklist = new FilmFilterControllerBlacklist(filterDto);
 
         filmSmallFilterControllerFilter = new FilmSmallFilterControllerFilter(filterDto);
         if (filterDto.audio) {
             ProgConfig.AUDIOFILTER_SMALL_FILTER.addListener((u, o, n) -> {
                 setFilter();
-//                setGui();
             });
 
         } else {
             ProgConfig.FILMFILTER_SMALL_FILTER.addListener((u, o, n) -> {
                 setFilter();
-//                setGui();
             });
         }
 
         setFilterStart();
         initGui();
-//        setGui();
     }
 
     private void setFilterStart() {
@@ -102,44 +101,6 @@ public class FilmFilterController extends FilterController {
         }
     }
 
-//    private void setGui() {
-//        boolean small = filterDto.audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER.get() : ProgConfig.FILMFILTER_SMALL_FILTER.get();
-//        if (small) {
-//            getChildren().clear();
-//            final VBox vBox = getVBoxFilter();
-//            vBox.getChildren().addAll(filmFilterControllerTextFilter);
-//            vBox.getChildren().add(P2GuiTools.getDistanceV(10));
-//            vBox.getChildren().addAll(filmFilterControllerFilter);
-//            vBox.getChildren().add(P2GuiTools.getDistanceV(10));
-//            vBox.getChildren().addAll(filmFilterControllerOnlyNew);
-//
-//            vBox.getChildren().add(P2GuiTools.getVBoxGrower());
-//            vBox.getChildren().addAll(filmSmallFilterControllerFilter);
-//            getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
-//
-//        } else {
-//            // dann alle Filter
-//            getChildren().clear();
-//            final VBox vBox = getVBoxFilter();
-//            vBox.getChildren().addAll(filmFilterControllerTextFilter);
-//
-//            Separator sp = new Separator();
-//            sp.getStyleClass().add("pseperator2");
-//            sp.setMinHeight(0);
-//            sp.setMaxHeight(1);
-//            sp.visibleProperty().bind(filmFilterControllerTextFilter.visibleProperty());
-//            sp.managedProperty().bind(filmFilterControllerTextFilter.visibleProperty());
-//            vBox.getChildren().add(sp);
-//
-//            vBox.getChildren().addAll(filmFilterControllerFilter,
-//                    P2GuiTools.getVBoxGrower(),
-//                    filmFilterControllerClearFilter);
-//
-//            getVBoxBlack().getChildren().add(filmFilterControllerProfiles);
-//            getVBoxBlack().getChildren().add(filmFilterControllerBlacklist);
-//        }
-//    }
-
     private void initGui() {
         BooleanProperty small = filterDto.audio ? ProgConfig.AUDIOFILTER_SMALL_FILTER : ProgConfig.FILMFILTER_SMALL_FILTER;
 
@@ -150,6 +111,10 @@ public class FilmFilterController extends FilterController {
         vBox.getChildren().add(reg1);
 
         vBox.getChildren().addAll(filmFilterControllerFilter);
+
+        vBox.getChildren().add(filmFilterControllerSort);
+        filmFilterControllerSort.visibleProperty().bind(ProgConfig.SYSTEM_SORT_FILM_TABLE.and(small.not()));
+        filmFilterControllerSort.managedProperty().bind(filmFilterControllerSort.visibleProperty());
 
         Region reg2 = P2GuiTools.getDistanceV(10); // small
         reg2.visibleProperty().bind(small);
