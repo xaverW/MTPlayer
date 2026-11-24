@@ -16,7 +16,6 @@ import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -33,12 +32,15 @@ public class FilmFilterSortTab extends Tab {
 
     private final ProgData progData;
     private final VBox vBoxAll = new VBox(P2GuiTools.getVBoxGrower());
-    private final Button btnAdd = new Button();
-    private final Button btnDel = new Button();
-    private final Button btnUp = new Button();
-    private final Button btnDown = new Button();
+    private final Button btnAddSort = new Button();
+    private final Button btnDelSort = new Button();
+    private final Button btnAddComp = new Button();
+    private final Button btnDelComp = new Button();
+    private final Button btnUpComp = new Button();
+    private final Button btnDownComp = new Button();
     private final Button btnSort = new Button("Jetzt sortieren");
-    private final TextField txtText = new TextField();
+    private final TextField txtTextSort = new TextField();
+    private final TextField txtTextComp = new TextField();
     private final P2ToggleSwitch tglOn = new P2ToggleSwitch("Sortierung einschalten");
     private boolean sort = false;
 
@@ -48,13 +50,6 @@ public class FilmFilterSortTab extends Tab {
         this.progData = ProgData.getInstance();
         sortList = audio ? progData.sortListAudio : progData.sortListFilm;
 
-        if (sortList.isEmpty()) {
-            SortData sortData = new SortData("Sortierung");
-            sortData.getCompList().add(new CompData("Tatort", audio));
-            sortData.getCompList().add(new CompData("Sport", audio));
-            sortList.add(sortData);
-        }
-
         init();
         initListView();
         initButton();
@@ -62,7 +57,13 @@ public class FilmFilterSortTab extends Tab {
     }
 
     public void close() {
-        sortList.forEach(sortData -> sortData.getCompList().removeIf(compData -> compData.getText().isEmpty()));
+        sortList.forEach(sortData -> {
+            boolean found = sortData.getCompList().removeIf(compData -> compData.getText().isEmpty());
+            if (found) sort = true;
+        });
+        boolean found = sortList.removeIf(sortData -> sortData.getCompList().isEmpty());
+        if (found) sort = true;
+
         if (sort) {
             ProgData.getInstance().pEventHandler.notifyListener(audio ? PEvents.EVENT_SORT_AUDIO : PEvents.EVENT_SORT_FILM);
         }
@@ -75,23 +76,25 @@ public class FilmFilterSortTab extends Tab {
         setClosable(false);
 
         tglOn.selectedProperty().bindBidirectional(audio ? ProgConfig.SYSTEM_SORT_AUDIO_TABLE : ProgConfig.SYSTEM_SORT_FILM_TABLE);
-
         Button btnHelp = P2Button.helpButton(stage, "Vorgaben zum Sortieren",
                 "");
-        HBox hBoxBtn = new HBox(P2LibConst.SPACING_HBOX);
-        hBoxBtn.getChildren().addAll(btnAdd, btnDel, btnUp, btnDown, P2GuiTools.getHBoxGrower(), btnSort);
-
-        HBox hBoxText = new HBox(P2LibConst.SPACING_HBOX);
-        HBox.setHgrow(txtText, Priority.ALWAYS);
-        hBoxText.getChildren().addAll(txtText, btnHelp);
 
         splitPane.getItems().addAll(vBoxSort, vBoxComp);
         splitPane.getItems().get(0).autosize();
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.SYSTEM_SORT_DIALOG_DIVIDER);
         SplitPane.setResizableWithParent(vBoxAll, Boolean.FALSE);
 
-        vBoxSort.getChildren().addAll(sortDataListView);
-        vBoxComp.getChildren().addAll(compDataListView, hBoxBtn, hBoxText);
+        HBox hBoxBtnSort = new HBox(P2LibConst.SPACING_HBOX);
+        hBoxBtnSort.getChildren().addAll(btnAddSort, btnDelSort);
+        vBoxSort.setSpacing(P2LibConst.SPACING_VBOX);
+        vBoxSort.setPadding(new Insets(P2LibConst.PADDING_VBOX));
+        vBoxSort.getChildren().addAll(sortDataListView, hBoxBtnSort, txtTextSort);
+
+        HBox hBoxBtnComp = new HBox(P2LibConst.SPACING_HBOX);
+        hBoxBtnComp.getChildren().addAll(btnAddComp, btnDelComp, btnUpComp, btnDownComp, P2GuiTools.getHBoxGrower(), btnSort, btnHelp);
+        vBoxComp.setSpacing(P2LibConst.SPACING_VBOX);
+        vBoxComp.setPadding(new Insets(P2LibConst.PADDING_VBOX));
+        vBoxComp.getChildren().addAll(compDataListView, hBoxBtnComp, txtTextComp);
 
         vBoxAll.setPadding(new Insets(5));
         vBoxAll.setSpacing(P2LibConst.SPACING_VBOX);
@@ -101,55 +104,93 @@ public class FilmFilterSortTab extends Tab {
     private void initListView() {
         sortDataListView.setItems(sortList);
         sortDataListView.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
-            SortData sortData = getSelSort();
-            if (sortData != null) {
+            SortData sortData = sortDataListView.getSelectionModel().getSelectedItem();
+            if (sortData == null) {
+                compDataListView.getItems().clear();
+                txtTextSort.setText("");
+
+            } else {
                 compDataListView.setItems(sortData.getCompList());
+                txtTextSort.setText(sortData.getName());
             }
         });
         compDataListView.getSelectionModel().selectedItemProperty().addListener((u, o, n) -> {
-            CompData compData = getSelComp();
+            CompData compData = compDataListView.getSelectionModel().getSelectedItem();
             if (compData == null) {
-                txtText.setText("");
+                txtTextComp.setText("");
 
             } else {
-                txtText.setText(compData.getText());
+                txtTextComp.setText(compData.getText());
             }
         });
+        sortDataListView.getSelectionModel().selectFirst();
     }
 
     private void initText() {
-        txtText.textProperty().addListener((u, o, n) -> {
-            CompData compData = getSelComp();
+        txtTextSort.textProperty().addListener((u, o, n) -> {
+            SortData sortData = sortDataListView.getSelectionModel().getSelectedItem();
+            if (sortData != null) {
+                sortData.setName(txtTextSort.getText());
+                sortDataListView.refresh();
+                sort = true;
+            } else {
+                txtTextSort.setText("");
+            }
+        });
+        txtTextSort.disableProperty().bind(sortDataListView.getSelectionModel().selectedItemProperty().isNull());
+
+        txtTextComp.textProperty().addListener((u, o, n) -> {
+            CompData compData = compDataListView.getSelectionModel().getSelectedItem();
             if (compData != null) {
-                compData.setText(txtText.getText());
+                compData.setText(txtTextComp.getText());
                 compDataListView.refresh();
                 sort = true;
             }
         });
-        txtText.disableProperty().bind(compDataListView.getSelectionModel().selectedItemProperty().isNull());
-        new FilterCheckRegEx(txtText);
+        txtTextSort.disableProperty().bind(sortDataListView.getSelectionModel().selectedItemProperty().isNull());
+        txtTextComp.disableProperty().bind(compDataListView.getSelectionModel().selectedItemProperty().isNull());
+        new FilterCheckRegEx(txtTextComp);
     }
 
     private void initButton() {
-        btnAdd.setGraphic(P2IconFactory.P2ICON.BTN_PLUS.getFontIcon());
-        btnAdd.setTooltip(new Tooltip("Einen neue Eintrag hinzufügen"));
-        btnDel.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
-        btnDel.setTooltip(new Tooltip("Einen Eintrag löschen"));
-        btnUp.setGraphic(P2IconFactory.P2ICON.BTN_UP.getFontIcon());
-        btnUp.setTooltip(new Tooltip("Einen Eintrag nach oben schieben"));
-        btnDown.setGraphic(P2IconFactory.P2ICON.BTN_DOWN.getFontIcon());
-        btnDown.setTooltip(new Tooltip("Einen Eintrag nach unten schieben"));
+        btnAddSort.setGraphic(P2IconFactory.P2ICON.BTN_PLUS.getFontIcon());
+        btnAddSort.setTooltip(new Tooltip("Einen neue Eintrag hinzufügen"));
+        btnDelSort.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
+        btnDelSort.setTooltip(new Tooltip("Einen Eintrag löschen"));
 
-        btnAdd.setOnAction(a -> {
+        btnAddComp.setGraphic(P2IconFactory.P2ICON.BTN_PLUS.getFontIcon());
+        btnAddComp.setTooltip(new Tooltip("Einen neue Eintrag hinzufügen"));
+        btnDelComp.setGraphic(P2IconFactory.P2ICON.BTN_MINUS.getFontIcon());
+        btnDelComp.setTooltip(new Tooltip("Einen Eintrag löschen"));
+        btnUpComp.setGraphic(P2IconFactory.P2ICON.BTN_UP.getFontIcon());
+        btnUpComp.setTooltip(new Tooltip("Einen Eintrag nach oben schieben"));
+        btnDownComp.setGraphic(P2IconFactory.P2ICON.BTN_DOWN.getFontIcon());
+        btnDownComp.setTooltip(new Tooltip("Einen Eintrag nach unten schieben"));
+
+        btnAddSort.setOnAction(a -> {
+            SortData sortData = new SortData("Neu");
+            sortList.add(sortData);
+            sortDataListView.getSelectionModel().select(sortData);
+            sort = true;
+        });
+        btnDelSort.setOnAction(a -> {
             SortData sortData = getSelSort();
             if (sortData != null) {
-                CompData compData = new CompData("", audio);
+                sortList.remove(sortData);
+                sort = true;
+            }
+        });
+
+        btnAddComp.setOnAction(a -> {
+            SortData sortData = getSelSort();
+            if (sortData != null) {
+                CompData compData = new CompData("Sortieren");
                 sortData.getCompList().add(compData);
                 compDataListView.getSelectionModel().select(compData);
                 sort = true;
             }
         });
-        btnDel.setOnAction(a -> {
+        btnDelComp.setOnAction(a -> {
             SortData sortData = getSelSort();
             if (sortData != null) {
                 CompData compData = getSelComp();
@@ -159,10 +200,10 @@ public class FilmFilterSortTab extends Tab {
                 sort = true;
             }
         });
-        btnUp.setOnAction(a -> {
+        btnUpComp.setOnAction(a -> {
             SortData sortData = getSelSort();
             if (sortData != null) {
-                int sel = getSelectedLine();
+                int sel = getSelectedLineComp();
                 if (sel >= 0) {
                     int newSel = sortData.getCompList().up(sel, true);
                     compDataListView.getSelectionModel().select(newSel);
@@ -170,10 +211,10 @@ public class FilmFilterSortTab extends Tab {
                 sort = true;
             }
         });
-        btnDown.setOnAction(a -> {
+        btnDownComp.setOnAction(a -> {
             SortData sortData = getSelSort();
             if (sortData != null) {
-                int sel = getSelectedLine();
+                int sel = getSelectedLineComp();
                 if (sel >= 0) {
                     int newSel = sortData.getCompList().up(sel, false);
                     compDataListView.getSelectionModel().select(newSel);
@@ -189,7 +230,7 @@ public class FilmFilterSortTab extends Tab {
         );
     }
 
-    private int getSelectedLine() {
+    private int getSelectedLineComp() {
         final int sel = compDataListView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
             P2Alert.showInfoNoSelection(stage);

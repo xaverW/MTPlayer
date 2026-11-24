@@ -16,6 +16,7 @@
 
 package de.p2tools.mtplayer.controller.data.compdata;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class SortList extends SimpleListProperty<SortData> implements P2DataList<SortData> {
 
-    public String TAG = "SortData";
+    public final String TAG;
     private final ProgData progData;
 
     private final ObservableList<SortData> undoList = FXCollections.observableArrayList();
@@ -34,7 +35,7 @@ public class SortList extends SimpleListProperty<SortData> implements P2DataList
     public SortList(ProgData progData, boolean audio) {
         super(FXCollections.observableArrayList());
         this.progData = progData;
-        TAG = audio ? "SortDataAudio" : "SortDataFilm";
+        TAG = audio ? "SortListAudio" : "SortListFilm";
     }
 
     @Override
@@ -48,14 +49,34 @@ public class SortList extends SimpleListProperty<SortData> implements P2DataList
     }
 
     @Override
-    public CompData getNewItem() {
-        return new CompData();
+    public SortData getNewItem() {
+        return new SortData("");
     }
 
     @Override
     public void addNewItem(Object obj) {
         if (obj.getClass().equals(SortData.class)) {
             add((SortData) obj);
+        }
+    }
+
+    public void init(boolean audio) {
+        if (isEmpty()) {
+            SortData sortData = new SortData("Tatort / Sport");
+            sortData.getCompList().add(new CompData("Tatort"));
+            sortData.getCompList().add(new CompData("Sport"));
+            add(sortData);
+
+            // #:.*\(S\d\d\/E.*
+            sortData = new SortData("Serien");
+            sortData.getCompList().add(new CompData("#:.*\\(S\\d\\d\\/E.*"));
+            add(sortData);
+
+            if (audio) {
+                ProgConfig.SYSTEM_SORT_AUDIO.set(0);
+            } else {
+                ProgConfig.SYSTEM_SORT_FILM.set(0);
+            }
         }
     }
 

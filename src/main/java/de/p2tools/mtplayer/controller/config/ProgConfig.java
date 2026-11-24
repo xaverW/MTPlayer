@@ -302,9 +302,6 @@ public class ProgConfig extends P2DataProgConfig {
     public static BooleanProperty SYSTEM_FILTER_REG_EX_ONLY_CONTAIN = addBoolProp("system-filter-reg-ex-only-contain", Boolean.FALSE);
     public static StringProperty SYSTEM_DOWNLOAD_DIR_NEW_VERSION = addStrProp("system-download-dir-new-version", ""); // wird beim Download auf das gewählte, gesetzt
     public static IntegerProperty SYSTEM_DOWNLOAD_COUNT = addIntProp("system-download-count", 1); // Ist der Downloadzähler: %c, %C
-    public static BooleanProperty SYSTEM_SORT_FILM_TABLE = addBoolProp("system-sort-film-table", Boolean.FALSE);
-    public static BooleanProperty SYSTEM_SORT_AUDIO_TABLE = addBoolProp("system-sort-audio-table", Boolean.FALSE);
-    public static DoubleProperty SYSTEM_SORT_DIALOG_DIVIDER = addDoubleProp("system-sort-dialog-divider", 0.5);
 
     public static IntegerProperty SYSTEM_FONT_SIZE = addIntProp("system-font-size", 0);
     public static BooleanProperty SYSTEM_FONT_SIZE_CHANGE = addBoolProp("system-font-size-change", Boolean.FALSE); // für die Schriftgröße
@@ -363,6 +360,17 @@ public class ProgConfig extends P2DataProgConfig {
     public static StringProperty SYSTEM_GUI_TITLE_BAR_SEL_DARK_2 = addStrProp("system-gui-title-bar-sel-dark-2", ProgConst.GUI_TITLE_BAR_SEL_DARK_2);
     public static StringProperty SYSTEM_GUI_TITLE_BAR_SEL_LIGHT_1 = addStrProp("system-gui-title-bar-sel-light-1", ProgConst.GUI_TITLE_BAR_SEL_LIGHT_1);
     public static StringProperty SYSTEM_GUI_TITLE_BAR_SEL_LIGHT_2 = addStrProp("system-gui-title-bar-sel-light2", ProgConst.GUI_TITLE_BAR_SEL_LIGHT_2);
+
+    // Sort Table
+    static {
+        addComment("Sort Table");
+    }
+
+    public static BooleanProperty SYSTEM_SORT_FILM_TABLE = addBoolProp("system-sort-film-table", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_SORT_AUDIO_TABLE = addBoolProp("system-sort-audio-table", Boolean.FALSE);
+    public static DoubleProperty SYSTEM_SORT_DIALOG_DIVIDER = addDoubleProp("system-sort-dialog-divider", 0.3);
+    public static IntegerProperty SYSTEM_SORT_FILM = addIntProp("system-sort-film", 0); // ausgewählter SORT
+    public static IntegerProperty SYSTEM_SORT_AUDIO = addIntProp("system-sort-audio", 0); // ausgewählter SORT
 
     // Einstellungen Filmliste
     static {
@@ -819,7 +827,7 @@ public class ProgConfig extends P2DataProgConfig {
     }
 
     // Filter settings
-    public static StringProperty FILTER_SETTINGS_DIALOG_SIZE = addStrProp("filter-settings-dialog-size", "600:600");
+    public static StringProperty FILTER_SETTINGS_DIALOG_SIZE = addStrProp("filter-settings-dialog-size", "800:600");
 
     // ToolsDialog
     public static StringProperty TOOLS_DIALOG_SIZE = addStrProp("tools-dialog-size", "600:500");

@@ -17,18 +17,12 @@
 package de.p2tools.mtplayer.controller.data.compdata;
 
 import de.p2tools.p2lib.configfile.config.Config;
-import de.p2tools.p2lib.configfile.config.Config_boolProp;
-import de.p2tools.p2lib.configfile.config.Config_lDate;
 import de.p2tools.p2lib.configfile.config.Config_stringProp;
 import de.p2tools.p2lib.configfile.pdata.P2DataSample;
 import de.p2tools.p2lib.mediathek.filter.Filter;
-import de.p2tools.p2lib.tools.date.P2LDateFactory;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -39,8 +33,6 @@ public class CompDataProps extends P2DataSample<CompDataProps> {
 
     private int no = 0;
     private final StringProperty text = new SimpleStringProperty("");
-    private final BooleanProperty audio = new SimpleBooleanProperty(true);
-    private LocalDate genDate = LocalDate.now();
 
     private String textLow = "";
     private boolean regEx = false;
@@ -55,21 +47,12 @@ public class CompDataProps extends P2DataSample<CompDataProps> {
     public Config[] getConfigsArr() {
         ArrayList<Config> configList = new ArrayList<>();
         configList.add(new Config_stringProp("text", text));
-        configList.add(new Config_boolProp("audio", audio));
-        configList.add(new Config_lDate("genDate", P2LDateFactory.toString(genDate)) {
-            @Override
-            public void setUsedValue(LocalDate act) {
-                genDate = act;
-            }
-        });
         return configList.toArray(new Config[]{});
     }
 
     public CompData getCopy() {
         CompData bl = new CompData();
         bl.textProperty().set(bl.getText());
-        bl.audioProperty().set(bl.isAudio());
-        bl.setGenDate(genDate);
         return bl;
     }
 
@@ -99,26 +82,6 @@ public class CompDataProps extends P2DataSample<CompDataProps> {
 
     public StringProperty textProperty() {
         return text;
-    }
-
-    public boolean isAudio() {
-        return audio.get();
-    }
-
-    public void setAudio(boolean audio) {
-        this.audio.set(audio);
-    }
-
-    public BooleanProperty audioProperty() {
-        return audio;
-    }
-
-    public LocalDate getGenDate() {
-        return genDate;
-    }
-
-    public void setGenDate(LocalDate genDate) {
-        this.genDate = genDate;
     }
 
     public String getTextLow() {

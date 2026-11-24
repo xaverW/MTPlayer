@@ -31,10 +31,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class TableAudio extends PTable<FilmDataMTP> {
+    private final TableColumn<FilmDataMTP, String> titleColumn;
 
     public TableAudio(Table.TABLE_ENUM table_enum, ProgData progData) {
         super(table_enum);
         this.table_enum = table_enum;
+        this.titleColumn = new TableColumn<>("Titel");
         iniColumn();
     }
 
@@ -95,6 +97,19 @@ public class TableAudio extends PTable<FilmDataMTP> {
             }
         });
 
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_SORT_AUDIO) {
+            @Override
+            public void pingGui() {
+                setComparator();
+                refreshTable();
+            }
+        });
+        ProgConfig.SYSTEM_SORT_AUDIO_TABLE.addListener((u, o, n) -> {
+            setComparator();
+            refreshTable();
+        });
+        setComparator();
+
         final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
@@ -110,7 +125,6 @@ public class TableAudio extends PTable<FilmDataMTP> {
         themeColumn.getStyleClass().add("alignCenterLeft");
         TableFilmFactory.columnFactoryString(themeColumn);
 
-        final TableColumn<FilmDataMTP, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
         TableFilmFactory.columnFactoryString(titleColumn);
@@ -188,5 +202,9 @@ public class TableAudio extends PTable<FilmDataMTP> {
                 dateColumn, timeColumn, durationColumn, sizeColumn,
                 hdColumn, utColumn, bookmarkColumn,
                 geoColumn, doubleColumn, aboColumn, urlColumn);
+    }
+
+    private void setComparator() {
+        titleColumn.setComparator(TableFactory.getComparator(true));
     }
 }

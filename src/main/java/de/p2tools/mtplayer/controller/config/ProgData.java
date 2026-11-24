@@ -23,6 +23,7 @@ import de.p2tools.mtplayer.controller.data.blackdata.BlackList;
 import de.p2tools.mtplayer.controller.data.blackdata.BlackListFilter;
 import de.p2tools.mtplayer.controller.data.bookmark.BookmarkList;
 import de.p2tools.mtplayer.controller.data.cleaningdata.CleaningDataList;
+import de.p2tools.mtplayer.controller.data.compdata.CompList;
 import de.p2tools.mtplayer.controller.data.compdata.SortList;
 import de.p2tools.mtplayer.controller.data.download.DownloadInfos;
 import de.p2tools.mtplayer.controller.data.download.DownloadList;
@@ -137,8 +138,12 @@ public class ProgData {
     public AboList aboList;
     public BlackList filmListFilter;
     public BlackList blackList;
+
     public SortList sortListFilm;
     public SortList sortListAudio;
+    public CompList compListFilm;
+    public CompList compListAudio;
+
     public CleaningDataList cleaningDataListMedia;
     public CleaningDataList cleaningDataListPropose;
     public SetDataList setDataList;
@@ -187,6 +192,8 @@ public class ProgData {
 
         sortListFilm = new SortList(this, false);
         sortListAudio = new SortList(this, true);
+        compListFilm = new CompList();
+        compListAudio = new CompList();
 
         cleaningDataListMedia = new CleaningDataList(false);
         cleaningDataListPropose = new CleaningDataList(true);

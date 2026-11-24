@@ -30,17 +30,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.text.Collator;
-import java.util.Comparator;
-
 public class TableFilm extends PTable<FilmDataMTP> {
 
-    final TableColumn<FilmDataMTP, String> titleColumn;
+    private final TableColumn<FilmDataMTP, String> titleColumn;
 
     public TableFilm(Table.TABLE_ENUM table_enum, ProgData progData) {
         super(table_enum);
         this.table_enum = table_enum;
-        titleColumn = new TableColumn<>("Titel");
+        this.titleColumn = new TableColumn<>("Titel");
         iniColumn();
     }
 
@@ -209,15 +206,6 @@ public class TableFilm extends PTable<FilmDataMTP> {
     }
 
     private void setComparator() {
-        if (ProgConfig.SYSTEM_SORT_FILM_TABLE.get()) {
-            titleColumn.setComparator(TableFactory.getComparator(false));
-        } else {
-            titleColumn.setComparator(new Comparator<String>() {
-                @Override
-                public int compare(String s, String t1) {
-                    return Collator.getInstance().compare(s, t1);
-                }
-            });
-        }
+        titleColumn.setComparator(TableFactory.getComparator(false));
     }
 }

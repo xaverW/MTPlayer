@@ -25,7 +25,7 @@ import java.util.List;
 
 public class CompList extends SimpleListProperty<CompData> implements P2DataList<CompData> {
 
-    public String TAG = "CompList";
+    public final String TAG = "CompList";
 
     private final ObservableList<CompData> undoList = FXCollections.observableArrayList();
 

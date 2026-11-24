@@ -21,9 +21,8 @@ public class CompData extends CompDataProps {
     public CompData() {
     }
 
-    public CompData(String text, boolean audio) {
+    public CompData(String text) {
         this.setText(text);
-        this.setAudio(audio);
         init();
     }
 }

@@ -27,7 +27,7 @@ public class ProgConfigUpdateAfterLoad {
     private ProgConfigUpdateAfterLoad() {
     }
 
-    public static void setUpdateDone() {
+    private static void setUpdateDone() {
         ProgConfig.SYSTEM_HISTORY_INIT_FILM_AUDIO_LIST.setValue(true); // für Version 23
     }
 
