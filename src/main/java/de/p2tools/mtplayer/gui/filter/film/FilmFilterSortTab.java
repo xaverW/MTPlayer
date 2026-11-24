@@ -10,9 +10,11 @@ import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
+import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
+import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -21,7 +23,7 @@ import javafx.stage.Stage;
 
 public class FilmFilterSortTab extends Tab {
     private final boolean audio;
-    private final Stage stage;
+    private final ObjectProperty<Stage> stage;
 
     private final SplitPane splitPane = new SplitPane();
     private final VBox vBoxSort = new VBox();
@@ -44,7 +46,7 @@ public class FilmFilterSortTab extends Tab {
     private final P2ToggleSwitch tglOn = new P2ToggleSwitch("Sortierung einschalten");
     private boolean sort = false;
 
-    public FilmFilterSortTab(Stage stage, boolean audio) {
+    public FilmFilterSortTab(ObjectProperty<Stage> stage, boolean audio) {
         this.stage = stage;
         this.audio = audio;
         this.progData = ProgData.getInstance();
@@ -77,7 +79,25 @@ public class FilmFilterSortTab extends Tab {
 
         tglOn.selectedProperty().bindBidirectional(audio ? ProgConfig.SYSTEM_SORT_AUDIO_TABLE : ProgConfig.SYSTEM_SORT_FILM_TABLE);
         Button btnHelp = P2Button.helpButton(stage, "Vorgaben zum Sortieren",
-                "");
+                """
+                        Hier kann man in der Tabelle die Spalte "Titel" blockweise \
+                        sortieren, zB. zuerst alle Filme die "Tatort" im Namen \
+                        haben, dann alle Filme die "Sport" im Namen haben und dann die restlichen Filme. \
+                        Jeder Block wird dabei alphabetisch sortiert in der Tabelle angezeigt.
+                        
+                        Die Blöcke werden in der Reihenfolge angeordnet, wie sie in der Liste aufgelistet \
+                        sind. Mit dem Button "Jetzt sortieren" kann die Sortierung sofort angestoßen werden, ansonsten erst beim \
+                        Beenden des Dialogs.
+                        
+                        Bei der Sortierung können auch RegEx benutzt werden. Diese müssen mit "#:" \
+                        eingeleitet werden (zB. "#:.*\\(S\\d\\d\\/E.*" sucht nach Serientitel die zB. "(S01/E07)" \
+                        im Titel haben).
+                        
+                        Bitte beachten: Je aufwendiger die Sortierung wird, desto länger dauert sie!
+                        """);
+
+        Label lblSort = P2Text.getLblTextBold("Name der Sortierung");
+        Label lblComp = P2Text.getLblTextBold("Suchbegriffe");
 
         splitPane.getItems().addAll(vBoxSort, vBoxComp);
         splitPane.getItems().get(0).autosize();
@@ -88,13 +108,13 @@ public class FilmFilterSortTab extends Tab {
         hBoxBtnSort.getChildren().addAll(btnAddSort, btnDelSort);
         vBoxSort.setSpacing(P2LibConst.SPACING_VBOX);
         vBoxSort.setPadding(new Insets(P2LibConst.PADDING_VBOX));
-        vBoxSort.getChildren().addAll(sortDataListView, hBoxBtnSort, txtTextSort);
+        vBoxSort.getChildren().addAll(lblSort, sortDataListView, hBoxBtnSort, txtTextSort);
 
         HBox hBoxBtnComp = new HBox(P2LibConst.SPACING_HBOX);
         hBoxBtnComp.getChildren().addAll(btnAddComp, btnDelComp, btnUpComp, btnDownComp, P2GuiTools.getHBoxGrower(), btnSort, btnHelp);
         vBoxComp.setSpacing(P2LibConst.SPACING_VBOX);
         vBoxComp.setPadding(new Insets(P2LibConst.PADDING_VBOX));
-        vBoxComp.getChildren().addAll(compDataListView, hBoxBtnComp, txtTextComp);
+        vBoxComp.getChildren().addAll(lblComp, compDataListView, hBoxBtnComp, txtTextComp);
 
         vBoxAll.setPadding(new Insets(5));
         vBoxAll.setSpacing(P2LibConst.SPACING_VBOX);
@@ -111,6 +131,7 @@ public class FilmFilterSortTab extends Tab {
 
             } else {
                 compDataListView.setItems(sortData.getCompList());
+                compDataListView.getSelectionModel().selectFirst();
                 txtTextSort.setText(sortData.getName());
             }
         });
@@ -233,7 +254,7 @@ public class FilmFilterSortTab extends Tab {
     private int getSelectedLineComp() {
         final int sel = compDataListView.getSelectionModel().getSelectedIndex();
         if (sel < 0) {
-            P2Alert.showInfoNoSelection(stage);
+            P2Alert.showInfoNoSelection(stage.get());
         }
         return sel;
     }
@@ -241,7 +262,7 @@ public class FilmFilterSortTab extends Tab {
     private SortData getSelSort() {
         SortData sortData = sortDataListView.getSelectionModel().getSelectedItem();
         if (sortData == null) {
-            P2Alert.showInfoNoSelection(stage);
+            P2Alert.showInfoNoSelection(stage.get());
         } else {
             return sortData;
         }
@@ -251,7 +272,7 @@ public class FilmFilterSortTab extends Tab {
     private CompData getSelComp() {
         CompData compData = compDataListView.getSelectionModel().getSelectedItem();
         if (compData == null) {
-            P2Alert.showInfoNoSelection(stage);
+            P2Alert.showInfoNoSelection(stage.get());
         } else {
             return compData;
         }
