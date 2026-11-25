@@ -101,11 +101,13 @@ public class TableFilm extends PTable<FilmDataMTP> {
         ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_SORT_FILM) {
             @Override
             public void pingGui() {
+                // Änderung der CBO oder durch SORT-TAB im Dialog
                 setComparator();
                 refreshTable();
             }
         });
         ProgConfig.SYSTEM_SORT_FILM_TABLE.addListener((u, o, n) -> {
+            // ein/ausschlaten von SORT
             setComparator();
             refreshTable();
         });
