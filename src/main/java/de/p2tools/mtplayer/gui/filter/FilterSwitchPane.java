@@ -2,14 +2,16 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
 import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -47,13 +49,23 @@ public class FilterSwitchPane extends VBox {
         Button btnHelp = P2Button.helpButton(stage, "Sortierung einschalten",
                 """
                         Hier kann die eigene Sortierung der "Titel-Spalte" \
-                        ein- und ausgeschaltet werden.
+                        in den Tabellen ein- und ausgeschaltet werden.
                         """);
 
-        this.setPadding(new Insets(5));
-        this.setSpacing(P2LibConst.SPACING_VBOX);
-        this.getChildren().addAll(P2Text.getLblTextBold("Sortierung einschalten"),
+        HBox hBoxHelp = new HBox();
+        hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
+        hBoxHelp.getChildren().add(btnHelp);
+
+        HBox hBoxTitle = new HBox();
+        hBoxTitle.setPadding(new Insets(10));
+        hBoxTitle.getStyleClass().add("extra-pane");
+        Label lblText = P2Text.getLblTextBold("Sortierung einschalten");
+        hBoxTitle.getChildren().add(lblText);
+
+        this.setPadding(new Insets(10, 5, 5, 5));
+        this.setSpacing(20);
+        this.getChildren().addAll(hBoxTitle,
                 tglFilm, tglAudio, tglLive, tglDownload, tglAbo,
-                P2GuiTools.getVBoxGrower(), btnHelp);
+                P2GuiTools.getVBoxGrower(), hBoxHelp);
     }
 }

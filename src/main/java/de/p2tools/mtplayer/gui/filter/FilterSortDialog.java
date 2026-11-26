@@ -18,9 +18,7 @@ package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
-import de.p2tools.mtplayer.gui.tools.HelpText;
 import de.p2tools.p2lib.dialogs.dialog.P2DialogExtra;
-import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -34,7 +32,7 @@ public class FilterSortDialog extends P2DialogExtra {
     private final FilterSwitchPane filterSwitchPane;
 
     public FilterSortDialog(ProgData progData) {
-        super(progData.primaryStage, ProgConfig.DOWNLOAD_FILTER_SORT_DIALOG_SIZE, "Filtereinstellungen",
+        super(progData.primaryStage, ProgConfig.DOWNLOAD_FILTER_SORT_DIALOG_SIZE, "Eigene Sortierung",
                 false, true, false, DECO.NO_BORDER);
 
         this.filterSwitchPane = new FilterSwitchPane(getStageProp());
@@ -52,7 +50,7 @@ public class FilterSortDialog extends P2DialogExtra {
 
     @Override
     public void make() {
-        Tab tabSwitch = new Tab("Ein/Ausschlaten");
+        Tab tabSwitch = new Tab("Ein/Ausschalten");
         tabSwitch.setClosable(false);
         tabSwitch.setContent(filterSwitchPane);
 
@@ -66,10 +64,10 @@ public class FilterSortDialog extends P2DialogExtra {
         getVBoxCont().getChildren().add(tabPane);
         VBox.setVgrow(tabPane, Priority.ALWAYS);
 
-        final Button btnHelp = P2IconFactory.getHelpButton(getStage(), "Filtereinstellungen", HelpText.GUI_FILMS_EDIT_FILTER);
+//        final Button btnHelp = P2IconFactory.getHelpButton(getStage(), "Filtereinstellungen", HelpText.GUI_FILMS_EDIT_FILTER);
         final Button btnOk = new Button("_Ok");
         btnOk.setOnAction(event -> close());
         addOkButton(btnOk);
-        addHlpButton(btnHelp);
+//        addHlpButton(btnHelp);
     }
 }

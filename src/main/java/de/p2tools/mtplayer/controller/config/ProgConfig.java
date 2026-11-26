@@ -118,9 +118,6 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.utDataList);
         configFile.addConfigs(progData.markDataList);
         configFile.addConfigs(progData.sortList);
-//        configFile.addConfigs(progData.sortListFilm);
-//        configFile.addConfigs(progData.sortListAudio);
-//        configFile.addConfigs(progData.sortListDownload);
         if (save) {
             // dann nur die selbst angelegten Downloads
             configFile.addConfigs(progData.downloadList.getCopyForSaving());
@@ -485,7 +482,6 @@ public class ProgConfig extends P2DataProgConfig {
     }
 
     public static StringProperty BOOKMARK_DIALOG_SIZE = addStrProp("bookmark-dialog-size", "600:800");
-    public static StringProperty BOOKMARK_DIALOG_DEL_SIZE = addStrProp("bookmark-dialog-del-size", "450:350");
     public static StringProperty BOOKMARK_TABLE_WIDTH = addStrProp("bookmark-table-width");
     public static StringProperty BOOKMARK_TABLE_SORT = addStrProp("bookmark-table-sort");
     public static StringProperty BOOKMARK_TABLE_UP_DOWN = addStrProp("bookmark-table-up-down");

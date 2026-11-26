@@ -76,13 +76,16 @@ public class FilterSortPane extends VBox {
                         haben, dann alle Filme die "Sport" im Namen haben und dann die restlichen Filme. \
                         Jeder Block wird dabei alphabetisch sortiert in der Tabelle angezeigt.
                         
-                        Die Blöcke werden in der Reihenfolge angeordnet, wie sie in der Liste aufgelistet \
-                        sind. Mit dem Button "Jetzt sortieren" kann die Sortierung sofort angestoßen werden, ansonsten erst beim \
-                        Beenden des Dialogs.
+                        Die Blöcke werden in der Reihenfolge angeordnet, wie sie in der Liste mit den \
+                        Suchbegriffen aufgelistet \
+                        sind. Mit dem Button "Jetzt sortieren" kann die Sortierung \
+                        zum Testen sofort angestoßen werden, ansonsten erst \
+                        beim Beenden des Dialogs.
                         
                         Bei der Sortierung können auch RegEx benutzt werden. Diese müssen mit "#:" \
-                        eingeleitet werden (zB. "#:.*\\(S\\d\\d\\/E.*" sucht nach Serientitel die zB. "(S01/E07)" \
-                        im Titel haben).
+                        eingeleitet werden.
+                        (ZB. sucht "#:.*\\(S\\d\\d\\/E.*" nach Serientitel die zB. "(S01/E07)" \
+                        im Titel enthalten.)
                         
                         Bitte beachten: Je aufwendiger die Sortierung wird, desto länger dauert sie!
                         """);
@@ -108,9 +111,15 @@ public class FilterSortPane extends VBox {
         vBoxComp.setPadding(new Insets(P2LibConst.PADDING_VBOX));
         vBoxComp.getChildren().addAll(lblComp, listViewComp, hBoxBtnComp, txtTextComp);
 
-        this.setPadding(new Insets(5));
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(10));
+        hBox.getStyleClass().add("extra-pane");
+        Label lblText = P2Text.getLblTextBold("Suchbegriffe für die Sortierung");
+        hBox.getChildren().add(lblText);
+
+        this.setPadding(new Insets(10, 5, 5, 5));
         this.setSpacing(P2LibConst.SPACING_VBOX);
-        this.getChildren().addAll(splitPane);
+        this.getChildren().addAll(hBox, splitPane);
     }
 
     private void initListView() {
