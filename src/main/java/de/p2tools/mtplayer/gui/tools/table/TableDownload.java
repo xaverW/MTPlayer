@@ -38,7 +38,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.Comparator;
 
 public class TableDownload extends PTable<DownloadData> {
-    int i = 0;
+    private final TableColumn<DownloadData, String> titleColumn = new TableColumn<>("Titel");
 
     public TableDownload(Table.TABLE_ENUM table_enum) {
         super(table_enum);
@@ -84,6 +84,21 @@ public class TableDownload extends PTable<DownloadData> {
             }
         });
 
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_SORT_DOWNLOAD) {
+            @Override
+            public void pingGui() {
+                // Änderung der CBO oder durch SORT-TAB im Dialog
+                setComparator();
+                refreshTable();
+            }
+        });
+        ProgConfig.SYSTEM_SORT_DOWNLOAD_TABLE.addListener((u, o, n) -> {
+            // ein/ausschlaten von SORT
+            setComparator();
+            refreshTable();
+        });
+        setComparator();
+
         final TableColumn<DownloadData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.setCellFactory(new P2CellIntMax().cellFactory);
@@ -117,7 +132,6 @@ public class TableDownload extends PTable<DownloadData> {
         themeColumn.getStyleClass().add("alignCenterLeft");
         themeColumn.setComparator(sorter);
 
-        final TableColumn<DownloadData, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
         titleColumn.setComparator(sorter);
@@ -234,5 +248,10 @@ public class TableDownload extends PTable<DownloadData> {
                 }
             }
         });
+    }
+
+    private void setComparator() {
+        titleColumn.setComparator(TableFactory.getComparator(ProgData.getInstance().compListDownload,
+                ProgConfig.SYSTEM_SORT_DOWNLOAD_TABLE));
     }
 }

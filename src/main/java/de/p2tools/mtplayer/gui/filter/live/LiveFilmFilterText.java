@@ -16,10 +16,13 @@
 
 package de.p2tools.mtplayer.gui.filter.live;
 
+import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
+import de.p2tools.mtplayer.gui.filter.FilterControllerSort;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
+import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -64,6 +67,11 @@ public class LiveFilmFilterText extends VBox {
         addTxt("Sender", mbChannel, this);
         addTxt("Thema", cboThema, this);
         addTxt("Titel", cboTitle, this);
+
+        FilterControllerSort filterControllerSort = new FilterControllerSort(FilterControllerSort.SORTER.LIVE);
+        this.getChildren().addAll(P2GuiTools.getDistanceV(5), filterControllerSort);
+        filterControllerSort.visibleProperty().bind(ProgConfig.SYSTEM_SORT_LIVE_TABLE);
+        filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
 
         Button btnClear = P2ButtonClearFilterFactory.getPButtonClear();
         btnClear.setOnAction(a -> progData.liveFilmFilterWorker.clearFilter());

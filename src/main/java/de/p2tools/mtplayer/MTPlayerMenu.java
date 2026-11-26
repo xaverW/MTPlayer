@@ -31,6 +31,7 @@ import de.p2tools.mtplayer.gui.configdialog.ConfigDialogController;
 import de.p2tools.mtplayer.gui.dialog.AboutDialogController;
 import de.p2tools.mtplayer.gui.dialog.ImportMVDialog;
 import de.p2tools.mtplayer.gui.dialog.ResetDialogController;
+import de.p2tools.mtplayer.gui.filter.FilterSortDialog;
 import de.p2tools.mtplayer.gui.mediadialog.MediaDialogController;
 import de.p2tools.p2lib.guitools.P2Open;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
@@ -121,6 +122,11 @@ public class MTPlayerMenu extends MenuButton {
         final CheckMenuItem miColorMode = new CheckMenuItem("Farb-Modus-1");
         miColorMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_THEME_1);
 
+        MenuItem miSort = new MenuItem("Titel-Sortierung einstellen");
+        miSort.setOnAction(a -> {
+            new FilterSortDialog(progData);
+        });
+
         final MenuItem miLog = new MenuItem("Logdatei öffnen");
         miLog.setOnAction(event -> {
             P2Logger.openLogFile();
@@ -152,7 +158,7 @@ public class MTPlayerMenu extends MenuButton {
 
         mTools.getItems().addAll(miDarkMode, miColorMode);
         addMenuButton(mTools);
-        mTools.getItems().addAll(new SeparatorMenuItem(), miLog, miShortCut,
+        mTools.getItems().addAll(new SeparatorMenuItem(), miSort, miLog, miShortCut,
                 miImportMV, new SeparatorMenuItem(), miSave, miReset, miSearchUpdate, new SeparatorMenuItem(), miInfos);
         return mTools;
     }

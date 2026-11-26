@@ -205,6 +205,7 @@ public class TableAudio extends PTable<FilmDataMTP> {
     }
 
     private void setComparator() {
-        titleColumn.setComparator(TableFactory.getComparator(true));
+        titleColumn.setComparator(TableFactory.getComparator(ProgData.getInstance().compListAudio,
+                ProgConfig.SYSTEM_SORT_AUDIO_TABLE));
     }
 }

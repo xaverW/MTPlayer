@@ -57,7 +57,7 @@ public class AboFilterController extends FilterController {
 
     public AboFilterController() {
         VBox vBoxFilter = getVBoxFilter();
-        progData = ProgData.getInstance();
+        this.progData = ProgData.getInstance();
         progData.aboFilterController = this;
 
         ToggleGroup tg = new ToggleGroup();
@@ -75,7 +75,7 @@ public class AboFilterController extends FilterController {
         addCont("Beschreibung", cboDescription, vBoxFilter);
 
         // Filme/Audios
-        vBoxFilter.getChildren().add(P2GuiTools.getDistanceV(15));
+        vBoxFilter.getChildren().add(P2GuiTools.getDistanceV(10));
         VBox vBoxRadio = new VBox(2);
         Label lblRadio = new Label("Abos für Liste");
         HBox hBoxRadio = new HBox(P2LibConst.SPACING_HBOX);
@@ -84,17 +84,22 @@ public class AboFilterController extends FilterController {
         vBoxFilter.getChildren().addAll(vBoxRadio);
 
         // Last Abo
-        vBoxFilter.getChildren().add(P2GuiTools.getDistanceV(15));
-        VBox vBox = new VBox(2);
+        vBoxFilter.getChildren().add(P2GuiTools.getDistanceV(10));
+        VBox vBox = new VBox();
         HBox h = new HBox();
         Label lblTimeRange = new Label("Kein Abo seit:");
         h.getChildren().addAll(lblTimeRange, P2GuiTools.getHBoxGrower(), lblTimeRangeValue);
         vBox.getChildren().addAll(h, slider, chkOld);
         vBoxFilter.getChildren().addAll(vBox);
 
+        FilterControllerSort filterControllerSort = new FilterControllerSort(FilterControllerSort.SORTER.ABO);
+        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(10), filterControllerSort);
+        filterControllerSort.visibleProperty().bind(ProgConfig.SYSTEM_SORT_ABO_TABLE);
+        filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
+
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.setPadding(new Insets(10, 0, 0, 0));
+        hBox.setPadding(new Insets(15, 0, 0, 0));
         Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
         hBox.getChildren().add(btnClear);
 

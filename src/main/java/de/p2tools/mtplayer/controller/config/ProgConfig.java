@@ -117,8 +117,10 @@ public class ProgConfig extends P2DataProgConfig {
         configFile.addConfigs(progData.offerList);
         configFile.addConfigs(progData.utDataList);
         configFile.addConfigs(progData.markDataList);
-        configFile.addConfigs(progData.sortListFilm);
-        configFile.addConfigs(progData.sortListAudio);
+        configFile.addConfigs(progData.sortList);
+//        configFile.addConfigs(progData.sortListFilm);
+//        configFile.addConfigs(progData.sortListAudio);
+//        configFile.addConfigs(progData.sortListDownload);
         if (save) {
             // dann nur die selbst angelegten Downloads
             configFile.addConfigs(progData.downloadList.getCopyForSaving());
@@ -368,9 +370,15 @@ public class ProgConfig extends P2DataProgConfig {
 
     public static BooleanProperty SYSTEM_SORT_FILM_TABLE = addBoolProp("system-sort-film-table", Boolean.FALSE);
     public static BooleanProperty SYSTEM_SORT_AUDIO_TABLE = addBoolProp("system-sort-audio-table", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_SORT_LIVE_TABLE = addBoolProp("system-sort-live-table", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_SORT_DOWNLOAD_TABLE = addBoolProp("system-sort-download-table", Boolean.FALSE);
+    public static BooleanProperty SYSTEM_SORT_ABO_TABLE = addBoolProp("system-sort-abo-table", Boolean.FALSE);
     public static DoubleProperty SYSTEM_SORT_DIALOG_DIVIDER = addDoubleProp("system-sort-dialog-divider", 0.3);
-    public static IntegerProperty SYSTEM_SORT_FILM = addIntProp("system-sort-film", 0); // ausgewählter SORT
-    public static IntegerProperty SYSTEM_SORT_AUDIO = addIntProp("system-sort-audio", 0); // ausgewählter SORT
+    public static IntegerProperty SYSTEM_SORT_IDX_FILM = addIntProp("system-sort-idx-film", 0); // ausgewählter SORT
+    public static IntegerProperty SYSTEM_SORT_IDX_AUDIO = addIntProp("system-sort-idx-audio", 0); // ausgewählter SORT
+    public static IntegerProperty SYSTEM_SORT_IDX_LIVE = addIntProp("system-sort-idx-live", 0); // ausgewählter SORT
+    public static IntegerProperty SYSTEM_SORT_IDX_DOWNLOAD = addIntProp("system-sort-idx-download", 0); // ausgewählter SORT
+    public static IntegerProperty SYSTEM_SORT_IDX_ABO = addIntProp("system-sort-abo", 0); // ausgewählter SORT
 
     // Einstellungen Filmliste
     static {
@@ -828,6 +836,7 @@ public class ProgConfig extends P2DataProgConfig {
 
     // Filter settings
     public static StringProperty FILTER_SETTINGS_DIALOG_SIZE = addStrProp("filter-settings-dialog-size", "800:600");
+    public static StringProperty DOWNLOAD_FILTER_SORT_DIALOG_SIZE = addStrProp("download-filter-sort-dialog-size", "800:600");
 
     // ToolsDialog
     public static StringProperty TOOLS_DIALOG_SIZE = addStrProp("tools-dialog-size", "600:500");

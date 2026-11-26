@@ -208,6 +208,7 @@ public class TableFilm extends PTable<FilmDataMTP> {
     }
 
     private void setComparator() {
-        titleColumn.setComparator(TableFactory.getComparator(false));
+        titleColumn.setComparator(TableFactory.getComparator(ProgData.getInstance().compListFilm,
+                ProgConfig.SYSTEM_SORT_FILM_TABLE));
     }
 }

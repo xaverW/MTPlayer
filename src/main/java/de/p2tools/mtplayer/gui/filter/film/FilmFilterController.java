@@ -20,6 +20,7 @@ import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.mtplayer.controller.filter.FilterWorker;
 import de.p2tools.mtplayer.gui.filter.FilterController;
+import de.p2tools.mtplayer.gui.filter.FilterControllerSort;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import javafx.beans.property.BooleanProperty;
 import javafx.scene.layout.Region;
@@ -33,7 +34,7 @@ public class FilmFilterController extends FilterController {
     final FilmFilterControllerClearFilter filmFilterControllerClearFilter;
 
     final FilmFilterControllerProfiles filmFilterControllerProfiles;
-    final FilmFilterControllerSort filmFilterControllerSort;
+    final FilterControllerSort filterControllerSort;
     final FilmFilterControllerBlacklist filmFilterControllerBlacklist;
 
     final FilmSmallFilterControllerFilter filmSmallFilterControllerFilter;
@@ -47,7 +48,8 @@ public class FilmFilterController extends FilterController {
         filmFilterControllerClearFilter = new FilmFilterControllerClearFilter(filterDto);
 
         filmFilterControllerProfiles = new FilmFilterControllerProfiles(filterDto);
-        filmFilterControllerSort = new FilmFilterControllerSort(filterDto);
+        filterControllerSort = new FilterControllerSort(filterDto.audio ?
+                FilterControllerSort.SORTER.AUDIO : FilterControllerSort.SORTER.FILM);
         filmFilterControllerBlacklist = new FilmFilterControllerBlacklist(filterDto);
 
         filmSmallFilterControllerFilter = new FilmSmallFilterControllerFilter(filterDto);
@@ -112,10 +114,10 @@ public class FilmFilterController extends FilterController {
 
         vBox.getChildren().addAll(filmFilterControllerFilter);
 
-        vBox.getChildren().add(filmFilterControllerSort);
-        filmFilterControllerSort.visibleProperty().bind(filterDto.audio ?
+        vBox.getChildren().addAll(P2GuiTools.getDistanceV(5), filterControllerSort);
+        filterControllerSort.visibleProperty().bind(filterDto.audio ?
                 ProgConfig.SYSTEM_SORT_AUDIO_TABLE.and(small.not()) : ProgConfig.SYSTEM_SORT_FILM_TABLE.and(small.not()));
-        filmFilterControllerSort.managedProperty().bind(filmFilterControllerSort.visibleProperty());
+        filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
 
         Region reg2 = P2GuiTools.getDistanceV(10); // small
         reg2.visibleProperty().bind(small);

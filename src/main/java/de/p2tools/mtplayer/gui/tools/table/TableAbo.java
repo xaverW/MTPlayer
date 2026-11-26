@@ -32,6 +32,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class TableAbo extends PTable<AboData> {
 
+    private final TableColumn<AboData, String> nameColumn = new TableColumn<>("Name");
+
     public TableAbo(Table.TABLE_ENUM table_enum) {
         super(table_enum);
         this.table_enum = table_enum;
@@ -71,6 +73,22 @@ public class TableAbo extends PTable<AboData> {
                 refreshTable();
             }
         });
+
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_SORT_ABO) {
+            @Override
+            public void pingGui() {
+                // Änderung der CBO oder durch SORT-TAB im Dialog
+                setComparator();
+                refreshTable();
+            }
+        });
+        ProgConfig.SYSTEM_SORT_ABO_TABLE.addListener((u, o, n) -> {
+            // ein/ausschlaten von SORT
+            setComparator();
+            refreshTable();
+        });
+        setComparator();
+
         final TableColumn<AboData, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
@@ -90,7 +108,6 @@ public class TableAbo extends PTable<AboData> {
         hitColumn.setCellFactory(new CellAboBackHist().callback);
         hitColumn.getStyleClass().add("alignCenterRightPadding_10");
 
-        final TableColumn<AboData, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.getStyleClass().add("alignCenterLeft");
 
@@ -172,5 +189,10 @@ public class TableAbo extends PTable<AboData> {
                 somewhereColumn, timeRange, minColumn, maxColumn, startTimeColumn,
                 destinationColumn, datumColumn, psetColumn, genDateColumn);
 
+    }
+
+    private void setComparator() {
+        nameColumn.setComparator(TableFactory.getComparator(ProgData.getInstance().compListAbo,
+                ProgConfig.SYSTEM_SORT_ABO_TABLE));
     }
 }

@@ -33,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class TableLiveFilm extends PTable<FilmDataMTP> {
+    private final TableColumn<FilmDataMTP, String> titleColumn = new TableColumn<>("Titel");
 
     public TableLiveFilm(Table.TABLE_ENUM table_enum, ProgData progData) {
         super(table_enum);
@@ -84,6 +85,22 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
             }
         });
 
+        ProgData.getInstance().pEventHandler.addListener(new P2Listener(PEvents.EVENT_SORT_LIVE) {
+            @Override
+            public void pingGui() {
+                // Änderung der CBO oder durch SORT-TAB im Dialog
+                setComparator();
+                refreshTable();
+            }
+        });
+        ProgConfig.SYSTEM_SORT_LIVE_TABLE.addListener((u, o, n) -> {
+            // ein/ausschlaten von SORT
+            setComparator();
+            refreshTable();
+        });
+        setComparator();
+
+
         final TableColumn<FilmDataMTP, Integer> nrColumn = new TableColumn<>("Nr");
         nrColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         nrColumn.getStyleClass().add("alignCenterRightPadding_10");
@@ -96,7 +113,6 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
         themeColumn.setCellValueFactory(new PropertyValueFactory<>("theme"));
         themeColumn.getStyleClass().add("alignCenterLeft");
 
-        final TableColumn<FilmDataMTP, String> titleColumn = new TableColumn<>("Titel");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         titleColumn.getStyleClass().add("alignCenterLeft");
 
@@ -157,5 +173,10 @@ public class TableLiveFilm extends PTable<FilmDataMTP> {
                 startColumn,
                 dateColumn, timeColumn, durationColumn, sizeColumn,
                 hdColumn, utColumn, geoColumn, urlColumn, aboColumn);
+    }
+
+    private void setComparator() {
+        titleColumn.setComparator(TableFactory.getComparator(ProgData.getInstance().compListLive,
+                ProgConfig.SYSTEM_SORT_LIVE_TABLE));
     }
 }

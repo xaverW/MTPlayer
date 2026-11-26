@@ -1,10 +1,10 @@
 package de.p2tools.mtplayer.gui.tools.table;
 
 import de.p2tools.mtplayer.controller.config.ProgConfig;
-import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.compdata.CompData;
 import de.p2tools.mtplayer.controller.data.compdata.CompDataProps;
 import de.p2tools.mtplayer.controller.data.compdata.CompList;
+import javafx.beans.property.BooleanProperty;
 
 import java.text.Collator;
 import java.util.Comparator;
@@ -15,14 +15,12 @@ public class TableFactory {
     }
 
     // #:.*\(S\d\d\/E.*
-    public static Comparator<String> getComparator(boolean audio) {
-        CompList compList = audio ? ProgData.getInstance().compListAudio : ProgData.getInstance().compListFilm;
-
+    public static Comparator<String> getComparator(CompList compList, BooleanProperty sort) {
         if (compList.isEmpty()) {
             return (s, t1) -> Collator.getInstance().compare(s, t1);
         }
 
-        if (audio ? !ProgConfig.SYSTEM_SORT_AUDIO_TABLE.get() : !ProgConfig.SYSTEM_SORT_FILM_TABLE.get()) {
+        if (!sort.get()) {
             return (s, t1) -> Collator.getInstance().compare(s, t1);
         }
 

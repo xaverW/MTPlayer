@@ -16,7 +16,6 @@
 
 package de.p2tools.mtplayer.controller.data.compdata;
 
-import de.p2tools.mtplayer.controller.config.ProgConfig;
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.p2lib.configfile.pdata.P2DataList;
 import javafx.beans.property.SimpleListProperty;
@@ -27,15 +26,14 @@ import java.util.List;
 
 public class SortList extends SimpleListProperty<SortData> implements P2DataList<SortData> {
 
-    public final String TAG;
+    public final String TAG = "SortList";
     private final ProgData progData;
 
     private final ObservableList<SortData> undoList = FXCollections.observableArrayList();
 
-    public SortList(ProgData progData, boolean audio) {
+    public SortList(ProgData progData) {
         super(FXCollections.observableArrayList());
         this.progData = progData;
-        TAG = audio ? "SortListAudio" : "SortListFilm";
     }
 
     @Override
@@ -60,7 +58,7 @@ public class SortList extends SimpleListProperty<SortData> implements P2DataList
         }
     }
 
-    public void init(boolean audio) {
+    public void init() {
         if (isEmpty()) {
             SortData sortData = new SortData("Tatort / Sport");
             sortData.getCompList().add(new CompData("Tatort"));
@@ -71,12 +69,6 @@ public class SortList extends SimpleListProperty<SortData> implements P2DataList
             sortData = new SortData("Serien");
             sortData.getCompList().add(new CompData("#:.*\\(S\\d\\d\\/E.*"));
             add(sortData);
-
-            if (audio) {
-                ProgConfig.SYSTEM_SORT_AUDIO.set(0);
-            } else {
-                ProgConfig.SYSTEM_SORT_FILM.set(0);
-            }
         }
     }
 

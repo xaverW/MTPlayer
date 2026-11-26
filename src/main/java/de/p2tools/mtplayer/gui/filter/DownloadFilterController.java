@@ -49,6 +49,7 @@ public class DownloadFilterController extends FilterController {
     private final Slider sliderBandwidth = new Slider();
     private final Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
     private final Label lblBandwidth = new Label();
+    private final FilterControllerSort filterControllerSort;
 
     private final VBox vBoxFilter;
     private final ProgData progData;
@@ -64,6 +65,7 @@ public class DownloadFilterController extends FilterController {
 
         this.cboThemeTitle = new PCboString(progData.stringFilterLists.getFilterListDownloadThemeTitle(),
                 ProgConfig.FILTER_DOWNLOAD_THEME_TITLE, () -> false);
+        filterControllerSort = new FilterControllerSort(FilterControllerSort.SORTER.DOWNLOAD);
 
         initLayout();
         initFilter();
@@ -84,6 +86,11 @@ public class DownloadFilterController extends FilterController {
         addCont("Quelle", cboSrc, vBoxFilter);
         addCont("Downloadart", cboKind, vBoxFilter);
         addCont("Status", cboState, vBoxFilter);
+
+        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(5), filterControllerSort);
+        filterControllerSort.visibleProperty().bind(ProgConfig.SYSTEM_SORT_DOWNLOAD_TABLE);
+        filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
+
 
         final Button btnHelpFilter = P2IconFactory.getHelpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
 

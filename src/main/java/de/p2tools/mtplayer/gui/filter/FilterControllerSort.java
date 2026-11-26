@@ -14,7 +14,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -22,40 +22,70 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.data.compdata.CompList;
 import de.p2tools.mtplayer.controller.data.compdata.SortData;
 import de.p2tools.mtplayer.controller.data.compdata.SortList;
-import de.p2tools.mtplayer.controller.filter.FilterDto;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 import de.p2tools.p2lib.p2event.P2Listener;
+import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class FilmFilterControllerSort extends VBox {
+public class FilterControllerSort extends VBox {
+
+    public enum SORTER {FILM, AUDIO, LIVE, DOWNLOAD, ABO}
 
     private final ComboBox<SortData> cboSort = new P2CboSeparator<>();
     private final ProgData progData;
-    private final FilterDto filterDto;
     private final SortList sortList;
     private final CompList compList;
     private boolean stop = false;
+    private final Enum<SORTER> sorterEnum;
+    private final IntegerProperty idx;
+    private final int eventSort;
 
-    public FilmFilterControllerSort(FilterDto filterDto) {
-        this.filterDto = filterDto;
+    public FilterControllerSort(Enum<SORTER> sorterEnum) {
         progData = ProgData.getInstance();
-        sortList = this.filterDto.audio ? progData.sortListAudio : progData.sortListFilm;
-        compList = this.filterDto.audio ? progData.compListAudio : progData.compListFilm;
+        this.sorterEnum = sorterEnum;
+        sortList = progData.sortList;
+        if (sorterEnum.equals(SORTER.FILM)) {
+            compList = progData.compListFilm;
+            idx = ProgConfig.SYSTEM_SORT_IDX_FILM;
+            eventSort = PEvents.EVENT_SORT_FILM;
+
+        } else if (sorterEnum.equals(SORTER.AUDIO)) {
+            compList = progData.compListAudio;
+            idx = ProgConfig.SYSTEM_SORT_IDX_AUDIO;
+            eventSort = PEvents.EVENT_SORT_AUDIO;
+
+        } else if (sorterEnum.equals(SORTER.LIVE)) {
+            compList = progData.compListLive;
+            idx = ProgConfig.SYSTEM_SORT_IDX_LIVE;
+            eventSort = PEvents.EVENT_SORT_LIVE;
+
+        } else if (sorterEnum.equals(SORTER.DOWNLOAD)) {
+            compList = progData.compListDownload;
+            idx = ProgConfig.SYSTEM_SORT_IDX_DOWNLOAD;
+            eventSort = PEvents.EVENT_SORT_DOWNLOAD;
+
+        } else {
+            compList = progData.compListAbo;
+            idx = ProgConfig.SYSTEM_SORT_IDX_ABO;
+            eventSort = PEvents.EVENT_SORT_ABO;
+        }
+
         init();
+        initCbo();
     }
 
     private void init() {
+        setSpacing(2);
         cboSort.setMaxWidth(Double.MAX_VALUE);
         getChildren().addAll(new Label("Sortierung:"), cboSort);
-        initCbo();
     }
 
     private void initCbo() {
         loadCbo();
         progData.pEventHandler.addListener(
-                new P2Listener(filterDto.audio ? PEvents.EVENT_BTN_RUN_SORT_AUDIO : PEvents.EVENT_BTN_RUN_SORT_FILM) {
+                new P2Listener(PEvents.EVENT_BTN_RUN_SORT) {
                     @Override
                     public void pingGui() {
                         loadCbo();
@@ -69,11 +99,7 @@ public class FilmFilterControllerSort extends VBox {
 
             int id = cboSort.getSelectionModel().getSelectedIndex();
             if (id >= 0) {
-                if (filterDto.audio) {
-                    ProgConfig.SYSTEM_SORT_AUDIO.set(id);
-                } else {
-                    ProgConfig.SYSTEM_SORT_FILM.set(id);
-                }
+                idx.set(id);
             }
             setCbo();
         });
@@ -90,28 +116,17 @@ public class FilmFilterControllerSort extends VBox {
     }
 
     private void setCbo() {
-        if (filterDto.audio) {
-            if (cboSort.getItems().size() > ProgConfig.SYSTEM_SORT_AUDIO.get() &&
-                    cboSort.getSelectionModel().getSelectedIndex() != ProgConfig.SYSTEM_SORT_AUDIO.get()) {
-                cboSort.getSelectionModel().select(ProgConfig.SYSTEM_SORT_AUDIO.get());
-            } else {
-                cboSort.getSelectionModel().clearSelection();
-            }
+        if (cboSort.getItems().size() > idx.get()) {
+            cboSort.getSelectionModel().select(idx.get());
 
         } else {
-            if (cboSort.getItems().size() > ProgConfig.SYSTEM_SORT_FILM.get()) {
-                cboSort.getSelectionModel().select(ProgConfig.SYSTEM_SORT_FILM.get());
-
-            } else {
-                ProgConfig.SYSTEM_SORT_FILM.set(0);
-                cboSort.getSelectionModel().clearSelection();
-                cboSort.getSelectionModel().selectFirst();
-            }
+            idx.set(0);
+            cboSort.getSelectionModel().clearSelection();
+            cboSort.getSelectionModel().selectFirst();
         }
 
         setCompList();
-        ProgData.getInstance().pEventHandler.
-                notifyListener(filterDto.audio ? PEvents.EVENT_SORT_AUDIO : PEvents.EVENT_SORT_FILM);
+        ProgData.getInstance().pEventHandler.notifyListener(eventSort);
     }
 
     private void setCompList() {

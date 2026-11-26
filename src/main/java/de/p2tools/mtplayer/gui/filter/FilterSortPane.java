@@ -1,4 +1,4 @@
-package de.p2tools.mtplayer.gui.filter.film;
+package de.p2tools.mtplayer.gui.filter;
 
 import de.p2tools.mtplayer.controller.config.PEvents;
 import de.p2tools.mtplayer.controller.config.ProgConfig;
@@ -11,7 +11,6 @@ import de.p2tools.p2lib.alert.P2Alert;
 import de.p2tools.p2lib.guitools.P2Button;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.P2Text;
-import de.p2tools.p2lib.guitools.ptoggleswitch.P2ToggleSwitch;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
 import javafx.beans.property.ObjectProperty;
@@ -21,8 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class FilmFilterSortTab extends Tab {
-    private final boolean audio;
+public class FilterSortPane extends VBox {
     private final ObjectProperty<Stage> stage;
 
     private final SplitPane splitPane = new SplitPane();
@@ -33,7 +31,6 @@ public class FilmFilterSortTab extends Tab {
     private final SortList sortList;
 
     private final ProgData progData;
-    private final VBox vBoxAll = new VBox(P2GuiTools.getVBoxGrower());
     private final Button btnAddSort = new Button();
     private final Button btnDelSort = new Button();
     private final Button btnAddComp = new Button();
@@ -41,16 +38,16 @@ public class FilmFilterSortTab extends Tab {
     private final Button btnUpComp = new Button();
     private final Button btnDownComp = new Button();
     private final Button btnSort = new Button("Jetzt sortieren");
+
     private final TextField txtTextSort = new TextField();
     private final TextField txtTextComp = new TextField();
-    private final P2ToggleSwitch tglOn = new P2ToggleSwitch("Sortierung einschalten");
+
     private boolean sort = false;
 
-    public FilmFilterSortTab(ObjectProperty<Stage> stage, boolean audio) {
+    public FilterSortPane(ObjectProperty<Stage> stage) {
         this.stage = stage;
-        this.audio = audio;
         this.progData = ProgData.getInstance();
-        sortList = audio ? progData.sortListAudio : progData.sortListFilm;
+        this.sortList = progData.sortList;
 
         init();
         initListView();
@@ -67,19 +64,11 @@ public class FilmFilterSortTab extends Tab {
         if (found) sort = true;
 
         if (sort) {
-            ProgData.getInstance().pEventHandler.notifyListener(audio ?
-                    PEvents.EVENT_BTN_RUN_SORT_AUDIO : PEvents.EVENT_BTN_RUN_SORT_FILM);
+            ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BTN_RUN_SORT);
         }
-
-        tglOn.selectedProperty().unbindBidirectional(audio ? ProgConfig.SYSTEM_SORT_AUDIO_TABLE : ProgConfig.SYSTEM_SORT_FILM_TABLE);
     }
 
     private void init() {
-        setText("Sortierung");
-        setContent(vBoxAll);
-        setClosable(false);
-
-        tglOn.selectedProperty().bindBidirectional(audio ? ProgConfig.SYSTEM_SORT_AUDIO_TABLE : ProgConfig.SYSTEM_SORT_FILM_TABLE);
         Button btnHelp = P2Button.helpButton(stage, "Vorgaben zum Sortieren",
                 """
                         Hier kann man in der Tabelle die Spalte "Titel" blockweise \
@@ -104,7 +93,7 @@ public class FilmFilterSortTab extends Tab {
         splitPane.getItems().addAll(vBoxSort, vBoxComp);
         splitPane.getItems().get(0).autosize();
         splitPane.getDividers().get(0).positionProperty().bindBidirectional(ProgConfig.SYSTEM_SORT_DIALOG_DIVIDER);
-        SplitPane.setResizableWithParent(vBoxAll, Boolean.FALSE);
+        SplitPane.setResizableWithParent(this, Boolean.FALSE);
 
         HBox hBoxBtnSort = new HBox(P2LibConst.SPACING_HBOX);
         hBoxBtnSort.getChildren().addAll(btnAddSort, btnDelSort);
@@ -119,9 +108,9 @@ public class FilmFilterSortTab extends Tab {
         vBoxComp.setPadding(new Insets(P2LibConst.PADDING_VBOX));
         vBoxComp.getChildren().addAll(lblComp, listViewComp, hBoxBtnComp, txtTextComp);
 
-        vBoxAll.setPadding(new Insets(5));
-        vBoxAll.setSpacing(P2LibConst.SPACING_VBOX);
-        vBoxAll.getChildren().addAll(tglOn, splitPane);
+        this.setPadding(new Insets(5));
+        this.setSpacing(P2LibConst.SPACING_VBOX);
+        this.getChildren().addAll(splitPane);
     }
 
     private void initListView() {
@@ -258,22 +247,13 @@ public class FilmFilterSortTab extends Tab {
     }
 
     private void startSort() {
-        if (getSelSort() != null) {
-            if (audio) {
-                ProgConfig.SYSTEM_SORT_AUDIO.set(listViewSort.getSelectionModel().getSelectedIndex() + 1);
-            } else {
-                ProgConfig.SYSTEM_SORT_FILM.set(listViewSort.getSelectionModel().getSelectedIndex() + 1);
-            }
-        } else {
-            if (audio) {
-                ProgConfig.SYSTEM_SORT_AUDIO.set(0);
-            } else {
-                ProgConfig.SYSTEM_SORT_FILM.set(0);
-            }
-        }
+//        if (getSelSort() != null) {
+//            systemSortIdx.set(listViewSort.getSelectionModel().getSelectedIndex() + 1);
+//        } else {
+//            systemSortIdx.set(0);
+//        }
 
-        ProgData.getInstance().pEventHandler.notifyListener(audio ?
-                PEvents.EVENT_BTN_RUN_SORT_AUDIO : PEvents.EVENT_BTN_RUN_SORT_FILM);
+        ProgData.getInstance().pEventHandler.notifyListener(PEvents.EVENT_BTN_RUN_SORT);
         sort = false;
     }
 

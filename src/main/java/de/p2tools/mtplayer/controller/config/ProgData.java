@@ -139,10 +139,15 @@ public class ProgData {
     public BlackList filmListFilter;
     public BlackList blackList;
 
-    public SortList sortListFilm;
-    public SortList sortListAudio;
+    public SortList sortList;
+    //    public SortList sortListFilm;
+//    public SortList sortListAudio;
+//    public SortList sortListDownload;
     public CompList compListFilm;
     public CompList compListAudio;
+    public CompList compListLive;
+    public CompList compListDownload;
+    public CompList compListAbo;
 
     public CleaningDataList cleaningDataListMedia;
     public CleaningDataList cleaningDataListPropose;
@@ -190,10 +195,16 @@ public class ProgData {
         filmListFilter = new BlackList(this, "FilmListFilter");
         blackList = new BlackList(this, "BlackList");
 
-        sortListFilm = new SortList(this, false);
-        sortListAudio = new SortList(this, true);
+//        sortListFilm = new SortList(this, "SortListFilm", ProgConfig.SYSTEM_SORT_IDX_FILM);
+//        sortListAudio = new SortList(this, "SortListAudio", ProgConfig.SYSTEM_SORT_IDX_AUDIO);
+//        sortListDownload = new SortList(this, "SortListDownload", ProgConfig.SYSTEM_SORT_IDX_DOWNLOAD);
+
+        sortList = new SortList(this);
         compListFilm = new CompList();
         compListAudio = new CompList();
+        compListLive = new CompList();
+        compListDownload = new CompList();
+        compListAbo = new CompList();
 
         cleaningDataListMedia = new CleaningDataList(false);
         cleaningDataListPropose = new CleaningDataList(true);
