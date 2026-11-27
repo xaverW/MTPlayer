@@ -38,6 +38,8 @@ public class FilterSortDialog extends P2DialogExtra {
         this.filterSwitchPane = new FilterSwitchPane(getStageProp());
         this.filterSortPane = new FilterSortPane(getStageProp());
 
+        ProgData.SORT_DIALOG_IS_OPEN.set(true);
+
         init(true);
     }
 
@@ -45,6 +47,7 @@ public class FilterSortDialog extends P2DialogExtra {
     public void close() {
         filterSwitchPane.close();
         filterSortPane.close();
+        ProgData.SORT_DIALOG_IS_OPEN.set(false);
         super.close();
     }
 

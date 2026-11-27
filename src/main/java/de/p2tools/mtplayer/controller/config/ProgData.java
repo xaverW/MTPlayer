@@ -82,6 +82,7 @@ public class ProgData {
 
     public static BooleanProperty FILMLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Filmliste geladen, LoadFilmList.propLoadFilmlist kann nicht genommen werden, kann sonst nicht einfach zurückgesetzt werden
     public static BooleanProperty AUDIOLIST_IS_DOWNLOADING = new SimpleBooleanProperty(Boolean.FALSE); // dann wird eine Audioliste geladen
+    public static BooleanProperty SORT_DIALOG_IS_OPEN = new SimpleBooleanProperty(Boolean.FALSE); // damit der Dialog nicht 2x gestartet werden kann
 
     // Infos
     public static String configDir = ""; //Verzeichnis zum Speichern der Programmeinstellungen
@@ -116,8 +117,6 @@ public class ProgData {
     public DownloadFilterController downloadFilterController = null;
     public AboGuiController aboGuiController = null; // Tab mit den Abos
     public AboFilterController aboFilterController = null;
-    //    public FilmFilterControllerClearFilter filmFilterControllerClearFilter = null;
-//    public AudioFilterControllerClearFilter audioFilterControllerClearFilter = null;
     public CheckForNewFilmlist checkForNewFilmlist;
     public final ChartData chartData;
     public final ProgTray progTray;
@@ -140,9 +139,6 @@ public class ProgData {
     public BlackList blackList;
 
     public SortList sortList;
-    //    public SortList sortListFilm;
-//    public SortList sortListAudio;
-//    public SortList sortListDownload;
     public CompList compListFilm;
     public CompList compListAudio;
     public CompList compListLive;
@@ -195,10 +191,6 @@ public class ProgData {
         filmListFilter = new BlackList(this, "FilmListFilter");
         blackList = new BlackList(this, "BlackList");
 
-//        sortListFilm = new SortList(this, "SortListFilm", ProgConfig.SYSTEM_SORT_IDX_FILM);
-//        sortListAudio = new SortList(this, "SortListAudio", ProgConfig.SYSTEM_SORT_IDX_AUDIO);
-//        sortListDownload = new SortList(this, "SortListDownload", ProgConfig.SYSTEM_SORT_IDX_DOWNLOAD);
-
         sortList = new SortList(this);
         compListFilm = new CompList();
         compListAudio = new CompList();
@@ -211,22 +203,15 @@ public class ProgData {
         setDataList = new SetDataList();
         aboList = new AboList(this);
         downloadList = new DownloadList(this);
-//        downloadListButton = new DownloadList(this);
 
         filmFilterRunner = new FilmFilterRunner(this, false);
         audioFilterRunner = new FilmFilterRunner(this, true);
 
         historyListJson = new HistoryListJson();
-
-//        historyListShown = new HistoryList(ProgConst.FILE_HISTORY_SHOWN, HistoryList.HISTORY_LIST.DOWNLOAD_HISTORY);
-//        historyListAbos = new HistoryList(ProgConst.FILE_HISTORY_ABO, HistoryList.HISTORY_LIST.ABO_HISTORY);
         bookmarkList = new BookmarkList();
-
         mediaDataList = new MediaDataList();
         mediaCollectionDataList = new MediaCollectionDataList();
-
         proposeList = new ProposeList(this);
-
         blackListFilterFilmList = new BlackListFilter();
         blackListFilterBlackList = new BlackListFilter();
 

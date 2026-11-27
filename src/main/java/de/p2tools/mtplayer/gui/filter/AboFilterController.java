@@ -30,7 +30,6 @@ import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
 import de.p2tools.p2lib.ikonli.P2IconFactory;
 import de.p2tools.p2lib.mediathek.filter.FilterCheck;
 import de.p2tools.p2lib.mediathek.filter.FilterCheckRegEx;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -74,6 +73,12 @@ public class AboFilterController extends FilterController {
         addCont("Filtertext", cboSearchText, vBoxFilter);
         addCont("Beschreibung", cboDescription, vBoxFilter);
 
+        // Sortierung
+        FilterControllerSort filterControllerSort = new FilterControllerSort(FilterControllerSort.SORTER.ABO);
+        vBoxFilter.getChildren().addAll(/*P2GuiTools.getDistanceV(10),*/ filterControllerSort);
+        filterControllerSort.visibleProperty().bind(ProgConfig.SYSTEM_SORT_ABO_TABLE);
+        filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
+
         // Filme/Audios
         vBoxFilter.getChildren().add(P2GuiTools.getDistanceV(10));
         VBox vBoxRadio = new VBox(2);
@@ -92,30 +97,21 @@ public class AboFilterController extends FilterController {
         vBox.getChildren().addAll(h, slider, chkOld);
         vBoxFilter.getChildren().addAll(vBox);
 
-        FilterControllerSort filterControllerSort = new FilterControllerSort(FilterControllerSort.SORTER.ABO);
-        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(10), filterControllerSort);
-        filterControllerSort.visibleProperty().bind(ProgConfig.SYSTEM_SORT_ABO_TABLE);
-        filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
-
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.setPadding(new Insets(15, 0, 0, 0));
-        Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
-        hBox.getChildren().add(btnClear);
-
         final Button btnHelpFilter = P2IconFactory.getHelpButton("Filter", HelpText.GUI_ABO_FILTER);
-        HBox hBoxHelp = new HBox();
-        hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
-        hBoxHelp.getChildren().add(btnHelpFilter);
+        Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
 
-        vBoxFilter.getChildren().addAll(hBox, P2GuiTools.getVBoxGrower(), hBoxHelp);
+        vBoxFilter.getChildren().add(P2GuiTools.getDistanceV(20));
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().addAll(btnHelpFilter, P2GuiTools.getHBoxGrower(), btnClear);
+
+        vBoxFilter.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBox, P2GuiTools.getDistanceV(10));
         btnClear.setOnAction(a -> clearFilter());
     }
 
     private void initLastAboFilter() {
         slider.setMin(LAST_ABO_MIN);
         slider.setMax(LAST_ABO_MAX);
-//        slider.setShowTickMarks(true);
         slider.setShowTickLabels(true);
 
         slider.setMajorTickUnit(50);

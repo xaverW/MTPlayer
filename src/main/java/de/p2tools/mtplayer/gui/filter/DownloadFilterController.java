@@ -77,32 +77,28 @@ public class DownloadFilterController extends FilterController {
     private void initLayout() {
         addCont("Sender", mbChannel, vBoxFilter);
         addCont("Thema/Titel", cboThemeTitle, vBoxFilter);
-        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(10));
 
         addCont("Abo", cboAbo, vBoxFilter);
         addCont("Liste", cboList, vBoxFilter);
-        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(10));
 
         addCont("Quelle", cboSrc, vBoxFilter);
         addCont("Downloadart", cboKind, vBoxFilter);
         addCont("Status", cboState, vBoxFilter);
 
-        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(5), filterControllerSort);
+        // Sortierung
+        vBoxFilter.getChildren().addAll(filterControllerSort);
         filterControllerSort.visibleProperty().bind(ProgConfig.SYSTEM_SORT_DOWNLOAD_TABLE);
         filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
 
-
         final Button btnHelpFilter = P2IconFactory.getHelpButton("Filter", HelpText.GUI_DOWNLOAD_FILTER);
+        final Button btnClear = P2ButtonClearFilterFactory.getPButtonClearFilter();
 
-        HBox hBoxClear = new HBox(P2LibConst.SPACING_HBOX);
-        hBoxClear.setAlignment(Pos.CENTER_RIGHT);
-        hBoxClear.getChildren().addAll(btnClear);
+        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceV(20));
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().addAll(btnHelpFilter, P2GuiTools.getHBoxGrower(), btnClear);
 
-        HBox hBoxHelp = new HBox();
-        hBoxHelp.setAlignment(Pos.CENTER_RIGHT);
-        hBoxHelp.getChildren().add(btnHelpFilter);
-
-        vBoxFilter.getChildren().addAll(P2GuiTools.getDistanceH(10), hBoxClear, P2GuiTools.getVBoxGrower(), hBoxHelp);
+        vBoxFilter.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBox, P2GuiTools.getDistanceV(10));
 
         // black
         VBox vb = new VBox(FilterController.FILTER_SPACING_TEXTFILTER);

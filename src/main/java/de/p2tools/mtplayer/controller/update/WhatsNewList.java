@@ -52,20 +52,21 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         Damit kann dann nach Suchbegriffen und mit der URL einer
                         Sendung gesucht werden.""", 70);
         add(whatsNewInfo);
-        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2026, 11, 24),
+        whatsNewInfo = new WhatsNewInfo(LocalDate.of(2026, 11, 26),
                 "/de/p2tools/mtplayer/res/whatsnew/whatsNew_sortTable.png",
                 "Spalte Titel blockweise sortieren",
                 """
-                        Die Tabellenspalte "Titel" in den Tabellen können blockweise
-                        sortiert werden. ZB. zuerst alle Filme mit "Tatort" im Namen, dann
-                        alle Filme mit "Sport" im Namen und dann der Rest.
+                        Die in den Tabellen kann die Tabellenspalte "Titel" blockweise
+                        sortiert werden, zB. zuerst alle Filme mit "Tatort" im Namen,
+                        dann alle Filme mit "Sport" im Namen und dann der Rest. In den
+                        Blöcken werden die Filme alphabetisch sortiert.
                         
-                        In einem Dialog (im Programmmenü->Tools->Titel-Sortierung) \
-                        kann sie für jede Tabelle eingeschaltet und eingestellt werden.
+                        In einem Dialog (im Programmmenü->Tools->Titel-Sortierung)
+                        kann sie eingestellt und für jede Tabelle eingeschaltet werden.
                         
                         Es gibt dann im Filterpanel links neben der Tabelle ein neues
                         Auswahlfeld mit den erstellten Sortier-Einstellungen.
-                        """, 200);
+                        """, 220);
         add(whatsNewInfo);
     }
 }

@@ -123,6 +123,7 @@ public class MTPlayerMenu extends MenuButton {
         miColorMode.selectedProperty().bindBidirectional(ProgConfig.SYSTEM_GUI_THEME_1);
 
         MenuItem miSort = new MenuItem("Titel-Sortierung einstellen");
+        miSort.disableProperty().bind(ProgData.SORT_DIALOG_IS_OPEN);
         miSort.setOnAction(a -> {
             new FilterSortDialog(progData);
         });

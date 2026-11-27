@@ -116,7 +116,7 @@ public class FilmFilterController extends FilterController {
 
         vBox.getChildren().addAll(P2GuiTools.getDistanceV(5), filterControllerSort);
         filterControllerSort.visibleProperty().bind(filterDto.audio ?
-                ProgConfig.SYSTEM_SORT_AUDIO_TABLE.and(small.not()) : ProgConfig.SYSTEM_SORT_FILM_TABLE.and(small.not()));
+                ProgConfig.SYSTEM_SORT_AUDIO_TABLE : ProgConfig.SYSTEM_SORT_FILM_TABLE);
         filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
 
         Region reg2 = P2GuiTools.getDistanceV(10); // small

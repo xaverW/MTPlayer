@@ -21,10 +21,12 @@ import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.controller.worker.ThemeListFactory;
 import de.p2tools.mtplayer.gui.filter.FilterControllerSort;
 import de.p2tools.mtplayer.gui.filter.helper.PCboString;
+import de.p2tools.mtplayer.gui.tools.HelpText;
+import de.p2tools.p2lib.P2LibConst;
 import de.p2tools.p2lib.guitools.P2ButtonClearFilterFactory;
 import de.p2tools.p2lib.guitools.P2GuiTools;
 import de.p2tools.p2lib.guitools.pcbo.P2CboCheckBoxListString;
-import javafx.geometry.Insets;
+import de.p2tools.p2lib.ikonli.P2IconFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -68,18 +70,22 @@ public class LiveFilmFilterText extends VBox {
         addTxt("Thema", cboThema, this);
         addTxt("Titel", cboTitle, this);
 
+        // Sortierung
         FilterControllerSort filterControllerSort = new FilterControllerSort(FilterControllerSort.SORTER.LIVE);
-        this.getChildren().addAll(P2GuiTools.getDistanceV(5), filterControllerSort);
+        this.getChildren().addAll(filterControllerSort);
         filterControllerSort.visibleProperty().bind(ProgConfig.SYSTEM_SORT_LIVE_TABLE);
         filterControllerSort.managedProperty().bind(filterControllerSort.visibleProperty());
 
+        final Button btnHelp = P2IconFactory.getHelpButton(progData.primaryStage, "Live-Suche",
+                HelpText.LIVE_SEARCH);
         Button btnClear = P2ButtonClearFilterFactory.getPButtonClear();
-        btnClear.setOnAction(a -> progData.liveFilmFilterWorker.clearFilter());
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.setPadding(new Insets(10, 0, 0, 0));
-        hBox.getChildren().add(btnClear);
-        this.getChildren().add(hBox);
+
+        this.getChildren().add(P2GuiTools.getDistanceV(20));
+        HBox hBox = new HBox(P2LibConst.SPACING_HBOX);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.getChildren().addAll(btnHelp, P2GuiTools.getHBoxGrower(), btnClear);
+
+        this.getChildren().addAll(P2GuiTools.getVBoxGrower(), hBox, P2GuiTools.getDistanceV(10));
     }
 
     private void addTxt(String txt, Node control, VBox vBoxComplete) {

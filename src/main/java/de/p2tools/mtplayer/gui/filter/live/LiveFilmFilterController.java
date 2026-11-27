@@ -18,13 +18,8 @@ package de.p2tools.mtplayer.gui.filter.live;
 
 import de.p2tools.mtplayer.controller.config.ProgData;
 import de.p2tools.mtplayer.gui.filter.FilterController;
-import de.p2tools.mtplayer.gui.tools.HelpText;
-import de.p2tools.p2lib.guitools.P2GuiTools;
-import de.p2tools.p2lib.ikonli.P2IconFactory;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class LiveFilmFilterController extends FilterController {
@@ -51,13 +46,9 @@ public class LiveFilmFilterController extends FilterController {
         tabPane.getTabs().addAll(liveFilterTabArd, liveFilterTabZdf, liveFilterTabArte);
         vBoxFilter.getChildren().add(tabPane);
 
-        final Button btnHelp = P2IconFactory.getHelpButton(progData.primaryStage, "Live-Suche",
-                HelpText.LIVE_SEARCH);
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().add(btnHelp);
+        vBoxFilter.getChildren().addAll(liveFilmFilterText);
+        VBox.setVgrow(liveFilmFilterText, Priority.ALWAYS);
 
-        vBoxFilter.getChildren().addAll(liveFilmFilterText, P2GuiTools.getVBoxGrower(), hBox);
         getVBoxBlack().getChildren().addAll(liveFilmFilterClearList);
     }
 }
