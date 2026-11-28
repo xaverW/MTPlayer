@@ -24,8 +24,6 @@ import de.p2tools.mtplayer.controller.data.compdata.SortData;
 import de.p2tools.mtplayer.controller.data.compdata.SortList;
 import de.p2tools.p2lib.guitools.pcbo.P2CboSeparator;
 import de.p2tools.p2lib.p2event.P2Listener;
-import de.p2tools.p2lib.tools.duration.P2Duration;
-import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -99,17 +97,16 @@ public class FilterControllerSort extends VBox {
                 return;
             }
 
-            P2Duration.counterStart("Sort");
+//            P2Duration.counterStart("Sort");
             int id = cboSort.getSelectionModel().getSelectedIndex();
             if (id >= 0) {
                 idx.set(id);
             }
             setCbo();
             // todo
-            Platform.runLater(() -> {
-                System.out.println("fertig");
-                P2Duration.counterStop("Sort");
-            });
+//            Platform.runLater(() -> {
+//                P2Duration.counterStop("Sort");
+//            });
         });
     }
 

@@ -56,12 +56,12 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                 "/de/p2tools/mtplayer/res/whatsnew/whatsNew_sortTable.png",
                 "Spalte Titel blockweise sortieren",
                 """
-                        Die in den Tabellen kann die Tabellenspalte "Titel" blockweise
-                        sortiert werden, zB. zuerst alle Filme mit "Tatort" im Namen,
-                        dann alle Filme mit "Sport" im Namen und dann der Rest. In den
-                        Blöcken werden die Filme alphabetisch sortiert.
+                        Wird in den Tabellen die Spalte "Titel" sortiert, ist das jetzt
+                        auch blockweise möglich, zB. zuerst alle Filme mit "Tatort"
+                        im Namen, dann alle Filme mit "Sport" im Namen und dann der Rest.
+                        In den Blöcken werden die Filme auch alphabetisch sortiert.
                         
-                        In einem Dialog (im Programmmenü->Tools->Titel-Sortierung)
+                        In einem Dialog (im Programmmenü ->Tools ->Titel-Sortierung)
                         kann sie eingestellt und für jede Tabelle eingeschaltet werden.
                         
                         Es gibt dann im Filterpanel links neben der Tabelle ein neues

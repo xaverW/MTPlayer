@@ -71,13 +71,13 @@ public class FilterSortPane extends VBox {
     private void init() {
         Button btnHelp = P2Button.helpButton(stage, "Vorgaben zum Sortieren",
                 """
-                        Hier kann man in der Tabelle die Spalte "Titel" blockweise \
-                        sortieren, zB. zuerst alle Filme die "Tatort" im Namen \
-                        haben, dann alle Filme die "Sport" im Namen haben und dann die restlichen Filme. \
-                        Jeder Block wird dabei alphabetisch sortiert in der Tabelle angezeigt.
+                        Wird in den Tabellen die Spalte "Titel" sortiert, ist das jetzt
+                        damit blockweise möglich, zB. zuerst alle Filme mit "Tatort"
+                        im Namen, dann alle Filme mit "Sport" im Namen und dann der Rest.
+                        In den Blöcken werden die Filme auch alphabetisch sortiert.
                         
-                        Die Blöcke werden in der Reihenfolge angeordnet, wie sie in der Liste mit den \
-                        Suchbegriffen aufgelistet \
+                        Die Blöcke werden in der Reihenfolge angeordnet, wie sie in der \
+                        Liste mit den Suchbegriffen aufgelistet \
                         sind. Mit dem Button "Jetzt sortieren" kann die Sortierung \
                         zum Testen sofort angestoßen werden, ansonsten erst \
                         beim Beenden des Dialogs.
