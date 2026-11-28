@@ -65,9 +65,14 @@ public class SortList extends SimpleListProperty<SortData> implements P2DataList
             sortData.getCompList().add(new CompData("Sport"));
             add(sortData);
 
-            // #:.*\(S\d\d\/E.*
+
+            // #:.*\(S\d{1,2}\/E\d{1,2}\).*
+            // #:.*\(\d{1,2}\).*
+            // #:.*\(\d{1,2}\/\d{1,2}\).*
             sortData = new SortData("Serien");
-            sortData.getCompList().add(new CompData("#:.*\\(S\\d\\d\\/E.*"));
+            sortData.getCompList().add(new CompData("#:.*\\(S\\d{1,2}\\/E\\d{1,2}\\).*"));
+            sortData.getCompList().add(new CompData("#:.*\\(\\d{1,2}\\).*"));
+            sortData.getCompList().add(new CompData("#:.*\\(\\d{1,2}\\/\\d{1,2}\\).*"));
             add(sortData);
         }
     }

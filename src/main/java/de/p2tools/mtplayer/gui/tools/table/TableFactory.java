@@ -8,13 +8,18 @@ import javafx.beans.property.BooleanProperty;
 
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class TableFactory {
     private TableFactory() {
     }
 
-    // #:.*\(S\d\d\/E.*
+
+    // #:.*\(S\d{1,2}\/E\d{1,2}\).*
+    // #:.*\(\d{1,2}\).*
+    // #:.*\(\d{1,2}\/\d{1,2}\).*
+
     public static Comparator<String> getComparator(CompList compList, BooleanProperty sort) {
         if (compList.isEmpty()) {
             return (s, t1) -> Collator.getInstance().compare(s, t1);
@@ -24,12 +29,24 @@ public class TableFactory {
             return (s, t1) -> Collator.getInstance().compare(s, t1);
         }
 
+        // collator: 8.3s
+        // compare: 6s
+        // "e" and "f" are considered primary differences,
+        // while "e" and "ě" are secondary differences,
+        // "e" and "E" are tertiary differences and
+        // "e" and "e" are identical
+        Collator collator = Collator.getInstance(Locale.GERMAN);
+        collator.setStrength(Collator.PRIMARY);
+
         compList.forEach(CompDataProps::init);
-        Comparator<String> comparator = (s, t1) -> {
+
+        return (s, t1) -> {
             // t nach s => t>s => 1
             s = s.toLowerCase();
             t1 = t1.toLowerCase();
-            final int c = s.compareTo(t1);
+
+            // final int c = s.compareTo(t1);
+            final int c = collator.compare(s, t1);
 
             for (CompData compData : compList) {
                 if (compData.isRegEx()) {
@@ -69,6 +86,5 @@ public class TableFactory {
 
             return c;
         };
-        return comparator;
     }
 }
