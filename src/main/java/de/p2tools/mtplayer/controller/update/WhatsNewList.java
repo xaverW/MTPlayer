@@ -60,6 +60,7 @@ public class WhatsNewList extends ArrayList<WhatsNewInfo> {
                         auch blockweise möglich, zB. zuerst alle Filme mit "Tatort"
                         im Namen, dann alle Filme mit "Sport" im Namen und dann der Rest.
                         In den Blöcken werden die Filme auch alphabetisch sortiert.
+                        So können zB. lange Downloadlisten Thematisch sortiert werden.
                         
                         In einem Dialog (im Programmmenü ->Tools ->Titel-Sortierung)
                         kann sie eingestellt und für jede Tabelle eingeschaltet werden.

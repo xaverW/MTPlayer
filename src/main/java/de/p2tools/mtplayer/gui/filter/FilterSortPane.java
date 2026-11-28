@@ -75,6 +75,7 @@ public class FilterSortPane extends VBox {
                         damit blockweise möglich, zB. zuerst alle Filme mit "Tatort"
                         im Namen, dann alle Filme mit "Sport" im Namen und dann der Rest.
                         In den Blöcken werden die Filme auch alphabetisch sortiert.
+                        So können zB. lange Downloadlisten Thematisch sortiert werden.
                         
                         Die Blöcke werden in der Reihenfolge angeordnet, wie sie in der \
                         Liste mit den Suchbegriffen aufgelistet \
